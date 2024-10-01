@@ -1,0 +1,95 @@
+%%%%%%
+%
+% $Autor: Wings $
+% $Datum: 2020-01-18 11:15:45Z $
+% $Pfad: WuSt/Skript/Produktspezifikation/powerpoint/ImageProcessing.tex $
+% $Version: 4620 $
+%
+%%%%%%
+
+
+
+\subsection{Starting up the Raspberry Pi Camera with the Jetson Nano}
+
+The Raspberry Pi camera module is supported by the Jetson Nano Plug-and-Play, which makes commissioning easy. The device drivers are already installed with the operating system. Once the module is connected, the camera should show up as a device under \SHELL{/dev/video0}. If this is not the case, the plug connections must be checked. Especially during transport, the plug-in connection on the top of the board can come loose.
+
+For the next steps the programme GStreamer is helpful \cite{GStreamer:2021}. The programme can be called as well as a programme, but it can also be integrated into your own programme. It enables the creation of single images and image sequences. GStreamer can be installed with the following commands:
+
+\medskip
+
+\SHELL{apt-get install libgstreamer1.0-0 gstreamer1.0-plugins-base   \textbackslash}
+
+\SHELL{\quad gstreamer1.0-plugins-good gstreamer1.0-plugins-bad \textbackslash}
+
+\SHELL{\quad gstreamer1.0-plugins-ugly gstreamer1.0-libav gstreamer1.0-doc \textbackslash}
+
+\SHELL{\quad gstreamer1.0-tools gstreamer1.0-x gstreamer1.0-alsa \textbackslash}
+
+\SHELL{\quad  gstreamer1.0-gl gstreamer1.0-gtk3 gstreamer1.0-qt5 \textbackslash}
+
+\SHELL{\quad  gstreamer1.0-pulseaudio}
+
+\medskip
+
+Mit der Eingabe 
+
+\medskip
+
+\SHELL{\$ gst-launch-1.0 nvarguscamerasrc sensor\_id=0 ! nvoverlaysink}
+
+\medskip
+
+the camera can be tested. The command creates a camera image in full screen mode. To end the display, \keys{\ctrl + C} must be pressed.
+
+\medskip
+
+Other settings can also be made to the camera image. To request the GStreamer programme to open the live image of the camera with a width of 3820 pixels and a height of 2464 pixels at 21 frames per second and to display it in a window with a width of 960 pixels and a height of 616 pixels, the following line is entered:
+
+\medskip
+
+\SHELL{\$ gst-launch-1.0 nvarguscamerasrc sensor\_mode=0 !\textbackslash}
+
+\SHELL{\quad 'video/x-raw(memory:NVMM),width=3820, height=2464,\textbackslash}
+
+\SHELL{\quad framerate=21/1, format=NV12' ! nvvidconv flip-method=0 ! \textbackslash}
+
+\SHELL{\quad 'video/x-raw,width=960, height=616' ! nvvidconv ! \textbackslash}
+    
+\SHELL{\quad nvegltransform ! nveglglessink -e}
+%todo Apostrophe müssen gerade Striche sein, damit der Befehl per copy paste verwendet werden kann
+
+When the camera is attached to the bracket on the Jetson Nano, the image may initially be upside down. If you set \SHELL{flip-method=2}, the image will be rotated by $180^\circ$. For more options to rotate and flip the image, see table~\ref{flip}.
+
+\medskip
+
+\medskip
+\begin{table} [H]
+    \centering
+    \begin{tabular} {l c l}
+        none                 & 0 & no rotation \\
+        clockwise            & 1 & Rotate clockwise by $90^\circ$ \\
+        rotate-180           & 2 & Rotate by $180^\circ$ \\
+        counterclockwise     & 3 & Rotate counterclockwise by $90^\circ$ \\
+        horizontal-flip      & 4 & Flip horizontally \\
+        vertical-flip        & 5 & Flip vertical \\
+        upper-left-diagonal  & 6 & flip over upper-left/lower-right diagonal \\
+        upper-right-diagonal & 7 & Flip over upper right/lower left diagonal\\
+        automatic            & 8 & flip method based on image-orientation tag\\
+    \end{tabular}
+    \caption{Operations to rotate and mirror the image in GStreamer}
+    \label{Flip}
+\end{table}
+
+
+\medskip
+
+
+The documentation for GSteamer can be found at \Cite{GStreamer:2021} and in a GitHub project. From the GitHub project, the documentation can be accessed via
+
+\medskip
+
+\SHELL{git clone https://gitlab.freedesktop.org/gstreamer/gst-docs}
+
+\medskip
+
+can be installed. Further plug-ins are also documented there.

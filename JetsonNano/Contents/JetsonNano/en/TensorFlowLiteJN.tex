@@ -1,0 +1,166 @@
+%%%%%%%%%%%%%%%%%%%%
+%
+% $Autor: Wings $
+% $Datum: 2020-02-24 14:29:03Z $
+% Projekt: $
+% $Version: 1791 $
+%
+%
+%%%%%%%%%%%%%%%%%%%
+
+
+
+\section{TensorFlow Lite and Jetson Nano}
+
+
+\subsection{Compatibility}
+
+Compared to other AI systems such as the Edge TPU, NVIDIA's Jetson Nano is more flexible in terms of model properties. As \cite{Stock.07.01.2021} shows, 16- and 32-bit models can be used on the Jetson Nano. Therefore, there are many different model formats that are compatible with the Jetson Nano. Often models are converted with Keras in the format HDF5 or with TensorFlow as a protocol buffer file with the extension .pb to a file in the format originally supported by TensorRT with the extension .uff to be used on the Jetson Nano. %There does not seem to be too much literature on using TensorFlow Lite on the Jetson Nano yet due to the wide range of possibilities. 
+TensorFlow Lite is optimised for use on ARM CPU edge devices \cite{Jain:2020}. Since the Jetson Nano also uses an ARM Cortex-A57 processor, using TensorFlow Lite on the Jetson Nano is an obvious choice.
+
+\subsection{Conversion of the model}
+
+It is recommended to convert a model in SavedModel format. After training, the model should therefore be saved accordingly. The following steps can then be carried out:
+
+\medskip
+
+\PYTHON{import tensorflow as tf}
+
+\PYTHON{\# Convert the model}
+    
+\PYTHON{converter = tf.lite.TFLiteConverter.from\_saved\_model(saved\_model\_dir)}
+
+\PYTHON{\# with the path to the SavedModel directory}
+
+\PYTHON{tflite\_model = converter.convert()}
+
+\PYTHON{\# Save the model.}
+
+\PYTHON{with open('model.tflite', 'wb') as f:}
+
+\PYTHON{\qquad f.write(tflite\_model)}
+
+\medskip
+
+This converts the saved model into the format tflite and saves it in the specified location with the specified name. \cite{Google.04.11.2020} The flag \PYTHON{'wb'} merely specifies that it is written in binary mode.
+
+In addition, this model can now be optimised as already described. For this purpose, the optimisation must be specified \cite{Warden:2020} before the actual conversion:
+
+\medskip
+
+\PYTHON{converter.optimizations = [tf.lite.Optimize.DEFAULT]}
+
+\medskip
+
+In addition to the \PYTHON{DEFAULT} variant, there are also options to specifically optimise the size or latency. However, according to \cite{Google.13.01.2021}, these are outdated, so \PYTHON{DEFAULT} should be used.
+
+\subsection{Transfer of the model}
+
+A convenient way to transfer models and other large files between a PC and the Jetson Nano is to set up a Secure Shell FileSystem (SSHFS). This allows access to the Jetson Nano's folders from the PC. The installation of such a system for Windows is explained \url{here}{https://www.digikey.com/en/maker/projects/getting-started-with-the-nvidia-jetson-nano-part-1-setup/2f497bb88c6f4688b9774a81b80b8ec2}.  \Mynote{replace link with a quote and explanation}.
+
+First, the latest version of the programme \FILE{winfsp} must be downloaded:
+
+\Mynote{Was macht winfsp?}
+
+\medskip
+
+\url{https://github.com/billziss-gh/winfsp/releases}
+
+\Mynote{clone ....}
+
+\medskip
+
+Then the programme \FILE{SSHFS-Win} is installed: 
+
+\medskip
+
+\url{https://github.com/billziss-gh/sshfs-win/releases}
+
+\Mynote{clone ....}
+
+
+\medskip
+
+Then you can open the Explorer/File Manager in Windows. After right-clicking on 'This PC', select 'Add network address'. The following must be entered as the network address:
+
+\medskip
+
+\SHELL{\textbackslash \textbackslash sshfs \textbackslash<username>@<IP address>}
+
+\medskip
+
+Where <username> is the user name used on the Jetson nano and <IP address> is the IP address. The IP address can be viewed in a terminal on the Jetson nano using the command
+
+\medskip
+
+\SHELL{\$ ip addr show}
+
+\medskip
+
+display.
+
+
+\Mynote{Wohin kopieren?}
+
+
+\subsection{Using a model on Jetson Nano}
+
+The TensorFlow Lite model can be used in different environments. On the Jetson Nano, it is best to use the Python environment. To use the TensorFlow Lite interpreter, TensorFlow must be installed on the Jetson Nano. The installation of TensorFlow on the Jetson Nano is described in the chapter~\ref{Chapter_TF}. \Mynote{Where?}
+
+At the beginning of a program that is to evaluate a model in tflite format, TensorFlow must be imported. Then the model should be loaded by specifying the memory path and the tensors should be associated:
+
+
+\medskip
+
+\PYTHON{import tensorflow as tf}
+
+\PYTHON{interpreter = tf.lite.Interpreter(model\_path="converted\_model.tflite")}
+
+\PYTHON{interpreter.allocate\_tensors()}
+
+\medskip
+
+
+Then the shape/size of the input and output tensors can be determined so that subsequently the data can be adjusted accordingly.
+
+\medskip
+
+\PYTHON{input\_details = interpreter.get\_input\_details()}
+
+\PYTHON{output\_details = interpreter.get\_output\_details()}
+
+\medskip
+
+
+With this information, the input data, in this example of \ref{Google.24.11.2020} a random array, can be adjusted and set as the input data:
+
+\medskip
+
+\PYTHON{input\_shape = input\_details[0]['shape']}
+
+\PYTHON{input\_data = np.array(np.random.random\_sample(input\_shape), dtype=np.float32)}
+
+\PYTHON{interpreter.set\_tensor(input\_details[0]['index'], input\_data)}
+
+\medskip
+
+Then the interpreter is executed and determines the result of the model
+
+\medskip
+
+
+\PYTHON{interpreter.invoke()}
+
+\medskip
+
+Finally, the output of the model can be determined and read out:
+
+\medskip
+
+\PYTHON{output\_data = interpreter.get\_tensor(output\_details[0]['index'])}
+
+\medskip
+
+If the data is to be further processed or displayed, additional libraries, for example \FILE{numpy}, must be loaded.
+
+

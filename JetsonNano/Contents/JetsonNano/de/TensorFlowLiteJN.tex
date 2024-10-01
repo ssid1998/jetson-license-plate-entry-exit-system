@@ -1,0 +1,165 @@
+%%%%%%%%%%%%%%%%%%%%
+%
+% $Autor: Wings $
+% $Datum: 2020-02-24 14:29:03Z $
+% Projekt: $
+% $Version: 1791 $
+%
+%
+%%%%%%%%%%%%%%%%%%%
+
+
+
+\section{TensorFlow Lite und Jetson Nano}
+
+
+\subsection{Kompatibilität}
+Im Vergleich zu anderen KI-Systemen wie der Edge TPU ist der Jetson Nano von NVIDIA flexibler bezüglich der Modelleigenschaften. Wie \cite{Stock.07.01.2021} zeigt, können auf dem Jetson Nano auf 16- und 32-Bit-Modelle verwendet werden. Daher gibt es viele verschiedene Modellformate, die mit dem Jetson Nano kompatibel sind. Oft werden  mit Keras Modelle im Format HDF5 oder mit TensorFlow als Protokollpufferdatei mit der Extension .pb zu einer Datei in dem Format, das von TensorRT originär mit der Extension .uff unterstützt wird, konvertiert, um sie auf dem Jetson Nano zu verwenden. %Es scheint auf Grund der vielfältigen Möglichkeiten noch nicht all zu viel Literatur zur Verwendung von TensorFlow Lite auf dem Jetson Nano zu geben. 
+TensorFlow Lite ist für die Verwendung auf ARM CPU Edge Devices optimiert \cite{Jain:2020}. Da auch im Jetson Nano ein ARM Cortex-A57 Prozessor verwendet wird, bietet sich die Verwendung von TensorFlow Lite auf dem Jetson Nano offensichtlich an.
+
+\subsection{Konvertierung des Modells}
+
+Empfohlen wird die Konvertierung eines Modells im Format SavedModel. Nach dem Training sollte deshalb das Modell entsprechend gespeichert werden. Anschließend können dann die folgenden Schritte erfolgen:
+
+\medskip
+
+\PYTHON{import tensorflow as tf}
+
+\PYTHON{\# Convert the model}
+    
+\PYTHON{converter = tf.lite.TFLiteConverter.from\_saved\_model(saved\_model\_dir)}
+
+\PYTHON{\# with the path to the SavedModel directory}
+
+\PYTHON{tflite\_model = converter.convert()}
+
+\PYTHON{\# Save the model.}
+
+\PYTHON{with open('model.tflite', 'wb') as f:}
+
+\PYTHON{\qquad f.write(tflite\_model)}
+
+\medskip
+
+Dies konvertiert das gespeicherte Modell in das Format tflite und speichert es am vorgegeben Ort mit dem vorgegebenen Namen. \cite{Google.04.11.2020} Die Flagge \PYTHON{'wb'} spezifiziert dabei lediglich, dass im binary mode geschrieben wird.
+
+Zusätzlich kann dieses Modell nun wie bereits beschrieben optimiert werden. Dazu muss vor der tatsächlichen Konvertierung die Optimierung spezifiziert werden \cite{Warden:2020}:
+
+\medskip
+
+\PYTHON{converter.optimizations = [tf.lite.Optimize.DEFAULT]}
+
+\medskip
+
+Es gibt neben der Variante \PYTHON{DEFAULT} noch die Optionen, gezielt die Größe oder Latenz zu optimieren. Nach Angaben von \cite{Google.13.01.2021} sind diese jedoch veraltet, sodass \PYTHON{DEFAULT} verwendet werden sollte.
+
+\subsection{Transfer des Modells}
+
+Eine bequeme Methode, um Modelle und andere größere Dateien zwischen einem PC und dem Jetson Nano zu transferieren ist die Einrichtung eines Secure Shell FileSystems (SSHFS). Damit kann vom PC aus auf die Ordner des Jetson Nano zugegriffen werden. Die Installation eines solchen Systems für Windows wird  \url{hier}{https://www.digikey.com/en/maker/projects/getting-started-with-the-nvidia-jetson-nano-part-1-setup/2f497bb88c6f4688b9774a81b80b8ec2} erklärt.  \Mynote{Link durch ein Zitat und Erläuterung ersetzen.}
+
+Zunächst muss die neueste Version des Programms \FILE{winfsp} heruntergeladen werden:
+
+\Mynote{Was macht winfsp?}
+
+\medskip
+
+\url{https://github.com/billziss-gh/winfsp/releases}
+
+\Mynote{clone ....}
+
+\medskip
+
+Anschließend wird das Programm \FILE{SSHFS-Win} installiert: 
+
+\medskip
+
+\url{https://github.com/billziss-gh/sshfs-win/releases}
+
+\Mynote{clone ....}
+
+
+\medskip
+
+Danach kann man in Windows den Explorer/ Dateimanager öffnen. Nach einem Rechtsklick auf 'Dieser PC' wählt man 'Netzwerkadresse hinzufügen'. Als Netzwerkadresse muss folgendes eingegeben werden:
+
+\medskip
+
+\SHELL{\textbackslash \textbackslash sshfs \textbackslash<username>@<IP address>}
+
+\medskip
+
+Wobei für <username> der auf dem Jetson nano genutzte Benutzername und für <IP address> die IP-Adresse angegeben werden muss. Die IP-Adresse kann man sich in einem Temrinal auf dem Jetson Nano mit dem Befehl
+
+\medskip
+
+\SHELL{\$ ip addr show}
+
+\medskip
+
+anzeigen lassen.
+
+
+\Mynote{Wohin kopieren?}
+
+
+\subsection{Verwendung eines Modells auf Jetson Nano}
+
+Das TensorFlow Lite-Modell kann in verschiedenen Umgebungen verwendet werden. Auf dem Jetson Nano bietet sich die Verwendung der Python-Umgebung an. Um den TensorFlow Lite-Interpreter verwenden zu können, muss TensorFlow auf dem Jetson Nano installiert sein. Die Installation von TensorFlow auf dem Jetson Nano wird im Kapitel~\ref{Kapitel_TF} beschrieben. \Mynote{Wo?}
+
+Zu Beginn eines Programms, dass ein Modell im Format tflite auswerten soll, muss TensorFlow importiert werden. Anschließend sollte das Modell durch Angabe des Speicherpfads geladen und die Tensoren alloziiert werden:
+
+
+\medskip
+
+\PYTHON{import tensorflow as tf}
+
+\PYTHON{interpreter = tf.lite.Interpreter(model\_path="converted\_model.tflite")}
+
+\PYTHON{interpreter.allocate\_tensors()}
+
+\medskip
+
+
+Dann kann die Form/Größe der Input- und Output-Tensoren bestimmt werden, sodass anschließend die Daten entsprechend angepasst werden können.
+
+\medskip
+
+\PYTHON{input\_details = interpreter.get\_input\_details()}
+
+\PYTHON{output\_details = interpreter.get\_output\_details()}
+
+\medskip
+
+
+Mit dieser Information können die Eingabedaten, in diesem Beispiel von \ref{Google.24.11.2020} ein zufälliges Array,  angepasst und als Eingabedaten festgelegt werden:
+
+\medskip
+
+\PYTHON{input\_shape = input\_details[0]['shape']}
+
+\PYTHON{input\_data = np.array(np.random.random\_sample(input\_shape), dtype=np.float32)}
+
+\PYTHON{interpreter.set\_tensor(input\_details[0]['index'], input\_data)}
+
+\medskip
+
+Dann wird der Interpreter ausgeführt und ermittelt das Ergebnis des Modells
+
+\medskip
+
+
+\PYTHON{interpreter.invoke()}
+
+\medskip
+
+Schließlich kann die Ausgabe des Modells ermittelt und ausgelesen werden:
+
+\medskip
+
+\PYTHON{output\_data = interpreter.get\_tensor(output\_details[0]['index'])}
+
+\medskip
+
+Falls die Daten weiterverarbeitet oder angezeigt werden sollen, si sind noch weitere Bibliotheken, zum Beispiel \FILE{numpy}, zu laden.
+
+

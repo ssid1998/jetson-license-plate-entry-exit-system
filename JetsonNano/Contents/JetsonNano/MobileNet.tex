@@ -1,0 +1,288 @@
+%%%%%%%%%%%%%%%
+%
+% $Autor: Wings $
+% $Datum: 2020-01-24 10:39:16Z $
+% $Pfad: komponenten/Bilderkennung/Produktspezifikation/JetsonNano/Inhalt/MobileNet.tex $
+% $Version: 1780 $
+%
+%
+%%%%%%%%%%%%%%%
+
+
+\section{MobileNet SSD V2}
+
+%todo Integriern
+
+Eingabeformat? Farben? Pixelauflösung?
+
+\section{Installation und Verwendung von MobileNet SSD v2} %Wings
+
+MobileNets ist eine neuronale Netzwerkarchitektur von Google, die sehr effizient auf mobilen Geräten läuft. Die erste Version erfreut sich großer Beliebtheit bei vielen
+Projekten. Anwendungen finden sich eingebettet in größeren neuronalen Netzen  als grundlegender Bildklassifikator oder als Merkmalsextraktor, der Teil eines größeren neuronalen Netzes ist. Die zweite Version MobileNet SSD V2 ist eine Verfeinerung 
+der ersten Version, deren Effizienz und Leistungsfähigkeit gesteigert wurde. \cite{MobileNet:2018}
+
+\bigskip
+
+Eine einfache Variante der Installation von MobileNet SSD v2 ist die Verwendung eines gegebenen
+Projektes. Hier bietet sich das Projekt \glqq Objekterkennung\grqq\, von AstaNV an, dass über GitHub öffentlich zugänglich ist. \cite{AstaNV:2020,GitHub:2020}
+
+% \href{https://github.com/AastaNV/TRT_object_detection}{Git-Repository}
+
+Das Vorgehen entspricht der Vorgaben aus dem Repository.
+
+\medskip
+
+
+Zunächst werden die Python-Bibliotheken \FILE{libhdf5-serial-dev} und \FILE{hdf5-tools}
+installiert. Die Bibliotheken ermöglichen das Arbeiten mit Dateien im Format \glqq HDF5\grqq.
+
+\medskip
+
+\SHELL{\$ sudo apt-get install python3-pip libhdf5-serial-dev hdf5-tools}
+
+\medskip
+
+Im zweiten Schritt wird eine Bibliothek der Firma NVIDIA zur Unterstützung derTensorFlow-GPU geladen. Mit der
+Option \SHELL{-{}-extra-index-url} kann die Internetadresse verwendet werden.
+
+\medskip
+
+
+\SHELL{\$ pip3 install -{}-extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v42 tensorflow-gpu==1.13.1+nv19.5 -{}-user}
+
+\medskip
+
+
+Die Firma NVIDIA bietet spezielle Hardware an, die für die Parallelisierung von Berechnungen ausgelegt ist
+und Standardprozessoren hier deutlich überlegen ist. Um diese Kapazitäten nutzen zu können, wird die
+CUDA-API angeboten. Die PythonBibliothek \FILE{PyCUDA} ermöglicht den einfachen Zugriff auf die Schnittstelle
+via Python. Voraussetzung zur Nutzung ist die Installation der numerischen Bibliothek \FILE{numpy}.
+
+\medskip 
+
+\SHELL{\$ pip3 install numpy pycuda -{}-user}
+
+\medskip
+
+Nachdem die notwendigen Bibliotheken installiert sind, wird nun  das 
+Repository geladen. 
+
+
+\medskip
+
+\SHELL{\$ git clone https://github.com/AastaNV/TRT\_object\_detection.git}
+
+\medskip
+
+Bevor wir das Projekt starten, muss ein trainiertes Modell vorliegen. Die Modell \glqq MobileNet SSD v2\grqq{}\,
+erhält man von der Firma Google.
+Dazu wird in dem Projektverzeichnis ein Verzeichnis \FILE{model} angelegt.
+
+
+\medskip
+
+\SHELL{\$ cd TRT\_object\_detection}
+
+
+\SHELL{\$ mkdir model}
+
+\medskip
+
+Aus dem Download-Bereich der Tensorflow wird das Modell direkt auf das System kopiert und anschließend
+entpackt.
+
+\medskip
+
+\SHELL{\$ wget http://download.tensorflow.org/models/object\_detection/ssd\_mobilenet\_v2\_coco\_2018\_03\_29.tar.gz}
+
+
+\SHELL{\$ tar zxvf ssd\_mobilenet\_v2\_coco\_2018\_03\_29.tar.gz}
+
+
+\medskip
+
+
+Um den Code im Repository ausführen zu können, muss die Datei \PYTHON{/usr/lib/python3.6/dist-packages/graphsurgeon/node\_manipulation.py}
+mit der Programm  Graph Surgeon konvertiert werden. Dies ist erforderlich, da das 
+Datenmodell von TensorFlow sich vom Datenmodell TensorRT unterscheidet. \cite{TensorRT:2020}
+
+\medskip
+
+\SHELL{diff -{}-git a/node\_manipulation.py b/node\_manipulation.py} \newline
+\SHELL{index d2d012a..1ef30a0 100644} \newline
+\SHELL{-{}-{}- a/node\_manipulation.py} \newline
+\SHELL{+++ b/node\_manipulation.py} \newline
+\SHELL{\@\@ -30,6 +30,7 \@\@ def create\_node(name, op=None, \_do\_suffix=False, **kwargs):} \newline
+\SHELL{node = NodeDef()} \newline
+\SHELL{node.name = name} \newline
+\SHELL{node.op = op if op else name} \newline
+\SHELL{+    node.attr["dtype"].type = 1} \newline
+\SHELL{for key, val in kwargs.items():} \newline
+\SHELL{if key == "dtype":} \newline
+\SHELL{node.attr["dtype"].type = val.as\_datatype\_enum}
+
+\medskip
+
+Optional kann die Leistung des Jetson Nanos noch mit dem Skript  \FILE{jetson\_clocks} optimiert werden.
+
+
+\medskip
+
+\SHELL{\$ sudo nvpmodel -m 0}
+
+\SHELL{\$ sudo jetson\_clocks}
+
+\medskip
+
+Jetzt steht das System zur Nutzung zur Verfügung. Bevor die Datei \FILE{main.py} aufgerufen
+werden kann, muss die folgende Zeile eingefügt werden:
+
+\medskip
+
+\PYTHON{from config import model\_ssd\_mobilenet\_v2\_coco\_2018\_03\_29 as model}
+
+\medskip
+
+Damit wurde das Model festegelt, welches zu verwendet werden soll. 
+Jetzt können Bilder getestet werden. Der Dateiname \FILE{[image]} beinhaltet den kompletten
+Pfad und den Namen  des Bildes.
+
+\medskip
+
+\SHELL{\$ python3 main.py [image]}
+
+\medskip
+
+
+
+Die erste Ausführung des Skripts kann ein paar Minuten dauern, da das Modell in das Format 
+\glqq TensorRT\grqq\,  konvertiert werden muss, aber danach sollte es in wenigen Sekunden erledigt sein.
+
+
+%todo hier weiter
+
+MobileNets ist eine neuronale Netzwerkarchitektur von Google, die sehr effizient auf mobilen Geräten läuft. Die erste Version erfreut sich großer Beliebtheit bei vielen
+Projekten. Anwendungen finden sich eingebettet in größeren neuronalen Netzen  als grundlegender Bildklassifikator oder als Merkmalsextraktor, der Teil eines größeren neuronalen Netzes ist. Die zweite Version MobileNet SSD V2 ist eine Verfeinerung 
+der ersten Version, deren Effizienz und Leistungsfähigkeit gesteigert wurde. \cite{MobileNet:2018}
+
+
+\subsection{Quick recap of version 1}
+
+{\tiny Quelle: https://machinethink.net/blog/mobilenet-v2/}
+
+Die große Idee hinter MobileNet V1 ist, dass Faltungsschichten, die für Computer-Vision-Aufgaben unerlässlich, aber ziemlich teuer in der Berechnung sind, durch so genannte tiefenweise trennbare Faltungen ersetzt werden können. \cite{MobileNet:2017}
+
+Die Aufgabe der Faltungsschicht ist in zwei Teilaufgaben aufgeteilt: Zunächst gibt es eine Tiefenfaltungsschicht, die die Eingabe filtert, gefolgt von einer 1×1 (oder punktuellen) Faltungsschicht, die diese gefilterten Werte kombiniert, um neue Funktionen zu schaffen:
+
+
+\GRAPHICSC{0.3}{1.0}{Jetson/DepthwiseSeparableConvolution2x}
+
+Zusammen bilden die tiefen- und punktförmigen Faltungen einen "tiefenmäßig trennbaren" Faltungsblock. Sie macht ungefähr dasselbe wie die traditionelle Faltung, ist aber viel schneller.
+Die vollständige Architektur von MobileNet V1 besteht aus einer regulären 3×3-Faltung als allererste Schicht, gefolgt von der 13-fachen Faltung des obigen Bausteins.
+
+Zwischen diesen in der Tiefe trennbaren Blöcken gibt es keine Pooling-Schichten. Stattdessen haben einige der Tiefenschichten eine 2er-Schrittweite, um die räumlichen Dimensionen der Daten zu reduzieren. Wenn dies geschieht, verdoppelt die entsprechende punktweise Schicht auch die Anzahl der Ausgabekanäle. Wenn das Eingabebild 224×224×3 ist, dann ist die Ausgabe des Netzwerks eine 7×7×1024 Feature Map.
+Wie in modernen Architekturen üblich, folgt auf die Faltungsschichten eine Batch-Normalisierung. Die vom MobileNet verwendete Aktivierungsfunktion ist ReLU6. Dies ist wie die bekannte ReLU, verhindert aber, dass die Aktivierungen zu groß werden:
+
+$$y = min(max(0, x), 6)$$
+
+Die Autoren des MobileNet-Papiers fanden heraus, dass ReLU6 bei Verwendung von Berechnungen mit geringer Genauigkeit robuster ist als normale ReLU. (Ich denke, "niedrige Präzision" bezieht sich hier auf die Festkommaarithmetik und nicht so sehr auf die 16-Bit-Fließkommazahlen, die bei Metal auf iOS verwendet werden).
+
+
+Es lässt auch die Form der Funktion eher wie ein Sigmoid aussehen:
+
+
+\GRAPHICSC{0.2}{1.0}{Jetson/ReLU62x}
+
+In einem Klassifikator, der auf MobileNet basiert, gibt es typischerweise eine globale Durchschnitts-Pooling-Schicht ganz am Ende, gefolgt von einer vollständig verbundenen Klassifikationsschicht oder einer äquivalenten 1×1-Faltung und einer Softmax.
+
+Es gibt tatsächlich mehr als ein MobileNet. Es wurde als eine Familie von neuronalen Netzwerkarchitekturen konzipiert. Es gibt mehrere Hyperparameter, die es ermöglichen, mit verschiedenen Architektur-Kompromisse.
+ 
+Der wichtigste dieser Hyperparameter ist der Tiefenmultiplikator, der verwirrenderweise auch als "Breitenmultiplikator" bezeichnet wird. Dieser verändert, wie viele Kanäle in jeder Schicht vorhanden sind. Die Verwendung eines Tiefenmultiplikators von 0,5 halbiert die Anzahl der in jeder Schicht verwendeten Kanäle, wodurch die Anzahl der Berechnungen um den Faktor 4 und die Anzahl der erlernbaren Parameter um den Faktor 3 verringert wird. Es ist daher viel schneller als das vollständige Modell, aber auch weniger genau.
+
+Dank der Innovation der tiefenauflösenden Faltungen muss MobileNet bei gleicher Genauigkeit etwa 9 Mal weniger Arbeit leisten als vergleichbare neuronale Netze. Diese Art von Schichten funktioniert so gut, dass ich Modelle mit mehr als 200 Schichten in Echtzeit auch auf einem iPhone 6s zum Laufen bringen konnte.
+
+Gut, das sind also alles alte Nachrichten. Für einen genaueren Blick in die Tiefe, schauen Sie sich meinen vorherigen Blog-Beitrag oder die Originalarbeit an.
+
+
+
+
+
+
+\subsection{The all new version 2}
+
+MobileNet V2 verwendet immer noch in der Tiefe trennbare Faltungen, aber sein Hauptbaustein sieht jetzt so aus:
+
+\GRAPHICSC{0.3}{1.0}{Jetson/ResidualBlock2x}
+
+Diesmal gibt es drei Faltungsschichten im Block. Die letzten beiden sind die, die wir bereits kennen: eine Tiefenfaltung, die die Eingaben filtert, gefolgt von einer 1×1 punktförmigen Faltungsschicht. Diese 1×1-Schicht hat nun jedoch eine andere Aufgabe.
+
+In V1 hat die punktweise Faltung die Anzahl der Kanäle entweder gleich gehalten oder verdoppelt. In V2 macht sie das Gegenteil: sie verringert die Anzahl der Kanäle. Deshalb wird diese Schicht jetzt als Projektionsschicht bezeichnet - sie projiziert Daten mit einer hohen Anzahl von Dimensionen (Kanälen) in einen Tensor mit einer viel geringeren Anzahl von Dimensionen.
+
+Zum Beispiel kann die Tiefenschicht auf einen Tensor mit 144 Kanälen arbeiten, die Projektionsschicht schrumpft dann auf nur 24 Kanäle. Diese Art von Schicht wird auch als Engpassschicht bezeichnet, weil sie die durch das Netzwerk fließende Datenmenge reduziert. (Daher der Name des "Bottleneck-Restblocks": die Ausgabe jedes Blocks ist ein Flaschenhals).
+
+Die erste Schicht ist das neue Kind im Block. Dies ist ebenfalls eine 1×1-Faltung. Ihr Zweck ist es, die Anzahl der Kanäle in den Daten zu erweitern, bevor sie in die Tiefenfaltung geht. Daher hat diese Erweiterungsschicht immer mehr Ausgangskanäle als Eingangskanäle - sie macht so ziemlich das Gegenteil der Projektionsschicht.
+
+Genau um wieviel die Daten erweitert werden, ist durch den Expansionsfaktor gegeben. Dies ist einer dieser Hyperparameter, um mit verschiedenen Architektur-Kompromissen zu experimentieren. Der Standardexpansionsfaktor ist 6.
+
+Wenn z.B. ein Tensor mit 24 Kanälen in einen Block geht, wandelt die Dehnungsschicht diesen zunächst in einen neuen Tensor mit 24 * 6 = 144 Kanälen um. Dann wendet die Tiefenfaltung ihre Filter auf diesen 144-Kanal-Tensor an. Und schließlich projiziert die Projektionsschicht die 144 gefilterten Kanäle wieder auf eine kleinere Zahl, sagen wir wieder 24.
+
+\GRAPHICSC{0.3}{1.0}{Jetson/ExpandProject2x}
+
+
+Der Eingang und der Ausgang des Blocks sind also niedrigdimensionale Tensoren, während der Filterschritt, der innerhalb des Blocks stattfindet, auf einem hochdimensionalen Tensor erfolgt.
+
+Die zweite Neuerung im Baustein von MobileNet V2 ist die Restverbindung. Diese funktioniert genau wie bei ResNet und dient dazu, den Fluss der Gradienten durch das Netzwerk zu unterstützen. (Die Restverbindung wird nur dann verwendet, wenn die Anzahl der Kanäle, die in den Block hineingehen, gleich der Anzahl der Kanäle ist, die aus dem Block herauskommen, was nicht immer der Fall ist, da alle paar Blöcke die Ausgangskanäle erhöhen).
+
+Wie üblich hat jede Schicht eine Batch-Normalisierung und die Aktivierungsfunktion ist ReLU6. Auf den Ausgang der Projektionsebene wird jedoch keine Aktivierungsfunktion angewendet. Da diese Schicht niedrigdimensionale Daten erzeugt, stellten die Autoren des Papiers fest, dass die Verwendung einer Nichtlinearität nach dieser Schicht tatsächlich nützliche Informationen zerstört.
+
+HINWEIS: Die vortrainierten Modelle aus Tensorflow/Modellen verwenden nur eine Batch-Normierung nach der tiefenwirksamen Faltungsschicht, die 1×1-Faltungen verwenden stattdessen eine Verzerrung. Ich bin mir nicht sicher, warum das der Fall ist, aber in der Praxis spielt es keine Rolle - für die Schlussfolgerung wird die Batch-Normalisierung ohnehin in die Faltungsschicht eingefaltet.
+
+Die vollständige MobileNet V2-Architektur besteht also aus 17 dieser Bausteine in einer Reihe. Danach folgt eine reguläre 1×1-Faltung, eine globale Durchschnitts-Pooling-Schicht und eine Klassifizierungsschicht. (Kleines Detail: der allererste Block ist etwas anders, er verwendet eine reguläre 3×3-Faltung mit 32 Kanälen anstelle der Erweiterungsschicht).
+
+\subsection{Motivation for these changes}
+
+Warum haben die Autoren von MobileNet V2 diese Entscheidungen getroffen?
+
+Die Idee hinter V1 war es, teure Konvolute durch billigere zu ersetzen, auch wenn es bedeutete, mehr Schichten zu verwenden. Das war ein großer Erfolg. Die wichtigsten Änderungen in der V2-Architektur sind die verbleibenden Verbindungen und die Erweiterungs-/Projektionsschichten.
+
+Wenn wir uns die Daten ansehen, wie sie durch das Netzwerk fließen, fällt auf, dass die Anzahl der Kanäle zwischen den Blöcken ziemlich gering bleibt:
+
+
+
+\GRAPHICSC{0.3}{1.0}{Jetson/LowDimensionality2x}
+
+Wie bei dieser Art von Modell üblich, wird die Anzahl der Kanäle im Laufe der Zeit erhöht (und die räumlichen Dimensionen halbiert). Insgesamt bleiben die Tensoren jedoch dank der Engpassschichten, die die Verbindungen zwischen den Blöcken bilden, relativ klein. Im Vergleich dazu lässt V1 seine Tensoren viel größer werden (bis zu 7×7×1024).
+
+Die Verwendung niedrig dimensionierter Tensoren ist der Schlüssel zur Reduzierung der Anzahl der Berechnungen. Denn je kleiner der Tensor, desto weniger Multiplikationen müssen die Faltungsschichten durchführen.
+Allerdings... nur die Verwendung niedrigdimensionaler Tensoren funktioniert nicht sehr gut. Die Anwendung einer Faltungsschicht zur Filterung eines niedrigdimensionalen Tensors wird nicht in der Lage sein, eine ganze Menge an Informationen zu extrahieren. Um die Daten zu filtern, wollen wir also idealerweise mit großen Tensoren arbeiten. Das Blockdesign von MobileNet V2 bietet uns das Beste aus beiden Welten.
+
+Stellen Sie sich die niedrigdimensionalen Daten, die zwischen den Blöcken fließen, als eine komprimierte Version der realen Daten vor. Um Filter über diese Daten laufen zu lassen, müssen wir sie zuerst dekomprimieren. Das geschieht innerhalb jedes Blocks:
+
+\GRAPHICSC{0.3}{1.0}{Jetson/Compression2x}
+
+Die Expansionsschicht fungiert als Dekomprimierer (wie Unzip), der die Daten zunächst in ihrer vollen Form wiederherstellt, dann führt die Tiefenschicht die in dieser Phase des Netzwerks wichtige Filterung durch, und schließlich komprimiert die Projektionsschicht die Daten, um sie wieder klein zu machen.
+
+Der Trick, mit dem dies alles funktioniert, besteht natürlich darin, dass die Erweiterungen und Projektionen mit Hilfe von Faltungsschichten mit lernbaren Parametern durchgeführt werden, so dass das Modell in der Lage ist, zu lernen, wie die Daten in jeder Phase des Netzwerks am besten (de)komprimiert werden können.
+
+\subsection{Kampf der Versionen}
+Vergleichen wir MobileNet V1 mit V2, beginnend mit den Größen der Modelle in Bezug auf die gelernten Parameter und den erforderlichen Berechnungsaufwand:
+
+\begin{tabular}{l|l|l}
+Version                 & MobileNet V1 & MobileNet V2 \\ \hline
+MACs (millions)         & 569          &  300 \\
+Parameters (millions)   & 4.24         &  3.47\\
+\end{tabular}
+
+
+Diese Zahlen stammen von 1 und 2. Sie sind für die Modellversionen mit einem Tiefenmultiplikator von 1,0. In dieser Tabelle sind niedrigere Zahlen besser.
+
+"MACs" sind Multiplikator-Akkumulations-Operationen. Damit wird gemessen, wie viele Berechnungen erforderlich sind, um eine Schlussfolgerung für ein einzelnes 224×224-RGB-Bild durchzuführen. (Je größer das Bild, desto mehr MACs werden benötigt).
+
+Allein aufgrund der Anzahl der MACs sollte V2 fast doppelt so schnell sein wie V1. Es geht jedoch nicht nur um die Anzahl der Berechnungen. Auf mobilen Geräten ist der Speicherzugriff viel langsamer als die Berechnung. Aber auch hier hat V2 den Vorteil, dass es nur 80\% der Parameteranzahl hat, die V1 hat.
+
+HINWEIS: Ich bin mir nicht ganz sicher, wie diese Parameter gezählt wurden. Meine Metallversion des V1-Modells hat 4.254.889 Parameter und das V2-Modell hat 3.510.505, also etwas mehr als die oben genannten. Es ist möglich, dass die Parameter für die Stapelnormalisierung nicht gezählt werden, da diese typischerweise zu einem einzigen Satz von Vorspannungen für jede Schicht gefaltet werden.
+
+Ich habe auch die tatsächliche Geschwindigkeitsdifferenz zwischen den beiden Modellen auf einigen wenigen Geräten gemessen und dabei Schlussfolgerungen auf einer Sequenz von 224×224 Bildern gezogen. Die folgende Tabelle zeigt die maximalen FPS (frames-per-second), die ich aus diesen Modellen herauspressen konnte:
+
+%todo Artikel in Dokumenten/MobileNet
+%todo:

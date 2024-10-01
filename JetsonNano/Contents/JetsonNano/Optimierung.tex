@@ -1,0 +1,315 @@
+%%%%%%
+%
+% $Autor: Wings $
+% $Datum: 2020-01-18 11:15:45Z $
+% $Pfad: WuSt/Skript/Produktspezifikation/powerpoint/ImageProcessing.tex $
+% $Version: 4620 $
+%
+%%%%%%
+
+
+
+\chapter{Optimierungen}
+
+In diesem Kapitel werden Möglichkeiten zur Optimierung eines neuronalen Netzes aufgezeigt
+und anhand des bestehenden Netzes angewendet. Eine Optimierung lässt sich
+hinsichtlich der Zeit beim Trainingsvorgang oder der Genauigkeit der Erkennung einer
+Kategorie durchführen. Da es sich bei dem Trainingsmodell um ein einfaches neuronales
+Netz handelt, ist der benötigte Rechenaufwand verhältnismäßig gering und der zeitliche
+Aufwand überschaubar. Die folgenden Optimierungen befassen sich aus diesem Grund
+verstärkt mit der Erhöhung und Festigung der Genauigkeit, welche im nachfolgenden
+auch als Korrektklassifizierungsrate bezeichnet wird.
+
+\section{Ausgangsbasis der künstlichen neuronalen Netze}
+
+Das neuronale Netz zur Erkennung von Entnahmefehlern und das Netz zur Erkennung des
+Fehlers Überschäumer, sind identisch aufgebaut. An dem Computer an der TS-30 wurde
+das neuronale Netz zur Erkennung von Entnahmefehlern bereits aktiv getestet. Die 
+eingehenden Bilder werden beim Ausführen des Modells in einer bestimmten Ordnerstruktur
+gespeichert. Zuerst wird automatisch ein Ordner mit aktuellem Datum erstellt, falls dieser
+noch nicht vorhanden ist. Danach wird die linke und rechte Bildhälfte auf einen 
+Entnahmefehler geprüft. Das gesamte Bild wird nach der Auswertung in den entsprechenden
+Ordner der Kategorie good good, good bad, bad good oder bad bad einsortiert und 
+gespeichert. Es wird das Entnahmemodell für die nachfolgenden Optimierungen verwendet,
+da die Genauigkeit direkt an dem Computer, der mit der TS-30 verbunden ist, getestet
+werden kann.
+
+Das ursprüngliche neuronale Netz zur Erkennung von Entnahmefehlern besaß folgende
+Parameter:
+
+\begin{itemize}
+  \item Bildauflösung der Eingangsdaten: 80x30
+  \item Anzahl der Epochen: 40
+  \item Anzahl der Schritte pro Epoche: 200
+  \item Stapelgröße: 64
+  \item Netzstruktur: Faltungsebenen 16-32-32
+  \item Kernelgröße: 3x3
+  \item Poolinggröße: 2x2
+\end{itemize}
+	
+	
+Das Modell besitzt eine theoretische Genauigkeit von über 95\%. An der TS-30 wurde dieses 
+Modell mit neu erzeugten Bildern getestet. Beim Prüfen der kategorisierten Ordner
+stellte sich heraus, dass viele Bilder falsch sortiert wurden, was auf eine starke Abweichung
+der tatsächlichen Genauigkeit vom theoretischen Wert hinweist. Mit dem Programm Prediction 
+aus Kapitel 7 wurde eine Vorhersage auf einen Datensatz von insgesamt 3.730
+Bildern gemacht. Der Datensatz bestand aus neuen Bildern, die noch nicht zum Trainieren 
+verwendet wurden. Daraus ergab sich, dass aus dem Ordner mit 3.552 Bildern der
+Kategorie good 172 Bilder fälschlicherweise der Kategorie bad zugeordnet wurden. Aus
+dem Ordner der Kategorie bad in dem sich 178 Bilder befanden, wurden 128 Bilder als
+good erkannt. Das Modell hat eine starke Tendenz dazu, Bilder der Kategorie bad in die
+Kategorie good einzuordnen. Die praktische Gesamtgenauigkeit des Modells lag bei 91,96
+Prozent. Aus diesen Erkenntnissen wurde das neuronale Netz schrittweise optimiert.
+
+\subsection{Hinzufügen von neuen Bildmerkmalen}
+
+Das Programm der Vorhersage aus Kapitel 7 zeigt die Bilder an, die vom Modell in
+die falsche Kategorie eingeordnet wurden. Nach Begutachtung dieser Bilder stellte sich
+heraus, dass alle Einzelformen und bestimmte Doppelformen besonders häufig als Fehler
+erkannt wurden, obwohl das Produkt nicht im Werkzeug verharrte und somit kein Fehler
+auftrat. Beim Überprüfen der ursprünglichen Trainingsdatenbasis zeigte sich, dass die
+falsch kategorisierten Formen nicht in den Trainingsdaten enthalten waren. Daraufhin
+wurden die gesamten Trainingsdaten aktualisiert. In diesem Zug wurden Bilder, die falsch
+gedreht oder sehr unscharf waren, entfernt. Anschließend wurde eine Testmenge von ca.
+10\%.
+
+Die theoretische Genauigkeit lag nach dem Training bei 93,33\%. Mit dem Testdatensatz
+wurde dieses Ergebnis kontrolliert. Von den 713 Bildern aus der Kategorie good wurden
+712 richtig erkannt, was einer Genauigkeit von 99,86 Prozent entsprach und somit über
+der Genauigkeit des Netzes lag. Bei 111 Bildern der Kategorie bad wurden 34 Bilder	
+nicht richtig erkannt, es ergab sich eine Genauigkeit von 69,37 Prozent. Im Vergleich
+zum Ursprung hat die Genauigkeit sich in beiden Fällen verbessert. In den folgenden
+Abschnitten werden die Veränderungen der Genauigkeit mit Grafiken dokumentiert.
+
+\subsection{Veränderung der Auflösung}
+
+Die erste Optimierung bestand darin die Auflösung der Trainingsdaten zu verändern.
+In Abbildung 8.1 (a) wird die Klassifizierungsgenauigkeit bei einer Datenbasis mit 
+einer Auflösung von 80x30 je Bildhälfte dargestellt. Die blaue Linie in den Grafiken zeigt
+die Veränderung der Genauigkeit der Trainingsdaten in Abhängigkeit der Epochen an.
+Die roten Punkte zeigen die Genauigkeit der Validierungsdaten nach jeder Epoche an.
+Es ist zu erkennen, dass die Validierungsgenauigkeit starke Schwankungen aufweist und
+deutlich höher ist als die Trainingsgenauigkeit. Die Vermutung liegt nahe, dass das Netz
+übertrainiert ist und die Validierungsdaten auswendig gelernt wurden. Für mehr Detail
+Abstraktion wurde die Auflösung auf 160x60 pro Bildhälfte verdoppelt. Das Training mit
+doppelt so hoher Auflösung sorgte für eine nahezu Vervierfachung des Rechenvorgangs.
+Dies ist auf den exponentiellen Anstieg der Pixelmenge zurückzuführen. Die theoretische
+Genauigkeit des neuronalen Netzes erhöhte sich gering auf 93,73\%. Angewendet auf die
+Testdatenmenge, wurde ein Bild in der Kategorie good und 30 Bilder in der Kategorie bad
+falsch erkannt. Die praktische Genauigkeit hat sich auf 96,24\% verbessert. Die Abbildung
+8.1 (b) mit der Auflösung 60x160 zeigen ebenfalls starke Schwankungen bei den 
+Validierungsgenauigkeiten Es wurde ein weiterer Durchlauf gestartet, um zu überprüfen,
+ob eine weitere Erhöhung der Trainingsparameter zu einer Verbesserung der Ergebnisse führt. 
+Die Zeit hat sich im Vergleich zum Ursprungsmodell von 28 Sekunden pro Epoche auf 462
+Sekunden erhöht. Aufgrund der exponentiellen Vergrößerung der Datenpunkte stieg die
+Zeit zum Trainieren exponentiell an. Die Genauigkeit hat sich auf 50 Prozent 
+verschlechtert. Eine mögliche Ursache dafür könnte sein, dass die Filtergröße der Faltungschicht mit
+3x3 zu klein war, um lokale Muster zu erkennen. Eine weitere Vergrößerung der Bildgröße
+würde zu einem exponentiellen Anstieg der Zeit führen, weshalb die Größe 60x160 als
+Basis für die nächsten Optimierungen verwendet wird.
+
+\subsection{Anpassung der Validierungsdaten}
+
+Die Validierungsmenge im ursprünglichen Modell lag bei einer Anzahl von 300 Bildern.
+Auf die Gesamtmenge der Trainingsdaten entspricht das einen Prozentsatz von 3,6 Prozent. 
+Als weiterer Optimierungsschritt wurde die Validierungsmenge auf 20 Prozent der
+Gesamttrainingsmenge hochgesetzt.
+
+Im Vergleich von Abbildung 8.1(b) zu Abbildung 8.2 ist zu erkennen, dass die Streu-
+ung der Genauigkeit der Validierungsdaten näher bei der Genauigkeit der Trainingsdaten
+liegt. Die Erhöhung der Validierungsdaten führte offensichtlich zu einer Verringerung des
+Overfitting. Gleichzeitig führte es zu einer leichten Verlängerung der Epochen-Zeit, da
+die Samples am Ende einer Epoche zur Überprüfung der Ergebnisse eingespielt werden.
+Angewendet auf den Testdatensatz, wurden alle Bilder aus der Kategorie good richtig
+erkannt und 24 Bilder aus der Kategorie bad falsch erkannt. Hierdurch ergibt sich eine
+Gesamtgenauigkeit des Modells von 97\%.
+
+\subsection{Veränderung der Epochen und Durchgänge}
+
+Nach den ersten Optimierungsschritten wurde geprüft, ob ein Training mit weniger 
+Epochen und weniger Schritten pro Epoche zu einem Ergebnis mit gleicher Genauigkeit führt.
+Zudem könnte eine Reduzierung der Trainingszeit realisiert werden, wodurch die 
+Aktualisierungen des Netzes schneller durchgeführt werden kann.
+
+Es wurden verschiedene Varianten getestet. Zunächst wurde die Anzahl der Schritte auf
+100 reduziert und die Anzahl der Epochen blieb unverändert bei 40. Die theoretische 
+Genauigkeit der Trainings- und Validierungsdaten war fast identisch. Angewendet auf die
+Testmenge wurde aus der Kategorie good ein Bild und aus der Kategorie bad wurden 26
+Bilder falsch erkannt, was eine Erhöhung der falsch eingeordneten Bilder um 3 Stück 
+ergab. Die Anzahl der Schritte wurde aus diesem Grund wieder auf 200 Schritte pro Epoche
+erhöht.
+
+Im zweiten Schritt wurde die Anzahl der Epochen auf 25 reduziert, was zu einer zeitlichen
+Verkürzung des Trainings führte. Die theoretische Genauigkeit der Trainingsdaten 
+reduzierte sich auf 89,19\% und die Validierungs-Genauigkeit auf 91,80\%. Die beiden Grafiken
+befinden sich in Abbildung 8.3. Angewendet auf die Testmenge wurde ein Bild flasch in
+die Kategorie good und 53 Bilder falsch in die Kategorie bad einsortiert. Da die 
+Reduzierung der Epochen mit einer Verschlechterung der Genauigkeit einherging wurden keine
+weiteren Tests mit reduzierten Epochen gemacht. Es wurde weiterhin mit 200 Schritten
+pro Epoche und 40 Epochen gearbeitet.
+
+\subsection{Daten künstlich Vervielfältigen}
+
+Ein künstliches Vervielfältigen von Daten ist besonders empfehlenswert, wenn eine Klas-
+sifikation stark unterrepräsentiert ist. Es wird dadurch ein künstlicher Ausgleich zwischen
+den Kategorien erzeugt, um das neuronale Netz effizienter trainieren zu können. Dasselbe
+Prinzip funktioniert auch mit der Reduzierung von Daten aus der überrepräsentierten
+Klasse. Dabei werden Daten aus der Klasse zufällig aus dem Trainingsdatensatz ausge-
+lassen und so eine Angleichung zwischen den Kategorien erzielt.
+
+\subsubsection{Random-Oversampling}
+
+In dem Ursprungsmodell wurde bereits das Random-Oversampling als Vervielfältigungsmethode
+genutzt. Der entsprechende Programmabschnitt befinde sich im Kapitel 6.
+Das Random-Oversampling verändert die Bilder nicht, sondern dupliziert Bilder aus der
+unterrepräsentierten Kategorie bis ein Gleichgewicht zwischen den Kategorien herrscht.
+Die Auswahl der vervielfältigten Bilder erfolgt dabei zufällig. \cite{Lemaitre:2017}
+
+\subsubsection{SMOTE-Oversampling}
+Zu weiteren Optimierungszwecken wurde das SMOTE-Oversampling als alternative Art
+zum Random-Oversampling verwendet. Bei diesem Verfahren werden Bilder nicht eins
+zu eins dupliziert, sondern durch Interpolation verändert. Die Technik beruht auf den
+k-nächsten Nachbarn eines Bildes, basierend auf den euklidischen Abstand der Daten-
+punkte. Zwischen einer betrachteten Instanz und den k nächsten Nachbarn existieren k
+Differenzvektoren. Diese Differenzvektoren werden jeweils mit einer zufälligen Zahl > 0
+bis < 1 multipliziert. Anschließend wird dieser neue Differenzvektor auf die 
+Merkmalsvektoren der Instanz addiert. Der Vorteil ist, dass keine identischen Bilder 
+für das Training verwendet werden. \cite{Chakrabarty:2015}
+
+Nach Anpassung des Programms von Random-Oversampling auf SMOTE-Oversampling,
+wurde das Netz neu trainiert. Die theoretische Genauigkeit des Netzes lag bei 95,89\% und
+damit über der theoretischen Genauigkeit des Netzes mit dem Random-Oversampling.
+Die Validierungsgenauigkeit lag bei 97,84\% was eine Verbesserung des Netzes erwarten
+ließ. Angewendet auf die Testmenge wurden jedoch mehr Bilder falsch erkannt. Aus der
+Kategorie good wurde ein Bild falsch erkannt und aus der Kategorie bad wurden 43 Bilder
+falsch erkannt, entsprechend ergibt sich eine praktische Gesamtgenauigkeit von 94,7\%. Es
+wurde daraufhin mit dem Random-Oversampling weitergearbeitet.
+
+\subsection{Farbe}
+Ein weiterer Versuch die Genauigkeit zu erhöhen lag darin, die Bilder der Datenbasis
+als Farbbilder zum Trainieren zu verwenden. In dem Trainingsprogramm aus Kapitel
+7 die Funktion GRAYSCALE entfernt und die Bildtiefe auf 3 hoch gesetzt. Nach dem
+Training lag die Genauigkeit der Testdaten bei 91,51\% und die Validierungs-Genauigkeit
+bei 90,42\%.
+
+Angewendet auf die Testmenge wurden 29 Bilder in der Kategorie good und 54 Bilder
+in der Kategorie bad nicht richtig zugeordnet. Sowohl die theoretische und praktische
+Genauigkeit waren deutlich schlechter als bei dem neuronalen Netz, welches mit nur einer
+Farbe trainiert wurde. Es ist zu vermuten, dass in den einzelnen Farbkanälen weniger
+eindeutige Unterscheidungsmerkmale zu erkennen, da die Ursprungsbilder generell sehr
+wenig Farbe enthalten. Daher wurde die Farbtiefe 1 als Basis beibehalten.
+
+\subsection{Erweiterung einer Faltungsebene}
+Der ursprüngliche Netzaufbau wurde zur weiteren Optimierung um eine Faltungsschicht
+mit 32 Filtern ergänzt. Die theoretische Genauigkeit lag bei 93,44\%. Angewendet auf die
+Testmenge wurden alle Bilder der Kategorie good richtig erkannt und 59 Bilder aus der
+Kategorie bad falsch eingeordnet. Dies ergibt eine Gesamtgenauigkeit von 92,84\%. Da das
+Hinzufügen einer weiteren Faltungsebene zu einer Verschlechterung geführt hat, wurde
+dieser Optimierungsversuch verworfen.
+
+\subsection{Veränderung der Filteranzahl}
+
+Ein weiterer Optimierungsschritt bestand darin, die Filteranzahl der letzten Schicht zu
+erhöhen. Sie wurde von 32 Filter auf 64 angepasst. Die theoretische Genauigkeit lag bei
+95,3\%. Aus der Kategorie bad wurden 24 Bilder falsch zugeordnet, aus der anderen 
+Kategorie wurden alle Bilder richtig erkannt. Die praktische Gesamtgenauigkeit lag bei 97,09%.
+Die Erhöhung der Filter auf 64 brachte eine Verbesserung. Die Abbildung 8.7 zeigt den
+Trainingsverlauf.
+
+\subsection{Veränderung der Kernelgröße}
+
+Als weiterer Optimierungsschritt wurde die Filtergröße geändert. Im ersten Durchgang
+wurde sie auf 2x2 eingestellt. Ein kleinerer Filter kann auch komplexere Merkmale in 
+einem Bild erkennen, jedoch sind die zu extrahierenden Merkmale sehr lokal. Grundlegende
+Bildkomponenten könnten dadurch schlechter als Ganzes erkannt werden. Die theoretische 
+Genauigkeit lag bei 95,84\%. Auf die Testmenge angewendet wurden alle Bilder der
+Kategorie good richtig erkannt und 31 Bilder aus der Kategorie bad. Die praktische 
+Genauigkeit lag bei 96,24\%. Im nächsten Schritt wurde die Kernelgröße auf 5x5 erhöht. Die
+theoretische Genauigkeit lag bei 92,45\%. Angewendet auf die Testmenge ergaben sich 3
+Fehler in der Kategorie good und 17 Fehler in der Kategorie bad. Die praktische 
+Gesamtgenauigkeit des Netzes lag bei 97,94\%. Das neuronale Netz hatte in dieser 
+Konstellation zwar die beste praktische Genauigkeit erzielt, jedoch hatte das Modell 
+eine Tendenz entwickelt, Bilder ohne Entnahmefehler als Fehler zu erkennen. Für die praktische Anwendung
+an der Maschine ist nachteilig, da der Produktionsprozess unnötig unterbrochen werden
+könnte. Daher wurde die Filtergröße bei 3x3 belassen.
+
+\section{Transfer Learning}
+
+Die Parameter des optimierten neuronalen Netzes zur Erkennung von Entnahmefehlern
+wurden auf das neuronale Netz zur Erkennung von Überschäumer übertragen.
+
+Als erweiterte Funktion soll das neuronale Netz bei dem Fehler des
+Überschäumers zudem erkennen können, ob es sich um einen Fehler vom Typ Deckel auf oder 
+Deckel zu handelt (vergleiche Abbildung 3.2 aus Kapitel 3). Das ursprüngliche Modell zur 
+Erkennung des Fehlers Deckel auf/ Deckel zu, hatte eine theoretische Genauigkeit von 
+99,67\%. Das Modell wurde auf eine Testmenge aus 245 Bilder der Kategorie Deckel zu 
+und 19 Bilder aus der Kategorie Deckel auf angewendet. 45 Bilder der Kategorie Deckel 
+zu wurden falsch erkannt, was eine praktische Genauigkeit von 87,8\% ergab. 
+Da für die Unterscheidung der Kategorien Deckel auf und Deckel zu nur sehr wenige 
+Bilder zum Trainieren vorhanden waren, wurde eine Optimierung mit Hilfe des 
+Transfer Learning durchgeführt. Als Basismodell wurde das neuronale Netz zur 
+Erkennung von Überschäumen verwendet. Dieses besitzt eine sehr hohe
+Ähnlichkeit zum Modell zur Erkennung des Deckelproblems, was
+ein Vorteil beim Transfer Learning ist.
+
+Der Programmaufbau entspricht dem bekannten Programmabschnitt zur Erstellung des
+neuronalen Netzes aus Kapitel 7. Die wichtigsten Ergänzungen des Programms werden
+nachfolgend beschrieben.
+
+\begin{lstlisting}
+import tensorflow as tf
+from tensorflow.python.keras.models import Model , load_model
+\end{lstlisting}
+
+Eine wichtige Funktion, die in dem Programm aus Kapitel 7 ergänzt werden muss, ist
+das load model. Dieses ermöglicht das Einspielen von schon vorhandenen Modellen in das
+Programm.
+
+\begin{lstlisting}
+model=load_model ('Model_Ueberschaeumer.model')
+
+model.summary ()
+len( model.layers )
+\end{lstlisting}
+
+Mit der Funktion load model wird das neuronale Netz aufgerufen, welches sich in dem 
+Verzeichnis unter dem Namen befindet. Anschließend werden mit dem Befehl model.summary
+die Netzstruktur und die dazugehörigen Parameter angezeigt.
+
+\begin{lstlisting}
+for layer in model.layers [ : 1 2 ] :
+    layer.trainable=False
+for layer in model.layers [ 1 2 : ] :
+    layer.trainable=True
+\end{lstlisting}
+
+Wenn das Modell geladen ist, kann mit den zwei for-Schleifen bestimmt werden, welche
+Schichten des neuronalen Netzes neu trainiert werden. Abbildung 8.10 zeigt die 
+Struktur des Modells zur Erkennung von Überschäumern und die Anzahl der trainierbaren
+Parameter, die sich nach und nach erhöhen.
+
+Die Abbildung 8.9 zeigt die theoretische Genauigkeit beim Trainieren
+(Trainingsgenauigkeit) und die praktische Genauigkeit anwenden auf die Testmenge.
+Die Tabelle 8.1 zeigt an, wie viele Bilder in der Testmenge der jeweiligen Kategorie 
+von dem neuronalen Netz falsch zugeordnet wurden.
+
+Bei 0 trainierbaren Parametern bleiben alle Gewichte und Schichten des Modells zur Er-
+kennung von Überschäumern gleich. Das Netz hat daher keine Informationen über die
+Bilder mit den Kategorien Deckel auf und Deckel zu und ordnet diese willkürlich den
+Kategorien Überschäumer und kein Überschäumer zu. So lässt sich die theoretische 
+Wahrscheinlichkeit von 47,73\% erklären.
+
+Bei 33 trainierbaren Parametern ändert sich der Output-Layer, was bedeutet, dass die
+Kategorien Überschäumer / kein Überschäumer zu Deckel auf / Deckel zu wechseln. Der
+Rest des Modells wurde nicht angepasst. Der Einbruch der praktische Genauigkeit auf
+7,2\% lässt sich dadurch erklären, dass alle Bilder der Testmenge Deckel auf/Deckel zu
+gleichzeitig Überschäumer sind und vom Modell verstärkt in eine Kategorie sortiert werden.
+
+Die beste Performance liefert das neuronale Netz bei 75.904 trainierbaren Parametern.
+Dies ist dadurch zu erklären, dass dem Modell ab dieser Schicht örtliche Informationen
+aus dem Training mitbekommt. Zudem sind die Filter in dieser Schicht auf die Erkennung
+von Details ausgelegt.
+
+Die weitere Verschlechterung der Genauigkeit mit zunehmenden trainierbaren Parameter
+ist durch die steigende Abstraktion der Filter in Kombination mit einer geringen Anzahl
+an Trainingsdaten zu erklären.

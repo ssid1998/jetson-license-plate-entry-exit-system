@@ -1,0 +1,1264 @@
+%%%%%%%%%%%%
+%
+% $Autor: Wings $
+% $Datum: 2021-05-12 $
+% $Pfad: Projects\Inhalt\General\BeispielTFLiteFlaschen.tex $
+% $Version: 4250 $
+%
+% $Projekt: Künstliche Intelligenz mit dem Jetson Nano
+%
+%%%%%%%%%%%%
+
+
+\section{Application example: tflite model for bottle detection with a combined data set from CIFAR10\index{Dataset!CIFAR10} and CIFAR100\index{Dataset!CIFAR100}}
+
+The model trained in \ref{TrainBottles} with a combined dataset of \ac{cifar}-10\index{CIFAR-10} and \ac{cifar}-100\index{CIFAR-100} shall be transformed into .tflite format and used on the Jetson Nano for image classification. This is intended to provide an example of a possible application of a network trained on the work PC on an edge computer in the field to enable detection of bottles located in front of the camera. To do this, the previously trained model must be converted to \FILE{.tflite} for use on the Jetson Nano.
+
+\subsection{Conversion to  format tflite}
+
+The selected model is converted into the tflite format with the tflite converter. For this purpose, the two following programmes, \FILE{Conversion.py} and \FILE{Conversion\_Opt.py} were created and run on the work PC. In these programmes, the model can be selected based on the parameters used in the training (dataset, model, epochs and batch size) and then converted to .tflite format with optimisation (\FILE{Conversion\_Opt.py}) or without.
+
+\begin{code}
+  \lstinputlisting[language=Python,firstnumber=1]{../../Code/JetsonNano/Konvertierung.py}
+  \lstinputlisting[language=Python,firstnumber=1]{../../Code/JetsonNano/Konvertierung_Opt.py}
+
+  \caption{Conversion to  format tflite}
+\end{code}
+
+The conversion with optimisation reduces the size of the file in tflife format, as can be seen in table~\ref{TabSize}, by about 75\%. The speed is also supposed to be increased by the optimisation with a slight loss of accuracy. Whether this is confirmed will be clarified in the following tests, among others.
+
+\begin{center}
+\begin{table}[H]
+\caption{File sizes of the different models/ formats}
+\label{TabSize}
+\begin{tabular}{| c | c | c | c |}
+\firsthline
+Parameter & .pb & \multicolumn{2}{| c |}{.tflite}\\
+\hline
+ & & With optimisation & Without optimisation\\
+ \hline
+ Dataset=2, Model=2, & \multirow{2}{*}{452 kB} & \multirow{2}{*}{225 MB} & \multirow{2}{*}{56.4 MB}\\
+ Epochs=100, Batch Size=32 & & & \\
+ \hline
+ Dataset=1, Model=2, & \multirow{2}{*}{452 kB} & \multirow{2}{*}{225 MB} & \multirow{2}{*}{56.4 MB}\\
+ Epochs=100, Batch Size=32 & & & \\
+ \hline
+\end{tabular}
+\end{table}
+\end{center}
+
+
+\subsection{Test with any images} \label{Test mit beliebigen Bildern}
+
+An indication of the accuracy in terms of the correct classifications of the models with the images from the dataset \ac{cifar}-10\index{CIFAR-10} and a combination of the datasets \ac{cifar}-10\index{Dataset!CIFAR-10} and \ac{cifar}-100\index{Dataset!CIFAR-100} are the validation and test accuracy as well as the corresponding losses.
+
+Since in a real application it would hardly be possible to use such carefully selected images of uniform format and resolution, the performance of the models is to be tested under conditions closer to the application using a few more or less arbitrary images selected from the Google Image Search for the various categories.
+
+Five photos in format .jpg or .jpeg  will be selected from the internet and, to a small extent, from the photos contained in the project jetson-inference (\url{https://github.com/dusty-nv/jetson-inference})\Mynote{correct source}, per category. Care is taken to ensure that the images are not too similar so that the results are approximately representative and meaningful despite the small number of images per category.
+
+The selected images are shown in figure~\ref{FigTestImages} and a reference to their source to facilitate the search for comparable photos, the link to the image in the Google Image Search in table~\ref{TabSource}.
+
+
+\begin{figure} [H]
+\captionsetup[subfigure]{labelformat=empty}
+    \begin{subfigure}{0.19\textwidth}
+    \centering
+	\includegraphics[height=0.55\textwidth]{Examples/TFLiteFlaschen/images/airplane0}
+	\caption{airplane0}
+	\end{subfigure}
+	\begin{subfigure}{0.19\textwidth}
+    \centering
+	\includegraphics[height=0.55\textwidth]{Examples/TFLiteFlaschen/images/airplane1}
+	\caption{airplane1}
+	\end{subfigure}
+	\begin{subfigure}{0.19\textwidth}
+    \centering
+	\includegraphics[height=0.55\textwidth]{Examples/TFLiteFlaschen/images/airplane2}
+	\caption{airplane2}
+	\end{subfigure}
+	\begin{subfigure}{0.19\textwidth}
+    \centering
+	\includegraphics[height=0.55\textwidth]{Examples/TFLiteFlaschen/images/airplane3}
+	\caption{airplane3}
+	\end{subfigure}
+	\begin{subfigure}{0.19\textwidth}
+    \centering
+	\includegraphics[height=0.55\textwidth]{Examples/TFLiteFlaschen/images/airplane4}
+	\caption{airplane4}
+	\end{subfigure}
+
+    \begin{subfigure}{0.19\textwidth}
+    \centering
+	\includegraphics[height=0.55\textwidth]{Examples/TFLiteFlaschen/images/auto0}
+	\caption{auto0}
+	\end{subfigure}
+	\begin{subfigure}{0.19\textwidth}
+    \centering
+	\includegraphics[height=0.55\textwidth]{Examples/TFLiteFlaschen/images/auto1}
+	\caption{auto1}
+	\end{subfigure}
+	\begin{subfigure}{0.19\textwidth}
+    \centering
+	\includegraphics[height=0.55\textwidth]{Examples/TFLiteFlaschen/images/auto2}
+	\caption{auto2}
+	\end{subfigure}
+	\begin{subfigure}{0.19\textwidth}
+    \centering
+	\includegraphics[height=0.55\textwidth]{Examples/TFLiteFlaschen/images/auto3}
+	\caption{auto3}
+	\end{subfigure}
+	\begin{subfigure}{0.19\textwidth}
+    \centering
+	\includegraphics[height=0.55\textwidth]{Examples/TFLiteFlaschen/images/auto4}
+	\caption{auto4}
+	\end{subfigure}
+	
+	\begin{subfigure}{0.19\textwidth}
+    \centering
+	\includegraphics[height=0.55\textwidth]{Examples/TFLiteFlaschen/images/bird0}
+	\caption{bird0}
+	\end{subfigure}
+	\begin{subfigure}{0.19\textwidth}
+    \centering
+	\includegraphics[height=0.55\textwidth]{Examples/TFLiteFlaschen/images/bird1}
+	\caption{bird1}
+	\end{subfigure}
+	\begin{subfigure}{0.19\textwidth}
+    \centering
+	\includegraphics[height=0.55\textwidth]{Examples/TFLiteFlaschen/images/bird2}
+	\caption{bird2}
+	\end{subfigure}
+	\begin{subfigure}{0.19\textwidth}
+    \centering
+	\includegraphics[height=0.55\textwidth]{Examples/TFLiteFlaschen/images/bird3}
+	\caption{bird3}
+	\end{subfigure}
+	\begin{subfigure}{0.19\textwidth}
+    \centering
+	\includegraphics[height=0.55\textwidth]{Examples/TFLiteFlaschen/images/bird4}
+	\caption{bird4}
+	\end{subfigure}
+	
+	    \begin{subfigure}{0.19\textwidth}
+    \centering
+	\includegraphics[height=0.55\textwidth]{Examples/TFLiteFlaschen/images/cat0}
+	\caption{cat0}
+	\end{subfigure}
+	\begin{subfigure}{0.19\textwidth}
+    \centering
+	\includegraphics[height=0.55\textwidth]{Examples/TFLiteFlaschen/images/cat1}
+	\caption{cat1}
+	\end{subfigure}
+	\begin{subfigure}{0.19\textwidth}
+    \centering
+	\includegraphics[height=0.55\textwidth]{Examples/TFLiteFlaschen/images/cat2}
+	\caption{cat2}
+	\end{subfigure}
+	\begin{subfigure}{0.19\textwidth}
+    \centering
+	\includegraphics[height=0.55\textwidth]{Examples/TFLiteFlaschen/images/cat3}
+	\caption{cat3}
+	\end{subfigure}
+	\begin{subfigure}{0.19\textwidth}
+    \centering
+	\includegraphics[height=0.55\textwidth]{Examples/TFLiteFlaschen/images/cat4}
+	\caption{cat4}
+	\end{subfigure}
+	
+	    \begin{subfigure}{0.19\textwidth}
+    \centering
+	\includegraphics[height=0.55\textwidth]{Examples/TFLiteFlaschen/images/deer0}
+	\caption{deer0}
+	\end{subfigure}
+	\begin{subfigure}{0.19\textwidth}
+    \centering
+	\includegraphics[height=0.55\textwidth]{Examples/TFLiteFlaschen/images/deer1}
+	\caption{deer1}
+	\end{subfigure}
+	\begin{subfigure}{0.19\textwidth}
+    \centering
+	\includegraphics[height=0.55\textwidth]{Examples/TFLiteFlaschen/images/deer2}
+	\caption{deer2}
+	\end{subfigure}
+	\begin{subfigure}{0.19\textwidth}
+    \centering
+	\includegraphics[height=0.55\textwidth]{Examples/TFLiteFlaschen/images/deer3}
+	\caption{deer3}
+	\end{subfigure}
+	\begin{subfigure}{0.19\textwidth}
+    \centering
+	\includegraphics[height=0.55\textwidth]{Examples/TFLiteFlaschen/images/deer4}
+	\caption{deer4}
+	\end{subfigure}
+	
+	    \begin{subfigure}{0.19\textwidth}
+    \centering
+	\includegraphics[height=0.55\textwidth]{Examples/TFLiteFlaschen/images/dog0}
+	\caption{dog0}
+	\end{subfigure}
+	\begin{subfigure}{0.19\textwidth}
+    \centering
+	\includegraphics[height=0.55\textwidth]{Examples/TFLiteFlaschen/images/dog1}
+	\caption{dog1}
+	\end{subfigure}
+	\begin{subfigure}{0.19\textwidth}
+    \centering
+	\includegraphics[height=0.55\textwidth]{Examples/TFLiteFlaschen/images/dog2}
+	\caption{dog2}
+	\end{subfigure}
+	\begin{subfigure}{0.19\textwidth}
+    \centering
+	\includegraphics[height=0.55\textwidth]{Examples/TFLiteFlaschen/images/dog3}
+	\caption{dog3}
+	\end{subfigure}
+	\begin{subfigure}{0.19\textwidth}
+    \centering
+	\includegraphics[height=0.55\textwidth]{Examples/TFLiteFlaschen/images/dog4}
+	\caption{dog4}
+	\end{subfigure}
+	
+	    \begin{subfigure}{0.19\textwidth}
+    \centering
+	\includegraphics[height=0.55\textwidth]{Examples/TFLiteFlaschen/images/frog0}
+	\caption{frog0}
+	\end{subfigure}
+	\begin{subfigure}{0.19\textwidth}
+    \centering
+	\includegraphics[height=0.55\textwidth]{Examples/TFLiteFlaschen/images/frog1}
+	\caption{frog1}
+	\end{subfigure}
+	\begin{subfigure}{0.19\textwidth}
+    \centering
+	\includegraphics[height=0.55\textwidth]{Examples/TFLiteFlaschen/images/frog2}
+	\caption{frog2}
+	\end{subfigure}
+	\begin{subfigure}{0.19\textwidth}
+    \centering
+	\includegraphics[height=0.55\textwidth]{Examples/TFLiteFlaschen/images/frog3}
+	\caption{frog3}
+	\end{subfigure}
+	\begin{subfigure}{0.19\textwidth}
+    \centering
+	\includegraphics[height=0.55\textwidth]{Examples/TFLiteFlaschen/images/frog4}
+	\caption{frog4}
+	\end{subfigure}
+	
+	    \begin{subfigure}{0.19\textwidth}
+    \centering
+	\includegraphics[height=0.55\textwidth]{Examples/TFLiteFlaschen/images/horse0}
+	\caption{horse0}
+	\end{subfigure}
+	\begin{subfigure}{0.19\textwidth}
+    \centering
+	\includegraphics[height=0.55\textwidth]{Examples/TFLiteFlaschen/images/horse1}
+	\caption{horse1}
+	\end{subfigure}
+	\begin{subfigure}{0.19\textwidth}
+    \centering
+	\includegraphics[height=0.55\textwidth]{Examples/TFLiteFlaschen/images/horse2}
+	\caption{horse2}
+	\end{subfigure}
+	\begin{subfigure}{0.19\textwidth}
+    \centering
+	\includegraphics[height=0.55\textwidth]{Examples/TFLiteFlaschen/images/horse3}
+	\caption{horse3}
+	\end{subfigure}
+	\begin{subfigure}{0.19\textwidth}
+    \centering
+	\includegraphics[height=0.55\textwidth]{Examples/TFLiteFlaschen/images/horse4}
+	\caption{horse4}
+	\end{subfigure}
+	
+	    \begin{subfigure}{0.19\textwidth}
+    \centering
+	\includegraphics[height=0.55\textwidth]{Examples/TFLiteFlaschen/images/ship0}
+	\caption{ship0}
+	\end{subfigure}
+	\begin{subfigure}{0.19\textwidth}
+    \centering
+	\includegraphics[height=0.55\textwidth]{Examples/TFLiteFlaschen/images/ship1}
+	\caption{ship1}
+	\end{subfigure}
+	\begin{subfigure}{0.19\textwidth}
+    \centering
+	\includegraphics[height=0.55\textwidth]{Examples/TFLiteFlaschen/images/ship2}
+	\caption{ship2}
+	\end{subfigure}
+	\begin{subfigure}{0.19\textwidth}
+    \centering
+	\includegraphics[height=0.55\textwidth]{Examples/TFLiteFlaschen/images/ship3}
+	\caption{ship3}
+	\end{subfigure}
+	\begin{subfigure}{0.19\textwidth}
+    \centering
+	\includegraphics[height=0.55\textwidth]{Examples/TFLiteFlaschen/images/ship4}
+	\caption{ship4}
+	\end{subfigure}
+	
+	    \begin{subfigure}{0.19\textwidth}
+    \centering
+	\includegraphics[height=0.55\textwidth]{Examples/TFLiteFlaschen/images/truck0}
+	\caption{truck0}
+	\end{subfigure}
+	\begin{subfigure}{0.19\textwidth}
+    \centering
+	\includegraphics[height=0.55\textwidth]{Examples/TFLiteFlaschen/images/truck1}
+	\caption{truck1}
+	\end{subfigure}
+	\begin{subfigure}{0.19\textwidth}
+    \centering
+	\includegraphics[height=0.55\textwidth]{Examples/TFLiteFlaschen/images/truck2}
+	\caption{truck2}
+	\end{subfigure}
+	\begin{subfigure}{0.19\textwidth}
+    \centering
+	\includegraphics[height=0.55\textwidth]{Examples/TFLiteFlaschen/images/truck3}
+	\caption{truck3}
+	\end{subfigure}
+	\begin{subfigure}{0.19\textwidth}
+    \centering
+	\includegraphics[height=0.55\textwidth]{Examples/TFLiteFlaschen/images/truck4}
+	\caption{truck4}
+	\end{subfigure}
+	
+	    \begin{subfigure}{0.19\textwidth}
+    \centering
+	\includegraphics[height=0.55\textwidth]{Examples/TFLiteFlaschen/images/bottle0}
+	\caption{bottle0}
+	\end{subfigure}
+	\begin{subfigure}{0.19\textwidth}
+    \centering
+	\includegraphics[height=0.55\textwidth]{Examples/TFLiteFlaschen/images/bottle1}
+	\caption{bottle1}
+	\end{subfigure}
+	\begin{subfigure}{0.19\textwidth}
+    \centering
+	\includegraphics[height=0.55\textwidth]{Examples/TFLiteFlaschen/images/bottle2}
+	\caption{bottle2}
+	\end{subfigure}
+	\begin{subfigure}{0.19\textwidth}
+    \centering
+	\includegraphics[height=0.55\textwidth]{Examples/TFLiteFlaschen/images/bottle3}
+	\caption{bottle3}
+	\end{subfigure}
+	\begin{subfigure}{0.19\textwidth}
+    \centering
+	\includegraphics[height=0.55\textwidth]{Examples/TFLiteFlaschen/images/bottle4}
+	\caption{bottle4}
+	\end{subfigure}
+\caption{Testbilder}
+\label{FigTestbilder}
+\end{figure}
+
+
+\begin{longtable}{p{2cm}|p{10cm}|}
+\caption{Bildquellen}
+\label{TabSource}\\
+airplane0.jpg & \url{https://images.app.goo.gl/miFysGdgzfattLYS8}\\
+airplane1.jpg & \url{https://images.app.goo.gl/21sxybSv9tgDv7pv9}\\
+airplane2.jpg& \url{https://images.app.goo.gl/gHEDpv2jqmgoUSEcA}\\
+airplane3.jpg& \url{https://images.app.goo.gl/Qc3iygkmB4qxW5eF8}\\
+airplane4.jpg& \url{https://images.app.goo.gl/jCnZcfBZndtGJkR38}\\
+auto0.jpg& \url{https://images.app.goo.gl/uzCTYpdSBksw57uv5}\\
+auto1.jpg& \url{https://images.app.goo.gl/hU6kNTPBJ5PnZq4Y6}\\
+auto2.jpg& \url{https://images.app.goo.gl/Gkfge72thV9R4oGx7}\\
+auto3.jpg& \url{https://images.app.goo.gl/1SCXdXxuXPCD6VYR8}\\
+auto4.jpg& \url{https://images.app.goo.gl/U9R26N43Tvn6jfXV6}\\
+bird0.jpg& \url{https://images.app.goo.gl/9oV7uhCzQtHbJYMf6}\\
+bird1.jpg& \url{https://images.app.goo.gl/ThFr8msmptb1cFpe9}\\
+bird2.jpg& \url{https://images.app.goo.gl/JhjHuVZcFGt5EvNb6}\\
+bird3.jpg& \url{https://images.app.goo.gl/g3vPKULecoVKoJC2A}\\
+bird4.jpg& \url{https://images.app.goo.gl/LKCTmDhy23WzMUjt7}\\
+cat0.jpg& jetson inference\\
+cat1.jpg & jetson inference\\
+cat2.jpg& \url{https://images.app.goo.gl/fg41HZ1oNSPyeu649}\\
+cat3.jpg& jetson inference\\
+cat4.jpg& \url{https://images.app.goo.gl/44PPHu2T88jUupBJ8}\\
+deer0.jpg& \url{https://images.app.goo.gl/XS56GYx4YWMKCjU8A}\\
+deer1.jpg& \url{https://images.app.goo.gl/uSjwNHSzS5VF7Xz29}\\
+deer2.jpg& \url{https://images.app.goo.gl/H6mwvVxDQfDb51vC6}\\
+deer3.jpeg& \url{https://images.app.goo.gl/ADDGt6FwvFAb5STM6}\\
+deer4.jpg& \url{https://images.app.goo.gl/X9m7Apd7Na8iBy4u8}\\
+dog0.jpg& jetson-inference\\
+dog1.jpg& \url{https://images.app.goo.gl/BQm3FtiCe2yAoWPi7}\\
+dog2.jpg& \url{https://images.app.goo.gl/T1ZR6WCjJpHGNiAC7}\\
+dog3.jpg& \url{https://images.app.goo.gl/wU5MWm2YbHeGZWHW9}\\
+dog4.jpg& \url{https://images.app.goo.gl/wiEyEo2mz5LrMwKQ8}\\
+frog0.jpg& \url{https://images.app.goo.gl/Dggsw2tvTQYBXBG29}\\
+frog1.jpg& \url{https://images.app.goo.gl/kxED4M2X9MBovfim6}\\
+frog2.jpg& \url{https://images.app.goo.gl/3BV8hN2XPpA5KYko6}\\
+frog3.jpg& \url{https://images.app.goo.gl/mEBLEcVzQezfLfy88}\\
+frog4.jpg& \url{https://images.app.goo.gl/gpbxX7rmnHeygMxeA}\\
+horse0.jpg& jetson inference\\
+horse1.jpg& jetson inference\\
+horse2.jpg& \url{https://images.app.goo.gl/iwfVuHDnZEDw5TqF6}\\
+horse3.jpg& \url{https://images.app.goo.gl/vUhQ3etEkPoRW96H8}\\
+horse4.jpg& \url{https://images.app.goo.gl/vQ3spHAZrvFL4B1z8}\\
+ship0.jpg& \url{https://images.app.goo.gl/cYgT3Z7F3Q1KWhtn7}\\
+ship1.jpg& \url{https://images.app.goo.gl/VRiqLzXymnGUqAgJ8}\\
+ship2.jpg& \url{https://images.app.goo.gl/RR8QVHgFi8XVPj67A}\\
+ship3.jpeg& \url{https://images.app.goo.gl/YHgCWbgY7FrN853u5}\\
+ship4.jpeg& \url{https://images.app.goo.gl/acCxpBFX9tuoM3TP9}\\
+truck0.jpg& \url{https://images.app.goo.gl/bTHwRb7nSxJw7fNu8}\\
+truck1.jpg& \url{https://images.app.goo.gl/jEeaSrjdpCwaX3Bn7}\\
+truck2.jpg& \url{https://images.app.goo.gl/u37AQen813uGTKpeA}\\
+truck3.jpg& \url{https://images.app.goo.gl/wxwHVmRyeWzMmMhH7}\\
+truck4.jpg& \url{https://images.app.goo.gl/mXVCZz1PiFKjyrQQ7}\\
+bottle0.jpg& \url{https://images.app.goo.gl/6QNxuQQ8VMYQbCf8A}\\
+bottle1.jpg& \url{https://images.app.goo.gl/gEjRtAHgwwShqcD28}\\
+bottle2.jpg& \url{https://images.app.goo.gl/YaKWZUq3SjWoWC1K6}\\
+bottle3.jpg& \url{https://images.app.goo.gl/wPaB7Q7u9DTbzhd38}\\
+bottle4.jpg& \url{https://images.app.goo.gl/HLKGVanQACtDxxmm8}\\
+\end{longtable}
+
+
+With the selected images, the trained model is first tested on the work PC in the Jupyter notebook to determine the performance of the original model with respect to the test images as reference. The script for this is \PYTHON{test\_original.py}. Based on the selection of the model parameters (dataset, model, epochs and batch size; see script \PYTHON{training\_CIFAR.py})\Mynote{ref listing missing}, this first reads in the model to be evaluated. Then the selected test pattern is loaded. This must be normalised and scaled in the same way as in the training. Therefore, the build-in functions of TensorFlow are used again for this (\PYTHON{tf.image.per\_image\_standardization} and (\PYTHON{tf.image.resize}).
+Finally, the model can be run and the result evaluated. The category with the maximum probability and the corresponding description are determined.
+
+\begin{code}
+  \lstinputlisting[language=Python,firstnumber=1]{../../Code/JetsonNano/test_original.py}
+  \caption{Classification of the test patterns}
+\end{code}  
+
+After the test on the work PC, the models converted to tflite format are used on the Jetson Nano. The programme \PYTHON{tflite-photo.py} works similarly to the previous one:
+The selected .tflite model is loaded, as well as the selected image, which is normalised and resized in the same way.
+in the same way. Before that, however, the TensorFlow Lite interpreter is initialised and the tensors are allocated. In addition, the necessary sizes of the input and output tensors are determined. After the input image has been prepared and defined as the input tensor, the model is executed including a measurement of the computing time. Afterwards, the result can be evaluated as usual. In this case, the result is also superimposed on the input image and the resulting result image is stored in a separate folder.
+
+\begin{code}
+  \lstinputlisting[language=Python,firstnumber=1]{../../Code/JetsonNano/tflite-foto.py}
+  \caption{Determination of the calculation time}
+\end{code}  
+
+
+\subsection{Test results}
+
+The results of the tests of the different models described above are recorded below. Models were tested with the parameters\PYTHON{dataset=1, model=2, epochs=100, batch size=32} and \PYTHON{dataset=2, model=2, epochs=100, batch size=32}, where dataset 1 corresponds to the original dataset \ac{cifar}-10\index{dataset! CIFAR-10} and dataset 2 corresponds to the self-created dataset from datasets \ac{cifar}-10\index{Dataset!CIFAR-10} with the added category ``bottles'' from dataset \ac{cifar}-100\index{Dataset!CIFAR-100}, each in the original as model \FILE{saved\_model.pb} and as optimised and non-optimised .tflite model.
+
+For all three format variants of both trained models, the categories of the highest probability for all five test images of the 10 or 11 trained categories and the corresponding probability are recorded in table \ref{TabTest}. The correct results obtained are marked in green.
+
+
+\definecolor{light-gray}{gray}{0.95}
+
+\begin{longtable}{| c | c | c | c | c | c | c |}
+\caption[Test results with serveral formats]{Test results for the different models: A - model with modified dataset, AlexNet, 100 epochs, batch size 32 in .pb format; 
+    A1 - tflite model without quantisation; A2 - tflite model with quantisation; B - model with CIFAR-10 dataset, AlexNet, 100 epochs, batch size 32 in .pb format;
+    B1 - tflite model without quantisation; B2 - tflite model with quantisation}
+\label{TabTest}\\
+\firsthline
+\multirow{2}{*}{image} & \multicolumn{6}{| c |}{Results}\\
+\cline{2-7}
+ & A & A1 & A2 & B & B1 & B2 \\
+ \hline
+airplane0\cellcolor{light-gray} 	& 99.9\% ship 		
+& 99.9\% ship 	
+& 99.7\% ship 		
+& 99.7\% plane\cellcolor{green}	
+& 94.4\% bird 	
+& 51.0\% bird \\
+ \hline
+airplane1\cellcolor{light-gray} 	
+& 94.3\% plane\cellcolor{green}	
+& 94.3\% plane\cellcolor{green}
+& 94.0\% plane\cellcolor{green} 	
+&  99.9\% plane\cellcolor{green}	
+& 100\% plane\cellcolor{green}	
+& 100\% plane\cellcolor{green}\\
+ \hline
+airplane2\cellcolor{light-gray} 	
+& 62.0\% auto 		
+& 62.0\% auto	 
+& 99.2\% auto 		
+&  85.2\% auto 		
+& 85.2\% auto 	
+& 94.8\% frog\\
+ \hline
+airplane3\cellcolor{light-gray} 	
+& 99.9\% auto  		
+& 99.9\% auto 	
+& 99.9\% auto 		
+& 100\% plane\cellcolor{green} 	
+& 100\% plane\cellcolor{green}	
+& 100\% plane\cellcolor{green}\\
+ \hline
+airplane4\cellcolor{light-gray} 	
+& 99.9\% plane\cellcolor{green}	
+& 100\% plane\cellcolor{green} 
+& 99.9\% plane\cellcolor{green} 	
+&  100\% plane\cellcolor{green} 	
+& 100\% plane\cellcolor{green}	
+& 100\% plane\cellcolor{green}\\
+ \hline
+auto0 \cellcolor{light-gray}	
+& 99.7\% horse		
+& 99.7\% horse  
+& 100\% horse 	
+& 84.7\% horse 
+& 84.7\% horse 	
+& 91.0\% horse\\
+ \hline
+auto1\cellcolor{light-gray} 	
+& 94.6\% auto\cellcolor{green}		
+& 94.6\% auto\cellcolor{green}  	
+& 97.8\% auto\cellcolor{green} 	
+&  99.9\% auto\cellcolor{green} 	
+& 100\% auto\cellcolor{green} 	
+& 100\% auto\cellcolor{green}\\
+ \hline
+auto2\cellcolor{light-gray} 	
+& 42.0\% bird		
+& 42.0\% bird 	
+& 95.9\% truck 	
+&  100\% auto\cellcolor{green}  	
+& 100\% auto\cellcolor{green} 	
+& 100\% auto\cellcolor{green}\\
+ \hline
+auto3\cellcolor{light-gray} 	
+& 100\% auto\cellcolor{green}		
+& 100\% auto\cellcolor{green} 	
+& 100\% auto\cellcolor{green} 	
+&  100\% auto\cellcolor{green}  	
+& 100\% auto\cellcolor{green} 	
+& 100\% auto\cellcolor{green}\\
+ \hline
+auto4\cellcolor{light-gray} 	
+& 100\% horse		
+& 100\% horse 	
+& 100\% horse 	
+&  89.0\% auto\cellcolor{green}  	
+& 89.0\% auto\cellcolor{green} 	
+& 79.3\% auto\cellcolor{green}\\
+ \hline
+bird0 	\cellcolor{light-gray}	
+& 100\% bird\cellcolor{green}		
+& 100\% bird\cellcolor{green} 	
+& 100\% bird\cellcolor{green} 	
+& 99.9\% bird\cellcolor{green}  	
+& 99.9\% bird\cellcolor{green} 	
+& 100\% bird\cellcolor{green}\\
+ \hline
+bird1 	\cellcolor{light-gray}	
+& 95.3\% horse		
+& 95.3\% horse 	
+& 85.2\% horse 	
+& 47.9\% plane
+& 47.9\% plane
+& 93.8\% bird\cellcolor{green}\\
+ \hline
+bird2 	\cellcolor{light-gray}	
+& 99.7\% frog		
+& 99.7\% frog 	
+& 99.7\% frog 	
+&  99.9\% bird\cellcolor{green} 	 
+& 100\% bird\cellcolor{green} 	
+& 100\% bird\cellcolor{green}\\
+ \hline
+bird3 	\cellcolor{light-gray}	
+& 80.4\% truck		
+& 80.4\% truck 	
+& 41.5\% truck 	
+&  91.7\% bird\cellcolor{green} 	 
+& 91.7\% bird\cellcolor{green} 	
+& 99.3\% bird\cellcolor{green}\\
+ \hline
+bird4 	\cellcolor{light-gray}	
+& 99.9\% bird\cellcolor{green}		
+& 99.9\% bird\cellcolor{green} 	
+& 99.4\% bird\cellcolor{green} 	
+&  99.8\% plane
+& 99.8\% plane 
+& 99.5\% plane\\
+ \hline
+cat0 	\cellcolor{light-gray}	
+& 97.9\% horse		
+& 97.9\% horse 	
+& 98.6\% horse 	
+&  91.3\% horse  
+& 91.3\% horse 
+& 74.3\% plane\\
+ \hline
+cat1 	\cellcolor{light-gray}	
+& 74.2\% horse		
+& 74.2\% horse 	
+& 66.3\% horse 	
+&  57.6\% horse	 
+& 57.6\% horse 
+& 72.5\% frog\\
+ \hline
+cat2 	\cellcolor{light-gray}	
+& 99.9\% horse		
+& 99.9\% horse 	
+& 99.8\% horse 
+&  98.2\% cat\cellcolor{green} 	 
+& 98.2\% cat\cellcolor{green} 	
+& 57.6\% auto\\
+ \hline
+cat3 	\cellcolor{light-gray}	
+& 99.6\% bird		
+& 99.6\% bird 	
+& 99.8\% bird 	
+& 78.7\% dog 	
+ & 78.7\% dog 	
+ & 65.3\% plane\\
+ \hline
+cat4 	\cellcolor{light-gray}	
+& 99.0\% horse		
+& 99.0\% horse 	
+& 59.6\% bird 	
+& 100\% horse 	
+ & 100\% horse 	
+ & 100\% horse\\
+ \hline
+deer0\cellcolor{light-gray} 	
+& 86.6\% cat 		
+& 86.6\% cat 	
+& 80.2\% cat 	
+&  99.9\% frog 	
+& 100\% frog 	
+& 100\% frog\\
+ \hline
+deer1\cellcolor{light-gray} 	
+& 99.8\% horse		
+& 99.8\% horse 	
+& 99.8\% horse 	
+&  100\% horse 	 
+& 100\% horse 	
+& 100\% horse\\
+ \hline
+deer2\cellcolor{light-gray} 	
+& 99.9\% frog		
+& 99.9\% frog 	
+& 99.9\% frog 	
+&  100\% frog	
+ & 100\% frog 	
+ & 100\% frog\\
+ \hline
+deer3\cellcolor{light-gray} 	
+& 96.6\% bird		
+& 96.6\% bird 	
+& 96.4\% bird 	
+&  100\% deer\cellcolor{green}	 
+& 100\% deer\cellcolor{green} 	
+& 100\% deer\cellcolor{green}\\
+ \hline
+deer4\cellcolor{light-gray} 	
+& 97.3\% truck		
+& 97.3\% truck 	
+& 97.8\% truck 	
+&  100\% deer\cellcolor{green} 	 
+& 100\% deer\cellcolor{green} 	
+& 100\% deer\cellcolor{green}\\
+ \hline
+dog0 \cellcolor{light-gray}	
+& 90.0\% truck		
+& 90.0\% truck 	
+& 97.8\% truck 	
+&  99.8\% horse	 
+& 99.8\% horse 
+& 72.3\% horse\\
+ \hline
+dog1 \cellcolor{light-gray}	
+& 98.7\% dog\cellcolor{green}		
+& 98.7\% dog\cellcolor{green} 	
+& 89.0\% dog\cellcolor{green} 	
+&  98.7\% deer 	 
+& 100\% dog\cellcolor{green} 	
+& 100\% dog\cellcolor{green}\\
+ \hline
+dog2 \cellcolor{light-gray}	
+& 99.3\% horse		
+& 99.3\% horse  
+& 99.0\% horse 	
+&  78.1\% plane
+& 78.1\% plane 
+& 74.3\% bird\\
+ \hline
+dog3 \cellcolor{light-gray}	
+& 99.9\% bird		
+& 100\% bird 	
+& 100\% bird 	
+&  99.9\% bird	 
+& 99.9\% bird 	
+& 99.6\% bird\\
+ \hline
+dog4 \cellcolor{light-gray}	
+& 99.9\% horse		
+& 100\% horse 	
+& 99.99\% horse 
+&  85.8\% horse	
+ & 85.8\% horse 
+ & 100\% horse \\
+ \hline
+frog0 \cellcolor{light-gray}	
+& 95.0\% truck		
+& 95.0\% truck 	
+& 87.19\% truck 
+&  97.7\% plane
+& 97.7\% plane 
+& 93.1\% plane\\
+ \hline
+frog1 \cellcolor{light-gray}	
+& 46.5\% bird		
+& 46.5\% bird 	
+& 44.1\% frog\cellcolor{green} 	
+&  58.5\% plane& 58.5\% plane 
+& 41.7\% frog\cellcolor{green}\\
+ \hline
+frog2 \cellcolor{light-gray}	
+& 99.9\% horse		
+& 99.9\% horse 	
+& 99.9\% horse 	
+&  95.7\% bird	 
+& 100\% frog\cellcolor{green} 	
+& 100\% frog\cellcolor{green}\\
+ \hline
+frog3 \cellcolor{light-gray}	
+& 99.3\% bottle		
+& 99.3\% bottle 	
+& 96.3\% bottle 	
+&  99.5\% frog\cellcolor{green}	 
+& 99.5\% frog\cellcolor{green} 	
+& 99.9\% frog\cellcolor{green}\\
+ \hline
+frog4 \cellcolor{light-gray}	
+& 62.8\% bird		
+& 62.8\% bird 	
+& 89.0\% bird 	
+&  58.1\% plane
+& 58.1\% plane
+ & 62.3\% plane\\
+ \hline
+horse0 \cellcolor{light-gray} 	
+& 100\% bird		
+& 100\% bird 	
+& 100\% bird 	
+&  99.9\% horse\cellcolor{green}	 
+& 100\% horse\cellcolor{green} 	
+& 100\% horse\cellcolor{green}\\
+ \hline
+horse1 \cellcolor{light-gray}	
+& 66.7\% bird		
+& 66.7\% bird 	
+& 83.16\% horse\cellcolor{green} 
+&  77.5\% frog	 
+& 77.5\% frog 	
+& 99.6\% frog\\
+ \hline
+horse2 \cellcolor{light-gray}	
+& 88.1\% horse\cellcolor{green}		
+& 88.1\% horse\cellcolor{green} 	
+& 95.0\% horse\cellcolor{green} 	
+&  99.9\% horse\cellcolor{green}	
+ & 100\% horse\cellcolor{green} 	
+ & 100\% horse\cellcolor{green}\\
+ \hline
+horse3 \cellcolor{light-gray}	
+& 90.0\% horse\cellcolor{green}		
+& 90.0\% horse\cellcolor{green} 	
+& 98.5\% horse\cellcolor{green} 	
+&  100\% horse\cellcolor{green}	
+ & 100\% horse\cellcolor{green} 	
+ & 100\% horse\cellcolor{green}\\
+ \hline
+horse4 \cellcolor{light-gray}	
+& 86.2\% horse\cellcolor{green}		
+& 86.2\% horse\cellcolor{green} 	
+& 78.2\% horse\cellcolor{green} 	
+&  77.7\% dog	 
+& 77.7\% dog 	
+& 50.5\% bird\\
+ \hline
+ship0 \cellcolor{light-gray}	
+& 99.9\% auto		
+& 100\% auto 	
+& 100\% auto 	
+&  85.8\% truck	 
+& 85.8\% truck 	
+& 50.9\% frog\\
+ \hline
+ship1 \cellcolor{light-gray}	
+& 69.2\% ship\cellcolor{green}		
+& 69.2\% ship\cellcolor{green} 	
+& 50.7\% auto 	
+&  99.0\% plane& 99.0\% plane 	
+& 99.7\% plane\\
+ \hline
+ship2 \cellcolor{light-gray}	
+& 66.4\% bird		
+& 66.4\% bird 	
+& 76.7\% bird 	
+&  50.4\% frog	 
+ & 50.5\% frog 	
+ & 83.3\% plane\\
+ \hline
+ship3 \cellcolor{light-gray}	
+& 54.2\% bottle		
+& 54.2\% bottle 	
+& 87.1\% bottle 
+&  98.6\% plane 
+& 98.6\% plane 
+& 73.1\% plane\\
+ \hline
+ship4 \cellcolor{light-gray}	
+& 73.8\% ship\cellcolor{green}		
+& 73.8\% ship\cellcolor{green} 	
+& 97.4\% truck 	
+&  99.9\% plane
+& 100\% plane 
+& 100\% plane\\
+ \hline
+truck0 \cellcolor{light-gray}	
+& 52.6\% horse		
+& 52.57\% horse	
+& 99.9\% horse 	
+&  99.9\% plane& 100\% plane
+& 99.9\% plane\\
+ \hline
+truck1 \cellcolor{light-gray}	
+& 99.9\% truck\cellcolor{green}		
+& 100\% truck \cellcolor{green}	
+& 100\% truck\cellcolor{green} 	
+&  100\% truck\cellcolor{green}	
+ & 100\% truck\cellcolor{green} 	
+ & 100\% truck\cellcolor{green}\\
+ \hline
+truck2 \cellcolor{light-gray}	
+& 99.9\% truck\cellcolor{green}		
+& 99.9\% truck\cellcolor{green} 	
+& 99.6\% truck\cellcolor{green} 	
+&  99.9\% plane
+& 99.9\% plane 	
+& 99.3\% plane\\
+ \hline
+truck3 \cellcolor{light-gray}	
+& 64.5\% auto		
+& 64.5\% truck\cellcolor{green} 	
+& 99.3\% auto 	
+&  99.9\% plane
+& 99.9\% plane 	
+& 99.8\% plane\\
+ \hline
+truck4 \cellcolor{light-gray}	
+& 99.9\% bird		
+& 99.9\% bird 	
+& 99.9\% bird 	
+&  99.9\% horse	 
+& 100\% horse 	
+& 100\% horse\\
+ \hline
+bottle0\cellcolor{light-gray} 	
+& 99.9\% bottle\cellcolor{green}		
+& 100\% bottle\cellcolor{green} 	
+& 100\% bottle\cellcolor{green} 	&  -	 & - 	& -\\
+ \hline
+bottle1\cellcolor{light-gray} 	
+& 99.9\% bird		
+& 99.9\% bottle\cellcolor{green} 	
+& 99.5\% bird 	&  -	 & - 	& -\\
+ \hline
+bottle2\cellcolor{light-gray} 	
+& 96.7\% horse		
+& 96.7\% horse 	
+& 89.7\% horse 	&  -	 & - 	& -\\
+ \hline
+bottle3\cellcolor{light-gray} 	
+& 93.7\% truck		
+& 93.7\% truck 	
+& 99.9\% truck 	&  -	 & - 	& -\\
+ \hline
+bottle4\cellcolor{light-gray} 	
+& 81.5\% bird		
+& 81.5\% bird 	
+& 96.6\% bird 	&  -	 & - 	& -\\
+ \hline
+\end{longtable}
+
+In table \ref{TabTime} the required computing time for the classification of the images with the respective network in .tflite format with or without optimisation is recorded, which is printed with the script \PYTHON{tflite-foto.py} together with the classification on the output image and output in the terminal. All images are entered together, so that an increased computing time due to the first call of the model only occurs with the image ``airplane0''.
+
+\begin{longtable} {| c | c | c | c | c |}
+\caption[Computing time for the different models]{Computing time for the different models:
+    A1 - Model with modified dataset, AlexNet, 100 epochs, batch size in tflite model without quantisation; 
+    A2 - Model with modified dataset, AlexNet, 100 epochs, batch size in tflite model with quantisation;
+    B1 - model with CIFAR-10 dataset, AlexNet, 100 epochs, batch size 32 in tflite model without quantisation; 
+    B2 - model with CIFAR-10 dataset, AlexNet, 100 epochs, batch size 32 in tflite model with quantisation.}
+\label{TabTime}\\
+\hline
+\multirow{2}{*}{image} & \multicolumn{4}{| c |}{Computing Time}\\
+\cline{2-5}
+  & A1 & A2 & B1 & B2 \\
+\hline
+airplane0\cellcolor{light-gray}  		
+& 2.63	
+& 0.67
+& 2.73 	
+& 0.66\\
+ \hline
+airplane1\cellcolor{light-gray} 	
+& 0.31	
+& 0.13
+& 0.35 	
+& 0.13\\
+ \hline
+airplane2\cellcolor{light-gray} 	
+& 0.32	
+& 0.13
+& 0.32	
+& 0.13\\
+ \hline
+airplane3\cellcolor{light-gray} 	
+& 0.32	
+& 0.13
+& 0.31 	
+& 0.13\\
+ \hline
+airplane4\cellcolor{light-gray} 	
+& 0.31
+& 0.13
+& 0.32	
+& 0.13\\
+ \hline
+auto0 \cellcolor{light-gray}	
+& 0.32	
+& 0.13
+& 0.32 	
+& 0.13\\
+ \hline
+auto1\cellcolor{light-gray} 	
+& 0.32	
+& 0.13
+& 0.32 	
+& 0.13\\
+ \hline
+auto2\cellcolor{light-gray} 	
+& 0.32	
+& 0.13
+& 0.31 	
+& 0.13\\
+ \hline
+auto3\cellcolor{light-gray} 	
+& 0.31	
+& 0.13
+& 0.32 	
+& 0.13\\
+ \hline
+auto4\cellcolor{light-gray} 	
+& 0.31	
+& 0.13
+& 0.32 	
+& 0.13\\
+ \hline
+bird0 	\cellcolor{light-gray}	
+& 0.31	
+& 0.13
+& 0.32 	
+& 0.13\\
+ \hline
+bird1 	\cellcolor{light-gray}	
+& 0.31	
+& 0.13
+&  0.31	
+& 0.13\\
+ \hline
+bird2 	\cellcolor{light-gray}	
+& 0.31	
+& 0.13
+& 0.31 	
+& 0.13\\
+ \hline
+bird3 	\cellcolor{light-gray}	
+& 0.31	
+& 0.13
+& 0.31	
+& 0.13\\
+ \hline
+bird4 	\cellcolor{light-gray}	
+& 0.31	
+& 0.13
+& 0.31 	
+& 0.13\\
+ \hline
+cat0 	\cellcolor{light-gray}	
+& 0.32	
+& 0.13
+& 0.35 	
+& 0.13\\
+ \hline
+cat1 	\cellcolor{light-gray}	
+& 0.32	
+& 0.13
+& 0.32	
+& 0.13\\
+ \hline
+cat2 	\cellcolor{light-gray}	
+& 0.31	
+& 0.13
+& 0.31 	
+& 0.13\\
+ \hline
+cat3 	\cellcolor{light-gray}	
+& 0.31	
+& 0.13
+& 0.32 	
+& 0.13\\
+ \hline
+cat4 	\cellcolor{light-gray}	
+& 0.31	
+& 0.13
+& 0.32 	
+& 0.13\\
+ \hline
+deer0\cellcolor{light-gray} 	
+& 0.31	
+& 0.13
+& 0.32 	
+& 0.13\\
+ \hline
+deer1\cellcolor{light-gray} 	
+& 0.32	
+& 0.13
+& 0.32 	
+& 0.13\\
+ \hline
+deer2\cellcolor{light-gray} 	
+& 0.32	
+& 0.13
+& 0.32 	
+& 0.13\\
+ \hline
+deer3\cellcolor{light-gray} 			
+& 0.32	
+& 0.13
+& 0.32	
+& 0.13\\
+ \hline
+deer4\cellcolor{light-gray} 	
+& 0.31	
+& 0.13
+& 0.32 	
+& 0.13\\
+ \hline
+dog0 \cellcolor{light-gray}	
+& 0.31	
+& 0.13
+& 0.32	
+& 0.13\\
+ \hline
+dog1 \cellcolor{light-gray}	
+& 0.32	
+& 0.13
+& 0.32 	
+& 0.13\\
+ \hline
+dog2 \cellcolor{light-gray}	
+& 0.32	
+& 0.13
+& 0.32 	
+& 0.13\\
+ \hline
+dog3 \cellcolor{light-gray}	
+& 0.32	
+& 0.13
+& 0.32 	
+& 0.13\\
+ \hline
+dog4 \cellcolor{light-gray}	
+& 0.32	
+& 0.13
+& 0.32 	
+& 0.13\\
+ \hline
+frog0 \cellcolor{light-gray}	
+& 0.31	
+& 0.13
+& 0.32 	
+& 0.13\\
+ \hline
+frog1 \cellcolor{light-gray}	
+& 0.32	
+& 0.13
+& 0.31 	
+& 0.13\\
+ \hline
+frog2 \cellcolor{light-gray}	
+& 0.32	
+& 0.13
+& 0.32 	
+& 0.13\\
+ \hline
+frog3 \cellcolor{light-gray}	
+& 0.31	
+& 0.13
+& 0.31 	
+& 0.13\\
+ \hline
+frog4 \cellcolor{light-gray}	
+& 0.31	
+& 0.13
+& 0.32 	
+& 0.13\\
+ \hline
+horse0 \cellcolor{light-gray} 	
+& 0.31	
+& 0.13
+& 0.32 	
+& 0.13\\
+ \hline
+horse1 \cellcolor{light-gray}	
+& 0.32	
+& 0.13
+& 0.32	
+& 0.13\\
+ \hline
+horse2 \cellcolor{light-gray}	
+& 0.31	
+& 0.13
+& 0.32 	
+& 0.13\\
+ \hline
+horse3 \cellcolor{light-gray}	
+& 0.32	
+& 0.13
+& 0.32 	
+& 0.13\\
+ \hline
+horse4 \cellcolor{light-gray}	
+& 0.31	
+& 0.13
+& 0.32 	
+& 0.13\\
+ \hline
+ship0 \cellcolor{light-gray}	
+& 0.31	
+& 0.13
+& 0.32 	
+& 0.13\\
+ \hline
+ship1 \cellcolor{light-gray}	
+& 0.32	
+& 0.13
+& 0.32 	
+& 0.13\\
+ \hline
+ship2 \cellcolor{light-gray}	
+& 0.32	
+& 0.13
+& 0.32 	
+& 0.13\\
+ \hline
+ship3 \cellcolor{light-gray}	
+& 0.31	
+& 0.13
+& 0.32 	
+& 0.13\\
+ \hline
+ship4 \cellcolor{light-gray}	
+& 0.31	
+& 0.13
+& 0.32 	
+& 0.13\\
+ \hline
+truck0 \cellcolor{light-gray}	
+& 0.31	
+& 0.13
+& 0.32 	
+& 0.13\\
+ \hline
+truck1 \cellcolor{light-gray}	
+& 0.31	
+& 0.13
+& 0.31 	
+& 0.12\\
+ \hline
+truck2 \cellcolor{light-gray}	
+& 0.31	
+& 0.13
+& 0.31 	
+& 0.13\\
+ \hline
+truck3 \cellcolor{light-gray}	
+& 0.32	
+& 0.13
+& 0.31 	
+& 0.13\\
+ \hline
+truck4 \cellcolor{light-gray}		
+& 0.31	
+& 0.13
+& 0.31 	
+& 0.13\\
+ \hline
+bottle0\cellcolor{light-gray} 	
+& 0.32
+& 0.13
+&  -	 & - \\
+ \hline
+bottle1\cellcolor{light-gray} 	
+& 0.31
+& 0.13
+&  -	 & - \\
+ \hline
+bottle2\cellcolor{light-gray} 	
+& 0.32
+& 0.13
+&  -	 & - \\
+ \hline
+bottle3\cellcolor{light-gray} 	
+& 0.32
+& 0.13
+&  -	 & - \\
+ \hline
+bottle4\cellcolor{light-gray}
+& 0.32
+& 0.13	
+&  -	 & - \\
+ \hline
+\end{longtable}
+
+\subsection{Evaluation of the Test Results}
+
+In general, the performance of the tested models is very mixed with regard to the correct classification of the test images. While some of the images are classified correctly, there are also many misclassifications, which are nevertheless assigned a high probability for the respective category by the model itself. Overall, all models with an error rate of more than 50 \% (with respect to the determined category with the highest probability) are far from a usable model quality for an application.
+
+As expected due to the different sizes of the training datasets, the model trained with the entire dataset \ac{cifar}-10\index{Dataset!CIIFAR-10} with 60,000 images, except for the validation and training images taken, can achieve more correct classifications in the test than the model trained and tested with a total of 5,500 images.
+images than the model trained and tested with a total of 5,500 images. Depending on the format used, the latter achieved a proportion of around 30 \% correct classifications in the tests, while the model trained with more images was able to correctly classify around 40 \% of the images in the test.
+
+There is no systematic difference between the results of the .pb and the .tflite models in the tests. In most cases, the same models in different formats arrive at the same results for the category with the highest probability; both are sometimes correct or incorrect on their own.
+
+
+Similarly, there are differences between the non-optimised and optimised .tflite models. There are deviations between the two, which, however, cannot be attributed to a lower hit rate of the optimised models on the basis of the tests carried out, since in part this model can achieve a correct classification, while the non-optimised model comes to a wrong result and vice versa.
+
+
+The optimisation of the .tflite models, on the other hand, was successful in terms of file size, with a reduction to a quarter, from 225 MB to 56.4 MB, and also in terms of the computing time required. The non-optimised models usually need 31-32 ms to classify one of the test images. The optimised models, on the other hand, can reduce the computing time required for classification to 13 ms. Exceptions to these times occur for the first image classified after programme start in each case, but even here the computing time is reduced to about a third by the optimisation.
+
+
+
+
+
+\subsection{Conclusion and Potential for Improvement}
+
+The models created are not capable of reliable classification. This seems unexpected at first, since the well-known architecture AlexNet\index{AlexNet} was used. However, the publications of Alex Krizhevsky \cite{Krizhevsky:2012} show that even the original AlexNet, when trained with 1.2 million high-resolution images of the ImageNet dataset, still has a top-1 error rate of 37.5 \%. In this respect, an error rate in the range of about twice this error rate for a training with only 5,500 and still 60,000 images in a resolution of only 32 $\times$ 32 is quite understandable. Also, other sources confirm the trajectories of accuracy observed in the training on the training and validation data, which confirms that the training was conducted correctly and thus the results.\cite{Varshney:2020}
+
+Due to these high error rates for models using the AlexNet{AlexNet} architecture, many more complex architectures have since been developed. \Mynote{sources} If a reliable classification should be realised in an application, it would make sense to use one of these more advanced architectures, but this would also increase the training time accordingly. This also applies to the use of many more training images. This would lead to a stronger generalisation of the learned patterns, so that, for example, the risk that the model classifies on the basis of the backgrounds instead of the motives can be reduced. However, if the training time is not to be increased by such measures, it makes sense to use an already pre-trained network and to train it further on the primary category to be recognised for the application.
+
+In this respect, only the first pass through the KDD scheme was realised here. Now, in order to realise the actual application, it is necessary to proceed iteratively in order to improve the mentioned aspects so that finally a model can be generated that can be used in reality. 
+
+Regardless of the model quality, it can be stated that the models could be converted into the .tflite format and evaluated on the Jetson Nano without major impairments. The conversion did not necessarily increase the error rate. Even between the optimised and non-optimised model, contrary to expectations, no increase in the error rate is recognisable in the tests. On the other hand, the optimisation is effective in reducing the file size and optimising the computing time.
+
+\subsection{Bottle Detection}
+
+Although the trained models are not suitable for reliable object or bottle detection, it was nevertheless shown that with the help of Tensor Flow Lite it is possible to use trained networks in the field on systems such as the Jetson Nano for real-time object detection without much loss of model quality.
+
+Possible programmes for bottle detection using the Jetson Nano, Pi camera and a tflite model can be found below. The programs are composed of the already shown use of tflite models in Python, see section \ref{Test with arbitrary images}, and the program developed in a previous project to detect bottles with Pi camera and Jetson Nano. 
+
+The programs both output a signal via a user-selected GPIO pin when the bottle detection sequence is ready or active, and another user-defined pin outputs a signal when a bottle is detected in front of the camera.
+
+In the process, the tflite-camera program, see Listing~\ref{tflite-camera.py}, continuously performs object detection based on the images captured by the camera and always evaluates 50 frames together. This result is then shown on the display and a signal is output via GPIO pin. The programme \FILE{tflite-camera-button.py}, see Listing~\ref{tflite-camera-button.py}, on the other hand, continuously displays the camera image, but only evaluates a single image taken when the 'q' key on the keyboard is pressed. Here, too, the result is displayed on the screen and by signaling the pin. In addition, the captured image is stored in a folder together with the classification.
+
+\begin{code}
+  \lstinputlisting[language=Python,firstnumber=1]{../../Code/JetsonNano/tflite-camera.py}
+  \caption{Cyclic evaluation of a live stream}\label{tflite-camera.py}
+\end{code}
+
+  
+\begin{code}
+\lstinputlisting[language=Python,firstnumber=1]{../../Code/JetsonNano/tflite-camera-button.py}
+  \caption{Evaluation of a live stream after button actuation}\label{tflite-camera-button.py}
+\end{code}

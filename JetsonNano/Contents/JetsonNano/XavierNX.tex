@@ -1,0 +1,237 @@
+%%%%%%
+%
+% $Autor: Wings $
+% $Datum: 2020-01-18 11:15:45Z $
+% $Pfad: WuSt/Skript/Produktspezifikation/powerpoint/ImageProcessing.tex $
+% $Version: 4620 $
+%
+%%%%%%
+
+\chapter{Jetson Xavier NX - Gewachsener Rechenzwerg }
+
+\url{https://www.heise.de/select/ix/2020/7/2013407444739448795}
+
+
+
+\GRAPHICSC{0.2}{1.0}{XavierNX/XavierNX}
+
+NVIDIAs neues KI-Entwicklerboard soll die Lücke zwischen den großen Jetson-Systemen und dem Nano-Modell schließen und ist vor allem auf Parallelisierung ausgelegt. 
+
+
+\section{Übersicht}
+
+  \begin{itemize}
+  	\item  Kaum größer, aber leistungsfähiger als NVIDIAs Jetson Nano und kleiner als das große Jetson-Modell AGX Xavier, belegt das neue KI-Entwicklerboard Xavier NX das Mittelfeld. 
+  	\item Unterschiedliche Energiemodi geben unterschiedliche Rechenressourcen frei. 
+  	\item Um die Performance zu nutzen, sollte man das von NVIDIA optimierte TensorRT-­System statt der aktuellen TensorFlow-2.1-Implementierung für Xavier NX verwenden. 
+    \item Auch containerisierte Anwendungen können auf Xavier NX laufen. 
+  \end{itemize}
+
+
+\section{Einführung}
+
+eit Mitte Mai ist das Entwicklerkit des Jetson Xavier NX auch in Deutschland erhältlich. Bereits im Vorfeld konnte iX den neuen KI-Rechenzwerg aus NVIDIAs Jetson-Familie in Augenschein nehmen. Das jüngste SoM-­Modell (System-on-Module) für KI-Anwendungen ist kaum größer als der 2019 vorgestellte Jetson Nano, aber deutlich umfangreicher bestückt. Die IO-Ausstattung reicht beim Xavier NX von CSI über PCIe bis hin zu I2Cs und GPIOs. 
+
+Auffällig ist der aktive Kühlkörper auf der Volta-GPU. Sie ist mit 384 CUDA- und 48 Tensor-Kernen ausgestattet. Anders als ihre großen Brüder der GeForce-, Quadro-, Titan oder Tesla-Familie dienen Volta-­GPUs nicht dazu, große Datenmengen für Spiele, wissenschaftliche Anwendungen oder für das ML-Training (Machine Learning) zu verarbeiten, sondern mithilfe bestehender ML-Modelle schnell zu schlussfolgern. 
+
+Der GPU steht ein 6-Kern-ARM-Chip der Tegra-Familie zur Seite. Je nach Betriebsmodus begrenzt NVIDIA den Takt und die Zahl der nutzbaren ARM-Kerne. Den Energiesparmodus für batteriebetriebene Systeme gibt der Hersteller mit 10 W und bis zu 14 TOPS (Tera Operations per Second) an, den Normalmodus mit 15 W und 21 TOPS. Das Betriebssystem, ein 64-Bit-Ubuntu 18.04 mit allen nötigen Treibern, liegt auf einer micro­SD-Karte. 
+
+Im Leistungsfeld ordnet sich der ­Xavier NX deutlich oberhalb des Jetson Nano und des TX2 und leicht unterhalb des doppelt so teuren SoMs Jetson AGX Xavier ein. Dessen 8-GByte-Modell kommt ebenfalls auf 20 TOPS, während die größere 16-­GByte-Version mit 32 TOPS aufwarten kann. Für den kleinsten Rechner, Jetson Nano, weist NVIDIA 472 GFLOPS (Giga Floating Point Operations per Second) aus. Dank des identischen Software­stacks fällt der Umstieg aber leicht. Entwickler mit Raspberry-Pi-Erfahrung finden sich auf diesem System schnell zurecht. Für die Nutzung als zweiten Rechner fehlt nur noch eine Tastatur und ein Gehäuse im Lieferumfang. Installiert sind die aktuelle JetPack-Version 4.4 und CUDA 10.2. Updates sowie Handbücher und weitere Informationen kann der Inhaber eines kostenlosen NVIDIA-Deve­loper-­Accounts über die Webseite des Herstellers beziehen. 
+
+\subsection{Eine Sache der Einordnung}
+
+ 
+Zur Einsortierung des Xavier NX zeigt Abbildung~\ref{XavierNXPipeline} eine typische Trainingspipeline für Deep-Learning-Modelle: Zuerst werden die Daten aus der Datenquelle gelesen und gesäubert, extrahiert und mit Varianten angereichert. Je nach Größe der Datenquelle kann es hier schon nötig sein, ETL-Jobs (Extract, Transform, Load) zu bemühen, die parallel auf einem Cluster laufen. Hier kommt es maßgeblich auf die CPU-Performance an. 
+
+\begin{figure}
+\GRAPHICSC{0.3}{1.0}{XavierNX/Pipeline}
+
+ \caption{In einer typischen Deep-Learning-Pipeline benötigt man für das Modelltraining in der Regel viel GPU-Power in Form leistungsstarker und leistungshungriger Grafikkarten. Für die Inference braucht man dagegen besonders in mobilen und autonomen Anwendungen stromsparende und hoch spezialisierte Prozessoren.} \label{XavierNXPipeline}
+ 
+\end{figure}
+
+
+Für den zweiten Schritt, das Modelltraining, nutzt man seit über zehn Jahren GPUs. Zunehmend kommen dabei auch spezielle TPUs (Tensor Processing Units) zum Einsatz, die besonders gut mit der Verarbeitung mehrdimensionaler Daten zurechtkommen – beide gern auch parallel auf mehrere Grafikkarten in leistungsfähigen Servern verteilt. Ist ein solches Modell in Schritt vier erstellt, übernimmt noch leichtgewichtigeres Silikon die Arbeit, immer häufiger auch in Form energieeffi­zienter Koprozessoren in Smartphones, Robotern oder autonomen Fahrzeugen. 
+
+Genau dafür ist der Jetson Xavier NX konzipiert: Er soll bei geringer Leistungsaufnahme eine möglichst hohe Zahl von Schlussfolgerungen pro Sekunde berechnen, um auch aus mehr als einem Full-HD-­Videostream noch Bilder klassifizieren und Objekte sicher erkennen zu können. 
+
+Für den ersten Test bietet es sich an, ein bestehendes Modell heranzuziehen, dessen Leistung bereits aus einer anderen Um­gebung bekannt ist. In diesem Fall ist es ein spezielles Deep-Learning-Modell zum Erkennen von Emotionen, die über die Gesichtserkennung einer angeschlossenen Kamera funktioniert. Das kann sowohl eine vom Raspberry PI bekannte CSI- als auch eine USB-Kamera sein. Da es für Jetson Xavier NX eine aktuelle TensorFlow-­2.1-Implementierung gibt, soll sie im ersten Versuch zum Zuge kommen. Die nötigen Bibliotheken einzurichten benötigt trotzdem etwas Zeit. 
+
+\section{Einrichten TensorFlow}
+
+\begin{lstlisting}
+sudo apt-get update
+sudo apt-get install libhdf5-serial-dev hdf5-tools libhdf5-dev zlib1g-dev zip libjpeg8-dev liblapack-dev libblas-dev gfortran
+sudo apt-get install python3-pip
+sudo pip3 install -U pip testresources setuptools
+sudo pip3 install -U numpy==1.16.1 future==0.17.1 mock==3.0.5 h5py==2.9.0 keras_preprocessing==1.0.5 keras_applications==1.0.8 gast==0.2.2 futures protobuf pybind11
+sudo pip3 install --pre --extra-index-url https://developer.download.nvidia.com/compute/redist/ jp/v44 tensorflow
+\end{lstlisting}
+
+\section{Ausführung eines Keras-Modells innerhalb von TensorFlow 2.1 mithilfe von OpenCV}
+	
+
+Beispiel für die Ausführung eines Keras-Modells innerhalb von TensorFlow 2.1 mithilfe von OpenCV 
+	
+\begin{lstlisting}
+import cv2
+import cvlib as cv
+import tensorflow as tf
+from tensorflow.keras.preprocessing.image import img_to_array
+from tensorflow.keras.models import load_model
+from tensorflow.keras.utils import get_file
+import numpy as np
+import argparse
+import os
+import time
+
+model_path = "models/mini_XCEPTION-final.hdf5"
+model = load_model(model_path)
+
+webcam = cv2.VideoCapture(0)
+
+if not webcam.isOpened():
+    print("Could not open webcam")
+    exit()
+
+classes = ["angry","disgust","scared", "happy", "sad", "surprised", "neutral"]
+
+while webcam.isOpened():
+
+    status, frame = webcam.read()
+
+    if not status:
+        print("Could not read frame")
+        exit()
+
+    face, confidence = cv.detect_face(frame)
+
+    fps = webcam.get(cv2.CAP_PROP_FPS)
+    print(f"Frames per second using video.get(cv2.CAP_PROP_FPS) : {fps}")
+
+    for idx, f in enumerate(face):
+        (startX, startY) = f[0], f[1]
+        (endX, endY) = f[2], f[3]
+
+        cv2.rectangle(frame, (startX,startY), (endX,endY), (0,  255,0), 2)
+        face_crop = np.copy(frame[startY:endY,startX:endX])
+        if (face_crop.shape[0]) < 10 or (face_crop.shape[1]) < 10:
+            continue
+
+        face_crop = cv2.resize(face_crop, (48,48))
+        face_crop = cv2.cvtColor(face_crop, cv2.COLOR_BGR2GRAY)
+        face_crop = face_crop.astype("float") / 255.0
+        face_crop = img_to_array(face_crop)
+        face_crop = np.expand_dims(face_crop, axis=0)
+
+        conf = model.predict(face_crop)[0]
+        idx = np.argmax(conf)
+        label = classes[idx]
+        label = "{}: {:.2f}%".format(label, conf[idx] * 100)
+        Y = startY - 10 if startY - 10 > 10 else startY + 10
+
+        cv2.putText(frame, label, (startX, Y),  cv2.FONT_HERSHEY_ SIMPLEX,
+                    0.7, (0, 255, 0), 2)
+
+    cv2.imshow("facial expression detection", frame)
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+        break
+
+webcam.release()
+cv2.destroyAllWindows()
+\end{lstlisting}
+
+Das GPU-beschleunigte TensorFlow bringt es immerhin auf rund 7,5 Bilder pro Sekunde. Nicht viel bei dem oben beschriebenen Geschwindigkeitsversprechen. Der Grund dafür ist die mäßige Optimierung auf NVIDIAs Jetson-Hardware (siehe Abbildung~\ref{XavierNXFace}). 
+
+\begin{figure}
+	\GRAPHICSC{0.2}{1.0}{XavierNX/Emotionserkennung}
+	
+	\caption{Mithilfe von TensorFlow 2.1 und OpenCV 4.1 schafft ein nicht optimiertes Keras-Modell ganze 7,5 Frames pro Sekunde.} \label{XavierNXFace}
+	
+\end{figure}
+
+
+Deshalb nutzt man besser das mitgelieferte TensorRT-System, das bestehende Modelle etwa im ONNX-Format (Open Neural Network Exchange) einliest, für die spezifische Hardware optimiert und in eine entsprechende Laufzeitumgebung, die Engine, überführt. Die nötige Software ist im JetPack enthalten. Der Befehl 
+
+\SHELL{usr/src/tensorrt/bin/trtexec --onnx=./ models/yolov3-tiny-416-bs8.onnx -- explicitBatch --int8 --workspace=2048 --avgRuns=100 --duration=180 --loadEngine=./models/yolov3-tiny-416\_b8\_ws2048\_gpu.engine}
+
+
+ädt ein bestehendes YOLOv3-Modell im ONNX-Format und erzeugt eine passende TensorRT-Engine. Damit lassen sich die Hauptanwendungen solcher Geräte, die Bild- und Objekterkennung, in Echtzeit umsetzen und Roboter oder autonome Fahrzeuge zu Land, zu Wasser und in der Luft antreiben. Hier haben Deep-Learning-­Modelle wie Inception, VGG19, ResNet, SSD-MobileNet und YOLOv3 in den letzten Jahren zu ungeahnten Leistungssteigerungen geführt. 
+
+\section{Geschwindigkeit erhöhen und messen}
+
+Für die Jetson-Familienmitglieder Nano, TX2, AGX Xavier und Xavier NX hat NVIDIA ein eigenes Benchmark-Kit auf GitHub hinterlegt, das helfen soll, die unterschiedlichen Verarbeitungsgeschwindigkeiten dieser Modelle zu erkennen. Die Installation und Ausführung der Benchmark sollte dabei headless, also ohne grafische Benutzeroberfläche erfolgen, um wertvollen Hauptspeicher zu sparen. Per SSH eingeloggt, installiert man die Quellen in ein beliebiges Verzeichnis: 
+
+\begin{lstlisting}
+git clone https://github.com/NVIDIA-AI-IOT/ jetson_benchmarks.git
+cd jetson_benchmarks
+mkdir models
+sudo sh install_requirements.sh
+\end{lstlisting}
+
+Danach kann man einzelne oder alle am Benchmark beteiligten Modelle herunterladen. Mit dem Python3-Modell-Downloader sieht das am Beispiel des YOLOv3-­Modells folgendermaßen aus: 
+
+\SHELL{python3 utils/download\_models.py --model\_name tiny-yolov3 --csv\_file\_path ./benchmark\_csv/nx-benchmarks.csv --save\_dir ./models}
+
+
+In der Datei nx-benchmark.csv finden sich die nötigen Konfigurationen. Den Benchmark selbst startet man mit dem Befehl 
+
+\SHELL{sudo python3 benchmark.py --model\_name tiny- yolov3 --csv\_file\_path /home/ramon/Dokumente/ source/jetson\_benchmarks/benchmark\_csv/ nx-benchmarks.csv --model\_dir /home/ramon/ Dokumente/source/jetson\_benchmarks/models  --precision fp16 }
+
+
+Zum Vergleich wurde parallel ein Jetson Nano mit denselben Modellen getestet. Der dortige Aufruf des Benchmark-Skripts unterscheidet sich leicht: 
+
+\SHELL{sudo python3 benchmark.py --all --csv\_file\_path /home/ramon/Dokumente/source/jetson\_benchmarks/benchmark\_csv/tx2-nano-benchmarks. csv --model\_dir /home/ramon/Dokumente/source/ jetson\_benchmarks/models --jetson\_devkit nano --gpu\_freq 921600000 --power\_mode 0 --precision fp16}
+
+Die ursprüngliche Ruhetaktung der GPU wurde auf beiden Systemen auf das Maximum eingestellt. Das ließ beim Xavier NX den Lüfter ordentlich hochdrehen und entsprechend deutlich hörbar fiepen. Im Ruhemodus ist er eher still. Die Benchmark-Konfigurationen und -Ergebnisse der Modelle auf dem Xavier NX und dem Jetson Nano zeigt die Tabelle „Benchmark-Ergebnisse von Jetson Nano und Xavier NX im Vergleich“. Aufgeführt sind hier die Zahl der parallel verwendeten GPU-Kerne, die Batch­size innerhalb der GPU, des Deep Learning Accelerator, der genutzte Speicherplatz sowie die FPS (Frames per ­Seconds), also die Zahl der resultierten Bilder pro Sekunde für die beiden unterschiedlichen Genauigkeiten INT8 und FP16. 
+
+
+\begin{table}
+\begin{tabular}{llccc ccccc}
+	System & 	Modell &	Auflösung &	genutzte GPU-Kerne &	Batchsize GPU & 	Batchsize DLA &	WS GPU &	WS\_DLA &	INT8 FPS &	FP16 FPS  \\
+	Jetson Nano &	YOLOv3 &	608×608 &	1 &	1 &	0 &	1024 &	0 &	29,41 &	47,05 \\
+	Jetson Xavier NX &	YOLOv3 &	608×608 &	1 &	8 &	0 &	2048 &	0 &	525,30 &	279,52 \\
+	Jetson Nano &	vgg19\_N2 &	224×224 &	1 &	1 &	0 &	512 &	0 &	0 &	0 \\
+	Jetson Xavier NX &	vgg19\_N2 &	224×224 &	1 &	1 &	0 &	2048 &	0 &	64,68 &	58,47 \\
+	Jetson Nano & 	super\_resolution\_bsd500 &	481×321 &	1 &	1 &	0 &	512 &	0 &	9,49 &	15,09 \\
+	Jetson Xavier NX &	super\_resolution\_bsd500 &	481×321 &	1 &	2 &	0 &	2048 &	0 &	145,09 &	80,69 \\
+	Jetson Nano &	unet-segmentation &	256×256 &	1 &	1 &	0 &	1024 &	0 &	12,39 &	16,64 \\
+	Jetson Xavier NX  & unet-segmentation  & 256×256  & 1  & 2  & 0  & 2048  & 0  & 143,43  & 90,76 \\
+    Jetson Nano  & pose\_estimation  & 256×456  & 1  & 1  & 0  & 1024  & 0  & 8,94  & 14,45 \\
+    Jetson Xavier NX  & pose\_estimation  & 256×456  & 1  & 2  & 0  & 2048  & 0  & 234,15  & 138,65 \\
+    Jetson Nano  & ResNet50\_224×224  & 224×224  & 1  & 1  & 0  & 1024  & 0  & 20,16  & 36,21 \\
+    Jetson Xavier NX  & ResNet50\_224×224  & 224×224  & 3  & 4  & 2  & 2048  & 1024  & 824,35  & 367,34 \\
+    Jetson Nano  & ssd-mobilenet-v1  & –  & 1  & 1  & 0  & 1024  & 0  & 33,92  & 42,01 \\
+    Jetson Xavier NX  & ssd-mobilenet-v1  & –  & 3  & 8  & 2  & 2048  & 1024  & 851,67  & 546,7 \\
+    Jetson Nano  & inception\_v4  & 299×299  & 1  & 1  & 0  & 1024  & 0  & 0  & 0 \\
+    Jetson Xavier NX  & inception\_v4  & 299×299  & 3  & 8  & 2  & 2048  & 1024  & 299,09  & 143,16 \\
+  \end{tabular}	
+  \caption{Benchmark-Ergebnisse von Jetson Nano und Xavier NX im Vergleich}
+\end{table}
+
+
+\section{Alles ordentlich verpackt}
+	Bisher unterschied sich die Entwicklung in der Cloud und auf Edge-Systemen wie dem Jetson fundamental. In der Cloud nutzt man schon lange das Konzept der Container, um Dienste zu kapseln und dadurch schnell zu entwickeln. Die Paketierung von Anwendungskomponenten innerhalb unabhängiger Container-­Images erlaubt eine klare Trennung zwischen einer Anwendung und der zugrunde liegenden Softwareumgebung. Seit JetPack 4.2.1 gibt es auch für die Jetson-­Familie eine NCR (Container Runtime), die die Integration von Docker ermöglicht. Die Idee dabei: Man nutzt ein Image und generiert etwa für das Training aufwendiger Deep-­Learning-Modelle da­raus einen Container auf einem leistungs­starken Server. Dieser wandert dann ohne Änderungen für die Ausführung direkt auf das Edge-Device. NVIDIA selbst bietet nicht nur die Container Runtime an, sondern auch einige Container (siehe ix.de/zake). 
+	
+	Container-Images benötigen allerdings Platz. Zudem fühlen sich Anwendungen, die aus mehreren Containern zusammengesetzt sind, auf performanten und latenzarmen SSDs am wohlsten. Aus diesem Grund hat der Xavier NX einen NVMe-Slot auf der Unterseite, der beliebige SSDs mit M.2-Schnittstelle aufnimmt. Eine dem Xavier-NX-Entwicklungskit beigelegte Demo zeigt die Möglichkeiten containerisierter Anwendungen. Dabei werden vier Container gestartet, die unterschiedliche Anwendungen und Modelle parallel ausführen. Die Applikation in Abbildung~\ref{XavierNXContainerDemo} links oben erkennt Personen mithilfe von NVIDIAs DeepStream SDK. Die Anwendung oben rechts führt ein Sprachmodell aus, um Kommandos von einem angeschlossenen Headset entgegenzunehmen. Die beiden unteren Containeranwendungen analysieren Körperposen und versuchen am Gesicht zu erkennen, ob es sich bei der Person um einen Roboter oder einen Menschen handelt. 
+	
+	
+\begin{figure}
+	\GRAPHICSC{0.2}{1.0}{XavierNX/NvidiaContainerDemo}
+	
+	\caption{Vier Docker-Container führen in diesem Beispiel vier unterschiedliche ML-Anwendungen aus .} \label{XavierNXContainerDemo}
+	
+\end{figure}
+
+\section{Fazit }
+	NVIDIAs Jetson Nano hat bereits 2019 einen preiswerten Einstieg in die Welt des KI-Edge-Computings ermöglicht. Für rund 100 Euro bekam man mit dem Nano all die Entwicklungswerkzeuge, die auch auf den großen Jetson-Systemen existieren. Möchte man aber das containerisierte Deployment und die Power für parallel arbeitende Modelle nutzen, ist der Jetson Xavier NX das konsequente Upgrade. Für den vierfachen Preis bekommt man, je nach Anwendungsfall, die doppelte bis zwanzigfache Inference-Geschwindigkeit. Das macht sich vor allem dann positiv bemerkbar, wenn man mehr als eine Videoquelle als Eingabe für ein Deep-Learning-­Modell nutzen will.
+	
+\section{Quellen}
+
+\begin{itemize}
+	\item \href{https://www.nvidia.com/de-de/data-center/volta-gpu-architecture/}{NVIDIA Volta}
+	\item \href{https://developer.nvidia.com/jetson-nx-developer-kit-sd-card-image}{SD-Card-Imagers für Jetson Xavier NX Developer Kit; Downloadbereich}
+	\item \href{https://github.com/NVIDIA-AI-IOT/jetson_benchmarks}{Jetson Benchmark auf HGitHub}
+	\item \href{https://docs.nvidia.com/deeplearning/frameworks/install-tf-jetson-platform/index.html}{NVIDIAs Deep Learning Frameworks Dokumentation}
+	\item \href{../../ExterneDDokumente/CNN/1710.07557.pdf}{Real-time Convolutional Neural Networks forEmotion and Gender Classification; arXiv:1710.07557v1 [cs.CV] 20 Oct 2017}
+\end{itemize}	

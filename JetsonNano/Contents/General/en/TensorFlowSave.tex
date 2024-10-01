@@ -1,0 +1,192 @@
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Sichern und Wiederherstellen eines Modells im Format HDF5}
+
+\Mynote{Was ist HDF5?}
+
+In der Regel verwendet man zum Training eines neuronalen Netzes eine besonders leistungsfähige Hardware. Nach Abschluss der Training können die Ergebnisse auf andere Systeme genutzt werden, beispielsweise einem Jetson Nano. Daher ist es notwendig, Mechanismen zu kennen, wir die Ergebnisse gesichert und wieder hergestellt werden. In diesem Abschnitt wird, der Anleitung~\url{https://www.tensorflow.org/tutorials/keras/save_and_load}  an einem einfahcen Beispiel dargestellt, wie ein Modell gespeichert und wieder geladen wird. \cite{GoogleTensorFlow:2019,StackOverflow:2019}
+
+Es gibt verschiedene Formate, Modelle abzuspeichern \cite{Onnx:2021,Junjie:2019,Folk:2011,HDF5} \Mynote{Quellen}. Hier verfolgen wir das Format HDF5, da es von TensorFlow unterstützt wird. \Mynote{Ist die richtig?} 
+
+\subsection{Notwendige Bibiotheken}
+
+Um Modelle im Format HDF5 speichern zu können, ist die Bibiothek \FILE{h5py} und der Zugriff auf Dateien notwendig. Die Bildiothek muss mit dem Befehl
+
+\medskip
+
+\SHELL{pip install -q pyyaml h5py}
+
+\medskip
+
+instlliert werden. Im Python-Programm muss man den Zugriff auf das Dateisystem ermöglichen und den aus dem Paket \FILE{TensorFlow} das Teilpaket \FILE{keras} bereitstellen.
+
+\medskip
+
+\PYTHON{import os}
+
+\PYTHON{import tensorflow as tf}
+
+\PYTHON{from tensorflow import keras}
+
+\medskip
+
+
+\subsection{Speichern während des Trainings}
+
+Zwischenergebnisse können während des Training gesichert werden. Dies kann nützlich sein, falls man ein Training abbrechen muss. Wenn dann das Training fortgesetzt wird, können die bereits erreichten Ergebnisse genutzt werden, um die Rechenzeit abzukürzen.
+
+Zur Zwischenspeicherung müssen Callback-Funktionen erstellt werden. An speziell definierten Stellen im Prgramm, so genannte Prüfpunkte, werden dann die Gewichte in eine Sammlung von Checkpoint-Dateien gespeichert. Diese werden am Ende jeder Epoche aktulisiert. Zunächst muss eine Checkpoint-Datei angelegt:
+
+\medskip
+
+\PYTHON{checkpoint\_path = "training\_1/cp.ckpt"}
+
+\Mynote{Datei cp fest?}
+
+\PYTHON{checkpoint\_dir = os.path.dirname(checkpoint\_path)}
+
+\medskip
+
+Es ist auch möglich, die Kontrollpunkte eindeutig anhand der Epoche zu benennen, dann ändert sich die Eingabe zu
+
+
+\medskip
+
+\PYTHON{checkpoint\_path = "training\_2/cp-{epoch:04d}.ckpt"}
+
+\Mynote{Wie sieht ein Beispiel aus?}
+
+\PYTHON{checkpoint\_dir = os.path.dirname(checkpoint\_path)}
+
+\medskip
+
+Danach wird die Callback-Funktion defniert. Die Übergabeparameter sind fest vorgegeben, der Inhalt ist entsprechend anzupassen.
+
+\medskip
+
+\PYTHON{\# Create a callback that saves the model's weights}
+
+\PYTHON{cp\_callback = tf.keras.callbacks.ModelCheckpoint(}
+
+\PYTHON{\qquad \qquad \qquad \qquad filepath=checkpoint\_path,}
+
+\PYTHON{\qquad \qquad \qquad \qquad save\_weights\_only=True,}
+
+\PYTHON{\qquad \qquad \qquad \qquad verbose=1)}
+
+\medskip
+
+Sollen die Gewichte nur alle beispielsweise 5 Epochen gespeichert werden, wird der Callback wie folgt angelegt:
+
+\medskip
+
+\PYTHON{\# Create a callback that saves the model's weights every 5 epochs}
+
+\PYTHON{cp\_callback = tf.keras.callbacks.ModelCheckpoint(}
+
+\PYTHON{\qquad \qquad \qquad \qquad  filepath=checkpoint\_path, }
+
+\PYTHON{\qquad \qquad \qquad \qquad  verbose=1, }
+
+\PYTHON{\qquad \qquad \qquad \qquad     save\_weights\_only=True,}
+
+\PYTHON{\qquad \qquad \qquad \qquad     save\_freq=5*batch\_size)}
+
+\PYTHON{\# Save the weights using the 'checkpoint\_path' format}
+
+\PYTHON{model.save\_weights(checkpoint\_path.format(epoch=0))}
+
+\medskip
+
+Um die Gewichte im Training zu speichern, muss die Callback-Funktion dann
+noch der Funktion \PYTHON{model.fit()} übergeben werden:
+
+\medskip
+
+\PYTHON{\# Train the model with the new callback}
+
+\PYTHON{model.fit(train\_images, }
+
+\PYTHON{\qquad \qquad \qquad  train\_labels,  }
+
+\PYTHON{\qquad \qquad \qquad  epochs=10,}
+
+\PYTHON{\qquad \qquad \qquad  validation\_data=(test\_images, test\_labels),}
+
+\PYTHON{\qquad \qquad \qquad  callbacks=[cp\_callback])  \# Pass callback to training}
+
+\medskip
+
+Es kann sein, dass auf diesem Wege eine Warnmeldung generiert wird, die aber ignoriert werden kann. \Mynote{Welche Warnumeldung}
+
+\bigskip
+
+
+Zwischen zwei Modellen mit derselben Architektur können die Gewichte mit Hilfe der erstellten Checkpoint-Datei geteilt werden. Sei \PYTHON{model} ein zweites Modell mit der gleichen Architektur wie das Modell, deren Gewichte gespeichert wurden,
+lädt man die Gewichte aus dem Checkpoint wie folgt in das neue Modell:
+
+\medskip
+
+\PYTHON{model.load\_weights(checkpoint\_path)}
+
+\medskip
+
+\subsection{Speichern von Gewichten}
+
+Falls die Gewichte eines Modells berechnet wurden, können sie abschließend gespeichert werden. Dazu kann der folgende Befehl verwendet werden.
+
+\medskip
+
+\PYTHON{model.save\_weights('./checkpoints/my\_checkpoint')}
+
+\medskip
+
+Standardmäßig wird so mit der Erweiterung \FILE{.ckpt} gespeichert.
+
+\subsection{Speichern des gesamten Modells}
+
+Über die Funktion \PYTHON{model.save} können Architektur, Gewichte und Trainingskonfiguration eines Modells in einer einzigen Datei gespeichert werden. Es gibt zwei Dateiformate, um ein gesamtes Modell zu speichern. Standard in TensorFlow  ist SavedModel, ein proprietäres Dateiformat. Es ist aber auch möglich, Modelle im Format HDF5 zu speichern.\Mynote{Was ist SavedModel?}
+
+\subsubsection{SavedModel-Format}
+
+Das Speichern im Format SavedModel erfolgt in nur zwei Zeilen.
+
+\medskip
+
+\PYTHON{!mkdir -p saved\_model}
+
+\PYTHON{model.save('saved\_model/my\_model')}
+
+\medskip
+
+Das Speichern eines Modells ist nur dann sinnvoll, wenn es später genutzt werden kann.
+Das Modell kann aus dem gespeicherten Modell neu geladen werden:
+
+\medskip
+
+\PYTHON{new\_model = tf.keras.models.load\_model('saved\_model/my\_model')}
+
+\subsubsection{Format HDF5}
+
+Um das Modell im Format HDF5 zu speichern, wird die entsprechende Endung \FILE{h5} angegeben. Es ist nur eine Zeile notwendig:
+
+\medskip
+
+\PYTHON{model.save('my\_model.h5')}
+
+\medskip
+
+Geladen wird das Modell entsprechend mit dem Dateinamen inklusive der Endung \FILE{h5}:
+
+\medskip
+
+\PYTHON{new\_model = tf.keras.models.load\_model('my\_model.h5')}
+
+\Mynote{Wie wird ein Modell genutzt?}
+
+\section{Nutzung eines Modells}
+
+%todo ausarbeiten; ein komplettes Beispiel
+\Mynote{Beispielprogramm}
+

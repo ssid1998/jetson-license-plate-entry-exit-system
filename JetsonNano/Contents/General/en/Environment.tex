@@ -1,0 +1,281 @@
+%%%%%%
+%
+% $Autor: Wings $
+% $Datum: 2020-01-18 11:15:45Z $
+% $Pfad: WuSt/Skript/Produktspezifikation/powerpoint/ImageProcessing.tex $
+% $Version: 4620 $
+%
+%%%%%%
+
+%todo Der Text muss komplett überarbeitet werden. Er stammt aus dem Link
+
+% todo https://www.datacamp.com/community/tutorials/virtual-environment-in-python
+
+
+
+\chapter{Virtual environments in Python}
+
+
+When creating software, it is a difficult undertaking to have a well-defined development environment. When developing software with Python, one is supported. A virtual environment can be set up here. It ensures, even if individual software packages are updated on the computer, that the defined package versions are always used. 
+
+\Mynote{Could be explained better}
+
+
+%\url{https://docs.python.org/3/tutorial/venv.html}
+
+
+\section{package \FILE{python3-venv} for virtual environments}
+
+On a PC system this is possible with the \FILE{conda} tool. Unfortunately, it cannot be used on a Jetson Nano. Here the package \FILE{python3-venv} helps, which can be installed as follows:
+
+\medskip
+
+\SHELL{sudo apt install -y python3-venv}
+
+\medskip
+
+The following command creates a folder \FILE{python-envs} if it does not already exist, and a new virtual environment in \FILE{/home/msr/python-envs/env} with the name \FILE{env}:
+
+\medskip
+
+\SHELL{python3 -m venv $\sim$/python-envs/env}
+
+\medskip
+
+After these two steps, the virtual environment can be used. To do this, it must be activated:
+\medskip
+
+\SHELL{source $\sim$/python-envs/env/bin/activate}
+
+\medskip
+
+The terminal indicates that the environment is active by displaying the environment name \FILE{(env)} before the user name. To deactivate the environment, simply run the command \FILE{deactivate}.
+
+Now individual packages can be installed. In order to be able to manage the installed packages, the package \FILE{wheel} should also be installed; this is needed for the installation of many subsequent packages.
+
+\medskip
+
+\SHELL{pip3 install wheel}
+
+\medskip
+
+
+A new virtual environment should be created for each major project. This way, specific package versions can be installed. If updating a package causes problems, the virtual environment can simply be deleted. This is easier than reinstalling the entire system.
+
+
+\section{Package \FILE{pipenv} for virtual environments}
+
+The package \FILE{pipenv} enables the creation of a virtual environment. It a pip file that helps manage the package and can be easily installed or removed. After installing \FILE{pipenv}, the tools \FILE{pip} and \FILE{virtualenv} can be used together to create a 
+virtual environment, the file \FILE{pipfile} works as a replacement for the file \FILE{requirement.txt} which keeps track of the package version according to the given project.
+
+If a computer with the Windows operating system is used, the tool \FILE{Git Bash} is to be used as a terminal. For the macOS operating system, the tool \FILE{Homebrew} is available. Linux users use the package management tool \FILE{LinuxBrew}.
+
+To create a virtual environment with the package \FILE{pipenv}, a directory for the new project \FILE{MyProject} must first be created.
+
+\medskip
+
+\SHELL{mkdir MyProject}
+
+\medskip
+
+Now you have to change to this directory:
+
+\medskip
+
+\SHELL{cd MyProject}
+
+\medskip
+
+In the Windows operating system the package \FILE{pipenv} can now be installed.
+
+\medskip
+
+\PYTHON{pip install pipenv}
+
+\medskip
+
+On the other hand, Linux/macOS users can use the following command to install the \FILE{pipenv} package after installing \FILE{LinuxBrew}.
+\Mynote{Why brew if pip works?}
+
+\medskip
+
+\PYTHON{brew install pipenv}
+
+\medskip
+
+
+Now a new virtual environment can be created for the project with the following command:
+
+\medskip
+
+\PYTHON{pipenv shell}
+
+\medskip
+
+The command creates a new virtual environment \FILE{virtualenv} and a pip file \FILE{Pipfile} for the project. After installing the package \FILE{virtualenv}, the necessary packages for the project can now be installed in the virtual environment. In the following command the packages \FILE{requests} and \FILE{flask} are installed.
+
+
+\medskip
+
+\PYTHON{pipenv install requests}
+
+\PYTHON{pipenv install flask}
+
+\medskip
+
+The command reports that the file \FILE{Pipfile} has been changed accordingly. The following command can be used to uninstall the package.
+
+\medskip
+
+\PYTHON{pipenv uninstall flask}
+
+\medskip
+
+To be able to work outside the package, the virtual environment must be disabled:
+
+\medskip
+
+\SHELL{exit}
+
+\medskip
+
+
+The virtual environment can then be deactivated again with the command 
+
+\medskip
+
+
+\SHELL{source MyProject/bin/activate}
+
+\medskip
+
+can be activated.
+
+
+
+
+
+\section{Program \FILE{Anaconda Prompt-It} for virtual environments}
+
+The programme \FILE{Anaconda Prompt-It} is a tool that is installed with the installation of an Anaconda distribution. It allows the use of a command line to create Python programs. The figure~\ref{env:conda} shows what information you get if you call the command \SHELL{conda}.
+
+\bigskip
+
+\begin{figure}
+    \GRAPHICSC{0.4}{1.0}{environment/Env4}	
+    
+    \caption{help text for conda}
+    
+    \label{env:conda}  
+\end{figure}
+
+\bigskip
+
+With the installation of Anaconda there is an easy way to define a virtual environment. The command
+
+\SHELL{conda create -n MyProject python = 3.7}
+
+
+creates a new virtual environment named \FILE{MyProject} using the specific Python version of 3.7. After creating the virtual environment, it can be activated:
+
+\medskip
+
+\PYTHON{conda activate MyProject}
+
+\medskip
+
+The environment used is specified in the command line in brackets: SHELL{(MyProject) C:\textbackslash}. After activation, the necessary packages can be installed.  For example, the package \FILE{numpy} will be installed.
+
+\medskip
+
+\PYTHON{conda install -n MyProject numpy}
+
+\medskip
+
+Alternatively, the package manager inside the virtual environment can be used.
+
+\medskip
+
+\PYTHON{pip install numpy}
+
+\medskip
+
+For documentation purposes, all installed packages within a virtual environment can be displayed. The following command is used for this, with the figure~\ref{env:list} showing a possible output:
+
+\medskip
+
+\PYTHON{conda list}
+
+\medskip
+
+
+%todo insert own file     
+\begin{figure}
+    \GRAPHICSC{0.6}{1.0}{environment/env6}	
+    
+    \caption{list of installed packages}
+    
+    \label{env:list}  
+\end{figure}
+
+If one wants to use a different virtual environment, the current one must be deactivated:
+
+\medskip
+
+\PYTHON{conda deactivate}
+
+\medskip
+
+
+
+All created virtual environments can also be displayed. This facilitates their management.
+The figure~\ref{env:envlist} shows a possible output.
+
+\medskip
+
+\PYTHON{conda env list}
+
+\medskip
+
+\begin{figure}
+    \GRAPHICSC{0.6}{1.0}{environment/env7}	
+    
+    \caption{list of all created virtual environments}
+    \label{env:envlist}  
+\end{figure}
+
+
+Finally, you can also remove a virtual environment. The following command removes the virtual environment \FILE{MyProject} with all its packages. 
+
+\medskip
+
+\PYTHON{conda env remove -n myenv}
+
+
+\section{Program \FILE{Anaconda Navigator} for Virtual Environments}
+
+If a graphical interface is preferred, the tool \FILE{Anaconda Navigator-It} can be used. With it one can start and manage packages in \FILE{Anaconda}.
+
+After starting the programme, one can switch to the \glqq Environments\grqq {} task according to Figure~\ref{env:Navigator}, where the virtual environment \FILE{base} is always displayed. It is the default setting.  
+
+\begin{figure}
+    \GRAPHICSC{0.3}{1.0}{environment/Env10}	
+    
+    \caption{Anaconda Navigator: Calling the virtual environments area}
+    
+    \label{env:Navigator}  
+\end{figure}
+
+In this dialogue one can press the button \glqq Create\grqq{}. Then the necessary information must be entered to create a new virtual environment called \FILE{new-env}, see figure~\ref{env:new}. 
+
+\begin{figure}
+    \GRAPHICSC{0.3}{1.0}{environment/env11}	
+    
+    \caption{Anaconda Navigator: Creating a virtual environment}
+    
+    \label{env:new}  
+\end{figure}
+
+
+After that, you can display all installed packages and install new ones.
+To activate the virtual environment, the corresponding environment must be selected.

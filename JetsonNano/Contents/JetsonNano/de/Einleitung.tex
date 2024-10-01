@@ -1,0 +1,89 @@
+%%%%%%%%%%%%%%%
+%
+% $Autor: Wings $
+% $Datum: 2020-02-24 14:30:26Z $
+% $Pfad: komponenten/Bilderkennung/Produktspezifikation/JetsonNano/Inhalt/Einleitung.tex $
+% $Version: 1792 $
+%
+%
+%%%%%%%%%%%%%%%
+
+
+
+\chapter{Jetson Nano}
+
+\section{Der Jetson Nano und die Konkurrenz}
+
+System-on-a-Chip-Systeme (SOC) bieten einen kostengünstigen Einstieg 
+in die Ent­wicklung autonomer, Strom sparender Deep-Learning-Anwendungen. 
+Sie eignen sich am besten für die Inference, also für das Anwenden 
+vortrainierter Machine-Learning-Modelle auf reale Daten. 
+Der Jetson Nano des Herstellers NVIDIA ist ein solches SOC-System. Er 
+ist das kleinste KI-Modul aus NVIDIAS Jetson-Familie, verspricht eine 
+hohe Verarbeitungsgeschwindigkeit bei gleichzeitig moderater Leistungsaufnahme.
+\cite{JetsonGettingStarted:2019}
+
+
+
+\bigskip
+
+Im unteren Preissegment sind in den letzten Jahren mehrere günstige Systeme auf den 
+Markt gekommen, die sich zum Entwickeln von Anwendungen im Bereich maschinelles 
+Lernen für eingebettete Systeme eignen. Dabei sind Chips und Systeme entstanden, 
+die spezielle Berechnungskerne für solche Aufgaben mitbringen, bei gleichzeitig 
+niedriger Leistungsaufnahme.
+
+Für Entwickler hat Intel zum Beispiel mit dem Neural Compute Stick eine preiswerte 
+Lösung geschaffen, die sich per USB an bestehende Hardware wie einen Raspberry Pi 
+anschließen lässt. Für rund 70 Euro bekommt man ein System mit 16 Kernen, das auf 
+Intels eigenem Low-Power-Prozessorchip für die Bildverarbeitung Movidius basiert. 
+Das Produkt von Intel verwendet 
+ Movidius Myriad X Vision Processing Unit und kann mit den Betriebssystemen  
+ Windows\textsuperscript{\textregistered} 10, Ubuntu oder 
+ MacOS verwendet werden. \cite{IntelStickDataSheet:2019}
+
+
+\bigskip
+
+Die gleiche Zielgruppe versucht Google mit dem Google Edge TPU Boards anzusprechen. 
+Für 80 Euro bekommt man eine Tensor Processing Unit (TPU), die ähnliche Hardware 
+wie Google Cloud oder Googles Entwicklungsumgebung für Jupyter-Notebooks Colab 
+verwendet und sich ebenfalls als USB-3-Dongle nutzen lässt.
+\cite{Vincent:2018,GoogleTensorFlowModel:2019,GoogleCoral:2019} 
+
+
+
+\bigskip
+
+Vergleichbare Technik findet sich mit dem A12 Bionic Chip mit 8~Kernen 
+und 5~Billionen Operationen pro Sekunde auch in der neuesten 
+Generation von Apples iPhone, in Samsungs Exynos 980 mit 
+integrierter Neural Processing Unit (NPU) oder in Huaweis Kirin~990 mit gleich zwei NPUs. 
+\cite{SamsungExynos980:2020,HuaweiKirin990:2020}
+
+
+
+\section{Anwendungsgebiete des Jetson Nano}
+
+Für den Jetson Nano gibt es mehrere Anwendungsfälle. Er kann für ganz grundlegende
+Aufgaben dienen, die auch mit Geräten wie dem Raspberry Pi erledigt werden können. 
+Er kann als kleiner, leistungsfähiger Computer in konventionellen Anwendungsfällen 
+wie dem Betrieb eines Webservers oder der Nutzung zum Surfen im Internet und zur 
+Erstellung von Dokumenten oder als Low-End-Spielcomputer eingesetzt werden. \cite{Kurniawan:2021}
+
+\bigskip
+
+Aber der wahre Mehrwert des Jetson Nano liegt in seinem Design für eine einfache Implementierung der künstlichen Intelligenz. 
+Was dies so einfach macht, ist das Software-Entwicklungskit NVIDIA TensorRT, das eine hochleistungsfähige tiefgreifende Lerninterferenz ermöglicht. 
+Ein bereits trainiertes Netzwerk kann implementiert werden und entwickelt sich weiter, 
+während es mit den neuen Daten konfrontiert wird, die in der spezifischen Anwendung vorhanden sind.
+
+\bigskip
+
+Auf der Website \cite{JetsonProjects:2020} von NVidia sind
+eine Vielzahl von Projekten aus der Jetson-Community zu finden. 
+Neben der einfachen Teleoperation erlaubt der Jetson Nano auch die Realisierung von Kollisionsvermeidung und Objektverfolgung bis hin zum weiteren Aufbau eines kleinen autonomen Fahrzeugs. Neben den nicht kommerziellen Projekte werden auch industrielle Projekte dargestellt.
+Ein Beispiel dafür ist das Adaptive-Traffic-Controlling-System, das eine visuelle Verkehrsstau-Messmethode verwendet, um die Ampelzeiten so anzupassen, dass der Fahrzeugstau reduziert wird. Ein anderes Projekt ermöglicht es Seh- oder Lesebehinderten, sowohl gedruckten als auch handgeschriebenen Text zu hören, indem erkannte Sätze in synthetisierte Sprache umgewandelt werden. 
+Auch in diesem Projekt werden im Grunde nur der Jetson Nano und die Pi-Kamera verwendet. 
+Zum Training des Modells werden Tensorflow 2.0 und Google Colab verwendet.
+Auch die Erkennung von Gebärdensprache, Gesichtern und Objekten kann mit Jetson Nano und vortrainierten Modellen realisiert werden.

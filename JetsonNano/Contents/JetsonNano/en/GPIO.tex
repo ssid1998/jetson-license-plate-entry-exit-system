@@ -1,0 +1,129 @@
+
+
+\section{GPIOs} \label{GPIO}
+
+%todo Warum hat es nicht funktioniert?
+The pinout of the Jetson Nano and the instructions for installing the required libraries can be found in chapter \ref{Installation}.
+
+\subsection{Control via the terminal}
+The GPIOs can be controlled directly via the terminal. This is especially helpful for testing the functionality. For example, a circuit can be built with an LED that is controlled via board pin 12. A possible circuit is shown in the chapter \ref{LED}. 
+
+\medskip
+
+To get direct access to the GPIOs, you have to be a 'super user'.
+
+\medskip
+\SHELL{\$ sudo su}
+\medskip
+
+Now you can view the current configuration of the pins:
+
+\medskip
+\SHELL{\$ cat /sys/kernel/debug/gpio}
+\medskip
+
+To define pin 12 of the Jetson Nano as an output, tap
+
+\medskip
+\SHELL{\$ echo 79 > /sys/class/gpio/export} \newline
+\SHELL{\$ echo out > /sys/class/gpio/gpio79/direction}
+\medskip
+
+Now the output of the pin can be set to high (3.3 V) or low (0 V):
+
+\medskip
+\SHELL{\$ echo 1 > /sys/class/gpio/gpio79/value} \newline
+\SHELL{\$ echo 0 > /sys/class/gpio/gpio79/value}
+\medskip
+
+Finally, the pin should be released again:
+
+\medskip
+\SHELL{\$ echo 79 > /sys/class/gpio/unexport}
+\medskip
+
+\subsection{Verwendung der GPIO-Pins im Python-Programm}
+
+If the GPIO pins are to be controlled from a Python programme, the following commands are elementary.
+
+First, the library must be imported (before this, the steps described in the chapter \ref{Installation} for installing these libraries must be carried out). In order to be able to access the module under 'GPIO', the corresponding specification 'as GPIO' follows
+
+\medskip
+\SHELL{import Jetson.GPIO as GPIO}
+\medskip
+
+The Jetson GPIO library offers four options for numbering the I/O pins, so the numbering to be used must be specified.
+
+\medskip
+\SHELL{GPIO.setmode(GPIO.BOARD)} \newline
+oder \newline
+\SHELL{GPIO.setmode(GPIO.BCM)} \newline
+oder \newline
+\SHELL{GPIO.setmode(GPIO.CVM)} \newline
+oder \newline
+\SHELL{GPIO.setmode(GPIO.TEGRA\_SOC)}
+\medskip
+
+To set up a GPIO channel as an input or output, the commands
+
+\medskip
+\SHELL{GPIO.setup(channel, GPIO.IN)} 
+
+or 
+
+\SHELL{GPIO.setup(channel, GPIO.OUT)}
+\medskip
+
+where under \SHELL{channel} the pin is specified in the given numbering. The state of the pin prepared in this way can now be checked via
+
+\medskip
+\SHELL{GPIO.output(channel, GPIO.HIGH)}
+
+and 
+
+\SHELL{GPIO.output(channel, GPIO.LOW)}
+\medskip
+
+be changed.
+
+\subsection{Visualisierung mit LED}\label{LED}
+
+To visualise the circuitry of the GPIO pins, LEDs can be connected to the Jetson Nano. A possible circuit for this can be seen in figure \ref{Circuit}. It is explained in more detail under \cite{JetsonHacks:2020}. On the left side you can see the pins to which the elements are connected. Here, pin 2 has 5V, pin 6 is GND and pin 12 is switched to turn the LED on and off.
+
+\begin{figure}[H]
+	\begin{center}
+%		\includegraphics[width=0.6\textwidth]{Jetson/Schaltung}
+        
+  \begin{tikzpicture}[scale = 0.75]
+    \draw[line width=2pt] (0,0.5) -- (4,0.5) -- (4,1.5) -- (3.5,2) -- (4.0,2.5) -- (4,3.5) -- (4,5);
+    \draw[line width=2pt] (4.0,5)  -- (4.5,5) -- (4.5,7)--(3.5,7)--(3.5,5)--(4,5);
+    \draw[line width=2pt]  (3.5,3.5) -- (4.5,3.5);
+    \draw[line width=2pt]  (4,3.5) -- (4.5,4.5) -- (3.5,4.5) -- cycle;
+    \draw[-triangle 45]  (4.5, 4.2) -- (4.9,3.9);
+    \draw[-triangle 45]  (4.45, 4.0) -- (4.85,3.7);
+    \draw[line width=2pt] (4,7) -- (4,7.5) -- (0,7.5);
+    \draw[line width=2pt] (0,2) -- (0.75,2) -- (0.75,2.5) -- (2.75,2.5) -- (2.75,1.5) -- (0.75,1.5) -- (0.75,2);
+    \draw[line width=2pt] (2.75,2) -- (3.5,2);
+    \draw[line width=2pt] ((3.5,1.5) -- (3.5,2.5);  
+    \node[left] (Pin2) at (0,7.5)  {2};
+    \node[left] (Pin12) at (0,2)  {12};
+    \node[left] (Pin6) at (0,0.5)  {6};
+    \node[above] (R10) at (1.75,2.5) {$10k\Omega$};
+    \node[right] (BC) at (5,2) {BC337};
+    \node[right] (LED) at (5,4) {LED};
+    \node[right] (R330) at (5,6) {$330 \Omega$};
+  \end{tikzpicture}        
+		\caption{Circuit for testing the GPIO pins with LED}
+		\label{Schaltung}
+	\end{center}
+\end{figure}
+
+A photo of the circuit can be seen in figure \ref{CircuitPhoto}. The cable on the left in this photo is connected to pin 2, the one in the middle to pin 6 and the one on the right to pin 12.
+
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=0.8\textwidth]{Jetson/SchaltungFoto}
+		\caption{Circuit for testing the GPIO pins with LED}
+		\label{SchaltungFoto}
+	\end{center}
+\end{figure}

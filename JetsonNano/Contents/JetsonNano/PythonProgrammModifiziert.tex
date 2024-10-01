@@ -1,0 +1,431 @@
+%%%%%%
+%
+% $Autor: Wings $
+% $Datum: 2021-05-14 $
+% $Pfad: GitLab/MLEdgeComputer/$
+% $Dateiname: PythonProgrammModifiziert
+% $Version: 4620 $
+%
+%%%%%%
+
+
+
+
+Nach der erfolgreichen Installation der Bilderkennung über Klonen des Projektes jetson-inference wie in Kapitel 4 beschrieben, stehen die Programme \FILE{imagenet-console.py} und \FILE{imagenet-camera.py} zur Durchführung der Bilderkennung zur Verfügung. Für individuelle Projekte können eigene Programme auf Basis der heruntergeladenen Modelle geschrieben beziehungsweise die vorhandenen Programme modifiziert werden.
+
+\section{imagenet-console.py}
+
+Das Programm imagenet-console lädt ein vom Benutzer spezifiziertes Bild und klassifiziert es.
+Das Ergebnis wird im Terminal unter Angabe der Objektklasse und Sicherheit ausgegeben und auf eine Kopie des Eingangsbildes gedruckt, welches an der vom Benutzer angegebenen Stelle gespeichert wird.
+
+\lstset{ 
+	backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}; should come as last argument
+	basicstyle=\footnotesize,        % the size of the fonts that are used for the code
+	breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+	breaklines=true,                 % sets automatic line breaking
+	captionpos=b,                    % sets the caption-position to bottom
+	columns=flexible,
+	commentstyle=\color{mygreen},    % comment style
+	deletekeywords={...},            % if you want to delete keywords from the given language
+	escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+	extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+	firstnumber=1,                % start line enumeration with line 1
+	frame=single,	                   % adds a frame around the code
+	keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+	keywordstyle=\color{blue},       % keyword style
+	language=Python,                 % the language of the code
+	morekeywords={*,...},            % if you want to add more keywords to the set
+	numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
+	numbersep=5pt,                   % how far the line-numbers are from the code
+	numberstyle=\tiny\color{mygray}, % the style that is used for the line-numbers
+	rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+	showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+	showstringspaces=false,          % underline spaces within strings only
+	showtabs=false,                  % show tabs within strings adding particular underscores
+	stepnumber=2,                    % the step between two line-numbers. If it's 1, each line will be numbered
+	stringstyle=\color{mymauve},     % string literal style
+	tabsize=2,	                   % sets default tabsize to 2 spaces
+	title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
+} 
+\lstset{language=Python}
+
+\begin{lstlisting}
+#!/usr/bin/python
+#
+# Copyright (c) 2019, NVIDIA CORPORATION. All rights reserved.
+#
+# Permission is hereby granted, free of charge, to any person obtaining a
+# copy of this software and associated documentation files (the "Software"),
+# to deal in the Software without restriction, including without limitation
+# the rights to use, copy, modify, merge, publish, distribute, sublicense,
+# and/or sell copies of the Software, and to permit persons to whom the
+# Software is furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL
+# THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+# FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+# DEALINGS IN THE SOFTWARE.
+#
+
+import jetson.inference
+import jetson.utils
+
+import argparse
+import sys
+
+# parse the command line
+parser = argparse.ArgumentParser(description="Classify an image using an image recognition DNN.", formatter_class=argparse.RawTextHelpFormatter, epilog=jetson.inference.imageNet.Usage())
+
+
+parser.add_argument("file_in", type=str, help="filename of the input image to process")
+parser.add_argument("file_out", type=str, default=None, nargs='?', help="filename of the output image to save")
+parser.add_argument("--network", type=str, default="googlenet", help="pre-trained model to load (see below for options)")
+
+try:
+	opt = parser.parse_known_args()[0]
+
+except:
+	print("")
+	parser.print_help()
+	sys.exit(0)
+
+# load an image (into shared CPU/GPU memory)
+img, width, height = jetson.utils.loadImageRGBA(opt.file_in)
+
+# load the recognition network
+net = jetson.inference.imageNet(opt.network, sys.argv)
+
+# classify the image
+class_idx, confidence = net.Classify(img, width, height)
+
+# find the object description
+class_desc = net.GetClassDesc(class_idx)
+
+# print out the result
+print("image is recognized as '{:s}' (class #{:d}) with {:f}% confidence\n".format(class_desc, class_idx, confidence * 100))
+
+# print out timing info
+net.PrintProfilerTimes()
+
+# overlay the result on the image
+if opt.file_out is not None:
+	font = jetson.utils.cudaFont(size=jetson.utils.adaptFontSize(width))	
+	font.OverlayText(img, width, height, "{:f}% {:s}".format(confidence * 100, class_desc), 10, 10, font.White, font.Gray40)
+	jetson.utils.cudaDeviceSynchronize()
+	jetson.utils.saveImageRGBA(opt.file_out, img, width, height)
+
+\end{lstlisting}
+
+In Zeile 24-28 werden zunächst alle benötigten Module importiert.
+Anschließend (Zeile 30-45) wird die Kommandozeile ausgelesen und interpretiert,
+sodass das Bild und das Netzwerk geladen werden können (Zeile 46-50).
+Danach kann das Bild einfach durch den Befehl in Zeile 53 klassifiziert werden.
+Basierend auf dem Klassenindex wird die Objektbeschreibung gefunden und zusammen
+mit der Sicherheit der Klassifizierung über das Ausgangsbild gelegt.
+Zusätzlich werden die Zeitinformationen im Terminal ausgegeben.
+
+
+\section{imagenet-camera.py}
+
+Das Programm imagenet-camera funktioniert prinzipiell gleich wie imagenet-console. Jedoch werden statt eines einzelnen Bildes die Live-Aufnahmen der angeschlossenen Kamera ausgewertet.
+
+\lstset{ 
+	backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}; should come as last argument
+	basicstyle=\footnotesize,        % the size of the fonts that are used for the code
+	breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+	breaklines=true,                 % sets automatic line breaking
+	captionpos=b,                    % sets the caption-position to bottom
+	columns=flexible,
+	commentstyle=\color{mygreen},    % comment style
+	deletekeywords={...},            % if you want to delete keywords from the given language
+	escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+	extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+	firstnumber=1,                % start line enumeration with line 1
+	frame=single,	                   % adds a frame around the code
+	keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+	keywordstyle=\color{blue},       % keyword style
+	language=Python,                 % the language of the code
+	morekeywords={*,...},            % if you want to add more keywords to the set
+	numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
+	numbersep=5pt,                   % how far the line-numbers are from the code
+	numberstyle=\tiny\color{mygray}, % the style that is used for the line-numbers
+	rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+	showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+	showstringspaces=false,          % underline spaces within strings only
+	showtabs=false,                  % show tabs within strings adding particular underscores
+	stepnumber=2,                    % the step between two line-numbers. If it's 1, each line will be numbered
+	stringstyle=\color{mymauve},     % string literal style
+	tabsize=2,	                   % sets default tabsize to 2 spaces
+	title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
+} 
+\lstset{language=Python}
+
+\begin{lstlisting}
+#!/usr/bin/python
+#
+# Copyright (c) 2019, NVIDIA CORPORATION. All rights reserved.
+#
+# Permission is hereby granted, free of charge, to any person obtaining a
+# copy of this software and associated documentation files (the "Software"),
+# to deal in the Software without restriction, including without limitation
+# the rights to use, copy, modify, merge, publish, distribute, sublicense,
+# and/or sell copies of the Software, and to permit persons to whom the
+# Software is furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL
+# THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+# FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+# DEALINGS IN THE SOFTWARE.
+#
+
+import jetson.inference
+import jetson.utils
+
+import argparse
+import sys
+
+# parse the command line
+parser = argparse.ArgumentParser(description="Classify a live camera stream using an image recognition DNN.", formatter_class=argparse.RawTextHelpFormatter, epilog=jetson.inference.imageNet.Usage())
+
+parser.add_argument("--network", type=str, default="googlenet", help="pre-trained model to load (see below for options)")
+parser.add_argument("--camera", type=str, default="0", help="index of the MIPI CSI camera to use (e.g. CSI camera 0)\nor for VL42 cameras, the /dev/video device to use.\nby default, MIPI CSI camera 0 will be used.")
+parser.add_argument("--width", type=int, default=1280, help="desired width of camera stream (default is 1280 pixels)")
+parser.add_argument("--height", type=int, default=720, help="desired height of camera stream (default is 720 pixels)")
+
+try:
+	opt = parser.parse_known_args()[0]
+except:
+	print("")
+	parser.print_help()
+	sys.exit(0)
+
+# load the recognition network
+net = jetson.inference.imageNet(opt.network, sys.argv)
+
+# create the camera and display
+font = jetson.utils.cudaFont()
+camera = jetson.utils.gstCamera(opt.width, opt.height, opt.camera)
+display = jetson.utils.glDisplay()
+
+# process frames until user exits
+while display.IsOpen():
+	# capture the image
+	img, width, height = camera.CaptureRGBA()
+
+	# classify the image
+	class_idx, confidence = net.Classify(img, width, height)
+
+	# find the object description
+	class_desc = net.GetClassDesc(class_idx)
+
+	# overlay the result on the image	
+	font.OverlayText(img, width, height, "{:05.2f}% {:s}".format(confidence * 100, class_desc), 5, 5, font.White, font.Gray40)
+
+	# render the image
+	display.RenderOnce(img, width, height)
+
+	# update the title bar
+	display.SetTitle("{:s} | Network {:.0f} FPS".format(net.GetNetworkName(), net.GetNetworkFPS()))
+
+	# print out performance info
+	net.PrintProfilerTimes()
+
+\end{lstlisting}
+
+\section{Bilderkennung mit digitaler Signalausgabe}
+
+Im Folgenden finden Sie eine modifizierte Version des Programms \FILE{imagenet-camera.py},
+die bei der Erkennung von Flaschen ein Signal über einen GPIO-Pin zu einem zweiten System senden soll.
+
+\medskip
+
+Diese Aufgabenstellung ist auf verschiedene Arten zu realisieren und das Programm insofern nur als exemplarisches Beispiel zu verstehen. In diesem Fall wird zugunsten eines konstanteren, nicht schnell fluktuierenden Signals nicht die Auswertung jedes einzelnen Frames zur Signalgebung verwendet, sondern aus mehreren Frames jeweils die identifizierte Objektklasse mit der höchsten Wahrscheinlichkeit ermittelt. Insofern wird die Signalstabilität auf Kosten der Echtzeitfähigkeit erhöht.
+
+\medskip
+
+\lstset{ 
+	backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}; should come as last argument
+	basicstyle=\footnotesize,        % the size of the fonts that are used for the code
+	breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+	breaklines=true,                 % sets automatic line breaking
+	captionpos=b,                    % sets the caption-position to bottom
+	columns=flexible,
+	commentstyle=\color{mygreen},    % comment style
+	deletekeywords={...},            % if you want to delete keywords from the given language
+	escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+	extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+	firstnumber=1,                % start line enumeration with line 1
+	frame=single,	                   % adds a frame around the code
+	keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+	keywordstyle=\color{blue},       % keyword style
+	language=Python,                 % the language of the code
+	morekeywords={*,...},            % if you want to add more keywords to the set
+	numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
+	numbersep=5pt,                   % how far the line-numbers are from the code
+	numberstyle=\tiny\color{mygray}, % the style that is used for the line-numbers
+	rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+	showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+	showstringspaces=false,          % underline spaces within strings only
+	showtabs=false,                  % show tabs within strings adding particular underscores
+	stepnumber=2,                    % the step between two line-numbers. If it's 1, each line will be numbered
+	stringstyle=\color{mymauve},     % string literal style
+	tabsize=2,	                   % sets default tabsize to 2 spaces
+	title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
+} 
+\lstset{language=Python}
+
+\begin{lstlisting}
+#!/usr/bin/python
+#
+# Copyright (c) 2019, NVIDIA CORPORATION. All rights reserved.
+#
+# Permission is hereby granted, free of charge, to any person obtaining a
+# copy of this software and associated documentation files (the "Software"),
+# to deal in the Software without restriction, including without limitation
+# the rights to use, copy, modify, merge, publish, distribute, sublicense,
+# and/or sell copies of the Software, and to permit persons to whom the
+# Software is furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL
+# THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+# FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+# DEALINGS IN THE SOFTWARE.
+#
+
+import jetson.inference
+import jetson.utils
+
+import argparse
+import sys
+import atexit
+#!/usr/bin/python
+#
+import jetson.inference
+import jetson.utils
+import argparse
+import sys
+import Jetson.GPIO as GPIO
+
+def ex():
+	GPIO.output(13, GPIO.LOW)
+
+#prepare the Pins as Outputs
+GPIO.setmode(GPIO.BOARD)
+GPIO.setup(12, GPIO.OUT, initial=GPIO.LOW) #Signal for bottle detected
+GPIO.setup(13, GPIO.OUT, initial=GPIO.LOW) #Signal for image detection running
+
+# parse the command line
+parser = argparse.ArgumentParser(description="Classify a live camera stream using an image recognition DNN.", 
+formatter_class=argparse.RawTextHelpFormatter, epilog=jetson.inference.imageNet.Usage())
+parser.add_argument("--network", type=str, default="googlenet", help="pre-trained model to load (see below for options)")
+parser.add_argument("--camera", type=str, default="0", help="index of the MIPI CSI camera to use (e.g. CSI camera 0)\nor for VL42 cameras, the /dev/video device to use.\nby default, MIPI CSI camera 0 will be used.")
+parser.add_argument("--width", type=int, default=1280, help="desired width of camera stream (default is 1280 pixels)")
+parser.add_argument("--height", type=int, default=720, help="desired height of camera stream (default is 720 pixels)")
+
+try:
+	opt = parser.parse_known_args()[0]
+except:
+	print("")
+	parser.print_help()
+	sys.exit(0)
+	
+# load the recognition network
+net = jetson.inference.imageNet(opt.network, sys.argv)
+class_idx_l = [None]*1001
+confidence_l = [None]*1001
+
+# create the camera and display
+font = jetson.utils.cudaFont()
+camera = jetson.utils.gstCamera(opt.width, opt.height, opt.camera)
+display = jetson.utils.glDisplay()
+
+# Set Pin 13 to High
+GPIO.output(13, GPIO.HIGH)
+
+# process frames until user exits
+a = 0
+while display.IsOpen():
+	t = 0
+	while t<50:
+		# capture the image
+		img, width, height = camera.CaptureRGBA()
+		# classify the image
+		idx, conf = net.Classify(img, width, height)
+		class_idx_l[t] = idx
+		confidence_l[t] = conf
+		t = t+1
+
+		# render the image and overlay the result on the image (not in first run)
+		if a == 1:
+			# if bottle is detected
+			if class_idx == 440 or class_idx == 737 or class_idx == 898 or class_idx                     == 907:
+				font.OverlayText(img, width, height, "{:05.2f}% {:s} \n bottle detected".format(confidence * 100, class_desc), 5, 5, font.White, font.Gray40)
+			# if no bottle detcted
+			else:    
+				font.OverlayText(img, width, height, "{:05.2f}% {:s}".format(confidence * 100,     class_desc), 5, 5, font.White, font.Gray40)
+		display.RenderOnce(img, width, height)
+
+	# use class index with highest confidence
+	class_idx = class_idx_l[confidence_l.index(max(confidence_l))]
+	confidence = max(confidence_l)
+
+	# find the object description
+	class_desc = net.GetClassDesc(class_idx)
+
+	# render the image and update Pin
+	# if bottle detected
+	if class_idx == 440 or class_idx == 737 or class_idx == 898 or class_idx == 907:
+		font.OverlayText(img, width, height, "{:05.2f}% {:s} \n bottle detected".format(confidence * 100, class_desc), 5, 5, font.White, font.Gray40)
+		GPIO.output(12, GPIO.HIGH)
+	# if no bottle detcted
+	else:    
+		font.OverlayText(img, width, height, "{:05.2f}% {:s}".format(confidence * 100,     class_desc), 5, 5, font.White, font.Gray40)
+		GPIO.output(12, GPIO.LOW)
+	display.RenderOnce(img, width, height)
+
+	# update the title bar
+	display.SetTitle("{:s} | Network {:.0f} FPS".format(net.GetNetworkName(), net.GetNetworkFPS()))
+
+	# print out performance info
+	net.PrintProfilerTimes()
+
+	# first run finished
+	a = 1
+	
+# when the program is exit, reset all GPIOs
+atexit.register(GPIO.cleanup)
+atexit.register(GPIO.output,13, GPIO.LOW)
+atexit.register(GPIO.output,12, GPIO.LOW)
+
+\end{lstlisting}
+
+Um die Verwendung der GPIOs zu ermöglichen, wird zunächst die entsprechende Bibliothek importiert. Damit können die GPIO-Channel 12 und 13 als Output eingerichtet werden.
+
+Die Kommandozeile wird wie in den anderen Programmen ausgewertet und das Klassifizierungsmodell geladen. Wie auch in imagenet-camera wird die Kamera und das Display eingerichtet.
+
+\medskip
+
+Nachdem dies geschehen ist, wird der Pin 13 auf High gesetzt, um zu signalisieren, dass die Objekterkennung aktiv ist. Wird das Programm verlassen, wird dies wieder rückgängig gemacht (Zeile 93).
+
+\medskip
+
+Während der Verarbeitung der Frames wird nun, anders als im Ursprungsprogramm, über 50 Frames die Bilderkennung durchgeführt und die jeweiligen Ergebnisse in einem Array gespeichert. Nach 50 Frames wird als Ergebnis die Klasse angezeigt, die den höchsten Wert für die Wahrscheinlichkeit erreichen konnte. So wird der anderenfalls auftretende sehr schnelle Wechsel zwischen den Ergebnissen geglättet, der zu einem ständigen An und Aus des entsprechenden GPIO-Pins bei Platzierung einer Flasche vor der Kamera führen würde. Um dennoch ein flüssiges Bild anzuzeigen, wird der Bildschrim dennoch in jedem Durchgang aktualisiert. Die Anzeige des Ergebnisses und die Schaltung des Pins erfolgen jedoch erst ab Zeile 72.
+

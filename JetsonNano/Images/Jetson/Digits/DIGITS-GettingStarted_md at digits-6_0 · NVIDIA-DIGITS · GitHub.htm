@@ -1,0 +1,766 @@
+<!DOCTYPE HTML>
+<!-- saved from url=(0071)https://github.com/NVIDIA/DIGITS/blob/digits-6.0/docs/GettingStarted.md -->
+<!DOCTYPE html PUBLIC "" ""><HTML lang="en"><HEAD><META content="IE=11.0000" 
+http-equiv="X-UA-Compatible">
+     
+<META charset="utf-8">   <LINK href="https://github.githubassets.com" rel="dns-prefetch"> 
+  <LINK href="https://avatars0.githubusercontent.com" rel="dns-prefetch">   
+<LINK href="https://avatars1.githubusercontent.com" rel="dns-prefetch">   <LINK 
+href="https://avatars2.githubusercontent.com" rel="dns-prefetch">   <LINK href="https://avatars3.githubusercontent.com" 
+rel="dns-prefetch">   <LINK href="https://github-cloud.s3.amazonaws.com" rel="dns-prefetch"> 
+  <LINK href="https://user-images.githubusercontent.com/" rel="dns-prefetch">   
+<LINK href="DIGITS-GettingStarted_md%20at%20digits-6_0%20·%20NVIDIA-DIGITS%20·%20GitHub-Dateien/frameworks-481a47a96965f6706fb41bae0d14b09a.css" 
+rel="stylesheet" media="all" integrity="sha512-/YEVWs7BzxfKyUd6zVxjEQcXRWsLbcEjv045Rq8DSoipySmQblhVKxlXLva2GtNd5DhwCxHwW1RM0N9I7S2Vew==" 
+crossorigin="anonymous">   <LINK href="DIGITS-GettingStarted_md%20at%20digits-6_0%20·%20NVIDIA-DIGITS%20·%20GitHub-Dateien/site-d3c48f1b58ea95d9efb184fd4592b411.css" 
+rel="stylesheet" media="all" integrity="sha512-xod5+iick6st6a0tvmfiqwCFLFTRzOkGLX0SAqY7SQFl0Q3sWxKUB2rm1Kw4Vz/57FMg7chtfVYeUB/Yr/xmFQ==" 
+crossorigin="anonymous">     <LINK href="DIGITS-GettingStarted_md%20at%20digits-6_0%20·%20NVIDIA-DIGITS%20·%20GitHub-Dateien/github-eabfbaded2e91939e805d1a3af34018a.css" 
+rel="stylesheet" media="all" integrity="sha512-xlKdcTpXrrd+rLG1h8yYl5yt/S94zWLil75KS5529Mf0/RdApUbGTKcFbY0OZMotEz3l11k0GqfDAhasayWehw==" 
+crossorigin="anonymous">                   
+<META name="viewport" content="width=device-width">     
+<TITLE>DIGITS/GettingStarted.md at digits-6.0 · NVIDIA/DIGITS · GitHub</TITLE>   
+  
+<META name="description" content="Deep Learning GPU Training System. Contribute to NVIDIA/DIGITS development by creating an account on GitHub."> 
+    <LINK title="GitHub" href="/opensearch.xml" rel="search" type="application/opensearchdescription+xml"> 
+  <LINK title="GitHub" href="https://github.com/fluidicon.png" rel="fluid-icon"> 
+  
+<META content="1401488693436528" property="fb:app_id">     
+<META name="twitter:image:src" content="https://avatars0.githubusercontent.com/u/1728152?s=400&amp;v=4">
+<META name="twitter:site" content="@github">
+<META name="twitter:card" content="summary">
+<META name="twitter:title" content="NVIDIA/DIGITS">
+<META name="twitter:description" content="Deep Learning GPU Training System. Contribute to NVIDIA/DIGITS development by creating an account on GitHub."> 
+    
+<META content="https://avatars0.githubusercontent.com/u/1728152?s=400&amp;v=4" 
+property="og:image">
+<META content="GitHub" property="og:site_name">
+<META content="object" property="og:type">
+<META content="NVIDIA/DIGITS" property="og:title">
+<META content="https://github.com/NVIDIA/DIGITS" property="og:url">
+<META content="Deep Learning GPU Training System. Contribute to NVIDIA/DIGITS development by creating an account on GitHub." 
+property="og:description">   <LINK href="https://github.githubassets.com/" rel="assets"> 
+        
+<META name="request-id" content="E34A:3D531:46EE26F:6A991B6:5DE4C09E" 
+data-pjax-transient="">     
+<META name="selected-link" data-pjax-transient="" value="repo_source">       
+<META name="google-site-verification" content="KT5gs8h0wvaagLKAVWq8bbeNwnZZK1r1XQysX3xurLU"> 
+    
+<META name="google-site-verification" content="ZzhVyEFwb7w3e0-uOTltm8Jsck2F5StVihD0exw2fsA"> 
+    
+<META name="google-site-verification" content="GXs5KoUUkNCoaAZn7wPN-t01Pywp9M3sEjnt_3_ZWPc"> 
+    
+<META name="octolytics-host" content="collector.githubapp.com">
+<META name="octolytics-app-id" content="github">
+<META name="octolytics-event-url" content="https://collector.githubapp.com/github-external/browser_event">
+<META name="octolytics-dimension-request_id" content="E34A:3D531:46EE26F:6A991B6:5DE4C09E">
+<META name="octolytics-dimension-region_edge" content="ams">
+<META name="octolytics-dimension-region_render" content="iad">
+<META name="octolytics-dimension-ga_id" class="js-octo-ga-id" content="">
+<META name="octolytics-dimension-visitor_id" content="2259548790915751095"> 
+<META name="analytics-location" content="/<user-name>/<repo-name>/blob/show" 
+data-pjax-transient="true"> 
+<META name="dimension1" class="js-ga-set" content="Logged Out">         
+<META name="hostname" content="github.com">     
+<META name="user-login" content="">       
+<META name="expected-hostname" content="github.com">       
+<META name="js-proxy-site-detection-payload" content="M2E3ZTM4ZDEzYWU5ZGJhOTdjNjk3MTRhNzhlY2UyYmViZTgwOTc0OGI3NzczNGFmZmM0MGUzMjk2ZDEyZTZmOXx7InJlbW90ZV9hZGRyZXNzIjoiMTM5LjEzLjg2LjIzMiIsInJlcXVlc3RfaWQiOiJFMzRBOjNENTMxOjQ2RUUyNkY6NkE5OTFCNjo1REU0QzA5RSIsInRpbWVzdGFtcCI6MTU3NTI3MjYwNiwiaG9zdCI6ImdpdGh1Yi5jb20ifQ=="> 
+    
+<META name="enabled-features" content="MARKETPLACE_FEATURED_BLOG_POSTS,MARKETPLACE_INVOICED_BILLING,MARKETPLACE_SOCIAL_PROOF_CUSTOMERS,MARKETPLACE_TRENDING_SOCIAL_PROOF,MARKETPLACE_RECOMMENDATIONS,MARKETPLACE_PENDING_INSTALLATIONS"> 
+    
+<META name="html-safe-nonce" content="2e13343287f43e25e412254fac961f453bdd9985"> 
+  
+<META http-equiv="x-pjax-version" content="5889f893dcaa7c2acb03cae96934b7a4">    
+     <LINK title="Recent Commits to DIGITS:digits-6.0" href="https://github.com/NVIDIA/DIGITS/commits/digits-6.0.atom" 
+rel="alternate" type="application/atom+xml">   
+<META name="go-import" content="github.com/NVIDIA/DIGITS git https://github.com/NVIDIA/DIGITS.git"> 
+  
+<META name="octolytics-dimension-user_id" content="1728152">
+<META name="octolytics-dimension-user_login" content="NVIDIA">
+<META name="octolytics-dimension-repository_id" content="32403967">
+<META name="octolytics-dimension-repository_nwo" content="NVIDIA/DIGITS">
+<META name="octolytics-dimension-repository_public" content="true">
+<META name="octolytics-dimension-repository_is_fork" content="false">
+<META name="octolytics-dimension-repository_network_root_id" content="32403967">
+<META name="octolytics-dimension-repository_network_root_nwo" content="NVIDIA/DIGITS">
+<META name="octolytics-dimension-repository_explore_github_marketplace_ci_cta_shown" 
+content="false">     <LINK href="https://github.com/NVIDIA/DIGITS/blob/digits-6.0/docs/GettingStarted.md" 
+rel="canonical" data-pjax-transient="">   
+<META name="browser-stats-url" content="https://api.github.com/_private/browser/stats"> 
+  
+<META name="browser-errors-url" content="https://api.github.com/_private/browser/errors"> 
+  <LINK href="https://github.githubassets.com/pinned-octocat.svg" rel="mask-icon" 
+color="#000000">   <LINK class="js-site-favicon" href="https://github.githubassets.com/favicon.ico" 
+rel="icon" type="image/x-icon"> 
+<META name="theme-color" content="#1e2327">   <LINK href="/manifest.json" rel="manifest" 
+crossorigin="use-credentials">   
+<META name="GENERATOR" content="MSHTML 11.00.9600.18860"></HEAD>   
+<BODY class="logged-out env-production page-responsive page-blob">
+<DIV class="position-relative js-header-wrapper "><A tabindex="1" class="px-2 py-4 bg-blue text-white show-on-focus js-skip-to-content" 
+href="https://github.com/NVIDIA/DIGITS/blob/digits-6.0/docs/GettingStarted.md#start-of-content">Skip 
+to content</A>     <SPAN class="Progress progress-pjax-loader position-fixed width-full js-pjax-loader-bar"><SPAN 
+class="progress-pjax-loader-bar top-0 left-0" style="width: 0%;"></SPAN>     
+</SPAN>                     <HEADER class="Header-old header-logged-out js-details-container Details position-relative f4 py-2" 
+role="banner">
+<DIV class="container-lg d-lg-flex flex-items-center p-responsive">
+<DIV class="d-flex flex-justify-between flex-items-center"><A class="mr-4" 
+aria-label="Homepage" href="https://github.com/" data-ga-click="(Logged out) Header, go to homepage, icon:logo-wordmark"><svg 
+xmlns="http://www.w3.org/2000/svg" 
+class="octicon octicon-mark-github text-white" aria-hidden="true" viewBox="0 0 16 16" 
+width="32" height="32" version="1.1"><path fill-rule="evenodd" d="M 8 0 C 3.58 0 0 3.58 0 8 c 0 3.54 2.29 6.53 5.47 7.59 c 0.4 0.07 0.55 -0.17 0.55 -0.38 c 0 -0.19 -0.01 -0.82 -0.01 -1.49 c -2.01 0.37 -2.53 -0.49 -2.69 -0.94 c -0.09 -0.23 -0.48 -0.94 -0.82 -1.13 c -0.28 -0.15 -0.68 -0.52 -0.01 -0.53 c 0.63 -0.01 1.08 0.58 1.23 0.82 c 0.72 1.21 1.87 0.87 2.33 0.66 c 0.07 -0.52 0.28 -0.87 0.51 -1.07 c -1.78 -0.2 -3.64 -0.89 -3.64 -3.95 c 0 -0.87 0.31 -1.59 0.82 -2.15 c -0.08 -0.2 -0.36 -1.02 0.08 -2.12 c 0 0 0.67 -0.21 2.2 0.82 c 0.64 -0.18 1.32 -0.27 2 -0.27 c 0.68 0 1.36 0.09 2 0.27 c 1.53 -1.04 2.2 -0.82 2.2 -0.82 c 0.44 1.1 0.16 1.92 0.08 2.12 c 0.51 0.56 0.82 1.27 0.82 2.15 c 0 3.07 -1.87 3.75 -3.65 3.95 c 0.29 0.25 0.54 0.73 0.54 1.48 c 0 1.07 -0.01 1.93 -0.01 2.2 c 0 0.21 0.15 0.46 0.55 0.38 A 8.013 8.013 0 0 0 16 8 c 0 -4.42 -3.58 -8 -8 -8 Z" 
+/></svg>         </A>           
+<DIV class="d-lg-none css-truncate css-truncate-target width-fit p-2"><svg 
+xmlns="http://www.w3.org/2000/svg" class="octicon octicon-repo" aria-hidden="true" 
+viewBox="0 0 12 16" width="12" height="16" version="1.1"><path fill-rule="evenodd" 
+d="M 4 9 H 3 V 8 h 1 v 1 Z m 0 -3 H 3 v 1 h 1 V 6 Z m 0 -2 H 3 v 1 h 1 V 4 Z m 0 -2 H 3 v 1 h 1 V 2 Z m 8 -1 v 12 c 0 0.55 -0.45 1 -1 1 H 6 v 2 l -1.5 -1.5 L 3 16 v -2 H 1 c -0.55 0 -1 -0.45 -1 -1 V 1 c 0 -0.55 0.45 -1 1 -1 h 10 c 0.55 0 1 0.45 1 1 Z m -1 10 H 1 v 2 h 2 v -1 h 3 v 1 h 5 v -2 Z m 0 -10 H 2 v 9 h 9 V 1 Z" 
+/></svg>     <A class="Header-link" href="https://github.com/NVIDIA">NVIDIA</A>  
+  /     <A class="Header-link" 
+href="https://github.com/NVIDIA/DIGITS">DIGITS</A>           </DIV>
+<DIV class="d-flex flex-items-center"><A class="d-inline-block d-lg-none f5 text-white no-underline border border-gray-dark rounded-2 px-2 py-1 mr-3 mr-sm-5" 
+href="https://github.com/join?source=header-repo" data-ga-click="(Logged out) Header, clicked Sign up, text:sign-up" 
+data-hydro-click-hmac="67c24f1adf03dff31783a69320b6abd54b4ca9e99ce129e5bee79a715f733f09" 
+data-hydro-click='{"event_type":"authentication.click","payload":{"location_in_page":"site header","repository_id":null,"auth_type":"SIGN_UP","client_id":"526092199.1530027191","originating_request_id":"E34A:3D531:46EE26F:6A991B6:5DE4C09E","originating_url":"https://github.com/NVIDIA/DIGITS/blob/digits-6.0/docs/GettingStarted.md","referrer":null,"user_id":null}}'> 
+             Sign&nbsp;up             </A>           <BUTTON class="btn-link d-lg-none mt-1 js-details-target" 
+aria-expanded="false" aria-label="Toggle navigation" type="button"><svg xmlns="http://www.w3.org/2000/svg" 
+class="octicon octicon-three-bars text-white" aria-hidden="true" viewBox="0 0 12 16" 
+width="18" height="24" version="1.1"><path fill-rule="evenodd" d="M 11.41 9 H 0.59 C 0 9 0 8.59 0 8 c 0 -0.59 0 -1 0.59 -1 H 11.4 c 0.59 0 0.59 0.41 0.59 1 c 0 0.59 0 1 -0.59 1 h 0.01 Z m 0 -4 H 0.59 C 0 5 0 4.59 0 4 c 0 -0.59 0 -1 0.59 -1 H 11.4 c 0.59 0 0.59 0.41 0.59 1 c 0 0.59 0 1 -0.59 1 h 0.01 Z M 0.59 11 H 11.4 c 0.59 0 0.59 0.41 0.59 1 c 0 0.59 0 1 -0.59 1 H 0.59 C 0 13 0 12.59 0 12 c 0 -0.59 0 -1 0.59 -1 Z" 
+/></svg>           </BUTTON>         </DIV></DIV>
+<DIV class="HeaderMenu HeaderMenu--logged-out position-fixed top-0 right-0 bottom-0 height-fit position-lg-relative d-lg-flex flex-justify-between flex-items-center flex-auto">
+<DIV 
+class="d-flex d-lg-none flex-justify-end border-bottom bg-gray-light p-3"><BUTTON 
+class="btn-link js-details-target" aria-expanded="false" aria-label="Toggle navigation" 
+type="button"><svg xmlns="http://www.w3.org/2000/svg" class="octicon octicon-x text-gray" 
+aria-hidden="true" viewBox="0 0 12 16" width="18" height="24" 
+version="1.1"><path fill-rule="evenodd" d="M 7.48 8 l 3.75 3.75 l -1.48 1.48 L 6 9.48 l -3.75 3.75 l -1.48 -1.48 L 4.52 8 L 0.77 4.25 l 1.48 -1.48 L 6 6.52 l 3.75 -3.75 l 1.48 1.48 L 7.48 8 Z" 
+/></svg>         </BUTTON>       </DIV><NAV class="mt-0 px-3 px-lg-0 mb-5 mb-lg-0" 
+aria-label="Global">
+<UL class="d-lg-flex list-style-none">
+  <LI class="d-block d-lg-flex flex-lg-nowrap flex-lg-items-center border-bottom border-lg-bottom-0 mr-0 mr-lg-3 edge-item-fix position-relative flex-wrap flex-justify-between d-flex flex-items-center "><details 
+  class="HeaderMenu-details details-overlay details-reset width-full"><summary 
+  class="HeaderMenu-summary HeaderMenu-link px-0 py-3 border-0 no-wrap d-block d-lg-inline-block"> 
+                     Why GitHub?                     <svg xmlns="http://www.w3.org/2000/svg" 
+  class="icon-chevon-down-mktg position-absolute position-lg-relative" fill="none" 
+  viewBox="0 0 14 8" x="0px" y="0px" xmlns:xml="http://www.w3.org/XML/1998/namespace" 
+  xml:space="preserve"><path d="M 1 1 l 6.2 6 L 13 1" />                     
+  </svg>                   </summary>
+  <DIV class="dropdown-menu flex-auto rounded-1 bg-white px-0 mt-0 pb-4 p-lg-4 position-relative position-lg-absolute left-0 left-lg-n4"><A 
+  class="py-2 lh-condensed-ultra d-block link-gray-dark no-underline h5 Bump-link--hover" 
+  href="https://github.com/features" data-ga-click="(Logged out) Header, go to Features">Features 
+  <SPAN 
+  class="Bump-link-symbol float-right text-normal text-gray-light">→</SPAN></A>
+  <UL class="list-style-none f5 pb-3">
+    <LI class="edge-item-fix"><A class="py-2 lh-condensed-ultra d-block link-gray no-underline f5" 
+    href="https://github.com/features/code-review/" data-ga-click="(Logged out) Header, go to Code review">Code 
+    review</A></LI>
+    <LI class="edge-item-fix"><A class="py-2 lh-condensed-ultra d-block link-gray no-underline f5" 
+    href="https://github.com/features/project-management/" data-ga-click="(Logged out) Header, go to Project management">Project 
+    management</A></LI>
+    <LI class="edge-item-fix"><A class="py-2 lh-condensed-ultra d-block link-gray no-underline f5" 
+    href="https://github.com/features/integrations" data-ga-click="(Logged out) Header, go to Integrations">Integrations</A></LI>
+    <LI class="edge-item-fix"><A class="py-2 lh-condensed-ultra d-block link-gray no-underline f5" 
+    href="https://github.com/features/actions" data-ga-click="(Logged out) Header, go to Actions">Actions</A></LI>
+    <LI class="edge-item-fix"><A class="py-2 lh-condensed-ultra d-block link-gray no-underline f5" 
+    href="https://github.com/features/packages" data-ga-click="(Logged out) Header, go to GitHub Packages">Packages</A></LI>
+    <LI class="edge-item-fix"><A class="py-2 lh-condensed-ultra d-block link-gray no-underline f5" 
+    href="https://github.com/features/security" data-ga-click="(Logged out) Header, go to Security">Security</A></LI>
+    <LI class="edge-item-fix"><A class="py-2 lh-condensed-ultra d-block link-gray no-underline f5" 
+    href="https://github.com/features#team-management" data-ga-click="(Logged out) Header, go to Team management">Team 
+    management</A></LI>
+    <LI class="edge-item-fix"><A class="py-2 lh-condensed-ultra d-block link-gray no-underline f5" 
+    href="https://github.com/features#social-coding" data-ga-click="(Logged out) Header, go to Social coding">Social 
+    coding</A></LI>
+    <LI class="edge-item-fix"><A class="py-2 lh-condensed-ultra d-block link-gray no-underline f5" 
+    href="https://github.com/features#documentation" data-ga-click="(Logged out) Header, go to Documentation">Documentation</A></LI>
+    <LI class="edge-item-fix"><A class="py-2 lh-condensed-ultra d-block link-gray no-underline f5" 
+    href="https://github.com/features#code-hosting" data-ga-click="(Logged out) Header, go to Code hosting">Code 
+    hosting</A></LI></UL>
+  <UL class="list-style-none mb-0 border-lg-top pt-lg-3">
+    <LI class="edge-item-fix"><A class="py-2 lh-condensed-ultra d-block no-underline link-gray-dark no-underline h5 Bump-link--hover" 
+    href="https://github.com/customer-stories" data-ga-click="(Logged out) Header, go to Customer stories">Customer 
+    stories <SPAN class="Bump-link-symbol float-right text-normal text-gray-light">→</SPAN></A></LI>
+    <LI class="edge-item-fix"><A class="py-2 lh-condensed-ultra d-block no-underline link-gray-dark no-underline h5 Bump-link--hover" 
+    href="https://github.com/security" data-ga-click="(Logged out) Header, go to Security">Security 
+    <SPAN 
+    class="Bump-link-symbol float-right text-normal text-gray-light">→</SPAN></A></LI></UL></DIV></details></LI>
+  <LI class="border-bottom border-lg-bottom-0 mr-0 mr-lg-3"><A class="HeaderMenu-link no-underline py-3 d-block d-lg-inline-block" 
+  href="https://github.com/enterprise" data-ga-click="(Logged out) Header, go to Enterprise">Enterprise</A></LI>
+  <LI class="d-block d-lg-flex flex-lg-nowrap flex-lg-items-center border-bottom border-lg-bottom-0 mr-0 mr-lg-3 edge-item-fix position-relative flex-wrap flex-justify-between d-flex flex-items-center "><details 
+  class="HeaderMenu-details details-overlay details-reset width-full"><summary 
+  class="HeaderMenu-summary HeaderMenu-link px-0 py-3 border-0 no-wrap d-block d-lg-inline-block"> 
+                     Explore                     <svg xmlns="http://www.w3.org/2000/svg" 
+  class="icon-chevon-down-mktg position-absolute position-lg-relative" fill="none" 
+  viewBox="0 0 14 8" x="0px" y="0px" xmlns:xml="http://www.w3.org/XML/1998/namespace" 
+  xml:space="preserve"><path d="M 1 1 l 6.2 6 L 13 1" />                     
+  </svg>                   </summary>
+  <DIV class="dropdown-menu flex-auto rounded-1 bg-white px-0 pt-2 pb-0 mt-0 pb-4 p-lg-4 position-relative position-lg-absolute left-0 left-lg-n4">
+  <UL class="list-style-none mb-3">
+    <LI class="edge-item-fix"><A class="py-2 lh-condensed-ultra d-block link-gray-dark no-underline h5 Bump-link--hover" 
+    href="https://github.com/explore" data-ga-click="(Logged out) Header, go to Explore">Explore 
+    GitHub <SPAN class="Bump-link-symbol float-right text-normal text-gray-light">→</SPAN></A></LI></UL>
+  <H4 class="text-gray-light text-normal text-mono f5 mb-2 border-lg-top pt-lg-3">Learn 
+  &amp; contribute</H4>
+  <UL class="list-style-none mb-3">
+    <LI class="edge-item-fix"><A class="py-2 lh-condensed-ultra d-block link-gray no-underline f5" 
+    href="https://github.com/topics" data-ga-click="(Logged out) Header, go to Topics">Topics</A></LI>
+    <LI class="edge-item-fix"><A class="py-2 lh-condensed-ultra d-block link-gray no-underline f5" 
+    href="https://github.com/collections" data-ga-click="(Logged out) Header, go to Collections">Collections</A></LI>
+    <LI class="edge-item-fix"><A class="py-2 lh-condensed-ultra d-block link-gray no-underline f5" 
+    href="https://github.com/trending" data-ga-click="(Logged out) Header, go to Trending">Trending</A></LI>
+    <LI class="edge-item-fix"><A class="py-2 lh-condensed-ultra d-block link-gray no-underline f5" 
+    href="https://lab.github.com/" data-ga-click="(Logged out) Header, go to Learning lab">Learning 
+    Lab</A></LI>
+    <LI class="edge-item-fix"><A class="py-2 lh-condensed-ultra d-block link-gray no-underline f5" 
+    href="https://opensource.guide/" data-ga-click="(Logged out) Header, go to Open source guides">Open 
+    source guides</A></LI></UL>
+  <H4 class="text-gray-light text-normal text-mono f5 mb-2 border-lg-top pt-lg-3">Connect 
+  with others</H4>
+  <UL class="list-style-none mb-0">
+    <LI class="edge-item-fix"><A class="py-2 lh-condensed-ultra d-block link-gray no-underline f5" 
+    href="https://github.com/events" data-ga-click="(Logged out) Header, go to Events">Events</A></LI>
+    <LI class="edge-item-fix"><A class="py-2 lh-condensed-ultra d-block link-gray no-underline f5" 
+    href="https://github.community/" data-ga-click="(Logged out) Header, go to Community forum">Community 
+    forum</A></LI>
+    <LI class="edge-item-fix"><A class="py-2 pb-0 lh-condensed-ultra d-block link-gray no-underline f5" 
+    href="https://education.github.com/" data-ga-click="(Logged out) Header, go to GitHub Education">GitHub 
+    Education</A></LI></UL></DIV></details></LI>
+  <LI class="border-bottom border-lg-bottom-0 mr-0 mr-lg-3"><A class="HeaderMenu-link no-underline py-3 d-block d-lg-inline-block" 
+  href="https://github.com/marketplace" data-ga-click="(Logged out) Header, go to Marketplace">Marketplace</A></LI>
+  <LI class="d-block d-lg-flex flex-lg-nowrap flex-lg-items-center border-bottom border-lg-bottom-0 mr-0 mr-lg-3 edge-item-fix position-relative flex-wrap flex-justify-between d-flex flex-items-center "><details 
+  class="HeaderMenu-details details-overlay details-reset width-full"><summary 
+  class="HeaderMenu-summary HeaderMenu-link px-0 py-3 border-0 no-wrap d-block d-lg-inline-block"> 
+                     Pricing                     <svg xmlns="http://www.w3.org/2000/svg" 
+  class="icon-chevon-down-mktg position-absolute position-lg-relative" fill="none" 
+  viewBox="0 0 14 8" x="0px" y="0px" xmlns:xml="http://www.w3.org/XML/1998/namespace" 
+  xml:space="preserve"><path d="M 1 1 l 6.2 6 L 13 1" />                     
+  </svg>                   </summary>
+  <DIV class="dropdown-menu flex-auto rounded-1 bg-white px-0 pt-2 pb-4 mt-0 p-lg-4 position-relative position-lg-absolute left-0 left-lg-n4"><A 
+  class="pb-2 lh-condensed-ultra d-block link-gray-dark no-underline h5 Bump-link--hover" 
+  href="https://github.com/pricing" data-ga-click="(Logged out) Header, go to Pricing">Plans 
+  <SPAN 
+  class="Bump-link-symbol float-right text-normal text-gray-light">→</SPAN></A>
+  <UL class="list-style-none mb-3">
+    <LI class="edge-item-fix"><A class="py-2 lh-condensed-ultra d-block link-gray no-underline f5" 
+    href="https://github.com/pricing#feature-comparison" data-ga-click="(Logged out) Header, go to Compare plans">Compare 
+    plans</A></LI>
+    <LI class="edge-item-fix"><A class="py-2 lh-condensed-ultra d-block link-gray no-underline f5" 
+    href="https://enterprise.github.com/contact" data-ga-click="(Logged out) Header, go to Contact Sales">Contact 
+    Sales</A></LI></UL>
+  <UL class="list-style-none mb-0 border-lg-top pt-lg-3">
+    <LI class="edge-item-fix"><A class="py-2 lh-condensed-ultra d-block no-underline link-gray-dark no-underline h5 Bump-link--hover" 
+    href="https://github.com/nonprofit" data-ga-click="(Logged out) Header, go to Nonprofits">Nonprofit 
+    <SPAN 
+    class="Bump-link-symbol float-right text-normal text-gray-light">→</SPAN></A></LI>
+    <LI class="edge-item-fix"><A class="py-2 pb-0 lh-condensed-ultra d-block no-underline link-gray-dark no-underline h5 Bump-link--hover" 
+    href="https://education.github.com/" data-ga-click="(Logged out) Header, go to Education">Education 
+    <SPAN 
+    class="Bump-link-symbol float-right text-normal text-gray-light">→</SPAN></A></LI></UL></DIV></details></LI></UL></NAV>
+<DIV class="d-lg-flex flex-items-center px-3 px-lg-0 text-center text-lg-left">
+<DIV class="d-lg-flex mb-3 mb-lg-0">
+<DIV class="header-search flex-self-stretch flex-lg-self-auto mr-0 mr-lg-3 mb-3 mb-lg-0 scoped-search site-scoped-search js-site-search position-relative js-jump-to" 
+role="combobox" aria-expanded="false" aria-haspopup="listbox" aria-owns="jump-to-results" 
+aria-label="Search or jump to">
+<DIV class="position-relative"><!-- '"` --><!-- </textarea></xmp> -->
+<FORM class="js-site-search-form" role="search" aria-label="Site" action="/NVIDIA/DIGITS/search" 
+method="get" accept-charset="UTF-8" data-unscoped-search-url="/search" 
+data-scoped-search-url="/NVIDIA/DIGITS/search" data-scope-id="32403967" 
+data-scope-type="Repository"><INPUT name="utf8" type="hidden" value="✓">       
+<LABEL class="form-control input-sm header-search-wrapper p-0 header-search-wrapper-jump-to position-relative d-flex flex-justify-between flex-items-center js-chromeless-input-container"><INPUT name="q" class="form-control input-sm header-search-input jump-to-field js-jump-to-field js-site-search-focus js-site-search-field is-clearable" aria-controls="jump-to-results" spellcheck="false" aria-autocomplete="list" aria-label="Search" type="text" placeholder="Search" value="" autocomplete="off" data-jump-to-suggestions-path="/_graphql/GetSuggestedNavigationDestinations#csrf-token=JYCrF+5tAuDq9SnFJ4jkJMomYegDGdt9vVRM3OXJy0ZEem40GcUMbg/iMpoijr4686lKlxb5buORpShDwgTnXQ==" autocapitalize="off" data-scoped-placeholder="Search" data-unscoped-placeholder="Search GitHub" data-hotkey="s,/"> 
+          <INPUT name="type" class="js-site-search-type-field" type="hidden">    
+         <IMG class="mr-2 header-search-key-slash" alt="" src="DIGITS-GettingStarted_md%20at%20digits-6_0%20·%20NVIDIA-DIGITS%20·%20GitHub-Dateien/search-key-slash.svg"> 
+            
+<DIV class="Box position-absolute overflow-hidden d-none jump-to-suggestions js-jump-to-suggestions-container">
+<UL class="d-none js-jump-to-suggestions-template-container">
+  <LI class="d-flex flex-justify-start flex-items-center p-0 f5 navigation-item js-navigation-item js-jump-to-suggestion" 
+  role="option"><A tabindex="-1" class="no-underline d-flex flex-auto flex-items-center jump-to-suggestions-path js-jump-to-suggestion-path js-navigation-open p-2" 
+  href="DIGITS-GettingStarted_md%20at%20digits-6_0%20·%20NVIDIA-DIGITS%20·%20GitHub-Dateien/docs.htm">
+  <DIV class="jump-to-octicon js-jump-to-octicon flex-shrink-0 mr-2 text-center d-none"><svg 
+  xmlns="http://www.w3.org/2000/svg" title="Repository" class="octicon octicon-repo flex-shrink-0 js-jump-to-octicon-repo d-none" 
+  role="img" aria-label="Repository" viewBox="0 0 12 16" width="16" height="16" 
+  version="1.1"><path fill-rule="evenodd" d="M 4 9 H 3 V 8 h 1 v 1 Z m 0 -3 H 3 v 1 h 1 V 6 Z m 0 -2 H 3 v 1 h 1 V 4 Z m 0 -2 H 3 v 1 h 1 V 2 Z m 8 -1 v 12 c 0 0.55 -0.45 1 -1 1 H 6 v 2 l -1.5 -1.5 L 3 16 v -2 H 1 c -0.55 0 -1 -0.45 -1 -1 V 1 c 0 -0.55 0.45 -1 1 -1 h 10 c 0.55 0 1 0.45 1 1 Z m -1 10 H 1 v 2 h 2 v -1 h 3 v 1 h 5 v -2 Z m 0 -10 H 2 v 9 h 9 V 1 Z" 
+  /></svg>       <svg xmlns="http://www.w3.org/2000/svg" title="Project" class="octicon octicon-project flex-shrink-0 js-jump-to-octicon-project d-none" 
+  role="img" aria-label="Project" viewBox="0 0 15 16" width="16" height="16" 
+  version="1.1"><path fill-rule="evenodd" d="M 10 12 h 3 V 2 h -3 v 10 Z m -4 -2 h 3 V 2 H 6 v 8 Z m -4 4 h 3 V 2 H 2 v 12 Z m -1 1 h 13 V 1 H 1 v 14 Z M 14 0 H 1 a 1 1 0 0 0 -1 1 v 14 a 1 1 0 0 0 1 1 h 13 a 1 1 0 0 0 1 -1 V 1 a 1 1 0 0 0 -1 -1 Z" 
+  /></svg>       <svg xmlns="http://www.w3.org/2000/svg" title="Search" class="octicon octicon-search flex-shrink-0 js-jump-to-octicon-search d-none" 
+  role="img" aria-label="Search" viewBox="0 0 16 16" width="16" height="16" 
+  version="1.1"><path fill-rule="evenodd" d="M 15.7 13.3 l -3.81 -3.83 A 5.93 5.93 0 0 0 13 6 c 0 -3.31 -2.69 -6 -6 -6 S 1 2.69 1 6 s 2.69 6 6 6 c 1.3 0 2.48 -0.41 3.47 -1.11 l 3.83 3.81 c 0.19 0.2 0.45 0.3 0.7 0.3 c 0.25 0 0.52 -0.09 0.7 -0.3 a 0.996 0.996 0 0 0 0 -1.41 v 0.01 Z M 7 10.7 c -2.59 0 -4.7 -2.11 -4.7 -4.7 c 0 -2.59 2.11 -4.7 4.7 -4.7 c 2.59 0 4.7 2.11 4.7 4.7 c 0 2.59 -2.11 4.7 -4.7 4.7 Z" 
+  /></svg>     </DIV><IMG width="28" height="28" class="avatar mr-2 flex-shrink-0 js-jump-to-suggestion-avatar d-none" 
+  aria-label="Team" alt="" src="DIGITS-GettingStarted_md%20at%20digits-6_0%20·%20NVIDIA-DIGITS%20·%20GitHub-Dateien/docs.htm"> 
+      
+  <DIV class="jump-to-suggestion-name js-jump-to-suggestion-name flex-auto overflow-hidden text-left no-wrap css-truncate css-truncate-target"></DIV>
+  <DIV class="border rounded-1 flex-shrink-0 bg-gray px-1 text-gray-light ml-1 f6 d-none js-jump-to-badge-search"><SPAN 
+  class="js-jump-to-badge-search-text-default d-none" aria-label="in this repository"> 
+         In this repository       </SPAN>       <SPAN class="js-jump-to-badge-search-text-global d-none" 
+  aria-label="in all of GitHub">        All GitHub       </SPAN>       <SPAN 
+  class="d-inline-block ml-1 v-align-middle" aria-hidden="true">↵</SPAN>     
+  </DIV>
+  <DIV class="border rounded-1 flex-shrink-0 bg-gray px-1 text-gray-light ml-1 f6 d-none d-on-nav-focus js-jump-to-badge-jump" 
+  aria-hidden="true">Jump to       <SPAN class="d-inline-block ml-1 v-align-middle">↵</SPAN> 
+      </DIV></A> </LI></UL>
+<UL class="d-none js-jump-to-no-results-template-container">
+  <LI class="d-flex flex-justify-center flex-items-center f5 d-none js-jump-to-suggestion p-2"><SPAN 
+  class="text-gray">No suggested jump to results</SPAN>   </LI></UL>
+<UL class="p-0 m-0 js-navigation-container jump-to-suggestions-results-container js-jump-to-suggestions-results-container" 
+id="jump-to-results" role="listbox">
+  <LI class="d-flex flex-justify-start flex-items-center p-0 f5 navigation-item js-navigation-item js-jump-to-scoped-search d-none" 
+  role="option"><A tabindex="-1" class="no-underline d-flex flex-auto flex-items-center jump-to-suggestions-path js-jump-to-suggestion-path js-navigation-open p-2" 
+  href="DIGITS-GettingStarted_md%20at%20digits-6_0%20·%20NVIDIA-DIGITS%20·%20GitHub-Dateien/docs.htm">
+  <DIV class="jump-to-octicon js-jump-to-octicon flex-shrink-0 mr-2 text-center d-none"><svg 
+  xmlns="http://www.w3.org/2000/svg" title="Repository" class="octicon octicon-repo flex-shrink-0 js-jump-to-octicon-repo d-none" 
+  role="img" aria-label="Repository" viewBox="0 0 12 16" width="16" height="16" 
+  version="1.1"><path fill-rule="evenodd" d="M 4 9 H 3 V 8 h 1 v 1 Z m 0 -3 H 3 v 1 h 1 V 6 Z m 0 -2 H 3 v 1 h 1 V 4 Z m 0 -2 H 3 v 1 h 1 V 2 Z m 8 -1 v 12 c 0 0.55 -0.45 1 -1 1 H 6 v 2 l -1.5 -1.5 L 3 16 v -2 H 1 c -0.55 0 -1 -0.45 -1 -1 V 1 c 0 -0.55 0.45 -1 1 -1 h 10 c 0.55 0 1 0.45 1 1 Z m -1 10 H 1 v 2 h 2 v -1 h 3 v 1 h 5 v -2 Z m 0 -10 H 2 v 9 h 9 V 1 Z" 
+  /></svg>       <svg xmlns="http://www.w3.org/2000/svg" title="Project" class="octicon octicon-project flex-shrink-0 js-jump-to-octicon-project d-none" 
+  role="img" aria-label="Project" viewBox="0 0 15 16" width="16" height="16" 
+  version="1.1"><path fill-rule="evenodd" d="M 10 12 h 3 V 2 h -3 v 10 Z m -4 -2 h 3 V 2 H 6 v 8 Z m -4 4 h 3 V 2 H 2 v 12 Z m -1 1 h 13 V 1 H 1 v 14 Z M 14 0 H 1 a 1 1 0 0 0 -1 1 v 14 a 1 1 0 0 0 1 1 h 13 a 1 1 0 0 0 1 -1 V 1 a 1 1 0 0 0 -1 -1 Z" 
+  /></svg>       <svg xmlns="http://www.w3.org/2000/svg" title="Search" class="octicon octicon-search flex-shrink-0 js-jump-to-octicon-search d-none" 
+  role="img" aria-label="Search" viewBox="0 0 16 16" width="16" height="16" 
+  version="1.1"><path fill-rule="evenodd" d="M 15.7 13.3 l -3.81 -3.83 A 5.93 5.93 0 0 0 13 6 c 0 -3.31 -2.69 -6 -6 -6 S 1 2.69 1 6 s 2.69 6 6 6 c 1.3 0 2.48 -0.41 3.47 -1.11 l 3.83 3.81 c 0.19 0.2 0.45 0.3 0.7 0.3 c 0.25 0 0.52 -0.09 0.7 -0.3 a 0.996 0.996 0 0 0 0 -1.41 v 0.01 Z M 7 10.7 c -2.59 0 -4.7 -2.11 -4.7 -4.7 c 0 -2.59 2.11 -4.7 4.7 -4.7 c 2.59 0 4.7 2.11 4.7 4.7 c 0 2.59 -2.11 4.7 -4.7 4.7 Z" 
+  /></svg>     </DIV><IMG width="28" height="28" class="avatar mr-2 flex-shrink-0 js-jump-to-suggestion-avatar d-none" 
+  aria-label="Team" alt="" src="DIGITS-GettingStarted_md%20at%20digits-6_0%20·%20NVIDIA-DIGITS%20·%20GitHub-Dateien/docs.htm"> 
+      
+  <DIV class="jump-to-suggestion-name js-jump-to-suggestion-name flex-auto overflow-hidden text-left no-wrap css-truncate css-truncate-target"></DIV>
+  <DIV class="border rounded-1 flex-shrink-0 bg-gray px-1 text-gray-light ml-1 f6 d-none js-jump-to-badge-search"><SPAN 
+  class="js-jump-to-badge-search-text-default d-none" aria-label="in this repository"> 
+         In this repository       </SPAN>       <SPAN class="js-jump-to-badge-search-text-global d-none" 
+  aria-label="in all of GitHub">        All GitHub       </SPAN>       <SPAN 
+  class="d-inline-block ml-1 v-align-middle" aria-hidden="true">↵</SPAN>     
+  </DIV>
+  <DIV class="border rounded-1 flex-shrink-0 bg-gray px-1 text-gray-light ml-1 f6 d-none d-on-nav-focus js-jump-to-badge-jump" 
+  aria-hidden="true">Jump to       <SPAN class="d-inline-block ml-1 v-align-middle">↵</SPAN> 
+      </DIV></A> </LI>
+  <LI class="d-flex flex-justify-start flex-items-center p-0 f5 navigation-item js-navigation-item js-jump-to-global-search d-none" 
+  role="option"><A tabindex="-1" class="no-underline d-flex flex-auto flex-items-center jump-to-suggestions-path js-jump-to-suggestion-path js-navigation-open p-2" 
+  href="DIGITS-GettingStarted_md%20at%20digits-6_0%20·%20NVIDIA-DIGITS%20·%20GitHub-Dateien/docs.htm">
+  <DIV class="jump-to-octicon js-jump-to-octicon flex-shrink-0 mr-2 text-center d-none"><svg 
+  xmlns="http://www.w3.org/2000/svg" title="Repository" class="octicon octicon-repo flex-shrink-0 js-jump-to-octicon-repo d-none" 
+  role="img" aria-label="Repository" viewBox="0 0 12 16" width="16" height="16" 
+  version="1.1"><path fill-rule="evenodd" d="M 4 9 H 3 V 8 h 1 v 1 Z m 0 -3 H 3 v 1 h 1 V 6 Z m 0 -2 H 3 v 1 h 1 V 4 Z m 0 -2 H 3 v 1 h 1 V 2 Z m 8 -1 v 12 c 0 0.55 -0.45 1 -1 1 H 6 v 2 l -1.5 -1.5 L 3 16 v -2 H 1 c -0.55 0 -1 -0.45 -1 -1 V 1 c 0 -0.55 0.45 -1 1 -1 h 10 c 0.55 0 1 0.45 1 1 Z m -1 10 H 1 v 2 h 2 v -1 h 3 v 1 h 5 v -2 Z m 0 -10 H 2 v 9 h 9 V 1 Z" 
+  /></svg>       <svg xmlns="http://www.w3.org/2000/svg" title="Project" class="octicon octicon-project flex-shrink-0 js-jump-to-octicon-project d-none" 
+  role="img" aria-label="Project" viewBox="0 0 15 16" width="16" height="16" 
+  version="1.1"><path fill-rule="evenodd" d="M 10 12 h 3 V 2 h -3 v 10 Z m -4 -2 h 3 V 2 H 6 v 8 Z m -4 4 h 3 V 2 H 2 v 12 Z m -1 1 h 13 V 1 H 1 v 14 Z M 14 0 H 1 a 1 1 0 0 0 -1 1 v 14 a 1 1 0 0 0 1 1 h 13 a 1 1 0 0 0 1 -1 V 1 a 1 1 0 0 0 -1 -1 Z" 
+  /></svg>       <svg xmlns="http://www.w3.org/2000/svg" title="Search" class="octicon octicon-search flex-shrink-0 js-jump-to-octicon-search d-none" 
+  role="img" aria-label="Search" viewBox="0 0 16 16" width="16" height="16" 
+  version="1.1"><path fill-rule="evenodd" d="M 15.7 13.3 l -3.81 -3.83 A 5.93 5.93 0 0 0 13 6 c 0 -3.31 -2.69 -6 -6 -6 S 1 2.69 1 6 s 2.69 6 6 6 c 1.3 0 2.48 -0.41 3.47 -1.11 l 3.83 3.81 c 0.19 0.2 0.45 0.3 0.7 0.3 c 0.25 0 0.52 -0.09 0.7 -0.3 a 0.996 0.996 0 0 0 0 -1.41 v 0.01 Z M 7 10.7 c -2.59 0 -4.7 -2.11 -4.7 -4.7 c 0 -2.59 2.11 -4.7 4.7 -4.7 c 2.59 0 4.7 2.11 4.7 4.7 c 0 2.59 -2.11 4.7 -4.7 4.7 Z" 
+  /></svg>     </DIV><IMG width="28" height="28" class="avatar mr-2 flex-shrink-0 js-jump-to-suggestion-avatar d-none" 
+  aria-label="Team" alt="" src="DIGITS-GettingStarted_md%20at%20digits-6_0%20·%20NVIDIA-DIGITS%20·%20GitHub-Dateien/docs.htm"> 
+      
+  <DIV class="jump-to-suggestion-name js-jump-to-suggestion-name flex-auto overflow-hidden text-left no-wrap css-truncate css-truncate-target"></DIV>
+  <DIV class="border rounded-1 flex-shrink-0 bg-gray px-1 text-gray-light ml-1 f6 d-none js-jump-to-badge-search"><SPAN 
+  class="js-jump-to-badge-search-text-default d-none" aria-label="in this repository">In 
+  this repository       </SPAN>       <SPAN class="js-jump-to-badge-search-text-global d-none" 
+  aria-label="in all of GitHub">        All GitHub       </SPAN>       <SPAN 
+  class="d-inline-block ml-1 v-align-middle" aria-hidden="true">↵</SPAN>     
+  </DIV>
+  <DIV class="border rounded-1 flex-shrink-0 bg-gray px-1 text-gray-light ml-1 f6 d-none d-on-nav-focus js-jump-to-badge-jump" 
+  aria-hidden="true">Jump to       <SPAN class="d-inline-block ml-1 v-align-middle">↵</SPAN> 
+      </DIV></A> </LI></UL></DIV></LABEL> </FORM></DIV></DIV></DIV><A class="HeaderMenu-link no-underline mr-3" 
+href="https://github.com/login?return_to=%2FNVIDIA%2FDIGITS%2Fblob%2Fdigits-6.0%2Fdocs%2FGettingStarted.md" 
+data-ga-click="(Logged out) Header, clicked Sign in, text:sign-in" 
+data-hydro-click-hmac="c39e5a6aa047efc4d5a10352c54a098a28d9c1204f00912edc0c0c7a30f69260" 
+data-hydro-click='{"event_type":"authentication.click","payload":{"location_in_page":"site header menu","repository_id":null,"auth_type":"SIGN_UP","client_id":"526092199.1530027191","originating_request_id":"E34A:3D531:46EE26F:6A991B6:5DE4C09E","originating_url":"https://github.com/NVIDIA/DIGITS/blob/digits-6.0/docs/GettingStarted.md","referrer":null,"user_id":null}}'>Sign&nbsp;in 
+        </A>           <A class="HeaderMenu-link d-inline-block no-underline border border-gray-dark rounded-1 px-2 py-1" 
+href="https://github.com/join?source=header-repo&amp;source_repo=NVIDIA%2FDIGITS" 
+data-ga-click="(Logged out) Header, clicked Sign up, text:sign-up" 
+data-hydro-click-hmac="c39e5a6aa047efc4d5a10352c54a098a28d9c1204f00912edc0c0c7a30f69260" 
+data-hydro-click='{"event_type":"authentication.click","payload":{"location_in_page":"site header menu","repository_id":null,"auth_type":"SIGN_UP","client_id":"526092199.1530027191","originating_request_id":"E34A:3D531:46EE26F:6A991B6:5DE4C09E","originating_url":"https://github.com/NVIDIA/DIGITS/blob/digits-6.0/docs/GettingStarted.md","referrer":null,"user_id":null}}'> 
+           Sign&nbsp;up           </A>       </DIV></DIV></DIV></HEADER></DIV>
+<DIV class="show-on-focus" id="start-of-content"></DIV>
+<DIV id="js-flash-container"></DIV>
+<DIV class="application-main " data-commit-hovercards-enabled="">
+<DIV itemtype="http://schema.org/SoftwareSourceCode" itemscope=""><main>
+<DIV class=" pagehead repohead instapaper_ignore readability-menu experiment-repo-nav pt-0 pt-lg-4 ">
+<DIV class="repohead-details-container clearfix container-lg p-responsive d-none d-lg-block">
+<UL class="pagehead-actions">
+  <LI><A class="tooltipped tooltipped-s btn btn-sm btn-with-count" aria-label="You must be signed in to watch a repository" 
+  href="https://github.com/login?return_to=%2FNVIDIA%2FDIGITS" rel="nofollow" 
+  data-hydro-click-hmac="c0e606b81d357a294794fa764ccdac3c71ca77d6460aec350ca58b8b9dee389a" 
+  data-hydro-click='{"event_type":"authentication.click","payload":{"location_in_page":"notification subscription menu watch","repository_id":null,"auth_type":"LOG_IN","client_id":"526092199.1530027191","originating_request_id":"E34A:3D531:46EE26F:6A991B6:5DE4C09E","originating_url":"https://github.com/NVIDIA/DIGITS/blob/digits-6.0/docs/GettingStarted.md","referrer":null,"user_id":null}}'><svg 
+  xmlns="http://www.w3.org/2000/svg" class="octicon octicon-eye v-align-text-bottom" 
+  aria-hidden="true" viewBox="0 0 16 16" width="16" height="16" 
+  version="1.1"><path fill-rule="evenodd" d="M 8.06 2 C 3 2 0 8 0 8 s 3 6 8.06 6 C 13 14 16 8 16 8 s -3 -6 -7.94 -6 Z M 8 12 c -2.2 0 -4 -1.78 -4 -4 c 0 -2.2 1.8 -4 4 -4 c 2.22 0 4 1.8 4 4 c 0 2.22 -1.78 4 -4 4 Z m 2 -4 c 0 1.11 -0.89 2 -2 2 c -1.11 0 -2 -0.89 -2 -2 c 0 -1.11 0.89 -2 2 -2 c 1.11 0 2 0.89 2 2 Z" 
+  /></svg>    Watch </A>    <A class="social-count" aria-label="347 users are watching this repository" 
+  href="https://github.com/NVIDIA/DIGITS/watchers">      347     </A>   </LI>
+  <LI><A class="btn btn-sm btn-with-count tooltipped tooltipped-s" aria-label="You must be signed in to star a repository" 
+  href="https://github.com/login?return_to=%2FNVIDIA%2FDIGITS" rel="nofollow" 
+  data-hydro-click-hmac="26f7c16d9d6848795230b6f11b841988d04dc6082db53e553b6b38627215ffdc" 
+  data-hydro-click='{"event_type":"authentication.click","payload":{"location_in_page":"star button","repository_id":32403967,"auth_type":"LOG_IN","client_id":"526092199.1530027191","originating_request_id":"E34A:3D531:46EE26F:6A991B6:5DE4C09E","originating_url":"https://github.com/NVIDIA/DIGITS/blob/digits-6.0/docs/GettingStarted.md","referrer":null,"user_id":null}}'><svg 
+  xmlns="http://www.w3.org/2000/svg" class="octicon octicon-star v-align-text-bottom" 
+  aria-hidden="true" viewBox="0 0 14 16" width="14" height="16" 
+  version="1.1"><path fill-rule="evenodd" d="M 14 6 l -4.9 -0.64 L 7 1 L 4.9 5.36 L 0 6 l 3.6 3.26 L 2.67 14 L 7 11.67 L 11.33 14 l -0.93 -4.74 L 14 6 Z" 
+  /></svg>      Star </A>     <A class="social-count js-social-count" 
+  aria-label="3852 users starred this repository" href="https://github.com/NVIDIA/DIGITS/stargazers"> 
+       3.9k     </A>   </LI>
+  <LI><A class="btn btn-sm btn-with-count tooltipped tooltipped-s" aria-label="You must be signed in to fork a repository" 
+  href="https://github.com/login?return_to=%2FNVIDIA%2FDIGITS" rel="nofollow" 
+  data-hydro-click-hmac="33deca7d453d449be7ae460e95f68ab68998cab005f978b63e3b02e184ce41eb" 
+  data-hydro-click='{"event_type":"authentication.click","payload":{"location_in_page":"repo details fork button","repository_id":32403967,"auth_type":"LOG_IN","client_id":"526092199.1530027191","originating_request_id":"E34A:3D531:46EE26F:6A991B6:5DE4C09E","originating_url":"https://github.com/NVIDIA/DIGITS/blob/digits-6.0/docs/GettingStarted.md","referrer":null,"user_id":null}}'><svg 
+  xmlns="http://www.w3.org/2000/svg" class="octicon octicon-repo-forked v-align-text-bottom" 
+  aria-hidden="true" viewBox="0 0 10 16" width="10" height="16" 
+  version="1.1"><path fill-rule="evenodd" d="M 8 1 a 1.993 1.993 0 0 0 -1 3.72 V 6 L 5 8 L 3 6 V 4.72 A 1.993 1.993 0 0 0 2 1 a 1.993 1.993 0 0 0 -1 3.72 V 6.5 l 3 3 v 1.78 A 1.993 1.993 0 0 0 5 15 a 1.993 1.993 0 0 0 1 -3.72 V 9.5 l 3 -3 V 4.72 A 1.993 1.993 0 0 0 8 1 Z M 2 4.2 C 1.34 4.2 0.8 3.65 0.8 3 c 0 -0.65 0.55 -1.2 1.2 -1.2 c 0.65 0 1.2 0.55 1.2 1.2 c 0 0.65 -0.55 1.2 -1.2 1.2 Z m 3 10 c -0.66 0 -1.2 -0.55 -1.2 -1.2 c 0 -0.65 0.55 -1.2 1.2 -1.2 c 0.65 0 1.2 0.55 1.2 1.2 c 0 0.65 -0.55 1.2 -1.2 1.2 Z m 3 -10 c -0.66 0 -1.2 -0.55 -1.2 -1.2 c 0 -0.65 0.55 -1.2 1.2 -1.2 c 0.65 0 1.2 0.55 1.2 1.2 c 0 0.65 -0.55 1.2 -1.2 1.2 Z" 
+  /></svg>        Fork </A>     <A class="social-count" aria-label="1373 users forked this repository" 
+  href="https://github.com/NVIDIA/DIGITS/network/members">      1.4k     </A>   
+  </LI></UL>
+<H1 class="public "><svg xmlns="http://www.w3.org/2000/svg" class="octicon octicon-repo" 
+aria-hidden="true" viewBox="0 0 12 16" width="12" height="16" 
+version="1.1"><path fill-rule="evenodd" d="M 4 9 H 3 V 8 h 1 v 1 Z m 0 -3 H 3 v 1 h 1 V 6 Z m 0 -2 H 3 v 1 h 1 V 4 Z m 0 -2 H 3 v 1 h 1 V 2 Z m 8 -1 v 12 c 0 0.55 -0.45 1 -1 1 H 6 v 2 l -1.5 -1.5 L 3 16 v -2 H 1 c -0.55 0 -1 -0.45 -1 -1 V 1 c 0 -0.55 0.45 -1 1 -1 h 10 c 0.55 0 1 0.45 1 1 Z m -1 10 H 1 v 2 h 2 v -1 h 3 v 1 h 5 v -2 Z m 0 -10 H 2 v 9 h 9 V 1 Z" 
+/></svg>   <SPAN class="author" itemprop="author"><A class="url fn" href="https://github.com/NVIDIA" 
+rel="author" data-hovercard-url="/orgs/NVIDIA/hovercard" data-hovercard-type="organization">NVIDIA</A></SPAN><!--
+--><SPAN 
+class="path-divider">/</SPAN><!--
+--><STRONG itemprop="name"><A href="https://github.com/NVIDIA/DIGITS" 
+data-pjax="#js-repo-pjax-container">DIGITS</A></STRONG>   </H1></DIV><NAV class="hx_reponav reponav js-repo-nav js-sidenav-container-pjax container-lg p-responsive d-none d-lg-block" 
+aria-label="Repository" itemtype="http://schema.org/BreadcrumbList" itemscope="" 
+data-pjax="#js-repo-pjax-container"><SPAN itemtype="http://schema.org/ListItem" 
+itemscope="" itemprop="itemListElement"><A class="js-selected-navigation-item selected reponav-item" 
+href="https://github.com/NVIDIA/DIGITS/tree/digits-6.0" aria-current="page" 
+data-hotkey="g c" itemprop="url" data-selected-links="repo_source repo_downloads repo_commits repo_releases repo_tags repo_branches repo_packages /NVIDIA/DIGITS/tree/digits-6.0"><svg 
+xmlns="http://www.w3.org/2000/svg" class="octicon octicon-code" aria-hidden="true" 
+viewBox="0 0 14 16" width="14" height="16" version="1.1"><path fill-rule="evenodd" 
+d="M 9.5 3 L 8 4.5 L 11.5 8 L 8 11.5 L 9.5 13 L 14 8 L 9.5 3 Z m -5 0 L 0 8 l 4.5 5 L 6 11.5 L 2.5 8 L 6 4.5 L 4.5 3 Z" 
+/></svg>       <SPAN itemprop="name">Code</SPAN>       
+<META content="1" itemprop="position"> </A>  </SPAN>     <SPAN itemtype="http://schema.org/ListItem" 
+itemscope="" itemprop="itemListElement"><A class="js-selected-navigation-item reponav-item" 
+href="https://github.com/NVIDIA/DIGITS/issues" data-hotkey="g i" itemprop="url" 
+data-selected-links="repo_issues repo_labels repo_milestones /NVIDIA/DIGITS/issues"><svg 
+xmlns="http://www.w3.org/2000/svg" class="octicon octicon-issue-opened" 
+aria-hidden="true" viewBox="0 0 14 16" width="14" height="16" 
+version="1.1"><path fill-rule="evenodd" d="M 7 2.3 c 3.14 0 5.7 2.56 5.7 5.7 s -2.56 5.7 -5.7 5.7 A 5.71 5.71 0 0 1 1.3 8 c 0 -3.14 2.56 -5.7 5.7 -5.7 Z M 7 1 C 3.14 1 0 4.14 0 8 s 3.14 7 7 7 s 7 -3.14 7 -7 s -3.14 -7 -7 -7 Z m 1 3 H 6 v 5 h 2 V 4 Z m 0 6 H 6 v 2 h 2 v -2 Z" 
+/></svg>         <SPAN itemprop="name">Issues</SPAN>         <SPAN class="Counter">574</SPAN> 
+        
+<META content="2" itemprop="position"> </A>    </SPAN>   <SPAN itemtype="http://schema.org/ListItem" 
+itemscope="" itemprop="itemListElement"><A class="js-selected-navigation-item reponav-item" 
+href="https://github.com/NVIDIA/DIGITS/pulls" data-hotkey="g p" itemprop="url" 
+data-selected-links="repo_pulls checks /NVIDIA/DIGITS/pulls" data-skip-pjax="true"><svg 
+xmlns="http://www.w3.org/2000/svg" class="octicon octicon-git-pull-request" 
+aria-hidden="true" viewBox="0 0 12 16" width="12" height="16" 
+version="1.1"><path fill-rule="evenodd" d="M 11 11.28 V 5 c -0.03 -0.78 -0.34 -1.47 -0.94 -2.06 C 9.46 2.35 8.78 2.03 8 2 H 7 V 0 L 4 3 l 3 3 V 4 h 1 c 0.27 0.02 0.48 0.11 0.69 0.31 c 0.21 0.2 0.3 0.42 0.31 0.69 v 6.28 A 1.993 1.993 0 0 0 10 15 a 1.993 1.993 0 0 0 1 -3.72 Z m -1 2.92 c -0.66 0 -1.2 -0.55 -1.2 -1.2 c 0 -0.65 0.55 -1.2 1.2 -1.2 c 0.65 0 1.2 0.55 1.2 1.2 c 0 0.65 -0.55 1.2 -1.2 1.2 Z M 4 3 c 0 -1.11 -0.89 -2 -2 -2 a 1.993 1.993 0 0 0 -1 3.72 v 6.56 A 1.993 1.993 0 0 0 2 15 a 1.993 1.993 0 0 0 1 -3.72 V 4.72 c 0.59 -0.34 1 -0.98 1 -1.72 Z m -0.8 10 c 0 0.66 -0.55 1.2 -1.2 1.2 c -0.65 0 -1.2 -0.55 -1.2 -1.2 c 0 -0.65 0.55 -1.2 1.2 -1.2 c 0.65 0 1.2 0.55 1.2 1.2 Z M 2 4.2 C 1.34 4.2 0.8 3.65 0.8 3 c 0 -0.65 0.55 -1.2 1.2 -1.2 c 0.65 0 1.2 0.55 1.2 1.2 c 0 0.65 -0.55 1.2 -1.2 1.2 Z" 
+/></svg>       <SPAN itemprop="name">Pull requests</SPAN>       <SPAN class="Counter">29</SPAN> 
+      
+<META content="3" itemprop="position"> </A>  </SPAN>     <A class="js-selected-navigation-item reponav-item" 
+href="https://github.com/NVIDIA/DIGITS/projects" data-hotkey="g b" 
+data-selected-links="repo_projects new_repo_project repo_project /NVIDIA/DIGITS/projects"><svg 
+xmlns="http://www.w3.org/2000/svg" class="octicon octicon-project" aria-hidden="true" 
+viewBox="0 0 15 16" width="15" height="16" version="1.1"><path fill-rule="evenodd" 
+d="M 10 12 h 3 V 2 h -3 v 10 Z m -4 -2 h 3 V 2 H 6 v 8 Z m -4 4 h 3 V 2 H 2 v 12 Z m -1 1 h 13 V 1 H 1 v 14 Z M 14 0 H 1 a 1 1 0 0 0 -1 1 v 14 a 1 1 0 0 0 1 1 h 13 a 1 1 0 0 0 1 -1 V 1 a 1 1 0 0 0 -1 -1 Z" 
+/></svg>      Projects       <SPAN class="Counter">0</SPAN> </A>     <A class="js-selected-navigation-item reponav-item" 
+href="https://github.com/NVIDIA/DIGITS/security/advisories" data-selected-links="security alerts policy code_scanning /NVIDIA/DIGITS/security/advisories" 
+data-skip-pjax="true"><svg xmlns="http://www.w3.org/2000/svg" class="octicon octicon-shield" 
+aria-hidden="true" viewBox="0 0 14 16" width="14" height="16" 
+version="1.1"><path fill-rule="evenodd" d="M 0 2 l 7 -2 l 7 2 v 6.02 C 14 12.69 8.69 16 7 16 c -1.69 0 -7 -3.31 -7 -7.98 V 2 Z m 1 0.75 L 7 1 l 6 1.75 v 5.268 C 13 12.104 8.449 15 7 15 c -1.449 0 -6 -2.896 -6 -6.982 V 2.75 Z m 1 0.75 L 7 2 v 12 c -1.207 0 -5 -2.482 -5 -5.985 V 3.5 Z" 
+/></svg>      Security </A>     <A class="js-selected-navigation-item reponav-item" 
+href="https://github.com/NVIDIA/DIGITS/pulse" data-selected-links="repo_graphs repo_contributors dependency_graph pulse people /NVIDIA/DIGITS/pulse"><svg 
+xmlns="http://www.w3.org/2000/svg" class="octicon octicon-graph" aria-hidden="true" 
+viewBox="0 0 16 16" width="16" height="16" version="1.1"><path fill-rule="evenodd" 
+d="M 16 14 v 1 H 0 V 0 h 1 v 14 h 15 Z M 5 13 H 3 V 8 h 2 v 5 Z m 4 0 H 7 V 3 h 2 v 10 Z m 4 0 h -2 V 6 h 2 v 7 Z" 
+/></svg>      Insights </A> </NAV>   
+<DIV class="reponav-wrapper reponav-small d-lg-none"><NAV class="reponav js-reponav text-center no-wrap" 
+itemtype="http://schema.org/BreadcrumbList" itemscope=""><SPAN itemtype="http://schema.org/ListItem" 
+itemscope="" itemprop="itemListElement"><A class="js-selected-navigation-item selected reponav-item" 
+href="https://github.com/NVIDIA/DIGITS/tree/digits-6.0" aria-current="page" 
+itemprop="url" data-selected-links="repo_source repo_downloads repo_commits repo_releases repo_tags repo_branches repo_packages /NVIDIA/DIGITS/tree/digits-6.0"><SPAN 
+itemprop="name">Code</SPAN>         
+<META content="1" itemprop="position"> </A>    </SPAN>       <SPAN itemtype="http://schema.org/ListItem" 
+itemscope="" itemprop="itemListElement"><A class="js-selected-navigation-item reponav-item" 
+href="https://github.com/NVIDIA/DIGITS/issues" itemprop="url" 
+data-selected-links="repo_issues repo_labels repo_milestones /NVIDIA/DIGITS/issues"><SPAN 
+itemprop="name">Issues</SPAN>           <SPAN class="Counter">574</SPAN>         
+  
+<META content="2" itemprop="position"> </A>      </SPAN>     <SPAN itemtype="http://schema.org/ListItem" 
+itemscope="" itemprop="itemListElement"><A class="js-selected-navigation-item reponav-item" 
+href="https://github.com/NVIDIA/DIGITS/pulls" itemprop="url" 
+data-selected-links="repo_pulls checks /NVIDIA/DIGITS/pulls"><SPAN itemprop="name">Pull 
+requests</SPAN>         <SPAN class="Counter">29</SPAN>         
+<META content="3" itemprop="position"> </A>    </SPAN>       <SPAN itemtype="http://schema.org/ListItem" 
+itemscope="" itemprop="itemListElement"><A class="js-selected-navigation-item reponav-item" 
+href="https://github.com/NVIDIA/DIGITS/projects" itemprop="url" 
+data-selected-links="repo_projects new_repo_project repo_project /NVIDIA/DIGITS/projects"><SPAN 
+itemprop="name">Projects</SPAN>           <SPAN class="Counter">0</SPAN>         
+  
+<META content="4" itemprop="position"> </A>      </SPAN>       <A class="js-selected-navigation-item reponav-item" 
+href="https://github.com/NVIDIA/DIGITS/security/advisories" itemprop="url" 
+data-selected-links="security alerts policy code_scanning /NVIDIA/DIGITS/security/advisories"><SPAN 
+itemprop="name">Security</SPAN>         
+<META content="6" itemprop="position"> </A>       <A class="js-selected-navigation-item reponav-item" 
+href="https://github.com/NVIDIA/DIGITS/pulse" data-selected-links="pulse /NVIDIA/DIGITS/pulse"> 
+       Pulse </A>   </NAV></DIV></DIV>
+<DIV class="container-lg clearfix new-discussion-timeline experiment-repo-nav  p-responsive">
+<DIV class="repository-content "><A class="d-none js-permalink-shortcut" href="https://github.com/NVIDIA/DIGITS/blob/0100f5604c1938cab1c8577af40219b80a7e5775/docs/GettingStarted.md" 
+data-hotkey="y">Permalink</A>     <!-- blob contrib key: blob_contributors:v21:db6ca91a1d3e9c6808befe95fbb3a5eb --> 
+          
+<DIV class="signup-prompt-bg rounded-1">
+<DIV class="signup-prompt p-4 text-center mb-4 rounded-1">
+<DIV class="position-relative"><!-- '"` --><!-- </textarea></xmp> -->
+<FORM action="/prompt_dismissals/signup" method="post" 
+accept-charset="UTF-8"><INPUT name="utf8" type="hidden" value="✓"><INPUT name="_method" type="hidden" value="put"><INPUT name="authenticity_token" type="hidden" value="NK5/1y1dRebQzOHrHbfYuIYGaT3mErLUizzrqgIZMxGXTLiXCKK11fK//EV+D5JHoDRWnEHPWSoI/W9t6GyruQ=="> 
+            <BUTTON class="position-absolute top-0 right-0 btn-link link-gray" 
+type="submit" data-ga-click="(Logged out) Sign up prompt, clicked Dismiss, text:dismiss"> 
+             Dismiss             </BUTTON> </FORM>
+<H3 class="pt-2">Join GitHub today</H3>
+<P class="col-6 mx-auto">GitHub is home to over 40 million developers working 
+together to host and review code, manage projects, and build software 
+together.</P><A class="btn btn-primary" href="https://github.com/join?source=prompt-blob-show&amp;source_repo=NVIDIA%2FDIGITS" 
+data-ga-click="(Logged out) Sign up prompt, clicked Sign up, text:sign-up" 
+data-hydro-click-hmac="b9f6efdd6a0a6cee2037e30f428ca040a0fdfcaceff6aaadade15cd7e7637d52" 
+data-hydro-click='{"event_type":"authentication.click","payload":{"location_in_page":"files signup prompt","repository_id":null,"auth_type":"SIGN_UP","client_id":"526092199.1530027191","originating_request_id":"E34A:3D531:46EE26F:6A991B6:5DE4C09E","originating_url":"https://github.com/NVIDIA/DIGITS/blob/digits-6.0/docs/GettingStarted.md","referrer":null,"user_id":null}}'>Sign 
+up</A>         </DIV></DIV></DIV>
+<DIV 
+class="d-flex flex-items-start flex-shrink-0 pb-3 flex-column flex-md-row"><SPAN 
+class="d-flex flex-justify-between width-full width-md-auto"><details class="details-reset details-overlay select-menu branch-select-menu  hx_rsm" 
+id="branch-select-menu"><summary title="Switch branches or tags" class="btn btn-sm select-menu-button css-truncate" 
+data-hotkey="w"><I>Branch:</I>     <SPAN class="css-truncate-target" 
+data-menu-button="">digits-6.0</SPAN>   </summary>   <details-menu class="select-menu-modal hx_rsm-modal position-absolute" 
+style="z-index: 99;" preload="" src="/NVIDIA/DIGITS/ref-list/digits-6.0/docs/GettingStarted.md?source_action=show&amp;source_controller=blob"><include-fragment 
+class="select-menu-loading-overlay anim-pulse"><svg xmlns="http://www.w3.org/2000/svg" 
+class="octicon octicon-octoface" aria-hidden="true" viewBox="0 0 16 16" width="32" 
+height="32" version="1.1"><path fill-rule="evenodd" d="M 14.7 5.34 c 0.13 -0.32 0.55 -1.59 -0.13 -3.31 c 0 0 -1.05 -0.33 -3.44 1.3 c -1 -0.28 -2.07 -0.32 -3.13 -0.32 s -2.13 0.04 -3.13 0.32 c -2.39 -1.64 -3.44 -1.3 -3.44 -1.3 c -0.68 1.72 -0.26 2.99 -0.13 3.31 C 0.49 6.21 0 7.33 0 8.69 C 0 13.84 3.33 15 7.98 15 S 16 13.84 16 8.69 c 0 -1.36 -0.49 -2.48 -1.3 -3.35 Z M 8 14.02 c -3.3 0 -5.98 -0.15 -5.98 -3.35 c 0 -0.76 0.38 -1.48 1.02 -2.07 c 1.07 -0.98 2.9 -0.46 4.96 -0.46 c 2.07 0 3.88 -0.52 4.96 0.46 c 0.65 0.59 1.02 1.3 1.02 2.07 c 0 3.19 -2.68 3.35 -5.98 3.35 Z M 5.49 9.01 c -0.66 0 -1.2 0.8 -1.2 1.78 s 0.54 1.79 1.2 1.79 c 0.66 0 1.2 -0.8 1.2 -1.79 s -0.54 -1.78 -1.2 -1.78 Z m 5.02 0 c -0.66 0 -1.2 0.79 -1.2 1.78 s 0.54 1.79 1.2 1.79 c 0.66 0 1.2 -0.8 1.2 -1.79 s -0.53 -1.78 -1.2 -1.78 Z" 
+/></svg>     </include-fragment>   </details-menu> </details>
+<DIV class="BtnGroup flex-shrink-0 d-md-none"><A class="js-pjax-capture-input btn btn-sm BtnGroup-item" 
+href="https://github.com/NVIDIA/DIGITS/find/digits-6.0" data-hotkey="t" 
+data-pjax="">            Find file           </A>           <clipboard-copy 
+class="btn btn-sm BtnGroup-item" value="docs/GettingStarted.md">            Copy 
+path           </clipboard-copy>         </DIV></SPAN>       
+<H2 class="breadcrumb flex-auto min-width-0 text-normal flex-md-self-center ml-md-2 mr-md-3 my-2 my-md-0" 
+id="blob-path"><SPAN class="js-repo-root text-bold"><SPAN class="js-path-segment"><A 
+href="https://github.com/NVIDIA/DIGITS/tree/digits-6.0" 
+data-pjax="true"><SPAN>DIGITS</SPAN></A></SPAN></SPAN><SPAN class="separator">/</SPAN><SPAN 
+class="js-path-segment"><A href="https://github.com/NVIDIA/DIGITS/tree/digits-6.0/docs" 
+data-pjax="true"><SPAN>docs</SPAN></A></SPAN><SPAN class="separator">/</SPAN><STRONG 
+class="final-path">GettingStarted.md</STRONG>       </H2>
+<DIV class="BtnGroup flex-shrink-0 d-none d-md-inline-block"><A class="js-pjax-capture-input btn btn-sm BtnGroup-item" 
+href="https://github.com/NVIDIA/DIGITS/find/digits-6.0" data-hotkey="t" 
+data-pjax="">          Find file         </A>         <clipboard-copy class="btn btn-sm BtnGroup-item" 
+value="docs/GettingStarted.md">          Copy path         </clipboard-copy>     
+  </DIV></DIV><include-fragment class="Box Box--condensed commit-loader" src="/NVIDIA/DIGITS/contributors/digits-6.0/docs/GettingStarted.md">
+<DIV class="Box-body bg-blue-light f6">        Fetching contributors…       
+</DIV>
+<DIV class="Box-body d-flex flex-items-center">Cannot retrieve contributors at 
+this time.         <SPAN class="text-red h6 loader-error">Cannot retrieve 
+contributors at this time</SPAN>       </DIV></include-fragment>
+<DIV class="Box mt-3 position-relative">
+<DIV class="Box-header py-2 d-flex flex-column flex-shrink-0 flex-md-row flex-md-items-center">
+<DIV class="text-mono f6 flex-auto pr-3 flex-order-2 flex-md-order-1 mt-2 mt-md-0"> 
+     97 lines (69 sloc)       <SPAN class="file-info-divider"></SPAN>    4.04 KB 
+  </DIV>
+<DIV class="d-flex py-1 py-md-0 flex-auto flex-order-1 flex-md-order-2 flex-sm-grow-0 flex-justify-between">
+<DIV class="BtnGroup"><A class="btn btn-sm BtnGroup-item" id="raw-url" href="https://github.com/NVIDIA/DIGITS/raw/digits-6.0/docs/GettingStarted.md">Raw</A> 
+        <A class="btn btn-sm js-update-url-with-hash BtnGroup-item" href="https://github.com/NVIDIA/DIGITS/blame/digits-6.0/docs/GettingStarted.md" 
+data-hotkey="b">Blame</A>       <A class="btn btn-sm BtnGroup-item" href="https://github.com/NVIDIA/DIGITS/commits/digits-6.0/docs/GettingStarted.md" 
+rel="nofollow">History</A>     </DIV>
+<DIV><A class="btn-octicon tooltipped tooltipped-nw hide-sm" aria-label="Open this file in GitHub Desktop" 
+href="https://desktop.github.com/" data-ga-click="Repository, open with desktop, type:windows"><svg 
+xmlns="http://www.w3.org/2000/svg" class="octicon octicon-device-desktop" 
+aria-hidden="true" viewBox="0 0 16 16" width="16" height="16" 
+version="1.1"><path fill-rule="evenodd" d="M 15 2 H 1 c -0.55 0 -1 0.45 -1 1 v 9 c 0 0.55 0.45 1 1 1 h 5.34 c -0.25 0.61 -0.86 1.39 -2.34 2 h 8 c -1.48 -0.61 -2.09 -1.39 -2.34 -2 H 15 c 0.55 0 1 -0.45 1 -1 V 3 c 0 -0.55 -0.45 -1 -1 -1 Z m 0 9 H 1 V 3 h 14 v 8 Z" 
+/></svg>             </A>           <BUTTON class="btn-octicon disabled tooltipped tooltipped-nw" 
+aria-label="You must be signed in to make or propose changes" type="button"><svg 
+xmlns="http://www.w3.org/2000/svg" class="octicon octicon-pencil" aria-hidden="true" 
+viewBox="0 0 14 16" width="14" height="16" version="1.1"><path fill-rule="evenodd" 
+d="M 0 12 v 3 h 3 l 8 -8 l -3 -3 l -8 8 Z m 3 2 H 1 v -2 h 1 v 1 h 1 v 1 Z m 10.3 -9.3 L 12 6 L 9 3 l 1.3 -1.3 a 0.996 0.996 0 0 1 1.41 0 l 1.59 1.59 c 0.39 0.39 0.39 1.02 0 1.41 Z" 
+/></svg>           </BUTTON>           <BUTTON class="btn-octicon btn-octicon-danger disabled tooltipped tooltipped-nw" 
+aria-label="You must be signed in to make or propose changes" type="button"><svg 
+xmlns="http://www.w3.org/2000/svg" class="octicon octicon-trashcan" 
+aria-hidden="true" viewBox="0 0 12 16" width="12" height="16" 
+version="1.1"><path fill-rule="evenodd" d="M 11 2 H 9 c 0 -0.55 -0.45 -1 -1 -1 H 5 c -0.55 0 -1 0.45 -1 1 H 2 c -0.55 0 -1 0.45 -1 1 v 1 c 0 0.55 0.45 1 1 1 v 9 c 0 0.55 0.45 1 1 1 h 7 c 0.55 0 1 -0.45 1 -1 V 5 c 0.55 0 1 -0.45 1 -1 V 3 c 0 -0.55 -0.45 -1 -1 -1 Z m -1 12 H 3 V 5 h 1 v 8 h 1 V 5 h 1 v 8 h 1 V 5 h 1 v 8 h 1 V 5 h 1 v 9 Z m 1 -10 H 2 V 3 h 9 v 1 Z" 
+/></svg>           </BUTTON>     </DIV></DIV></DIV>
+<DIV class="Box-body readme blob instapaper_body js-code-block-container" id="readme"><ARTICLE 
+class="markdown-body entry-content p-3 p-md-6" itemprop="text">
+<H1><A class="anchor" id="user-content-getting-started" aria-hidden="true" href="https://github.com/NVIDIA/DIGITS/blob/digits-6.0/docs/GettingStarted.md#getting-started"><svg 
+xmlns="http://www.w3.org/2000/svg" class="octicon octicon-link" aria-hidden="true" 
+viewBox="0 0 16 16" width="16" height="16" version="1.1"><path fill-rule="evenodd" 
+d="M 4 9 h 1 v 1 H 4 c -1.5 0 -3 -1.69 -3 -3.5 S 2.55 3 4 3 h 4 c 1.45 0 3 1.69 3 3.5 c 0 1.41 -0.91 2.72 -2 3.25 V 8.59 c 0.58 -0.45 1 -1.27 1 -2.09 C 10 5.22 8.98 4 8 4 H 4 c -0.98 0 -2 1.22 -2 2.5 S 3 9 4 9 Z m 9 -3 h -1 v 1 h 1 c 1 0 2 1.22 2 2.5 S 13.98 12 13 12 H 9 c -0.98 0 -2 -1.22 -2 -2.5 c 0 -0.83 0.42 -1.64 1 -2.09 V 6.25 c -1.09 0.53 -2 1.84 -2 3.25 C 6 11.31 7.55 13 9 13 h 4 c 1.45 0 3 -1.69 3 -3.5 S 14.5 6 13 6 Z" 
+/></svg></A>Getting Started</H1>
+<P>Now that you have successfully installed DIGITS, this guide will teach you 
+the basics of how to use it. By the end, you will have trained a Caffe model to 
+recognize hand-written digits. We will be using the <A href="http://yann.lecun.com/exdb/mnist" 
+rel="nofollow">MNIST handwritten digit database</A> as our dataset and <A href="http://yann.lecun.com/exdb/lenet/" 
+rel="nofollow">LeNet-5</A> for our network. Both are generously made available 
+by Yann LeCun on <A href="http://yann.lecun.com/" rel="nofollow">his 
+website</A>.</P>
+<H2><A class="anchor" id="user-content-download-the-data" aria-hidden="true" 
+href="https://github.com/NVIDIA/DIGITS/blob/digits-6.0/docs/GettingStarted.md#download-the-data"><svg 
+xmlns="http://www.w3.org/2000/svg" class="octicon octicon-link" aria-hidden="true" 
+viewBox="0 0 16 16" width="16" height="16" version="1.1"><path fill-rule="evenodd" 
+d="M 4 9 h 1 v 1 H 4 c -1.5 0 -3 -1.69 -3 -3.5 S 2.55 3 4 3 h 4 c 1.45 0 3 1.69 3 3.5 c 0 1.41 -0.91 2.72 -2 3.25 V 8.59 c 0.58 -0.45 1 -1.27 1 -2.09 C 10 5.22 8.98 4 8 4 H 4 c -0.98 0 -2 1.22 -2 2.5 S 3 9 4 9 Z m 9 -3 h -1 v 1 h 1 c 1 0 2 1.22 2 2.5 S 13.98 12 13 12 H 9 c -0.98 0 -2 -1.22 -2 -2.5 c 0 -0.83 0.42 -1.64 1 -2.09 V 6.25 c -1.09 0.53 -2 1.84 -2 3.25 C 6 11.31 7.55 13 9 13 h 4 c 1.45 0 3 -1.69 3 -3.5 S 14.5 6 13 6 Z" 
+/></svg></A>Download the data</H2>
+<P>Use the following command to download the MNIST dataset onto your server:</P>
+<DIV class="highlight highlight-source-shell">
+<PRE>$ python -m digits.download_data mnist <SPAN class="pl-k">~</SPAN>/mnist
+Downloading url=http://yann.lecun.com/exdb/mnist/train-images-idx3-ubyte.gz ...
+Downloading url=http://yann.lecun.com/exdb/mnist/train-labels-idx1-ubyte.gz ...
+Downloading url=http://yann.lecun.com/exdb/mnist/t10k-images-idx3-ubyte.gz ...
+Downloading url=http://yann.lecun.com/exdb/mnist/t10k-labels-idx1-ubyte.gz ...
+Uncompressing file=train-images-idx3-ubyte.gz ...
+Uncompressing file=train-labels-idx1-ubyte.gz ...
+Uncompressing file=t10k-images-idx3-ubyte.gz ...
+Uncompressing file=t10k-labels-idx1-ubyte.gz ...
+Reading labels from /home/username/mnist/train-labels.bin ...
+Reading images from /home/username/mnist/train-images.bin ...
+Reading labels from /home/username/mnist/test-labels.bin ...
+Reading images from /home/username/mnist/test-images.bin ...
+Dataset directory is created successfully at <SPAN class="pl-s"><SPAN class="pl-pds">'</SPAN>/home/username/mnist<SPAN class="pl-pds">'</SPAN></SPAN>
+Done after 16.722807169 seconds.</PRE></DIV>
+<P>See <A href="https://github.com/NVIDIA/DIGITS/blob/digits-6.0/docs/StandardDatasets.md">Standard 
+Datasets</A> for details about this script.</P>
+<H2><A class="anchor" id="user-content-using-the-webapp" aria-hidden="true" 
+href="https://github.com/NVIDIA/DIGITS/blob/digits-6.0/docs/GettingStarted.md#using-the-webapp"><svg 
+xmlns="http://www.w3.org/2000/svg" class="octicon octicon-link" aria-hidden="true" 
+viewBox="0 0 16 16" width="16" height="16" version="1.1"><path fill-rule="evenodd" 
+d="M 4 9 h 1 v 1 H 4 c -1.5 0 -3 -1.69 -3 -3.5 S 2.55 3 4 3 h 4 c 1.45 0 3 1.69 3 3.5 c 0 1.41 -0.91 2.72 -2 3.25 V 8.59 c 0.58 -0.45 1 -1.27 1 -2.09 C 10 5.22 8.98 4 8 4 H 4 c -0.98 0 -2 1.22 -2 2.5 S 3 9 4 9 Z m 9 -3 h -1 v 1 h 1 c 1 0 2 1.22 2 2.5 S 13.98 12 13 12 H 9 c -0.98 0 -2 -1.22 -2 -2.5 c 0 -0.83 0.42 -1.64 1 -2.09 V 6.25 c -1.09 0.53 -2 1.84 -2 3.25 C 6 11.31 7.55 13 9 13 h 4 c 1.45 0 3 -1.69 3 -3.5 S 14.5 6 13 6 Z" 
+/></svg></A>Using the Webapp</H2>
+<P>Open up a web browser and navigate to the home screen of DIGITS. The server 
+should be at either <CODE>http://localhost/</CODE> (if installed from Deb 
+packages), or <CODE>http://localhost:5000/</CODE> (if using 
+<CODE>digits-devserver</CODE>).</P>
+<P><A href="https://github.com/NVIDIA/DIGITS/blob/digits-6.0/docs/images/home-page-1.jpg" 
+target="_blank" rel="noopener noreferrer"><IMG style="max-width: 100%;" alt="Home page" 
+src="DIGITS-GettingStarted_md%20at%20digits-6_0%20·%20NVIDIA-DIGITS%20·%20GitHub-Dateien/home-page-1.jpg"></A></P>
+<H3><A class="anchor" id="user-content-logging-in" aria-hidden="true" href="https://github.com/NVIDIA/DIGITS/blob/digits-6.0/docs/GettingStarted.md#logging-in"><svg 
+xmlns="http://www.w3.org/2000/svg" class="octicon octicon-link" aria-hidden="true" 
+viewBox="0 0 16 16" width="16" height="16" version="1.1"><path fill-rule="evenodd" 
+d="M 4 9 h 1 v 1 H 4 c -1.5 0 -3 -1.69 -3 -3.5 S 2.55 3 4 3 h 4 c 1.45 0 3 1.69 3 3.5 c 0 1.41 -0.91 2.72 -2 3.25 V 8.59 c 0.58 -0.45 1 -1.27 1 -2.09 C 10 5.22 8.98 4 8 4 H 4 c -0.98 0 -2 1.22 -2 2.5 S 3 9 4 9 Z m 9 -3 h -1 v 1 h 1 c 1 0 2 1.22 2 2.5 S 13.98 12 13 12 H 9 c -0.98 0 -2 -1.22 -2 -2.5 c 0 -0.83 0.42 -1.64 1 -2.09 V 6.25 c -1.09 0.53 -2 1.84 -2 3.25 C 6 11.31 7.55 13 9 13 h 4 c 1.45 0 3 -1.69 3 -3.5 S 14.5 6 13 6 Z" 
+/></svg></A>Logging in</H3>
+<P>Click on <CODE>Datasets &gt; New Dataset &gt; Images &gt; 
+Classification</CODE>. This will lead you to the login page:</P>
+<BLOCKQUOTE>
+  <P>NOTE: there is no authentication - you don't even need a password. This is 
+  a utility feature, not a security feature.</P></BLOCKQUOTE>
+<P><A href="https://github.com/NVIDIA/DIGITS/blob/digits-6.0/docs/images/login.jpg" 
+target="_blank" rel="noopener noreferrer"><IMG style="max-width: 100%;" alt="Login" 
+src="DIGITS-GettingStarted_md%20at%20digits-6_0%20·%20NVIDIA-DIGITS%20·%20GitHub-Dateien/login.jpg"></A></P>
+<H3><A class="anchor" id="user-content-creating-a-dataset" aria-hidden="true" 
+href="https://github.com/NVIDIA/DIGITS/blob/digits-6.0/docs/GettingStarted.md#creating-a-dataset"><svg 
+xmlns="http://www.w3.org/2000/svg" class="octicon octicon-link" aria-hidden="true" 
+viewBox="0 0 16 16" width="16" height="16" version="1.1"><path fill-rule="evenodd" 
+d="M 4 9 h 1 v 1 H 4 c -1.5 0 -3 -1.69 -3 -3.5 S 2.55 3 4 3 h 4 c 1.45 0 3 1.69 3 3.5 c 0 1.41 -0.91 2.72 -2 3.25 V 8.59 c 0.58 -0.45 1 -1.27 1 -2.09 C 10 5.22 8.98 4 8 4 H 4 c -0.98 0 -2 1.22 -2 2.5 S 3 9 4 9 Z m 9 -3 h -1 v 1 h 1 c 1 0 2 1.22 2 2.5 S 13.98 12 13 12 H 9 c -0.98 0 -2 -1.22 -2 -2.5 c 0 -0.83 0.42 -1.64 1 -2.09 V 6.25 c -1.09 0.53 -2 1.84 -2 3.25 C 6 11.31 7.55 13 9 13 h 4 c 1.45 0 3 -1.69 3 -3.5 S 14.5 6 13 6 Z" 
+/></svg></A>Creating a Dataset</H3>
+<P>After logging in, you will be brought to the "New Image Classification 
+Dataset" page.</P>
+<UL>
+  <LI>Type in the path to the MNIST training images 
+  <UL>
+    <LI>You can also add the folder of MNIST test images as a "Separate 
+    validation images folder", if you like. Don't use the "test images" fields - 
+    test images are not used for anything in DIGITS yet.</LI></UL></LI>
+  <LI>Change the <CODE>Image Type</CODE> to <CODE>Grayscale</CODE></LI>
+  <LI>Change the <CODE>Image size</CODE> to 28 x 28</LI>
+  <LI>Give the dataset a name</LI>
+  <LI>Click on the <CODE>Create</CODE> button</LI></UL>
+<P><A href="https://github.com/NVIDIA/DIGITS/blob/digits-6.0/docs/images/new-dataset.jpg" 
+target="_blank" rel="noopener noreferrer"><IMG style="max-width: 100%;" alt="New dataset" 
+src="DIGITS-GettingStarted_md%20at%20digits-6_0%20·%20NVIDIA-DIGITS%20·%20GitHub-Dateien/new-dataset.jpg"></A></P>
+<P>While the job is running, you should see the expected completion time on the 
+right side:</P>
+<P><A href="https://github.com/NVIDIA/DIGITS/blob/digits-6.0/docs/images/creating-dataset.jpg" 
+target="_blank" rel="noopener noreferrer"><IMG style="max-width: 100%;" alt="Creating dataset" 
+src="DIGITS-GettingStarted_md%20at%20digits-6_0%20·%20NVIDIA-DIGITS%20·%20GitHub-Dateien/creating-dataset.jpg"></A></P>
+<P>When the job is finished, go back to the home page by clicking 
+<CODE>DIGITS</CODE> in the top left hand part of the page. You should now see 
+your dataset listed under the "Datasets" tab.</P>
+<P><A href="https://github.com/NVIDIA/DIGITS/blob/digits-6.0/docs/images/home-page-2.jpg" 
+target="_blank" rel="noopener noreferrer"><IMG style="max-width: 100%;" alt="Home page with dataset" 
+src="DIGITS-GettingStarted_md%20at%20digits-6_0%20·%20NVIDIA-DIGITS%20·%20GitHub-Dateien/home-page-2.jpg"></A></P>
+<H3><A class="anchor" id="user-content-training-a-model" aria-hidden="true" 
+href="https://github.com/NVIDIA/DIGITS/blob/digits-6.0/docs/GettingStarted.md#training-a-model"><svg 
+xmlns="http://www.w3.org/2000/svg" class="octicon octicon-link" aria-hidden="true" 
+viewBox="0 0 16 16" width="16" height="16" version="1.1"><path fill-rule="evenodd" 
+d="M 4 9 h 1 v 1 H 4 c -1.5 0 -3 -1.69 -3 -3.5 S 2.55 3 4 3 h 4 c 1.45 0 3 1.69 3 3.5 c 0 1.41 -0.91 2.72 -2 3.25 V 8.59 c 0.58 -0.45 1 -1.27 1 -2.09 C 10 5.22 8.98 4 8 4 H 4 c -0.98 0 -2 1.22 -2 2.5 S 3 9 4 9 Z m 9 -3 h -1 v 1 h 1 c 1 0 2 1.22 2 2.5 S 13.98 12 13 12 H 9 c -0.98 0 -2 -1.22 -2 -2.5 c 0 -0.83 0.42 -1.64 1 -2.09 V 6.25 c -1.09 0.53 -2 1.84 -2 3.25 C 6 11.31 7.55 13 9 13 h 4 c 1.45 0 3 -1.69 3 -3.5 S 14.5 6 13 6 Z" 
+/></svg></A>Training a Model</H3>
+<P>Click on <CODE>Models &gt; New Model &gt; Images &gt; Classification</CODE>.
+ This will lead you to the "New Image Classification Model" page.</P>
+<P>For this example, do the following:</P>
+<UL>
+  <LI>Choose the "MNIST" dataset in the <CODE>Select Dataset</CODE> field</LI>
+  <LI>Choose the <CODE>LeNet</CODE> network in the <CODE>Standard 
+  Networks</CODE> tab</LI>
+  <LI>Give the model a name</LI>
+  <LI>Click on the <CODE>Create</CODE> button</LI></UL>
+<P><A href="https://github.com/NVIDIA/DIGITS/blob/digits-6.0/docs/images/new-model.jpg" 
+target="_blank" rel="noopener noreferrer"><IMG style="max-width: 100%;" alt="New model" 
+src="DIGITS-GettingStarted_md%20at%20digits-6_0%20·%20NVIDIA-DIGITS%20·%20GitHub-Dateien/new-model.jpg"></A></P>
+<P>While training the model, you should see the expected completion time on the 
+right side:</P>
+<P><A href="https://github.com/NVIDIA/DIGITS/blob/digits-6.0/docs/images/training-model.jpg" 
+target="_blank" rel="noopener noreferrer"><IMG style="max-width: 100%;" alt="Training model" 
+src="DIGITS-GettingStarted_md%20at%20digits-6_0%20·%20NVIDIA-DIGITS%20·%20GitHub-Dateien/training-model.jpg"></A></P>
+<P>To test the model, scroll to the bottom of the page.</P>
+<UL>
+  <LI>Click on the <CODE>Upload image</CODE> button and choose a file 
+  <UL>
+    <LI>There are plenty to choose from in 
+    <CODE>/home/username/mnist/test/</CODE></LI></UL></LI>
+  <LI>Or, find an image on the web and paste the URL into the <CODE>Image 
+  URL</CODE> field</LI>
+  <LI>Check the <CODE>Show visualizations and statistics</CODE> box</LI>
+  <LI>Click on <CODE>Classify One</CODE></LI></UL>
+<P>At the top of the page, DIGITS displays the top five classifications and 
+corresponding confidence values. DIGITS also provides visualizations and 
+statistics about the weights and activations of each layer in your network.</P>
+<P><A href="https://github.com/NVIDIA/DIGITS/blob/digits-6.0/docs/images/classified-one-image.jpg" 
+target="_blank" rel="noopener noreferrer"><IMG style="max-width: 100%;" alt="Classified one image" 
+src="DIGITS-GettingStarted_md%20at%20digits-6_0%20·%20NVIDIA-DIGITS%20·%20GitHub-Dateien/classified-one-image.jpg"></A></P></ARTICLE></DIV></DIV><details 
+class="details-reset details-overlay details-overlay-dark"><summary aria-label="Jump to line" 
+data-hotkey="l"></summary><details-dialog class="Box Box--overlay d-flex flex-column anim-fade-in fast linejump" 
+aria-label="Jump to line"><!-- '"` --><!-- </textarea></xmp> -->
+<FORM class="js-jump-to-line-form Box-body d-flex" action="" method="get" 
+accept-charset="UTF-8"><INPUT name="utf8" type="hidden" value="✓">         
+<INPUT class="form-control flex-auto mr-3 linejump-input js-jump-to-line-field" autofocus="" aria-label="Jump to line" type="text" placeholder="Jump to line…" value=""> 
+        <BUTTON class="btn" type="submit" data-close-dialog="">Go</BUTTON> 
+</FORM></details-dialog>   </details></DIV></DIV></main></DIV></DIV>
+<DIV class="footer container-lg width-full p-responsive" role="contentinfo">
+<DIV class="position-relative d-flex flex-row-reverse flex-lg-row flex-wrap flex-lg-nowrap flex-justify-center flex-lg-justify-between pt-6 pb-2 mt-6 f6 text-gray border-top border-gray-light ">
+<UL class="list-style-none d-flex flex-wrap col-12 col-lg-5 flex-justify-center flex-lg-justify-between mb-2 mb-lg-0">
+  <LI class="mr-3 mr-lg-0">© 2019 GitHub, Inc.</LI>
+  <LI class="mr-3 mr-lg-0"><A href="https://github.com/site/terms" 
+  data-ga-click="Footer, go to terms, text:terms">Terms</A></LI>
+  <LI class="mr-3 mr-lg-0"><A href="https://github.com/site/privacy" 
+  data-ga-click="Footer, go to privacy, text:privacy">Privacy</A></LI>
+  <LI class="mr-3 mr-lg-0"><A href="https://github.com/security" data-ga-click="Footer, go to security, text:security">Security</A></LI>
+  <LI class="mr-3 mr-lg-0"><A href="https://githubstatus.com/" data-ga-click="Footer, go to status, text:status">Status</A></LI>
+  <LI><A href="https://help.github.com/" data-ga-click="Footer, go to help, text:help">Help</A></LI></UL><A 
+title="GitHub" class="footer-octicon d-none d-lg-block mx-lg-4" aria-label="Homepage" 
+href="https://github.com/"><svg xmlns="http://www.w3.org/2000/svg" class="octicon octicon-mark-github" 
+aria-hidden="true" viewBox="0 0 16 16" width="24" height="24" 
+version="1.1"><path fill-rule="evenodd" d="M 8 0 C 3.58 0 0 3.58 0 8 c 0 3.54 2.29 6.53 5.47 7.59 c 0.4 0.07 0.55 -0.17 0.55 -0.38 c 0 -0.19 -0.01 -0.82 -0.01 -1.49 c -2.01 0.37 -2.53 -0.49 -2.69 -0.94 c -0.09 -0.23 -0.48 -0.94 -0.82 -1.13 c -0.28 -0.15 -0.68 -0.52 -0.01 -0.53 c 0.63 -0.01 1.08 0.58 1.23 0.82 c 0.72 1.21 1.87 0.87 2.33 0.66 c 0.07 -0.52 0.28 -0.87 0.51 -1.07 c -1.78 -0.2 -3.64 -0.89 -3.64 -3.95 c 0 -0.87 0.31 -1.59 0.82 -2.15 c -0.08 -0.2 -0.36 -1.02 0.08 -2.12 c 0 0 0.67 -0.21 2.2 0.82 c 0.64 -0.18 1.32 -0.27 2 -0.27 c 0.68 0 1.36 0.09 2 0.27 c 1.53 -1.04 2.2 -0.82 2.2 -0.82 c 0.44 1.1 0.16 1.92 0.08 2.12 c 0.51 0.56 0.82 1.27 0.82 2.15 c 0 3.07 -1.87 3.75 -3.65 3.95 c 0.29 0.25 0.54 0.73 0.54 1.48 c 0 1.07 -0.01 1.93 -0.01 2.2 c 0 0.21 0.15 0.46 0.55 0.38 A 8.013 8.013 0 0 0 16 8 c 0 -4.42 -3.58 -8 -8 -8 Z" 
+/></svg> </A>    
+<UL class="list-style-none d-flex flex-wrap col-12 col-lg-5 flex-justify-center flex-lg-justify-between mb-2 mb-lg-0">
+  <LI class="mr-3 mr-lg-0"><A href="https://github.com/contact" data-ga-click="Footer, go to contact, text:contact">Contact 
+  GitHub</A></LI>
+  <LI class="mr-3 mr-lg-0"><A href="https://github.com/pricing" data-ga-click="Footer, go to Pricing, text:Pricing">Pricing</A></LI>
+  <LI class="mr-3 mr-lg-0"><A href="https://developer.github.com/" 
+  data-ga-click="Footer, go to api, text:api">API</A></LI>
+  <LI class="mr-3 mr-lg-0"><A href="https://training.github.com/" data-ga-click="Footer, go to training, text:training">Training</A></LI>
+  <LI class="mr-3 mr-lg-0"><A href="https://github.blog/" data-ga-click="Footer, go to blog, text:blog">Blog</A></LI>
+  <LI><A href="https://github.com/about" data-ga-click="Footer, go to about, text:about">About</A></LI></UL></DIV>
+<DIV class="d-flex flex-justify-center pb-6"><SPAN 
+class="f6 text-gray-light"></SPAN>   </DIV></DIV>
+<DIV class="ajax-error-message flash flash-error" id="ajax-error-message"><svg 
+xmlns="http://www.w3.org/2000/svg" class="octicon octicon-alert" aria-hidden="true" 
+viewBox="0 0 16 16" width="16" height="16" version="1.1"><path fill-rule="evenodd" 
+d="M 8.893 1.5 c -0.183 -0.31 -0.52 -0.5 -0.887 -0.5 s -0.703 0.19 -0.886 0.5 L 0.138 13.499 a 0.98 0.98 0 0 0 0 1.001 c 0.193 0.31 0.53 0.501 0.886 0.501 h 13.964 c 0.367 0 0.704 -0.19 0.877 -0.5 a 1.03 1.03 0 0 0 0.01 -1.002 L 8.893 1.5 Z m 0.133 11.497 H 6.987 v -2.003 h 2.039 v 2.003 Z m 0 -3.004 H 6.987 V 5.987 h 2.039 v 4.006 Z" 
+/></svg>     <BUTTON class="flash-close js-ajax-error-dismiss" aria-label="Dismiss error" 
+type="button"><svg xmlns="http://www.w3.org/2000/svg" class="octicon octicon-x" 
+aria-hidden="true" viewBox="0 0 12 16" width="12" height="16" 
+version="1.1"><path fill-rule="evenodd" d="M 7.48 8 l 3.75 3.75 l -1.48 1.48 L 6 9.48 l -3.75 3.75 l -1.48 -1.48 L 4.52 8 L 0.77 4.25 l 1.48 -1.48 L 6 6.52 l 3.75 -3.75 l 1.48 1.48 L 7.48 8 Z" 
+/></svg>     </BUTTON>    You can’t perform that action at this time.   </DIV>
+<DIV class="js-stale-session-flash flash flash-warn flash-banner" hidden=""><svg 
+xmlns="http://www.w3.org/2000/svg" class="octicon octicon-alert" aria-hidden="true" 
+viewBox="0 0 16 16" width="16" height="16" version="1.1"><path fill-rule="evenodd" 
+d="M 8.893 1.5 c -0.183 -0.31 -0.52 -0.5 -0.887 -0.5 s -0.703 0.19 -0.886 0.5 L 0.138 13.499 a 0.98 0.98 0 0 0 0 1.001 c 0.193 0.31 0.53 0.501 0.886 0.501 h 13.964 c 0.367 0 0.704 -0.19 0.877 -0.5 a 1.03 1.03 0 0 0 0.01 -1.002 L 8.893 1.5 Z m 0.133 11.497 H 6.987 v -2.003 h 2.039 v 2.003 Z m 0 -3.004 H 6.987 V 5.987 h 2.039 v 4.006 Z" 
+/></svg>     <SPAN class="js-stale-session-flash-signed-in" hidden="">You signed 
+in with another tab or window. <A href="DIGITS-GettingStarted_md%20at%20digits-6_0%20·%20NVIDIA-DIGITS%20·%20GitHub-Dateien/docs.htm">Reload</A> 
+to refresh your session.</SPAN>     <SPAN class="js-stale-session-flash-signed-out" 
+hidden="">You signed out in another tab or window. <A href="DIGITS-GettingStarted_md%20at%20digits-6_0%20·%20NVIDIA-DIGITS%20·%20GitHub-Dateien/docs.htm">Reload</A> 
+to refresh your session.</SPAN>   </DIV><template 
+id="site-details-dialog"><details class="details-reset details-overlay details-overlay-dark lh-default text-gray-dark hx_rsm" 
+open=""><summary role="button" 
+aria-label="Close dialog"></summary><details-dialog class="Box Box--overlay d-flex flex-column anim-fade-in fast hx_rsm-dialog hx_rsm-modal"><BUTTON 
+class="Box-btn-octicon m-0 btn-octicon position-absolute right-0 top-0" 
+aria-label="Close dialog" type="button" data-close-dialog=""><svg xmlns="http://www.w3.org/2000/svg" 
+class="octicon octicon-x" aria-hidden="true" viewBox="0 0 12 16" width="12" 
+height="16" version="1.1"><path fill-rule="evenodd" d="M 7.48 8 l 3.75 3.75 l -1.48 1.48 L 6 9.48 l -3.75 3.75 l -1.48 -1.48 L 4.52 8 L 0.77 4.25 l 1.48 -1.48 L 6 6.52 l 3.75 -3.75 l 1.48 1.48 L 7.48 8 Z" 
+/></svg>       </BUTTON>       
+<DIV 
+class="octocat-spinner my-6 js-details-dialog-spinner"></DIV></details-dialog>   
+</details></template>   
+<DIV tabindex="0" class="Popover js-hovercard-content position-absolute" style="display: none;">
+<DIV class="Popover-message Popover-message--bottom-left Popover-message--large Box box-shadow-large" 
+style="width: 360px;"></DIV></DIV>
+<DIV class="js-global-screen-reader-notice sr-only" 
+aria-live="polite"></DIV></BODY></HTML>

@@ -1,0 +1,1222 @@
+%%%%%%%%%%%%%%%%%%%%
+%
+% $Autor: Wings $
+% $Datum: 2020-02-24 14:29:03Z $
+% $Pfad: komponenten/Bilderkennung/Produktspezifikation/CorelTPU/Ausarbeitung/Kapitel/Software.tex $
+% $Version: 1791 $
+%
+%
+%%%%%%%%%%%%%%%%%%%
+
+
+%todo \url{https://www.kdnuggets.com/2017/09/tensorflow-tutorial-part-1.html}
+%todo \url{https://www.kdnuggets.com/2017/09/tensorflow-tutorial-part-2.html}
+
+%todo Einleitung überarbeiten
+    
+\chapter{TensorFlow} \label{Kapitel_TF}
+
+\section{Overview}
+
+\subsection{TensorFlow Framework} 
+
+TensorFlow is a machine learning system that operates at large scale and in heterogeneous environments. It uses dataflow graphs to represent computation, shared state, and the operations that mutate that state. TensorFlow can train and run deep neural networks for handwritten digit classification, image recognition, word embeddings, recurrent neural networks, sequence-to-sequence models for machine translation, natural language processing, and PDE (partial differential equation) based simulations. It maps the nodes of a dataflow graph across many machines in a cluster, and within a machine across multiple computational devices, including multicore CPUs, general-purpose GPUs, and custom-designed ASICs known as Tensor Processing Units (TPUs).TensorFlow enables developers to experiment with novel optimizations and training algorithms. TensorFlow supports a variety of applications, with a focus on training and inference on deep neural networks. Several Google services use TensorFlow in production, we have released it as an open-source project, and it has become widely used for machine learning research. In this paper, we describe the TensorFlow dataflow model and demonstrate the compelling performance that Tensor- Flow achieves for several real-world applications.\href{https://www.tensorflow.org/overview/}{TensorFlow}
+% To get started with TensorFlow here is Google's introduction to \href{https://www.youtube.com/watch?v=yjprpOoH5c8}{TensorFlow video}.
+
+\subsection{TensorFlow Use Case}
+
+Tensor flow is the framework made by google for making the Machine learning application and training the model. Google search engine also based on Tensor flow AI application, e.g; when a user type "a" in the google search bar, the search engine predict the most suitable complete word to select, or it may be predicts depends upon the previous search on the same system by the user too. It can be used across a range of tasks but has a particular focus on training and inference of deep neural networks. Tensor flow has a various collection of workflows to develop and train the model using Python and Javascripts programming languages, after training the model we can deploy the model on the Cloud or also on any device for making edge computing application no matter which language use in the device. It is obvious that, the most important part in every Machine learning application is to train the ML model, so the model will apply in real time condition and take the decision without any human intervention as the human normally make. 
+
+\subsection{TensorFlow Lite for Microcontrollers}
+
+TensorFlow is a critical software piece of infrastructure that is needed, in order to be able to train a machine learning model, in order to be able to teach an algorithm, to look for interesting patterns in data, and how we go about doing that. If an edge computer is used then the user also has to train models in the context of TinyML. TensorFlow is big, bulky, and beefy because it was originally designed for big computing systems. If the user want to deploy  things on small, little embedded microcontrollers, then it is necessary to make the system lean and mean. that's why TensorFlow Lite was developed.
+
+TensorFlow Lite, short ``TFLite'', is a set of tools for converting and optimizing TensorFlow models for use on mobile and edge devices.TensorFlow Lite, as an Edge AI implementation, significantly eliminates the challenges of integrating large-scale computer vision with on-device machine learning, allowing machine learning to be used anywhere.TensorFlow Lite for Microcontrollers is a machine learning framework designed to run on microcontrollers and other devices with limited memory.We can improve the intelligence of billions of devices in our lives, including household appliances and Internet of Things devices, by bringing machine learning to tiny microcontrollers, rather than relying on expensive hardware or reliable internet connections, which are often subject to bandwidth and power constraints and result in high latency. It also helps in data security as the data stays in the device.TensorFlow Lite is specially optimized for on-device machine learning (Edge ML). As an Edge ML model, it is suitable for deployment to resource-constrained edge devices. \cite{GoogleTensorFlowLite:2021,Dokic:2020}
+
+
+
+\section{Sample TensorFlow Code}
+
+While TensorFlow is written with fast custom C++ code, it has a high level Python interface that will used. 
+
+For example it is possible to create a custom Neural Network model using code that looks \ref{TensorFlowSample}. Each part of the code will be presneted later, but th following points are important:
+
+
+\begin{enumerate}
+    \item This is a custom class that extends the  base class \PYTHON{tf.keras.Model}.
+    \item The class defines four specific kinds of \PYTHON{tf.keras.layers}.
+    \item The class has a \PYTHON{call} function which will run an input through those layers.
+\end{enumerate}
+
+
+\begin{code}
+  \begin{lstlisting}[language=Python]
+# Load in the TensorFlow library
+import tensorflow as tf
+
+# Define my custom Neural Network model
+class MyModel(tf.keras.Model):
+    def __init__(self):
+        super(MyModel, self).__init__()
+        # define Neural Network layer types
+        self.conv = tf.keras.layers.Conv2D(32, 3, activation='relu')
+        self.flatten = tf.keras.layers.Flatten()
+        self.dense1 = tf.keras.layers.Dense(128, activation='relu')
+        self.dense2 = tf.keras.layers.Dense(10)
+
+    # run my Neural Network model by evaluating
+    # each layer on my input data
+    def call(self, x):
+        x = self.conv(x)
+        x = self.flatten(x)
+        x = self.dense1(x)
+        x = self.dense2(x)
+        return x
+
+
+    # Create an instance of the model
+    model = MyModel()
+  \end{lstlisting}
+  \caption{Simple Example for TensorFlow}\label{TensorFlowSample}
+\end{code}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{TensorFlow 2.0} 
+ 
+TensorFLow is an open source library for deep leaning, often referred to as a framework due to its scope. The free library has been available in Verson 2.0 since 2019. The scope of the library has led to its widespread use in both academia and industry. The current version 2.0 was released on 30 September 2019.
+\cite{GoogleTensorFlow:2019}
+
+The open-source library uses data flow graphs to create models. 
+It enables developers to create large neural networks with many layers. TensorFlow is mainly used for: Classification, perception, understanding, discovery and prediction. \cite{GoogleTensorFlow:2019} %Quelle prüfen
+
+\section{TensorFlow and Python}
+
+According to \cite{Heise:2020}, the Python API is the most complete and widespread interface for TensorFlow and co. Therefore, it makes sense to familiarise yourself with Python if you want to work with TensorFlow.
+
+
+
+\section{Installation of TensorFlow}
+
+In addition to the standard version of the library, there are also variants that support special hardware. Depending on availability, AI accelerators and graphics cards are supported. In addition to the standard variant, variants for Intel hardware and for NVIDIA graphics cards are also presented here. First, the standard variant is presented, which does not require any special hardware.
+
+
+
+\subsection{Standard Installation}
+
+
+
+Installation of the library is done as follows for an Anaconda installation:
+
+First, the Anaconda prompt must be opened. Then it should first be started with
+
+\medskip 
+\SHELL{\$ pip install --upgrade pip}
+\medskip
+
+the latest version of \FILE{pip} must be installed. This may result in an error message regarding denied access, which recommends adapting the command accordingly:
+
+\medskip
+\SHELL{\$ pip install --upgrade pip --user}
+\medskip
+
+The pip version damaged by the previously failed upgrade can be repaired with
+
+\medskip
+\SHELL{\$ easy\_install pip}
+\medskip
+
+Finally, the installation of TensorFlow is done with
+
+\medskip
+
+\SHELL{\$ pip install tensorflow}
+
+
+\subsection{Installation of Intel Hardware} %korrekt?
+
+Intel has optimised the library for its hardware, such as the Intel Neural Compute Stick 2. TensorFlow is installed specifically for Intel hardware, for example, using the following commands:
+
+\medskip
+
+\SHELL{\$ conda install –c intel tensorflow}
+
+
+
+\subsection{Installation of Jetson Nano Hardware}
+
+The NVIDIA page describes the installation of TensorFlow for NVIDIA, in this case for the Jetson Nano.\cite{NVIDIA.27.10.2020}
+
+First, the necessary system packages required by TensorFlow are installed:
+
+\medskip
+
+\SHELL{\$ sudo apt-get update}
+
+\SHELL{\$ sudo apt-get install libhdf5-serial-dev hdf5-tools \textbackslash}
+
+\SHELL{\quad libhdf5-dev zlib1g-dev zip libjpeg8-dev liblapack-dev  \textbackslash}
+
+\SHELL{\quad libblas-dev gfortran}
+
+\medskip
+
+Install and update Pip3:
+
+\SHELL{\$ sudo apt-get install python3-pip}
+
+\SHELL{\$ sudo pip3 install -U pip testresources setuptools==49.6.0} 
+\medskip
+
+Install Python package dependencies:
+
+\medskip
+
+\SHELL{\$ sudo pip3 install -U numpy==1.16.1 future==0.18.2 mock==3.0.5 \textbackslash}
+
+\SHELL{\quad h5py==2.10.0 keras\_preprocessing==1.1.1 keras\_applications==1.0.8  \textbackslash}
+
+\SHELL{\quad gast==0.2.2 futures protobuf pybind11}
+
+\medskip
+
+The execution of the last command may take a few minutes. This is normal, even if no forest progress of the activity is visible in the meantime.
+
+\medskip
+
+Install a TensorFlow version that matches the JetPack version:
+
+\medskip
+
+\SHELL{\$ sudo pip3 install --extra-index-url  \textbackslash}
+
+\SHELL{\quad  https://developer.download.nvidia.com/compute/redist/jp/v\$VERSION  \textbackslash}
+
+\SHELL{\quad  tensorflow}
+
+\medskip
+
+For the expression <\$VERSION> the installed JetPack version must be used, where 44 stands for version 4.4 and 45 for 4.5 and so on. The installed version can be found by entering
+
+\medskip
+
+\SHELL{dpkg-query --show nvidia-l4t-core}
+
+\medskip
+
+and matching the L4T number with the respective JetPack versions on the url{https://developer.nvidia.com/embedded/jetpack-archive} page.
+Performing this step also takes a few minutes.
+
+
+
+\section{``Hello World 1'' of Machine Learning - Handwritten Digits}
+
+The typical first programme in Deep Learning is the recognition of handwritten digits from the MNIST dataset. Also on the \href{https://www.tensorflow.org/}{Web page of TensorFlow}, under the \href{https://www.tensorflow.org/tutorials/quickstart/beginner}{Quick Start for Beginners}, there is a short tutorial on training a neural network based on the MNIST\index{MNIST} dataset. 
+The following presentation follows the tutorial from \cite{Heise:2020}.
+
+\bigskip
+
+In this section, the complete process of training a neural network is shown. It is started with a data set containing 70,000 images. This data set is already divided into test and training images. Since it is the ten digits, the number of classes is also given as ten. A neural network with one layer is used. All in all, this results in a short training time. Since the images only have a resolution of 28 $\times$ 28-pixel and the neural network is very small, only an accuracy of about 60 \% is achieved. Extending the neural network with a hidden layer containing 200 neurons improves the result significantly to over 80 \%.  A further improvement is achieved by using a \ac{cnn}. This achieves an accuracy of 99 \%. During the training, the results are displayed graphically with the help of Tensorboard.
+
+\bigskip
+
+Formalities must be observed when training a neural network with TensorFlow. The following sequence must be taken into account:
+
+
+
+\begin{enumerate}
+  \item Loading and testing the dataset MNIST\index{MNIST} as a dataset provided by TensorFlow.
+  \item normalisation of the images into floating point numbers
+  \item Mixing and shaping a training sequence (batch) with a defined number of examples
+  \item Creation of the neural network and optimisation with \PYTHON{Adam}
+  \item Specification of an additional metric precision and 
+  \item Training/testing the model by calling the function \PYTHON{model.fit}
+\end{enumerate}
+
+
+\subsection{Loading the Data Set MNIST}
+
+The command \PYTHON{load\_data()} loads the data and immediately splits it into two parts. The data then contain two lists each, the first list containing the images and the second list the corresponding classification. The images are loaded in the list with the designation \PYTHON{x}, the classification with \PYTHON{y}.
+
+\medskip
+
+
+\begin{code}
+    \begin{lstlisting}[numbers=none]
+        from tensorflow.keras.datasets import mnist
+        train_da, test_da = mnist.load_data()
+        x_train, y_train  = train_da
+        x_test, y_test    = test_da
+    \end{lstlisting}
+    
+    \caption{Loading the data set MNIST\index{MNIST}}
+\end{code}
+
+
+\subsection{Data Preparation}
+
+A neural network expects data as 32-bit floating point numbers in the value range of $0$ and $1$. In the following code, the image data is therefore normalised accordingly and brought into the format $28 \times 28$. The choice of normalisation depends on the selected network structure.
+
+
+
+
+\begin{code}
+    \begin{lstlisting}[numbers=none]
+        import tensorflow.keras.backend as K
+        from tensorflow.keras.utils  import to_categorical
+        
+        dat_form = K.image_data_format()
+        rows, cols = 28, 28
+        train_size = x_train.shape[0]
+        test_size  = x_test.shape[0]
+        
+        if dat_form == 'channels_first':
+        x_train = x_train.reshape(train_size, 1, rows, cols)
+        x_test = x_test.reshape(test_size, 1, rows, cols)
+        input_shape = (1, rows, cols)
+        else:
+        x_train = x_train.reshape(train_size, rows, cols, 1)
+        x_test = x_test.reshape(test_size, rows, cols, 1)
+        input_shape = (rows, cols, 1)
+        
+        # norm data to float in range 0..1
+        x_train = x_train.astype('float32')
+        x_test = x_test.astype('float32')
+        x_train /= 255
+        x_test /= 255
+        
+        # conv class vecs to one hot vec
+        y_train = to_categorical(y_train,10)
+        y_test = to_categorical(y_test, 10)
+    \end{lstlisting}
+    
+    \caption{Normalisation of the data set MNIST\index{MNIST}}
+\end{code}
+
+
+To reduce the training time for the first trials, instead of starting with all training data, the data is initially limited to 100 images:
+
+\medskip
+
+\begin{code}
+    \begin{lstlisting}[numbers=none]
+        x_train = x_train[:100]
+        y_train = y_train[:100]
+    \end{lstlisting}
+    
+    \caption{Limitation of the fields to 100 elements}
+\end{code}
+
+\subsection{Structure and Training of the Model}
+
+Before the model can be used, it must be built. To do this, the modules to be used must first be imported. This model is created with the class \PYTHON{Sequential}. First, a very simple model is used that consists of only two layers.
+
+\medskip
+
+\begin{code}
+    \begin{lstlisting}[numbers=none]
+        from tensorflow.keras.models import Sequential
+        from tensorflow.keras.layers import Dense,Flatten
+        model = Sequential()
+        model.add(Flatten())
+        model.add(Dense(10,activation='softmax'))
+    \end{lstlisting}
+    
+    \caption{Building a model with two layers}
+\end{code}
+
+\medskip
+
+The command \PYTHON{flatten()} transforms the input data, here a field with 28 by 28 entries, into a one-dimensional vector of size 784. The function \PYTHON{model.add()} adds each of the calculations as a separate layer to the model. Then the function \PYTHON{Dense()} starts the calculation of the activation function of the neurons. In this case there are ten neurons and the activation function \PYTHON{softmax}. Each of the ten neurons corresponds to one possible result, i.e. one of the ten letters. Each neuron, i.e. each possible outcome, is assigned a probability by the function \PYTHON{softmax}, so that the sum of all neurons is 1. A value close to 1 is to be interpreted in such a way that the associated result can be assumed with a high degree of certainty. If all values are close to 0, no reliable statement can be made.
+
+
+TensorFlow uses the above construction to build a graph for the calculations, these are automatically optimised and transformed into a format that allows efficient calculation on the hardware. In practical use, the values are calculated from input to output. For training, TensorFlow automatically determines the derivative of the loss function and adds the gradient descent calculations to the graph. One function is sufficient for this:
+
+\begin{code}
+    \begin{lstlisting}[numbers=none]
+        from tensorflow.keras.losses import categorical_crossentropy
+        from tensorflow.keras.optimizers import Adam
+        model.compile(
+        loss=categorical_crossentropy,
+        optimizer=Adam(),
+        metrics=['accuracy'])
+    \end{lstlisting}
+    
+    \caption{Preparation of the training}
+\end{code}
+
+
+The command passes the loss function \PYTHON{categorical\_crossentropy} to the model. The selected loss function calculates the squared Euclidean distance between two vectors. To determine the optimal weights in the neural network, the algorithm \PYTHON{Adam()} is used, which is a variant of gradient descent. The algorithm is very robust, so that for most applications no changes to the parameters are necessary. Through the passing parameter \PYTHON{metrics=['accuracy']}, it is counted during the calculations how many images have been correctly determined by the neural network.
+
+
+\bigskip
+
+The training can be started with the command \PYTHON{model.fit()}:
+
+\begin{code}
+    \begin{lstlisting}[numbers=none]
+        history = model.fit(x_train, y_train,
+        batch_size=128,
+        epochs=12, verbose=1,
+        validation_data=(x_test, y_test))
+    \end{lstlisting}
+    
+    \caption{Implementation of the training}
+\end{code}
+
+
+The function expects several parameters. First, the training data must be passed, followed by the classifications. The third value is the batch size, it specifies how much data is added to the calculation at the same time. On the one hand, the value should be as large as possible to achieve a good result, on the other hand, the value is limited by the hardware. This is because all input data of a batch are processed simultaneously in the computer's memory. The parameter \PYTHON{epochs} specifies how often the training data of a batch are run through during training. More complex problems may require more epochs and a lower learning rate.
+
+After each training run, the command \PYTHON{validation\_data=(x\_test, y\_test)}
+to determine how well the model performs with unknown data.
+
+The return value of the function \PYTHON{model.fit()} is an object \PYTHON{history}. With the help of this object, the learning success can be tracked. The visualisation can be done with TensorBoard\index{TensorBoard}, as shown in the next section.
+
+
+\subsection{History of the Training and Visualisation with TensorBoard\index{TensorBoard}}
+
+When the cell is executed with \PYTHON{model.fit()}, the output is the history. The history for the example created above looks as follows:
+
+\begin{lstlisting}[numbers=none]
+    Epoch 1/12
+    1/1 [==============================] - 1s 705ms/step - loss: 2.3428 - accuracy: 0.1700 - val_loss: 2.3428 - val_accuracy: 0.1653
+    Epoch 2/12
+    1/1 [==============================] - 0s 235ms/step - loss: 2.2764 - accuracy: 0.1800 - val_loss: 2.3030 - val_accuracy: 0.1832
+    Epoch 3/12
+    1/1 [==============================] - 0s 235ms/step - loss: 2.2125 - accuracy: 0.2200 - val_loss: 2.2649 - val_accuracy: 0.1995
+    Epoch 4/12
+    1/1 [==============================] - 0s 227ms/step - loss: 2.1507 - accuracy: 0.2300 - val_loss: 2.2283 - val_accuracy: 0.2152
+    Epoch 5/12
+    1/1 [==============================] - 0s 217ms/step - loss: 2.0909 - accuracy: 0.2700 - val_loss: 2.1931 - val_accuracy: 0.2326
+    Epoch 6/12
+    1/1 [==============================] - 0s 211ms/step - loss: 2.0330 - accuracy: 0.3100 - val_loss: 2.1589 - val_accuracy: 0.2500
+    Epoch 7/12
+    1/1 [==============================] - 0s 218ms/step - loss: 1.9766 - accuracy: 0.3600 - val_loss: 2.1257 - val_accuracy: 0.2681
+    Epoch 8/12
+    1/1 [==============================] - 0s 198ms/step - loss: 1.9218 - accuracy: 0.3900 - val_loss: 2.0933 - val_accuracy: 0.2879
+    Epoch 9/12
+    1/1 [==============================] - 0s 216ms/step - loss: 1.8685 - accuracy: 0.4000 - val_loss: 2.0616 - val_accuracy: 0.3077
+    Epoch 10/12
+    1/1 [==============================] - 0s 232ms/step - loss: 1.8164 - accuracy: 0.4000 - val_loss: 2.0305 - val_accuracy: 0.3291
+    Epoch 11/12
+    1/1 [==============================] - 0s 238ms/step - loss: 1.7656 - accuracy: 0.4700 - val_loss: 2.0000 - val_accuracy: 0.3491
+    Epoch 12/12
+    1/1 [==============================] - 0s 240ms/step - loss: 1.7160 - accuracy: 0.5300 - val_loss: 1.9701 - val_accuracy: 0.3717
+\end{lstlisting}
+
+With the tool TensorBoard\index{TensorBoard} the history can also be visualised. An introduction to the use of TensorBoard can be found at \cite{TensorFlow.30.10.2020}.
+
+To load TensorBoard\index{TensorBoard}, the following should be included in the beginning of the script
+
+\medskip
+
+\SHELL{\%load\_ext tensorboard}
+
+\medskip
+
+be executed. If only the history of the respective run is to be visualised, any data already contained in the log file must be deleted.
+already contained in the log file must be deleted. According to \cite{TensorFlow.30.10.2020}, this should be done with the command
+
+\medskip
+
+\SHELL{!rm -rf ./logs/}
+
+\medskip
+
+be possible. However, this does not work in every case. As an alternative 
+
+\medskip
+
+\SHELL{import shutil}
+
+\SHELL{shutil.rmtree('./logs',ignore\_errors=True)}
+
+\medskip
+
+can be used. Before executing \PYTHON{model.fit()}, the log file and the callback function must be prepared:
+
+\medskip
+
+\SHELL{\small log\_dir = "logs/fit/" + datetime.datetime.now().strftime("\%Y\%m\%d-\%H\%M\%S")}
+
+\SHELL{\small tensorboard\_callback = tf.keras.callbacks.TensorBoard(log\_dir=log\_dir, \textbackslash} 
+
+\SHELL{\small \quad histogram\_freq=1)}
+
+\medskip
+
+With this callback function, the data, named after the time of the training, is stored. In the training, the callback function must be given to the tensor board, which is why this part must be adapted:
+
+
+\begin{code}
+    \begin{lstlisting}[numbers=none]
+        history = model.fit(x_train, y_train,
+        batch_size=128,
+        epochs=12, verbose=1,
+        validation_data=(x_test, y_test),
+        callbacks=[tensorboard_callback])
+    \end{lstlisting}
+    
+    \caption{Carrying out the training with a callback function}
+\end{code}
+
+
+With the input
+
+\medskip
+
+\SHELL{\%tensorboard --logdir logs/fit}
+
+\medskip
+
+the training is visualised with TensorBoard after it is completed. For the simple model built above, the history of the training in TensorBoard looks as shown in Figure~\ref{HistMNIST1}.
+
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[width=0.49\textwidth]{TensorFlow/HistMNIST1acc}
+        \includegraphics[width=0.49\textwidth]{TensorFlow/HistMNIST1loss}
+        \caption{Training history of the simple model visualised with TensorBoard} 
+        \label{HistMNIST1}
+    \end{center}
+\end{figure}
+
+\subsection{Problems with TensorBoard}
+
+When using TensorBoard, problems can occur when establishing the connection, loading the data or loading the \glqq correct\grqq{} data. If, for example, data is still displayed that has been deleted in the meantime, or if for some other reason a complete shutdown and restart of the TensorBoard is to be forced because Tensorboard no longer responds, the following commands - to be entered in the Windows command prompt - may be helpful:
+
+\medskip
+
+
+\SHELL{taskkill /im tensorboard.exe /f}
+
+\SHELL{del /q \%TMP\%\textbackslash.tensorboard-info\textbackslash*}
+
+\medskip
+
+An error message may appear that the file cannot be found. This can be ignored. After a short time, the TensorBoard should then be able to be reloaded.
+
+\subsection{Neural network}
+
+To make the neural network \glqq more intelligent\grqq, an additional hidden layer is added, a so-called hidden layer. This layer consists of 200 neurons with the ReLu activation function. Another improvement can be achieved by dropout, which avoids overfitting, i.e. memorising the training data. This could also be achieved by substantially increasing the number of training data, but of course this also entails a much higher computation time. Instead, a layer is inserted between the two layers with neurons, which randomly discards half of all information. The new definition of the model looks as follows:
+
+\begin{code}
+    \begin{lstlisting}[numbers=none]
+        from tensorflow.keras.models import Sequential
+        from tensorflow.keras.layers import Dense,Flatten
+        from tensorflow.keras.layers import Dropout
+        model = Sequential()
+        model.add(Flatten())
+        model.add(Dense(200,activation='relu'))
+        model.add(Dropout(0.5))
+        model.add(Dense(10,activation='softmax'))
+    \end{lstlisting}
+    
+    \caption{Neural network with a second hidden layer and the dropout function}
+\end{code}
+
+As can be seen in Figure~\ref{HistMNIST2}, training with the neural network and dropout leads to better results.
+
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[width=0.49\textwidth]{TensorFlow/HistMNIST2acc}
+        \includegraphics[width=0.49\textwidth]{TensorFlow/HistMNIST2loss}
+        \caption{Training history of the simple model visualised with TensorBoard} 
+        \label{HistMNIST2}
+    \end{center}
+\end{figure}
+
+
+\subsection{Convolutional Neural Network}
+
+%todo Quellen
+Convolutional neural networks are particularly suitable for image classification tasks. Therefore, the idea is naturally to use them here as well. For this purpose, the model is redefined again:
+
+
+\begin{code}
+    \begin{lstlisting}[numbers=none]
+        from tensorflow.keras.layers import Conv2D
+        from tensorflow.keras.layers import MaxPooling2D
+        model.add(Conv2D( 32, 
+        kernel_size=(3, 3),
+        activation='relu',
+        input_shape=input_shape))
+        model.add(Conv2D( 64, 
+        kernel_size=(3, 3),
+        activation='relu'))
+        model.add(MaxPooling2D(pool_size=(2, 2)))
+        model.add(Dropout(0.25))
+        model.add(Flatten())
+        model.add(Dense(200,
+        activation = 'relu'))
+        model.add(Dropout(0.5))
+        model.add(Dense(10,
+        activation = 'softmax'))
+    \end{lstlisting}
+    \caption{Building a Convolutional Neural Network}
+\end{code}
+
+
+\medskip
+
+There are now two convolutional layers and one pooling layer in this model. The newly added \PYTHON{Conv2D()} layers belong in front of the existing \PYTHON{Slabs()} layer because they use the two-dimensional structure of the input images. The first layer learns 32 filters with a matrix size of $3 \times 3$, the second 64 filters. This is followed by a maximum pooling layer that stores only the largest value from each $2 \times 2$ field.
+
+With the training data set limited to 100 samples, even this training is still fast. The history is shown in Figure~\ref{HistMNIST3}.
+
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[width=0.49\textwidth]{TensorFlow/HistMNIST3acc}
+        \includegraphics[width=0.49\textwidth]{TensorFlow/HistMNIST3loss}
+        \caption{Training history of the simple model visualised with TensorBoard} 
+        \label{HistMNIST3}
+    \end{center}
+\end{figure}
+
+If you train over 12 epochs with all 60,000 training data, the training on a laptop with an AMD Ryzen 5 3500U processor takes over 15 minutes (about 1.5 minutes per epoch at about 200ms per step). In return, an accuracy of over 99 \% is already achieved in the sixth run, which Tensornboard displays as the fifth (see figure~\ref{HistMNIST3_60000}).
+
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[width=0.49\textwidth]{TensorFlow/HistMNIST3acc_60000}
+        \includegraphics[width=0.49\textwidth]{TensorFlow/HistMNIST3loss_60000}
+        \caption{Trainingshistorie des einfachen Modells visualisiert mit TensorBoard} 
+        \label{HistMNIST3_60000}
+    \end{center}
+\end{figure}
+
+\subsection{Complete code}
+
+The complete code with the previously described steps and the final CNN model is recorded in Listing~\ref{TensorFlow:Complete}. It was created with Jupyter Notebook.
+
+\begin{code}
+    \lstinputlisting[language=Python, firstnumber=1]{../../Code/JetsonNano/MNIST.py}
+    %\includepdf[pages=-]{MNIST.pdf}
+    \caption{Creation of a Convolutional Neural Network}\label{TensorFlow:Complete}
+\end{code}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%        
+
+\section{``Hello World 2'' - Detection of an Iris}
+
+The recognition of the iris is another classic for image classification. There are also several tutorials on this classic. \Mynote{Sources} The following tutorial is based on the tutorial by \cite{KDnuggets.07.12.2020}.
+
+The aim of this tutorial is to classify three different iris species based on four different attributes, the length and width of the sepal and the petal. That is, the starting point is a CSV format file. However, only 50 measurements are available for each iris species. The data are first normalised by using a \glqq OneHotVector\grqq{} so that they can be processed with a neural network. The neural network used consists of nine hidden layers and one output layer. Five hidden layers have 64 neurons and four have 128. The activation function ReLu is used for all hidden layers. In the output layer, the activation function is SoftMax so that each class is assigned a probability. An accuracy of approximately 87 \% is achieved. Finally, to avoid overfitting, regularisation is used.
+
+\subsection{Loading Fisher's Iris Data Set\index{Dataset!Fisher's Iris Data Set}}
+
+The Fisher's Iris data set\index{Dataset!Fisher's Iris Data Set} is delivered with the library \PYTHON{sklearn}.
+
+\begin{code}
+    \begin{lstlisting}[numbers=none]
+        from sklearn.datasets import load_iris
+        iris = load_iris()
+    \end{lstlisting}
+    \caption{Loading the data set Iris\index{Dataset!Fisher's Iris Data Set}}
+\end{code}
+
+Other libraries must be loaded for image recognition:
+
+\begin{code}
+    \begin{lstlisting}[numbers=none]
+        import numpy as np
+        import pandas as pd
+        import matplotlib.pyplot as plt
+        
+        import tensorflow as tf
+        from tensorflow.keras.models import Sequential
+        from tensorflow.keras.layers import Dense
+    \end{lstlisting}
+    \caption{Libraries for Hello World 2 - Iris\index{Dataset!Fisher's Iris Data Set}}
+\end{code}
+
+
+The libraries \FILE{numpy}, \FILE{pandas} and \FILE{pyplot} are used for the preparation and visualisation of the data and the presentation of the results. In a neural network, the calculations are processed sequentially. The model type \PYTHON{Sequential} is imported to match this. The model is built up from individual layers that are processed sequentially. The layer type \PYTHON{Dense} is then imported. The layer type is a type of layer that is \glqq dicht\grqq{} connected, which means that all nodes of the previous layer are connected to all nodes of the current layer.
+
+
+The record is a \PYTHON{dictionary}. Its keys can be easily displayed:
+
+\medskip
+
+\PYTHON{iris.keys()}
+
+\medskip
+
+You get as output:
+
+\medskip
+
+\PYTHON{dict\_keys(['data', 'target', 'frame', 'target\_names', 'DESCR', 'feature\_names', 'filename'])}
+
+\medskip
+
+The individual elements can now be viewed. After entering the command 
+
+\medskip
+
+\PYTHON{iris['DESCR']}
+
+\medskip
+
+a detailed description is output:
+
+%\begin{verbatim}
+%'.. _iris_dataset:
+%
+%Iris plants dataset
+%--------------------
+%
+%**Data Set Characteristics:**
+%
+%   :Number of Instances: 150 (50 in each of three classes)
+%   :Number of Attributes: 4 numeric, predictive attributes and the class
+%   :Attribute Information:
+%    - sepal length in cm
+%    - sepal width in cm
+%    - petal length in cm
+%    - petal width in cm
+%    - class:
+%      - Iris-Setosa
+%      - Iris-Versicolour
+%      - Iris-Virginica
+%      
+%    :Summary Statistics:
+%    
+%    ============== ==== ==== ======= ===== ====================
+%                   Min  Max   Mean    SD   Class Correlation
+%    ============== ==== ==== ======= ===== ====================
+%    sepal length:   4.3  7.9   5.84   0.83    0.7826
+%    sepal width:    2.0  4.4   3.05   0.43   -0.4194
+%    petal length:   1.0  6.9   3.76   1.76    0.9490  (high!)
+%    petal width:    0.1  2.5   1.20   0.76    0.9565  (high!)
+%    ============== ==== ==== ======= ===== ====================
+%    
+%    :Missing Attribute Values: None
+%    :Class Distribution: 33.3% for each of 3 classes.
+%    :Creator: R.A. Fisher
+%    :Donor: Michael Marshall (MARSHALL%PLU@io.arc.nasa.gov)
+%    :Date: July, 1988
+%    
+%    The famous Iris database, first used by Sir R.A. Fisher. The dataset is taken\nfrom Fisher\'s paper. Note that it\'s the same as in R, but not as in the UCI
+%    Machine Learning Repository, which has two wrong data points.
+%    
+%    This is perhaps the best known database to be found in the\npattern recognition literature.  Fisher\'s paper is a classic in the field and
+%    is referenced frequently to this day.  (See Duda & Hart, for example.)  The
+%    data set contains 3 classes of 50 instances each, where each class refers to a
+%    type of iris plant.  One class is linearly separable from the other 2; the
+%    latter are NOT linearly separable from each other.
+%    
+%    .. topic:: References
+%    
+%      - Fisher, R.A. "The use of multiple measurements in taxonomic problems"
+%        Annual Eugenics, 7, Part II, 179-188 (1936); also in "Contributions to
+%        Mathematical Statistics" (John Wiley, NY, 1950).
+%      - Duda, R.O., & Hart, P.E. (1973) Pattern Classification and Scene Analysis.
+%        (Q327.D83) John Wiley & Sons.  ISBN 0-471-22361-1.  See page 218.
+%      - Dasarathy, B.V. (1980) "Nosing Around the Neighborhood: A New System
+%        Structure and Classification Rule for Recognition in Partially Exposed
+%        Environments".  IEEE Transactions on Pattern Analysis and Machine
+%        Intelligence, Vol. PAMI-2, No. 1, 67-71.
+%      - Gates, G.W. (1972) "The Reduced Nearest Neighbor Rule".  IEEE Transactions
+%        on Information Theory, May 1972, 431-433.
+%      - See also: 1988 MLC Proceedings, 54-64.  Cheeseman et al"s AUTOCLASS II
+%        conceptual clustering system finds 3 classes in the data.\n   
+%      - Many, many more ...'
+%\end{verbatim}
+
+\begin{code}
+    \begin{lstlisting}[numbers=none]
+        '.. _iris_dataset:\n\nIris plants dataset
+        --------------------
+        **Data Set Characteristics:**
+        :Number of Instances: 150 (50 in each of three classes)
+        :Number of Attributes: 4 numeric, predictive attributes and the class
+        :Attribute Information:
+        - sepal length in cm
+        - sepal width in cm
+        - petal length in cm
+        - petal width in cm
+        - class:
+        - Iris-Setosa
+        - Iris-Versicolour
+        - Iris-Virginica
+        
+        :Summary Statistics:
+        ============== ==== ==== ======= =========================
+        Min  Max   Mean    SD   Class Correlation
+        ============== ==== ==== ======= ===== ====================
+        sepal length:   4.3  7.9   5.84   0.83    0.7826
+        sepal width:    2.0  4.4   3.05   0.43   -0.4194
+        petal length:   1.0  6.9   3.76   1.76    0.9490  (high!)
+        petal width:    0.1  2.5   1.20   0.76    0.9565  (high!)
+        ============== ==== ==== ======= ===== ====================
+        
+        :Missing Attribute Values: None
+        :Class Distribution: 33.3% for each of 3 classes.
+        :Creator: R.A. Fisher
+        :Donor: Michael Marshall (MARSHALL%PLU@io.arc.nasa.gov)
+        :Date: July, 1988
+        
+        The famous Iris database, first used by Sir R.A. Fisher. The dataset is taken
+        from Fisher\'s paper. Note that it\'s the same as in R, but not as in the UCI
+        Machine Learning Repository, which has two wrong data points.
+        
+        This is perhaps the best known database to be found in the
+        pattern recognition literature.  Fisher\'s paper is a classic in the field and
+        is referenced frequently to this day.  (See Duda & Hart, for example.)  The
+        data set contains 3 classes of 50 instances each, where each class refers to a
+        type of iris plant.  One class is linearly separable from the other 2; the
+        latter are NOT linearly separable from each other.
+        .. topic:: References
+        - Fisher, R.A. "The use of multiple measurements in taxonomic problems"
+        Annual Eugenics, 7, Part II, 179-188 (1936); also in "Contributions to
+        Mathematical Statistics" (John Wiley, NY, 1950).
+        - Duda, R.O., & Hart, P.E. (1973) Pattern Classification and Scene Analysis.
+        (Q327.D83) John Wiley & Sons.  ISBN 0-471-22361-1.  See page 218.
+        - Dasarathy, B.V. (1980) "Nosing Around the Neighborhood: A New System
+        Structure and Classification Rule for Recognition in Partially Exposed
+        Environments".  IEEE Transactions on Pattern Analysis and Machine
+        Intelligence, Vol. PAMI-2, No. 1, 67-71.
+        - Gates, G.W. (1972) "The Reduced Nearest Neighbor Rule".  IEEE Transactions
+        on Information Theory, May 1972, 431-433.
+        - See also: 1988 MLC Proceedings, 54-64.  Cheeseman et al"s AUTOCLASS II
+        conceptual clustering system finds 3 classes in the data.
+        - Many, many more ...'
+    \end{lstlisting}
+    \caption{Information on the data set Iris\index{Dataset!Fisher's Iris Data Set} from scikit-learn}
+\end{code}
+
+
+With the input
+
+\medskip
+
+\PYTHON{iris['feature\_names']}
+
+\medskip
+
+it becomes clear that the characteristics by which flowers are classified are the length and width of the sepal and petal:
+
+
+
+\begin{lstlisting}[numbers=none]
+    ['sepal length (cm)',
+    'sepal width (cm)',
+    'petal length (cm)',
+    'petal width (cm)']
+\end{lstlisting}
+
+The names of the flowers that appear after entering
+
+\medskip
+\PYTHON{iris['target\_names']}
+
+\medskip
+
+are displayed, are
+
+\begin{lstlisting}[numbers=none]
+    array(['setosa', 'versicolor', 'virginica'], dtype='<U10')
+\end{lstlisting}
+
+For further investigation, the data with the headings are included in a data frame.
+
+\medskip
+
+\PYTHON{x = pd.DataFrame(data = iris.data, columns = iris.feature\_names)}
+
+\PYTHON{print(x.head())}
+
+\medskip
+
+The data structure \PYTHON{x} now only contains the first four columns. The class will later be stored in the data structure \PYTHON{y}. This separation had to be done in preparation for the training. The command \PYTHON{(x.head())} shows -- as in Figure~\ref{TensorFlowHead} -- the head of the data frame. It is obvious that each data set consists of four values. 
+
+\begin{figure}[H]
+    \GRAPHICSC{0.6}{1.0}{TensorFlow/IrisHead}
+    \caption{Header lines of the data set Iris\index{Dataset!Fisher's Iris Data Set}}\label{TensorFlowHead}
+\end{figure}
+
+Each record also already contains its classification in the key \PYTHON{target}. In the figure~\ref{TensorFlowHeadType} this is listed for the first data sets.
+
+\medskip
+
+\PYTHON{y = pd.DataFrame(data=iris.target, columns = ['irisType'])}
+
+\PYTHON{y.head()}
+
+\medskip
+
+\begin{figure}[H]
+    \GRAPHICSC{1.0}{1.0}{TensorFlow/IrisHeadType}
+    \caption{Output of the categories of the data set Iris\index{Dataset!Fisher's Iris Data Set}}\label{TensorFlowHeadType}
+\end{figure}
+
+By means of the command 
+
+\medskip
+
+\SHELL{y.irisType.value\_counts()}
+
+\medskip
+
+can be used to determine how many classes are present. The output of the command is shown in the figure~\ref{TensorFlowIrisTypes}; it results in 3 classes with the numbers $0$, $1$ and $2$. There are 50 records assigned to each of them.
+
+\begin{figure}[H]
+    \GRAPHICSC{1.0}{1.0}{TensorFlow/IrisTypes}
+    \caption{Names of the categories in the data set Iris\index{Dataset!Fisher's Iris Data Set}}\label{TensorFlowIrisTypes}
+\end{figure}
+
+
+\subsection{Data preparation}
+
+Now the process can be started. First, the data must be prepared.
+In this case, the following steps are necessary: 
+
+\begin{enumerate}
+  \item Missing values must be completed.
+  \item The data must be split into training and validation data.
+  \item The data is normalised.
+  \item The data representing categories must be converted into a vector.
+  \item The data is entered into vectors.
+\end{enumerate}
+
+\subsubsection{Missing Values}
+
+With the command 
+
+\medskip
+
+\PYTHON{pandas.DataFrame.info()}
+
+\medskip
+
+can be used to check whether the data is consistent. The figure~\ref{TensorFlowIrisInfo} shows that the data is complete and the data type is identical for all values. Consequently, no action is required for this data set.
+
+\medskip
+
+x.info()
+
+\medskip
+
+\begin{figure}[H]
+    \GRAPHICSC{1.0}{1.0}{TensorFlow/IrisInfo}
+    \caption{Checking the data set Iris\index{Dataset!Fisher's Iris Data Set}}\label{TensorFlowIrisInfo}
+\end{figure}
+
+
+\subsubsection{Split into Training and Validation Data}
+
+To split a dataset into training and validation data, the method \PYTHON{train\_test\_split} is available in the library \PYTHON{sklearn} in the class \PYTHON{model\_selection}. Here 10\% of the data set is retained as validation data.
+
+\medskip
+
+\PYTHON{x\_train, x\_test, y\_train, y\_test = train\_test\_split(X,y, test\_size=0.1)}
+
+\medskip
+
+\subsubsection{Normalisation of the Data}
+
+If the data have a high variance, they are to be normalised. Therefore, the variance is determined first. The function \PYTHON{var()} is available for this from the class \PYTHON{pandas.DataFrame}. According to Figure~\ref{TensorFlowIrisVar}, the output shows that the variance is low and therefore no action is required.
+
+\medskip
+
+\PYTHON{x\_train.var(), x\_test.var()}
+
+\medskip
+
+
+\begin{figure}[H]
+    \GRAPHICSC{1.0}{1.0}{TensorFlow/IrisVariance}
+    \caption{Variance in the data set Iris\index{Dataset!Fisher's Iris Data Set}}\label{TensorFlowIrisVar}
+\end{figure}
+
+\subsubsection{Converting the Categories into a Vector}
+
+From examining the data set, it is known that three categories are included. Currently they are numbered $0$, $1$ and $2$. The algorithm used could assign higher values a higher priority, so that the result is distorted. To avoid this, a vector is generated that contains only the $0$ and $1$ values, thus encoding the category. This is a so-called \glqq OneHotVector\grqq{}. There are two possibilities for this. One could use the function \PYTHON{to\_categorical} of the library \PYTHON{Keras} or the function \PYTHON{OneHotEncoder} of the library \PYTHON{sklearn}.
+
+\medskip
+
+\PYTHON{y\_train = tf.keras.utils.to\_categorical(y\_train)}
+
+\PYTHON{y\_test = tf.keras.utils.to\_categorical(y\_test)}
+
+\medskip
+
+The result of the first five data shows the figure~\ref{TensorFlowIrisCat} on the right. It is displayed with
+
+\medskip
+
+\PYTHON{y\_train[:5,:]}
+
+\medskip
+
+The left side of the figure~\ref{TensorFlowIrisCat} shows the original coding of the categories. Here you can also see which data sets were randomly selected as the first five training data.
+
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[width=0.2\textwidth]{TensorFlow/IrisCat1}
+        \includegraphics[width=0.6\textwidth]{TensorFlow/IrisCat}
+        \caption{Coding of the categories before (left) and after conversion} 
+        \label{TensorFlowIrisCat}
+    \end{center}
+\end{figure}
+
+
+\subsubsection{Conversion of the Data into Vectors}
+
+To make the data easier to process, it is converted into vectors of the library \PYTHON{numpy}.
+
+\medskip
+
+\PYTHON{x\_train = x\_train.values}
+
+\PYTHON{x\_test = x\_test.values}
+
+\medskip
+
+
+The result of the conversion can be checked in the first data set:
+
+\medskip
+
+\PYTHON{x\_train[0]}
+
+\medskip
+
+The result is as follows:
+
+\begin{lstlisting}[numbers=none]
+    array([5.5, 2.4, 3.7, 1. ])
+\end{lstlisting}
+
+
+\subsection{Structure and Training of the Model}
+
+
+After the preparations, the sequential model can now be created and the layers added.
+
+\begin{code}
+    \begin{lstlisting}[numbers=none]
+        model1 = Sequential()
+        model1.add(Dense(64,activation='relu', input_shape= X_train[0].shape))
+        model1.add(Dense(128,activation='relu'))
+        model1.add(Dense(128,activation='relu'))
+        model1.add(Dense(128,activation='relu'))
+        model1.add(Dense(128,activation='relu'))
+        model1.add(Dense(64,activation='relu'))
+        model1.add(Dense(64,activation='relu'))
+        model1.add(Dense(64,activation='relu'))
+        model1.add(Dense(64,activation='relu'))
+        model1.add(Dense(3,activation='softmax'))
+    \end{lstlisting}
+    
+    \caption{Structure of the neural network for the data set Iris \index{Dataset!Fisher's Iris Data Set}}
+\end{code}
+
+In this example, the model consists of one input layer, eight hidden layers and one output layer. The activation function of the first layers is \PYTHON{relu}, only for the output layer the activation function \PYTHON{softmax} is used, because it assigns probabilities to the possible categories. In the case where there are only two possible categories, the activation function \PYTHON{sigmoid} would be chosen. Besides the activation function \PYTHON{relu}, the functions \PYTHON{sigmoid}, \PYTHON{linear} or \PYTHON{tanh} are also available. The experiments have shown that the activation function \PYTHON{relu} shows the best success.
+
+The input layer contains an additional argument \PYTHON{input\_shape}. This argument ensures that the dimension of the first layer is based on the dimension of a data set. In this example, the dimension is four.
+
+The next step is to finalise the model. For this, the optimisation, the evaluation function and the metric must be passed.
+
+\medskip
+
+\PYTHON{model1.compile(optimizer='adam', loss= 'categorical\_crossentropy', metrics = ['acc'])}
+
+
+\medskip
+
+Several candidates are available for the optimisation function:
+
+\begin{itemize}
+    \item \PYTHON{Stochastic Gradient Descent}, 
+    \item \PYTHON{RMSProp} or also 
+    \item \PYTHON{adam}.
+\end{itemize}  
+
+\medskip
+
+Here, as in the previous example, \PYTHON{adam} was used.
+
+For the evaluation function, \PYTHON{categorical\_crossentropy} is used here, which is mostly used in classification tasks with several classes where only one category is correct at a time. If only two categories are available, \PYTHON{binary\_crossentropy} is used instead.
+
+Metrics are important to evaluate one's model. There are several metrics we can use to evaluate our model. For classification problems, the most important metric is the accuracy \PYTHON{['acc']}, which indicates how accurate our predictions are.
+
+In the last step, the model is now trained using the training data.
+
+\medskip
+
+\PYTHON{history = model1.fit(x\_train, y\_train, batch\_size = 40, epochs=800, validation\_split = 0.1)}
+
+\medskip
+
+For the creation of the model, 800 epochs with a batch size of 40 were set here. As validation data, 10\% of the training data set is taken at random.
+
+\subsection{History of the Training and Visualisation with TensorBoard}
+
+The \PYTHON{fit} method returns a data structure that contains the entire history of our training. This allows us to track how the quality has evolved during the training. For example, a hint of overfitting can be detected by much better performance in the training data than in the validation data. Furthermore, one can see if the quality behaves asymptotically in the last epochs or if the training should be extended or can be shortened.
+
+The return value is a dictionary that can be accessed via \PYTHON{history.history}.
+Here one can, among other things, follow the development of the accuracy in the training as well as in the validation data set.
+can be followed. We can access the history of the elements acc, loss, val\_loss and val\_acc with history.history.loss or history.history['val\_acc'] etc. respectively.
+
+
+In the figure~\ref{TensorFlowIrisPlotHist1} the progression of accuracy over the epochs is shown. Only five lines need to be programmed to generate the graph:
+
+\medskip
+
+\PYTHON{plt.plot(history.history['acc'])}
+
+\PYTHON{plt.plot(history.history['val\_acc'])}
+
+\PYTHON{plt.xlabel('Epochs')}
+
+\PYTHON{plt.ylabel('Acc')}
+
+\PYTHON{plt.legend(['Training', 'Validation'], loc='upper right')}
+
+\medskip
+
+\begin{figure}[H]
+    \GRAPHICSC{0.8}{1.0}{TensorFlow/IrisPlotHist1}
+    \caption{Course of the accuracy for the training and test data during the training of the model}\label{TensorFlowIrisPlotHist1}
+\end{figure}
+
+The course of the loss function can be drawn analogously:
+
+\medskip
+
+\PYTHON{plt.plot(history.history['loss'])}
+
+\PYTHON{plt.plot(history.history['val\_loss'])}
+
+\PYTHON{plt.xlabel('Epochs')}
+
+\PYTHON{plt.ylabel('Loss')}
+
+\PYTHON{plt.legend(['Training', 'Validation'], loc='upper left')}
+
+\medskip
+
+\begin{figure}[H]
+    \GRAPHICSC{0.7}{1.0}{TensorFlow/IrisPlotHist2}
+    \caption{Course of the loss function for the training and test data during the training of the model}\label{TensorFlowIrisPlotHist2}
+\end{figure}
+
+According to \cite{KDnuggets.07.12.2020}, we expect to observe an overfitting, which manifests itself in the fact that the results for the training data are significantly better than for the validation data. However, this problem is not evident in the results obtained. The validation data even perform better than the training data. Compare this also with the plots of \cite{KDnuggets.07.12.2020}. Possibly different versions of TensorFlow were used here, which lead to different results.
+
+To check the model, the function \PYTHON{model.evaluate} can be used; the method expects the test data with the associated categories:
+
+\medskip
+
+\PYTHON{model1.evaluate(x\_test, y\_test)}
+
+\medskip
+
+The achieved accuracy on the test data is about 87 \%.
+
+\subsection{Regularisation}
+
+To achieve a better model, regularisation is introduced. This reduces the risk of overfitting, which was expected for the first model. In this model, an L2 regularisation is added. This adds the squared amount of the respective coefficient as a penalty term in the loss function for determining the weights.  
+
+As a second measure to reduce overfitting and improve the model, dropout layers are added.
+
+\begin{code}
+    \begin{lstlisting}[numbers=none]
+        model2 = Sequential()
+        model2.add(Dense(64, activation = 'relu', input_shape= X_train[0].shape))
+        model2.add(Dense(128, activation = 'relu', kernel_regularizer=tf.keras.regularizers.l2(0.001)))
+        model2.add(Dense (128, activation = 'relu',kernel_regularizer=tf.keras.regularizers.l2(0.001)))
+        model2.add(tf.keras.layers.Dropout(0.5))
+        model2.add(Dense (128, activation = 'relu', kernel_regularizer=tf.keras.regularizers.l2(0.001)))
+        model2.add(Dense(128, activation = 'relu', kernel_regularizer = tf.keras.regularizers.l2(0.001)))
+        model2.add(Dense (64, activation = 'relu', kernel_regularizer=tf.keras.regularizers.l2(0.001)))
+        model2.add(Dense (64, activation = 'relu', kernel_regularizer=tf.keras.regularizers.l2(0.001)))
+        model2.add(tf.keras.layers.Dropout(0.5))
+        model2.add(Dense (64, activation = 'relu', kernel_regularizer=tf.keras.regularizers.l2(0.001)))
+        model2.add(Dense (64, activation = 'relu', kernel_regularizer=tf.keras.regularizers.l2(0.001)))
+        model2.add(Dense (3, activation = 'softmax', kernel_regularizer=tf.keras.regularizers.l2(0.001)))
+    \end{lstlisting}
+    
+    \caption{Construction of the neural network for the data set Iris\index{Dataset!Fisher's Iris Data Set} - Improved version}
+\end{code}
+
+Apart from the introduction of regularisation and the two dropout layers, nothing is changed in the model or in the parameters. 
+
+\medskip
+
+\begin{code}
+    \begin{lstlisting}[numbers=none]
+        model2.compile(optimizer='adam', 
+        loss='categorical_crossentropy', 
+        metrics=['acc'])
+        history2 = model2.fit(x_train, y_train, 
+        epochs=800, 
+        validation_split=0.1, batch_size=40)
+        model2.evaluate(x\_test, y\_test)
+    \end{lstlisting}
+    
+    \caption{Training of the second model}
+\end{code}
+
+
+\medskip
+
+An accuracy of 87 \% is also achieved for this model using the test data.
+
+The course of the accuracy and the evaluation function are shown in the figures \ref{TensorFlowIrisPlotHist3} and \ref{TensorFlowIrisPlotHist4}. 
+
+
+\begin{code}
+    \begin{lstlisting}[numbers=none]
+        plt.plot(history2.history['acc'])
+        plt.plot(history2.history['val_acc'])
+        plt.title('Accuracy vs. epochs')
+        plt.ylabel('Acc')
+        plt.xlabel('Epoch')
+        plt.legend(['Training', 'Validation'], loc='lower right')
+        plt.show()
+    \end{lstlisting}
+    
+    \caption{Course of the accuracy and the evaluation function}
+\end{code}
+
+
+\begin{figure}[H]
+    \GRAPHICSC{0.8}{1.0}{TensorFlow/IrisPlotHist3}
+    \caption{Course of accuracy for the training and test data during the training of the second model}
+    \label{TensorFlowIrisPlotHist3}
+\end{figure}
+
+
+The Python program part for the loss function is given as follows:
+
+\begin{code}
+    \begin{lstlisting}[numbers=none]
+        plt.plot(history2.history['loss'])
+        plt.plot(history2.history['val_loss'])
+        plt.title('Loss vs. epochs')
+        plt.ylabel('Loss')
+        plt.xlabel('Epoch')
+        plt.legend(['Training', 'Validation'], loc='upper right')
+        plt.show()
+    \end{lstlisting}
+    
+    \caption{Course of the loss function}
+\end{code}
+
+\begin{figure}[H]
+    \GRAPHICSC{0.8}{1.0}{TensorFlow/IrisPlotHist4}
+    \caption{Course of the loss function for the training and test data during the training of the second model}
+    \label{TensorFlowIrisPlotHist4}
+\end{figure}
+
+
+\subsection{Complete Code}
+
+The entire script of the tutorial described can be found in Listing~\ref{tensorflow:IrisComplete}.
+
+\begin{code}
+    \lstinputlisting[language=Python, firstnumber=1]{../../Code/JetsonNano/Iris.py}
+    
+    \caption{Complete Python programme for the Iris data set}\label{tensorflow:IrisComplete}
+\end{code}
+
+

@@ -1,0 +1,159 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% $Autor: Wings $
+% $Datum: 2020-02-24 14:30:26Z $
+% $Pfad: ESP32/ESP32.tex $
+% $Version: 1792 $
+%
+% !TeX encoding = utf8
+% !TeX root = NiclaVision
+% !TeX TXS-program:bibliography = txs:///bibtex
+%
+%
+%%%%%%%%%%%%%%%
+
+% ! TeX TXS-SCRIPT = foobar
+% //Trigger = ?load-this-file
+% app.load("/tmp/test/test.tex");
+% app.load("/tmp/test/a.tex");
+% TXS-SCRIPT-END
+%%%
+%
+% Auswahl der Sprache
+% Die nicht gewünschte Sprache muss auskommentiert werden:
+%\def\isGerman{1}
+\def\isEnglish{1}
+%
+%%%%%%%%%%%%%%%
+
+\documentclass[10pt,a4paper,bibliography=totoc]{scrbook}
+
+
+\input{../../General/packages}
+\input{../../General/commands}
+\input{../../General/tikzdefs}
+
+\input{../../General/acronyms}
+\input{../../General/Hyphenations}%
+
+\bibliography{../../../MLbib/Jetson} 
+\addbibresource{../../../MLbib/literature.bib}
+\addbibresource{../../../MLbib/MyLiterature.bib}
+
+
+%\renewcommand{\Ausblenden}[1]{#1}
+
+\begin{document}
+    
+   
+\InputLanguage{Contents/General/}{Titlepage}
+
+%Inhaltsverzeichnis
+\tableofcontents
+\newpage
+
+\listoffigures
+\newpage
+
+%\addcontentsline{toc}{chapter}{\TRANS{Liste der Programme}{List of Listings}}
+%\lstlistoflistings
+\listofcodes
+\cleardoublepage
+
+% Ist in acronyms/Acronymlist aufgegangen
+%\input{../contents/JetsonNano/Symbollist}
+%\newpage
+
+\InputLanguage{Contents/General/}{Acronymlist}
+\newpage
+
+
+  
+\InputLanguage{Contents/General/}{Introduction}
+  
+\part{Domain Knowledge - Application}  
+
+\part{Domain Knowledge - Hardware}  
+
+\input{../../Contents/General/Templates/SensorActor}
+
+\part{Domain Knowledge - Machine Learning/Algorithms}  
+
+
+
+\part{Domain Knowledge - Tools}  
+
+\part{Methodology}  
+
+\part{Developmenmt}
+
+\part{Development to Deployment}
+
+
+\part{Monitoring}
+
+\part{Deployment}
+
+\part{Verification - Evaluation - Conclusion}
+
+
+
+
+\part{\TRANS{Anhang}{Appendix}}
+
+
+\cleardoublepage
+\InputLanguage{Contents/General/}{ListOfMaterial}
+
+\cleardoublepage
+\InputLanguage{Contents/General/}{SBOM}
+
+
+  \input{../../Contents/General/Templates/Package}
+
+    
+\InputLanguage{Contents/General/}{Hints}
+
+\newpage
+\InputLanguage{Contents/General/}{Bezier}
+
+\newpage
+\InputLanguage{Contents/General/}{ArcStrategy}
+
+\newpage
+\InputLanguage{Contents/General/}{MapleFiles}
+
+\newpage
+\InputLanguage{Contents/General/}{Python}
+
+
+\newpage
+\InputLanguage{Contents/General/}{FirstChapter}
+
+\cleardoublepage
+\appendix
+\InputLanguage{Contents/General/}{AppendixTikz}
+
+\cleardoublepage
+\InputLanguage{Contents/General/}{Appendix}
+
+\cleardoublepage
+\InputLanguage{Contents/General/}{ModelCard}
+
+
+    
+ 
+
+%\addcontentsline{toc}{chapter}{Literaturverzeichnis}
+\printbibliography[
+  heading=bibintoc,
+  title={\TRANS{Literaturverzeichnis}{Literature}}
+]
+
+\newpage
+
+%\addcontentsline{toc}{chapter}{\TRANS{Stichwortverzeichnis}{Index}}
+\printindex
+
+
+\end{document}

@@ -1,0 +1,45 @@
+%%%%%%
+%
+% $Autor: Wings $
+% $Datum: 2020-01-18 11:15:45Z $
+% $Pfad: WuSt/Skript/Produktspezifikation/powerpoint/ImageProcessing.tex $
+% $Version: 4620 $
+%
+%%%%%%
+
+%\chapter{KI mit dem Jetson Nano r32.3.1de: Echtzeit-Objekterkennung mit Pi-Kamera}
+%\href{https://elinux.org/Jetson_Nano#What.27s_Included}{Jetson Nano - Linux System}
+%todo ToDo/iX2_2020.pdf
+
+\chapter{Anwendung \glqq Bilderkennung mit dem Jetson\grqq}
+
+
+\section{Anwendungsbeispiel Flaschenerkennung}
+
+Aufgrund der wachsenden Möglichkeiten zur Datenanalyse werden Entwicklungen wie
+vorausschauende Wartung und intelligente Fehlererkennung in der Industrie vorangetrieben.
+ Durch den Einsatz künstlicher Intelligenz sind weniger oder gar keine menschlichen Entscheidungen erforderlich, und es können komplexere Zusammenhänge erkannt werden. Ziel ist hierbei oft die Qualitätskontrolle oder frühzeitige Erkennung von Fehlerquellen beziehungsweise zu erwartenden Fehlern. 
+
+In der Industrie ist die Qualitätskontrolle oder frühzeitige Erkennung von Fehlerquellen beziehungsweise zu erwartenden Fehlern ein wichtiges Einsatzgebiet des Maschinellen Lernens. 
+\Mynote{Quellen} In diesem Buch wird beispielhaft eine  einfachere Anwendung behandelt. So sollen Flaschen in einer beliebigen Umgebung erkannt werden. Die Objekterkennung soll kontinuierlich erfolgen. Zur Erfassung der Umgebung  wird eine Kamera verwendet. Die gesammelten Daten werden mit dem NVIDIA Jetson Nano verifiziert. Falls eine einer Flasche detektiert wurde, soll der Jetson Nano ein binäres Signal an ein angebundene System zur Verfügung stellen. In der Industrie könnte das System eine \ac{sps}, die eine Maschine steuert. 
+
+\bigskip
+
+Damit die Aktionen des NVidia Jetson Nanos verfolgbar sind, wird nach dem Start des Programms das Live-Bild der Kamera permanent auf dem Bildschirm angezeigt und das Ergebnis der Bilderkennung eingeblendet, wie in Abbildung~\ref{Bottle} zu sehen ist.
+
+\begin{figure} [H]
+	\centering
+	\includegraphics[height=0.4\textwidth]{Test/BottleDetected}
+	\caption{Anwendungsbeispiel: Erkennung von Flaschen} \label{Bottle}\Mynote{Quelle}
+\end{figure}
+
+
+\section{Notwendige Hardware}
+
+
+Für die Anwendung der optischen Erkennung von Flaschen wird ein Jetson Nano mit Kamerasystem benötigt. Da die Anwendung zur Demonstration der Möglichkeiten dient, wird in diesem Projekt keine hochwertige Kamera, sondern eine Kamera Raspberry Pi CAM \cite{Monk:2017} verwendet. Die Wahl dr Kamera und des Objektivs beeinflusst natürlich die erfolgreiche Detektion. Bei einer industriellen Anwendung muss hier eine genaue Recherche erfolgen; auf jedem Fall muss die Umgebung berücksichtigt werden. Auflösung der Kamera, Lichtverhältnisse, Luftfeuchtigkeit, Spritzwasser und Vibrationen sind hier typische Fragestellungen. Für diesen Demonstrator ist die Raspberry Pi Kamera vollkommen ausreichend. Im Anhang~\ref{Anhang:Materialliste} ist eine vollständige Materialliste angegeben. In den folgenden Kapiteln wird die Anwendung häufig als Beispiel verwendet. So wird das NVidia Jetson Nano-Entwickler Kit wird im Kapitel~\ref{JetsonNano:DeveloperKit} ausführlich vorgestellt. Die Kamera und ihre Eigenschaften werden in Kapitel~\ref{SmartPiCAM:Kamera} beleuchtet. 
+
+
+
+
+

@@ -1,0 +1,60 @@
+%%%%%%%%%%%%
+%
+% $Autor: Wings $
+% $Datum: 2019-12-09 11:47:41Z $
+% $Pfad: komponenten/Bilderkennung/Produktspezifikation/JetsonNano/Inhalt/JetsonDigits6.tex $
+% $Version: 1765 $
+%
+%%%%%%%%%%%%
+
+
+
+\chapter{DIGITS}
+
+
+{\tiny Source: \href{https://github.com/NVIDIA/nvidia-docker/wiki/DIGITS}{Jonathan Calmels edited this page Nov 16, 2017 ·  14 revisions}}
+
+
+\section{Description}
+
+Docker image based on \href{https://github.com/NVIDIA/DIGITS}{DIGITS}.
+
+\section{Requirements}
+
+See the requirements for \href{https://github.com/NVIDIA/nvidia-docker/wiki/CUDA#requirements}{CUDA} since the DIGITS image is based on a cuDNN runtime image.
+
+\section{Examples}
+
+\begin{lstlisting}
+# Run DIGITS on host port 5000
+docker run --runtime=nvidia --name digits -d -p 5000:5000 nvidia/digits
+\end{lstlisting}
+
+If you want to use a dataset stored in a host directory, you will need to import it inside the container using a volume:
+
+\begin{lstlisting}
+# Run DIGITS with the mnist dataset stored on the host under /opt/mnist
+docker run --runtime=nvidia --name digits -d -p 5000:5000 -v /opt/mnist:/data/mnist nvidia/digits
+\end{lstlisting}
+
+If you want to persist jobs across multiple DIGITS containers, you can use a named volume. For DIGITS 3.0:
+
+\begin{lstlisting}
+# Run DIGITS storing jobs in a host volume named digits-jobs
+
+# For DIGITS 3.0
+docker run --runtime=nvidia --name digits -d -p 5000:34448 -v digits-jobs:/usr/share/digits/digits/jobs nvidia/digits:3.0
+
+# For DIGITS 3.3 and 4.0
+docker run --runtime=nvidia --name digits -d -p 5000:34448 -v digits-jobs:/jobs nvidia/digits:4.0
+
+# For DIGITS 5.0
+docker run --runtime=nvidia --name digits -d -p 5000:5000 -v digits-jobs:/jobs nvidia/digits:5.0
+
+# For DIGITS 6.0
+docker run --runtime=nvidia --name digits -d -p 5000:5000 -p 6006:6006 -v digits-jobs:/jobs nvidia/digits:6.0
+\end{lstlisting}
+
+\section{Tags available}
+
+Check the \href{https://hub.docker.com/r/nvidia/digits/}{DockerHub}

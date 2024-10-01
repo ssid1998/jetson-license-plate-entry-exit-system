@@ -1,0 +1,123 @@
+\section{GPIOs} \label{GPIO}
+
+%todo Warum hat es nicht funktioniert?
+Das Pinout des Jetson Nano sowie die Anleitung zur Installation der benötigten Bibliotheken finden Sie in Kapitel \ref{Installation}.
+
+\subsection{Steuerung über das Terminal}
+Die GPIOs können unmittelbar über das Terminal angesteuert werden. Dies ist vor allem zum Test der Funktionsweise hilfreich. Dazu kann beispielsweise eine Schaltung mit einer LED aufgebaut werden, die über den Board-Pin 12 gesteuert wird. Eine mögliche Schaltung ist im Kapitel \ref{LED} dargestellt. 
+
+\medskip
+
+Um direkten Zugriff auf die GPIOs zu erhalten, muss man ein 'Super-User sein'.
+
+\medskip
+\SHELL{\$ sudo su}
+\medskip
+
+Nun kann man sich die aktuelle Konfiguration der Pins ansehen:
+
+\medskip
+\SHELL{\$ cat /sys/kernel/debug/gpio}
+\medskip
+
+Um den Pin 12 des Jetson Nano als Output zu definieren, tippen Sie
+
+\medskip
+\SHELL{\$ echo 79 > /sys/class/gpio/export} \newline
+\SHELL{\$ echo out > /sys/class/gpio/gpio79/direction}
+\medskip
+
+Jetzt kann der Output des Pins auf High (3.3 V) oder Low (0 V) gesetzt werden:
+
+\medskip
+\SHELL{\$ echo 1 > /sys/class/gpio/gpio79/value} \newline
+\SHELL{\$ echo 0 > /sys/class/gpio/gpio79/value}
+\medskip
+
+Zum Schluss sollte der Pin wieder freigegeben werden:
+
+\medskip
+\SHELL{\$ echo 79 > /sys/class/gpio/unexport}
+\medskip
+
+\subsection{Verwendung der GPIO-Pins im Python-Programm}
+
+Sollen die GPIO-Pins aus einem Python-Programm gesteuert werden, sind folgende Befehle elementar.
+
+Zunächst muss die Bibliothek importiert werden (Zuvor müssen die im Kapitel \ref{Installation} beschriebenen Schritte zur Installation dieser Bibliotheken durchgeführt werden.) Um auf das Modul unter 'GPIO' zugreifen zu können folgt die entsprechende Angabe 'as GPIO'
+
+\medskip
+\SHELL{import Jetson.GPIO as GPIO}
+\medskip
+
+Die Jetson-GPIO-Bibliothek bietet vier Möglichkeiten zur Nummerierung der I/O-Pins, deshalb muss die zu nutzende Nummerierung spezifiziert werden.
+
+\medskip
+\SHELL{GPIO.setmode(GPIO.BOARD)} \newline
+oder \newline
+\SHELL{GPIO.setmode(GPIO.BCM)} \newline
+oder \newline
+\SHELL{GPIO.setmode(GPIO.CVM)} \newline
+oder \newline
+\SHELL{GPIO.setmode(GPIO.TEGRA\_SOC)}
+\medskip
+
+Um einen GPIO-Kanal als Eingang oder Ausgang einzurichten, werden die Befehle
+
+\medskip
+\SHELL{GPIO.setup(channel, GPIO.IN)} \newline
+oder \newline
+\SHELL{GPIO.setup(channel, GPIO.OUT)} \newline
+\medskip
+
+verwendet, wobei unter \SHELL{channel} der Pin in der angegebenen Nummerierung spezifiziert wird. Der Zustand des so vorbereiteten Pins kann nun über
+
+\medskip
+\SHELL{GPIO.output(channel, GPIO.HIGH)}\newline
+und \newline
+\SHELL{GPIO.output(channel, GPIO.LOW)}
+\medskip
+
+verändert werden.
+
+\subsection{Visualisierung mit LED}\label{LED}
+
+Um die Schaltung der GPIO-Pins zu visualisieren, können LEDs an den Jetson Nano angeschlossen werden. Eine hierfür mögliche Schaltung ist in Abbildung \ref{Schaltung} zu sehen. Sie ist genauer unter \cite{JetsonHacks:2020} erklärt. Auf der linken Seite sind hierbei die Pins zu sehen, an welche die Elemente angeschlossen werden. Hierbei liegen an Pin 2 5V an, Pin 6 ist GND und der Pin 12 wird geschaltet, um die LED an- und auszuschalten.\\
+
+\begin{figure}[H]
+	\begin{center}
+%		\includegraphics[width=0.6\textwidth]{Jetson/Schaltung}
+        
+  \begin{tikzpicture}[scale = 0.75]
+    \draw[line width=2pt] (0,0.5) -- (4,0.5) -- (4,1.5) -- (3.5,2) -- (4.0,2.5) -- (4,3.5) -- (4,5);
+    \draw[line width=2pt] (4.0,5)  -- (4.5,5) -- (4.5,7)--(3.5,7)--(3.5,5)--(4,5);
+    \draw[line width=2pt]  (3.5,3.5) -- (4.5,3.5);
+    \draw[line width=2pt]  (4,3.5) -- (4.5,4.5) -- (3.5,4.5) -- cycle;
+    \draw[-triangle 45]  (4.5, 4.2) -- (4.9,3.9);
+    \draw[-triangle 45]  (4.45, 4.0) -- (4.85,3.7);
+    \draw[line width=2pt] (4,7) -- (4,7.5) -- (0,7.5);
+    \draw[line width=2pt] (0,2) -- (0.75,2) -- (0.75,2.5) -- (2.75,2.5) -- (2.75,1.5) -- (0.75,1.5) -- (0.75,2);
+    \draw[line width=2pt] (2.75,2) -- (3.5,2);
+    \draw[line width=2pt] ((3.5,1.5) -- (3.5,2.5);  
+    \node[left] (Pin2) at (0,7.5)  {2};
+    \node[left] (Pin12) at (0,2)  {12};
+    \node[left] (Pin6) at (0,0.5)  {6};
+    \node[above] (R10) at (1.75,2.5) {$10k\Omega$};
+    \node[right] (BC) at (5,2) {BC337};
+    \node[right] (LED) at (5,4) {LED};
+    \node[right] (R330) at (5,6) {$330 \Omega$};
+  \end{tikzpicture}        
+		\caption{Schaltung zum Test der GPIO-Pins mit LED}
+		\label{Schaltung}
+	\end{center}
+\end{figure}
+
+Ein Foto der Schaltung ist in Abbildung \ref{SchaltungFoto} zu sehen. Das auf diesem Foto linke Kabel ist an Pin 2, das mittlere an Pin 6 und das rechte an Pin 12 angeschlossen.
+
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=0.8\textwidth]{Jetson/SchaltungFoto}
+		\caption{Schaltung zum Test der GPIO-Pins mit LED}
+		\label{SchaltungFoto}
+	\end{center}
+\end{figure}

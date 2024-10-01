@@ -1,0 +1,638 @@
+%%%%%%
+%
+% $Autor: Wings $
+% $Datum: 2020-01-18 11:15:45Z $
+% $Pfad: WuSt/Skript/Produktspezifikation/powerpoint/ImageProcessing.tex $
+% $Version: 4620 $
+%
+%%%%%%
+
+
+\chapter{Bilder für das Modelltraining aufbereiten}
+
+\begin{itemize}
+	\item Mehrschichtige Convolutional Neural Networks (CNNs) berechnen durch Faltungen Filter, die Objekte auf Bildern erkennen können.  
+	\item Bestehendes und selbst erstelltes Bildmaterial lässt sich mittels Techniken wie Data Augmentation variieren und vervielfältigen. 
+	\item Bounding Boxes umrahmen und benennen in jedem Bild die zu erkennenden Objekte. 
+\end{itemize}
+
+
+Die Entwicklung eines Deep-Learning-Modells, das nicht nur irgendwelche, sondern die eigenen Objekte erkennt, ist mit vielen Fragen verbunden: Mit welcher Plattform oder Umgebung möchte ich arbeiten? Was ist meine favorisierte Programmiersprache? Kann und darf ich das fertige Modell in einer Cloud einsetzen oder muss ich mit meinen Daten on Premises bleiben, vielleicht sogar auf einem lokalen Rechner? Welches Deep-­Learning-Framework passt am besten? Auf welchem Zielsystem soll mein trainiertes Modell später laufen? Benötigt es einen leistungsstarken Server oder muss es mit beschränkten Hardwareressourcen auf einem Mobiltelefon oder einem anderen Embedded-Device zurechtkommen? 
+
+Zum Trainieren des gewählten Modells sind daneben viele Beispielbilder zu beschaffen. Und wenn man diese in ausreichender Zahl hat, müssen die zu erkennenden Objekte in jedem Bild eingezeichnet werden, damit das Deep-Learning-Modell lernen kann, was es erkennen soll. 
+
+Dieses dreiteilige Tutorial geht auf all diese Fragen und Herausforderungen ein und zeigt einen generischen Weg auf, wie sich ein künstliches neuronales Netz für die automatische Erkennung von Objekten in eigenen oder fremden Bildern realisieren lässt. 
+
+
+\section{Star-Wars-Protagonisten}
+
+Auch wenn es eine Menge Modelle gibt, die zuverlässig eine handgeschriebene 9 von einer 6, Katzen von Hunden oder Pkw von Lkw und Ampeln von Verkehrsschildern unterscheiden können: Eines, das zuverlässig alle Objekte auf einem Bild klassifizieren kann wie das menschliche Gehirn, gibt es leider noch nicht. Um Deep-Learning-Modelle auf spezifische Objekte zu trainieren, ist etwas Aufwand vonnöten. 
+
+Das Modell in diesem Tutorial soll die beliebten Figuren R2D2, C3PO, Luke Skywalker, Obi-Wan Kenobi sowie einen bösen Sturmtruppler aus der Star-Wars-Serie von Lego erkennen lernen. Was passiert, wenn man die Protagonisten einem bestehenden Modell zur Objekterkennung übergibt, zeigt Abbildung 1. Trainiert wurde das Modell mit Daten der Datenbank Image­Net (alle Links siehe ix.de/zuqv). Es erkennt immerhin 1000 unterschiedliche Objektklassen – nur Star-Wars-Figuren aus Lego leider nicht. Dies gilt es zu ändern. 
+
+\begin{figure}
+	\GRAPHICSC{1.3}{1.0}{Modellbau/b1_luke_skywalker_predicted.png}
+	\caption{Das erkennt ein Deep-Learning-Modell, wenn es nicht mit dem spezifischen Objekt eines Luke Skywalker aus Lego trainiert ist: zu 91 Prozent Wahrscheinlichkeit eine Person. Das Lichtschwert sortiert das Modell mit 96 Prozent Wahrscheinlichkeit als Baseballschläger ein.}
+\end{figure}	
+
+\section{Andere Anwendungsfälle, Tutorialaufbau}
+
+Der hier vorgestellte Ansatz, die Auswahl an Methoden und die Techniken sind allerdings so generisch gehalten, dass sich damit auch andere Objekte auf Bildern erkennen lassen. Die Anwendungsfälle können dabei ebenso aus dem medizinischen Bereich kommen (Bilddiagnostik) wie aus der Industrie (Materialprüfung). Die Methoden eignen sich sowohl für die Szenenerkennung im Straßenverkehr als auch für die Erkennung von Familienangehörigen in der heimischen Bildersammlung. 
+
+Der erste Teil dieses Tutorials soll zeigen, warum Deep-Learning-Modelle gerade im Bereich der Bildverarbeitung in den letzten Jahren so erfolgreich waren und was hinter der Technik steht, die weit mehr als ein Buzzword ist. Die wichtigste Aufgabe ist hier die Datenbeschaffung: Wie lassen sich Bilddaten so erzeugen und aufbereiten, dass man sie als Grundlage für das Training einsetzen kann? 
+
+Eine wichtige Technik dafür ist die Data Augmentation, die bestehende Bilder durch automatische Variationen vervielfacht. Das Training kann außerdem nur auf Daten erfolgen, die dem Deep-Learning-Modell bekannt sind. Dafür benötigen die Objekte innerhalb der Bilder entsprechende Markierungen (Label). 
+
+Der zweite Teil des Tutorials dreht sich um die Modellerstellung. Zum Einsatz kommt dabei ein bestehendes Convolu­tional Neural Network (CNN), das die aufbereiteten Bilddaten des ersten Teils als Trainingsmaterial bekommt. Ein eigenes Modell zu entwickeln, würde den Rahmen dieses Tutorials bei Weitem sprengen, zumal in den letzten Jahren leistungsfähige Modelle entstanden sind, die sich gut als Grundlage nutzen lassen. 
+
+
+\section{Die eingesetzten Werkzeuge}
+
+Um das Tutorial am eigenen Rechner oder in der Cloud nachzuvollziehen, sind folgende Voraussetzungen gegeben. Alle Programme und Skripte sind in Python3 implementiert. Der Grund dafür ist die generelle Verfügbarkeit vieler datenspezifischer Tools, die Anbindung an moderne Machine-Learning-Bibliotheken und die gute Lesbarkeit und Kompaktheit des Quellcodes. 
+
+Besonders in Kombination mit den ebenfalls für dieses Tutorial genutzten Jupyter Notebooks eignet sich Python sehr gut für Projekte dieser Art. Die Notebooks sind ein gutes Werkzeug zum schnellen „Skizzieren“ eigener Ideen, ohne eine dicke IDE bemühen zu müssen. Jupyter Notebooks funktionieren zudem auch sehr gut in der Cloud als Software as a Service (SaaS). So bietet Google mit Colaboratory kostenlos eine gemanagte Umgebung für Jupyter Notebooks an, inklusive GPU oder TPU. 
+
+Als ML-Frameworks bieten sich sowohl TensorFlow als auch Keras in Kombination mit Google Colab an. Für beide existieren optimierte Bibliotheken und sie sind in der Praxis weit verbreitet. Die Keras-API gilt seit TensorFlow 2.0 als empfohlene High-Level-Programmierschnittstelle für Deep Learning in TensorFlow. 
+
+Ein weiterer Vorteil bei der Nutzung der Keras-API (statt der generischen TensorFlow-Schnittstelle) ist die Möglichkeit, andere Frameworks wie Theano oder CNTK einzubinden. Ein Keras-Modell läuft auf diesen beiden Plattformen ohne Änderung. 
+
+Da sich bei diesem Tutorial alles um die Objekterkennung in Bildern dreht, ist zudem eine Bibliothek für die Echtzeitverarbeitung von Bildern nötig. Als De-facto-Standard hat sich in den letzten Jahren mit der Open Source Computer Vision Library (OpenCV) eine Li­brary etabliert, die sowohl namhafte Firmen als auch Hobbyisten einsetzen. Für OpenCV existieren neben der Anbindung an Python auch entsprechende Beschleunigungsmodule für CUDA und OpenCL. 
+
+
+
+\section{Objekte auf Bildern erkennen}
+
+Die Objekterkennung als Teil der Bildklassifizierung ist seit einigen Jahren fest in der Hand von Deep-Learning-Algorithmen (siehe Kasten „Was ist Deep Learning“?). Sie belegen bei allen großen Forschungswettbewerben die vordersten Plätze. Aus diesen Wettbewerben ist eine Reihe freier Bilddatenbanken entstanden. So müssen sich die Teilnehmer der jährlichen ImageNet Large Scale Visual Recognition Challenge auf Bilder der ImageNet-­Datenbank stützen. Bekannt ist auch die MNIST-Datenbank mit über 60000 Bildern von handgeschriebenen Zahlen. 
+
+Für die Erkennung von Objekten in Bildern fand bis 2012 die Pascal VOC Challenge statt, deren Bilddaten immer noch verfügbar sind. Einem weiteren Wettbewerb, dem Common Objects in Context (COCO), sind 330000 Bilder aus 80 Objektkategorien unter Creative-Commons-­Lizenz für das Training eigener Modelle zu verdanken. Noch mehr Bilder gibt es nur bei Google: Für die eigene Open Images Challenge im Rahmen der International Conference on Computer Vision (ICCV) und für alle Interessierten pflegt man dort das Open Images Dataset mit in der aktuellen Version 5 mehr als neun Millionen Bildern, annotiert mit 16 Millionen Begrenzungsboxen aus 600 Objektkategorien. Welche Möglichkeiten es sonst noch gibt, an Bilder zu kommen, beschreibt der Kasten „Bilder aus YouTube-Videos extrahieren“. 
+
+Geht es bei der reinen Bilderkennung darum, was genau ein Bild zeigt (nach dem Schema: „Auf Bild 1 ist C3PO zu sehen und auf Bild 2 R2D2“), so geht die Objekterkennung noch einen Schritt weiter. Sie identifiziert auf Bildern vorher definierte Objektklassen. Abbildung 1 zeigt die Objekterkennung am Beispiel der Lego-Figur Luke Skywalker mit Laserschwert. Das Modell kennt dabei weder Luke Sky­walker noch Science-Fiction-Waffen. Da es aber mit anderen Objekten trainiert wurde, erkennt es die Figur immerhin als Person und aus dem Lichtschwert macht es einen Baseballschläger. 
+
+Anders also als bei der reinen Bildklassifikation erkennt die Objekterkennung pro Bild gegebenenfalls mehrere Objekte in verschiedenen Bereichen eines Bildes. Diese umrandet es mit Begrenzungsboxen – sogenannte Bounding Boxes. 
+
+\section{Was ist Deep Learning?}
+
+Deep Learning ist ein Teilgebiet des maschinellen Lernens, ein Unterbereich der künstlichen Intelligenz [1]. Die Grundlagen dafür legte bereits in den 1940er-Jahren die Theorie über künstliche neuronale Netze (KNNs). Erkenntnisse über die Funktionsweise und Neuroanatomie von Nervenzellen brachten Walter Pitts und Warren McCulloch dazu, ein Modell vorzuschlagen, um sowohl logische als auch arithmetische Funktionen zu berechnen. 
+
+Jahrzehntelang fristeten KNNs ein Nischendasein. Erst mit dem Aufkommen leistungsfähiger Grafikkarten, der günstigen Verfügbarkeit großer Datenmengen – vor allem bei Google, Amazon, Facebook und Apple – und Durchbrüchen in der Algorithmik (wie Backpropagation, Long Short-Term Memory und Transformer) gelangten künstliche neuronale Netze und der Begriff Deep Learning in die öffentliche Wahrnehmung. 
+
+Modelle wie das AlexNet von Alex Krizhevsky (2012), VGG Net von Karen Simonyan und Andrew Zisserman (2014) sowie Inception V4 von Christian Szegedy et al. (2016) gewannen einen Wettbewerb nach dem anderen und überflügelten zum Beispiel bei der Erkennung von Hautkrebs sogar die Erkennungsraten ausgewiesener Dermatologen. Schließlich bekamen ­Yoshua Bengio, Geoffrey Hinton und Yann LeCun 2018 den Turing Award der Association for Computing Machinery (ACM) für ihre Arbeiten rund um Deep Learning. 
+
+
+\begin{figure}
+	
+	\GRAPHICSC{0.3}{1.0}{Modellbau/akl2}
+	
+	\caption{Luke Skywalker durch das Deep-Learning-Modell: eine schematische Darstellung. Vom Originalbild zur Objekterkennung ist es ein weiter Weg. Über 100 Schichten des neuronalen Netzes werden auf moderner Hardware in Millisekunden durchlaufen, sodass auch die Echtzeiterkennung von Star-Wars-Lego-Figuren möglich wird.}
+\end{figure} 
+
+
+Besonders in zwei Bereichen haben Deep-Learning-Modelle klassischen Machine-Learning-Modellen den Rang abgelaufen: bei der Verarbeitung natürlicher Sprache (Natural Language Processing, NLP) mit dem Teilbereich der maschinellen Übersetzung und in der Bild- oder Objekterkennung. Grund hierfür ist die große Anzahl frei verfügbarer Datensätze und die kommerzielle Relevanz derartiger Modelle. Für NLP hat sich das Web selbst als größter Datensatz für das Trainieren von Sprachmodellen bewährt. Modelle wie BERT, XLNet oder RoBERTa nutzen unter anderem Artikel aus der Wikipedia als Trainingsdaten. 
+
+Deep-Learning-Modelle bestehen aus vielen bis sehr vielen Schichten künstlicher Neuronen. Verbunden sind diese Layer über Eingabe- und Ausgabeneuronen. Beginnend mit der Eingabeschicht (Input Layer) fließen die Daten über alle Zwischenschichten (Hidden Layers) zur Ausgabeschicht (Output Layer), wo diese – wie im Falle von Objektklassifikationen – die Wahrscheinlichkeit ausgeben, dass das Objekt richtig erkannt wurde. 
+
+Sogenannte Convolutional Neural Networks berechnen durch Faltungen (Summation von Teilbereichen der Bildmatix) Filter, die Objekte auf den Bildern erkennen können. Niedrige Schichten erkennen dabei zum Beispiel Objektkanten, höhere Schichten hingegen Teile der Objekte. Die Erkennung der Objekte wird dabei von Schicht zu Schicht weitergetragen. 
+
+Abbildung 2 zeigt die schematische Darstellung der verschiedenen Layer eines CNN. Der YOLOv3-Algorithmus implementiert die Objekterkennung in drei unterschiedlichen Bildskalierungen. Dieser Umstand macht diese Art von Netzwerk äußerst erfolgreich, wie Teil 2 dieses Tutorials zeigen wird. 
+
+\section{Die Bilderbeschaffung}
+
+Fotos der zu erkennenden Objekte kann man, wenn keine passende Bilddatenbank zur Verfügung steht, auch mit einer Digitalkamera oder einem Smartphone anfertigen. Für das Beispiel aus diesem Tutorial sollten es pro Objektklasse – also jeweils für R2D2, C3PO, Luke Skywalker, Obi Wan Kenobi und den Sturmtruppler – mindestens 100 Bilder sein. 
+
+Mehr Fotos erhöhen in der Regel die Trainingsdauer, aber auch die Präzision des trainierten Modells. Dabei sollte man darauf achten, pro Motiv möglichst unterschiedliche Ansichten zu erstellen, damit die spätere Erkennung möglichst viele Beispielsituationen abdeckt. Bei Fotos mit gleich mehreren Objekten ist es zudem wichtig, auch unterschiedliche Positionen der Objekte zu berücksichtigen. 
+
+Diese selbst erstellten Fotos der Star-Wars-Helden kann man im nächsten Schritt mit weiteren Bildern anreichern, die man zum Beispiel von YouTube oder aus anderen Quellen extrahiert. Um aus den eigenen und den extrahierten Bildern auf die anvisierten 100 Bilder pro Objekt zu kommen, kommt die Technik der Data Augmentation zum Einsatz. 
+
+\section{Bilder aus YouTube-Videos extrahieren}
+
+Im Internet existiert eine Reihe freier Quellen, die sowohl Bilder als auch Videos für eigene Experimente bereithalten. Sobald man eigene Modelle mit diesen Daten trainieren will, sollte man jedoch immer auf das Kleingedruckte – sprich: die Copyright-Bedingungen – achten. Viele Bilddatenbanken wie ImageNet oder COCO enthalten Urheberrechtsvermerke. Möchte man Bilder aus Facebook, der Google-­Fotosuche oder Flickr nutzen, sollte man die Urheber der Bilder vorher um Erlaubnis bitten, wenn diese keine explizite Lizenz angegeben haben. 
+
+Eine sehr interessante, weil riesige Quelle für die Beschaffung von Bildern ist auch Googles YouTube. Um aus YouTube-Videos Einzelbilder zu extrahieren, braucht man nicht viel mehr als einen geeigneten YouTube-Downloader und das Schweizer Armeemesser der Bewegtbildverarbeitung ffmpeg. Einen reichen Fundus an Lego-Star-Wars-Videos enthält zum Beispiel der YouTube-Kanal von Totobricks. Unter Windows, Linux und macOS eignet sich das freie Kommandozeilentool youtube-dl für den Download von Videos aus dem Google-­Portal. Mit dem Aufruf 
+
+\SHELL{youtube-dl --format mp4 https://youtu.be/cns-M7jkPJI}
+
+lädt man das 30 MByte große Video herunter, um es dann mithilfe von ffmepg auf der Kommandozeile in rund 6000 Einzelbilder zu zerlegen.  
+
+\SHELL{ffmpeg -i ""LEGO 8092 LEGO STAR WARS Luke's Landspeeder-cns-M7jkPJI.mp4"" "star-wars\_\%d.jpg"}
+
+Das Video teilt sich grob in fünf Szenen. Die Bilder des Vor- und des Abspanns sowie alle, in denen Lukes Landspeeder zusammengebaut wird, kann man getrost löschen, da sie keine Figuren enthalten. Auf immerhin 33 Schlüsselbildern sind die Protagonisten vertreten, sodass man diese dem Trainingsdatensatz hinzufügen kann. Alle Bilder haben eine Größe von 960 × 720 Pixeln. 
+
+\section{Bildvarianten erzeugen mit Data Augmentation}
+
+Statt zeitaufwendig Tausende von Fotos pro Objekt zu schießen, kann man aus bestehenden Aufnahmen mit geeigneten Bildverarbeitungsverfahren (Data Augmentation) Varianten erstellen. Gängige Abwandlungen sind zum Beispiel die einfache Rotation des Objekts um einen beliebigen Winkel, die Motivverschiebung um wenige Pixel, Vergrößerungen und Verkleinerungen des Motivs, zufällige Farb- und Kontrastkorrekturen, das horizontale und vertikale Spiegeln sowie zufällige Pixel oder Weichzeichner. Abbildung 3 zeigt acht mittels Data Augmentation erstellte Variationen eines Ursprungsbildes der Star-Wars-Figur C3PO. 
+
+\begin{figure}
+	
+	\GRAPHICSC{1.0}{1.0}{Modellbau/b3_data_augmentation_abb.png}
+	
+	\caption{Data Augmentation mit der Software Albumentation am Beispiel der Lego-Figur C3PO. Von links oben nach rechts unten: Originalfoto, zufällige Helligkeit, vertikale Spiegelung, Positionsverschiebung, Verzerrung, Schnee, zufälliger Kontrast, Vergrößerung einer Bildauswahl, Grauwerte.}
+\end{figure} 
+
+
+Für die automatische Erstellung vieler Variationen von Bildern mit Python gibt es Tools wie imgaug, Augmentor oder Albumentation. Letzteres kommt in diesem Tutorial zum Einsatz. Das Werkzeug von Alexander Buslaev, Alex Parinov, Eugene Khvedchenya und Vladimir Iglovikov hat schon etliche Kaggle-Wettbewerbe bestritten und gewonnen. Ein Vorteil dieser Python-Bibliothek ist die gute Integration in bestehende Frameworks wie OpenCV und PyTorch. 
+
+Ein Beispiel, wie sich Albumentation auf bestehende Bilder anwenden lässt, findet sich im Google Colab-Notebook zu diesem Tutorial unter \href{https://www.heise.de/select/ix/2020/6/softlinks/zuqv?wt_mc=pred.red.ix.ix062020.040.softlink.softlink}{ix.de/zuqv}.
+
+Sowohl in Google Colab als auch in einer lokalen Python-Umgebung lässt sich Albumentation mithilfe von pip installieren. Lokal reicht ein 
+
+\SHELL{pip install albumentations}
+
+oder  
+
+\SHELL{conda install -c conda-forge albumentations }
+
+Innerhalb von Google Colab oder anderen Jupyter-Notebook-Umgebungen stellt man dem Befehl ein Ausrufezeichen voran: 
+
+\SHELL{!pip install albumentations}
+
+oder 
+
+\SHELL{!conda install -c conda-forge albumentations}
+
+Als Ausgangsbild dient ein Foto der Lego-Figur C3PO. Eine vertikale Spiegelung lässt sich über wenige Zeilen Python bewerkstelligen (Listing 1). 
+
+
+\begin{lstlisting}
+Listing 1: Vertikale Bildspiegelung mit Albumentation 
+import cv2
+from albumentations import *
+
+c3po_img = cv2.imread('drive/My Drive/data/c3po_0001.jpg')
+c3po_img = cv2.cvtColor(c3po_img, cv2.COLOR_BGR2RGB)
+c3po_img = image_resize(c3po_img, height=800)
+aug = VerticalFlip(p=1)
+c3po_img3 = aug.apply(c3po_img)
+\end{lstlisting}
+
+
+Das Colab-Notebook lässt sich um weitere Beispiele erweitern. Für die Erzeugung aller Varianten soll das Muster aus Abbildung 4 Anwendung finden. Pro Originalbild werden mithilfe von Data Augmentation 37 veränderte Kopien erzeugt. Aus 104 Bildern entstehen so insgesamt 3848 Bilder. 
+
+
+\begin{figure}
+	
+	\GRAPHICSC{0.3}{1.0}{Modellbau/tut1.png}
+	
+	\caption{Mithilfe von Data Augmentation lassen sich aus einem Ausgangsbild 37 Varianten erzeugen. Dabei ändern nur vier Varianten ihre Form, sodass man die Objektmarkierungen bei 32 Bildern durch einfaches Kopieren erzeugen kann.}
+\end{figure} 
+
+\section{Das Labeling: Objekte klassifizieren}
+
+Einer der wichtigsten und zeitintensivsten Schritte beim Umgang mit Bild- und Objektklassifikationen ist das Zuordnen der verschiedenen Objektklassen zu den Begrenzungsboxen, das Labeling. 
+Basierend auf zwei großen Bilddatensätzen haben sich zwei unterschiedliche Dateiformate für die Speicherung von Bounding Boxes in Bildern etabliert: das JSON-basierte COCO-Datenformat und das XML-basierte Pascal-Visual-Object-­Class-Format (VOC). Sie verfolgen jeweils einen unterschiedlichen Ansatz. Während beim VOC-Format für jedes Bild eine eigene XML-Datei existiert, speichert das COCO-Format alle Infos zu den Bildern im Dataset, und damit auch die Beschreibungen der Bounding Boxes, in einer Datei. Auf GitHub finden sich zu den Formaten passende Konvertierungsprogramme. 
+
+\section{Fleißarbeit}
+
+Begrenzungsboxen in ein Bild zu zeichnen, kann je nach Tool mehrere Minuten dauern. Wenn man jedes der 3848 Einzelbilder für dieses Tutorial innerhalb von zwei Minuten per Hand labeln würde, bräuchte man dafür 128 Stunden oder mehr als fünf Tage ununterbrochene Arbeit. Wer diesen Aufwand scheut, kann (kostenpflichtige) Dienste wie Mechanical Turk oder Ground Truth von Amazon oder ähnliche Angebote anderer Dienstleister nutzen, die auf diese Art von Aufgaben spezialisiert sind. 
+
+Zum Glück lässt sich der manuelle Aufwand durch strukturiertes Vorgehen jedoch deutlich reduzieren. Nur vier der Varia­tionstechniken wirken sich konkret auf die Form des Objekts aus und damit auch auf die Koordinaten der Bounding Box (siehe Abbildung 4). 32 der 37 verschiedenen Bilder betreffen nur Änderungen im Aussehen des Objekts auf Pixelebene. Indem man also nur die vier formändernden Varianten pro Bild mit Bounding Boxes versieht, lassen sich die anderen im nächsten Schritt durch eine einfache Dateikopie erzeugen. 
+
+Für dieses Tutorial kommt die freie Labeling-Software LabelImg von Tzuta Lin zum Einsatz (siehe Abbildung 5). Deren großer Vorteil besteht darin, dass sie auf dem GUI-Framework Qt basiert, das für die gängigen Betriebssysteme (Windows, macOS, Linux) verfügbar ist. Qt ist in C++ implementiert, lässt sich jedoch auch an andere Programmiersprachen wie Java, Ruby, PHP und Python anbinden. 
+
+LabelImg ist in Python geschrieben und nutzt PyQt 4.8 oder PyQt 5 unter Python 3. In den Links unter \href{https://www.heise.de/select/ix/2020/6/softlinks/zuqv?wt_mc=pred.red.ix.ix062020.040.softlink.softlink}{ix.de/zuqv} finden sich die nötigen Schritte zur Installation unter Ubuntu, macOS und Windows. Wer über die lokale Docker-Installation verfügt, findet darüber hinaus ein passendes Docker-­Image. 
+
+Damit die Objekte mit Labels versehen werden können, benötigt man im ersten Schritt eine Liste mit den Namen der Objektklassen. LabelImg erwartet diese in einer Datei namens classes.txt (siehe Listing 2). Mit diesen Klassennamen werden die Bounding Boxes benannt, die das Modell für das Training braucht. 
+
+\begin{lstlisting}
+Listing 2: classes.txt mit der Liste der Objektklassen 
+r2d2
+c3po
+luke-skywalker
+obi-wan-kenobisturmtruppler
+\end{lstlisting}
+
+Starten lässt sich LabelImg von der Kommandozeile mit 
+
+\SHELL{labelImg meineBilderVerzeichnis classes.txt}
+
+Besonders wenn es auf jeden Klick und jede Mausbewegung ankommt, können intelligent gewählte Tastenkombinationen die Arbeit stark beschleunigen. Die Tabelle listet diejenigen für LabelImg auf. Mit dieser Belegung ist eine parallele Eingabe effizient möglich. Die linke Hand kümmert sich um die Dateiauswahl, die Erzeugung und die Speicherung, während die rechte die Bounding Boxes aufzeichnet. 
+
+\begin{table}
+\caption{Tastaturkürzel für LabelImg}
+
+\begin{tabular}{ll}
+	Tastenkombination & Aktion in LabelImg \\
+	Ctrl+U & lädt alle Bilder eines Verzeichnisses \\
+	Ctrl+R  &ändert das Standardverzeichnis für die Annotationen \\
+	Ctrl+S & speichert das aktuelle Bild \\
+	Ctrl+D &kopiert das aktuelle Label und die Bounding Box \\
+	Leertaste & markiert das aktuelle Bild als geprüft \\
+	W &erzeugt eine Bounding Box  \\
+	D & springt zum nächsten Bild \\
+	A & springt zum vorherigen Bild \\
+	Entf & löscht eine Bounding Box \\
+	Ctrl++ & vergrößert das Bild \\
+	Ctrl+- & verkleinert das Bild \\
+	Pfeiltasten & bewegt die Bounding Box 
+\end{tabular}
+\end{table}
+
+
+\begin{figure}
+
+\GRAPHICSC{0.15}{1.0}{Modellbau/b5_labelimg.png}
+
+\caption{Annotation der Lego-Figuren auf den Fotos mit LabelImg. Dank intelligenter Tastenbelegung geht das manuelle Einzeichnen von Bounding Boxes zügig von der Hand.}
+\end{figure} 
+
+
+
+Annotation der Lego-Figuren auf den Fotos mit LabelImg. Dank intelligenter Tastenbelegung geht das manuelle Einzeichnen von Bounding Boxes zügig von der Hand (Abb. 5). 
+Nach dem manuellen Labeln von rund 400 Bildern muss man noch die einzelnen Objektdateien kopieren, sodass man am Ende 3848 Bilder mit Bounding Boxes hat. Sie bilden die Grundlage für das Objekttraining und die Qualitätsmessung des Modells in Teil 2 dieses Tutorials. 
+
+\section{Trainingsplatz}
+
+Nach der Aufbereitung der Bilder sind diese bereit für das Training. Das Anlernen von Deep-Learning-Modellen und die Arbeit mit Deep-Learning-Frameworks wie TensorFlow und Keras ist sehr rechenaufwendig. In der Regel sind viele Hundert oder Tausend Trainingsdurchläufe (sogenannte Iterationen oder Epochen) nötig, um eine gute Erkennungsrate des Modells zu erhalten. Das ist mit gängigen CPUs selbst auf modernen Computersystemen nur mit sehr viel Zeit zu leisten. 
+
+Ein System mit spezieller Grafikhardware und darauf angepasster Software kann die Aufgabe sehr viel schneller erledigen. Das kann zum Beispiel ein lokaler PC mit entsprechend leistungsstarker GPU oder auch ein Cloud-System von Amazon, Google oder Microsoft sein. Letztere haben den Vorteil, dass sie gegen Geld hervorragend skalieren. Es lassen sich aus dem Stegreif Serverinstanzen mit viel Hauptspeicher und GPU-Power starten und nach dem erfolgreichen Training wieder herunterfahren. Einige dieser Angebote gehen über das reine Hosting-on-­Demand hinaus. Dienste wie Googles AI Platform Notebooks, Microsoft Azure Notebooks oder Amazon SageMaker bieten Jupyter Notebooks as a Service und lassen sich mit wenig Aufwand aufsetzen. Noch einfacher geht es mit der bereits erwähnten Umgebung Colaboratory (Colab) von Google, die nur einen Webbrowser benötigt. 
+
+Dieses Tutorial basiert auf einer Kombination aus heimischem Mac Mini für das Labeling der Bilddaten, Google Colab für das Modelltraining und Google Drive für die Ablage der Daten und Modelle. Der Vorteil von Google Colab ist, dass man hier einen GPU-Kern oder eine Google TPU kostenlos nutzen kann. 
+
+
+\section{quellen}
+
+%todo die pdfs liegen vor, aber nicht in bib
+\begin{itemize}
+\item \href{https://colab.research.google.com/drive/17rnQksOkR1YTbSPwH33NUwqsh5CQv5Ry}{Notebook das zeigt, wie sich mit Hilfe des Python-Moduls Albumentations Bilder variieren lassen um eine größere Datenbasis für das Training von Deep Learning Modellen zu erhalten.}
+\item \href{https://colab.research.google.com/drive/1Dee633DserPwu289_EpwD10T794aFaUY}{Erweitertes Colab Notebook (pro Bild werden 37 Varianten erzeugt)}
+\item \href{https://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks.pdf}{ImageNet Classification with Deep Convolutional Neural Networks }
+\item \href{https://arxiv.org/pdf/1409.1556.pdf}{Very Deep Convolutional Networks for large-scale image recognition }
+\item \href{https://arxiv.org/abs/1602.07261}{Inception-ResNet and the Impact of Residual Connections on Learning }
+\item \href{https://www.journals.elsevier.com/annals-of-oncology}{Man against machine: diagnostic performance of a deep learning convolutional neural network for dermoscopic melanoma recognition in comparison to 58 dermatologists }
+\item \href{https://github.com/google-research/bert}{BERT }
+\item \href{https://arxiv.org/pdf/1906.08237.pdf}{XLNet: Generalized Autoregressive Pretraining for Language Understanding }
+\item \href{https://arxiv.org/abs/1907.11692}{RoBERTa: A Robustly Optimized BERT Pretraining Approach }
+\item \href{https://www.youtube.com/channel/UCWDdBL2CqSa-h0F5JifAcxg}{TotoBricks auf Youtube }
+\item \href{Python/ModellbauListings.zip}{Listing: listings.zip} 
+\end{itemize}
+
+
+
+\chapter{Modellbau -  Modellerstellung auf Basis eines bestehenden Convolutional Neural Network (CNN)}
+
+Teil 2 dieses Deep-Learning-Tutorials beschäftigt sich mit dem Training eines in Keras implementierten YOLOv3-Modells zur Objekterkennung.
+
+\begin{itemize}
+	\item Zum Erkennen von Objekten auf Bildern hat sich das Deep-Learning-Modell YOLOv3 bewährt. 
+	\item Es erkennt und klassifiziert Objekte in einem Rutsch, indem es die eingehenden Bilder in ein Gitternetz kleinerer Zellen aufteilt und sie so parallel verarbeiten kann. 
+	\item Für das Training und die anschließende Erfolgsmessung teilt man das Datenmaterial in einen Trainings- und einen Testdatensatz auf. 
+\end{itemize}
+
+Während sich der erste Teil dieses Tutorials um das Erstellen, Beschaffen und Anreichern der benötigten Bilddaten drehte, sodass die darauf zu erkennenden Objekte gekennzeichnet sind, geht es nun in Teil 2 um das Modelltraining. Das Deep-Learning-Modell aus dem Beispiel soll Figuren aus der Star-Wars-Serie von LEGO erkennen, doch der dargestellte Ansatz ist so generisch, dass er sich auf beliebige Objekte anwenden lässt. Die Objekterkennung kann nach dem Training sowohl auf gespeicherten Bildern oder Videos als auch auf den Livebildern einer Kamera stattfinden. 
+
+\section{Die Datenlage: Viel hilft viel}
+
+ 
+Je mehr unterschiedliche Daten man für das Trainieren eines Deep-Learning-Modells verwendet, desto mehr statistische Varianz erzeugt man und umso besser wird die Erkennungsrate bei neuen, noch unbekannten Bildern. 
+	Um die Präzision eines trainierten Machine-Learning-Modells zu bewerten, benötigt man nicht nur Trainingsdaten, die man kennt, sondern auch einen Satz mit Testdaten. Dazu teilt man das aufbereitete Material in der Regel in zwei Gruppen auf: Achtzig bis neunzig Prozent dienen dem Modelltraining, zehn bis zwanzig Prozent behält man zum Testen des trainierten Modells zurück. Im Repository zum Artikel auf GitHub (alle Links siehe ix.de/znp2) finden sich die Trainings- und Testdaten für die Star-Wars-Figuren aus dem Beispiel. 
+	In Google Colab lassen sich die Daten mit folgendem Befehl importieren: 
+	
+\SHELL{!git clone https://github.com/rawar/ix-tut- yolov3-data}
+
+
+Listing 1 zeigt die Verzeichnisstruktur des Repository mit allen Bildern, Annotationen und den Test- und Trainingsdaten­sätzen. 
+
+	\GRAPHICSC{1.0}{1.0}{Modellbau/Listing1}
+
+%\begin{lstlisting}
+%anchors
+%│   └── basline_anchors.txt
+%├── annotations
+%│   ├── c3po_0001_elastic.xml
+%│   ├── c3po_0001_elastic_alpha.xml
+%│   ├── ...
+%├── classes
+%│   └── starwars.names
+%├── data
+%│   ├── c3po_0001_elastic.jpg
+%│   ├── c3po_0001_elastic_alpha.jpg
+%│   ├── c3po_0001_elastic_bight.jpg
+%│   ├── ...
+%├── datasets
+%│   ├── starwars_test.txt
+%│   └── starwars_train.txt
+%├── detection
+%├── logs
+%\end{lstlisting}
+
+
+Die Annotationen im VOC-Format (siehe Kasten \glqq Objektbegrenzungsformat\grqq) 
+wurden für die Erstellung der Trainings- und Testdatenbestände noch einmal in
+ein eigenes Format überführt, das viele Implementierungen des zum Einsatz kommenden Modells 
+(siehe Abschnitt \glqq Das Modell: You Only Look Once\grqq) als Objektbeschreibung nutzen. 
+Es besteht aus den beiden Textdateien starwars\_train.txt für das Training und starwars\_test.txt 
+zum Testen des fertigen Modells. Wie man dieses Datenformat aus den VOC-Dateien von LabelImg 
+erstellen kann, beschreibt das Google Colab Notebook ix\_objectdetect\_tut1\_02.ipynb unter ix.de/znp2. 
+
+Listing 2 zeigt den Aufbau der beiden Dateien an einem Ausschnitt aus starwars\_train.txt. 
+
+\begin{itemize}
+	\item Jede Textdatei enthält pro Zeile einen Bilddateinamen inklusive Pfadangabe. 
+    \item Getrennt durch Leerzeichen hinter dem Dateinamen stehen die Angaben der Objektbegrenzungen. 
+    \item Jede Objektbegrenzung besteht aus den x- und y-Koordinaten in der VOC-­Datei für die obere linke und die untere rechte Ecke. 
+    \item Hinter jeder Bounding Box ist der Klassenname als Nummer codiert. 
+    \item Pro Bilddatei lassen sich 1 bis n Begrenzungsboxen mit Klassennummern angeben. 
+\end{itemize}
+
+\begin{lstlisting}
+Listing 2: Objektbeschreibungen (Ausschnitt) 
+ix-tut-yolov3-data/data/c3po_0010_horzflip_channel.jpg 160,57,258,328,1
+ix-tut-yolov3-data/data/r2d2_0004_elastic_noise.jpg 108,110,235,390,0
+ix-tut-yolov3-data/data/sturmtruppler_0005_vertflip_channel.jpg 100,71,283,349,4
+ix-tut-yolov3-data/data/sturmtruppler_0004_elastic_blur.jpg 133,74,292,336,4
+ix-tut-yolov3-data/data/c3po_0009_vertflip_jpeg.jpg 162,129,284,314,1
+ix-tut-yolov3-data/data/luke-skywalker_0009_vertflip_alpha.jpg 94,33,237,414,2
+ix-tut-yolov3-data/data/sturmtruppler_0005_horzflip_gray.jpg 133,68,316,344,4
+ix-tut-yolov3-data/data/luke-skywalker_0006_rot_alpha.jpg 91,135,320,264,2
+ix-tut-yolov3-data/data/c3po_0008_rot.jpg 112,21,366,220,0
+ix-tut-yolov3-data/data/sturmtruppler_0008_vertflip_blur.jpg 158,114,326,333,4
+...
+\end{lstlisting}
+
+\section{Objektbegrenzungsformat}
+
+Zum Speichern der Objektbegrenzungen kommt das XML-basierte Format Pascal ­Visual Object Class (VOC) zum Einsatz. VOC gilt als eins der Standardformate in der Objekt­erkennung, sodass viele Werkzeuge für die Bilddatenannotierung damit arbeiten.  
+
+Listing 3 zeigt eine Beispielannotation für ein Bild des Star-Wars-Sturmtrupplers. Sie definiert neben dem Namen in Zeile 15 den Dateinamen, den Pfadnamen in Zeile 3 und 4 sowie die Größe des Bildes in Zeile 9 und 10. 
+Zeile 20 bis 23 enthalten die x- und y-Koordinatenpaare der Objektbegrenzung. 
+
+Möchte man mehrere Objekte in einem Bild annotieren, erhalten diese jeweils einen eigenen Object-Tag mit Inhalt. 
+
+\begin{lstlisting}
+Listing 3: Beispielannotation im VOC-Format 
+<annotation verified="yes">
+2       <folder>ix-tut-processed</folder>
+3       <filename>sturmtruppler_0010_rot.jpg</filename>
+4       <path>/Users/rwartala/Google Drive/data/ix-tut-processed/sturmtruppler_0010_rot.jpg</path>
+5       <source>
+6           <database>Unknown</database>
+7       </source>
+8       <size>
+9           <width>416</width>
+10          <height>416</height>
+11          <depth>3</depth>
+12      </size>
+13      <segmented>0</segmented>
+14      <object>
+15          <name>sturmtruppler</name>
+16          <pose>Unspecified</pose>
+17          <truncated>0</truncated>
+18          <difficult>0</difficult>
+19          <bndbox>
+20              <xmin>104</xmin>
+21              <ymin>118</ymin>
+22              <xmax>345</xmax>
+23              <ymax>281</ymax>
+24          </bndbox>
+25      </object>
+26  </annotation>
+\end{lstlisting}
+
+\section{Das Modell: You Only Look Once}
+
+Im Bereich der Echtzeiterkennung von Objekten, wobei ein System also mindestens 25 Bilder pro Sekunde (Frames per Second, FPS) analysiert, hat sich in den letzten Jahren das YOLO-Modell von Joseph Redmon und Ali Farhad einen Namen gemacht. Das Akronym für „You Only Look Once“ beschreibt den Mechanismus, nach dem dieses Modell funktioniert. Es wurde 2016 vorgestellt und liegt inzwischen in der dritten Version vor. 
+
+Im Unterschied zu anderen Modellen vollzieht YOLOv3 das Erkennen und Klassifizieren in einem Rutsch. Dabei wird das eingehende Bild in ein Gitternetz kleinerer Zellen aufgeteilt. Innerhalb jeder dieser Zellen berechnet das Modell die Wahrscheinlichkeit für das Vorhanden- oder Nichtvorhandensein einer Objektbegrenzung. 
+
+\section{3D-Tensoren}
+
+Diesen Vorgang durchläuft das Modell für drei unterschiedliche Bildauflösungen. Aus den daraus resultierenden drei Wahrscheinlichkeiten ermittelt es, welche Bounding Box am ehesten das zu klassifizierende Objekt abgrenzt. Diese Wahrscheinlichkeit beschreibt ein 3D-Tensor, dessen Dimensionen sich wie folgt errechnen: Die ersten beiden Dimensionen entsprechen der Anzahl der Gitternetzzellen, in die das eingehende Bild aufgeteilt wird. Sie ist für Breite und Höhe des Bildes gleich. Die dritte Dimension besteht aus der Anzahl der Bounding Boxes, die für jede dieser Zellen vorausgesagt werden soll (nxn). Die Boxen werden für 3 verschiedene Bildgrößen berechnet. Die Bounding Box selbst hat einen Start- und einen Endpunkt sowie eine Länge und Breite (4 in der nachfolgenden Berechnung). Dazu kommen ein Objektivitätswert und die Anzahl an Objektklassen (5), die das Modell vorhersagen kann. 
+
+Bei einem Eingangsbild von 416 × 416 Pixeln bietet sich zum Beispiel eine Zellen­größe für das Gitternetz von 13 × 13 Pixeln an. Damit würde sich das Bild in 32 × 32 Zellen aufteilen lassen. Der resultierende Tensor mit der Dimension 3 hätte demnach folgende Größe: 13 × 13 × [3 × (4 + 1 + 5)] = 13 × 13 × 30. 
+
+Grundsätzlich lässt sich innerhalb ­einer Gitterzelle nur ein einziges Objekt er­kennen. Dafür muss dieses sich im Mittelpunkt der Gitterzelle befinden. Damit YOLO auch mehrere, sich überlappende Objekte innerhalb eines Bildes erkennt, nutzt es sogenannte Anchor Boxes – vordefinierte Objektbegrenzungen fester Höhe und Breite mit unterschiedlichen Seitenverhältnissen. Listing 4 zeigt die neun verschiedenen Referenzwerte für die drei Boxenskalierungen. Die Ankerkästen finden sich im Daten-Repository zum Tutorial im Verzeichnis anchors. 
+
+\section{Vielschichtige Architektur}
+
+Das YOLO-Modell besteht aus fünf verschiedenen Schichttypen. Abbildung 1 zeigt einen Teil dieser Schichten im Überblick. YOLOv3 beinhaltet 53 sogenannte Faltungsschichten (Convolutional Layers). Daher rührt auch der Name Darknet-53, der auf der Seite von Joseph Redmon und Ali Farhad oft als Synonym für YOLOv3 auftaucht. 
+
+Listing 5 zeigt den Aufbau des YOLOv3-­­Modells in Python. Neben den Convo­lutional Layers gibt es noch Up­sample Layer, Route Layer, Shortcut Layer und YOLO Layer. Der tf.Keras-Teil ist im Modul common gekapselt. Insgesamt besteht YOLOv3 aus 107 Schichten und kann damit mit Fug und Recht von sich behaupten, „deep“ zu sein. 
+
+\begin{figure}
+	\GRAPHICSC{0.8}{1.0}{Modellbau/b1_yolov3_architektur.png}
+	\caption{Ausschnitt aus dem YOLOv3-Modell im Viewer für Deep-Learning-Modelle Netron unter macOS.}
+\end{figure}	
+
+\begin{lstlisting}
+    Listing 4: Referenzwerte fuer die Skalierungen
+    1.25,1.625, 
+	2.0,3.75, 
+	4.125,2.875, 
+	1.875,3.8125, 
+	3.875,2.8125, 
+	3.6875,7.4375, 
+	3.625,2.8125, 
+	4.875,6.1875, 
+	11.65625,10.1875
+\end{lstlisting}	
+
+	Der erste Layer nimmt die Bilddateien auf. In der Originalimplementierung dürfen sie 416 × 416 Pixel groß sein und RGB-codierte Farbwerte enthalten. Die Convolutional Layers extrahieren die verschiedenen Merkmale wie Kanten und Objektbegrenzungen aus dem Bild. Die am Ende des Modells vollständig verbundenen Schichten erzeugen die Wahrscheinlichkeiten und die Objektkoordinaten für die verschiedenen Klassen. 
+
+\begin{lstlisting}
+	Listing 5: Definition des Modells in Python 
+	def darknet53(input_data):
+	
+	input_data = common.convolutional(input_data, (3, 3,  3,  32))  
+	
+	input_data = common.convolutional(input_data, (3, 3, 32,  64), downsample=True)
+	
+	for i in range(1):
+	input_data = common.residual_block(input_data,  64,  32, 64)
+	input_data = common.convolutional(input_data, (3, 3,  64, 128), downsample=True)
+	
+	for i in range(2):
+	input_data = common.residual_block(input_data, 128,  64, 128)
+	input_data = common.convolutional(input_data, (3, 3, 128, 256), downsample=True)
+	
+	for i in range(8):
+	input_data = common.residual_block(input_data, 256, 128, 256)
+	route_1 = input_data
+	input_data = common.convolutional(input_data, (3, 3, 256, 512), downsample=True)
+	
+	for i in range(8):
+	input_data = common.residual_block(input_data, 512, 256, 512)
+	route_2 = input_data
+	input_data = common.convolutional(input_data, (3, 3, 512, 1024), downsample=True)
+	
+	for i in range(4):
+	input_data = common.residual_block(input_data, 1024, 512, 1024)
+	
+	return route_1, route_2, input_data
+\end{lstlisting}	
+
+	Um die Genauigkeit der Vorhersagen zu erhöhen, nutzt YOLO Residual Blocks aus der Residual-Encoder-Decoder-Network-Architektur (ResNet). Diese führen die Objekterkennung in den unterschiedlichen Größen durch. Der erste Residual Block ist für die Erkennung kleiner Objekte zuständig, der zweite erkennt mittelgroße und der letzte große Objekte.  
+
+\section{Finetuning mit Hyperparametern}
+
+Neben den eigentlichen Tensoren, die als Datencontainer durch die Schichten des künstlichen neuronalen Netzes laufen, braucht es für das Training wie bei jedem andern Machine-Learning-Modell auch sogenannte Hyperparameter, die den Trainingsalgorithmus steuern. 
+
+Für das Modelltraining kommt ­YOLOv3 mit nur wenigen Hyperparametern aus. Der Parameter STRIDES (Schrittlänge) legt fest, wie viele Pixel auf einmal innerhalb des Convolutional Layers über die Bildmatrix wandern. YOLO nutzt drei verschiedene Faltungsmatrizen für die drei unterschiedlichen Erkennungsgrößen. Bei einem Eingangsbild von 416 × ­416 Pixeln ergibt sich für den ersten Maßstab 416/8 die 52 × 52 Pixel große Faltungsmatrix; bei 416/16 die 26 × 26 große Matrix und bei 416/32 die 13 × 13 große Variante. 
+
+Die Anzahl der Ankerkästen legt man mit dem Hyperparameter ANCHOR\_PER\_SCALE fest. Der Parameter IOU\_LOSS\_THRESH definiert einen Schwellenwert, der die Überlappungen der Ob­jekte berechnet. IOU steht für Intersection over Union und beschreibt das Verhältnis zwischen Objektschnittmenge und -vereinigungsmenge. Dieser Wert liegt immer zwischen 0 und 1. 
+
+	Die weiteren Hyperparameter sind für das Training selbst relevant und mit dem Präfix TRAIN gekennzeichnet. Die BATCH\_SIZE gibt an, nach wie vielen Bildern sich das Modell aktualisieren soll. Je schneller der Rechner, desto höher kann dieser Wert sein. EPOCHS definiert die Anzahl der vollständigen Durchläufe des Modells durch den Trainingsdatensatz. Bei 2250 Bildern und einem Trainings- und Testsplit im Verhältnis 85:15 läuft das Training pro Epoche mit 1912 Bildern ab. 
+
+Der Parameter WARMUP\_EPOCH kommt zum Einsatz, wenn man ein bestehendes Modell nutzt und auf diesem mit neuen Daten trainiert: das sogenannte Transfer Learning. Bei YOLOv3 wäre ein solches Vorgehen zum Beispiel mit Image­Net oder COCO-Gewichten denkbar. Den Parameter DATA\_AUG nutzt man, um die eigenen Daten gegebenenfalls noch weiter anzureichern. Der Quellcode von Yun­Yang1994 enthält in core/dataset.py drei einfache Funktionen, um das Eingangsbild zu variieren. Da dies innerhalb des Tutorialdatensatzes schon passiert ist, ist der Wert hier False. Schließlich definieren die Parameter LR\_INIT und LR\_END die Lernrate des Modells. 
+
+
+\begin{lstlisting}
+    Listing 6: Die Hyperparameter fuer das Training von YOLOv3 
+	YOLO.STRIDES           = [8, 16, 32]
+	YOLO.ANCHOR_PER_SCALE  = 3
+	YOLO.IOU_LOSS_THRESH   = 0.5
+	TRAIN.BATCH_SIZE       = 4
+	TRAIN.DATA_AUG         = False
+	TRAIN.LR_INIT          = 1e-3
+	TRAIN.LR_END           = 1e-6
+	TRAIN.WARMUP_EPOCHS    = 2
+	TRAIN.EPOCHS           = 5
+\end{lstlisting}	
+
+\section{Das Darknet in Python}
+
+	Doch genug der grauen Theorie. Um ­YOLOv3 zu trainieren, lässt sich entweder das Framework Darknet von Joseph Redmon oder eine der zahlreichen Alternativimplementierungen einsetzen. Das Darknet-Framework ist von Anfang an auf Geschwindigkeit optimiert und aus dem Grund in C und auf der Basis von ­NVIDIAs GPU-Framework CUDA (Compute Unified Device Architecture) geschrieben. 
+	Wie bereits in Teil 1 angekündigt, setzt das Tutorialbeispiel vollständig auf Python 3 und TensorFlow/Keras. Diese Kombination bringt drei entscheidende Vorteile mit sich: 
+
+\begin{itemize}
+	\item Das Machine-Learning-Framework TensorFlow ist weit verbreitet und direkt innerhalb von Google Colab lauffähig. 
+	\item Keras ist der De-facto-Standard für die Implementierung von Deep-Learning-­Modellen (nicht nur in TensorFlow). 
+	\item Python läuft sowohl innerhalb der Goo­gle Colab Notebooks als auch auf vielen anderen Geräten, darunter die Entwickerboards aus NVIDIAs Jetson-Familie. 
+\end{itemize}	
+
+
+Auf GitHub gibt es eine Reihe freier Implementierungen des YOLOv3-Modells in Python. Allerdings sollte man sich frühzeitig Gedanken darüber machen, welches Zielframework und hier vor allen Dingen welche Version davon man nutzen will. Viele ältere Implementierungen basieren noch auf TensorFlow 1.X. Zur Version 2 hat sich allerdings an der TensorFlow-API eine Menge getan – gerade auch im Hinblick auf die Anbindung spezieller Beschleunigungshardware, wie der genannten Jetson-Boards. Dieses Tutorial nutzt daher die aktuelle, als stabil gekennzeichnete Version 2.1 von TensorFlow. 
+
+	Auch muss man das Rad an dieser Stelle nicht neu erfinden. Findige Menschen haben das YOLOv3-Modell schon für alle möglichen Deep-Learning-Frameworks umgesetzt. So gibt es auch Implementierungen für beispielsweise PyTorch oder Caffe. 
+
+	Grundlage für dieses Tutorial ist die Umsetzung für TensorFlow 2 von Yun­Yang1994. Der Code ist minimalistisch, gut nachvollziehbar und einfach anzupassen. Er ist Teil einer größeren Algorithmensammlung für TensorFlow 2. Die Anpassungen für dieses Tutorial finden sich im GitHub-Repository ix-tut-yolov3.git. 
+	
+\begin{figure}
+	\GRAPHICSC{0.2}{1.0}{Modellbau/b2_google_colab_gpu.png}
+	\caption{In der Google-Colab-Instanz lässt sich eine GPU einbinden. }
+\end{figure}	
+
+Um den Code und die Beispieldaten innerhalb von Google Colab zu nutzen, sind folgende Schritte notwendig: 
+
+\begin{itemize}
+	\item Konfiguration des Google Colab Notebooks mit GPU-Einbindung (siehe Abbildung 2); 
+	\item Installation der nötigen NVIDIA-Bibliotheken; 
+	\item Installation der richtigen TensorFlow-­Version; 
+	\item Installation des GitHub-Code-Repository zum Tutorial; 
+	\item Installation des GitHub-Daten-Repository zum Tutorial. 
+
+\end{itemize}	
+
+\section{Das Training vorbereiten}
+
+Für das komplette Modelltraining steht unter ix.de/znp2 das Google Colab Notebook ix\_objectdetect\_tut2\_03.ipynb bereit. Das Training selbst übernimmt das Python­Skript train.py, das in folgende Abschnitte unterteilt ist:  
+
+\begin{itemize}
+	\item 	Definieren der Eingabe- und Ausgabetensoren; 
+	\item Erzeugen des YOLOv3-Modells; 
+	\item Erzeugen eines Adam-basierten Optimizers. 
+\end{itemize}
+
+Pro Trainingsschritt bearbeitet das Modell ein Bild, vergleicht die gefundene Box mit der Box aus den Eingangsdaten, berechnet eine Verlustfunktion und führt einen Gradientenabstieg aus. Der Gradientenabstieg ist das Herz des Trainings künstlicher neuronaler Netze. Dazu kommt der Adam-Algorithmus zum Einsatz, der die optimalen Gewichte für die Trainingsdaten aus Bild- und Objektbegrenzungsdaten berechnet. Alle nötigen Trainingsparameter finden sich unterhalb des Verzeichnisses core in der Datei config.py. 
+
+\section{Auf die Plätze, fertig, los \ldots}
+
+Das Training lässt sich in Google Colab starten mit 
+
+\SHELL{!python train.py}
+
+In der Konsolenzelle des Notebooks kann man den Lernfortschritt verfolgen. Dieser lässt sich auch mithilfe der eingebauten TensorBoard-­Ansicht etwas anschaulicher darstellen (siehe Abbildung 3). Dazu nutzt man das folgende Kommando: 
+
+\SHELL{\%tensorboard --logdir logs}
+	
+	
+\begin{figure}
+	\GRAPHICSC{0.2}{1.0}{Modellbau/b3_yolov3_tensorboard.png}
+	\caption{Mithilfe von TensorBoard lassen sich die Lernfortschritte des Modells visualisieren.}
+\end{figure}	
+	
+	
+Je nach Anzahl der Epochen kann das Modelltraining in Google Colab leicht eine halbe Stunde oder mehr dauern. Führt man das Training auf Systemen ohne spezielle Hardwareunterstützung aus, können selbst fünf Epochen mehrere Stunden benötigen.  
+
+Das fertige Modell besteht aus drei verschiedenen Dateien: starwars\_yolov3.json enthält die Modellarchitektur im lesbaren JSON-Format. Die trainierten Gewichte sind in den Checkpoint-Dateien der Form starwars\_yolov3.data-00xxx-of-xxxxx gespeichert. Mehrere Checkpoint-Dateien werden mithilfe eines Index in der Datei starwars\_yolov3.index verwaltet. 
+
+\SHELL{Alles gut gelaufen?}
+
+Den anschließenden Test des trainierten Modells führt das Notebook ix\_object­detect\_tut2\_04.ipynb durch. Unabhängig vom eingesetzten Trainings-Notebook benötigt man für die Objekterkennung ein paar Beispielbilder -  und das gespeicherte Modell. Bilder lassen sich recht einfach über das Modul files von Colab mit einem Zweizeiler in das Notebook bringen.  
+
+\SHELL{from google.colab import files}
+\SHELL{files.upload()}
+
+Das trainierte YOLOv3-Modell mit den LEGO-Star-Wars-Figuren ist mit rund 280 MByte deutlich größer. Am einfachsten lädt man es über seinen bestehenden Google-­Account in GDrive hoch, denn dort gibt es immerhin 15 GByte kosten­losen Speicherplatz. Ein bereits trainiertes Modell liegt zur freien Verfügung unter\url{ix.de/znp2}.
+ 
+Um dieses oder ein eigenes Modell aus dem GDrive zu importieren, reicht die Einbindung des drive-Moduls von Colab mit einem anschließenden Mount: 
+
+\SHELL{from google.colab import drive}
+
+\SHELL{drive.mount('/content/drive')}
+
+Jetzt findet sich das eigene GDrive unterhalb des Verzeichnisses /content/drive. Um es zu laden, muss Keras die Modellstruktur erst einmal mit dem entsprechenden Eingabe-Layer initialisieren. 
+
+\SHELL{model = tf.keras.Model(input\_layer, bbox\_tensors)}
+
+Einlesen kann man es im nächsten Schritt mit  
+
+\SHELL{model.load\_weights("/content/drive/MyDrive/data/ix-tut-model/starwars\_yolov3")}
+
+Die eigentliche Vorhersage der LEGO-Star-Wars-Helden erfolgt mit 
+
+
+
+\SHELL{pred\_bbox = model.predict(image\_data)}
+
+Die Bounding Boxes innerhalb des Bildes erzeugt der Python-Code aus Listing 7. Das Ergebnis zeigt Abbildung 4 mit dem richtig erkannten R2D2. 
+	
+\begin{figure}
+	\GRAPHICSC{1.0}{1.0}{Modellbau/b4_r2d2_bounding_box.jpg}
+	\caption{Den Star-Wars-Roboter R2D2 hat das Modell korrekt erkannt.}
+\end{figure}	
+
+	
+\begin{lstlisting}
+	Listing 7: Bounding Boxes erzeugen 
+	from IPython.display import Image, display
+	
+	pred_bbox = [tf.reshape(x, (-1, tf.shape(x)[-1])) for x in pred_bbox]
+	pred_bbox = tf.concat(pred_bbox, axis=0)
+	bboxes = utils.postprocess_boxes(pred_bbox, original_image_size, input_size, 0.3)
+	bboxes = utils.nms(bboxes, 0.45, method='nms')
+	
+	for bbox in bboxes:
+	    print(bbox)
+        coor = np.array(bbox[:4], dtype=np.int32)
+        score = bbox[4]
+        class_ind = int(bbox[5])
+        class_name = CLASSES[class_ind]
+        score = '%.4f' % score
+        xmin, ymin, xmax, ymax = list(map(str, coor))
+        bbox_mess = ' '.join([class_name, score, xmin, ymin, xmax, ymax]) + '\n'
+        print('\t' + str(bbox_mess).strip())
+	
+	image = utils.draw_bbox(original_image, bboxes, classes=CLASSES)
+	image = Image.fromarray(image)
+	image.save("predicted-test9.jpg")
+	display(Image("predicted-test9.jpg"))
+\end{lstlisting}	
+
+
+
+\chapter{Zielhardware Jetson Nano}
+
+Der dritte und letzte Teil beschäftigt sich mit dem Einsatz des in Teil 2 erzeugten und trainierten Modells auf der Zielhardware. Hier geht es um Besonderheiten wie die Verkleinerung von Modellen und deren Abbildung und Optimierung auf eine bestimmte Plattform wie das Entwickler­board Jetson Nano von NVIDIA. 
+
+
+Die Optimierung für und den Einsatz auf einem Embedded-System zeigt das Tutorial in Teil 3 an gleich zwei Vertretern aus NVIDIAs Entwicklerboard-Familie Jetson. Der Jetson Nano, der als Einstiegsmodell in die Welt der Echtzeiterkennung im Embedded-Bereich anzusehen ist, bietet dank leistungsfähigem Grafikchip Pin-Kompatibilität zum Raspberry Pi zu einem niedrigen Preis. Im Vergleich dazu soll der neue Jetson Xavier NX zeigen, welche Rechenleistung er bei einer ähnlichen Leistungsaufnahme von 10 Watt hat. Da beide Systeme NVIDIAs JetPack SDK nutzen, ist eine Portierung vom kleineren Jetson Nano auf die leistungsfähigere Xavier-NX-Hardware sehr einfach möglich.  
+
+\section{Ausblick: YOLO auf dem Jetson Nano}
+
+Zielplattform für das trainierte Modell sollen in Teil 3 die Entwicklerboards aus NVIDIAs Jetson-Familie sein. Auch auf dem kleinsten Modell, dem Jetson Nano, lassen sich mit TensorFlow trainierte Deep-­Learning-Modelle ausführen.  
+
+Für eine ordentliche Bilderkennungsrate mit YOLOv3 sind jedoch noch ein paar Klimmzüge nötig. So nutzt NVIDIA das eigene TensorRT als hardwarebeschleunigte Plattform für die Ausführung von Deep-Learning-Modellen auf der eigenen CUDA-Bibliothek. TensorRT liegt als Abstraktionsschicht über der eigent­lichen GPU und ermöglicht eine weitgehende Skalierung der Geschwindigkeit über verschiedene GPU-Typen. Während der Jetson Nano zum Beispiel eine Maxwell-GPU mit 128 CUDA-Kernen hat, beherbergt das neueste Modell der Jetson-­Familie, der Xavier NX, eine Volta-GPU mit 384 CUDA-Kernen. 
+
+TensorRT dient als Runtime zum Kapseln verschiedener Hardwarearchitekturen. Bei der Ausführung auf einem bestehenden Modell prüft sie die vorhandene Hardware und wählt die Funktionen aus, die GPU-unterstützt laufen können. Dabei wird das eingelesene Modell zur Laufzeit in eine GPU-optimierte Version überführt. 
+
+Auch wenn TensorFlow 2 nativ auf dem Jetson Nano läuft, sollte man das hardwarenahe TensorRT für die Objekterkennung mit YOLOv3 einsetzen. Was dafür nötig ist und wie sich die Protagonisten von LEGO Star-Wars auch in Echtzeit mit einer angeschlossenen Kamera erkennen lassen, wird der dritte und letzte Teil dieses Tutorials zeigen. (akl@ix.de) 
+

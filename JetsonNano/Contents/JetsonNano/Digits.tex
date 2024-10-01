@@ -1,0 +1,325 @@
+%%%%%%%%%%%%%%%
+%
+% $Autor: Wings $
+% $Datum: 2020-02-04 07:44:38Z $
+% $Pfad: komponenten/Bilderkennung/Produktspezifikation/JetsonNano/Inhalt/Digits.tex $
+% $Version: 1788 $
+%
+%
+%%%%%%%%%%%%%%%
+
+%todo https://devblogs.nvidia.com/tensorrt-integration-speeds-tensorflow-inference/
+%todo https://developer.download.nvidia.com/compute/machine-learning/tensorrt/models/charRNN-notebook.html
+
+\chapter{Training eines \ac{cnn}}
+
+\section{Workflow mit DIGITS}
+
+NVIDIA DIGITS wird verwendet, um Netzwerkmodelle interaktiv auf annotierten Datensätzen in der Cloud oder auf dem PC zu trainieren, während TensorRT und Jetson zur Bereitstellung von Laufzeitinferenzen im Feld verwendet werden. TensorRT verwendet Graphenoptimierungen und FP16-Unterstützung mit halber Genauigkeit, um die DNN-Inferenzierung mehr als zu verdoppeln. Zusammen bilden DIGITS und TensorRT einen effektiven Arbeitsablauf für die Entwicklung und den Einsatz tiefer neuronaler Netzwerke, die in der Lage sind, fortgeschrittene KI und Wahrnehmung zu implementieren.
+
+\begin{figure}
+
+\GRAPHICSC{0.3}{1.0}{Digits/digits-workflow}
+  \caption{Workflow mit DIGITS}
+\end{figure}
+
+
+\section{DIGITS-System-Einrichtung}
+
+Während dieses Tutorials verwenden wir einen Host-PC (oder eine Cloud-Instanz) für das Training von DNNs, zusammen mit einem Jetson für die Interferenz.
+
+Aufgrund der Anzahl der für die Schulung erforderlichen Abhängigkeiten wird Anfängern empfohlen, ihren Host-Schulungs-PC mit \href{https://www.nvidia.com/en-us/gpu-cloud/}{NVIDIA GPU Cloud (NGC)} oder \href{https://github.com/NVIDIA/nvidia-docker}{nvidia-docker} einzurichten. Diese Methoden automatisieren die Installation der Treiber und des Machine-Learning-Frameworks auf dem Host. NGC kann verwendet werden, um Docker-Images lokal oder remote an Cloud-Anbieter wie AWS oder Azure N-Serie zu verteilen.
+
+Ein Host-PC dient auch dazu, den Jetson mit dem neuesten JetPack zu flashen. Zunächst werden wir den Host-Schulungs-PC mit dem erforderlichen Betriebssystem und den erforderlichen Tools einrichten und konfigurieren.
+
+
+\subsection{Installation von Ubuntu auf dem Host}
+
+Wenn Sie Ubuntu nicht bereits auf Ihrem Host-PC installiert haben, laden Sie Ubuntu 
+16.04 x86\_64 von einem der folgenden Orte herunter und installieren Sie es:
+
+\medskip
+
+\SHELL{http://releases.ubuntu.com/16.04/ubuntu-16.04.2-desktop-amd64.iso}
+
+\SHELL{http://releases.ubuntu.com/16.04/ubuntu-16.04.2-desktop-amd64.iso.torrent}
+
+\medskip
+
+
+Ubuntu 14.04 x86\_64 oder Ubuntu 18.04 x86\_64 können mit geringfügigen Änderungen auch später bei der Installation einiger Pakete mit \SHELL{apt-get} akzeptiert werden.
+
+
+\subsection{Einrichten eines Host-Schulungs-PCs mit NGC-Container}
+
+    Hinweis: Um DIGITS nativ auf Ihrem Host-PC einzurichten, sollten Sie zu \SHELL{Natively setting up DIGITS on the Host (advanced)} gehen.
+
+\bigskip
+
+
+NVIDIA hostet die NVIDIA® GPU Cloud (NGC) Container-Registrierung für KI-Entwickler weltweit. Sie können einen containerisierten Softwarestack für eine breite Palette von Deep Learning  Frameworks herunterladen, der mit NVIDIA-Bibliotheken und der CUDA-Laufzeitversion optimiert und verifiziert wurde.
+
+\begin{figure}
+  \GRAPHICSC{0.3}{1.0}{Digits/NGC-Registry_DIGITS}
+  
+  \caption{NGC-Registrierung}
+\end{figure}
+
+
+Wenn Sie eine GPU der neuesten Generation (Pascal oder neuer) auf Ihrem PC haben, ist die Verwendung des NGC-Registrierungscontainers wahrscheinlich die einfachste Möglichkeit, DIGITS einzurichten. Um einen NGC-Registrierungscontainer auf Ihrem lokalen Host-Rechner (im Gegensatz zur Cloud) zu verwenden, können Sie dieser detaillierten Anleitung zur Einrichtung folgen.
+
+
+\subsection{Installation des NVIDIA-Treibers}
+
+
+Fügen Sie das NVIDIA Developer-Repository hinzu und installieren Sie den NVIDIA-Treiber.
+
+\medskip
+
+\SHELL{\$ sudo apt-get install -y apt-transport-https curl}
+
+\SHELL{\$ cat <<EOF | sudo tee /etc/apt/sources.list.d/cuda.list > /dev/null}
+
+\SHELL{deb https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1604/x86\_64 / }
+
+\SHELL{EOF}
+
+\SHELL{\$ curl -s \textbackslash}
+
+\SHELL{
+ https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1604/x86\_64/7fa2af80.pub \textbackslash }
+
+
+\SHELL{| sudo apt-key add -}
+
+\SHELL{\$ cat <<EOF | sudo tee /etc/apt/preferences.d/cuda > /dev/null}
+
+\SHELL{Package: *}
+
+\SHELL{Pin: origin developer.download.nvidia.com}
+
+\SHELL{Pin-Priority: 600}
+
+\SHELL{EOF}
+
+\SHELL{\$ sudo apt-get update \&\& sudo apt-get install -y --no-install-recommends cuda-drivers}
+
+\SHELL{\$ sudo reboot}
+
+\medskip
+
+
+
+Prüfen Sie nach dem Neustart, ob Sie nvidia-smi ausführen können und ob Ihre GPU angezeigt wird.
+
+\medskip
+
+\SHELL{\$ nvidia-smi}
+
+\SHELL{Thu May 31 11:56:44 2018}
+
+
+\SHELL{+-----------------------------------------------------------------------------+}
+
+\SHELL{| NVIDIA-SMI 390.30                 Driver Version: 390.30                    |}
+
+\SHELL{|-------------------------------+----------------------+----------------------+}
+
+\SHELL{| GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |}
+
+\SHELL{| Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |}
+
+\SHELL{|===============================+======================+======================|}
+
+\SHELL{|   0  Quadro GV100        Off  | 00000000:01:00.0  On |                  Off |}
+
+\SHELL{| 29\%   41C    P2    27W / 250W |   1968MiB / 32506MiB |     22\%      Default |}
+
+\SHELL{+-------------------------------+----------------------+----------------------+}
+
+\medskip
+
+
+\subsection{Installation von Docker}
+
+
+Voraussetzungen zur Installation von Docker ist die Installation des GPG-Schlüssels und fügen Sie das Docker-Repository hinzu.
+
+\medskip
+
+\SHELL{\$ sudo apt-get install -y ca-certificates curl software-properties-common}
+
+\SHELL{\$ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -}
+
+\SHELL{\$ sudo add-apt-repository  \textbackslash}
+
+\SHELL{"deb  [arch=amd64] https://download.docker.com/linux/ubuntu \$(lsb\_release -cs) stable"}
+
+\medskip
+
+
+Add the Docker Engine Utility (nvidia-docker2) repository, install nvidia-docker2, set up permissions to use Docker without sudo each time, and then reboot the system.
+
+\SHELL{\$ curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | \textbackslash}
+
+\SHELL{sudo apt-key add -}
+
+\SHELL{\$ ccurl -s -L https://nvidia.github.io/nvidia-docker/ubuntu16.04/amd64/nvidia-docker.list | \textbackslash}
+
+\SHELL{sudo tee /etc/apt/sources.list.d/nvidia-docker.list}
+
+\SHELL{\$ csudo apt-get update}
+
+\SHELL{\$ csudo apt-get install -y nvidia-docker2}
+
+\SHELL{\$ csudo usermod -aG docker \$USER}
+
+\SHELL{\$ sudo reboot}
+
+\medskip
+
+
+\subsection{NGC-Anmeldung}
+
+Melden Sie sich bei NGC an, wenn Sie dies nicht getan haben.
+
+\medskip
+
+\SHELL{\href{ttps://ngc.nvidia.com/signup/register}{https://ngc.nvidia.com/signup/register}}
+
+\medskip
+
+Generieren Sie Ihren API-Schlüssel und speichern Sie ihn an einem sicheren Ort. Sie werden ihn bald darauf verwenden.
+
+
+
+
+\begin{figure}
+  \GRAPHICSC{0.3}{1.0}{Digits/NGC-Registry_API-Key-generated.png}
+  \caption{Workflow mit DIGITS}
+\end{figure}
+
+
+\subsection{Einrichten des Daten- und Auftragsverzeichnisses für DIGITS}
+
+Zurück auf Ihrem PC (nach dem Neustart), melden Sie sich bei der NGC-Container-Registrierung an
+
+\medskip
+
+\SHELL{\$ docker login nvcr.io}
+
+
+\medskip
+
+Sie werden aufgefordert, Benutzername und Passwort einzugeben.
+
+\medskip
+
+\SHELL{Username: \$oauthtoken}
+
+\SHELL{Password: <Your NGC API Key>}
+
+\medskip
+
+
+Verwenden Sie für einen Test den CUDA-Container, um zu sehen, ob das nvidia-smi Ihre GPU anzeigt.
+
+
+\medskip
+
+\SHELL{docker run --runtime=nvidia --rm nvcr.io/nvidia/cuda:9.0-cudnn7-devel-ubuntu16.04 nvidia-smi}
+
+\medskip
+
+\subsection{Einrichten von Daten- und Auftragsverzeichnissen}
+
+
+Erstellen Sie Daten- und Auftragsverzeichnisse auf Ihrem Host-PC, die per DIGITS-Container gemountet werden.
+
+\medskip
+
+\SHELL{\$ mkdir /home/username/data}
+
+
+\SHELL{\$ mkdir /home/username/digits-jobs}
+
+\medskip
+
+
+DIGITS-Container starten
+
+\medskip
+
+\SHELL{\$ nvidia-docker run --name digits -d -p 8888:5000 \textbackslash}
+
+\SHELL{-v /home/username/data:/data:ro}
+
+\SHELL{-v /home/username/digits-jobs:/workspace/jobs nvcr.io/nvidia/digits:18.05}
+
+
+\medskip
+
+Öffnen Sie einen Webbrowser und greifen Sie auf \SHELL{http://localhost:8888} zu.
+
+
+\section{Einrichten von Jetson mit JetPack}
+
+
+    Hinweis: Wenn Ihr Jetson Nano bereits mit dem SD-Karten-Image (das die JetPack-Komponenten enthält) oder Ihr Jetson bereits mit dem JetPack eingerichtet wurde, können Sie diesen Schritt überspringen und mit dem Aufbau des Repo
+
+\bigskip
+
+Laden Sie das neueste JetPack auf Ihren Host-PC herunter. Zusätzlich zum Flashen des Jetson mit dem neuesten Board Support Package (BSP) installiert JetPack automatisch Tools für den Host wie das CUDA Toolkit. Die vollständige Liste der Funktionen und installierten Pakete finden Sie in den JetPack-Veröffentlichungshinweisen.
+
+Nachdem Sie JetPack über den obigen Link heruntergeladen haben, führen Sie es mit den folgenden Befehlen vom Host-PC aus:
+
+\medskip
+
+
+\SHELL{\$ cd <directory where you downloaded JetPack>}
+
+\SHELL{\$ chmod +x JetPack-L4T-<version>-linux-x64.run }
+
+\SHELL{\$ ./JetPack-L4T-<version>-linux-x64.run }
+
+
+Die JetPack-GUI wird gestartet. Folgen Sie der Schritt-für-Schritt-Installationsanleitung, um das Setup abzuschließen. Zu Beginn wird JetPack bestätigen, für welche Generation von Jetson Sie entwickeln.
+
+jetpack-platform.png
+
+
+\begin{figure}
+  \GRAPHICSC{0.3}{1.0}{Digits/jetpack-platform}
+  
+  \caption{Wahl der Plattfomr}
+\end{figure}
+
+Wählen Sie Jetson TX1, wenn Sie TX1 verwenden, oder Jetson TX2, wenn Sie TX2 verwenden, und drücken Sie \SHELL{Weiter}, um fortzufahren.
+
+Der nächste Bildschirm listet die zur Installation verfügbaren Pakete auf. Die auf dem Host installierten Pakete werden oben unter der Dropdown-Liste \SHELL{Host - Ubuntu} aufgelistet, während die für den Jetson bestimmten Pakete unten angezeigt werden. Sie können ein einzelnes Paket zur Installation auswählen oder die Auswahl aufheben, indem Sie auf seine Spalte \SHELL{Action} klicken.
+
+
+\begin{figure}
+  \GRAPHICSC{0.3}{1.0}{Digits/jetpack-downloads}
+  
+  \caption{Wahl der Plattfomr}
+\end{figure}
+
+
+Da CUDA auf dem Host für die Schulung von DNNs verwendet wird, wird empfohlen, die vollständige Installation durch Klicken auf das Optionsfeld oben rechts auszuwählen. Drücken Sie dann auf \SHELL{next}, um mit der Einrichtung zu beginnen. JetPack wird die Reihenfolge der Pakete herunterladen und dann installieren. Beachten Sie, dass alle \SHELL{.deb}-Pakete unter dem Unterverzeichnis \SHELL{jetpack\_downloads} gespeichert werden, falls Sie sie später benötigen sollten. 
+
+Nach Abschluss der Downloads tritt JetPack in die Nachinstallationsphase ein, in der das JetPack mit dem L4T-BSP geflasht wird.  Sie müssen Ihren Jetson über den Micro-USB-Port und das im Devkit enthaltene Kabel mit Ihrem Host-PC verbinden.  Dann bringen Sie Ihren Jetson in den Wiederherstellungsmodus, indem Sie den Wiederherstellungsknopf gedrückt halten, während Sie Reset drücken und loslassen.  Wenn Sie \SHELL{lsusb} vom Host-PC aus eingeben, nachdem Sie das Mikro-USB-Kabel angeschlossen und den Jetson in den Wiederherstellungsmodus versetzt haben, sollten Sie das NVIDIA-Gerät unter der Liste der USB-Geräte sehen.  JetPack verwendet die Micro-USB-Verbindung vom Host, um den L4T BSP an den Jetson zu flashen. 
+
+Nach dem Flashen wird der Jetson neu gestartet und, falls er an einen HDMI-Bildschirm angeschlossen ist, auf den Ubuntu-Desktop hochfahren.  Danach verbindet sich JetPack vom Host über SSH mit dem Jetson, um zusätzliche Pakete auf dem Jetson zu installieren, wie die ARM aarch64-Builds von CUDA Toolkit, cuDNN und TensorRT.  Damit JetPack den Jetson über SSH erreichen kann, sollte der Host-PC über Ethernet mit dem Jetson vernetzt sein.  Dies kann durch den Einsatz eines Ethernet-Kabels direkt vom Host zum Jetson oder durch den Anschluss beider Geräte an einen Router oder Switch erfolgen - die JetPack-GUI fragt Sie, welches Netzwerk-Szenario verwendet wird. 
+
+Die vollständige Anleitung zur Installation von JetPack und zum Flashen von Jetson finden Sie im 
+\href{https://docs.nvidia.com/jetson/index.html}{JetPack-Installationshandbuch}. \cite{JetsonUserManual:2019} 
+
+
+\Ausblenden{
+
+weiter hier \href{https://github.com/dusty-nv/jetson-inference/blob/master/docs/building-repo.md}{https://github.com/dusty-nv/jetson-inference/blob/master/docs/building-repo.md}
+
+
+
+} % Ausblenden

@@ -1,0 +1,257 @@
+%%%%%%
+%
+% $Autor: Wings $
+% $Datum: 2021-05-14 $
+% $Pfad: GitLab/MLEdgeComputer $
+% $Dateiname: Testflaschen
+% $Version: 4620 $
+%
+%%%%%%
+
+
+
+
+
+Es werden verschiedene Tests durchgeführt, um zum einen die Funktionalität und Zuverlässigkeit
+der für den Anwendungsfall erstellten Flaschenerkennung zu überprüfen und um zum anderen
+verschiedene Modelle miteinander zu vergleichen und das Zeitverhalten der Bilderkennung zu untersuchen.
+
+\section{Test der Flaschenerkennung}
+
+Zunächst soll die Funktion und Zuverlässigkeit der Flaschenerkennung qualitativ getestet werden. Dazu werden verschiedene Flaschen vor der Kamera platziert und die Ausgabe auf dem Bildschirm beobachtet. Dabei werden fünf verschiedene Flaschen mit der Vorderseite, Rückseite und Seite zur Kamera gerichtet in etwa 95 cm, 70 cm und 50 cm Entfernung vor der Kamera platziert (siehe Abbildung \ref{Flaschen}). 
+
+\medskip
+
+Nach etwa 3 Aktualisierungen der Ausgabe wird ein Screenshot erstellt, um die Ergebnisse der Ausgabe festzuhalten.
+
+
+\begin{figure} [H]
+	\includegraphics[height=0.15\textwidth, width=0.275\textwidth]{Test/Cola95}
+	\includegraphics[height=0.15\textwidth, width=0.275\textwidth]{Test/Cola70}
+	\includegraphics[height=0.15\textwidth, width=0.275\textwidth]{Test/Cola50}\newline
+	\includegraphics[height=0.15\textwidth, width=0.275\textwidth]{Test/Wein95}
+	\includegraphics[height=0.15\textwidth, width=0.275\textwidth]{Test/Wein70}
+	\includegraphics[height=0.15\textwidth, width=0.275\textwidth]{Test/Wein50}\newline
+	\includegraphics[height=0.15\textwidth, width=0.275\textwidth]{Test/Bier95}
+	\includegraphics[height=0.15\textwidth, width=0.275\textwidth]{Test/Bier70}
+	\includegraphics[height=0.15\textwidth, width=0.275\textwidth]{Test/Bier50}\newline
+	\includegraphics[height=0.15\textwidth, width=0.275\textwidth]{Test/Soda95}
+	\includegraphics[height=0.15\textwidth, width=0.275\textwidth]{Test/Soda70}
+	\includegraphics[height=0.15\textwidth, width=0.275\textwidth]{Test/Soda50}\newline	
+	\includegraphics[height=0.15\textwidth, width=0.275\textwidth]{Test/Schorle95}
+	\includegraphics[height=0.15\textwidth, width=0.275\textwidth]{Test/Schorle70}
+	\includegraphics[height=0.15\textwidth, width=0.275\textwidth]{Test/Schorle50}\newline
+	\caption{Die verschiedenen Flaschen in Abständen von 95 cm, 70 cm und 50 cm zur Kamera}
+	\label{Flaschen}
+\end{figure}
+
+\subsection{Ergebnisse}
+In den Tabellen \ref{Cola}, \ref{Wein}, \ref{Bier}, \ref{Sodastream} und \ref{Schorle} sind die Ergebnisse für eine Colaflasche, Weinflasche, Bierflasche, Sodastream-Flasche und Apfelschorle-Flasche festgehalten.
+
+\bigskip
+
+Da die Sodastream-Flasche von vorne und hinten gleich aussieht, wurden die Testaufnahmen von hinten hier ausgelassen.
+Da die Apfelschorle-Flasche ohne Etikett getestet wurde, sind hier ausschließlich Aufnahmen von vorne aufgeführt.
+Für den einfachen Überblick ist in den Tabellen farblich in der letzten Spalte hervorgehoben, ob eine Flasche erkannt wurde und in der vorletzten Spalte, ob die richtige Art Flasche erkannt wurde.
+
+\begin{table} [H]
+	\centering
+	\begin{tabular} {l l l l l}
+Orientierung & Entfernung [cm] & Sicherheit [\%] & erkanntes Objekt & Flasche erkannt\\  \hline
+von vorne&	95&	60-65&	Limoflasche\cellcolor{green}&ja\cellcolor{green}\\
+von vorne&	70&	75-80&	Limoflasche\cellcolor{green}&ja\cellcolor{green}\\
+von vorne&	50&	75-80&	Limoflasche\cellcolor{green}&ja\cellcolor{green}\\
+von vorne&	95&	60-65&	Limoflasche\cellcolor{green}&ja\cellcolor{green}\\
+von vorne&	70&	85-90&	Limoflasche\cellcolor{green}&ja\cellcolor{green}\\
+von vorne&	50&	65-70&	Limoflasche\cellcolor{green}&ja\cellcolor{green}\\
+von vorne&	95&	70-75&	Limoflasche\cellcolor{green}&ja\cellcolor{green}\\
+von vorne&	70&	85-90&	Limoflasche\cellcolor{green}&ja\cellcolor{green}\\
+von vorne&	50&	75-80&	Limoflasche\cellcolor{green}&ja\cellcolor{green}\\ \hline
+von hinten&	95&	50-55&	Bierflasche\cellcolor{red}&ja\cellcolor{green}\\
+von hinten&	70&	40-45&	Weinflasche\cellcolor{red}&ja\cellcolor{green}\\
+von hinten&	50&	35-40&	Haarspray\cellcolor{red}&nein\cellcolor{red}\\
+von hinten&	95&	40-45&	Weinflasche\cellcolor{red}&ja\cellcolor{green}\\
+von hinten&	70&	50-55&	Weinflasche\cellcolor{red}&ja\cellcolor{green}\\
+von hinten&	50&	40-45&	Lippenstift\cellcolor{red}&nein\cellcolor{red}\\
+von hinten&	95&	50-55&	Bierflasche\cellcolor{red}&ja\cellcolor{green}\\
+von hinten&	70&	45-50&	Weinflasche\cellcolor{red}&ja\cellcolor{green}\\
+von hinten&	50&	55-60&	Haarspray\cellcolor{red}&nein\cellcolor{red}\\ \hline
+von der Seite&	95&	50-55&	Bierflasche\cellcolor{red}&ja\cellcolor{green}\\
+von der Seite&	70&	50-55&	Weinflasche\cellcolor{red}&ja\cellcolor{green}\\
+von der Seite&	50&	30-35&	Haarspray\cellcolor{red}&nein\cellcolor{red}\\
+von der Seite&	95&	25-30&	Feuerzeug\cellcolor{red}&nein\cellcolor{red}\\
+von der Seite&	70&	35-40&	Weinflasche\cellcolor{red}&ja\cellcolor{green}\\
+von der Seite&	50&	35-40&	Bierflasche\cellcolor{red}&ja\cellcolor{green}\\
+von der Seite&	95&	30-35&	Haarspray\cellcolor{red}&nein\cellcolor{red}\\
+von der Seite&	70&	35-40&	Weinflasche\cellcolor{red}&ja\cellcolor{green}\\
+von der Seite&	50&	40-45&	Lippenstift\cellcolor{red}&nein\cellcolor{red}\\
+		\end{tabular}
+\caption{Testergebnisse Cola-Flasche}
+\label{Cola}
+\end{table}
+
+\begin{table} [H]
+	\centering
+	\begin{tabular} {l l l l l}
+		Orientierung & Entfernung [cm] & Sicherheit [\%] & erkanntes Objekt & Flasche erkannt\\  \hline
+	von vorne&	95&	40-45&	Weinflasche\cellcolor{green}&ja\cellcolor{green}\\
+	von vorne&	70&	65-70&	Weinflasche\cellcolor{green}&ja\cellcolor{green}\\
+	von vorne&	50&	55-60&	Weinflasche\cellcolor{green}&ja\cellcolor{green}\\
+	von vorne&	95&	65-70&	Weinflasche\cellcolor{green}&ja\cellcolor{green}\\
+	von vorne&	70&	75-80&	Weinflasche\cellcolor{green}&ja\cellcolor{green}\\
+	von vorne&	50&	50-55&	Weinflasche\cellcolor{green}&ja\cellcolor{green}\\
+	von vorne&	95&	65-70&	Weinflasche\cellcolor{green}&ja\cellcolor{green}\\
+	von vorne&	70&	65-70&	Weinflasche\cellcolor{green}&ja\cellcolor{green}\\
+	von vorne&	50&	55-60&	Bierflasche\cellcolor{red}&ja\cellcolor{green}\\ \hline
+	von hinten&	95&	30-35&	Weinflasche\cellcolor{green}&ja\cellcolor{green}\\
+	von hinten&	70&	60-65&	Weinflasche\cellcolor{green}&ja\cellcolor{green}\\
+	von hinten&	50&	35-40&	Weinflasche\cellcolor{green}&ja\cellcolor{green}\\
+	von hinten&	95&	55-60&	Weinflasche\cellcolor{green}&ja\cellcolor{green}\\
+	von hinten&	70&	65-70&	Weinflasche\cellcolor{green}&ja\cellcolor{green}\\
+	von hinten&	50&	40-45&	Weinflasche\cellcolor{green}&ja\cellcolor{green}\\
+	von hinten&	95&	65-70&	Weinflasche\cellcolor{green}&ja\cellcolor{green}\\
+	von hinten&	70&	60-65&	Weinflasche\cellcolor{green}&ja\cellcolor{green}\\
+	von hinten&	50&	40-45&	Lotion\cellcolor{red}&nein\cellcolor{red}\\  \hline
+	von der Seite&	95&	30-35&	Lippenstif\cellcolor{red}t&nein\cellcolor{red}\\
+	von der Seite&	70&	15-20&	Flöte\cellcolor{red}&nein\cellcolor{red}\\
+	von der Seite&	50&	80-85&	Glocke, Gong\cellcolor{red}&nein\cellcolor{red}\\
+	von der Seite&	95&	15-20&	Spritze\cellcolor{red}&nein\cellcolor{red}\\
+	von der Seite&	70&	20-25&	Glocke, Gong\cellcolor{red}&nein\cellcolor{red}\\
+	von der Seite&	50&	75-80&	Glocke, Gong\cellcolor{red}&nein\cellcolor{red}\\
+	von der Seite&	95&	25-30&	Spritze\cellcolor{red}&nein\cellcolor{red}\\
+	von der Seite&	70&	25-30&	Weinflasche\cellcolor{green}&ja\cellcolor{green}\\
+	von der Seite&	50&	85-90&	Glocke, Gong\cellcolor{red}&nein\cellcolor{red}\\
+	\end{tabular}
+	\caption{Testergebnisse Weinflasche}
+	\label{Wein}
+\end{table}
+
+\begin{table} [H]
+	\centering
+	\begin{tabular} {l l l l l}
+		Orientierung & Entfernung [cm] & Sicherheit [\%] & erkanntes Objekt & Flasche erkannt\\ \hline
+		von vorne&	95&	75-80&	Bierflasche\cellcolor{green}&ja\cellcolor{green}\\
+		von vorne&	70&	85-90&	Weinflasche\cellcolor{red}&ja\cellcolor{green}\\
+		von vorne&	50&	55-60&	Weinflasche\cellcolor{red}&ja\cellcolor{green}\\
+		von vorne&	95&	65-70&	Bierflasche\cellcolor{green}&ja\cellcolor{green}\\
+		von vorne&	70&	55-60&	Weinflasche\cellcolor{red}&ja\cellcolor{green}\\
+		von vorne&	50&	60-65&	Bierflasche\cellcolor{green}&ja\cellcolor{green}\\
+		von vorne&	95&	70-75&	Weinflasche\cellcolor{red}&ja\cellcolor{green}\\
+		von vorne&	70&	65-70&	Bierflasche\cellcolor{green}&ja\cellcolor{green}\\
+		von vorne&	50&	50-55&	Bierflasche\cellcolor{green}&ja\cellcolor{green}\\ \hline
+		von hinten&	95&	85-90&	Weinflasche\cellcolor{red}&ja\cellcolor{green}\\
+		von hinten&	70&	85-90&	Weinflasche\cellcolor{red}&ja\cellcolor{green}\\
+		von hinten&	50&	90-95&	Weinflasche\cellcolor{red}&ja\cellcolor{green}\\
+		von hinten&	95&	75-80&	Weinflasche\cellcolor{red}&ja\cellcolor{green}\\
+		von hinten&	70&	90-95&	Weinflasche\cellcolor{red}&ja\cellcolor{green}\\
+		von hinten&	50&	85-90&	Weinflasche\cellcolor{red}&ja\cellcolor{green}\\
+		von hinten&	95&	85-90&	Weinflasche\cellcolor{red}&ja\cellcolor{green}\\
+		von hinten&	70&	90-95&	Weinflasche\cellcolor{red}&ja\cellcolor{green}\\
+		von hinten&	50&	80-85&	Weinflasche\cellcolor{red}&ja\cellcolor{green}\\ \hline
+		von der Seite&	95&	40-45&	Bierflasche\cellcolor{green}&ja\cellcolor{green}\\
+		von der Seite&	70&	65-70&	Weinflasche\cellcolor{red}&ja\cellcolor{green}\\
+		von der Seite&	50&	70-75&	Weinflasche\cellcolor{red}&ja\cellcolor{green}\\
+		von der Seite&	95&	55-60&	Bierflasche\cellcolor{green}&ja\cellcolor{green}\\
+		von der Seite&	70&	55-60&	Bierflasche\cellcolor{green}&ja\cellcolor{green}\\
+		von der Seite&	50&	90-95&	Weinflasche\cellcolor{red}&ja\cellcolor{green}\\
+		von der Seite&	95&	30-35&	Weinflasche\cellcolor{red}&ja\cellcolor{green}\\
+		von der Seite&	70&	60-65&	Bierflasche\cellcolor{green}&ja\cellcolor{green}\\
+		von der Seite&	50&	75-80&	Weinflasche\cellcolor{red}&ja\cellcolor{green}\\
+	\end{tabular}
+	\caption{Testergebnisse Bierflasche}
+	\label{Bier}
+\end{table}
+
+\begin{table} [H]
+	\centering
+	\begin{tabular} {l l l l l}
+		Orientierung & Entfernung [cm] & Sicherheit [\%] & erkanntes Objekt & Flasche erkannt\\ \hline
+		von vorne&	95&	55-60&	Wasserflasche\cellcolor{green}&ja\cellcolor{green}\\
+		von vorne&	70&	70-75&	Haarspray\cellcolor{red}&nein\cellcolor{red}\\
+		von vorne&	50&	45-50&	Spritze\cellcolor{red}&nein\cellcolor{red}\\
+		von vorne&	95&	60-65&	Haarspray\cellcolor{red}&nein\cellcolor{red}\\
+		von vorne&	70&	70-75&	Haarspray\cellcolor{red}&nein\cellcolor{red}\\
+		von vorne&	50&	35-40&	Wasserflasche\cellcolor{green}&ja\cellcolor{green}\\
+		von vorne&	95&	55-60&	Wasserflasche\cellcolor{green}&ja\cellcolor{green}\\
+		von vorne&	70&	80-85&	Haarspray\cellcolor{red}&nein\cellcolor{red}\\
+		von vorne&	50&	40-45&	Spritze\cellcolor{red}&nein\cellcolor{red}\\ \hline
+		von der Seite&	95&	65-70&	Wasserflasche\cellcolor{green}&ja\cellcolor{green}\\
+		von der Seite&	70&	60-65&	Spritze\cellcolor{red}&nein\cellcolor{red}\\
+		von der Seite&	50&	15-20&	Spritze\cellcolor{red}&nein\cellcolor{red}\\
+		von der Seite&	95&	85-90&	Spritze\cellcolor{red}&nein\cellcolor{red}\\
+		von der Seite&	70&	75-80&	Spritze\cellcolor{red}&nein\cellcolor{red}\\
+		von der Seite&	50&	35-40&	Cocktailshaker\cellcolor{red}&nein\cellcolor{red}\\
+		von der Seite&	95&	75-80&	Spritze\cellcolor{red}&nein\cellcolor{red}\\
+		von der Seite&	70&	70-75&	Spritze\cellcolor{red}&nein\cellcolor{red}\\
+		von der Seite&	50&	30-35&	Spritze\cellcolor{red}&nein\cellcolor{red}\\
+	\end{tabular}
+	\caption{Testergebnisse Sodastream-Flasche}
+	\label{Sodastream}
+\end{table}
+
+\begin{table} [H]
+	\centering
+	\begin{tabular} {l l l l l}
+		Orientierung & Entfernung [cm] & Sicherheit [\%] & erkanntes Objekt & Flasche erkannt\\ \hline
+	von vorne&	95&	45-50&	Spritze\cellcolor{red}&nein\cellcolor{red}\\
+	von vorne&	70&	60-65&	Wasserflasche\cellcolor{yellow}&ja\cellcolor{green}\\
+	von vorne&	50&	60-65&	Wasserflasche\cellcolor{yellow}&ja\cellcolor{green}\\
+	von vorne&	95&	65-70&	Wasserflasche\cellcolor{yellow}&ja\cellcolor{green}\\
+	von vorne&	70&	45-50&	Wasserflasche\cellcolor{yellow}&ja\cellcolor{green}\\
+	von vorne&	50&	40-45&	Wasserflasche\cellcolor{yellow}&ja\cellcolor{green}\\
+	von vorne&	95&	50-55&	Wasserflasche\cellcolor{yellow}&ja\cellcolor{green}\\
+	von vorne&	70&	50-55&	Wasserflasche\cellcolor{yellow}&ja\cellcolor{green}\\
+	von vorne&	50&	55-60&	Wasserflasche\cellcolor{yellow}&ja\cellcolor{green}\\
+	\end{tabular}
+	\caption{Testergebnisse Apfelschorle}
+	\label{Schorle}
+\end{table}
+
+Die Detektion einer Wasserflasche bei Platzierung der Apfelschorle-Flasche ist gelb hinterlegt, da die Form der vieler PET-Wasserflaschen ähnelt, während die Farbe des Inhalts nicht passend ist.
+
+\subsection{Auswertung}
+
+Die schlechtesten Ergebnisse erzielt die Bilderkennung bei der Sodastream-Flasche.
+Sie wird zumeist als Spitze oder Haarspray identifiziert.
+Zum einen kann die Transparenz der Flasche ein Grund dafür sein, dass die Flasche schwer erkannt wird. Dies wird dadurch bekräftigt, dass die Flasche von vorne, also mit mehr sichtbarem Schriftzug, häufiger als solche erkannt wird.
+Zum anderen ist auf Grund der Ergebnisse zu vermuten, dass in der Trainingsdatenbank
+keine solche Flasche enthalten war. Das Netzwerk müsste noch mit einer solchen Flasche trainiert werden, um sie zuverlässig als solche erkennen zu können.
+
+\bigskip
+
+Ganz im Gegensatz dazu konnte die Bierflasche in jedem der Testdurchgänge als Flasche erkannt werden.
+Ausschlaggebend scheint hierfür die charakteristische Form zu sein. Diese ist bei Wein- und Bierflaschen grundsätzlich ähnlich, sodass die Bierflasche oft als Weinflasche zugeordnet wird. 
+Dies lässt vermuten, dass unter den Trainingsdaten mehr Weinflaschen als Bierflaschen enthalten waren. 
+Zudem können zu der hohen Erfolgsquote der starke Kontrast der braunen Bierflasche zum weißen Hintergrund sowie die geringen Lichtreflexe des dunklen Glases beigetragen haben.
+Während von vorne und von der Seite die Bierflasche zu 50 \% als solche erkannt wird, 
+kann sie von hinten nur als Weinflasche erkannt werden. Möglicherweise liegt dies an dem Etikett der Bierflasche, welches vorne abgerundet, auf der Rückseite jedoch wie bei den meisten Weinflaschen rechteckig ist.
+
+\bigskip
+
+Ein Einfluss des Etiketts ist auch bei der Weinflasche zu erkennen: 
+Von vorne und von hinten wird die Weinflasche fast immer als solche erkannt.
+Dies scheint jedoch nicht einzig an der charakteristischen Form der Flasche zu liegen, denn wird sie von der Seite gefilmt, wird sie nur selten als Flasche erkannt.
+Dies kann einerseits an dem Etikett liegen, welches von vorne und von hinten die gleiche rechteckige Form hat, von der Seite jedoch nur teilweise zu sehen ist.
+Andererseits ermöglicht das Fehlen des Etiketts in der Mitte der Flasche bei Aufnahmen von der Seite stärkere Lichtreflexe durch das während des Tests 
+gegenüberliegenden Fenster. 
+Dieser Einfluss könnte durch eine erneute Durchführung bei anderen Testbedingungen nochmals genauer untersucht werden.
+
+\bigskip
+
+Ein ähnliches Phänomen ist bei der Colaflasche zu beobachten.
+Sie wird von vorne immer richtig als Limoflasche erkannt. Von der Seite und von hinten jedoch ist der Coca-Cola-Schriftzug nicht zu erkennen. Dieser scheint also
+bei der Erkennung eine wichtige Rolle zu spielen.
+In den meisten Fällen kann jedoch auf Grund der Form zumindest eine Flasche, wenn auch von einem anderen Typ, erkannt werden.
+Dies funktioniert jedoch nur in sehr wenigen Fällen, wenn die Flasche mit einem Abstand von nur 50 cm zur Kamera nicht mehr vollständig im Bild und der Flaschenhals abgeschnitten ist.
+
+\bigskip
+
+Die mit Apfelschorle gefüllte PET-Flasche wird im Gegensatz dazu ohne Etikett getestet. Trotz dessen wird Sie in fast 90 \% der Versuche als Flasche erkannt. 
+Jedoch wird sie als Wasserflasche zugeordnet, was vermuten lässt, dass im Trainingsset vor allem Wasserflaschen mit der hier verwendeten PET-Flaschenform enthalten waren.
+
+\bigskip
+
+Insgesamt lässt sich schlussfolgern, dass neben der Wahl der Trainingsdaten und der damit einhergehenden unterschiedlichen Erfolgsquote für verschiedene Typen von
+Flaschen auch die Entfernung zu Kamera und die Sichtbarkeit charakteristischer Merkmale wie Schriftzüge und Etiketten Einfluss auf die Zuverlässigkeit der Flaschenerkennung haben.
+Zusätzlich ist durch weitere Testreihen mit anderen Bedingungen zu Überprüfen,
+inwiefern Lichtverhältnisse und verschiedene Hintergründe Einfluss auf die Zuverlässigkeit der Flaschenerkennung haben.

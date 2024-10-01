@@ -1,0 +1,1803 @@
+%%%%%%%%%%%%
+%
+% $Autor: Wings $
+% $Datum: 2019-12-09 11:47:41Z $
+% $Pfad: komponenten/Bilderkennung/Produktspezifikation/JetsonNano/Inhalt/JetsonNano.tex $
+% $Version: 1765 $
+%
+%%%%%%%%%%%%
+
+%todo Siehe Pinbelegung.tex; diese Datei existiert, wird aber nicht mehr eingelesen.
+
+
+   
+\chapter{NVIDIA Jetson Nano Developer Kit}\label{JetsonNano:DeveloperKit}
+
+Starting with the NVIDIA Jetson Nano Developer Kit, we will now describe the construction and commissioning of the Jetson Nano. The description of the company NVIDIA \cite{JetsonGettingStarted:2019} serves as a basis for this. First, you must familiarise yourself with the hardware.  Then the operating system is installed and started for the first time. This is a standard procedure, which is independent of the application. After that, the software of the application can be installed and tested.
+
+
+\section{NVIDIA Jetson Nano Developer Kit}
+
+The NVIDIA Jetson Nano is a \ac{sbc} designed specifically for machine learning algorithm application. The NVIDIA Jetson Nano is built in such a way that you have direct access to the components, inputs and outputs. However, to protect the computer, a suitable enclosure should be used. %The Figure~\ref{}
+
+
+
+Similar to the Rapsberry Pi, the Jetson Nano shows all its components and outputs. The Jetson Nano kit packaging can be used to build the Jetson Nano.  However, for better protection, it is recommended to pack it in an additional case. The illustration~\ref{JetsonView} shows the Jetson Nano both from above. When the Jetson Nano is used in this book, it is always described in this orientation; this should be noted as confusion can occur, especially with the digital inputs and outputs.
+
+
+%\begin{figure}
+%	%dodo Eigenes Foto
+%	\GRAPHICSC{0.3}{1.0}{Jetson/JetsonAufbau} %Achtung liegt als GIF vor: Jetbot_animation_500x282_2.gif
+%	
+%	{\tiny Quelle: NVIDIA, 29.11.2019}
+%	
+%	\caption{Erste Schritte mit dem Jetson Nano} \label{JetsonKarton}
+%\end{figure}
+
+
+%\Ausblenden
+{
+
+	\begin{figure}
+	\begin{tikzpicture}
+		% Platine
+		\draw[greenblue,fill=greenblue] (0,0) -- (12.8,0) -- (12.8,10.1) -- (0,10.1) -- cycle;
+		
+		% J13 Camera
+		\foreach \i in {0,...,14}
+		{
+			\pgfmathsetmacro{\off}{- 0.1275 * \i}
+			\pgfmathsetmacro{\xmin}{0.31};
+			\pgfmathsetmacro{\xmax}{0.98};
+			\pgfmathsetmacro{\ymin}{6.79};
+			\pgfmathsetmacro{\ymax}{6.86};
+			\draw[copper,fill=copper] ({\xmin}, {\ymax + \off} ) -- (0.98, {\ymax + \off} ) -- (0.98, {\ymin + \off} ) -- ({\xmin}, {\ymin + \off}) -- cycle;
+		}
+		\draw[grayleft,fill=grayleft] (0.31,6.65) -- (0.47,6.75) -- (0.47,7.32) -- (0.8,7.32) -- (0.8,4.54) -- (0.47,4.54) -- (0.47, 5.1) -- (0.31,5.2) -- cycle;
+		\draw[black,fill=black] (0.67,6.95) -- (0.8,6.95) -- (0.8,4.9) --  (0.67, 4.9) -- cycle;
+		
+		
+		
+		% Anschlussprozessor
+		\foreach \i in {0,...,46}
+		{
+			\draw[copper,fill=copper] (1.95 + 0.095 * \i,4.0) -- (1.95+0.095*\i,3.76) -- (2+0.095*\i,3.76) -- (2+0.095*\i,4.0) -- cycle;
+		}
+		\foreach \i in {0,...,38}
+		{
+			\draw[copper,fill=copper] (6.67+ 0.095 * \i,4.0) -- (6.67+ 0.095 * \i,3.76) -- (6.72+ 0.095 * \i,3.76) -- (6.72+ 0.095 * \i,4.0) -- cycle;
+		}
+		\draw[greenenglish,line width=2pt,fill=darkpastelgreen] (1.5,7.0) -- (10.85,7.0) -- (10.85, 3.9) -- (1.5,3.9) -- cycle;
+		
+		
+		\draw[black,fill=black] (1.75,4.7) -- (10.65,4.7) -- (10.65,9.88) -- (1.75,9.88) -- cycle;
+		%Kühlkörper
+		\draw[fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft}] (1.8,8.822) -- (10.6,8.822) -- (10.6,9.83) -- (1.8,9.83) -- cycle;
+		\draw[fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft}] (1.8,8.773) -- (10.6,8.773) -- (10.6,8.521) -- (1.8,8.521) -- cycle;
+		
+		\draw[fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft}] (1.8,7.464) -- (10.6,7.464) -- (10.6,8.472) -- (1.8,8.472) -- cycle;
+		\draw[fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft}] (1.8,7.415) -- (10.6,7.415) -- (10.6,7.163) -- (1.8,7.163) -- cycle;
+		
+		\draw[fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft}] (1.8,6.106) -- (10.6,6.106) -- (10.6,7.114) -- (1.8,7.114) -- cycle;
+		\draw[fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft}] (1.8,6.057) -- (10.6,6.057) -- (10.6,5.805) -- (1.8,5.805) -- cycle;
+		
+		\draw[fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft}] (1.8,4.75) -- (10.6,4.75) -- (10.6,5.756) -- (1.8,5.756) -- cycle;
+		
+		\draw[fill=grayleft!30!graycircle, postaction={path fading=west,  fill=grayleft},domain=0:360] plot ({4.0+0.252*cos(\x)}, {9.326+0.252*sin(\x)});
+		\draw[fill=grayleft!30!graycircle, postaction={path fading=west,  fill=grayleft},domain=0:360] plot ({8.4+0.252*cos(\x)}, {9.326+0.252*sin(\x)});
+		
+		\draw[fill=grayleft!30!graycircle, postaction={path fading=west,  fill=grayleft},domain=0:360] plot ({4.0+0.252*cos(\x)}, {5.252+0.252*sin(\x)});
+		\draw[fill=grayleft!30!graycircle, postaction={path fading=west,  fill=grayleft},domain=0:360] plot ({8.4+0.252*cos(\x)}, {5.252+0.252*sin(\x)});
+		
+		\pgfmathsetmacro{\xmin}{12.2};
+		\pgfmathsetmacro{\xmax}{12.62};
+		\pgfmathsetmacro{\ymin}{1.42};
+		\pgfmathsetmacro{\ymax}{1.69};
+		\draw[darkpastelgreen,fill=greenyellow,
+		line width=1.6pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+		
+		% J40 Buttons
+		\pgfmathsetmacro{\xmin}{0.17};
+		\pgfmathsetmacro{\xmax}{0.82};
+		\pgfmathsetmacro{\ymin}{7.7};
+		\pgfmathsetmacro{\ymax}{9};
+		\draw[darkcyan,
+		line width=1.6pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+		
+		\foreach \j in {0,...,1}
+		{
+			\foreach \i in {0,...,3}
+			{
+				\pgfmathsetmacro{\d}{0.05}
+				\pgfmathsetmacro{\x}{0.35+0.312*\j};
+				\pgfmathsetmacro{\y}{7.87+0.312*\i};
+				\draw[yellow,fill=yellow] ({\x-\d}, {\y-\d} ) -- ({\x+\d}, {\y-\d}) -- ({\x+\d}, {\y+\d}) -- ({\x-\d}, {\y+\d}) -- cycle;
+			}
+		}
+		\pgfmathsetmacro{\d}{0.05}
+		\pgfmathsetmacro{\x}{0.35+0.312};
+		\pgfmathsetmacro{\y}{7.87+0.312*0};
+		\draw[yellow,thick,fill=fuchsia] ({\x-\d}, {\y-\d} ) -- ({\x+\d}, {\y-\d}) -- ({\x+\d}, {\y+\d}) -- ({\x-\d}, {\y+\d}) -- cycle;
+		
+		%J44 Serial
+		\pgfmathsetmacro{\xmin}{1.2};
+		\pgfmathsetmacro{\xmax}{1.5};
+		\pgfmathsetmacro{\ymin}{8.02};
+		\pgfmathsetmacro{\ymax}{9.95};
+		\draw[darkcyan,
+		line width=1.6pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+		
+		\foreach \j in {0,...,0}
+		{
+			\foreach \i in {0,...,5}
+			{
+				\pgfmathsetmacro{\d}{0.05}
+				\pgfmathsetmacro{\x}{1.35+0.312*\j};
+				\pgfmathsetmacro{\y}{8.2+0.312*\i};
+				\draw[yellow,fill=yellow] ({\x-\d}, {\y-\d} ) -- ({\x+\d}, {\y-\d}) -- ({\x+\d}, {\y+\d}) -- ({\x-\d}, {\y+\d}) -- cycle;
+			}
+		}
+		\pgfmathsetmacro{\d}{0.05}
+		\pgfmathsetmacro{\x}{1.35};
+		\pgfmathsetmacro{\y}{8.2+0.312*0};
+		\draw[yellow,thick,fill=fuchsia] ({\x-\d}, {\y-\d} ) -- ({\x+\d}, {\y-\d}) -- ({\x+\d}, {\y+\d}) -- ({\x-\d}, {\y+\d}) -- cycle;
+		
+		% J48 DC Jumper
+		\pgfmathsetmacro{\xmin}{0.175};
+		\pgfmathsetmacro{\xmax}{0.83};
+		\pgfmathsetmacro{\ymin}{3.908};
+		\pgfmathsetmacro{\ymax}{4.24};
+		\draw[darkcyan,
+		line width=1.6pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+		
+		\foreach \j in {0,...,1}
+		{
+			\foreach \i in {0,...,0}
+			{
+				\pgfmathsetmacro{\d}{0.05}
+				\pgfmathsetmacro{\x}{0.35+0.312*\j};
+				\pgfmathsetmacro{\y}{4.074 +0.312*\i};
+				\draw[yellow,fill=yellow] ({\x-\d}, {\y-\d} ) -- ({\x+\d}, {\y-\d}) -- ({\x+\d}, {\y+\d}) -- ({\x-\d}, {\y+\d}) -- cycle;
+			}
+		}
+		
+		% J38 PoE
+		\pgfmathsetmacro{\xmin}{11.95};
+		\pgfmathsetmacro{\xmax}{12.57};
+		\pgfmathsetmacro{\ymin}{9.27};
+		\pgfmathsetmacro{\ymax}{9.9};
+		\draw[darkcyan,
+		line width=1.6pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+		
+		\foreach \j in {0,...,1}
+		{
+			\foreach \i in {0,...,1}
+			{
+				\pgfmathsetmacro{\d}{0.05}
+				\pgfmathsetmacro{\x}{12.1+0.312*\j};
+				\pgfmathsetmacro{\y}{9.42 +0.312*\i};
+				\draw[yellow,fill=yellow] ({\x-\d}, {\y-\d} ) -- ({\x+\d}, {\y-\d}) -- ({\x+\d}, {\y+\d}) -- ({\x-\d}, {\y+\d}) -- cycle;
+			}
+		}
+		
+		% J41 Expansion
+		\pgfmathsetmacro{\xmin}{11.16};
+		\pgfmathsetmacro{\xmax}{11.8};
+		\pgfmathsetmacro{\ymin}{2.72};
+		\pgfmathsetmacro{\ymax}{9.1};
+		\draw[darkcyan,
+		line width=1.6pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+		
+		\foreach \j in {0,...,1}
+		{
+			\foreach \i in {0,...,19}
+			{
+				\pgfmathsetmacro{\d}{0.05}
+				\pgfmathsetmacro{\x}{11.325+0.312*\j};
+				\pgfmathsetmacro{\y}{2.86 +0.323*\i};
+				\draw[blue,fill=yellow] ({\x-\d}, {\y-\d} ) -- ({\x+\d}, {\y-\d}) -- ({\x+\d}, {\y+\d}) -- ({\x-\d}, {\y+\d}) -- cycle;
+			}
+		}
+		\pgfmathsetmacro{\d}{0.05}
+		\pgfmathsetmacro{\x}{11.325+0.312};
+		\pgfmathsetmacro{\y}{2.86};
+		\draw[yellow,thick,fill=fuchsia] ({\x-\d}, {\y-\d} ) -- ({\x+\d}, {\y-\d}) -- ({\x+\d}, {\y+\d}) -- ({\x-\d}, {\y+\d}) --    cycle;
+		
+		% J15 5V Fan
+		\pgfmathsetmacro{\xmin}{9.33};
+		\pgfmathsetmacro{\xmax}{10.55};
+		\pgfmathsetmacro{\ymin}{2.86};
+		\pgfmathsetmacro{\ymax}{3.55};
+		\draw[darkcyan,
+		line width=1.6pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+		
+		\pgfmathsetmacro{\xmin}{9.8};
+		\pgfmathsetmacro{\xmax}{10.45};
+		\pgfmathsetmacro{\ymin}{3.35};
+		\pgfmathsetmacro{\ymax}{3.55};
+		\draw[darkcyan,
+		line width=1.6pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+		
+		\foreach \j in {0,...,3}
+		{
+			\foreach \i in {0,...,0}
+			{
+				\pgfmathsetmacro{\d}{0.05}
+				\pgfmathsetmacro{\x}{9.45+0.317*\j};
+				\pgfmathsetmacro{\y}{3.18 +0.323*\i};
+				\draw[blue,fill=yellow] ({\x-\d}, {\y-\d} ) -- ({\x+\d}, {\y-\d}) -- ({\x+\d}, {\y+\d}) -- ({\x-\d}, {\y+\d}) -- cycle;
+			}
+		}
+		
+		\pgfmathsetmacro{\d}{0.05}
+		\pgfmathsetmacro{\d}{0.05}
+		\pgfmathsetmacro{\x}{9.45+0.951};
+		\pgfmathsetmacro{\y}{3.18};
+		
+		\draw[yellow,thick,fill=fuchsia] ({\x-\d}, {\y-\d} ) -- ({\x+\d}, {\y-\d}) -- ({\x+\d}, {\y+\d}) -- ({\x-\d}, {\y+\d}) -- cycle;
+		
+		
+		% Schwarze Flecken
+		\pgfmathsetmacro{\xmin}{0.902};
+		\pgfmathsetmacro{\xmax}{1.058};
+		\pgfmathsetmacro{\ymin}{8.12};
+		\pgfmathsetmacro{\ymax}{8.25};
+		\draw[black,fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft},
+		line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+		
+		\pgfmathsetmacro{\xmin}{0.902};
+		\pgfmathsetmacro{\xmax}{1.058};
+		\pgfmathsetmacro{\ymin}{8.74};
+		\pgfmathsetmacro{\ymax}{8.87};
+		\draw[black,fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft},
+		line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+		
+		\pgfmathsetmacro{\xmin}{0.942};
+		\pgfmathsetmacro{\xmax}{1.098};
+		\pgfmathsetmacro{\ymin}{7.29};
+		\pgfmathsetmacro{\ymax}{7.42};
+		\draw[black, fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft},
+		line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+		
+		\pgfmathsetmacro{\xmin}{1.382};
+		\pgfmathsetmacro{\xmax}{1.538};
+		\pgfmathsetmacro{\ymin}{7.74};
+		\pgfmathsetmacro{\ymax}{7.87};
+		\draw[black, fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft},
+		line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+		
+		\pgfmathsetmacro{\xmin}{1.35};
+		\pgfmathsetmacro{\xmax}{1.49};
+		\pgfmathsetmacro{\ymin}{7.2};
+		\pgfmathsetmacro{\ymax}{7.37};
+		\draw[black, fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft},
+		line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+		
+		\pgfmathsetmacro{\xmin}{1.13};
+		\pgfmathsetmacro{\xmax}{1.47};
+		\pgfmathsetmacro{\ymin}{3.43};
+		\pgfmathsetmacro{\ymax}{3.7};
+		\draw[black, fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft},
+		line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+		
+		\pgfmathsetmacro{\xmin}{0.97};
+		\pgfmathsetmacro{\xmax}{1.47};
+		\pgfmathsetmacro{\ymin}{2.81};
+		\pgfmathsetmacro{\ymax}{3.31};
+		\draw[black, fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft},
+		line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+		
+		% 5V DC (2.1mm ID, Positive Center)  Stecker
+		\pgfmathsetmacro{\xmin}{0.28};
+		\pgfmathsetmacro{\xmax}{1.51};
+		\pgfmathsetmacro{\ymin}{-0.1};
+		\pgfmathsetmacro{\ymax}{1.7};
+		\draw[black, fill=black,
+		line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+		
+		\pgfmathsetmacro{\xmin}{0.32};
+		\pgfmathsetmacro{\xmax}{1.47};
+		\pgfmathsetmacro{\ymin}{-0.06};
+		\pgfmathsetmacro{\ymax}{0.28};
+		\draw[black, fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft},
+		line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+		
+		\pgfmathsetmacro{\xmin}{0.32};
+		\pgfmathsetmacro{\xmax}{1.47};
+		\pgfmathsetmacro{\ymin}{0.32};
+		\pgfmathsetmacro{\ymax}{1.65};
+		\draw[left color=grayleft, right color=black, middle color=graycircle,
+		line width=0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+		
+		
+		% Display Port und HDMI
+		\pgfmathsetmacro{\xmin}{2.03};
+		\pgfmathsetmacro{\xmax}{4.08};
+		\pgfmathsetmacro{\ymin}{0};
+		\pgfmathsetmacro{\ymax}{2.15};
+		\draw[graycircle!50, fill=white!20!graylight, postaction={path fading=west,  fill=grayright!60},
+		line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+		
+		\draw[greenblue,fill=greenblue] 
+		(2.30, 0.7) -- (2.39, 0.22) -- (2.58,0.22) -- (2.68, 0.7) -- 
+		(2.52, 0.27) -- (2.46,0.27) -- cycle;
+		
+		\begin{scope}[xshift=27.3]
+			\draw[greenblue,fill=greenblue] 
+			(2.30, 0.7) -- (2.39, 0.22) -- (2.58,0.22) -- (2.68, 0.7) -- 
+			(2.52, 0.27) -- (2.46,0.27) -- cycle;
+		\end{scope}
+		
+		% USB 3.0 2-mal
+		\pgfmathsetmacro{\xmin}{4.6};
+		\pgfmathsetmacro{\xmax}{6.31};
+		\pgfmathsetmacro{\ymin}{-0.1};
+		\pgfmathsetmacro{\ymax}{2.05};
+		\draw[graycircle!50, fill=white!20!graylight, postaction={path fading=west,  fill=grayright!60},
+		line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+		
+		\draw[greenblue,fill=greenblue] 
+		(4.83, 0.82) -- (4.93, 0.07) -- (5.14,0.07) -- (5.25, 0.82) -- 
+		(5.08, 0.14) -- (5.0,0.14) -- cycle;
+		
+		\draw[greenblue,fill=greenblue] 
+		(5.63, 0.82) -- (5.73, 0.07) -- (5.94,0.07) -- (6.05, 0.82) -- 
+		(5.88, 0.14) -- (5.8,0.14) -- cycle;
+		
+		
+		% USB 3.0 2-mal
+		\begin{scope}[xshift=63]
+			\pgfmathsetmacro{\xmin}{4.6};
+			\pgfmathsetmacro{\xmax}{6.31};
+			\pgfmathsetmacro{\ymin}{-0.1};
+			\pgfmathsetmacro{\ymax}{2.05};
+			\draw[graycircle!50, fill=white!20!graylight, postaction={path fading=west,  fill=grayright!60},
+			line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+			
+			\draw[greenblue,fill=greenblue] 
+			(4.83, 0.82) -- (4.93, 0.07) -- (5.14,0.07) -- (5.25, 0.82) -- 
+			(5.08, 0.14) -- (5.0,0.14) -- cycle;
+			
+			\draw[greenblue,fill=greenblue] 
+			(5.63, 0.82) -- (5.73, 0.07) -- (5.94,0.07) -- (6.05, 0.82) -- 
+			(5.88, 0.14) -- (5.8,0.14) -- cycle;
+		\end{scope}
+		
+		% GigEth
+		\pgfmathsetmacro{\xmin}{8.84};
+		\pgfmathsetmacro{\xmax}{10.8};
+		\pgfmathsetmacro{\ymin}{-0.1};
+		\pgfmathsetmacro{\ymax}{2.62};
+		\draw[graycircle!50, fill=white!20!graylight, postaction={path fading=west,  fill=grayright!60},
+		line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+		
+		% Micro USB, PWR oder USB device
+		\pgfmathsetmacro{\xmin}{11.285};
+		\pgfmathsetmacro{\xmax}{12.225};
+		\pgfmathsetmacro{\ymin}{0};
+		\pgfmathsetmacro{\ymax}{0.83};
+		\draw[graycircle!50, fill=white!20!graylight, postaction={path fading=west,  fill=grayright!60},
+		line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+		
+		\draw[greenblue,fill=greenblue] 
+		(11.41, 0.38) -- (11.475, 0.08) -- (11.585,0.08) -- (11.65, 0.38) -- 
+		(11.55, 0.12) -- (11.52,0.12) -- cycle;
+		
+		\begin{scope}[xshift=12.5]
+			\draw[greenblue,fill=greenblue] 
+			(11.41, 0.38) -- (11.475, 0.08) -- (11.585,0.08) -- (11.65, 0.38) -- 
+			(11.55, 0.12) -- (11.52,0.12) -- cycle;
+		\end{scope}
+		
+	\end{tikzpicture}
+	\caption{Jetson Nano: Oversight}\label{JetsonAufsicht}
+\end{figure}
+
+}
+
+
+\section{Construction of the Jetson Nano}
+
+
+The NVIDIA Jetson Nano has a dimension of about $70 \times 45$mm without the case. The large heat sink dominates the board. Hidden under the heat sink is a very powerful microchip, the NVIDIA Tegra X1, which contains four ARM application processor cores and 128 graphics processing units (GPU). The figure~\ref{JetsonView} shows the top view of the NVIDIA Jetson Nano with its interfaces and the figure~\ref{JetonSide} shows it from the side with the sockets.
+
+
+%todo entfernen
+%\GRAPHICSC{0.4}{1.0}{Images/Jetson/JetsonNanoDiagram}
+
+
+	
+
+
+	\begin{figure}
+		
+    \centering		
+	\begin{tikzpicture}[scale=0.75]
+	% Platine
+	\draw[greenblue,fill=greenblue] (0,0) -- (12.8,0) -- (12.8,10.1) -- (0,10.1) -- cycle;
+	
+	% J13 Camera
+	\foreach \i in {0,...,14}
+	{
+		\pgfmathsetmacro{\off}{- 0.1275 * \i}
+		\pgfmathsetmacro{\xmin}{0.31};
+		\pgfmathsetmacro{\xmax}{0.98};
+		\pgfmathsetmacro{\ymin}{6.79};
+		\pgfmathsetmacro{\ymax}{6.86};
+		\draw[copper,fill=copper] ({\xmin}, {\ymax + \off} ) -- (0.98, {\ymax + \off} ) -- (0.98, {\ymin + \off} ) -- ({\xmin}, {\ymin + \off}) -- cycle;
+	}
+	\draw[grayleft,fill=grayleft] (0.31,6.65) -- (0.47,6.75) -- (0.47,7.32) -- (0.8,7.32) -- (0.8,4.54) -- (0.47,4.54) -- (0.47, 5.1) -- (0.31,5.2) -- cycle;
+	\draw[black,fill=black] (0.67,6.95) -- (0.8,6.95) -- (0.8,4.9) --  (0.67, 4.9) -- cycle;
+	
+	\node (J13) at (-1,6) {\begin{tabular}{l} J13\\ Kamera \end{tabular}};
+	
+	
+	% Anschlussprozessor
+	\foreach \i in {0,...,46}
+	{
+		\draw[copper,fill=copper] (1.95 + 0.095 * \i,4.0) -- (1.95+0.095*\i,3.76) -- (2+0.095*\i,3.76) -- (2+0.095*\i,4.0) -- cycle;
+	}
+	\foreach \i in {0,...,38}
+	{
+		\draw[copper,fill=copper] (6.67+ 0.095 * \i,4.0) -- (6.67+ 0.095 * \i,3.76) -- (6.72+ 0.095 * \i,3.76) -- (6.72+ 0.095 * \i,4.0) -- cycle;
+	}
+	\draw[greenenglish,line width=2pt,fill=darkpastelgreen] (1.5,7.0) -- (10.85,7.0) -- (10.85, 3.9) -- (1.5,3.9) -- cycle;
+	
+	
+	\draw[black,fill=black] (1.75,4.7) -- (10.65,4.7) -- (10.65,9.88) -- (1.75,9.88) -- cycle;
+	%Kühlkörper
+	\draw[fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft}] (1.8,8.822) -- (10.6,8.822) -- (10.6,9.83) -- (1.8,9.83) -- cycle;
+	\draw[fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft}] (1.8,8.773) -- (10.6,8.773) -- (10.6,8.521) -- (1.8,8.521) -- cycle;
+	
+	\draw[fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft}] (1.8,7.464) -- (10.6,7.464) -- (10.6,8.472) -- (1.8,8.472) -- cycle;
+	\draw[fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft}] (1.8,7.415) -- (10.6,7.415) -- (10.6,7.163) -- (1.8,7.163) -- cycle;
+	
+	\draw[fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft}] (1.8,6.106) -- (10.6,6.106) -- (10.6,7.114) -- (1.8,7.114) -- cycle;
+	\draw[fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft}] (1.8,6.057) -- (10.6,6.057) -- (10.6,5.805) -- (1.8,5.805) -- cycle;
+	
+	\draw[fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft}] (1.8,4.75) -- (10.6,4.75) -- (10.6,5.756) -- (1.8,5.756) -- cycle;
+	
+	\draw[fill=grayleft!30!graycircle, postaction={path fading=west,  fill=grayleft},domain=0:360] plot ({4.0+0.252*cos(\x)}, {9.326+0.252*sin(\x)});
+	\draw[fill=grayleft!30!graycircle, postaction={path fading=west,  fill=grayleft},domain=0:360] plot ({8.4+0.252*cos(\x)}, {9.326+0.252*sin(\x)});
+	
+	\draw[fill=grayleft!30!graycircle, postaction={path fading=west,  fill=grayleft},domain=0:360] plot ({4.0+0.252*cos(\x)}, {5.252+0.252*sin(\x)});
+	\draw[fill=grayleft!30!graycircle, postaction={path fading=west,  fill=grayleft},domain=0:360] plot ({8.4+0.252*cos(\x)}, {5.252+0.252*sin(\x)});
+	
+	\pgfmathsetmacro{\xmin}{12.2};
+	\pgfmathsetmacro{\xmax}{12.62};
+	\pgfmathsetmacro{\ymin}{1.42};
+	\pgfmathsetmacro{\ymax}{1.69};
+	\draw[darkpastelgreen,fill=greenyellow,
+	line width=1.6pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+	
+	% J40 Buttons
+	\pgfmathsetmacro{\xmin}{0.17};
+	\pgfmathsetmacro{\xmax}{0.82};
+	\pgfmathsetmacro{\ymin}{7.7};
+	\pgfmathsetmacro{\ymax}{9};
+	\draw[darkcyan,
+	line width=1.6pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+	
+	\foreach \j in {0,...,1}
+	{
+		\foreach \i in {0,...,3}
+		{
+			\pgfmathsetmacro{\d}{0.05}
+			\pgfmathsetmacro{\x}{0.35+0.312*\j};
+			\pgfmathsetmacro{\y}{7.87+0.312*\i};
+			\draw[yellow,fill=yellow] ({\x-\d}, {\y-\d} ) -- ({\x+\d}, {\y-\d}) -- ({\x+\d}, {\y+\d}) -- ({\x-\d}, {\y+\d}) -- cycle;
+		}
+	}
+	\pgfmathsetmacro{\d}{0.05}
+	\pgfmathsetmacro{\x}{0.35+0.312};
+	\pgfmathsetmacro{\y}{7.87+0.312*0};
+	\draw[yellow,thick,fill=fuchsia] ({\x-\d}, {\y-\d} ) -- ({\x+\d}, {\y-\d}) -- ({\x+\d}, {\y+\d}) -- ({\x-\d}, {\y+\d}) -- cycle;
+
+	\node (J40) at (-1,8.5) {\begin{tabular}{l}J40 \\ Buttons\end{tabular}};
+
+	
+	%J44 Serial
+	\pgfmathsetmacro{\xmin}{1.2};
+	\pgfmathsetmacro{\xmax}{1.5};
+	\pgfmathsetmacro{\ymin}{8.02};
+	\pgfmathsetmacro{\ymax}{9.95};
+	\draw[darkcyan,
+	line width=1.6pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+	
+	\foreach \j in {0,...,0}
+	{
+		\foreach \i in {0,...,5}
+		{
+			\pgfmathsetmacro{\d}{0.05}
+			\pgfmathsetmacro{\x}{1.35+0.312*\j};
+			\pgfmathsetmacro{\y}{8.2+0.312*\i};
+			\draw[yellow,fill=yellow] ({\x-\d}, {\y-\d} ) -- ({\x+\d}, {\y-\d}) -- ({\x+\d}, {\y+\d}) -- ({\x-\d}, {\y+\d}) -- cycle;
+		}
+	}
+	\pgfmathsetmacro{\d}{0.05}
+	\pgfmathsetmacro{\x}{1.35};
+	\pgfmathsetmacro{\y}{8.2+0.312*0};
+	\draw[yellow,thick,fill=fuchsia] ({\x-\d}, {\y-\d} ) -- ({\x+\d}, {\y-\d}) -- ({\x+\d}, {\y+\d}) -- ({\x-\d}, {\y+\d}) -- cycle;
+	
+	\node (J13) at (1.8,10.6) {\begin{tabular}{l} J44\\ Serial \end{tabular}};
+	
+	% J48 DC Jumper
+	\pgfmathsetmacro{\xmin}{0.175};
+	\pgfmathsetmacro{\xmax}{0.83};
+	\pgfmathsetmacro{\ymin}{3.908};
+	\pgfmathsetmacro{\ymax}{4.24};
+	\draw[darkcyan,
+	line width=1.6pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+	
+	\foreach \j in {0,...,1}
+	{
+		\foreach \i in {0,...,0}
+		{
+			\pgfmathsetmacro{\d}{0.05}
+			\pgfmathsetmacro{\x}{0.35+0.312*\j};
+			\pgfmathsetmacro{\y}{4.074 +0.312*\i};
+			\draw[yellow,fill=yellow] ({\x-\d}, {\y-\d} ) -- ({\x+\d}, {\y-\d}) -- ({\x+\d}, {\y+\d}) -- ({\x-\d}, {\y+\d}) -- cycle;
+		}
+	}
+	\node (J48) at (-1,4) {\begin{tabular}{l}J48 \\ Jumper\end{tabular}};
+	
+	
+	% J38 PoE
+	\pgfmathsetmacro{\xmin}{11.95};
+	\pgfmathsetmacro{\xmax}{12.57};
+	\pgfmathsetmacro{\ymin}{9.27};
+	\pgfmathsetmacro{\ymax}{9.9};
+	\draw[darkcyan,
+	line width=1.6pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+	
+	\foreach \j in {0,...,1}
+	{
+		\foreach \i in {0,...,1}
+		{
+			\pgfmathsetmacro{\d}{0.05}
+			\pgfmathsetmacro{\x}{12.1+0.312*\j};
+			\pgfmathsetmacro{\y}{9.42 +0.312*\i};
+			\draw[yellow,fill=yellow] ({\x-\d}, {\y-\d} ) -- ({\x+\d}, {\y-\d}) -- ({\x+\d}, {\y+\d}) -- ({\x-\d}, {\y+\d}) -- cycle;
+		}
+	}
+
+	\node[right] (J48) at (13.0,9.5) {\begin{tabular}{l}J38 \\ PoE\end{tabular}};
+
+	
+	% J41 Expansion
+	\pgfmathsetmacro{\xmin}{11.16};
+	\pgfmathsetmacro{\xmax}{11.8};
+	\pgfmathsetmacro{\ymin}{2.72};
+	\pgfmathsetmacro{\ymax}{9.1};
+	\draw[darkcyan,
+	line width=1.6pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+	
+	\foreach \j in {0,...,1}
+	{
+		\foreach \i in {0,...,19}
+		{
+			\pgfmathsetmacro{\d}{0.05}
+			\pgfmathsetmacro{\x}{11.325+0.312*\j};
+			\pgfmathsetmacro{\y}{2.86 +0.323*\i};
+			\draw[blue,fill=yellow] ({\x-\d}, {\y-\d} ) -- ({\x+\d}, {\y-\d}) -- ({\x+\d}, {\y+\d}) -- ({\x-\d}, {\y+\d}) -- cycle;
+		}
+	}
+	\pgfmathsetmacro{\d}{0.05}
+	\pgfmathsetmacro{\x}{11.325+0.312};
+	\pgfmathsetmacro{\y}{2.86};
+	\draw[yellow,thick,fill=fuchsia] ({\x-\d}, {\y-\d} ) -- ({\x+\d}, {\y-\d}) -- ({\x+\d}, {\y+\d}) -- ({\x-\d}, {\y+\d}) --    cycle;
+	
+	\node[right] (J41) at (13,6) {\begin{tabular}{l}J41 \\ Expansion\end{tabular}};
+	
+	% J15 5V Fan
+	\pgfmathsetmacro{\xmin}{9.33};
+	\pgfmathsetmacro{\xmax}{10.55};
+	\pgfmathsetmacro{\ymin}{2.86};
+	\pgfmathsetmacro{\ymax}{3.55};
+	\draw[darkcyan,
+	line width=1.6pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+	
+	\pgfmathsetmacro{\xmin}{9.8};
+	\pgfmathsetmacro{\xmax}{10.45};
+	\pgfmathsetmacro{\ymin}{3.35};
+	\pgfmathsetmacro{\ymax}{3.55};
+	\draw[darkcyan,
+	line width=1.6pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+	
+	\foreach \j in {0,...,3}
+	{
+		\foreach \i in {0,...,0}
+		{
+			\pgfmathsetmacro{\d}{0.05}
+			\pgfmathsetmacro{\x}{9.45+0.317*\j};
+			\pgfmathsetmacro{\y}{3.18 +0.323*\i};
+			\draw[blue,fill=yellow] ({\x-\d}, {\y-\d} ) -- ({\x+\d}, {\y-\d}) -- ({\x+\d}, {\y+\d}) -- ({\x-\d}, {\y+\d}) -- cycle;
+		}
+	}
+	
+	\node[right] (J15) at (13,3.3) {\begin{tabular}{l}J15 \\ 5V Fan\end{tabular}};
+	
+	% Schwarze Flecken
+	\pgfmathsetmacro{\xmin}{0.902};
+	\pgfmathsetmacro{\xmax}{1.058};
+	\pgfmathsetmacro{\ymin}{8.12};
+	\pgfmathsetmacro{\ymax}{8.25};
+	\draw[black,fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft},
+	line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+	
+	\pgfmathsetmacro{\xmin}{0.902};
+	\pgfmathsetmacro{\xmax}{1.058};
+	\pgfmathsetmacro{\ymin}{8.74};
+	\pgfmathsetmacro{\ymax}{8.87};
+	\draw[black,fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft},
+	line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+	
+	\pgfmathsetmacro{\xmin}{0.942};
+	\pgfmathsetmacro{\xmax}{1.098};
+	\pgfmathsetmacro{\ymin}{7.29};
+	\pgfmathsetmacro{\ymax}{7.42};
+	\draw[black, fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft},
+	line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+	
+	\pgfmathsetmacro{\xmin}{1.382};
+	\pgfmathsetmacro{\xmax}{1.538};
+	\pgfmathsetmacro{\ymin}{7.74};
+	\pgfmathsetmacro{\ymax}{7.87};
+	\draw[black, fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft},
+	line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+	
+	\pgfmathsetmacro{\xmin}{1.35};
+	\pgfmathsetmacro{\xmax}{1.49};
+	\pgfmathsetmacro{\ymin}{7.2};
+	\pgfmathsetmacro{\ymax}{7.37};
+	\draw[black, fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft},
+	line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+	
+	\pgfmathsetmacro{\xmin}{1.13};
+	\pgfmathsetmacro{\xmax}{1.47};
+	\pgfmathsetmacro{\ymin}{3.43};
+	\pgfmathsetmacro{\ymax}{3.7};
+	\draw[black, fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft},
+	line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+	
+	\pgfmathsetmacro{\xmin}{0.97};
+	\pgfmathsetmacro{\xmax}{1.47};
+	\pgfmathsetmacro{\ymin}{2.81};
+	\pgfmathsetmacro{\ymax}{3.31};
+	\draw[black, fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft},
+	line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+	
+	% 5V DC (2.1mm ID, Positive Center)  Stecker
+	\pgfmathsetmacro{\xmin}{0.28};
+	\pgfmathsetmacro{\xmax}{1.51};
+	\pgfmathsetmacro{\ymin}{-0.1};
+	\pgfmathsetmacro{\ymax}{1.7};
+	\draw[black, fill=black,
+	line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+	
+	\pgfmathsetmacro{\xmin}{0.32};
+	\pgfmathsetmacro{\xmax}{1.47};
+	\pgfmathsetmacro{\ymin}{-0.06};
+	\pgfmathsetmacro{\ymax}{0.28};
+	\draw[black, fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft},
+	line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+	
+	\pgfmathsetmacro{\xmin}{0.32};
+	\pgfmathsetmacro{\xmax}{1.47};
+	\pgfmathsetmacro{\ymin}{0.32};
+	\pgfmathsetmacro{\ymax}{1.65};
+	\draw[left color=grayleft, right color=black, middle color=graycircle,
+	line width=0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+	
+	
+	% Display Port und HDMI
+	\pgfmathsetmacro{\xmin}{2.03};
+	\pgfmathsetmacro{\xmax}{4.08};
+	\pgfmathsetmacro{\ymin}{0};
+	\pgfmathsetmacro{\ymax}{2.15};
+	\draw[graycircle!50, fill=white!20!graylight, postaction={path fading=west,  fill=grayright!60},
+	line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+	
+	\draw[greenblue,fill=greenblue] 
+	(2.30, 0.7) -- (2.39, 0.22) -- (2.58,0.22) -- (2.68, 0.7) -- 
+	(2.52, 0.27) -- (2.46,0.27) -- cycle;
+	
+	\begin{scope}[xshift=27.3]
+	\draw[greenblue,fill=greenblue] 
+	(2.30, 0.7) -- (2.39, 0.22) -- (2.58,0.22) -- (2.68, 0.7) -- 
+	(2.52, 0.27) -- (2.46,0.27) -- cycle;
+	\end{scope}
+	
+	% USB 3.0 2-mal
+	\pgfmathsetmacro{\xmin}{4.6};
+	\pgfmathsetmacro{\xmax}{6.31};
+	\pgfmathsetmacro{\ymin}{-0.1};
+	\pgfmathsetmacro{\ymax}{2.05};
+	\draw[graycircle!50, fill=white!20!graylight, postaction={path fading=west,  fill=grayright!60},
+	line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+	
+	\draw[greenblue,fill=greenblue] 
+	(4.83, 0.82) -- (4.93, 0.07) -- (5.14,0.07) -- (5.25, 0.82) -- 
+	(5.08, 0.14) -- (5.0,0.14) -- cycle;
+	
+	\draw[greenblue,fill=greenblue] 
+	(5.63, 0.82) -- (5.73, 0.07) -- (5.94,0.07) -- (6.05, 0.82) -- 
+	(5.88, 0.14) -- (5.8,0.14) -- cycle;
+	
+	
+	% USB 3.0 2-mal
+	\begin{scope}[xshift=63]
+	\pgfmathsetmacro{\xmin}{4.6};
+	\pgfmathsetmacro{\xmax}{6.31};
+	\pgfmathsetmacro{\ymin}{-0.1};
+	\pgfmathsetmacro{\ymax}{2.05};
+	\draw[graycircle!50, fill=white!20!graylight, postaction={path fading=west,  fill=grayright!60},
+	line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+	
+	\draw[greenblue,fill=greenblue] 
+	(4.83, 0.82) -- (4.93, 0.07) -- (5.14,0.07) -- (5.25, 0.82) -- 
+	(5.08, 0.14) -- (5.0,0.14) -- cycle;
+	
+	\draw[greenblue,fill=greenblue] 
+	(5.63, 0.82) -- (5.73, 0.07) -- (5.94,0.07) -- (6.05, 0.82) -- 
+	(5.88, 0.14) -- (5.8,0.14) -- cycle;
+	\end{scope}
+	
+	% GigEth
+	\pgfmathsetmacro{\xmin}{8.84};
+	\pgfmathsetmacro{\xmax}{10.8};
+	\pgfmathsetmacro{\ymin}{-0.1};
+	\pgfmathsetmacro{\ymax}{2.62};
+	\draw[graycircle!50, fill=white!20!graylight, postaction={path fading=west,  fill=grayright!60},
+	line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+	
+	% Micro USB, PWR oder USB device
+	\pgfmathsetmacro{\xmin}{11.285};
+	\pgfmathsetmacro{\xmax}{12.225};
+	\pgfmathsetmacro{\ymin}{0};
+	\pgfmathsetmacro{\ymax}{0.83};
+	\draw[graycircle!50, fill=white!20!graylight, postaction={path fading=west,  fill=grayright!60},
+	line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+	
+	\draw[greenblue,fill=greenblue] 
+	(11.41, 0.38) -- (11.475, 0.08) -- (11.585,0.08) -- (11.65, 0.38) -- 
+	(11.55, 0.12) -- (11.52,0.12) -- cycle;
+	
+	\begin{scope}[xshift=12.5]
+	\draw[greenblue,fill=greenblue] 
+	(11.41, 0.38) -- (11.475, 0.08) -- (11.585,0.08) -- (11.65, 0.38) -- 
+	(11.55, 0.12) -- (11.52,0.12) -- cycle;
+	\end{scope}
+
+	\node[right] (J15) at (13,1.3) {\begin{tabular}{l}PWR \\ LED\end{tabular}};
+
+	
+	\end{tikzpicture}
+	\caption{Jetson Nano: Oversight with labels}\label{JetsonAufsicht}
+\end{figure}
+
+
+
+
+
+%\GRAPHICSC{0.7}{1.0}{Images/Jetson/JetsonNanoSide}
+
+%  \node[right] (P) at (-0.3,0.97) {\includegraphics[scale=0.7]{Images/Jetson/JetsonNanoSide}};
+
+\begin{figure}
+	
+	\begin{tikzpicture}
+	% Platine
+	\draw[greenblue,fill=greenblue] (0,-0.02) -- (12.35,-0.02) -- (12.35,-0.2) -- (0,-0.2) -- cycle;
+	
+	% 5V 
+	\pgfmathsetmacro{\xmin}{0.2};
+	\pgfmathsetmacro{\xmax}{1.4};
+	\pgfmathsetmacro{\ymin}{0};
+	\pgfmathsetmacro{\ymax}{1.33};
+	\draw[black,  fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft},  line width=1.0pt] 
+	(\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+	
+	\draw[silver,fill=silver,domain=0:360] plot ({0.8+0.11*cos(\x)}, {0.75+0.11*sin(\x)});
+	\draw[silver,fill=silver,domain=230:310] plot ({0.8+0.4*cos(\x)}, {0.75+0.4*sin(\x)});
+	\draw[black,line width=1.0pt,domain=0:360] plot ({0.8+0.4*cos(\x)}, {0.75+0.4*sin(\x)});
+	
+	%Display Port und HDMI
+	\pgfmathsetmacro{\xmin}{1.9};
+	\pgfmathsetmacro{\xmax}{3.95};
+	\pgfmathsetmacro{\ymin}{0};
+	\pgfmathsetmacro{\ymax}{2.1};
+	\draw[graycircle!50, fill=white!20!graylight, postaction={path fading=west,  fill=grayright!60}, line width=1.0pt
+	] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+	
+	\draw[black,fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft},
+	line width=1.0pt]   (2.4, 0.17) -- (2.17,0.41) -- (2.17,0.64) -- (3.65,0.64) -- (3.65,0.41) -- (3.42,0.17) -- cycle;
+	
+	\pgfmathsetmacro{\xmin}{2.35};
+	\pgfmathsetmacro{\xmax}{3.48};
+	\pgfmathsetmacro{\ymin}{0.39};
+	\pgfmathsetmacro{\ymax}{0.42};
+	\draw[grayright,fill=grayright %graycircle!50, fill=white!20!graylight, postaction={path fading=west,  fill=grayright!60}, line width=1.0pt
+	] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+	
+	\draw[black,fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft},
+	line width=1.0pt] (2.33,1.42) -- (2.1, 1.65) -- (2.1,1.92) -- (3.66,1.92) -- (3.66,1.42) -- cycle;
+	\draw[grayright,fill=grayright] (2.47, 1.7) -- (2.47,1.6) -- (2.37, 1.6) -- (2.37,1.75) -- (3.47,1.75) -- (3.47,1.6) -- (3.37,1.6) -- (3.37,1.7) -- cycle;
+	
+	% USV 3.0 - 2 x 2 
+	\foreach \j in {0,...,1}
+	{
+		\pgfmathsetmacro{\xmin}{4.4+2.15*\j};
+		\pgfmathsetmacro{\xmax}{6.1+2.15*\j};
+		\pgfmathsetmacro{\ymin}{0};
+		\pgfmathsetmacro{\ymax}{1.8};
+		\draw[graycircle!50, fill=white!20!graylight, postaction={path fading=west,  fill=grayright!60}, line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+		
+		\foreach \i in {0,...,1}
+		{
+			\pgfmathsetmacro{\xmin}{4.54+2.16*\j};
+			\pgfmathsetmacro{\xmax}{5.96+2.16*\j};
+			\pgfmathsetmacro{\ymin}{0.27+0.86*\i};
+			\pgfmathsetmacro{\ymax}{0.78+0.86*\i};
+			\draw[black,fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft},
+			line width=1.0pt] 
+			(\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+			
+			\pgfmathsetmacro{\xmin}{4.6+2.16*\j};
+			\pgfmathsetmacro{\xmax}{5.91+2.16*\j};
+			\pgfmathsetmacro{\ymin}{0.52+0.82*\i};
+			\pgfmathsetmacro{\ymax}{0.73+0.82*\i};
+			\draw[cyan, fill=deepskyblue, line width=1.0pt] 
+			(\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+			
+			\foreach \k in {0,...,3}
+			{
+				\pgfmathsetmacro{\xmin}{4.75+2.16*\j+0.29*\k};
+				\pgfmathsetmacro{\xmax}{4.88+2.16*\j+0.29*\k};
+				\pgfmathsetmacro{\ymin}{0.44+0.83*\i};
+				\pgfmathsetmacro{\ymax}{0.48+0.83*\i};
+				\draw[copper,fill=copper] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+			}     
+		}
+	}
+	
+	% Ethernet
+	\pgfmathsetmacro{\xmin}{8.55};
+	\pgfmathsetmacro{\xmax}{10.5};
+	\pgfmathsetmacro{\ymin}{0};
+	\pgfmathsetmacro{\ymax}{1.5};
+	\draw[graycircle!50, fill=white!20!graylight, postaction={path fading=west,  fill=grayright!60}, line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+	
+	\pgfmathsetmacro{\xmin}{8.8};
+	\pgfmathsetmacro{\xmax}{10.2};
+	\pgfmathsetmacro{\ymin}{0};
+	\pgfmathsetmacro{\ymax}{1.25};
+	\draw[black,  fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft},  line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+	
+	\pgfmathsetmacro{\xmin}{8.8};
+	\pgfmathsetmacro{\xmax}{9.25};
+	\pgfmathsetmacro{\ymin}{0};
+	\pgfmathsetmacro{\ymax}{0.3};
+	\draw[darkpastelgreen,fill=greenyellow, line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+	
+	\pgfmathsetmacro{\xmin}{9.75};
+	\pgfmathsetmacro{\xmax}{10.2};
+	\pgfmathsetmacro{\ymin}{0};
+	\pgfmathsetmacro{\ymax}{0.3};
+	\draw[orange, fill=yellow, line width=1.0pt
+	] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+	
+	\foreach \j in {0,...,7}
+	{
+		\pgfmathsetmacro{\xmin}{9     + 0.13*\j};
+		\pgfmathsetmacro{\xmax}{9.068 + 0.13*\j};
+		\pgfmathsetmacro{\ymin}{0.92};
+		\pgfmathsetmacro{\ymax}{1.25};
+		\draw[copper,fill=copper]   (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+	}
+	
+	\pgfmathsetmacro{\xmin}{11.8};
+	\pgfmathsetmacro{\xmax}{12.25};
+	\pgfmathsetmacro{\ymin}{0};
+	\pgfmathsetmacro{\ymax}{0.1};
+	\draw[darkpastelgreen,fill=greenyellow, line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+	
+	% HDMI
+	\draw[silver,fill=silver, line width=1.0pt] (11.0, 0) -- (11.7,0) -- (11.9,0.17) -- (11.9, 0.35) -- (10.8,0.35) --  (10.8, 0.17) -- cycle;
+	
+	\draw[black,fill=black] (11.05, 0.125) -- (11.65,0.125) -- (11.75,0.22) -- (11.75, 0.25) -- (10.95,0.25) --  (10.95, 0.22) -- cycle;
+	
+	\node (P1) at (0.8,-0.6) {5V DC};
+	\node (P2) at (3,-0.8) {\begin{tabular}{c} Display Port \\ HDMI \end{tabular}};
+	\node (P2) at (5.2,-0.8) {\begin{tabular}{c} USB 3.0 \\ USB 3.0 \end{tabular}};
+	\node (P2) at (7.4,-0.8) {\begin{tabular}{c} USB 3.0 \\ USB 3.0 \end{tabular}};
+	\node (P2) at (9.5,-0.6) { GigEth };
+	\node (P2) at (11.8,-1) {\begin{tabular}{c} Micro USB\\ PWR oder \\ USB Device\end{tabular}};
+	\node (P2) at (12.9,-1.8) {PWR LED};
+	
+	\end{tikzpicture}
+	\caption{Side view of the Jetson Nano with labels} \label{JetonSeite}
+\end{figure}	
+
+
+\subsubsection{External power supply}
+
+The Jetson Nano requires an external power supply. A DC power supply (5V\textdirectcurrent{} 2A) must be available for this purpose. The power supply can be connected to either a 5V power supply via the 5V DC interface or Micro USB interface. If the 5V DC interface will be used, a jumper is required to bridge the two pins of J48 that are located between the camera and power supply connector.  The diameter of the connector is 2.1mm.  The centre is the positive pole. If the power is supplied via the Micro USB interface, the jumper must be removed.
+
+
+
+\subsubsection{HDMI and display port}
+
+A monitor is not necessary for later operation, but it is very useful for commissioning and some applications. An external monitor can be connected either to the HDMI interface or to the display port. Various resolutions with up to 4K are available.
+
+It should be noted that HDMI-to-DVI adapters are not supported. Therefore, a monitor that directly supports HDMI or display port input must be used. In the table~\ref{Jetson:Resolutions}
+lists the possible image resolutions that are supported.
+
+If no monitor is to be used in the application, this must be taken into account when installing the operating system.
+
+
+
+\begin{table}
+  \centering
+  \begin{tabular}{cc}
+    \textbf{Video Encode}  & \textbf{250MP/sec} \\   \hline
+     H.264/H.265           & 1 $\times$  4K mit  30 f/sec \\
+     H.264/H.265	       & 2 $\times$ 1080p mit 60 f/sec \\
+     H.264/H.265	       & 4 $\times$ 1080p mit 30 f/sec \\
+     H.264/H.265	       & 4 $\times$ 720p mit 60 f/sec  \\
+     H.264/H.265	       & 9 $\times$ 720p mit 30 f/sec \\
+  \end{tabular}
+ \caption{Supported video encoding formats}\label{Jetson:Aufloesungen}
+\end{table}
+
+
+
+\subsubsection{$\mu$USB interface}
+
+
+A power supply (5V\textdirectcurrent{} 2A) with $\mu$USB output can also be used at the $\mu$USB interface. $\mu$USB was chosen because inexpensive power supplies with this interface are easy to find. The maximum power consumption is 5W to 10W. A high quality power supply unit should be chosen. If an unsuitable power supply is used, the NVIDIA Jetson Nano will not start. A simple measure is to use a power supply with a shorter cable, as this leads to a lower voltage drop.
+
+
+%Als Beispiel für eine gute Stromversorgung hat NVIDIA das 5V 2,5A Schaltnetzteil von 
+%\href{https://www.adafruit.com/product/1995}{Adafruit mit 20AWG MicroUSB-Kabel (GEO151UB-6025)} validiert.
+%Es wurde speziell entwickelt, um häufige Probleme mit USB-Netzteilen zu lösen; 
+%weitere Informationen finden Sie auf der verlinkten Produktseite.
+
+
+
+\subsubsection{USB 3.0 interfaces}
+
+The Jetson Nano has 4 USB 3.0 interfaces. The current consumption on a USB interface is limited to 100mA. If the connected device has a higher consumption, it must be equipped with an additional power supply. As a rule, the USB keyboard and mouse can be connected. 
+
+\subsubsection{Ethernet interface}
+
+With the help of the Ethernet interface with RJ45 connection, the computer can either be connected directly to the Internet or communicate with another computer. Gigabit Ethernet can be used with a patch cable plugged into the router. Ethernet connections based on 10/100/1000BASE-T are supported.
+However, a WiFi connection can also be achieved with an optional USB dongle for WLAN.
+
+
+\subsubsection{Status LED}
+
+The status LED indicates whether the Jetson Nano is receiving power. The status LED will flash if there is insufficient or too much power from the power supply.
+
+
+
+\subsubsection{GPIOs}
+
+The Jetson Nano has an interface through which extensions can be connected.
+There are 40 connections to the outside at the J41 interface. They are called \ac{gpio}. With this, own circuits can be connected and the board can be provided with new functions. LEDs or motors can be connected here. 
+But there are other interesting interfaces of the type SPI, I$^2$C and I$^2$S available.
+
+
+\subsubsection{CSI connection for a camera}
+
+The Jetson Nano is additionally equipped with a camera CSI connector. 
+The exact specification is \textbf{12 lanes (3x4 or 4x2) MIPI CSI-2 D-PHY 1.1 (1.5 Gb/s per pair)}.
+If suitable software is used, the Jetson Nano can be used for image recognition.
+
+\subsubsection{microSD card}
+
+
+The Jetson Nano does not have a hard disk with an operating system on it.
+Therefore, there must be another way to store it. For this purpose, the Jetson Nano uses a microSD card. The SD card contains the operating system that is to be started and the application programmes. Accordingly, the SD card must be chosen. It should therefore be fast and large enough; the recommended minimum is a 16GB UHS-1 card. The slot is on the bottom of the Jetson Nano. 
+
+
+
+
+\subsection{Technical data}
+
+
+%todo neu formulieren
+\Mynote{Ausführen}
+
+GPU
+
+NVIDIA Maxwell architecture with 128 NVIDIA CUDA® cores
+
+
+Prozessor
+
+CPU
+
+Quad-core ARM Cortex-A57 MPCore processor 
+
+
+Memory
+
+
+4 GB 64-bit LPDDR4, 1600MHz 25.6 GB/s 
+
+
+Storage
+
+16 GB eMMC 5.1 
+
+Every notebook has an embedded multi media card (eMMC), a hard disk or an SSD - or a combination of these. An embedded multi media card is technically similar to an SD card and is a cheap option for manufacturers to offer 16 to 128 GBytes of permanently soldered storage space. Like SSDs, EMMCs offer low access times but slow sequential data transfer rates.
+
+
+
+\ToDo{Werbung, Quellen fehlen, Siehe pdf-Dokumente bzgl. Raspberry Pi als Vorlage}
+	
+	
+
+\section{Interfaces of the Jetson Nano}
+
+
+
+\subsection{J41 Expansion Header Pinout - GPIO Pins}
+
+The Jetson Nano can also communicate with other systems. For this communication or to control external devices, it can be helpful to be able to control the pins of the J41 header. The pins allow different types of communication:
+
+\begin{itemize}
+    \item Serial communication \ac{uart}
+    \item Communication via \ac{i2c}
+    \item \ac{spi}
+    \item \ac{i2s}
+    \item Direct communication via \ac{gpio}
+\end{itemize}    
+
+
+
+Binary signals are exchanged between two systems via communication via \ac{gpio}. Thus, they are simply digital inputs and outputs that can be defined as inputs or inputs as required.
+
+By default, all interface signal pins of the Jetson Nano are configured as \ac{gpio}. Pins 3, 5, 8, 9, 27 and 28 are exceptions to this. 
+Pins 3 and 5 and pins 27 and 28 are for the two \ac{i2c} interfaces with the data lines \ac{sda} and the line with the clock signal \ac{scl}. Pins 8 and 10 are reserved for the receive line (Rx) of the one and the transmit line (Tx) of the \ac{uart}. \cite{JetsonUserManual:2020} 
+
+To use the \ac{gpio}, the GPIO library must be installed.\cite{GitHubGPIO:2020}.
+
+\medskip
+
+The so-called pinout of the Jetson Nano can be seen in this figure~\ref{Jetson:gpio}.
+
+%\begin{figure}
+%  \centering
+%
+%   \GRAPHICS{0.5}{1.0}{Jetson/JetsonNano-pinout}
+%   
+%   \caption{Pin-Belegung J41 Expansion Header}\label{Jetson:gpio}
+%
+%\end{figure}
+%
+
+%Pi-Enthusiasten werden die Ähnlichkeit in der Pin-Benennung bemerken. Ich habe die Pins nach Farben gruppiert, aber ich weiß immer noch nicht, was all die sekundären Funktionen der Pins sind. 
+%Die Linux(BCM)-Spalte enthält zwei Zahlen. Die Zahlen in Klammern sind Raspberry-Pi-ähnliche GPIO-Nummern, so dass die gleichen GPIO-Bibliotheken wie die Raspberry-Pi verwendet werden können. 
+%Diese Tabelle wird aktualisiert, nachdem NVIDIA weitere Dokumentation veröffentlicht hat (ich glaube, es wird in einigen Wochen erwartet). 
+
+%\GRAPHICSC{1.0}{1.0}{Images/Jetson/JetsonNanoPins}
+%\GRAPHICSC{0.7}{1.0}{Images/Jetson/gpio-pinout}
+
+
+
+
+%{\scriptsize
+%	\begin{tabular}{|p{20mm}|p{15mm}|p{15mm}|>{\columncolor{blue}}c|>{\columncolor{blue}}c|p{15mm}|p{15mm}|p{15mm}|} % >{\columncolor{green}}	% 
+%		Alt Function & Linux (BCM) & Name & Pin & Pin & Name & Linux (BCM) & Alt Function \\ \hline
+%		\cellcolor{orange} DAP4\_DOUT & 78(21) & D21 & 40 & 39 &\GND & & \\
+%		\cellcolor{orange} DAP4\_DIN  & 77(20) & D20 & 38 & 37 & D26 & 12(26) & SPI2\_MOSI \\
+%		UART2\_CTS   & 51(16) &       D16 & 36 & 35 & D19        & 76(19) & DAP4\_FS \\
+%		&        &      \GND & 34 & 33 & D13        & 38(13) & GPIO\_PE6 \\
+%		LCD\_BL\_PWM & 168(12)&       D12 & 32 & 31 & D6         & 200(6) & GPIO\_PZ0 \\
+%		&        &      \GND & 30 & 29 & D5         & 149(5) & CAM\_AF\_EN \\
+%		&        & D1/ID\_SC & 28 & 27 & D0/ID\_SD  &        & \\         
+%		SPI1\_CS1    & 20(7)  &        D7 & 26 & 25 &\GND        &        &  \\
+%		SPI1\_CS0    & 19(8)  &        D8 & 24 & 23 & D11        & 18(11) & SP1\_SCK \\
+%		SPI2\_MISO   & 13(25) &       D25 & 22 & 21 & D9         & 17(9)  & SP1\_MISO \\
+%		&        &      \GND & 20 & 19 & D10        & 16(10) & SP1\_MOSI \\
+%		SPI2\_CS0    & 15(24) &       D24 & 18 & 17 & 3.3V       &        & \\   
+%		SPI2\_CS1    & 232(23)&       D23 & 16 & 15 & D22        & 194(22)& LCD\_TE \\   
+%		&        &      \GND & 14 & 13 & D27        & 14(27) & SPI2\_SCK \\
+%		DAP4\_SCLK   & 79(18) &       D18 & 12 & 11 & D17        & 50(17) & UART2\_RTS \\
+%		&        & RXD/D15   & 10 &  9 &\GND        &        & \\
+%		&        & TXD/D14   &  8 &  7 & D4         & 216(4) & AUDIO\_MCLK\\
+%		&        &\GND       &  6 &  5 & SCL/D3     &        & \\
+%		&        & 5V        &  4 &  3 & SDA/D2     &        & \\
+%		&        & 5V        &  2 &  1 & 3.3V       &        & \\
+%	\end{tabular}
+%}
+%
+
+
+\begin{table}
+    
+    \centering	
+    {\small%\scriptsize
+        \begin{tabular}{|c|c|a|a|c|c|} \hline
+            \rowcolor{white}	 Sysfs GPIO &   \begin{tabular}{c} \textcolor{white}{I}\\ \textcolor{white}{I}\end{tabular}    Name   \begin{tabular}{c} \textcolor{white}{I}\\ \textcolor{white}{I}\end{tabular}     & Pin & Pin & Name & Sysfs GPIO  \\ \hline
+            gpio78 & \begin{tabular}{c}I2S\_4\_SDOUT \\ D21 \\ \end{tabular}  & 40 & 39 & \GND   &  \\ \hline
+            gpio77 & \begin{tabular}{c}I2S\_4\_SDIN  \\ D20 \\ \end{tabular}  & 38 & 37 & \begin{tabular}{c}SPI\_2\_MOSI  \\ D26 \\ \end{tabular}  & gpio12  \\ \hline
+            gpio51 & \begin{tabular}{c}UART\_2\_CTS  \\ D16 \\ \end{tabular}  & 36 & 35 & \begin{tabular}{c}I2S\_4\_LRCK  \\ D19 \\ \end{tabular}  & gpio76  \\ \hline
+            & \GND                                                     & 34 & 33 & \begin{tabular}{c}GPIO\_PE6  \\ D13 \\ \end{tabular}     & gpio38  \\ \hline
+            gpio168& \begin{tabular}{c}LCD\_BL\_PWM \\ D12 \\ \end{tabular}   & 32 & 31 & \begin{tabular}{c}GPIO\_PZ0  \\ D6 \\ \end{tabular}      & gpio200  \\ \hline
+            & \GND                                                     & 30 & 29 & \begin{tabular}{c}CAM\_AF\_EN  \\ D5 \\ \end{tabular}    & gpio149  \\ \hline
+            &\begin{tabular}{c}I2C\_1\_SCL\\D1/I2C Bus 0\\\end{tabular} & 28 & 27 & \begin{tabular}{c}I2C\_1\_SDA\\ D0/I2C Bus 0\\\end{tabular}  &         \\   \hline     
+            gpio20 & \begin{tabular}{c}SPI\_1\_CS1\\ D7\\\end{tabular}    & 26 & 25 &\GND        &          \\ \hline
+            gpio19 & \begin{tabular}{c}SPI\_1\_CS0\\ D8\\\end{tabular}    & 24 & 23 & \begin{tabular}{c}SPI\_1\_SCK\\ D11\\\end{tabular}            & gpio18  \\ \hline
+            gpio13 & \begin{tabular}{c}SPI\_2\_MISO\\ D25\\\end{tabular}  & 22 & 21 & \begin{tabular}{c}SPI\_1\_MISO\\ D9\\\end{tabular}            & gpio17   \\  \hline
+            &      \GND                                            & 20 & 19 & \begin{tabular}{c}SPI\_1\_MOSI\\ D10\\\end{tabular}           & gpio16  \\ \hline
+            gpio15 & \begin{tabular}{c}SPI\_2\_CS0\\ D24\\\end{tabular}   & 18 & 17 & \Vd        &         \\  \hline 
+            gpio232& \begin{tabular}{c}SPI\_2\_CS1\\ D23\\\end{tabular}   & 16 & 15 & \begin{tabular}{c}LCD\_TE\\ D22\\\end{tabular}       & gpio194 \\   \hline
+            &      \GND                                            & 14 & 13 & \begin{tabular}{c}SPI\_2\_SCK\\ D27\\\end{tabular}   & gpio14  \\ \hline
+            gpio79 & \begin{tabular}{c}I2S\_4\_SCLK\\ D18\\\end{tabular}  & 12 & 11 & \begin{tabular}{c}UART\_2\_RTS\\ D17\\\end{tabular}  & gpio50  \\ \hline
+            & \begin{tabular}{c}UART\_2\_RX\\ /dev/ttyTHS1 - D15\\\end{tabular}  & 10 &  9 &\GND        &         \\ \hline
+            & \begin{tabular}{c}UART\_2\_TX\\ /dev/ttyTHS1 - D14\\\end{tabular}  &  8 &  7 & \begin{tabular}{c}AUDIO\_MCLK\\ D4\\\end{tabular}        & gpio216 \\ \hline
+            &\GND       &  6 &  5 & \begin{tabular}{c}I2C\_2\_SCL\\ I2C Bus 1 - D3\\\end{tabular}     &         \\ \hline
+            & \Vf       &  4 &  3 & \begin{tabular}{c}I2C\_2\_SDA\\ I2C Bus 1 - D2\\\end{tabular}     &         \\ \hline
+            & \Vf       &  2 &  1 & \Vd        &     \begin{tabular}{c} \textcolor{white}{I}\\ \textcolor{white}{I}\end{tabular}              \\ \hline
+        \end{tabular}
+    }
+    
+    \caption{Pinout of the GPIOs of the Jetson Nano} \label{Jetson:gpio}
+\end{table}
+
+%todo Nummern einfügen
+
+\subsection{Serial interface J44 UART}
+
+The Jetson Nano has two \ac{uart} type interfaces. The serial \ac{uart} can be used for applications that require bidirectional communication.
+
+
+
+\begin{figure}
+  \centering
+  
+  \begin{tikzpicture}[scale=1.4]
+        %J44 Serial
+        \pgfmathsetmacro{\xmin}{1.2};
+        \pgfmathsetmacro{\xmax}{1.5};
+        \pgfmathsetmacro{\ymin}{8.02};
+        \pgfmathsetmacro{\ymax}{9.95};
+        \draw[darkcyan,fill=greenblue,
+        line width=1.6pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+        
+        \foreach \j in {0,...,0}
+        {
+            \foreach \i in {0,...,5}
+            {
+                \pgfmathsetmacro{\d}{0.05}
+                \pgfmathsetmacro{\x}{1.35+0.312*\j};
+                \pgfmathsetmacro{\y}{8.2+0.312*\i};
+                \draw[yellow,fill=yellow] ({\x-\d}, {\y-\d} ) -- ({\x+\d}, {\y-\d}) -- ({\x+\d}, {\y+\d}) -- ({\x-\d}, {\y+\d}) -- cycle;
+            }
+        }
+        \pgfmathsetmacro{\d}{0.05}
+        \pgfmathsetmacro{\x}{1.35};
+        \pgfmathsetmacro{\y}{8.2+0.312*0};
+        \draw[yellow,thick,fill=fuchsia] ({\x-\d}, {\y-\d} ) -- ({\x+\d}, {\y-\d}) -- ({\x+\d}, {\y+\d}) -- ({\x-\d}, {\y+\d}) -- cycle;
+        
+        \node[right]  (P5) at (1.7,9.81) {CTS};
+        \node[right]  (P5) at (1.7,9.48) {TXD};
+        \node[right]  (P4) at (1.7,9.16) {TXD};
+        \node[right]  (P3) at (1.7,8.82) {N/A};
+        \node[right]  (P2) at (1.7,8.51) {RTS};
+        \node[right]  (P1) at (1.7,8.16) {GND};
+    \end{tikzpicture}
+    
+    \caption{J44 Serial interface - 3.3V 115200 Baud, 8N1} 
+\end{figure}
+
+\subsection{Interface J40 Buttons}
+
+
+\begin{figure}
+    \centering
+    \begin{tikzpicture}[scale=1.4]
+        % J40 Buttons
+        \pgfmathsetmacro{\xmin}{0.17};
+        \pgfmathsetmacro{\xmax}{0.82};
+        \pgfmathsetmacro{\ymin}{7.7};
+        \pgfmathsetmacro{\ymax}{9};
+        \draw[darkcyan,fill=greenblue,
+        line width=1.6pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+        
+        \foreach \j in {0,...,1}
+        {
+            \foreach \i in {0,...,3}
+            {
+                \pgfmathsetmacro{\d}{0.05}
+                \pgfmathsetmacro{\x}{0.35+0.312*\j};
+                \pgfmathsetmacro{\y}{7.87+0.312*\i};
+                \draw[yellow,fill=yellow] ({\x-\d}, {\y-\d} ) -- ({\x+\d}, {\y-\d}) -- ({\x+\d}, {\y+\d}) -- ({\x-\d}, {\y+\d}) -- cycle;
+            }
+        }
+        \pgfmathsetmacro{\d}{0.05}
+        \pgfmathsetmacro{\x}{0.35+0.312};
+        \pgfmathsetmacro{\y}{7.87+0.312*0};
+        \draw[yellow,thick,fill=fuchsia] ({\x-\d}, {\y-\d} ) -- ({\x+\d}, {\y-\d}) -- ({\x+\d}, {\y+\d}) -- ({\x-\d}, {\y+\d}) -- cycle;
+        
+        \node[right]  (P4) at (1,8.85) {DIS (disable auto power-on)};
+        \node[right]  (P3) at (1,8.5) {RST (system reset)};
+        \node[right]  (P2) at (1,8.15) {FRC (board recovery mode))};
+        \node[right]  (P1) at (1,7.8) {ON (power on) )};
+        
+    \end{tikzpicture}
+    
+    \caption{J40 Buttons}
+\end{figure}  
+
+\subsection{I\textsuperscript{2}C-Interface}
+
+The serial data bus \ac{i2c} allows the master unit to send data to a slave unit or request data from a slave unit.
+
+\subsection{I\textsuperscript{2}S-Interface}
+
+\subsection{Serial Peripheral Interface (SPI)}
+
+In the default configuration, the Jetson Nano does not have SPI port access. However, this can be configured on the SChnittstelle J41 Expansion Header.
+
+
+
+\subsection{Power over Ethernet}
+
+\subsection{Interface J15 to the fan}
+
+
+\begin{figure}
+    \centering
+    \begin{tikzpicture}[scale=1.4]
+        % J15 5V Fan
+        \pgfmathsetmacro{\xmin}{9.33};
+        \pgfmathsetmacro{\xmax}{10.55};
+        \pgfmathsetmacro{\ymin}{2.86};
+        \pgfmathsetmacro{\ymax}{3.55};
+        \draw[darkcyan,fill=greenblue,  line width=1.6pt] 
+        (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+        
+        \pgfmathsetmacro{\xmin}{9.8};
+        \pgfmathsetmacro{\xmax}{10.45};
+        \pgfmathsetmacro{\ymin}{3.35};
+        \pgfmathsetmacro{\ymax}{3.55};
+        \draw[darkcyan,
+        line width=1.6pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+        
+        \foreach \j in {0,...,3}
+        {
+            \foreach \i in {0,...,0}
+            {
+                \pgfmathsetmacro{\d}{0.05}
+                \pgfmathsetmacro{\x}{9.45+0.317*\j};
+                \pgfmathsetmacro{\y}{3.18 +0.323*\i};
+                \draw[blue,fill=yellow] ({\x-\d}, {\y-\d} ) -- ({\x+\d}, {\y-\d}) -- ({\x+\d}, {\y+\d}) -- ({\x-\d}, {\y+\d}) -- cycle;
+            }
+        }
+        
+        \draw[dotted] (9.45, 3.18) -- (9.45, 4.85) -- (9.6, 4.85);
+        \node[right]  (P4) at (9.6,4.85) {PWM};
+        \draw[dotted] (9.45+0.317, 3.18) -- (9.45+0.317, 4.5) -- (9.6+0.317, 4.5);
+        \node[right]  (P3) at (9.6+0.317,4.5) {Tach};
+        \draw[dotted] (9.45+0.317+0.317, 3.18) -- (9.45+0.317+0.317, 4.15) -- (9.6+0.317+0.317, 4.15);
+        \node[right]  (P2) at (9.6+0.317+0.317,4.15) {5V};
+        \draw[dotted] (9.45+0.317+0.317+0.317, 3.18) -- (9.45+0.317+0.317+0.317, 3.8) -- (9.6+0.317+0.317+0.317, 3.8);
+        \node[right]  (P1) at (9.6+0.317+0.317+0.317,3.8) {GND};
+        
+        \pgfmathsetmacro{\d}{0.05}
+        \pgfmathsetmacro{\x}{9.45+0.317*3};
+        \pgfmathsetmacro{\y}{3.18};
+        \draw[yellow,thick,fill=fuchsia] ({\x-\d}, {\y-\d} ) -- ({\x+\d}, {\y-\d}) -- ({\x+\d}, {\y+\d}) -- ({\x-\d}, {\y+\d}) -- cycle;
+        
+    \end{tikzpicture}
+    
+    \caption{J15 5V fan} 
+\end{figure}
+
+
+\section{Structure of the Jetson Nano}
+
+\begin{itemize}
+    \item housing
+    \item WLAN
+    \item monitor
+    \item keyboard
+\end{itemize}
+
+
+\section{JetPack operating system for the Jetson Nano}
+
+\subsection{Bescheibung des Betriebssystems}
+
+NVIDIA provides its own operating system \glqq JetPack\grqq{} for the Jetson Nano. This operating system is not only suitable for the Jetson Nano, but for the Jetson family, consisting of Jetson Nano, Jetson AGX Xavier and Jetson TX2.
+The operating system has a Linux kernel and features the Debian Management Tool. Therefore, one can work with the system on the basis of common Linux knowledge. In particular, it supports various machine learning modules:
+
+\begin{itemize}
+  \item CUDA, 
+  \item TensorRT, 
+  \item Computer Vision, 
+  \item Deep Stream SDK.
+\end{itemize}  
+
+This enables development for different hardware systems. Thus, the performance can be scaled depending on the application. \cite{Artamonov:2018,jetpack:2021} The figure~\ref{JetsonSDK} shows the structure of the development environment with the modules mentioned and others. The possible uses of the modules are also mentioned.
+
+
+%todo \Mynote{Erläuterung der Pakete}
+% DeepStream SDK ermöglicht Entwicklern eine schnelle Erstellung und Bereitstellung effizienter Pipelines zur Videoanalyse auf Jetson-Basis. 
+
+%\href{https://www.antratek.de/nvidia-jetson-xavier-nx-developer-kit?gclid=CjwKCAjwrcH3BRApEiwAxjdPTeWWscoBZWOLQgYzesZjl9OTE8WPs4v0Mrbv33llJ1hloT3Ncm85QRoCZ-UQAvD_BwE}{NVIDIA Jetson Xavier NX}
+%\href{https://www.antratek.de/jetson-agx-xavier-developer-kit?gclid=CjwKCAjwrcH3BRApEiwAxjdPTXsHWj66yTy04tNZ29d2D_77W8crTU9Pty4WtZHzD5WPPst75SQRbBoCyN0QAvD_BwE}{NVIDIA Jetson AGX Xavier}
+%\href{https://www.antratek.de/nvidia-jetson-tx2-development-kit}{NVIDIA Jetson TX2}
+
+\medskip
+
+\begin{figure}
+	
+	\GRAPHICSC{0.5}{1.0}{Jetson/JetsonNanoSDK}
+	
+	\caption{Jetson Nano SDK , source: Heise, 29.11.2019} \label{JetsonSDK}
+\end{figure}
+
+
+\subsection{Installing the operating system}
+
+The operating system must be provided on a microSD card. An image file can be found on the NVIDIA website. The image file is loaded from there onto a PC. It is written to the microSD card using a special programme that takes into account the file system of JetPack, which is the same as the file system of Linux. The microSD card is then made available to the Jetson Nano. The first time the system is started, it can be configured. This includes, among other things, the installation with or without a graphical user interface. The individual steps are now explained.
+
+
+\subsubsection{Writing the operating system to the microSD card}
+
+Using a computer that has an internet connection, the operating system is loaded from the NVIDIA website \cite{JetsonUserManual:2020, JetPackOS:2021}. The operating system can be copied to a microSD card using the usual tools, e.g. Etcher, available from the website \textcolor{blue}{\url{https://www.balena.io/etcher/}}. \cite{JetsonGettingStarted:2019} 
+
+First, the microSD card must be formatted:
+
+
+\begin{enumerate}
+  \item Windows:
+	\begin{itemize}
+		\item Format your microSD card with the SD memory card formatter from the company SD Association \href{https://www.sdcard.org/downloads/formatter/}{[Link]}. The SD card formatter must be installed and started.  After starting the SD Memory Card Formatter programme, a dialogue opens, see figure~\ref{JetPack:SdFormatierer}.
+		
+		\begin{figure}
+			\centering
+			
+     		\GRAPHICSC{0.5}{1.0}{Jetson/Jetson_Nano-Getting_Started-Windows-SD_Card_Formatter.png}
+			\caption{Dialogue for formatting a SD card}\label{JetPack:SdFormatierer}
+		\end{figure}
+		
+        Then the following steps have to be gone through:
+
+		  
+		\begin{enumerate}  	  
+		  \item First, the microSD card must be inserted into an SD card drive.
+          \item Then the correct card drive is selected.
+          \item The type \glqq Quick format\grqq{} is then selected.
+          \item The field \glqq Volume label\grqq{} must not be changed.
+          \item After that, formatting can be started by activating the button \glqq Format\grqq. However, a warning dialogue opens first, which must be confirmed with the button \glqq Ja\grqq{}.
+		\end{enumerate}
+		
+		After formatting the microSD card, you can write the image file to the microSD card using the Etcher programme. The following steps are necessary for this:
+		
+		\begin{enumerate}  	      	
+			
+			\item  The programme must be installed and started. After starting the Etcher programme, a dialogue opens, see Figure~\ref{JetPack:SdFormatierer}.
+			
+		    \begin{figure}
+		      \centering
+  			  \GRAPHICSC{0.5}{1.0}{Jetson/Jetson_Nano-Getting_Started-Windows-Etcher.png}
+			  \caption{Etcher start dialogue}\label{JetPack:Etcher}
+		    \end{figure}
+			
+			\item In this start dialogue the button \glqq Select image\grqq{} is first. Then the downloaded image file can be selected from.
+            
+            If the microSD card is not formatted, the operating system reports this, see figure~\ref{JetPack:NotFormatted}. Then the process must be aborted and the card must first be formatted.
+
+            \begin{figure}
+              \centering
+
+              \GRAPHICSC{0.5}{1.0}{Jetson/Jetson_Nano-Getting_Started-Windows-Etcher_Cancel.png}
+              
+              \caption{Unformatted file}\label{JetPack:NichtFormatiert}
+            \end{figure}			
+			
+			\item Pressing the button \glqq Flash!\grqq{} starts the copying process. The process takes about 10 minutes if a USB 3 interface is used. During this time Etcher writes the image file and then validates it.
+			\item  After the process is complete, Windows may report that the microSD card cannot be read, see Figure~\ref{JetPack:NotRead}. This message is to be ignored. The microSD card can simply be removed from the drive. 
+			
+			\begin{figure}
+				\centering
+			
+      			\GRAPHICSC{0.5}{1.0}{Jetson/Jetson_Nano-Getting_Started-Windows-SD_Card_Prompt.png}
+	 
+	            \caption{Windows message for an unformatted microSD card}\label{JetPack:NichtLesen}		
+			\end{figure}
+			
+		\end{enumerate}
+		
+	\end{itemize}
+\end{enumerate}  
+
+Removing the microSD card from the drive completes its preparation. 
+
+%todo https://developer.nvidia.com/embedded/learn/get-started-jetson-nano-devkit#setup	
+
+\subsection{Setup with graphical user interface and first start}
+
+A microSD card containing the operating system is now available. Now the Jetson Nano can be prepared to configure and use the operating system. There are two basic options:
+
+\begin{itemize}
+    \item use with graphical interface
+    \item use without graphical user interface
+\end{itemize}
+
+This decision must be made before the first start. A change cannot be made later. Then there is only the possibility to change by reinstalling the operating system. This means that all settings must also be repeated and the software that the operating system does not provide must also be added again.
+
+\bigskip
+
+This section describes how to configure a graphical user interface.
+
+\bigskip
+
+Before switching on the Jetson Nano, some preparations must be made. First, a monitor must be connected via an HDMI cable, a keyboard and a mouse. The Jetson Nano is ready and also a suitable power supply unit. However, the power supply unit must not yet be plugged in, as the Jetson Nano will then start automatically. Under these conditions, the prepared micorSD card is inserted into the Jetson Nano. Now the system can be switched on. First the monitor is switched on, then the power supply unit is connected to the Jetson Nano. The green PWR LED lights up and the system starts automatically. The boot process takes a few minutes. The system must then be configured during the initial start-up.
+
+
+\subsubsection{First start}
+
+During the first boot process, some settings have to be made:
+
+
+\bigskip
+
+First, the End User License Agreement (EULA) from NVIDIA for the Jetson Nano software is displayed. This agreement must be accepted. Then the language must be set. The keyboard layout can also be selected. This should match the connected keyboard. A suitable time zone must also be selected. Then the settings must be made, which will be requested at the next login. The following labels are recommended:
+
+\begin{itemize}
+    \item setting of the name: \textbf{MSR-Lab}
+    \item Designation of the computer name:\textbf{JetsonNanoMSRLab}
+    \item User name creation: \textbf{msrjetson}
+    \item Setting the password: \textbf{MSR}
+    \item Login type: \textbf{automatic login}
+\end{itemize}
+
+Finally, the size of the partition must be specified. For the standard application, the maximum size must be specified here. 
+
+
+
+
+\subsubsection{After logging in}
+
+After successful configuration, a welcome message, see~\ref{Jetson:Welcome}. The system can now be used.
+
+
+\begin{figure}
+  \centering
+  
+  \GRAPHICS{0.3}{1.0}{Jetson/Jetson_Nano-Getting_Started-Setup_Welcome_Screen.png}
+ 
+  \caption{Welcome message after the first start}\label{Jetson:Willkommen}
+\end{figure}
+
+\subsection{Setup without graphic interface}
+
+If the Jetson Nano is used as an edge computer, there is usually not an option to connect a monitor or keyboard. In this case, the system must be configured so that no interface is installed. This is described in this section.
+
+Preparations must again be made for this. The following parts must be provided:
+
+\begin{itemize}
+    \item A microSD card with the operating system,
+    \item Jetson Nano,
+    \item 5V power supply with jack plug,
+    \item Ethernet cable.
+    \item USB cable with microUSB plug
+    \item PC
+    \item Ethernet connector
+\end{itemize}
+
+Since no interface is installed on the Jetson Nano, it must be connected to a computer. Since Jetson Nano must also be connected to the Internet, only the micro USB port is available for this purpose. Therefore, a power supply unit with a jack plug must be used in this case. Before connecting the power supply, the Jetson Nano must be connected to the computer via a USB interface and to the Internet via an Ethernet cable. A monitor must not be connected. During the first start-up of the Jetson Nano, this is checked; if a monitor is connected, the graphical user interface is installed. Now the microSD card can be inserted into the Jetson Nano. The Jetson Nano can now be switched on.
+
+
+\section{Remote access to the Jetson Nano}
+
+\subsubsection{Access via Linux or MacOS}
+
+After switching on the Jetson Nano, search for the USB device in \SHELL{/dev} on the Linux or MacOS host. For example, this is \SHELL{tty.usbmodemFD133}. 
+This device is then connected to using the terminal emulator \glqq screen\grqq{}:
+
+\medskip
+
+\SHELL{screen /dev/tty.usbmodemFD133 115200}
+
+\subsubsection{Access via Windows}
+
+Under Windows, the interface of the Jetson Nano is found as a COM port. With the programme \glqq putty\grqq{} the connection via the serial interface can be started.
+
+\subsubsection{Configuration of the Jetson Nano}
+
+If the connection is successful, the installation wizard \SHELL{oem-config} is used to set the required data. As with the installation with a graphical interface, the End User License Agreement (EULA) from NVIDIA for the Jetson Nano software is displayed first. This agreement must be accepted. Then the language must be set. The keyboard layout can also be selected. This should match the connected keyboard. A suitable time zone must also be selected. Then the settings must be made, which will be requested at the next login. The following labels are recommended:
+
+\begin{itemize}
+    \item setting of the name: \textbf{MSR-Lab}
+    \item Designation of the computer name:\textbf{JetsonNanoMSRLab}
+    \item User name creation: \textbf{msrjetson}
+    \item Setting the password: \textbf{MSR}
+    \item Login type: \textbf{automatic login}
+\end{itemize}
+
+
+\bigskip
+
+After that, the Jetson Nano is available. You can then connect to the nano via ssh or putty:
+
+\medskip
+
+\SHELL{ssh elmar@JetsonNanoMSRLab}
+
+%\url{https://medium.com/@heldenkombinat/getting-started-with-the-jetson-nano-37af65a07aab#f208}
+\subsection{Switching on and activating Secure Shell}
+
+\ac{ssh} enables access to the Jetson Nano even if it is not equipped with a keyboard, mouse and monitor. The basic requirement is that the Jetson Nano is connected to the network via Ethernet or WLAN. 
+
+\subsubsection{Installation of SSH}
+
+An installation of \ac{ssh} is not necessary, as it is included in the distribution of the Jetson Nano's operating system. This only needs to be activated.
+
+%
+%Aktuelle Versionen von Raspbian oder auch den meisten alternativen Linux-Distributionen kommen ab Werk mit einem SSH-Server. Dieser muss nur noch aktiviert werden. Falls eine ältere Version von Raspbian oder eine Distribution ohne vorinstallierten SSH-Server verwendet wird, kann dies schnell nachinstalliert werden. In einem Terminal am Raspberry Pi muss folgendes eingegeben werden:
+%
+%\medskip
+%
+%
+%\SHELL{sudo apt-get install ssh}
+%
+%\medskip
+
+
+\subsubsection{Activation of SSH}
+
+To activate \ac{ssh}, the \ac{ssh} server is started. This is done by the following command:
+
+\medskip
+
+\SHELL{sudo /etc/init.d/ssh start}
+
+\medskip
+
+Since this is necessary with every use of \ac{ssh}, this process is automated:
+
+\medskip
+
+\SHELL{sudo update-rc.d ssh defaults}
+
+\medskip
+
+After this entry, \ac{ssh} is permanently available, even after a reboot. Access via \ac{ssh} to the Jetson Nano is then always possible.
+
+\bigskip
+
+Another possibility is to place an empty file named \glqq ssh\grqq{} in the root directory. If the file exists, \ac{ssh} is automatically activated at the next boot.
+
+\bigskip
+
+You can activate \ac{ssh} access via the system settings. To do this, open the configuration dialogue in the start menu \menu[>]{Settings > Configuration}, switch to the tab \glqq Interfaces\grqq{} and set the item \glqq SSH\grqq{} to \glqq Enabled\grqq{}. After confirmation, \ac{ssh} is also permanently available. The following command is used to open the dialogue:
+
+\medskip
+
+\SHELL{sudo raspi-config}
+
+\medskip
+
+The Jetson Nano must then be restarted:
+
+\medskip
+
+\SHELL{sudo reboot}
+
+
+\subsubsection{Access via user name and IP address}
+
+For \ac{ssh} access, the user name and password of the Jetson Nanoss must be known. The user name and associated password are specified during configuration during the first start-up.
+% Standardmäßig ist der Benutzername \glqq pi\grqq{} und das Passwort \glqq raspberry\grqq.
+%Das Benutzerpasswort kann auf unterschiedliche Weise geändert werden, zum Beispiel im Konfigurationsmenü im Punkt \glqq Change password for the current user\grqq{} ändern. Auf der grafischen Benutzeroberfläche kann 
+%dass Benutzerpasswort ebenfalls im Konfigurationsmenü geändert werden.
+
+
+\bigskip
+
+In order to use \ac{ssh}, the IP address of the Jetson Nano must be known. With the terminal command
+
+\medskip
+
+\SHELL{ifconfig}
+
+\medskip
+
+the current network settings including the IP address are output.
+
+
+%todo Testen!! und verbessern
+%\medskip
+%
+%Wenn \ac{ssh} eingerichtet ist und danach die SD-Karte neu beschrieben und alles von Grund auf neu gestartet wird, erhält man eine Fehlermeldung.
+%
+%\medskip
+%\SHELL{Remote Host Identification has changed}
+%
+%\medskip
+%
+%Mit dem Befehl
+%
+%\medskip
+
+%\SHELL{ssh-keygen -f "/home/msr/.ssh/known\_hosts"{} -R "192.168.1.70"}
+%
+%wird das Problem behoben, falls der richtige Benutzer, hier msr, und die IP-Adresse des Jetson Nanos, hier 192.168.1.70,
+%eingetragen wird.
+%
+%Für Windows-Benutzer ist beachten, die Nummer am Ende der Zeile der Fehlermeldung, die mit \SHELL{Offending ECDSA key in} beginnt. 
+%Im obigen Windows-Beispiel ist diese Zahl 3. Schließlich muss die Datein \SHELL{known\_hosts} bearbeitet werden:
+%
+%\medskip
+%
+%\SHELL{notepad C:/Users/msr/.ssh/known\_hosts}
+%
+%\medskip
+%
+%wobei \SHELL{C:/Users/msr/.ssh/known\_hosts} durch den Pfad zu ersetzen ist, der in der Fehlermeldung angezeigt wird. 
+%Die Zeile sollte die IP-Adresse Ihres Jetson enthalten.
+
+
+
+%todo Testen!! und verbessern
+\subsubsection{\ac{ssh}-Client under Windows}
+
+
+Since 2017, Windows has had an \ac{ssh} implementation based on OpenSSH, which is integrated into the PowerShell command line. To use it, the PowerShell must be called up via the Start menu and the following command entered:
+
+\medskip
+
+\SHELL{ssh benutzername@<IPAdresseDesJetsonNanos>}
+
+\medskip
+
+When connecting for the first time, the \ac{ssh} keys of the Jetson Nano must be confirmed with \glqq yes\grqq{}. After entering the user password, remote access can be performed.
+
+%Der Vorgang ist ausführlicher im NVIDIA Jetson Linux Developer Guide beschrieben.
+
+
+\subsection{Remote Desktop}
+
+
+If the Jetson Nano is to be operated without a monitor, keyboard and mouse, then a remote desktop access server called \SHELL{xrdp} should be used. The installation is simple:
+
+\medskip
+
+\SHELL{\$ sudo apt-get install xrdp}
+
+\medskip
+
+After the installation is complete, the Jetson Nano must be restarted. Once the reboot is complete, the \SHELL{nmap} command on the PC can be used to check whether the installation of \SHELL{xrdp} was successful:
+
+\medskip
+
+\SHELL{\$ nmap jetson}
+
+\SHELL{Starting Nmap 7.70 ( https://nmap.org ) at 2019-04-13 01:39 BST}
+
+\SHELL{Nmap scan report for jetson (192.168.1.118)}
+
+\SHELL{Host is up (0.0025s latency).}
+
+\SHELL{Not shown: 996 closed ports}
+
+\SHELL{PORT     STATE SERVICE}
+
+\SHELL{22/tcp   open  ssh}
+
+\SHELL{111/tcp  open  rpcbind}
+
+\SHELL{3389/tcp open  ms-wbt-server}
+
+\SHELL{Nmap done: 1 IP address (1 host up) scanned in 1.25 seconds}
+
+\SHELL{\$}
+
+\medskip
+
+
+
+
+%Wie Sie sehen können, da wir nicht eingeloggt sind, wurde unser VNC-Server heruntergefahren, aber der RDP-Server läuft, obwohl wir uns gerade auf dem Anmeldebildschirm des physischen Rechners befinden.
+Although Remote Desktop Protocol (RDP) is a proprietary protocol, Microsoft Viewer provides it free of charge for most platforms. This must be installed. For the Windows system, the desktop must be added in the Microsoft Remote Desktop programme: \glqq Add Desktop\grqq
+
+\medskip
+
+
+
+
+Once the settings have been configured, the session can be set in full screen mode by setting a reasonable resolution for the resulting windowed desktop. 
+%Klicken Sie auf "Speichern" und öffnen Sie dann den RDP-Desktop, indem Sie auf das Desktop-Symbol "Jetson Nano" klicken.
+
+If the PC is connected to the board via RDP, the desktop will look slightly different. This is because a standard Ubuntu desktop is displayed, running Gnome, rather than the older Unity-style desktop that is the default for L4T. This means that a separate desktop is created for the RDP. This desktop remains until the user logs off, closing the RDP window does not close the desktop. This means that the next time the RDP window is opened, the desktop will still be available.
+
+
+However, it should be noted that one cannot be logged on to the physical desktop and open an RDP desktop at the same time.
+
+If the Jetson Nano is accessed via a wireless network, in the Gnome application, under \glqq Settings\grqq{}, select \glqq Power\grqq{} from the menu on the left and ensure that \glqq Turn off Wi-Fi to save power\grqq{} is turned off.
+
+Now the monitor, keyboard and mouse can be unplugged, s are no longer needed.
+
+\section{Software installation}
+
+\subsection{Installing   pip}
+
+Python's default package installer \SHELL{pip} is not pre-installed on the Jetson Nano. The installation is simple:
+
+\medskip
+
+\SHELL{sudo apt install python3-pip}
+
+\medskip
+
+
+
+	
+
+\subsection{Installing  cmake and git}
+
+However, there is an extensive initial demonstration project entitled \glqq Hello AI World\grqq that can be downloaded from the project's GitHub. For this, the programmes \SHELL{cmake} and \SHELL{git} must first be installed:
+
+\medskip
+
+\SHELL{\$ sudo apt-get install cmake}
+
+\SHELL{\$ sudo apt-get install git}
+
+
+\section{Installing the  \ac{gpio}-Library}
+
+The library for managing and using the \ac{gpio} interface is provided by NVIDIA in a GitHub project. With the help of the command 
+
+
+\medskip
+\SHELL{\$ git clone https://github.com/NVIDIA/jetson-gpio}
+\medskip
+
+the project can be copied to the Jetson Nano. The library can then be installed. In the directory where the \PYTHON{setup.py} file of the project is located, now the command
+
+
+
+\medskip
+\SHELL{\$ sudo python3 setup.py install}
+\medskip
+
+can be executed. To be able to work with the library, one must have the user rights. To do this, first create a \ac{gpio} user group using
+
+\medskip
+\SHELL{\$ sudo groupadd -f -r gpio} \newline
+\medskip
+
+
+is created. Then one can set the corresponding user rights by adding a user:
+
+\medskip
+\SHELL{\$ sudo usermod -a -G gpio msrjetson}
+\medskip
+
+The programme udev manages the devices. The user rules must now be communicated to this programme. To do this, copy the file 99-gpio.rules into the rules.d directory.
+
+\medskip
+\SHELL{\$ sudo cp lib/python/Jetson/GPIO/99-gpio.rules /etc/udev/rules.d/}
+\medskip
+
+These rules are only used after a restart of the system. Alternatively, the rules can also be loaded actively:
+
+\medskip
+\SHELL{\$ sudo udevadm control -{}-reload-rules \&\& sudo udevadm trigger}
+\medskip
+
+The GitHub project also contains sample programmes located in the \SHELL{samples} folder. These can be used for testing.  One example is the program \PYTHON{simple\_out.py}. It uses the BCM pin numbering mode of the Raspberry Pi and outputs alternating high and low values to BCM pin 18, i.e. pin 12, every 2 seconds. This can be used to make an LED flash. The call is made by the following command:
+
+\medskip
+\SHELL{\$ python3 simple\_out.py}
+\medskip
+

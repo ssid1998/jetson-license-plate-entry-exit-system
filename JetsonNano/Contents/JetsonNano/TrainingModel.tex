@@ -1,0 +1,201 @@
+%%%%%%
+%
+% $Autor: Wings $
+% $Datum: 2020-01-18 11:15:45Z $
+% $Pfad: WuSt/Skript/Produktspezifikation/powerpoint/ImageProcessing.tex $
+% $Version: 4620 $
+%
+%%%%%%
+
+\chapter{Erzeugung des Trainingsmodells}
+
+
+In diesem Kapitel werden die wichtigsten Programmabschnitte aus dem ursprünglichen
+Programms zur Erzeugung des neuronalen Netzes erläutert. Zu Verfügung gestellt wurde
+das Programm von Herrn Dr.-Ing. Ole Mathis Magens.
+
+\section{Trainingsmodell}
+
+Die wichtigste Bibliothek in dem nachfolgenden Programmcode ist die Tensorflow-Bibliothek,
+da diese auf die wichtigsten Keras Funktionen zugreift. Der nachfolgende Programmcode
+ist an einigen Stellen gekürzt, ein vollständiger Programmcode befindet sich im Anhang~B.
+
+\begin{lstlisting}
+import tensorflow as tf
+from tensorflow.python.keras.datasets import cifar10
+from tensorflow.python.keras.preprocessing.image import ImageDataGenerator
+from tensorflow.python.keras.models import Sequential
+from tensorflow.python.keras.layers import Dense , Dropout , Activation , Flatten
+from tensorflow.python.keras.layers import Conv2D , MaxPooling2D
+from tensorflow.python.keras.callbacks import TensorBoard
+import collections
+\end{lstlisting}
+
+	Die Bibliothek collections ist für die Berechnung der Gewichte zuständig und somit 
+	ebenfalls von Relevanz.
+	Als erstes werden die Trainingsdaten aus Kapitel 6 als Variable pickle in geöffnet und
+	wieder unter dem Variablennamen X, y, Xval, yval gespeichert. Das rb steht für read
+	bytes.
+
+\begin{lstlisting}
+pickle_in = open("X.pickle" ,"rb")
+X = pickle.load( pickle_in )
+
+pickle_in = open("y.pickle" ,"rb")
+y = pickle.load( pickle_in )
+pickle_in = open("Xval.pickle" ,"rb")
+Xval = pickle.load( pickle_in )
+
+pickle_in = open("yval.pickle" ,"rb")
+yval = pickle.load( pickle_in )
+\end{lstlisting}
+
+Die Byte-Stream Zahlen enthalten Zahlenwerte zwischen 0-255, die sich aus dem entsprechenden 
+Farbwert des Pixels ergeben. Das neuronale Netz auf Basis von Tensorflow
+arbeitet im Wertebereich zwischen -1 bis 1.[Gmb19a] Die Variablen mit den Bildinformationen 
+wird auf einen Wertebereich zwischen 0-1 skaliert.
+
+
+\begin{lstlisting}
+X = X/255.0
+Xval = Xval /255.0
+\end{lstlisting}
+
+Mit der Funktion ImageDataGeneration können die einzelnen Bilder in ihrer Ausrichtung
+und ihrer Helligkeit leicht verändert werden. Hierdurch soll das Netz abstraktere Konzepte
+lernen, um auch bei leichten Abweichungen des Bildausschnitts gut zu performen.
+
+\begin{lstlisting}
+datagen = ImageDataGenerator (
+rotation_range = 5 ,
+brightness_range = (0.2 ,1.5) ,
+width_shift_range =0.1 ,
+height_shift_range =0.1 ,
+zoom_range =0.1 ,
+shear_range =0.1 ,
+fill_mode='nearest')
+datagen.fit(X)
+\end{lstlisting}
+
+\begin{lstlisting}
+model = Sequential ()
+
+model.add( Conv2D (16 , (3 , 3) , input_shape=(IMG_HEIGHT , IMG_WIDTH , 1) , padding='same') )
+model.add( Activation ('relu') )
+model.add( MaxPooling2D ( pool_size=(2, 2) ) )
+
+model.add( Conv2D (32 , (3 , 3) , padding='same') )
+model.add( Activation ('relu') )
+model.add( MaxPooling2D ( pool_size=(2, 2) ) )
+
+model.add( Conv2D (32 , (3 , 3) , padding='same') )
+model.add( Activation ('relu') )
+model.add( MaxPooling2D ( pool_size=(2, 2) ) )
+
+model.add( Flatten () )
+model.add( Dense (32) )
+model.add( Activation ('relu') )
+model.add( Dropout (0.5) )
+
+model.add( Dense (1) )
+model.add( Activation ('sigmoid') )
+model.compile (loss='binary_crossentropy' ,
+optimizer='AdaDelta' , metrics=['accuracy' ])
+
+model.fit_generator ( datagen.flow(X , y , batch_size=64) ,
+epochs=40,
+steps_per_epoch=200,
+validation_data=datagen.flow(Xval , yval , batch_size=64))
+\end{lstlisting}
+
+Der wichtigste Teil des Netzes liegt in dem Aufbau der Netzstruktur. Zuerst wird ein
+Modell vom Typ Sequential aufgerufen. Bei dieser Art handelt es sich um einen linea-
+ren Stapel von Schichten. Es folgen eine Reihe von Ebenenfunktionen. Ein \ac{cnn} beginnt
+mit einer Faltungsschicht (siehe Kapitel 4), welches mit dem Befehl model.add(Conv2D)
+erzeugt wird. Es folgt in Klammern die Anzahl der Filter (hier 16) und die Größe des
+Filters (hier: 3x3), danach wird die Eingangsgröße der Trainingsdaten und die Art des
+padding mitgeteilt. Mit der Funktion model.add(Activation) kann die Aktivierungsfunktion 
+der entsprechenden Schicht festgelegt werden. Danach folgt eine Polling-Schicht, 
+welche mit dem Befehl model.add(MaxPooling2D)erzeugt wird. In den Klammer befindet
+sich die Größe des Kernel (hier: 2x2). Diese Schichtenpakete wiederholen sich zweimal.
+Bei der zweiten Faltungsschicht wurde die Filteranzahl auf 32 erhöht. Nach diesem Aufbau 
+werden die 2-dimensionalen Bildinhalte mit dem Befehl model.add(Flatten) in einen
+eindimensionalen Vektor konvertiert. Anschließend wird ein Dense-Layer mit dem Befehl
+model.add(Dense) hinzugefügt. Diese letzte Schicht des \ac{cnn} schafft den Übergang zur
+klassischen neuronalen Netzstruktur, in der alle Neuronen untereinander vollverbunden
+sind. An dieser Stelle kann ein Dropout von 50\% hinzugefügt werden. In der letzten
+Schicht des klassischen neuronalen Netzes gibt es erneut einen Dense-Layer mit der 
+Aktivierungsfunktion Sigmoid. Bei binären Klassen wird der Dense-Layer auf 1 gesetzt.
+Im nächsten Schritt wird der Compiler definiert. Binary crossentropy wird verwendet,
+wenn nur zwei Beschriftungsklassen (0 und 1) vorhanden sind. Mit dem Optimierer Ada-Delta 
+wird eine stochastische Gradientenabstiegsmethode verwendet, um den kontinuierlichen Rückgang 
+der Lernrate während des Trainings und die Notwendigkeit einer manuell
+ausgewählten globalen Lernrate zu umgehen. [Cho19] Die Metrik accuracy berechnet, wie
+oft Vorhersagen mit der Beschriftung aus den Kategorien übereinstimmen. Mit 
+dem model.fit Generator werden wichtige Einstellungen zum Training definiert. Es werden die
+Trainings und Validierungsdaten als daten.flow zugeordnet, sowie dem Modell die Epo-
+chenanzahl, Stapelgröße und Anzahl der Schritte. In der Variable NAME kann ein eigens
+definierter, geeigneter Name für das neuronale Netz angegeben werden. Es empfiehlt sich,
+dem Modell Informationen der Netzstruktur mitzugeben.
+
+\begin{lstlisting}
+NAME = "demold_16_32_32 -32-32CNN-aug -50drop-ver180 -single_mold"
+model.save(NAME+'.model')
+\end{lstlisting}
+
+\section{Vorhersage}
+
+Nachdem das neuronale Netz trainiert wurde, geht es in diesem Programmabschnitt darum 
+die Performance des neuronalen Netzes in der Realität zu überprüfen. Das Modell
+wird dabei aktiv auf Bilder aus bestimmten Ordnern angewendet, um zu testen welcher
+Kategorie die Bilder zugeordnet werden.
+
+\begin{lstlisting}
+CATEGORIES = [ "good" , "bad" ]
+
+files = glob.glob('./Testmenge_good_30x80/*.bmp')
+
+def prepare ( filepath ) :
+    IMG_HEIGHT = 80
+    IMG_WIDTH = 30
+    img_array = cv2.imread (filepath , cv2.IMREAD_GRAYSCALE )
+    new_array = cv2.resize (img_array , (IMG_WIDTH , IMG_HEIGHT ) )
+        return new_array.reshape ( - 1 , IMG_HEIGHT , IMG_WIDTH ,1)
+
+model = tf.keras.models.load_model ('Model_300ValSam_30x80_E40_S200_FE3_DrO50Pr.model')
+
+prediction = numpy.zeros (( len( files ) ,1 , 1) )
+\end{lstlisting}
+
+Das Programm nutzt die Bibliotheken cv2, os, tensorflow, matplotlib, glob und numpy.
+Nach dem Einspielen der Bibliotheken werden die möglichen Kategorien definiert. Der
+Index 0 definiert die Katergorie good und der Index 1 die Kategorie bad. Die Variable files
+enthält den Ordnerpfad, in dem sich die Bilder befinden, die getestet werden sollen. Der
+Pfad aus dem Programmabschnitt führt zu einem Ordner mit Testbildern der Kategorie
+good.
+
+Die Funktion prepare bereitet die Bilder aus dem Ordner so vor, dass sie sich in einem
+Format befinden, welches das neuronale Netz verwenden kann. Diese Funktion ist ähnlich
+der Funktion zur Erstellung der Trainingsdaten aus Kapitel 6. Anschließend wird das
+neuronale Netz in der Variable model als neues Array über die angegeben Ordnerlänge
+gespeichert. Die for-Schleife erzeugt eine Laufvariable i, die über die gesamte Ordnerlänge
+des Testbilder aus der Kategorie good läuft. Die Funktion model.predict übernimmt die
+Klassifikationen des neuronalen Netzes und prüft die Bilder in dem Testordner auf deren 
+Klasse. In der if-Schleife werden alle Bilder angezeigt, die nicht der Kategorie good
+zugeordnet werden können. Da sich in dem Testordner nur Bilder der Kategorie good
+befinden, weisen alle angezeigten Bilder die der Kategorie bad zugeordnet wurden, auf
+eine Ungenauigkeit des Netzes hin.
+
+\begin{lstlisting}
+for i in range (len( files ) ) :
+    prediction [ i ,0 ,0] = model.predict ([ prepare ( files [ i ]) ])
+    print ( files [ i]+': '+CATEGORIES [ int( prediction [ i ] [ 0 ] [ 0 ] ) ])
+    img_array = cv2.imread ( files [ i ] ,cv2.IMREAD_COLOR )
+    pyplot.imshow (img_array , cmap='gray')
+    pyplot.show ()
+
+if CATEGORIES [ int( prediction [ i ] [ 0 ] [ 0 ] ) ] == 'bad' :
+    pyplot.imshow (img_array , cmap='gray')
+    pyplot.show ()
+\end{lstlisting}
+

@@ -1,0 +1,256 @@
+%%%%%%
+%
+% $Autor: Wings $
+% $Datum: 2020-01-18 11:15:45Z $
+% $Pfad: WuSt/Skript/Produktspezifikation/powerpoint/ImageProcessing.tex $
+% $Version: 4620 $
+%
+%%%%%%
+
+
+%todo Überschäumer entfernen
+
+
+\chapter{Datenbasis}
+
+Eine gute Datenbasis ist der Schlüssel für ein solides neuronales Netz. Wie aus Kapitel
+4 bereits bekannt, erlernen neuronale Netze die Fähigkeit zu klassifizieren auf Grundlage
+von Daten, die ihnen während des Trainings zur Verfügung gestellt werden. Je größer
+und qualitativ hochwertiger die Datenbasis ist, desto stabiler und genauer kann das Netz
+Klassifizierungen vornehmen. Dieses Kapitel befasst sich mit dem Thema, der Erstellung
+einer guten Datenbasis.
+
+\section{Aufbau eines Fotos}
+
+Ein \ac{cnn} benötigt Eingangsdaten in Form einer Matrix, um trainiert werden zu können.
+Ein Foto kann als solche Matrix beschrieben werden. Dabei wird das Bild in rasterförmig
+angeordnete Bildpunkte, den sogenannten Pixeln, unterteilt. Jedem Pixel wird ein Farbwert 
+zwischen 0 - 255 zugeordnet. Bei einem Schwarz-Weiß-Bild besitzt die Matrix die
+Tiefe 1. Ein weißer Pixel hat den Wert 0 und ein schwarzer den Wert 255. Ein optisch
+grauer Punkt hat einen Wert zwischen >0 und <255. Je heller der Pixel, desto kleiner
+der Wert. Handelt es sich um ein Farbfoto so gibt es mehrere Schichten, die jeweils einen
+Farbwert widerspiegeln. Die Bildtiefe ist dann >1. Die Größe der Matrix entspricht der
+Größe des Bildes. \cite{Python:2020b}
+
+\section{Vorbereitung der Daten}
+
+Die Abbildung+\ref{DBSchema} zeigt einen Ablaufplan zum Erzeugen von Trainingsdaten. Nachfolgend
+werden die einzelnen Punkte des Plans, anhand der ursprünglichen Datenbasis erläutert.
+Erzeugt werden die Bilder an der Taktstraße 30 und den dort montierten Kameras der Firma 
+Keyence. Diese erzeugen bei jeden Produktionstakt der Maschine ein Bild von einem
+bestimmten Ausschnitt. Der Bildausschnitt ist so festgelegt, dass von jedem Werkzeug
+der mittlere Teil fotografiert wird. Doppelformen bei denen links und rechts die gleichen
+Zusatzfedern produziert werden, können mit einem Bild gleichzeitig geprüft werden. Die
+Industriekameras die das Bild erzeugen sind an einen Sondercomputer der Firma Keyence
+angeschlossen, welcher die Bilddateien über ein File Transfer Protocol (FTP)-Server an
+einen Computer an der Taktstraße sendet. Dort wird das Bild in einem zuvor definierten
+Ordner gespeichert.
+
+Um den Computer vor äußeren Produktionsbedingungen und vor Fremdeinwirkungen zu
+schützen, steht dieser in einem verschlossenen Metallschrank und ist mit einem Passwort
+gesichert. Befugte Personen können mit entsprechendem Schlüssel und den Zugangsdaten
+auf den Computer und die Bilder zugreifen. Da der Computer, aus sicherheitstechnischen
+Gründen nicht mit dem Internet verbunden ist, wurde ein externes Speichermedium verwendet, 
+um die Bilder aus dem Ordner zu entnehmen.
+
+Bei einer Doppelform können sich insgesamt vier Zustände im Bild ergeben. Der erste
+Zustand ist die vollständige Entnahme der Zusatzfedern aus beiden Formen, beziehungsweise
+ein erfolgreicher Schließprozess und somit kein Überschäumer in einer Form. Dieser
+Zustand wurde im nachfolgenden als \texttt{good good} definiert. Bei dem Zustand zwei und drei,
+weist eine Seite eine unvollständige Entnahme beziehungsweise den Fehler
+Überschäumer auf. Diese Kategorie wurden als good bad oder bad good bezeichnet, je nach dem auf
+welcher Seite der Fehler auftritt. Der letzte Zustand ist eine fehlerhafte Entnahme auf
+beiden Seiten oder der Fehler Überschäumer in beiden Formen. Dieser Zustand wurde als
+\texttt{bad bad} festgelegt.
+
+Für die Sortierung der Bilder auf dem Speichermedium wurde eine ruhige Arbeitsatmosphäre 
+in einem Büro gewählt. In einem ausgewählten Verzeichnis auf dem Computer aus
+dem Büro wurden vier Ordner der oben genannten Kategorien erstellt. Anschließend wurden 
+die Fotos vom Speichermedium manuell gesichtet und in die entsprechenden Ordner
+auf dem Computer einsortiert. Der symmetrische Aufbau des Bildes macht es möglich,
+die Kategorien good good, good bad, bad good und bad bad auf die zwei Kategorien good
+und bad zu reduzieren. Es wurden zwei neue Ordner mit dem Namen good und bad in
+dem Verzeichnis angelegt. Mit Hilfe eines kurzen Programmabschnitt wurden die Bilder
+aus den vier kategorisierten Ordnern geöffnet, in der Mitte geschnitten und in die Ordner
+der Kategorien good oder bad als Kopie abgespeichert. Der Inhalt dieses Programms wird
+im nachfolgenden Abschnitt erläutert.
+
+Von jeder Kategorie wurde eine Testmenge von ca. 10\% zurückgehalten und in einen
+separaten Ordner sortiert. Die Testmenge wurde manuelle ausgewählt, um einen repräsentativen 
+Schnitt zu erhalten. Alternativ kann diese Aufgabe ebenfalls von einem
+Programm übernommen werden. Als letzten Schritt wurden die verbleibenden Bilder aus
+den Kategorien good und bad mit in einen großen Byte-Stream umgewandelt und gespeichert. 
+Dieses Vorgehen wird als Serialisieren bezeichnet. \cite{Duden:2020}
+
+\section{Programm Bilder zuschneiden und neu sortieren}
+
+
+Das folgende Programm bearbeitet die Bilder aus den vier Kategorien good good, good bad,
+bad good und bad bad, schneidet diese in der Mitte und speichert die Bildhälften in den
+Ordner good oder bad. Das Programm wurde von Dr.-Ing. Ole Mathis Magens erstellt
+und zur Verfügung gestellt.
+
+
+
+Zu Beginn des Programms, werden die Bibliotheken aufgerufen, aus denen im nachfolgenden 
+Programmcode Funktionen verwendetet werden. Um nicht die ganze Bibliothek in
+das Programm laden zu müssen, können aus bestimmt Bibliotheken einzelne Funktionen
+direkt aufgerufen werden. Aus der Bibliothek os wurde nur die Funktion \PYTHON{path} benötigt,
+um auf Verzeichnisse zugreifen zu können.
+
+Die Raw-Dateien liegen in einer sehr hohe Auflösung vor, das neuronale Netz kann zum Extrahieren 
+der relevanten Informationen auch mit kleineren Auflösungen genaue Ergebnisse
+erzielen. Daher wurde eine Ausgangsbreite (\PYTHON{output width}) und eine Ausgangshöhe 
+(\PYTHON{output height}). als Variable definiert. In dem ersten Programm wurde die Ausgangsbreite 
+und die Ausgangshöhe von einer Bildhälfte auf das Format 30x80 gesetzt.
+
+\lstinputlisting%[firstline=300,lastline=500]
+{../Python/JetsonNano/Zuschnitt.py}
+
+Im nächsten Schritt bekommt die Variable files den Pfad zugeordnet in denen sich
+die Bilder befinden. Mit dem Befehl glob.glob wird die Liste der Dateien mit ihrem
+vollständigen Pfad zurückgegeben. Die Endung *.bmp gibt an in welchem Format die
+Dateien sich befinden müssen, um berücksichtigt zu werden. [Fou20a] Es wird eine 
+for-Schleife in Kombination mit einem range()-Befehl verwendet, um die nachfolgenden 
+Befehle wiederholt über die gesamte Länge der im Ordner befindenden Bilder (len(files))
+auszuführen. Mit dem open()-Befehl wird das Bild geöffnet und anschließend eine 
+Transposition durchgeführt. Die von der Kamera gespeicherten Bilder sind in ihrer Ausrichtung
+nach rechts gedreht. Der Befehl ROTATE 270 innerhalb der transpose()-Funktion dreht
+das Bild um weitere 270 Grad nach rechts. Mit dem resize()-Befehl, wird die Größe des
+Bildes geändert. Wie zu Beginn definiert, soll die Ausgangsgröße einer Bildhälfte 30x80
+sein. Das ursprüngliche Bild besitzt die doppelte Bildbreite, da es sich um zwei Bildhälften
+handelt. Der crop()-Befehl schneidet das Bild rechteckig zu. Die ersten beiden Werte innerhalb 
+des Befehls definieren den Anfangspunkt (x 0 ,y 0 ) die folgenden zwei Werte definieren
+den Endpunkt(x 1 ,y 1 ) des Zuschnitts. Das erste Bild geht von der unteren linken Ecke des
+Bildes, bis zur oberen Hälfte. Die linke Bildhälfte wird anschließend im Ordner bad und
+mit dem Zusatz left und den ursprünglichen Pfadnamen versehen. Danach wird die rechte 
+Bildhälfte analog zugeschnitten und im Ordner good gespeichert. Mit dem Ausdruck
+FLIP in dem transpose()-Befehl, wird das Bild nach rechts gespiegelt. Hierdurch wird eine
+Vereinheitlichung der rechten und linken Seite erzeugt. Dieser Programmabschnitt wird
+für die anderen Ordner good good, good bad und bad bad analog durchgeführt. Hierfür
+muss das Verzeichnis entsprechend umgeändert werden. Derselbe Vorgang wurde für die
+Bilder zur Erkennung von Überschäumern durchgeführt. In der Abbildung~\ref{} sind die
+zugeschnittenen und gespiegelten Bilder dargestellt. Es ist zu erkennen, dass die Bilder
+bis auf leicht veränderte Lichtverhältnisse identisch sind.
+
+Nachdem dieses Programm durchlaufen wurde, befinden sich alle Ursprungsbilder als 
+geschnittene Kopie in den Ordnern good und bad. In der Tabelle 6.1 wird die Anzahl der
+Bilder in diesen Kategorien dargestellt, die für das erste Training verwendet wurde. Wie
+sich anhand der Tabelle erkennen lässt, herrscht ein starkes Ungleichgewicht zwischen
+den einzelnen Kategorien. Sowohl bei den Überschäumern und bei der Entnahme sind die
+Bilder der Kategorie bad stark unterrepräsentiert.
+
+\section{Bilden der Trainingsdaten}
+
+Die für das Training benötigten Bilddateien befanden sich alle in kategorisierten Ordnern.
+Um nicht jedes Bild einzeln in das neuronale Netz zu spielen, wurden alle Bilder für das
+Training, in einem großen Byte-Stream serialisiert. Hierfür wird die pickle-Funktion aus
+der gleichnamigen Bibliothek genutzt.
+
+Der nachfolgende Programmcode zeigt die wichtigsten Inhalte zum Erzeugen der Trainingsdaten 
+in reduzierter Form. Der vollständige Programmcode befindet sich im Anhang
+und orientier sich an eine Vorlage aus dem Internet. \cite{sentdex:2018} Zu Beginn werden die 
+notwendigen Bibliotheken aufgerufen. Wichtige Bibliotheken in diesem Programm sind das
+cv2-Modul, die random-Bibliothek und die Bibliothek imblearn-over sampling welche ein
+Datengleichgewicht zwischen unausgeglichenen Kategorien erzeugen kann.
+
+
+\lstinputlisting%[firstline=300,lastline=500]
+{../Python/JetsonNano/TrainingData.py}
+
+In der Variablen \PYTHON{training\_data} werden die Inhalte der Bilder gespeichert. Mit der 
+Funktion create trainings data wird dieser Inhalt erzeugt. Die erste for-Schleife dieser Funktion
+erzeugt ein Zugriffspfad namens path, welcher einzelne Pfade zu den jeweiligen Kategorien 
+herstellt. Mit der Variablen class num wird jeder Kategorie ein Index zugeordnet. Da
+es zwei Kategorien gibt, bekommt die erste Kategorie good den Index 0 und die zweite
+Kategorie bad den Index 1.
+
+Die zweite for-Schleife liest die Bilder über die gesamte Länge der Ordnerinhalte und
+speichert diese als Array in der Variable img arry. Der Befehl IMREAD Grayscale konvertiert
+das Farbbild in ein Graustufenbild, wodurch die Bildtiefe von drei Ebenen auf eine reduziert 
+wird. In der Variable new array wird der Inhalt des img array mit der geänderten
+Bildtiefe gespeichert. Nun befinden sich die Bildinformationen aus beiden Kategorien in
+der Variable new array. Zusammen mit den Informationen aus der Variable class num,
+wird daraus der Trainingsdatensatz erstellt.
+
+\begin{lstlisting}
+random.shuffle( training_data )
+\end{lstlisting}
+
+
+Der Trainingsdatensatz war zu Beginn des Trainings noch sortiert. Das Bedeutet, dass die
+ersten abgespeicherten Bilderinformationen aus der Kategorie good und die letzten aus
+der Kategorie bad stammen. Um diese Sortierung zu durchbrechen wurde mit dem Befehl
+random.shuffle gearbeitet. Diese Funktion schafft eine Durchmischung der Trainingsdaten.
+
+\begin{lstlisting}
+Xval = [ ]
+yval = [ ]
+X = [ ]
+y = [ ]
+ValNum =300
+\end{lstlisting}
+
+Die Variablen Xval, yval, X, Y und ValNum wurden neu definiert. Die Variable ValNum
+gibt an, wie viele Bilder als Validierungsdaten zum Trainieren des Netzes verwendet wer-
+den sollen. Der ursprüngliche Wert lag bei 300 Bilder.
+
+
+\begin{lstlisting}
+for features , label in training_data [0: ValNum - 1]:
+    Xval.append ( features )
+    yval.append ( label )
+    
+Xval = np.array (Xval).reshape( - 1 , IMG_HEIGHT , IMG_WIDTH , 1)
+
+for features , label in training_data[ ValNum : - 1]:
+    X.append( features )
+    y.append( label )
+
+X = np.array(X).reshape( - 1 , IMG_HEIGHT , IMG_WIDTH , 1)
+\end{lstlisting}
+
+
+Die for-Schleife hat die Funktion, die ersten 300 Positionen aus den Trainingsdaten zu
+nehmen und die Bildinformationen (features) der Variable Xval hinzuzufügen. Die 
+Information der zugehörigen Kategorie(lable) wird in der Variable yval gespeichert. Die
+Variable Xval wurde anschließend als Numpy-Array der Größe 80x30 und der Tiefe 1
+gespeichert. Analog hierzu wurden die verbleibenden Trainingsdaten als Variable X und
+y gespeichert.
+
+\begin{lstlisting}
+sm = RandomOverSampler( random_state=0)
+X , y = sm.fit_resample(X.reshape ( - 1 , IMG_HEIGHT*IMG_WIDTH ) , y)
+X = X.reshape( - 1 , IMG_HEIGHT , IMG_WIDTH , 1)
+\end{lstlisting}
+
+
+Da in den einzelnen Kategorien ein starkes Ungleichgewicht der Bilderanzahl herrscht,
+wurde ein Oversampling angewendet. Dazu wird die Funktion RandomOverSampling verwendet,
+welche beliebige Bilder der unterrepräsentierten Kategorie vervielfältigt bis ein
+Gleichgewicht zwischen den Kategorien herrscht.
+
+
+\begin{lstlisting}
+pickle_out = open("Xval.pickle" ,"wb")
+pickle.dump(Xval , pickle_out )
+pickle_out.close ()
+
+pickle_out = open("yval.pickle" ,"wb")
+pickle.dump(yval , pickle_out )
+pickle_out.close ()
+
+ickle_out = open("X.pickle" ,"wb")
+pickle.dump(X , pickle_out )
+pickle_out.close ()
+
+pickle_out = open("y.pickle" ,"wb")
+pickle.dump(y , pickle_out )
+pickle_out.close ()
+\end{lstlisting}
+
+Die pickle-Funktion schreibt die zuvor erstellten Variablen Xval, yval, X und y in einen
+Byte-Stream. Die Datei besitzt die Endung .pickle. Das wb in dem Programmabschnitt
+steht für write bytes.
+
+Nach diesem Vorgang war das Erstellen der Trainingsdaten abgeschlossen.

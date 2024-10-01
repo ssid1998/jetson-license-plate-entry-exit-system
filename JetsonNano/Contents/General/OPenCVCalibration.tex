@@ -1,0 +1,213 @@
+%%%%%%%%%%%%
+%
+% $Autor: Wings $
+% $Datum: 2019-03-05 08:03:15Z $
+% $Pfad: Automatisierung/Skript/Produktspezifikation/Powerpoint/AMF.tex $
+% $Version: 4250 $
+% !TeX spellcheck = en_GB/de_DE
+% !TeX encoding = utf8
+% !TeX root = filename 
+% !TeX TXS-program:bibliography = txs:///biber
+%
+%%%%%%%%%%%%
+
+
+\chapter{Camera Calibration using OpenCV}
+
+The camera is being used as a visual sensor in this application. It is essential to know the parameters of the camera to use it effectively as a visual sensor.
+The process of estimating the parameters of the camera is called camera calibration.When a camera looks at 3D objects in the real world and transforms them into a 2D image, the transformation isn’t perfect.Sometimes, the images are distorted: edges bent,sort of rounded or stretched outward. It is necessary to correct this distortion in some use cases where the information from the image is crucial.
+
+\section{Calibration using Checkerboard}
+
+In order to reduce the distortion, this distortion can be captured by five numbers called Distortion Coefficients, whose values reflect the amount of radial and tangential distortion in an image.If we know the values of all the coefficients, we can use them to calibrate our camera and undistort the distorted images.
+The camera calibration as done using chessboard patterns.A chessboard is great for calibration because it's regular, high contrast pattern makes it easy to detect automatically. Tthe corners of squares on the checkerboard are ideal for localizing them because they have sharp gradients in two directions
+In addition, these corners are also related by the fact that they are at the intersection of checkerboard lines.
+
+For the 3D points we photograph a checkerboard pattern with known dimensions at many different orientations. The world coordinate is attached to the checkerboard and since all the corner points lie on a plane, we can arbitrarily choose Z{\_}w for every point to be 0. Since points are equally spaced in the checkerboard, the (X{\_}w, Y{\_}w) coordinates of each 3D point are easily defined by taking one point as reference (0, 0) and defining remaining with respect to that reference point.
+
+\section{Method to Calibrate}
+
+The below are the steps used to calibrate the camera and remove the distortion in the images in brief: 
+
+\begin{itemize}
+	\item \textbf{Step1: Finding the corners of the chessboard} Automatic detection of the corners was done using the OpenCV functions \PYTHON{findChessboardCorners()} and \PYTHON{drawChessboardCorners()}
+	\item \textbf{Step2: Calibrating the camera} In order to Calibrate the camera, the first step will be to read in calibration Images of a chess board. It’s recommended to use at least 20 images to get a reliable calibration \cite{Sadekar:2020} To calibrate the camera opencv gives \PYTHON{calibrateCamera()}function. 
+	\PYTHON{retval, cameraMatrix, distCoeffs, rvecs, tvecs = cv2.calibrateCamera(objectPoints, imagePoints, imageSize)}
+	In \PYTHON{calibrateCamera()} function we need object points and image points.
+	The coordinates of the corners in the 2D displayed image which called as imagepoints are mapped to the 3D coordinates of the real, undistorted chessboard corners, which are called as objectpoints.The z coordinates will stay zero so leave that as it is but, for the first two columns x and y, Numpy’s mgrid function is used to generate the coordinates that we want. mgrid returns the coordinate values for given grid size and shape those coordinates back into two columns, one for x and one for y.
+	The following are returned by this function: 
+	\begin{itemize}
+		\item cameraMatrix : Camera Matrix, which helps to transform 3D objects points to 2D image points.
+		\item Distortion coefficients
+		\item It also returns the position of the camera in the world, with the values of rotation and translation vectors rvecs, tvecs
+	\end{itemize}
+	\item \textbf{Step3: Undistort images}	The undistort function takes in a distorted image, our camera matrix, and distortion coefficients and it returns an undistorted, often called destination image.
+	OpenCV has a function called \PYTHON{cv2.undistort()} which takes a camera matrix, distortion coefficients and the image.
+	\PYTHON{dst = cv2.undistort(img, camera\_matrix, dist\_coefs, None, newcameramtx)}
+\end{itemize}
+
+\textbf{Note:} More details about the concept of distortion in cameras,a step-by-step procedure to calibrate the camera matrix, distortion coefficients and remove distortion and the corresponding python programs  was explained in the file \FILE{Distortion\_Camera\_Calibration\_OpenCV.tex} in the directory ``JetsonNano\_Inhalt\_Software''. 
+
+\subsection{Evaluation of Results}
+
+The below are the camera matrix and distortion coefficients obtained when calculated for the logitech webcam: 
+
+\begin{figure}[H]
+	\centering
+	\GRAPHICS{1}{1}{OpenCVCalibration/cc9.png}
+	\caption{Camera matrix calculated by the cameracalibrate function for the logitech webcam}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\GRAPHICS{1}{1}{OpenCVCalibration/cc10.png}
+	\caption{Distortion coefficients returned}
+\end{figure}
+
+The below is the image of before and after distortion removal by the python program:
+
+\begin{figure}[H]
+	\centering
+	\GRAPHICS{1}{1}{OpenCVCalibration/cc8.png}
+	\caption{Image of the chessboard before and after removing distortion}
+\end{figure}
+
+There is no noticeable difference between the original image before and after the distortion removal.However, it is important to remove the distortion in the image as we need to calculate the real-world coordinates of the object's centroid from the pixel co-ordinates.
+
+\chapter{Distortion and Camera Calibration}
+The process of estimating the parameters of the camera is called camera calibration.When a camera looks at 3D objects in the real world and transforms them into a 2D image, the transformation isn’t perfect.Sometimes, the images are distorted: edges bent,sort of rounded or stretched outward. It is necessary to correct this distortion in some use cases where the information from the image is crucial.
+\section{Why Distortion?}
+When a camera looking at an object, it is looking at the world similar to how our eyes do. By focusing the light that’s reflected off of objects in the world. In the below picture, though a small pinhole, the camera focuses the light that’s reflected off to a 3D traffic sign and forms a 2D image at the back of the camera.
+In math, the Transformation from 3D object points, P of X, Y and Z to X and Y is done by a transformative matrix called the camera matrix(C),which we can use to calibrate the camera. However, real cameras don’t use tiny pinholes; they use lenses to focus on multiple light rays at a time which allows them to quickly form images. But, lenses can introduce distortion too.Light rays often bend a little too much at the edges of a curved lens of a camera, and this creates the effect that distorts the edges of the images.
+\begin{figure}[H]
+	\centering
+	\GRAPHICS{0.7}{0.7}{OpenCVCalibration/pinhole.png}
+	\caption{Working of a camera \cite{Kummarikuntla:2019}} 
+\end{figure}
+
+\subsection{Types of Distortion} 
+\textbf{Radial Distortion:} Radial Distortion is the most common type that affects the images, In which when a camera captured pictures of straight lines appeared slightly curved or bent
+
+\begin{figure}[H]
+	\centering
+	\GRAPHICS{0.6}{0.6}{OpenCVCalibration/rad.png}
+	\caption{Example of a Radial Distortion \cite{Kummarikuntla:2019}} 
+\end{figure}
+
+\textbf{Tangential distortion:} Tangential distortion occurs mainly because the lens is not parallely aligned to the imaging plane, that makes the image to be extended a little while longer or tilted, it makes the objects appear farther away or even closer than they actually are.
+
+\begin{figure}[H]
+	\centering
+	\GRAPHICS{0.8}{0.8}{OpenCVCalibration/tan.png}
+	\caption{Example of a Tangential Distortion \cite{Kummarikuntla:2019}} 
+\end{figure}
+So, In order to reduce the distortion, this distortion can be captured by five numbers called Distortion Coefficients, whose values reflect the amount of radial and tangential distortion in an image.
+If we know the values of all the coefficients, we can use them to calibrate our camera and undistort the distorted images.
+
+This means we have all the information (parameters or coefficients) about the camera required to determine an accurate relationship between a 3D point in the real world
+and its corresponding 2D projection (pixel) in the image captured by that calibrated camera.
+
+Typically this means recovering two kinds of parameters
+
+\begin{itemize}
+	\item \textbf{Intrinsic Parameters:}Internal parameters of the camera/lens system. E.g. focal length, optical center, and radial distortion coefficients of the lens.
+	\item \textbf{Extrinsic Paramters: }This refers to the orientation (rotation and translation) of the camera with respect to some world coordinate system.
+\end{itemize}
+
+\section{Calibration using Checkerboard}
+A chessboard is great for calibration because it's regular, high contrast pattern makes it easy to detect automatically.  Checkerboard patterns are distinct and easy to detect in an image. Not only that, the corners of squares on the checkerboard are ideal for localizing them because they have sharp gradients in two directions
+In addition, these corners are also related by the fact that they are at the intersection of checkerboard lines. All these facts are used to robustly locate the corners of the squares in a checkerboard pattern.
+\begin{figure}[H]
+	\centering
+	\GRAPHICS{0.8}{0.8}{OpenCVCalibration/camcalib_flowchart.png}
+	\caption{Camera Calibration flow chart \cite{Sadekar:2020} }
+\end{figure}
+The below image shows the difference between image of the chessboard with and without the distortion.  
+\begin{figure}[H]
+	\centering
+	\GRAPHICS{0.8}{0.8}{OpenCVCalibration/cc5.png}
+	\caption{Effect of distortion on Checkerboard images \cite{Sadekar:2020}}
+\end{figure}
+In the process of calibration we calculate the camera parameters by a set of know 3D points (X{\_}w, Y{\_}w, Z{\_}w) and their corresponding pixel location (u,v) in the image.
+For the 3D points we photograph a checkerboard pattern with known dimensions at many different orientations. The world coordinate is attached to the checkerboard and since all the corner points lie on a plane, we can arbitrarily choose Z{\_}w for every point to be 0. Since points are equally spaced in the checkerboard, the (X{\_}w, Y{\_}w) coordinates of each 3D point are easily defined by taking one point as reference (0, 0) and defining remaining with respect to that reference point.
+\section{Method to Calibrate}
+\subsection{Step1: Finding the corners of the chessboard}
+Open CV helps to automatically detect the corners and draw on it by \PYTHON{findChessboardCorners()} and \PYTHON{drawChessboardCorners()}
+
+The below image shows the sample image captured which is passed to the openCV functions to identify and draw the corners: 
+\begin{figure}[H]
+	\centering
+	\GRAPHICS{0.6}{0.6}{OpenCVCalibration/cc6.png}
+	\caption{The Image of the chessboard passed to the opencv functions to identify and draw corners}
+\end{figure}
+The resultant image is as below: 
+\begin{figure}[H]
+	\centering
+	\GRAPHICS{0.6}{0.6}{OpenCVCalibration/cc7.png}
+	\caption{Result after detection of corners}
+\end{figure}
+Below is the complete code to perform the above operation: 
+\begin{code}[H]
+	\lstinputlisting[language=Python, firstnumber=1]{../../Code/JetsonNano/Cameracalib/FindChessboardCorners.py}
+	\caption{Script to find and mark the corners on a chessboard image}\label{TensorFlow:Complete}
+\end{code}
+\subsection{Step2: Calibrating the camera}
+In order to Calibrate the camera, the first step will be to read in calibration Images of a chess board. It’s recommended to use at least 20 images to get a reliable calibration \cite{Sadekar:2020} 
+
+To calibrate the camera opencv gives \PYTHON{calibrateCamera()}function. 
+
+\PYTHON{retval, cameraMatrix, distCoeffs, rvecs, tvecs = cv2.calibrateCamera(objectPoints, imagePoints, imageSize)}
+
+In \PYTHON{calibrateCamera()} function we need object points and image points.
+The coordinates of the corners in the 2D displayed image which called as imagepoints are mapped to the 3D coordinates of the real, undistorted chessboard corners, which are called as objectpoints.
+
+The z coordinates will stay zero so leave that as it is but, for the first two columns x and y, Numpy’s mgrid function is used to generate the coordinates that we want. mgrid returns the coordinate values for given grid size and shape those coordinates back into two columns, one for x and one for y
+
+The following are returned by this function: 
+\begin{itemize}
+	\item cameraMatrix : Camera Matrix, which helps to transform 3D objects points to 2D image points.
+	\item Distortion coefficients
+	\item It also returns the position of the camera in the world, with the values of rotation and translation vectors rvecs, tvecs
+\end{itemize}
+
+The below are the pictures of the camera matrix and distortion coefficients calculated by the function. 
+\begin{figure}[H]
+	\centering
+	\GRAPHICS{1}{1}{OpenCVCalibration/cc9.png}
+	\caption{Camera matrix calculated by the cameracalibrate function for the logitech webcam}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\GRAPHICS{1}{1}{OpenCVCalibration/cc10.png}
+	\caption{Distortion coefficients returned}
+\end{figure}
+
+\subsection{Step3: Undistort images}
+
+The undistort function takes in a distorted image, our camera matrix, and distortion coefficients and it returns an undistorted, often called destination image.
+OpenCV has a function called \PYTHON{cv2.undistort()} which takes a camera matrix, distortion coefficients and the image.\\ 
+\PYTHON{dst = cv2.undistort(img, camera\_matrix, dist\_coefs, None, newcameramtx)}
+
+\begin{figure}[H]
+	\centering
+	\GRAPHICS{1}{1}{OpenCVCalibration/cc8.png}
+	\caption{Image of the chessboard before and after removing distortion}
+\end{figure}
+
+The below is the script to calibrate and undistort an image.
+
+\begin{code}[H]
+	\lstinputlisting[language=Python, firstnumber=1,firstline=1,lastline=55]{../../Code/JetsonNano/Cameracalib/calibrate.py}
+	\caption{Script to calibrate and undistort an image - part 1}\label{TensorFlow:Complete}
+\end{code}
+
+\begin{code}[H]
+    \lstinputlisting[language=Python, firstnumber=1,firstline=56,lastline=110]{../../Code/JetsonNano/Cameracalib/calibrate.py}
+    \caption{Script to calibrate and undistort an image - part 2}\label{TensorFlow:Complete}
+\end{code}
+
+\begin{code}[H]
+    \lstinputlisting[language=Python, firstnumber=1,firstline=111,lastline=149]{../../Code/JetsonNano/Cameracalib/calibrate.py}
+    \caption{Script to calibrate and undistort an image - part 3}\label{TensorFlow:Complete}
+\end{code}
+

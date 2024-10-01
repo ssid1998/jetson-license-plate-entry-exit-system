@@ -1,0 +1,324 @@
+%%%%%%
+%
+% $Autor: Wings $
+% $Datum: 2020-01-18 11:15:45Z $
+% $Pfad: WuSt/Skript/Produktspezifikation/powerpoint/ImageProcessing.tex $
+% $Version: 4620 $
+%
+%%%%%%
+
+
+
+\chapter{Installation der Bilderkennung}
+Im Folgenden wird die Erstellung eines Programms zur Bilderkennung beschrieben. Dabei können auf Grund vieler zur Verfügung stehender Programme, Netzwerke und Packages verschiedenste Vorgehensweisen befolgt werden. In dem Abschnitt 'Hello AI-World' wird der 
+Leitfaden für die Verwendung von Inferenznetzwerken für deep learning, der unter 
+\textcolor{blue}{\url{https://github.com/dusty-nv/jetson-inference}} zu finden ist, reduziert auf die wesentlichen Schritte zur 
+Objekterkennung mit der Pi-Cam dargestellt.
+
+\medskip
+
+In dem Abschnitt 'Installation und Verwendung von MobileNet SSD v2' wird hingegen das Repository AastaNV genutzt. 
+Nach Befolgung dieses Abschnitts kann die Objekterkennung an Bilddateien durchgeführt werden.
+
+\section{Hello AI-World}
+
+\textcolor{blue}{\url{https://developer.nvidia.com/embedded/learn/get-started-jetson-nano-devkit\#next}}
+
+Sobald man in eine neue Programmierwelt eintaucht, ist die Erstellung des Programms
+\glqq Hello World\grqq\, obligatorisch. Die Firma NVIDIA stellt eine Reihe von
+Programmierbeispielen zur Verfügung, um den Einstieg in die Welt der künstlichen
+Intelligenz zu erleichtern. \cite{JetsonHelloWorld:2020}
+
+\bigskip
+
+Die Anwendung \href{https://github.com/dusty-nv/jetson-inference}{Hello AI World} ermöglicht, erste Erfahrungen im Bereich der Echtzeit-Bildklassifizierung und Objekterkennung zu sammeln.
+Einerseits wird die Kamera verwendet und andererseits in die Softwarepakete JetPack SDK und NVIDIA TensorRT eingeführt. Das zugehörige Projekt \glqq jetson-inference-master\grqq\,
+kann von GitHub geladen werden. \cite{GitHubJetsonInferenceMaster:2020}
+
+
+%todo Stimmt das so?: Sie werden auch lernen, Ihr eigenes, leicht verständliches Erkennungsprogramm in Python oder C++ zu programmieren und Ihre eigenen DNN-Modelle an Bord von Jetson mit PyTorch zu trainieren.
+
+\begin{figure}
+	\GRAPHICSC{0.5}{1.0}{HelloAIWorld/Hello_AI_World}
+	
+	\caption[Hello AI World]{\href{https://github.com/dusty-nv/jetson-inference}{Hello AI World  \cite{JetsonHelloWorld:2020}}}
+\end{figure}
+
+Die Installation der Anwendung ist in Dateien mit der Extension \FILE{md} beschrieben.
+Eine Übersicht des Projekts zeigt die Datei \FILE{README.md}. Sie dient auch als Ausgangspunkt, um durch die Projektbeschreibungen zu navigieren.
+
+\subsection{Aufbau des Projekts}
+
+Zum Aufbau des Projekt, müssen folgende Befehle erfolgen:
+
+\SHELL{\$ sudo apt-get update} \newline
+\SHELL{\$ sudo apt-get install git cmake libpython3-dev python3-numpy} \newline
+\SHELL{\$ git clone --recursive https://github.com/dusty-nv/jetson-inference} \newline
+\SHELL{\$ cd jetson-inference} \newline
+\SHELL{\$ mkdir build} \newline
+\SHELL{\$ cd build} \newline
+\SHELL{\$ cmake ../} \newline
+\SHELL{\$ make -j\$(nproc)} \newline
+\SHELL{\$ sudo make install} \newline
+\SHELL{\$ sudo ldconfig} \newline
+
+Die Bedeutung der Befehle wird in den folgenden Abschnitten erläutert.
+
+\paragraph{Das Projekt klonen}
+Um den Code herunterzuladen, navigieren Sie zu einem Ordner Ihrer Wahl auf dem Jetson. Um sicherzustellen, dass git und cmake installiert sind, geben Sie im Terminal Folgendes ein:
+
+\medskip
+
+\SHELL{\$ sudo apt-get update} \newline
+\SHELL{\$ sudo apt-get install git cmake}
+
+\medskip
+Geklont wird das Projekt mit:
+\medskip
+
+\SHELL{\$ git clone https://github.com/dusty-nv/jetson-inference} \newline
+\SHELL{\$ cd jetson-inference} \newline
+\SHELL{\$ git submodule update -{}-init} 
+
+\paragraph{Python-Entwicklungspakete}
+
+Nicht alle Versionen von Python-Entwicklungspaketen sind vorinstalliert. 
+Um Bindungen für Python 3.6 neben dem vorinstallierten Python 2.7 zu erstellen, müssen die entsprechenden Pakete installiert werden:
+
+\medskip
+
+\SHELL{\$ sudo apt-get install libpython3-dev python3-numpy}
+
+\medskip
+
+Nach dem Build-Prozess stehen dann die Pakete jetson.inference und jetson.utils zur Verwendung in den Python-Umgebungen zur Verfügung.
+
+\paragraph{Konfigurieren mit CMake}
+
+Der nächste Schritt ist die Erstellung eines Verzeichnisses innerhalb des Projekts und die Ausführung von cmake zur Konfiguration des Builds. Dann wird ein Skript gestartet (CMakePreBuild.sh), das alle erforderlichen Abhängigkeiten installiert und DNN-Modelle für Sie herunterlädt. Geben Sie dafür die folgenden Zeilen ein:
+
+\medskip
+
+\SHELL{\$ cd jetson-inference} \newline   
+\SHELL{\$ mkdir build} \newline
+\SHELL{\$ cd build} \newline
+\SHELL{\$ cmake ../}
+
+\paragraph{Modelle herunterladen}
+
+Über das Tool Model Downloader (download-models.sh) können viele vortrainierte Netzwerke heruntergeladen und installiert werden. Standardmäßig werden anfangs nicht alle Modelle zum Herunterladen ausgewählt, um Speicherplatz zu sparen. Sie können die gewünschten Modelle auswählen oder das Tool später erneut ausführen, um ein weiteres Mal weitere Modelle herunterzuladen.
+Bei der anfänglichen Konfiguration des Projekts wird cmake das Downloader-Tool automatisch für Sie ausführen:
+
+\GRAPHICSC{0.5}{1.0}{HelloAIWorld/ModelDownloader}	
+
+Wählen Sie aus, welche Modelle heruntergeladen werden sollen und bestätigen Sie die Auswahl.
+
+\paragraph{Kompilieren des Projekts}
+
+Vergewissern Sie sich, dass Sie sich noch im Verzeichnis \SHELL{jetson-inference/build} befinden.
+Durch Ausführen von \SHELL{make} gefolgt von \SHELL{sudo make install} (die Ausführung dieser Schritte kann einige Minuten in Anspruch nehmen) installieren Sie die Bibliotheken und Python-Erweiterungsbindungen und Code-Beispiele werden erstellt:
+
+\medskip
+
+\SHELL{\$ cd jetson-inference/build} \newline         
+\SHELL{\$ make} \newline
+\SHELL{\$ sudo make install} \newline
+\SHELL{\$ sudo ldconfig} \newline
+
+\medskip
+
+Das Projekt wird auf \SHELL{jetson-inference/build/aarch64} mit der folgenden Verzeichnisstruktur aufgebaut:
+
+\bigskip
+
+\GRAPHICS{0.5}{1.0}{HelloAIWorld/Ordnerbaum}
+
+\bigskip
+
+%\SHELL{|-build}\newline
+%\SHELL{\\aarch64}\newline
+%\SHELL{\\bin}         where the sample binaries are built to \newline
+%\SHELL{\\networks}    where the network models are stored \newline
+%\SHELL{\\images}      where the test images are stored \newline
+%\SHELL{\\include}     where the headers reside \newline
+%\SHELL{\\lib}         where the libraries are build to \newline
+
+%todo Code so anpassen, dass er die Abbildung ersetzt
+
+Im Build-Baum finden Sie die in \SHELL{build/aarch64/bin/} enthaltenen Binärdateien, die Header in \SHELL{build/aarch64/include/} und die Bibliotheken in \SHELL{build/aarch64/lib/}. 
+Diese werden auch unter \SHELL{/usr/local/} während des \SHELL{sudo make install}-Schrittes installiert. 
+Die Python-Bindungen für die Module jetson.inference und jetson.utils werden ebenfalls während des \SHELL{sudo make install}-Schrittes unter \SHELL{/usr/lib/python*/dist-packages/} installiert. Wenn Sie den Code aktualisieren, denken Sie daran, ihn erneut auszuführen.
+
+\subsection{Bilder mit ImageNet klassifizieren}
+Es stehen viele deep learning Netzwerke zur Verfügung, die zur Objekterkennung genutzt werden können. Im folgenden wird \href{https://github.com/dusty-nv/jetson-inference/blob/master/c/imageNet.h}{ImageNet}als Konsolenprogramm und später als Live-Bilderkennung mit der Pi-Kamera verwendet.
+Die Modelle GoogleNet und ResNet-18, die auf der ImageNet ILSVRC Bilddatenbank beruhen, wurden im Build-Schritt automatisch heruntergeladen.
+
+\paragraph{Andere Klassifikationsmodelle herunterladen}
+
+Um weitere Modelle herunterzuladen, kann der Model Downloader aufgerufen werden:
+
+\medskip
+
+\SHELL{\$ cd jetson-inference/tools} \newline 
+\SHELL{\$ ./download-models.sh} \newline
+
+\medskip
+
+\begin{tabular}[h]{lcr}
+	Network & CLI argument & NetworkType enum \\
+	AlexNet & alexnet &	ALEXNET \\
+	GoogleNet & googlenet & GOOGLENET \\
+	GoogleNet-12 & googlenet-12 & GOOGLENET\_12 \\
+	ResNet-18 & resnet-18 & RESNET\_18 \\
+	ResNet-50 & resnet-50 & RESNET\_50 \\
+	ResNet-101 & resnet-101 & RESNET\_101 \\
+	ResNet-152 & resnet-152 & RESNET\_152 \\
+	VGG-16 & vgg-16 & VGG-16 \\
+	VGG-19 & vgg-19 & VGG-19 \\
+	Inception-v4 & inception-v4 & INCEPTION\_V4 \\
+\end{tabular}
+
+\section{Installation und Verwendung von MobileNet SSD v2} %Wings
+
+MobileNets ist eine neuronale Netzwerkarchitektur von Google, die sehr effizient auf mobilen Geräten läuft. Die erste Version erfreut sich großer Beliebtheit bei vielen
+Projekten. Anwendungen finden sich eingebettet in größeren neuronalen Netzen  als grundlegender Bildklassifikator oder als Merkmalsextraktor, der Teil eines größeren neuronalen Netzes ist. Die zweite Version MobileNet SSD V2 ist eine Verfeinerung 
+der ersten Version, deren Effizienz und Leistungsfähigkeit gesteigert wurde. \cite{MobileNet:2018}
+
+\bigskip
+
+Eine einfache Variante der Installation von MobileNet SSD v2 ist die Verwendung eines gegebenen
+Projektes. Hier bietet sich das Projekt \glqq Objekterkennung\grqq\, von AstaNV an, dass über GitHub öffentlich zugänglich ist. \cite{AstaNV:2020,GitHub:2020}
+
+% \href{https://github.com/AastaNV/TRT_object_detection}{Git-Repository}
+
+Das Vorgehen entspricht der Vorgaben aus dem Repository.
+
+\medskip
+
+
+Zunächst werden die Python-Bibliotheken \FILE{libhdf5-serial-dev} und \FILE{hdf5-tools}
+installiert. Die Bibliotheken ermöglichen das Arbeiten mit Dateien im Format \glqq HDF5\grqq.
+
+\medskip
+
+\SHELL{\$ sudo apt-get install python3-pip libhdf5-serial-dev hdf5-tools}
+
+\medskip
+
+Im zweiten Schritt wird eine Bibliothek der Firma NVIDIA zur Unterstützung derTensorFlow-GPU geladen. Mit der
+Option \SHELL{-{}-extra-index-url} kann die Internetadresse verwendet werden.
+
+\medskip
+
+
+\SHELL{\$ pip3 install -{}-extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v42 tensorflow-gpu==1.13.1+nv19.5 -{}-user}
+
+\medskip
+
+
+Die Firma NVIDIA bietet spezielle Hardware an, die für die Parallelisierung von Berechnungen ausgelegt ist
+und Standardprozessoren hier deutlich überlegen ist. Um diese Kapazitäten nutzen zu können, wird die
+CUDA-API angeboten. Die PythonBibliothek \FILE{PyCUDA} ermöglicht den einfachen Zugriff auf die Schnittstelle
+via Python. Voraussetzung zur Nutzung ist die Installation der numerischen Bibliothek \FILE{numpy}.
+
+\medskip 
+
+\SHELL{\$ pip3 install numpy pycuda -{}-user}
+
+\medskip
+
+Nachdem die notwendigen Bibliotheken installiert sind, wird nun  das 
+Repository geladen. 
+
+
+\medskip
+
+\SHELL{\$ git clone https://github.com/AastaNV/TRT\_object\_detection.git}
+
+\medskip
+
+Bevor wir das Projekt starten, muss ein trainiertes Modell vorliegen. Die Modell \glqq MobileNet SSD v2\grqq{}\,
+erhält man von der Firma Google.
+Dazu wird in dem Projektverzeichnis ein Verzeichnis \FILE{model} angelegt.
+
+
+\medskip
+
+\SHELL{\$ cd TRT\_object\_detection}
+
+
+\SHELL{\$ mkdir model}
+
+\medskip
+
+Aus dem Download-Bereich der Tensorflow wird das Modell direkt auf das System kopiert und anschließend
+entpackt.
+
+\medskip
+
+\SHELL{\$ wget http://download.tensorflow.org/models/object\_detection/ssd\_mobilenet\_v2\_coco\_2018\_03\_29.tar.gz}
+
+
+\SHELL{\$ tar zxvf ssd\_mobilenet\_v2\_coco\_2018\_03\_29.tar.gz}
+
+
+\medskip
+
+
+Um den Code im Repository ausführen zu können, muss die Datei \PYTHON{/usr/lib/python3.6/dist-packages/graphsurgeon/node\_manipulation.py}
+mit der Programm  Graph Surgeon konvertiert werden. Dies ist erforderlich, da das 
+Datenmodell von TensorFlow sich vom Datenmodell TensorRT unterscheidet. \cite{TensorRT:2020}
+
+\medskip
+
+\SHELL{diff -{}-git a/node\_manipulation.py b/node\_manipulation.py} \newline
+\SHELL{index d2d012a..1ef30a0 100644} \newline
+\SHELL{-{}-{}- a/node\_manipulation.py} \newline
+\SHELL{+++ b/node\_manipulation.py} \newline
+\SHELL{\@\@ -30,6 +30,7 \@\@ def create\_node(name, op=None, \_do\_suffix=False, **kwargs):} \newline
+\SHELL{node = NodeDef()} \newline
+\SHELL{node.name = name} \newline
+\SHELL{node.op = op if op else name} \newline
+\SHELL{+    node.attr["dtype"].type = 1} \newline
+\SHELL{for key, val in kwargs.items():} \newline
+\SHELL{if key == "dtype":} \newline
+\SHELL{node.attr["dtype"].type = val.as\_datatype\_enum}
+
+\medskip
+
+Optional kann die Leistung des Jetson Nanos noch mit dem Skript  \FILE{jetson\_clocks} optimiert werden.
+
+
+\medskip
+
+\SHELL{\$ sudo nvpmodel -m 0}
+
+\SHELL{\$ sudo jetson\_clocks}
+
+\medskip
+
+Jetzt steht das System zur Nutzung zur Verfügung. Bevor die Datei \FILE{main.py} aufgerufen
+werden kann, muss die folgende Zeile eingefügt werden:
+
+\medskip
+
+\PYTHON{from config import model\_ssd\_mobilenet\_v2\_coco\_2018\_03\_29 as model}
+
+\medskip
+
+Damit wurde das Model festegelt, welches zu verwendet werden soll. 
+Jetzt können Bilder getestet werden. Der Dateiname \FILE{[image]} beinhaltet den kompletten
+Pfad und den Namen  des Bildes.
+
+\medskip
+
+\SHELL{\$ python3 main.py [image]}
+
+\medskip
+
+
+
+Die erste Ausführung des Skripts kann ein paar Minuten dauern, da das Modell in das Format 
+\glqq TensorRT\grqq\,  konvertiert werden muss, aber danach sollte es in wenigen Sekunden erledigt sein.
+
+

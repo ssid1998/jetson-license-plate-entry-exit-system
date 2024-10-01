@@ -1,0 +1,53 @@
+%%%%%%%%%%%%%%%
+%
+% $Autor: Wings $
+% $Datum: 2020-02-24 14:30:26Z $
+% $Pfad: komponenten/Bilderkennung/Produktspezifikation/JetsonNano/Inhalt/Einleitung.tex $
+% $Version: 1792 $
+%
+%
+%%%%%%%%%%%%%%%
+
+
+
+\chapter{Jetson Nano}
+
+\section{The Jetson Nano and the Competition}
+
+System-on-a-chip (SOC) systems offer a low-cost entry point for developing autonomous, low-power deep-learning applications. They are best suited for inference, i.e. for applying 
+pre-trained machine learning models to real data. The Jetson Nano from the manufacturer NVIDIA is such an SOC system. It is the smallest AI module in NVIDIA's Jetson family, promises high processing speeds 
+high processing speed with moderate power consumption at the same time. \cite{JetsonGettingStarted:2019}
+
+
+
+\bigskip
+
+At the lower end of the price spectrum, several low-cost systems have come to market in recent years that are suitable for developing machine learning applications for embedded systems. Chips and systems have emerged that have special computational kernels for such tasks, with low power consumption at the same time.
+
+For developers, Intel has created an inexpensive solution with the Neural Compute Stick, for example, which can be connected to existing hardware such as a Raspberry Pi via USB. For around 70 euros, you get a system with 16 cores that is based on Intel's own low-power processor chip for image processing, Movidius. The product from Intel uses Movidius Myriad X Vision Processing Unit and can be used with the operating systems Windows\textsuperscript{\textregistered} 10, Ubuntu or MacOS. \cite{IntelStickDataSheet:2019}
+
+
+\bigskip
+
+Google is trying to address the same target group with the Google Edge TPU Boards. For 80 euros, you get a Tensor Processing Unit (TPU) that uses similar hardware to Google Cloud or Google's development environment for Jupyter notebooks Colab and can also be used as a USB 3 dongle.
+\cite{Vincent:2018,GoogleTensorFlowModel:2019,GoogleCoral:2019} 
+
+
+
+\bigskip
+
+Comparable technology can also be found in the latest generation of Apple's iPhone with the A12 Bionic chip with 8~cores and 5~trillion operations per second, in Samsung's Exynos 980 with integrated Neural Processing Unit (NPU) or in Huawei's Kirin~990 with two NPUs at once. \cite{SamsungExynos980:2020,HuaweiKirin990:2020}
+
+
+
+\section{Applications of the Jetson Nano}
+
+There are several use cases for the Jetson Nano. It can be used for very basic tasks that can also be done with devices like the Raspberry Pi. It can be used as a small, powerful computer in conventional use cases such as running a web server or using it to surf the web and create documents, or as a low-end gaming computer. \cite{Kurniawan:2021}
+
+\bigskip
+
+But the real added value of the Jetson Nano is in its design for easy implementation of artificial intelligence. What makes this so easy is the NVIDIA TensorRT software development kit, which enables high-performance deep learning interference. An already trained network can be implemented and evolve as it is confronted with the new data available in the specific application.
+
+\bigskip
+
+NVidia's \cite{JetsonProjects:2020} website features a variety of projects from the Jetson community. Besides simple teleoperation, the Jetson Nano also allows the realisation of collision avoidance and object tracking up to the further construction of a small autonomous vehicle. In addition to the non-commercial projects, industrial projects are also presented. One example is the Adaptive Traffic Controlling System, which uses a visual traffic congestion measurement method to adjust traffic light timing to reduce vehicle congestion. Another project enables the visually or reading impaired to hear both printed and handwritten text by converting recognised sentences into synthesised speech.  This project also basically uses only the Jetson Nano and the Pi camera.  Tensorflow 2.0 and Google Colab are used to train the model. The recognition of sign language, faces and objects can also be realised with Jetson Nano and pre-trained models.

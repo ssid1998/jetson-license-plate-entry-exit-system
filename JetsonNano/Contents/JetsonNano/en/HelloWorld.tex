@@ -1,0 +1,316 @@
+%%%%%%
+%
+% $Autor: Wings $
+% $Datum: 2020-01-18 11:15:45Z $
+% $Pfad: WuSt/Skript/Produktspezifikation/powerpoint/ImageProcessing.tex $
+% $Version: 4620 $
+%
+%%%%%%
+
+\chapter{``Hello World'' - Image Recognition}
+
+%\textcolor{blue}{\url{https://medium.com/hacksters-blog/getting-started-with-the-nvidia-jetson-nano-developer-kit-43aa7c298797}}
+
+This chapter shows how the Jetson Nano can be used for image recognition. However, no own network is trained, but a trained network is used. An example project from NVIDIA is used for this purpose. In the example, an attempt is made to recognise bottles. The result is then a probability; a value of 70\% is called good. 
+
+
+
+\section{Loading the Example Project from GitHub}
+
+NVIDIA provides a sample project via GitHub, which is loaded and configured as follows.
+
+\medskip
+
+
+\SHELL{\$ git clone https://github.com/dusty-nv/jetson-inference}
+
+\medskip
+
+Afterwards, a directory jetson-inference is available that contains all files. Now change to this directory:
+
+\medskip
+
+\SHELL{\$ cd jetson-inference}
+
+\medskip
+
+Now the submodule must be initialised.
+
+\medskip
+
+\SHELL{\$ git submodule update --init}
+
+\medskip
+
+However, the programme is not available as an executable file, but must still be created. To do this, a directory for the executable file is first created:
+
+\medskip
+
+\SHELL{\$ mkdir build}
+
+\medskip
+
+After changing to the build directory, the programme is created:
+
+\medskip
+
+\SHELL{\$ cd build}
+
+\SHELL{\$ cmake ../}
+
+\SHELL{\$ make}
+
+\SHELL{\$ sudo make install}
+
+
+\medskip
+
+
+Patience is needed here, as the process takes a while. The executable files are then located in the directory \SHELL{jetson-inference/build/aarch64/bin}.
+
+
+
+%%%%%%%%hier weiter
+
+\section{Example Applications}
+
+The following sample applications are all in the jetson-inference project. Either a single image or an image from a live stream is classified. Each application then delivers an image file with the surrounding rectangles of the detected objects as a result. In addition, the coordinates of the surrounding rectangles and the probability are listed. A hit probability of over 70\% is usually considered good. In other words, these are not production quality models. Since the Jetson Nano is used for inference, a trained model must also be passed. The first time the applications are started, the model is optimised; this process can take a few minutes. The next time the application is called, the optimised model is used, so the process is much faster.  Several pre-trained models are available; they are all in the project. The table~\ref{HelloWorld:Nets} lists the names of the models, their name as a passing argument and their trained classes. 
+
+
+
+\begin{table}
+%todo Tabellen aufhübschen    
+    \centering 
+    \begin{tabular}{l|l|l}
+      Model                & Argument      & Classes \\ \hline
+      Detect-COCO-Airplane & coco-airplain & airplane\\
+      Detect-COCO-Bottle   & coco-bottle   & bottles\\
+      Detect-COCO-Chair    & coco-chair    & chairs\\
+      Detect-COCO-Dog      & coco-dogs     & dogs\\
+      ped-100              & pednet        & pedestrian \\
+      multiped-500         & multiped      & pedestrians \& luggage \\
+      facenet-120          & facenet       & faces
+    \end{tabular}
+
+   \caption{Trained models in the projet jetson-inference}\label{HelloWorld:Nets}
+
+\Mynote{was ist coco-dog und Co.?}
+
+\Mynote{Zitieren von COCO, dem "Common Objects in Context"-Datensatz}
+\Mynote{TensorRT einführen}
+
+\end{table}
+
+
+\bigskip
+
+
+
+In order to be able to call up the applications, the directory is first changed:
+
+\medskip
+
+\SHELL{\$ cd $\raisebox{-0.7ex}{\~{}}$/jetson-inference/build/aarch64/bin}
+
+\medskip
+
+Example files are provided in the \SHELL{images/} directory. 
+
+
+\subsection{Launch of the First Machine Learning Model}
+
+The first application that can be tested is \PYTHON{detectnet-console}. It expects an image as input, a target file and a trained net. The file including the surrounding rectangles is stored in the target file. In addition, a list with the coordinates of the recognised surrounding rectangles is output as a result. A probability for the result is also provided. 
+
+
+In this example, a file with the name dog.jpg is examined. The result is written into the file out.jpg. This means that care must be taken that the file out.jpg is overwritten. Detect-COCO-Dog is used as the trained model. 
+
+\medskip
+
+\SHELL{\$ ./detectnet-console $\raisebox{-0.7ex}{\~{}}$/dog.jpg out.jpg coco-dog}
+
+\medskip
+
+A result could be reported as follows:
+
+\medskip
+
+\SHELL{1 Bounding Box erkannt}
+
+\SHELL{erkanntes Objekt 0 Klasse \#0 (Hund) confidence=0.710427}
+
+\SHELL{Begrenzungskasten 0 (334.687500, 488.742188) (1868.737549, 2298.121826) w=1534.050049 h=1809.379639}
+
+\medskip
+
+
+Here, the probability is given as 71.0\%.
+
+\bigskip
+
+
+%todo Hier muss ein konkretes Beispiel eingefügt.
+\Mynote{Insert concrete example here}
+
+%todo neu formulieren >>>>>>
+
+
+%Wenn ich ein Bild meines Hundes, der am Strand Apportieren spielt, an einem DetectNet Caffe-Modell, das mit dem COCO, dem "Common Objects in Context"-Datensatz, trainiert wurde, dann habe ich am Ende eine ziemlich solide Erkennung und eine gute Bounding Box.
+%
+%\bigskip
+%
+%Ich fuhr fort und warf das Bild von mir, das bei CES aufgenommen wurde, auf das vortrainierte Netzwerk.
+%
+%\medskip
+%
+%\SHELL{\$ ./detectnet-console me.jpg out.jpg facenet}
+%
+%\medskip
+%
+%
+%Interessanterweise war die Bounding Box etwas anders als wir es bisher gesehen haben, und das Vertrauen in die Erkennung viel geringer. Aber immer noch eine solide Erkennung.
+%
+%\medskip
+%
+%\SHELL{1 bounding boxes detected}
+%
+%\SHELL{detected obj 0  class \#0 (face)  confidence=0.604924}
+%
+%\SHELL{bounding box 0  (336.479156, 32.527779)  (441.888885, 199.777786)  w=105.409729  h=167.250000}
+%
+%\medskip
+%
+%Die Unterschiede werden eher auf die Abstimmung des Modells als auf andere Faktoren zurückzuführen sein. Ich vermute, dass die mit dem Jetson Nano mitgelieferten Demonstrationsmodelle nicht gut abgestimmt sind.
+%Mit anderen Worten, es handelt sich nicht um Modelle in Produktionsqualität.
+
+%todo <<<<<<<<<<<< neu formulieren 
+
+
+
+
+
+%todo neu formulieren >>>>>>
+\subsection{Using the Console Programme \PYTHON{imagenet-console.py}}
+
+The Python programme \PYTHON{imagenet-console.py} can also be used. The programme performs an inference for an image with the model imageNet. The programme also expects three transfer parameters. The first parameter is the image to classify. The second parameter is a file name; in this file the image is stored overlaid with the bounding boxes. The argument is the classification model. 
+
+
+\medskip
+
+The call to the application could look like this, for example:
+
+\medskip
+
+\SHELL{\$ ./imagenet-console.py -{}-network=googlenet images/orange\_0.jpg output\_0.jpg}
+\Mynote{What is googlenet?}
+
+
+
+\subsection{Live Camera Image Recognition with \PYTHON{imagenet-camera.py}}
+
+Another example is the evaluation of a live image using the application \PYTHON{imagenet-camera.py}. It generates a live camera stream with OpenGL rendering and accepts four optional command line arguments: 
+
+\begin{itemize}
+  \item [] \SHELL{-{}-network}: Selection of the classification model. If no specification is made, GoogleNet is used; this corresponds to \SHELL{-{}-network=googlenet}.
+  \item [] \SHELL{-{}-camera}: Specification of the camera device used. MIPI-CSI cameras are identified by specifying the sensor index (0, 1, \ldots). The default is to use the MIPI-CSI sensor 0, which is identical to the argument \SHELL{-{}-camera=0}.
+  \item [] \SHELL{-{}-width}: Setting the width of the camera resolution. The default value is 1280.
+  \item [] \SHELL{-{}-height}: Setting the width of the camera resolution. The default value is 720.
+  
+           The resolution should be set to a format that the camera supports.
+           \Mynote{Beispiel fehlt}
+  \item []  \SHELL{-{}-help}: Help text and further command line parameters
+\end{itemize}
+
+
+
+The use of these arguments can be combined as needed. To run the programme with the GoogleNet network using the Pi camera with a default resolution of $1280 \times 720$, entering this command is sufficient:
+
+\medskip
+
+\SHELL{\$ ./imagenet-camera.py}
+
+\medskip
+
+The OpenGL window displays the live camera stream, the name of the classified object and the confidence level of the classified object along with the frame rate of the network. The Jetson Nano provides up to 75 frames per second for the GoogleNet and ResNet-18 models. \Mynote{What is ResNEt-18?}
+
+\medskip
+
+Since each individual image is analysed in this programme and the result is output, rapid changes between the identified object classes may occur in the case of ambiguous assignments. If this is not desired, modifications must be made.
+
+
+
+\section{Creating your Own Programme}
+
+To create your own Python programme, you must first set up the new project:
+
+\medskip
+
+\Mynote{my-recognition ändern}
+
+\SHELL{\$ cd $\raisebox{-0.7ex}{\~{}}$/}
+
+\SHELL{\$ mkdir MyJetsonProject}
+
+\SHELL{\$ cd MyJetsonProject}
+
+\SHELL{\$ touch MyJetsonProject.py}
+
+\SHELL{\$ chmod +x MyJetsonProject.py}
+
+\medskip
+
+ 
+ 
+ In this case, a file \PYTHON{MyJetsonProject.py} is created in the directory MyJetsonProject. This file is still empty. To create the programme, it can now be opened and edited in an editor.
+ 
+ 
+ 
+ In the Linux world, bash scripting is often used. This includes the use of a shebang sequence; this is a sequence of characters written in the first line of a file. It starts with the two characters \PYTHON{\#!}; this is followed by the path to the bash interpreter, which is supposed to parse and interpret the rest of the file. In this case, the Python interpreter is entered:
+ 
+
+
+\medskip
+
+\lstset{ 
+    backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}; should come as last argument
+    basicstyle=\footnotesize,        % the size of the fonts that are used for the code
+    breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+    breaklines=true,                 % sets automatic line breaking
+    captionpos=b,                    % sets the caption-position to bottom
+    columns=flexible,
+    commentstyle=\color{mygreen},    % comment style
+    deletekeywords={...},            % if you want to delete keywords from the given language
+    escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+    extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+    firstnumber=1,                % start line enumeration with line 1
+    frame=none,	                   % adds a frame around the code
+    keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+    keywordstyle=\color{blue},       % keyword style
+    language=Python,                 % the language of the code
+    morekeywords={*,...},            % if you want to add more keywords to the set
+    numbers=none,                    % where to put the line-numbers; possible values are (none, left, right)
+    numbersep=5pt,                   % how far the line-numbers are from the code
+    numberstyle=\tiny\color{mygray}, % the style that is used for the line-numbers
+    rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+    showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+    showstringspaces=false,          % underline spaces within strings only
+    showtabs=false,                  % show tabs within strings adding particular underscores
+    stepnumber=2,                    % the step between two line-numbers. If it's 1, each line will be numbered
+    stringstyle=\color{mymauve},     % string literal style
+    tabsize=2,	                   % sets default tabsize to 2 spaces
+    title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
+} 
+\lstset{language=Python}
+
+\begin{lstlisting}
+    #!/usr/bin/python
+    
+    import jetson.inference
+    import jetson.utils
+    
+    import argparse
+\end{lstlisting}
+
+\medskip
+
+After the shebang sequence, the necessary import statements are added. Here they are the modules \PYTHON{jetson.inference} and \PYTHON{jetson.utils}. These two modules are used for loading images and image recognition.  In addition, the standard package \PYTHON{argparse} is given here. With the help of the functions of the package, the command line can be parsed.
+

@@ -1,0 +1,178 @@
+%%%%%%%%%%%%
+%
+% $Autor: Wings $
+% $Datum: 2020-01-24 14:19:22Z $
+% $Pfad: komponenten/Bilderkennung/Produktspezifikation/JetsonNano/Inhalt/JetsonHelloAIWorld.tex $
+% $Version: 1782 $
+%
+%%%%%%%%%%%%
+
+
+
+\chapter{Zwei Tage bis zu einer Demo}
+
+%\Ausblenden
+{
+
+{\tiny Source: \href{https://developer.nvidia.com/embedded/twodaystoademo}{developer.nvidia.com}}
+
+Two Days to a Demo ist unsere einführende Reihe von Tutorials für den Einsatz von KI und Computer Vision im Feld mit NVIDIA Jetson AGX Xavier, Jetson TX2, Jetson TX1 und Jetson Nano. Dieses Tutorial dauert von Anfang bis Ende etwa zwei Tage und ermöglicht Ihnen, Ihre eigenen neuronalen Netzwerke zu konfigurieren und zu trainieren. Es enthält alle notwendigen Quellcodes, Datensätze und Dokumentationen, die Sie für den Anfang benötigen. Tauchen Sie noch heute mit Two Days to a Demo in die Tiefe des Lernens ein.
+
+
+\section{Hallo KI-Welt}
+
+\href{https://github.com/dusty-nv/jetson-inference}{Hello AI World} ist eine großartige Möglichkeit, mit Jetson zu beginnen und die Macht der KI zu erfahren. In nur wenigen Stunden können Sie mit Ihrem Jetson Developer Kit mit JetPack SDK und NVIDIA TensorRT eine Reihe von Demos für tief greifende Lernschlussfolgerungen für die Echtzeit-Bildklassifizierung und Objekterkennung erstellen und ausführen lassen. Das Tutorial konzentriert sich auf Netzwerke im Zusammenhang mit der Computer-Vision und beinhaltet die Verwendung von Live-Kameras. Sie werden auch lernen, Ihr eigenes, leicht verständliches Erkennungsprogramm in Python oder C++ zu programmieren und Ihre eigenen DNN-Modelle an Bord von Jetson mit PyTorch zu trainieren.
+
+
+\begin{figure}
+  \GRAPHICSC{0.5}{1.0}{HelloAIWorld/Hello_AI_World}
+
+  \caption{\href{https://github.com/dusty-nv/jetson-inference}{Hello AI World supports Jetson Nano, Jetson TX1/TX2, and Jetson AGX Xavier.}}
+\end{figure}
+
+
+\section{Deep Learning einsetzen}
+
+Sind Sie bereit, in Deep Learning einzutauchen? Es dauert nur zwei Tage. Wir stellen Ihnen alle Tools zur Verfügung, die Sie benötigen, einschließlich leicht verständlicher Anleitungen, Softwarebeispiele wie TensorRT-Code und sogar vortrainierte Netzwerkmodelle wie ImageNet und DetectNet-Beispiele. Befolgen Sie diese Anweisungen, um Deep Learning in die Plattform Ihrer Wahl zu integrieren und schnell ein Proof-of-Concept-Design zu entwickeln. In diesem Leitfaden erhalten Sie einen stärkeren Hintergrund für Deep Learning, können ein vortrainiertes tiefes neuronales Netzwerk auf dem Jetson AGX Xavier Developer Kit oder Jetson TX1/TX2 Developer Kit laden und ausführen und lernen, wie Sie das Netzwerk mit Ihrem eigenen Datensatz neu trainieren können, um eine Live-Demo zu erstellen.
+
+
+\section{Vier Schritte zum Deep Learning}
+
+
+\begin{enumerate}
+	
+  \item System Setup
+  \item Bilderkennung
+  \item Objekt-Erkennung
+  \item Segmentierung
+\end{enumerate}
+
+\begin{figure}
+	\GRAPHICSC{0.3}{1.0}{HelloAIWorld/deep-vision-primitives}
+	
+	\caption{Hallo AI World unterstützt Jetson Nano, Jetson TX1/TX2 und Jetson AGX Xavier.}
+	
+\end{figure}
+
+\begin{figure}
+	\GRAPHICSC{0.25}{1.0}{HelloAIWorld/DIGITS_WORKFLOW_v2.png}
+	
+	\caption{Arbeitsablauf.}
+	
+\end{figure}
+
+
+\section{DIGITS Arbeitsablauf}
+
+
+
+\subsection{Empfohlene Systemanforderungen:}
+
+\begin{itemize}
+  \item Training GPU:
+    \begin{itemize}
+      \item Maxwell, Pascal, or Volta-based TITAN, Quadro, Tesla, or NGC instance.
+      \item Ubuntu 14.04 x86\_64 or Ubuntu 16.04 x86\_64 (see \href{https://aws.amazon.com/marketplace/pp/B01LZN28VD}{DIGITS AWS AMI}).
+    \end{itemize}
+  \item Deployment:
+    \begin{itemize}
+      \item Jetson TX1 Developer Kit with JetPack 2.3 or newer (Ubuntu 16.04).
+      \item Jetson TX2 Developer Kit with JetPack 3.0 or newer (Ubuntu 16.04).
+      \item Jetson AGX Xavier Developer Kit with JetPack 4.1 Developer Preview Early Access (Ubuntu 18.04).
+    \end{itemize}
+\end{itemize}
+
+
+\section{Fortgeschrittene - Deep Learning Nodes fürr ROS}
+
+\href{https://github.com/dusty-nv/ros_deep_learning}{Deep Learning-ROS-Knotenpunkte}
+integriert Erkennungs-, Erkennungs- und Segmentierungs-KI-Fähigkeiten von zwei Tagen bis zu einer Demo mit ROS (Robot Operating System) zur Einbindung in fortschrittliche Robotersysteme und -plattformen. Diese Echtzeit-Inferenzierungsknoten können leicht in bestehende ROS-Anwendungen integriert werden.
+
+\begin{figure}
+	\GRAPHICSC{0.25}{1.0}{HelloAIWorld/ROS_Deep_Learning}
+	
+	\caption{Hallo AI World unterstützt Jetson Nano, Jetson TX1/TX2 und Jetson AGX Xavier.}
+	
+\end{figure}
+
+
+
+Zu den unterstützten ROS-Versionen gehören ROS Melodic (Jetson Nano, Jetson TX2 und Jetson AGX Xavier) und ROS Kinetic (Jetson TX1).
+
+
+
+\section{Fortgeschrittene - Deep Reinforcement Learning in der Robotik}
+
+
+In diesem Tutorium werden wir künstlich intelligente Agenten schaffen, die aus der Interaktion mit ihrer Umgebung lernen, Erfahrungen sammeln und ein Belohnungssystem mit tiefem Verstärkungslernen (Deep Reinforcement Learning, RL) schaffen. Mit Hilfe von durchgehenden neuronalen Netzwerken, die rohe Pixel in Aktionen umsetzen, sind RL-geschulte Agenten in der Lage, intuitive Verhaltensweisen zu zeigen und komplexe Aufgaben auszuführen.
+
+
+Five Steps to Reinforcement Learning
+
+\begin{enumerate}
+  \item Building from Source
+  \item DQN and OpenAI Gym
+  \item The C++ API
+  \item 3D Simulation
+  \item Continuous Control
+\end{enumerate}
+
+\begin{figure}
+	\GRAPHICSC{0.75}{1.0}{HelloAIWorld/DLinRobotics.jpg}
+	
+	\caption{Deep Reinforcement Learning}
+	
+\end{figure}
+
+
+
+Recommended System Requirements:
+\begin{itemize}
+  \item Jetson TX1 Developer Kit with JetPack 2.3 or newer (Ubuntu 16.04).
+  \item Jetson TX2 Developer Kit with JetPack 3.0 or newer (Ubuntu 16.04).
+\end{itemize}
+
+
+\section{Fortgeschrittene - Von TensorFlow zu TensorRT-Bild-Klassifizierung}
+
+
+Sind Sie daran interessiert, TensorFlow Netzwerke optimal auf Jetson TX1/TX2 zu betreiben? Mit TensorFlow entwickelte tiefe neuronale Netzwerke können auf NVIDIA Jetson eingesetzt und mit TensorRT bis zu 5x beschleunigt werden. Dieses Tutorial behandelt die Konvertierung von vortrainierten TensorFlow Bildklassifikationsmodellen in TensorRT für den Einsatz auf der Jetson-Plattform.
+
+
+\bigskip
+
+\subsection{In fünf Schritten zur TensorRT-Bild-Klassifizierung}
+
+
+\begin{enumerate}
+  \item Setup
+  \item Eingefrorene Diagramme erstellen
+  \item Converting Frozen Graphs
+  \item Executing TensorRT
+  \item Benchmarking
+\end{enumerate}
+
+\begin{figure}
+	\GRAPHICSC{0.25}{1.0}{HelloAIWorld/performance_chart}
+	
+	\caption{Deep Reinforcement Learning}
+	
+\end{figure}
+
+\begin{figure}
+	\GRAPHICSC{0.5}{1.0}{HelloAIWorld/TF_TRT_workflow}
+	
+	\caption{TensorFlow to TensorRT Workflow}
+	
+\end{figure}
+
+
+
+
+
+Recommended System Requirements:
+
+\begin{itemize}
+  \item Jetson TX2 Developer Kit with JetPack 3.2 or newer (Ubuntu 16.04).
+\end{itemize}
+}

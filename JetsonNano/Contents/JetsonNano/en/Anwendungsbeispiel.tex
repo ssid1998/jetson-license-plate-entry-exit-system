@@ -1,0 +1,48 @@
+%%%%%%
+%
+% $Autor: Wings $
+% $Datum: 2020-01-18 11:15:45Z $
+% $Pfad: WuSt/Skript/Produktspezifikation/powerpoint/ImageProcessing.tex $
+% $Version: 4620 $
+%
+%%%%%%
+
+%\chapter{KI mit dem Jetson Nano r32.3.1de: Echtzeit-Objekterkennung mit Pi-Kamera}
+%\href{https://elinux.org/Jetson_Nano#What.27s_Included}{Jetson Nano - Linux System}
+%todo ToDo/iX2_2020.pdf
+
+\chapter{Application ``Image Recognition with the Jetson''}
+
+
+\section{Application Example ``Bottle Detection''}
+
+Due to growing data analytics capabilities, developments such as predictive maintenance and intelligent fault detection are being driven in industry. By using artificial intelligence, fewer or no human decisions are required and more complex relationships can be identified. The goal here is often quality control or early detection of error sources or expected errors. 
+
+\bigskip  
+
+A simpler application is the rapid detection of faults that have already occurred. A defect can be a foreign object or unwanted object that can enter the system in any phase such as production, manufacturing, assembly or logistics of a product development. To avoid this or to detect it at an early stage, an artificial intelligence system can be used to continuously monitor the system in the required phases. 
+
+\bigskip
+
+In this example, bottles are to be detected in any environment. The object detection is to be continuous. A camera is used to capture the environment. The collected data is verified with the NVIDIA Jetson Nano. If a bottle is detected, the Jetson Nano shall provide a binary signal to a connected system. In industry, the system could be a \ac{sps} that controls a machine. 
+
+\bigskip
+
+After starting the programme, the live image of the camera is permanently displayed on the screen and the result of the image recognition is shown, as can be seen in Figure~\ref{Bottle}. This makes it easy to check the results of the Jetson Nano during the development and testing phase.
+
+\begin{figure} [H]
+	\centering
+	\includegraphics[height=0.4\textwidth]{Test/BottleDetected}
+	\caption{Application example: Bottle detection} \label{Bottle}\Mynote{Quelle}
+\end{figure}
+
+
+\section{Necessary Hardware}
+
+
+A Jetson Nano with camera system is required for the optical bottle detection application. Since the application is for demonstrating the possibilities, this project does not use a high quality camera, but a Raspberry Pi CAM \cite{Monk:2017}. The choice of camera and lens will of course influence successful detection. In an industrial application, a precise research has to be done here; in any case, the environment has to be taken into account. Resolution of the camera, lighting conditions, humidity, splash water and vibrations are typical issues here. For a demonstrator, the Raspberry Pi camera is perfectly adequate. A complete material list is given in the appendix~\ref{Appendix:Material List}. The Jetson Nano Developer Kit is presented in detail in chapter~\ref{JetsonNano:DeveloperKit}. The camera and its features are highlighted in chapter~\ref{SmartPiCAM:Camera}. In addition, a computer with an internet connection and the ability to write to a microSD card is also required; however, this is not listed in the materials list.
+
+
+
+
+

@@ -1,0 +1,553 @@
+%%%%%%
+%
+% $Autor: Wings $
+% $Datum: 2020-01-18 11:15:45Z $
+% $Pfad: WuSt/Skript/Produktspezifikation/powerpoint/ImageProcessing.tex $
+% $Version: 4620 $
+%
+%%%%%%
+
+
+\section{\glqq Hello World 3\grqq - Bottle Detection}\label{TrainFlaschen}
+
+In this section, a neural network is trained to recognise bottles. In the previous examples, an existing data set was used. Based on the known data sets CIFAR10 and CIFAR100, a new data set is generated here. In this case, the images have three colour channels and 32$\times$32-pixels. The images are clearly assigned to classes.  
+
+
+\subsection{Dataset CIFAR-10 and CIFAR-100}
+
+In this example, we will use the CIFAR-10 and CIFAR-100 datasets, developed by Alex Krizhevsky and his team and therefore named after the \textbf{C}anadian \textbf{I}nstitute \textbf{f}or \textbf{A}dvanced \textbf{R}esearch. 
+Both datasets contain $\times$ 32-pixel colour images with three colour channels assigned to corresponding categories between which there is no overlap. \cite{Krizhevsky:2009}
+
+The data set CIFAR-10 contains a total of 60,000 images in 10 categories (airplane, automobile, bird, cat, deer, dog, frog, horse, ship, truck) with 6,000 images each. The data set is already divided into 50,000 training images and 10,000 test images.
+
+The data set CIFAR-100, on the other hand, also contains 60,000 images, but divided into 100 categories with 600 images each. In addition, there are 20 upper categories to which some of the 100 categories are assigned (see \ref{TabCIF100}).
+
+\begin{figure}
+  \begin{tabular} {c c} 
+\hline
+Superclass &	Classes\\
+\hline
+aquatic mammals & 	beaver, dolphin, otter, seal, whale\\
+fish & 	aquarium fish, flatfish, ray, shark, trout\\
+flowers & 	orchids, poppies, roses, sunflowers, tulips\\
+food containers &	bottles, bowls, cans, cups, plates\\
+fruit and vegetables &	apples, mushrooms, oranges, pears, sweet peppers\\
+household electrical devices &	clock, computer keyboard, lamp, telephone, television\\
+household furniture &	bed, chair, couch, table, wardrobe\\
+insects &	bee, beetle, butterfly, caterpillar, cockroach\\
+large carnivores &	bear, leopard, lion, tiger, wolf\\
+large man-made outdoor things &	bridge, castle, house, road, skyscraper\\
+large natural outdoor scenes &	cloud, forest, mountain, plain, sea\\
+large omnivores and herbivores &	camel, cattle, chimpanzee, elephant, kangaroo\\
+medium-sized mammals &	fox, porcupine, possum, raccoon, skunk\\
+non-insect invertebrates &	crab, lobster, snail, spider, worm\\
+people &	baby, boy, girl, man, woman\\
+reptiles &	crocodile, dinosaur, lizard, snake, turtle\\
+small mammals &	hamster, mouse, rabbit, shrew, squirrel\\
+trees &	maple, oak, palm, pine, willow\\
+vehicles 1 &	bicycle, bus, motorcycle, pickup truck, train\\
+vehicles 2 &	lawn-mower, rocket, streetcar, tank, tractor\\
+\end{tabular}
+  \caption{Categories in CIFAR-100}
+  \label{TabCIF100}
+
+\end{figure}
+
+\subsection{Loading the Dataset}
+
+The datasets can be downloaded or imported directly into TensorFlow via Keras \cite{TensorFlow.14.12.2020,kaggle.21.09.2020,KaggleCifar100:2020,Krizhevsky:2017}:
+
+\medskip
+
+\PYTHON{import tensorflow as tf}
+
+\PYTHON{from tensorflow.keras import datasets}
+
+\PYTHON{(X\_train10, y\_train10), (X\_test10, y\_test10) = \textbackslash}
+
+\PYTHON{\qquad tf.keras.datasets.cifar10.load\_data()}
+
+\PYTHON{(X\_train100, y\_train100), (X\_test100, y\_test100) =  \textbackslash} 
+
+\PYTHON{\qquad tf.keras.datasets.cifar100.load\_data()}
+
+
+\subsection{Data Preparation}
+
+The data set CIFAR-10 is to be merged with the data of the category \glqq bottles\grqq{} from the data set CIFAR-100 to form a new data set. For visualisation purposes \FILE{pyplot} and for purposes of manipulation of the datasets \FILE{numpy} will be imported. In addition, the required modules of \FILE{Keras} are imported and the datasets CIFAR-10 and CIFAR-100 are loaded.
+
+\medskip
+
+\PYTHON{import numpy as np}
+
+\PYTHON{import matplotlib.pyplot as plt}
+
+\PYTHON{import tensorflow as tf}
+
+\PYTHON{from tensorflow.keras import datasets, layers, models}
+
+\PYTHON{(X\_train10, y\_train10), (X\_test10, y\_test10) = \textbackslash}
+
+\PYTHON{\qquad  tf.keras.datasets.cifar10.load\_data()}
+
+\PYTHON{(X\_train100, y\_train100), (X\_test100, y\_test100) = \textbackslash}
+
+\PYTHON{\qquad tf.keras.datasets.cifar100.load\_data()}
+
+\medskip
+
+The shape of the training data can be checked by displaying the property \PYTHON{.shape} for the training data of both data sets:
+
+
+\medskip
+
+\PYTHON{print('Images Shape: {}'.format(X\_train10.shape))}
+
+\PYTHON{print('Labels Shape: {}'.format(y\_train10.shape))}
+
+\PYTHON{print('Images Shape: {}'.format(X\_train100.shape))}
+
+\PYTHON{print('Labels Shape: {}'.format(y\_train100.shape))}
+
+\medskip
+
+The result is:
+
+\medskip
+
+\PYTHON{Images Shape: (50000, 32, 32, 3)}
+
+\PYTHON{Labels Shape: (50000, 1)}
+
+\PYTHON{Images Shape: (50000, 32, 32, 3)}
+
+\PYTHON{Labels Shape: (50000, 1)}
+
+\medskip
+
+That is, they receive 50,000 training data per data set, consisting of 32$\times$32- pixels in three colour channels. 
+A vector of length 50,000 is assigned, which contains the corresponding labels. To see in which form the labels are coded, one can look at the first ten entries:
+
+\medskip
+
+\PYTHON{print(y\_train10[:10])}
+
+\PYTHON{}
+
+\PYTHON{[6]}
+
+\PYTHON{\quad [9]}
+
+\PYTHON{\quad [9]}
+
+\PYTHON{\quad [4]}
+
+\PYTHON{\quad [1]}
+
+\PYTHON{\quad [1]}
+
+\PYTHON{\quad [2]}
+
+\PYTHON{\quad [7]}
+
+\PYTHON{\quad [8]}
+
+\PYTHON{\quad [3]]}
+
+\medskip
+
+If you look at several entries, you will notice that the ten categories are coded with the numbers 0 to 9. This means that the vector with the categories is to be transformed into the OneHotVector representation.
+
+In Figure~\ref{CIF10} the first 25 training data are shown with associated labels. This can be easily programmed:
+
+
+\medskip
+
+\PYTHON{plt.figure(figsize=(10,10))}
+
+\PYTHON{for i in range(25):}
+
+\PYTHON{\qquad  plt.subplot(5,5,i+1)}
+
+\PYTHON{\qquad    plt.xticks([])}
+
+\PYTHON{\qquad    plt.yticks([])}
+
+\PYTHON{\qquad    plt.grid(False)}
+
+\PYTHON{\qquad    plt.imshow(X\_train10[i], cmap=plt.cm.binary)}
+
+\PYTHON{\qquad    plt.xlabel(y\_train10[i])}
+
+\PYTHON{plt.show()}
+
+\medskip
+
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=0.9\textwidth]{Examples/TrainingFlaschen/CIFAR10}
+		\caption{Visualisation of the first 25 training data from the data set CIFAR-10} 
+		\label{CIF10}
+	\end{center}
+\end{figure}
+
+Similarly, examples from the CIFAR-100 dataset can be displayed in Figure~\ref{CIF100}:
+
+\medskip
+
+\PYTHON{plt.figure(figsize=(10,10))}
+
+\PYTHON{for i in range(25):}
+
+\PYTHON{\qquad     plt.subplot(5,5,i+1)}
+
+\PYTHON{\qquad     plt.xticks([])}
+
+\PYTHON{\qquad     plt.yticks([])}
+
+\PYTHON{\qquad     plt.grid(False)}
+
+\PYTHON{\qquad     plt.imshow(X\_train100[i], cmap=plt.cm.binary)}
+
+\PYTHON{\qquad     plt.xlabel(y\_train100[i])}
+
+\PYTHON{\qquad plt.show()}
+    
+\medskip
+
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=0.9\textwidth]{Examples/TrainingFlaschen/CIFAR100}
+		\caption{Visualisation of the first 25 training data from the data set CIFAR-100} 
+		\label{CIF100}
+	\end{center}
+\end{figure}
+
+It can be seen that the categories are numbered in alphabetical order (0-apples, 1-aquarium fish...; cf. table~\ref{TabCIF100}). Accordingly, the category \glqq bottles\grqq{} has index 9, which can be checked by displaying the corresponding images.
+
+Since the goal is to add only the images of the category ``bottles'' to CIFAR-10, the CIFAR-100 dataset has to be filtered and reduced so that only the images with index 9 remain. This is done by searching for all entries with the value 9 in the label vector and applying the resulting structure to the training data to reduce it to these entries. Since we want to add the filtered data to a dataset that has already assigned the index 9 to an existing category, it will also have its index changed to 10 in this step.
+ 
+\medskip
+
+\PYTHON{idx = (y\_train100 == 9).reshape(X\_train100.shape[0])}
+
+\PYTHON{X\_train100 = X\_train100[idx]}
+
+\PYTHON{y\_train100 = y\_train100[idx]}
+
+\PYTHON{for i in range(len(y\_train100)):}
+
+\PYTHON{\qquad    y\_train100[i]=10 }
+
+\medskip
+
+
+With the query
+
+\medskip
+
+\PYTHON{len(X\_train100)}
+
+\medskip
+
+
+we find that the number of training data in the CIFAR-100 dataset has reduced from 50,000 to 500, which is exactly the number of expected entries per category. For a rough check, we can again display the first 25 entries from the modified CIFAR-100 dataset. As can be seen in Figure~\ref{CIF100b}, judging from both the image and the label, these consist exclusively of the desired category.
+ 
+ \begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=0.9\textwidth]{Examples/TrainingFlaschen/CIFAR100b}
+		\caption{Visualisation of the first 25 training data in the filtered CIFAR-100 dataset} 
+		\label{CIF100b}
+	\end{center}
+\end{figure}
+ 
+
+Unfortunately, the two data sets could not be merged directly. In this case, the added category would only have 500 images, while there are 5,000 images for each of the other categories. As a result, this category would not be sufficiently trained and would be recognised less well than the other categories. Now there are two possibilities. From the 500 images, 5,000 images could be generated, but this is costly. The alternative is to reduce the images of the other categories to 500. For this purpose, a similar procedure is now also applied to the data from the CIFAR-10 dataset in order to represent all categories equally in the new dataset.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%hier weiter
+
+
+\medskip
+
+\PYTHON{X\_train10\_red = [None]*5000}
+
+\PYTHON{y\_train10\_red = [None]*5000}
+
+\PYTHON{for i in range(10):}
+
+\PYTHON{\qquad idx = (y\_train10 == i).reshape(X\_train10.shape[0])}
+
+\PYTHON{\qquad x=X\_train10[idx]}
+
+\PYTHON{\qquad y=y\_train10[idx]}
+
+\PYTHON{\qquad X\_train10\_red[i*500:i*500+500] = x[0:500]}
+
+\PYTHON{\qquad y\_train10\_red[i*500:i*500+500] = y[0:500] }
+
+\medskip
+ 
+With the command \PYTHON{concatenate} from \FILE{numpy}, the two data sets, our modified versions of CIFAR-10 and CIFAR-100, can now be linked.
+ 
+\medskip
+
+\PYTHON{X\_train = np.concatenate((X\_train10, X\_train100))}
+
+\PYTHON{y\_train = np.concatenate((y\_train10, y\_train100))}
+
+\medskip
+
+The length of the two arrays is now 5500 entries. To see how the two datasets have been merged, entries 4999 to 5023 of the newly created dataset can be viewed. In Figure~\ref{Mod1} it can be seen that the data of the modified dataset CIFAR-100 has been appended to the data of the dataset CIFAR-10. In addition, the categories are now also in order in the CIFAR-10 dataset that we reduced.
+  
+ \begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=0.9\textwidth]{Examples/TrainingFlaschen/Mod1}
+		\caption{Visualisation of the transition between the two data sets} 
+		\label{Mod1}
+	\end{center}
+\end{figure}  
+
+To correct this, the created data set is shuffled. It is important that images and labels are shuffled in the same way so that they still fit together. For this, the auxiliary variable \PYTHON{shuffler} is defined, which specifies the way in which the two arrays are shuffled randomly but both equally.
+
+\medskip
+
+\PYTHON{shuffler = np.random.permutation(len(X\_train))}
+
+\PYTHON{X\_train = X\_train[shuffler]}
+
+\PYTHON{y\_train = y\_train[shuffler]}
+
+\medskip
+
+Then the same section of the dataset looks like in Figure~\ref{Mod2}.
+
+ \begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=0.9\textwidth]{Examples/TrainingFlaschen/Mod2}
+		\caption{Visualisation of the transition generated data set} 
+		\label{Mod2}
+	\end{center}
+\end{figure}  
+
+Finally, a OneHotVector representation is created from the labels:
+
+\medskip
+
+\PYTHON{y\_train = tf.keras.utils.to\_categorical(y\_train)}
+
+\medskip
+
+The data is now in the following form:
+
+\medskip
+
+\PYTHON{print(X\_train.shape)}
+
+\PYTHON{print(y\_train.shape)}
+
+\PYTHON{print(y\_train[1])}
+
+\medskip
+
+
+\PYTHON{(5500, 32, 32, 3)}
+
+\PYTHON{(5500, 11)}
+
+\PYTHON{[0. 0. 0. 0. 0. 0. 0. 0. 1. 0. 0.]}
+
+\medskip
+
+The same steps for modifying and merging the datasets must also be gone through for the test data. The code for creating the dataset without the additional steps for visualisation is shown below in the listing~\ref{cifar10:complete}.
+
+\begin{code}[H]
+  \lstinputlisting[language=Python]{../../Code/JetsonNano/Datensatz.py}
+  \caption{Generation of a data set from the data sets CIFAR-10 and CIFAR-100}\label{cifar10:complete}
+\end{code}
+
+\subsection{Structure and Training of the Model}
+
+The training is to be carried out with the previously created data set, but also with the complete CIFAR-10 data set for comparison purposes. In addition, different network architectures -- on the one hand the network known from the MNIST tutorial and on the other hand the architecture of AlexNet -- are to be used and different batch sizes tested. Therefore, an input of the parameters is provided in the source code at the beginning, where \PYTHON{dataset=1} stands for the CIFAR-10 dataset and \PYTHON{dataset=2} for the own dataset, \PYTHON{model=1} for the MNIST model and \PYTHON{model=2} for the AlexNet architecture. 100 is used as the number of epochs and it is tested at individual points whether the double number of epochs leads to a changed result. According to various sources, it is advisable to first select 32 as the batch size and additionally try out further powers of two (64, 128, 256).
+
+In the first step, based on the selection of the data set, the images are loaded with the corresponding labels. Then the model specified in the parameter selection can be built and the data prepared accordingly. If \PYTHON{model=1} was selected, a simple neural network is built as described in the MNIST tutorial in \cite{Heise:2020} (on p.68). For this, the images are normalised into the value range 0 to 1 in advance.
+
+If \PYTHON{model=2} was selected, AlexNet is built up as seen in \cite{Alake:2020}. The preparation of the datasets is done a little more abbreviated than shown here because if \PYTHON{tf.data.Dataset.from\_tensor\_slices} is used in the training, error messages will occur with the versions and configurations used. Instead, the image data remain in the tensor representation. These are normalised to a mean of zero and standard deviation of 1 using the build-in function \PYTHON{tf.image.per\_image\_standardisation} and resized to the AlexNet default size of $\times$ 227.
+
+For model 1, compiling the model with optimiser and loss function is also done as in the reference. For AlexNet, the optimiser \PYTHON{tf.optimizers.SGD(lr=0.001)} is also used as in the reference. SGD stands for \glqq stochastic gradient descent\grqq. The parameter \PYTHON{lr} specifies the learning rate, which determines in how large steps the weights are to be adjusted along the gradient in each case.
+
+The creation of the \FILE{logfiles} is done as before, only the file name is named according to the parameters chosen at the beginning of the programme run in order to be able to assign them afterwards. In the training itself, the only difference is that for model 1, the validation data for the training is split off using the command \PYTHON{validation\_split}, while for model 2, the validation data was defined in advance according to the template used (last 20 \% of the training data) and can be specified in the training as \PYTHON{validation\_data}.
+
+After completion of the training, the model is evaluated with the test data and the result of this as well as the elapsed training time and the model itself, the latter as \PYTHON{saved\_model.pb}, are saved, again specifying the selected parameters in the corresponding folder name. The programme \FILE{Training\_CIFAR.py} used for training as described can be found in full in Listing~\ref{cifar10:complete2}.
+
+
+\begin{code}
+  \lstinputlisting[language=Python,firstnumber=1]{../../Code/JetsonNano/Training_CIFAR.py}
+  \caption{Training of a data set from the data sets CIFAR-10 and CIFAR-100}
+  \label{cifar10:complete2}
+\end{code}
+
+
+\subsection{History of the Training and Visualisation with TensorBoard}
+
+The courses of the training visualised with TensorBoard for the different selected parameters can be seen in table~\ref{VisTrain1} for the data set CIFAR-10 and in table~\ref{VisTrain2} for the modified data set.
+
+\medskip
+
+
+\begin{longtable} {|c | c |} 
+\caption{Visualisation of training progress with the data set CIFAR10}
+\label{VisTrain1}\\
+\hline
+\multicolumn{2}{|c|}{Dataset 1 Model 1 Epochs 100 Batch Size 32}\\
+\hline
+ & \\
+% \includegraphics[width=0.49\textwidth]{Examples/TrainingFlaschen/plots/Dataset1Model1Epochs100BatchSize32/acc}
+\includegraphics[width=0.49\textwidth]{Examples/TrainingFlaschen/Plots/Dataset1Model1Epochs100BatchSize32/acc}
+  &	
+\includegraphics[width=0.49\textwidth]{Examples/TrainingFlaschen/Plots/Dataset1Model1Epochs100BatchSize32/loss}\\
+Accuracy & Loss \\
+\hline
+\multicolumn{2}{|c|}{Dataset 1 Model 2 Epochs 100 Batch Size 32}\\
+\hline
+ & \\
+\includegraphics[width=0.49\textwidth]{Examples/TrainingFlaschen/Plots/Dataset1Model2Epochs100BatchSize32/acc}
+  &	
+\includegraphics[width=0.49\textwidth]{Examples/TrainingFlaschen/Plots/Dataset1Model2Epochs100BatchSize32/loss}\\
+Accuracy & Loss \\
+\hline
+\end{longtable}
+
+\begin{longtable} {|c | c |} 
+\caption{Visualisation of the training courses with the modified data set}
+\label{VisTrain2}\\
+\hline
+\multicolumn{2}{|c|}{Dataset 2 Model 1 Epochs 100 Batch Size 32}\\
+\hline
+ & \\
+\includegraphics[width=0.49\textwidth]{Examples/TrainingFlaschen/Plots/Dataset2Model1Epochs100BatchSize32/acc}
+  &	
+\includegraphics[width=0.49\textwidth]{Examples/TrainingFlaschen/Plots/Dataset2Model1Epochs100BatchSize32/loss}\\
+Accuracy & Loss \\
+\hline
+\multicolumn{2}{|c|}{Dataset 2 Model 1 Epochs 200 Batch Size 32}\\
+\hline
+ & \\
+\includegraphics[width=0.49\textwidth]{Examples/TrainingFlaschen/Plots/Dataset2Model1Epochs200BatchSize32/acc}
+  &	
+\includegraphics[width=0.49\textwidth]{Examples/TrainingFlaschen/Plots/Dataset2Model1Epochs200BatchSize32/loss}\\
+Accuracy & Loss \\
+\hline
+\multicolumn{2}{|c|}{Dataset 2 Model 1 Epochs 100 Batch Size 64}\\
+\hline
+ & \\
+\includegraphics[width=0.49\textwidth]{Examples/TrainingFlaschen/Plots/Dataset2Model1Epochs100BatchSize64/acc}
+  &	
+\includegraphics[width=0.49\textwidth]{Examples/TrainingFlaschen/Plots/Dataset2Model1Epochs100BatchSize64/loss}\\
+Accuracy & Loss \\
+\hline
+\multicolumn{2}{|c|}{Dataset 2 Model 1 Epochs 100 Batch Size 128}\\
+\hline
+ & \\
+\includegraphics[width=0.49\textwidth]{Examples/TrainingFlaschen/Plots/Dataset2Model1Epochs100BatchSize128/acc}
+  &	
+\includegraphics[width=0.49\textwidth]{Examples/TrainingFlaschen/Plots/Dataset2Model1Epochs100BatchSize128/loss}\\
+Accuracy & Loss \\
+\hline
+\multicolumn{2}{|c|}{Dataset 2 Model 1 Epochs 100 Batch Size 256}\\
+\hline
+ & \\
+\includegraphics[width=0.49\textwidth]{Examples/TrainingFlaschen/Plots/Dataset2Model1Epochs100BatchSize256/acc}
+  &	
+\includegraphics[width=0.49\textwidth]{Examples/TrainingFlaschen/Plots/Dataset2Model1Epochs100BatchSize256/loss}\\
+Accuracy & Loss \\
+\hline
+\multicolumn{2}{|c|}{Dataset 2 Model 2 Epochs 100 Batch Size 32}\\
+\hline
+ & \\
+\includegraphics[width=0.49\textwidth]{Examples/TrainingFlaschen/Plots/Dataset2Model2Epochs100BatchSize32/acc}
+  &	
+\includegraphics[width=0.49\textwidth]{Examples/TrainingFlaschen/Plots/Dataset2Model2Epochs100BatchSize32/loss}\\
+Accuracy & Loss \\
+\hline
+\multicolumn{2}{|c|}{Dataset 2 Model 2 Epochs 200 Batch Size 32}\\
+\hline
+ & \\
+\includegraphics[width=0.49\textwidth]{Examples/TrainingFlaschen/Plots/Dataset2Model2Epochs200BatchSize32/acc}
+  &	
+\includegraphics[width=0.49\textwidth]{Examples/TrainingFlaschen/Plots/Dataset2Model2Epochs200BatchSize32/loss}\\
+Accuracy & Loss \\
+\hline
+\multicolumn{2}{|c|}{Dataset 2 Model 2 Epochs 100 Batch Size 64}\\
+\hline
+ & \\
+\includegraphics[width=0.49\textwidth]{Examples/TrainingFlaschen/Plots/Dataset2Model2Epochs100BatchSize64/acc}
+  &	
+\includegraphics[width=0.49\textwidth]{Examples/TrainingFlaschen/Plots/Dataset2Model2Epochs100BatchSize64/loss}\\
+Accuracy & Loss \\
+\hline
+\multicolumn{2}{|c|}{Dataset 2 Model 2 Epochs 100 Batch Size 128}\\
+\hline
+ & \\
+\includegraphics[width=0.49\textwidth]{Examples/TrainingFlaschen/Plots/Dataset2Model2Epochs100BatchSize128/acc}
+  &	
+\includegraphics[width=0.49\textwidth]{Examples/TrainingFlaschen/Plots/Dataset2Model2Epochs100BatchSize128/loss}\\
+Accuracy & Loss \\
+\hline
+\multicolumn{2}{|c|}{Dataset 2 Model 2 Epochs 100 Batch Size 256}\\
+\hline
+ & \\
+\includegraphics[width=0.49\textwidth]{Examples/TrainingFlaschen/Plots/Dataset2Model2Epochs100BatchSize256/acc}
+  &	
+\includegraphics[width=0.49\textwidth]{Examples/TrainingFlaschen/Plots/Dataset2Model2Epochs100BatchSize256/loss}\\
+Accuracy & Loss \\
+\hline
+\end{longtable}
+
+Table~\ref{TabTrain} shows the values of the accuracy and loss function at the end of the training for training, validation and the evaluation following the training with the test data.
+
+\begin{table}[ht]
+\caption{Model quality and training time for different parameters: D-dataset, M-model, E-epochs, B-batch size}
+\label{TabTrain}
+\begin{tabular} {| c | c | c | c | c | c | c | c | c | c | c |}
+\firsthline
+\multicolumn{4}{| c |}{Parameters} & \multicolumn{2}{ c }{training} & \multicolumn{2}{| c |}{validation} & \multicolumn{2}{ c |}{test} & \\
+\hline
+D & M & E & B & accuracy & loss & accuracy & loss & accuracy & loss & train.\\
+ & & & & & & & & & & time\\
+ \hline
+ 1& 1 & 100 & 32 & 0.9498 & 0.1522 & 0.7109 & 1.586 & 0.7066 & 1.567 & 65.1\\
+  \hline
+1 & 2 & 100 & 32 & 0.9937 & 0.0219 & 0.7356 & 1.323 & 0.7316 & 1.363 & 1,366.2\\
+ \hline
+2 & 1 & 100 & 32 & 0.9782 & 0.0647 & 0.5482 & 3.441 & 0.5367 & 3.306 & 7.4\\
+\hline
+2 & 1 & 200 & 32 & 0.9914 & 0.0299 & 0.5309 & 4.229 & 0.5224 & 4.350 & 14.8\\
+\hline
+2 & 1 & 100 & 64 & 0.9861 & 0.0460 & 0.5564 & 2.990 & 0.5427 & 3.157 & 6.1\\
+\hline
+2 & 1 & 100 & 128 & 0.9793 & 0.0663 & 0.5355 & 2.994 & 0.5392 & 3.060 & 5.6\\
+\hline
+2 & 1 & 100 & 256 & 0.9616 & 0.1003 & 0.5491 & 2.642 & 0.5543 & 2.602 & 5.2\\
+\hline
+2 & 2 & 100 & 32 & 0.9932 & 0.0413 & 0.5836 & 1.598 & 0.5582 & 1.730 & 152.3\\
+\hline
+2 & 2 & 200 & 32 & 0.9989 & 0.0094 & 0.6073 & 1.715 & 0.5578 & 1.954 & 303.0\\
+\hline
+2 & 2 & 100 & 64 & 0.9884 & 0.0548 & 0.5773 & 1.562 & 0.5603 & 1.679 & 151.9\\
+\hline
+2 & 2 & 100 & 128 & 0.9891 & 0.0489 & 0.6036 & 1.537 & 0.5602 & 1.686 & 151.4\\
+\hline
+2 & 2 & 100 & 256 & 0.9857 & 0.0570 & 0.5936 & 1.561 & 0.5569 & 1.727 & 154.6\\
+ \hline
+\end{tabular}
+\end{table}
+
+\medskip
+
+As might be expected, the full CIFAR-10 dataset achieves higher accuracy when trained with AlexNet, as it was trained with many more images. For the simpler model, the small dataset seems to achieve high accuracy in training, but there seems to be overfitting because the test accuracy for the small, modified dataset is much lower than the training accuracy. At the same time, training with the full CIFAR-10 dataset on the AlexNet architecture requires a training time of almost a full day with the specifications RAM 64 GB, Intel i9 9900k processor, 8 cores, 3600 MHz.
+
+It can be seen that training with 100 epochs is absolutely sufficient. The results vary slightly with the batch size, but no clear pattern can be seen here.
+
+The accuracies achieved are not particularly high. This is not surprising, however, when one considers the reduced training effort and makes a comparison with the results achieved by the AlexNet developers with AlexNet. Here, too, despite the use of over 1.2 million high-resolution images with the ImageNet dataset, a top-1 error rate of 37.5 \% was still observed. In this respect, the results achieved here with TensorFlow with fewer low-resolution images are plausible if not satisfactory.
+

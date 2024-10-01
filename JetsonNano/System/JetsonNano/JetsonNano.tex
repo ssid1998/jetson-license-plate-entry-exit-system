@@ -1,0 +1,170 @@
+%%%%%%%%%%%%%%%
+%
+% $Autor: Wings $
+% $Datum: 2020-02-24 14:30:26Z $
+% $Pfad: komponenten/Bilderkennung/Produktspezifikation/JetsonNano/JetsonNano.tex $
+% $Version: 1792 $
+%
+% !TeX encoding = utf8
+% !TeX root = JetsonNano
+% !TeX TXS-program:bibliography = txs:///bibtex
+%
+%
+%%%%%%%%%%%%%%%
+
+% ! TeX TXS-SCRIPT = foobar
+% //Trigger = ?load-this-file\right 
+% app.load("/tmp/test/test.tex");
+% app.load("/tmp/test/a.tex");
+% TXS-SCRIPT-END
+%%%
+%
+% Auswahl der Sprache
+% Die nicht gewünschte Sprache muss auskommentiert werden:
+%\def\isGerman{1}
+\def\isEnglish{1}
+%
+%%%%%%%%%%%%%%%
+
+\documentclass[10pt,a4paper,bibliography=totoc]{scrbook}
+
+
+\input{../../General/packages}
+\input{../../General/commands}
+\input{../../General/tikzdefs}
+
+\input{../../General/acronyms}
+\input{../../General/Hyphenations}%
+
+\bibliography{../../../MLbib/Jetson} 
+
+%\renewcommand{\Ausblenden}[1]{#1}
+
+\begin{document}
+    
+\InputLanguage{Contents/JetsonNano/}{Titlepage}
+
+%Inhaltsverzeichnis
+\tableofcontents
+\newpage
+
+\listoffigures
+\newpage
+
+\lstlistoflistings
+\clearpage
+
+
+%\addcontentsline{toc}{chapter}{\TRANS{Liste der Programme}{List of Listings}}
+%\lstlistoflistings
+\listofcodes
+\cleardoublepage
+
+% Ist in acronyms/Acronymlist aufgegangen
+%\input{../../Contents/JetsonNano/Symbollist}
+%\newpage
+
+\InputLanguage{Contents/General/}{Acronymlist}
+\newpage
+
+
+
+%\Ausblenden
+{
+    
+\part{Jetson Nano}
+
+\InputLanguage{Contents/JetsonNano/}{Einleitung}
+
+\InputLanguage{Contents/JetsonNano/}{Anwendungsbeispiel}
+
+\InputLanguage{Contents/JetsonNano/}{JetsonNano}
+
+\InputLanguage{Contents/General/}{SmartPiCAM}
+
+\InputLanguage{Contents/JetsonNano/}{JetsonSmartPi}
+
+
+% nur englisch
+\input{../../Contents/General/OpenCVCalibration}
+
+
+\InputLanguage{Contents/General/}{ConstraintsCamera}
+
+
+%nur deutsche Stichwörter
+\input{../../Contents/General/CAMimx477}
+    
+\input{../../Contents/General/LensCalibrationTool}
+
+\InputLanguage{Contents/JetsonNano/}{JetsonNanoMSR-Lab}
+
+\InputLanguage{Contents/JetsonNano/}{GPIO}
+
+\InputLanguage{Contents/JetsonNano/}{HelloWorld}  
+}
+
+
+%\Ausblenden
+{
+\TRANS{\part{Objekterkennung mit dem Jetson Nano}}{\part{Object Detection with the Jetson Nano}}
+	
+  \InputLanguage{Contents/General/}{PythonInstallation}
+
+  \InputLanguage{Contents/General/}{Environment}
+
+  \InputLanguage{Contents/General/}{TensorFlow} 
+
+  \InputLanguage{Contents/General/}{TensorFlowBottles}
+
+  \InputLanguage{Contents/General/}{TensorFlowSave} 
+
+  \InputLanguage{Contents/General/}{TensorFlowOpt} 
+
+  \InputLanguage{Contents/General/}{TensorFlowLite}  
+
+  \InputLanguage{Contents/JetsonNano/}{TensorFlowLiteJN}  
+
+  % Bearbeiten:
+  \InputLanguage{Contents/General/}{TFLiteBottles}  % Anwendungsbeispiel: tflite-Modell
+}
+
+
+
+%\Ausblenden
+{
+\part{\TRANS{Anhang}{Appendix}}
+    
+    \InputLanguage{Contents/JetsonNano/}{Materialliste}
+    
+    \InputLanguage{Contents/JetsonNano/}{Datenblatt}
+}
+
+%\Ausblenden
+{
+  \input{../../Contents/JetsonNano/ErsteSchritte}
+    
+  %Hier nicht sinnvoll, aber für spätere Anwendungen sinnvolle Dateien
+  \input{../../Contents/General/RaspCam}
+    
+  \input{../../Contents/General/RaspCamDatasheet}
+    
+  \input{../../Contents/General/hama}
+}
+
+
+
+
+%\addcontentsline{toc}{chapter}{Literaturverzeichnis}
+\printbibliography[
+  heading=bibintoc,
+  title={\TRANS{Literaturverzeichnis}{Literature}}
+]
+
+\newpage
+
+%\addcontentsline{toc}{chapter}{\TRANS{Stichwortverzeichnis}{Index}}
+\printindex
+
+
+\end{document}

@@ -1,0 +1,132 @@
+\section{Vergleich verschiedener Modelle}
+
+Um exemplarisch den Einfluss des Modells auf das Zeitverhalten und die Sicherheit der Klassifizierung zu bestimmen, werden fünf verschiedene Bilder (siehe Abbildung~\ref{Testbilder}) der Bibliothek mit imagenet-console unter Verwendung der drei Modellen GoogleNet, Resnet-18 und Alexnet klassifiziert und die ausgegebenen Zeitmesswerte sowie Sicherheiten in jeweils drei Durchgängen notiert. Die Ergebnisse sind in den folgenden Tabellen~\ref{Googlenet}, 
+~\ref{Resnet} und ~\ref{Alexnet} aufgeführt.
+
+\begin{figure} [H]
+	\includegraphics[height=0.165\textwidth]{Test/orange_0}
+	\includegraphics[height=0.165\textwidth]{Test/cat_1}
+	\includegraphics[height=0.165\textwidth]{Test/dog_0}
+	\includegraphics[height=0.165\textwidth]{Test/humans_0}
+	\includegraphics[height=0.165\textwidth]{Test/room_0}
+	\tiny{Quelle: \cite{GitHubJetsonInferenceMaster:2020}}
+	\caption{Orange\_0, Cat\_1, Dog\_0, Humans\_0, Room\_0}
+	\label{Testbilder}
+\end{figure}
+
+\subsection{Ergebnisse}
+
+\begin{table} [H]
+	\centering
+		\begin{tabular} {c c c c}
+Image & CPU & CUDA & Sicherheit \\
+Orange\_0 & 16.01484ms & 15.57135ms &	97,9004\% \\
+Orange\_0 & 36.33765ms &	35.91547ms &	97,9004\% \\
+Orange\_0 & 17.37886ms &	16.96849ms &	97,9004\% \\		
+Cat\_1 &16.25649ms &	16.10844ms	& 74,2188\%\\
+Cat\_1 &18.00220ms	& 17.63604ms&	74,2188\%\\
+Cat\_1 &16.00830ms&	16.00886ms&	74,2188\%\\		
+Dog\_0 &16.09965ms&	15.73339ms&	60,4980\%\\
+Dog\_0 &16.78305ms&	16.40469ms&	60,4980\%\\
+Dog\_0 &15.63709ms&	15.50693ms&	60,4980\%\\		
+Humans\_0 &17.05992ms&	16.88641ms&	82,8125\%\\
+Humans\_0 &16.11787ms&	15.76661ms&	82,8125\%\\
+Humans\_0 &17.01237ms & 16.64573ms&	82,8125\% \\		
+Room\_0 &16.10448ms&  15.71161ms&	81,6895\% \\
+Room\_0 &15.57260ms&  15.47688ms&	81,6895\% \\
+Room\_0 &16.15229ms&  15.95646ms&	81,6895\% \\
+		\end{tabular}
+	\caption{Messwerte GoogleNet}
+	\label{Googlenet}
+\end{table}
+
+
+\begin{table}[H]
+	\centering
+		\begin{tabular} {c c c c}
+	Image & CPU & CUDA & Sicherheit \\
+Orange\_0&	17.51059ms  &	17.20469ms&	99,6094\%\\
+Orange\_0&	16.38406ms  &	15.98901ms&	99,6094\%\\
+Orange\_0&	17.16923ms  &	16.85104ms&	99,6094\%\\
+Cat\_1&	16.95798ms  &	16.75537ms&	68,7988\%\\
+Cat\_1&	17.02730ms  &	16.82364ms&	68,7988\%\\
+Cat\_1&	16.95693ms  &	16.74839ms&	68,7988\%\\
+Dog\_0&	17.08527ms  &	16.85958ms&	71,1914\%\\
+Dog\_0&	17.21506ms  &	17.02948ms&	71,1914\%\\
+Dog\_0&	17.83476ms  &	17.65422ms&	71,1914\%\\
+Humans\_0&	17.02573ms  &	16.77406ms&	86,0352\%\\
+Humans\_0&	17.00323ms  &	16.79349ms&	86,0352\%\\
+Humans\_0&	15.40247ms  &	15.22213ms&	86,0352\%\\
+Room\_0&	17.00797ms  &	16.75922ms&	63,5254\%\\
+Room\_0&	17.14052ms  &	16.90589ms&	63,5254\%\\
+Room\_0&	16.86568ms  &	16.61495ms&	63,5254\%\\
+		\end{tabular}
+	\caption{Messwerte Resnet}
+	\label{Resnet}
+\end{table}
+
+
+\begin{table} [H]
+	\centering
+		\begin{tabular} {c c c c}
+Image & CPU & CUDA & Sicherheit \\
+Orange\_0	&	18.16590ms & 	17.64865ms&	99,1211\%\\
+Orange\_0	&	17.54921ms  &	17.04011ms&	99,1211\%\\
+Orange\_0	&	17.00929ms  &	16.41516ms&	99,1211\%\\
+Cat\_1	&	18.06608ms  &	17.85406ms&	74,1211\%\\
+Cat\_1	&	17.78847ms  &	17.51240ms&	74,1211\%\\
+Cat\_1	&	17.59664ms  &	17.34167ms&	74,1211\%\\
+Dog\_0	&	18.00372ms  &	17.58203ms&	38,2080\%\\
+Dog\_0	&	18.02408ms  &	17.59661ms&	38,2080\%\\
+Dog\_0	&	17.78418ms  &	17.36698ms&	38,2080\%\\
+Humans\_0	&	17.91261ms  &	17.45802ms&	94,6777\%\\
+Humans\_0	&	18.22413ms  &	17.77870ms&	94,6777\%\\
+Humans\_0	&	17.79771ms  &	17.54583ms&	94,6777\%\\
+Room\_0	&	17.83203ms  &	17.52568ms&	30,8350\%\\
+Room\_0	&	17.67358ms  &	17.39104ms&	30,8350\%\\
+Room\_0	&	17.99374ms  &	17.53318ms&	30,8350\%\\
+		\end{tabular}
+		\caption{Messwerte Alexnet}
+		\label{Alexnet}
+\end{table}
+
+\subsection{Auswertung}
+
+In den Abbildungen ~\ref{Zeitmessungen GoogleNet}, ~\ref{Zeitmessungen Resnet-18} und ~\ref{Zeitmessungen Alexnet} sind die durchschnittlich zur Auswertung der Netzwerke benötigte Zeitspannen der CPU und CUDA graphisch für die drei getesteten Modelle dargestellt.
+
+\smallskip
+
+Der Zeitbedarf der CPU ist durchgängig weniger als 1ms größer als der von CUDA. Auffällig ist der Zeitbedarf von GoogleNet für das Bild Orange\_0. Dies ist auf einen einzelnen Durchgang zurückzuführen, bei dem es sich wahrscheinlich um einen Ausreißer handelt - dies müsste durch weitere Tests mit mehr Durchgängen überprüft werden. Ansonsten sind bei allen Modellen alle Durchgänge kürzer als 19ms und keine wesentlichen Unterschiede im Zeitverhalten der Modelle zu erkennen.
+
+\begin{figure} [H]
+	\centering
+		\includegraphics[height=0.4\textwidth]{Test/ZeitGooglenet}
+		\caption{Zeitmessungen GoogleNet}
+		\label{Zeitmessungen GoogleNet}
+\end{figure}
+
+\begin{figure} [H]
+	\centering
+		\includegraphics[height=0.4\textwidth]{Test/ZeitResnet}
+		\caption{Zeitmessungen Resnet-18}
+		\label{Zeitmessungen Resnet-18}
+\end{figure}
+
+\begin{figure} [H]
+	\centering
+		\includegraphics[height=0.4\textwidth]{Test/ZeitAlexnet}
+		\caption{Zeitmessungen Alexnet}
+		\label{Zeitmessungen Alexnet}
+\end{figure}
+
+In Abbildung~\ref{Vergleich Sicherheit} sind die erzielten Sicherheiten der verschiedenen Modelle für die getesteten Bilder aufgetragen. Während die Orange von allen Netzen mit großer Sicherheit erkannt werden kann. Dies ist nicht überraschend, da im Bild keine weiteren Objekte und kein Hintergrund vorhanden sind. Die anderen, realitätsnäheren Bilder führen zu geringeren Sicherheiten. Insbesondere bei den Bildern Dog\_0 und Room\_0 sind auch deutliche Unterschiede zwischen den Modellen zu erkennen, wobei Alexnet bei diesen Bildern am schlechtesten abschneidet. 
+
+\smallskip
+
+Erwähnenswert ist auch die Tatsache, dass bei dem Bild Humans\_0 nicht etwa Menschen, sondern bei allen drei Modellen der Fußball erkannt wird, und zwar mit hoher Sicherheit. Bei einer Anwendung zur Erkennung von Menschen sollten also andere Netzwerke verwendet werden, die mit einem entsprechenden Schwerpunkt trainiert wurden.
+
+\begin{figure} [H]
+\GRAPHICSC{0.5}{1.0}{Test/Sicherheit}
+\caption{Vergleich Sicherheit}
+\label{Vergleich Sicherheit}
+\end{figure}

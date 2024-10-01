@@ -1,0 +1,184 @@
+%%%%%%
+%
+% $Autor: Wings $
+% $Datum: 2020-01-18 11:15:45Z $
+% $Pfad: WuSt/Skript/Produktspezifikation/powerpoint/ImageProcessing.tex $
+% $Version: 4620 $
+%
+%%%%%%
+
+
+\chapter{CUDA}
+
+
+{\tiny Quelle: \url{https://www.bigdata-insider.de/was-ist-cuda-a-851005/}}
+
+\bigskip
+
+CUDA ist eine von NVIDIA entwickelte Technologie und Programmierschnittstelle, mit der sich die Rechenleistung von Grafikprozessoren (GPUs) für Anwendungen nutzen lässt. Aufgrund der hohen Rechenleistung und parallelen Arbeitsweise der GPUs sind bei bestimmten Anwendungen enorme Performancegewinne erzielbar.
+
+Die Abkürzung CUDA steht für Compute Unified Device Architecture. Es handelt sich um eine Schnittstellentechnologie und Computing-Plattform, mit der sich Grafikprozessoren ansprechen und auch für nicht grafikspezifische Berechnungen nutzen lassen. CUDA wurde von NVIDIA entwickelt und beschleunigt Programme, indem neben der CPU bestimmte Programmteile von einer oder mehreren GPUs parallelisiert bearbeitet werden. 
+
+Im Vergleich zu einer CPU besteht eine GPU aus einer größeren Anzahl parallel nutzbarer Cores, die eine Vielzahl von Berechnungen gleichzeitig ausführen können. Die Compute Unified Device Architecture ist mit Programmiersprachen wie Python, Fortran, C, C++ oder mit Software wie MATLAB nutzbar. CUDA besteht aus Bibliotheken, Entwicklungstools, Runtime-Umgebung und Compiler. Unterstützt wird die CUDA-Technologie von NVIDIA-GPUs aus verschiedenen Serien wie Tesla, GeForce, Quadro und anderen.
+
+Im Gegensatz zu APIs wie DirectX und OpenGL ist CUDA nicht auf reine Multimediaanwendungen spezialisiert, sondern lässt sich für Applikationen unterschiedlichster Art verwenden. Veröffentlicht wurde CUDA erstmals im Jahr 2007. Die aktuelle Version ist 10.1 (Stand 2019) und ist für Betriebssysteme wie Linux, Windows oder macOS erhältlich. Das komplette CUDA-Toolkit kann direkt von den NVIDIA-Seiten heruntergeladen werden.
+
+
+\section{CUDA, Grafikprozessoren und die parallele Bearbeitung von Rechenaufgaben}
+
+
+Die Architektur einer CPU ist auf generelle Programmanforderungen ausgelegt und muss eine Vielzahl Befehle und Datentypen unterstützen. Neben einer geringen Anzahl von Kernen (Cores) nehmen Cache und Controller größere Teile der Architektur der CPU in Anspruch. Eine GPU hingegen ist auf Grafikberechnungen spezialisiert und arbeitet mit relativ wenigen Befehlen und vielen Cores. Dies ist darauf zurückzuführen, dass GPUs hauptsächlich für Pixelberechnungen konzipiert wurden. Die Architektur erlaubt es, viele einfache Befehle gleichzeitig an die Cores zu übertragen und parallel abzuarbeiten. Cache und Controller sind wesentlich einfacher aufgebaut und kleiner. 
+
+Liegt die Anzahl an Cores einer CPU im Bereich zwischen zwei und acht, haben moderne Grafikprozessoren teilweise bis zu mehrere tausend Cores. Eine GPU lässt sich mit CUDA nicht nur für Grafikberechnungen verwenden. Sie eignet sich für alle Anwendungen, die mit vielen parallelen Prozessen und gleichzeitigen Berechnungen arbeiten. CUDA und GPUs sind daher überall dort effizient einsetzbar, wo in Programmen viele Berechnungen parallel ablaufen müssen. Dies ist beispielsweise bei wissenschaftlichen Anwendungen oder bei Berechnungen im Umfeld der Künstlichen Intelligenz (KI) der Fall.
+
+
+
+\section{CUDA, OpenGL und DirectX}
+
+Auch OpenGL (Open Graphics Library) oder DirectX von Microsoft ermöglichen die Interaktion von Anwendungscode mit einer GPU. Allerdings sind OpenGL oder DirectX speziell auf die von Multimediaanwendungen benötigten Prozesse und Berechnungen ausgelegt. Will man die Rechenleistung eines Grafikprozessors für nicht grafikspezifischen Programmcode nutzen, ist eine Umsetzung der Berechnungen auf grafische Operatoren notwendig. Diese Umsetzung sorgt für eine zusätzliche Komplexität und schränkt die Funktionalität ein. 
+
+CUDA bietet ein vollständiges Programmiermodell, das die Unzulänglichkeiten von OpenGL und DirectX in diesem Bereich überwindet. Anwendungen, die nicht auf grafische Operationen spezialisiert sind, können dank des Programmiermodells CUDA GPUs einfach und effizient ansprechen. Der Entwickler erhält einen direkten, standardisierten Zugriff auf den Befehlssatz und den Speicher einer GPU.
+
+
+\section{Vorteile durch den Einsatz von CUDA}
+
+Der Einsatz von CUDA bietet unter anderem folgende Vorteile:
+
+\begin{itemize}
+	\item optimale Ausnutzung der Ressourcen eines Rechners durch die Verwendung der GPU und CPU für den Programmcode
+	\item hoher Performancegewinn bei parallelisierten Berechnungen aufgrund der besonderen Architektur der GPUs mit ihren vielen Cores
+	\item keine Notwendigkeit der Entwicklung und Bereitstellung spezieller Hardware für mehr Rechenleistung, sondern Nutzung der vorhandenen GPU
+	\item definierte Schnittstelle zur Nutzung der GPU-Rechenleistung
+	\item einsetzbar mit vielen NVIDIA-GPUs
+	\item kompatibel mit zahlreichen Programmiersprachen und Betriebssystemen
+\end{itemize}
+
+
+
+\section{Anwendungsbereiche von CUDA}
+
+Obwohl es sich bei CUDA um eine herstellerspezifische Entwicklung von NVIDIA handelt, hat sich das Computing-Modell in vielen Bereichen etabliert. Die Compute Unified Device Architecture kommt im wissenschaftlichen und kommerziellen Bereich in vielen Anwendungen zum Einsatz. Unter anderem profitieren Anwendungen im Umfeld der Künstlichen Intelligenz, neuronaler Netze und des Machine Learnings von der hohen Rechenleistung der Grafikprozessoren. So nutzen beispielsweise das Finanzwesen, die Energiewirtschaft und die Seismologie oder Geologie CUDA für diverse Anwendungen und Modellrechnungen. 
+
+Eine sehr bekannte Anwendung von CUDA ist das Projekt SETI@home der Universität Berkeley, das nach außerirdischem intelligentem Leben sucht. Ein weiterer wichtiger Einsatzbereich von CUDA ist die Video- und Bildbearbeitung. So nutzt die Medizin CUDA beispielsweise für die CT-Bildrekonstruktionen.
+
+
+
+\chapter{Installation von CUDA}
+
+{\tiny Quelle: \url{https://wiki.ubuntuusers.de/Nvidia_CUDA_installieren/}}
+
+
+\section{Voraussetzungen}
+
+Damit CUDA genutzt werden kann ist eine unterstützte Grafikkarte mit aktuellem proprietären Nvidia-Treiber nötig. Notebooks mit Optimus-Technologie können ebenfalls von CUDA profitieren, falls ihre zweite Grafikkarte unterstützt wird.
+
+\section{CUDA SDK DevKit installieren}
+
+Um NVIDIA Cuda auf Ubuntu nutzen zu können muss das entsprechende NVIDIA DevKit von den Ubuntu Paketquellen mittels
+
+\begin{itemize}
+  \item nvidia-cuda-dev 
+  \item nvidia-cuda-toolkit
+\end{itemize} 
+
+\bigskip
+
+Paketliste zum Kopieren: 
+
+\medskip
+
+\PYTHON{sudo apt-get install nvidia-cuda-dev  nvidia-cuda-toolkit}
+
+\medskip
+
+
+
+\section{Fremdpaket}
+
+Eine andere Möglichkeit besteht darin das entsprechende CUDA Developer Kit Paket direkt von der NVIDIA Entwickler Seite herunterzuladen und das DEB-Paket zu installieren. 
+
+\bigskip
+
+Hinweis!
+
+\bigskip
+
+Fremdpakete können das System gefährden. 
+
+\bigskip
+
+Anmerkung: Es wird empfohlen die von Ubuntu zur Verfügung gestellte und getestete Pakete und Treiber aus den offiziellen Paketquellen zu verwenden. 
+
+\section{GPU Computing Toolkit installieren}
+
+Wenn man selbst Programme mit CUDA Unterstützung schreiben möchte, ist es nötig nebst CUDA zusätzlich auch das CUDA Toolkit zu installieren. Dazu wird von Nvidias Entwicklerseite die Installationsdatei heruntergeladen. Man sollte darauf achten, dass die Version des Toolkits mit dem Installierten Grafikkartentreiber kompatibel ist. Das kann anhand einer Tabelle in der Sektion Release Notes überprüft werden. Sollte noch kein Nvidia-Grafiktreiber installiert sein, ist es besser vor der CUDA-Installation über zusätzliche Treiber die neuste getestete Version zu installieren. Danach kann mit 
+
+
+\medskip
+
+\PYTHON{sudo sh cuda\_<VERSION>\_linux.run}
+
+	
+\medskip
+
+Das CUDA Toolkit als Nutzer installiert werden. Während der Installation wird man gefragt, ob der enthaltenen Grafiktreiber installiert werden soll. Hat man das schon vorher gemacht muss diese Option entfernt werden. Soll der Grafiktreiber jedoch installiert werden muss man sich zuvor ausloggen, ohne X Server (im Terminal) wieder einloggen und die Installation erneut starten (nicht empfohlen). Während der Installation wird das Verzeichnis \PYTHON{/usr/local/cuda-9.0} als Standard vorgeschlagen, das nach Wunsch geändert werden kann (nicht empfohlen). Es sollte jedoch bedacht werden, um das Toolkit verwenden, müssen die Umgebungsvariablen \PYTHON{\$PATH} und \PYTHON{\$LD\_LIBRARY\_PATH} angepasst werden. Dazu fügt man folgende Zeilen am Ende der \PYTHON{\~{}/.bashrc} ein: 
+
+\medskip
+
+\PYTHON{export PATH=\$PATH:/usr/local/cuda-<VERSION>/bin}
+
+\PYTHON{export LD\_LIBRARY\_PATH=\$LD\_LIBRARY\_PATH:/usr/local/cuda-<VERSION>/lib64}
+
+\medskip
+
+
+
+Um auch die Beispiels-Dateien kompilieren zu können, sind folgende Pakete nötig: 
+
+\begin{itemize}
+  \item build-essential
+  \item freeglut3-dev
+  \item libgl1-mesa-glx
+  \item libglu1-mesa-dev
+  \item libx11-dev
+  \item libxi-dev
+  \item libxmu-dev
+\end{itemize}
+
+\bigskip
+
+Paketliste zum Kopieren: 
+
+\medskip
+
+\PYTHON{sudo apt-get install build-essential freeglut3-dev libgl1-mesa-glx libglu1-mesa-dev libx11-dev libxi-dev libxmu-dev }
+
+\bigskip
+
+Ist die Installation abgeschlossen, kann man in einem Terminal in den CUDA-Beispiele Ordner wechsel und die Installation testen.
+
+\medskip
+ 
+
+
+\PYTHON{cd  \~{}/NVIDIA\_CUDA-<VERSION>\_SAMPLES/0\_Simple/simpleLayeredTexture}
+
+\PYTHON{make}
+
+\PYTHON{./simpleLayeredTexture}
+
+\medskip
+
+In den Ausgaben finden sich Informationen zur Hardware und Ausführungszeit des Programms.
+
+
+
+\chapter{CUDA-Installation - Hardware-Voraussetzung}
+
+
+{\tiny Quelle: \url{https://towardsdatascience.com/pimp-up-your-pc-for-machine-learning-d11f68c2815}}
+
+\chapter{CUDA-Installation unter Windows}
+
+{\tiny Quelle: \url{https://towardsdatascience.com/installing-tensorflow-with-cuda-cudnn-and-gpu-support-on-windows-10-60693e46e781}}
+

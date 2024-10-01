@@ -1,0 +1,383 @@
+%%%%%%%%%%%%
+%
+% $Autor: Wings $
+% $Datum: 2019-03-05 08:03:15Z $
+% $Pfad: Automatisierung/Skript/Produktspezifikation/Powerpoint/AMF.tex $
+% $Version: 4250 $
+%
+%%%%%%%%%%%%
+
+%Quelle: iX 2/2020, S. 54 
+% Deep-Learning-Anwendungen mit NVIDIAs Jetson Nano 
+%Zwergenkönig 
+%Ramon Wartala
+
+\chapter{Zwergenkönig}
+
+Einplatinencomputer wie die Jetson-Platinen von NVIDIA eignen sich gut für eigene Experimente mit Deep Learning, besonders bei Bild- und Objekterkennung und Robotik. 
+
+\section{Kurzinfo}
+
+\begin{itemize}
+  \item System-on-a-Chip-Systeme bieten einen kostengünstigen Einstieg in die Ent­wicklung autonomer, Strom sparender Deep-Learning-Anwendungen. 
+  \item Der Jetson Nano, das kleinste KI-Modul aus NVIDIAS Jetson-Familie, verspricht eine hohe Verarbeitungsgeschwindigkeit bei gleichzeitig moderater Leistungs­aufnahme. 
+  \item SoCs eignen sich am besten für die Inference, also für das Anwenden vortrainierter ML-Modelle auf reale Daten. 
+\end{itemize}
+
+
+\section{Einleitung}
+
+Das Paradebeispiel für die Bilderkennung in Echtzeit ist autonomes Fahren. Aktuelle Bilderkennungsalgorithmen, die auf rechenintensiven Deep-­Learning-Verfahren basieren, be­nötigen viel Rechenleistung, um Wegmarken, andere Verkehrsteilnehmer und Hindernisse in Echtzeit erkennen zu können. Eine der größten Herausforderungen bei der Entwicklung elektrisch betriebener autonomer Fahrsysteme ist jedoch die Akkukapazität. Die Leistung eines modernen Akkus wird nicht nur für die Fortbewegung mithilfe des Elektromotors benötigt, sondern auch für die gesamte Bordelek­tronik inklusive Klima-, Navigations- und Entertainmentsystem. Bei autonom operierenden Fahrzeugen kommt dazu noch die Leistungsaufnahme für die Sensorik und die Verarbeitung des von den Sensoren gelieferten Datenstroms. 
+
+Moderne Grafikkarten, wie sie in Serversystemen als Rechenbeschleuniger zum Einsatz kommen, benötigen für ­diesen Zweck viel zu viel Strom. So nimmt eine High-End-Grafikkarte wie NVIDIAs Titan RTX rund 280 Watt an einem 650-Watt-Netzteil auf, um die über 4600 CUDA-­Kerne anzutreiben. Im Vergleich dazu nimmt sich der „Full Self-driving Computer“ (FSD), den Elon Musk auf den diesjährigen Autonomy Days von Tesla präsentierte, in seiner Leistungsaufnahme von 72 Watt moderat aus. Die zwei sogenannten Neural Network Arrays ermöglichen jeweils rund 72 Billionen (72 × 1012) Multiplikationen oder Additionen pro Sekunde. 
+
+Diese geballte Rechenpower wird zur Bilderkennung in Echtzeit benötigt. Dabei muss das System jede Millisekunde gleich mehrere Bilder, die aus unterschiedlichen Kameras des Fahrzeugs kommen, verarbeiten. 
+
+\section{Darf es etwas weniger sein?}
+
+Nicht jede ML-Anwendung braucht jedoch so viel Rechenleistung. Wer selbst mit Deep Learning und Bilderkennung experimentieren will, dem bietet NVIDIA seit 2014 eine Entwicklungsplattform für autonome Systeme an. 
+
+Zu der Jetson genannten Familie von Einplatinencomputern kommt jedes Jahr ein weiteres Mitglied hinzu. Auf dem Niveau eines Tesla FSD bewegt sich der Jetson Xavier, der bei einer Leistungsaufnahme von um die 30 Watt bis zu 30 TOPS realisiert. 
+
+NVIDIAs jüngster Sprössling ist der Jetson Xavier NX, der bei 15 Watt Leistungsaufnahme bis zu 21 TOPS an Rechen­leistung schafft und ab März 2020 erhältlich sein soll. Genauso kredit­kartenklein ist der im Frühjahr 2019 erschienene Jetson Nano. Er wird seinem Namen zweifach gerecht, denn der Nano ist auch das günstigste SoC der Familie. Bei 10 Watt Leistungsaufnahme bringt er es noch auf rund 0,5 TFlops mit 16-Bit-Floating-­Point-­Werten (siehe Kasten „Maßeinheiten für neuronale Rechenoperationen“). 
+
+
+Möchte man mithilfe von Deep-Learning-Modellen Bild- und Objekterkennung in Echtzeit, zum Beispiel über eine angeschlossene Kamera, implementieren, bietet der Nano dafür genug Leistungs­reserve. Die Tabelle \glqq Leistungswerte\ldots\grqq{} gibt einen Überblick über die Leistungswerte der Jetson-Familie. Wer genauere oder anwendungsspezifische Benchmarks benötigt, sei auf die Links unter ix.de/ztxt verwiesen. Allen Jetson-Systemen gemein ist das ARM-basierte System on a Chip (SoC) Tegra. Im Nano sind 4 CPU-Kerne bei 64 Bit enthalten. Softwareseitig ist ein angepasstes Ubuntu Linux 18.04 ­installiert. 
+
+\section{Maßeinheiten für neuronale Rechenoperationen}
+
+Geschwindigkeitsangaben können nicht nur bei CPUs zu Verwirrung führen. Die Berechnung von Flops (die Abkürzung steht für Floating Point Operations per Second – Gleitkomma­operationen pro Sekunde), also der Anzahl von Rechenoperationen pro Sekunde, ist bei modernen Prozessorarchitekturen kompliziert. Grund dafür sind verschiedene Turbo-, Hyper-­Thread- oder AVX-Erweiterungen, die spezielle Berechnungsansprüche adressieren. Auch die Taktgeschwindigkeit ist nicht immer ausschlaggebend für die Geschwindigkeit in bestimmten Anwendungsbereichen. Moderne CPUs rechnen für gewöhnlich mit Gleitkommazahlen von 32 oder 64 Bit Länge (FP32 oder FP64). 
+
+Moderne Frameworks für Deep Learning nutzen in der Regel FP16- anstelle von FP32- Operationen. Das ändert nicht viel an der Genauigkeit der Modelle, verkürzt aber die Trainingszeit signifikant. Etabliert hat sich die Maßeinheit TFlops, also Teraflops, was 1012 Gleitkommaoperationen pro Sekunde entspricht. 
+
+
+
+\begin{table}
+  \caption{Leistungswerte der Jetson-Familie}
+  
+  \begin{tabular}{ccccc cc}
+   Name      & Jahr &  Stromverbrauch      & GPU              & TFlops (FP16) &  Preis           \\ \hline
+   TK1       & 2014 & $\approx$10 Watt     & 192 Core Kepler  &  0,3          & $\approx$170 EUR \\  
+   TX1       & 2015 & $\approx$10–1 Watt   & 256 Core Maxwell &  1,0          & $\approx$270 EUR \\  
+   TX2       & 2017 & $\approx$7,5–15 Watt & 256 Core Pascal  &  1,3          & $\approx$350 EUR \\  
+   Xavier    & 2018 & $\approx$10–30 Watt  & 512 Core Volta   & 11,0          & $\approx$870 EUR \\    
+   Nano      & 2019 & $\approx$5–10 Watt   & 128 Core Maxwell &  0,5          & $\approx$90 EUR  \\    
+   Xavier NX & 2020 & $\approx$10–15 Watt  & 384 Core Volta   &  6,0          &  399 US\$        \\  
+  \end{tabular}
+\end{table}
+
+
+\section{Trainieren und schlussfolgern}
+
+Das Training komplexer und tiefer neuronaler Netze erfordert viel Speicher und noch mehr Prozessorleistung. Um eine hohe Modellqualität zu erreichen, sind mitunter sehr viele Trainingsdaten und viele Berechnungsiterationen nötig. Wer also glaubt, er könne eine moderne Grafikkarte für das Modelltraining ohne Weiteres durch ein System on a Chip ersetzen, irrt leider. Diese Systeme nutzen normalerweise extern – auf einem leistungsfähigeren System – trainierte Modelle, die im Anschluss zum Beispiel zur Erkennung von Objekten in Echtzeit zum Einsatz kommen. 
+
+Doch nicht nur das Training benötigt ordentlich Rechenpower. Sobald man ein vortrainiertes ML-Modell auf reale Daten anwendet – für dieses „Schlussfolgern“ hat sich der Begriff Inference durch­gesetzt –, muss das Modell im Speicher liegen. Die zu analysierenden Daten müssen zudem durch alle Operatoren des Netzes durchgeleitet werden, um zum Beispiel ein Objekt auf einem Bild mit einer der trainierten Klassen zu identifizieren. Solche Modelle können auch gern mehrere MByte groß werden und mehrere Hunderttausend oder Millionen Gewichte enthalten, die es bei der Klassifizierung zu berücksichtigen gilt.  
+
+So mancher Entwickler von autonomen oder Embedded-Systemen wünscht sich dabei die Einfachheit eines Raspberry Pi in Kombination mit einer ausgewach­senen GPU. Diese Zielgruppe scheint NVIDIA mit seinem Jetson Nano ansprechen zu wollen. Seit Mitte 2019 vertreibt das Unternehmen den Jetson Nano auch in Deutschland. 
+
+Vom Einplatinen-Urgestein Raspberry Pi hat der Nano auch seine Anschlussmöglichkeiten über GPIO-Kontaktstifte (General Purpose Input/Output) geerbt. Neben einer vollwertigen Ethernet-Schnitt­stelle, einem microSD-Kartenslot und vier USB-Anschlüssen besitzt der Nano einen HDMI-2.0-Ausgang mit Full-HD-Unterstützung sowie den vom Raspberry Pi gewohnten CSI Camera Connector, an den man eine bereits vorhandene Raspi-­Kamera anschließen kann (Abbildung \ref{{fig:Zwerg:Abb1}}). 
+
+
+\begin{figure}
+  \GRAPHICSC{1.0}{1.0}{Jetson/Zwergenkoenig/Aufbau}
+
+  \caption[NVIDIAs Jetson Nano im optionalen Plexiglas­gehäuse]{NVIDIAs Jetson Nano im optionalen Plexiglas­gehäuse mit Funk­tastatur- und WLAN-USB-Adapter und Rasp­berry-Pi-Kamera. Der große Kühlkörper schützt die Maxwell-GPU und sollte im Betrieb nicht berührt werden (Abb. 1)}\label{fig:Zwerg:Abb1}
+\end{figure}
+
+\section{Die Einkaufsliste vor dem Start}
+
+Für eigene Experimente reicht es leider nicht aus, einen Nano bei einem Händler seines Vertrauens zu erwerben. NVIDIA liefert das System ohne Netzteil, Tastatur und Maus, microSD-Karte oder andere Hardware. Wer allerdings die Infrastruktur für einen Raspberry Pi besitzt, hat in der Regel neben einem WLAN-USB-Dongle auch ein Kameramodul in der Version 2 oder höher. 
+
+Ist die Hardware beschafft, benötigt der Jetson Nano ein Boot-Image, das man von der NVIDIA-Website herunterladen und gemäß der dort ebenfalls zu findenden Anleitung installieren kann. Die ­microSD-Karte für das Image sollte aus­reichend groß dimensioniert sein und für ernsthafte Experimente mindestens 32 GByte umfassen. 
+
+Zum Zeitpunkt der Drucklegung dieses Artikels war die Version 4.2.2 des Jetson Nano Developer Kit (August 2019) aktuell. Das Boot-Image enthält unter anderem das SDK JetPack in der jeweils aktuellen Version und ein speziell angepasstes Linux für NVIDIAs auf ARM64 basierendes Ein-Chip-System Tegra mitsamt allen Bibliotheken und APIs sowie diversen Development-Tools, Beispielen und Dokumentationen. 
+
+JetPack läuft auf allen Mitgliedern der Jetson-Familie, sodass ein späteres Upgrade auf ein leistungsfähigeres System praktischerweise ohne großen Aufwand möglich ist. Auf NVIDIAs Downloadseite finden sich auch alle Links zur Dokumentation der verschiedenen Systeme wie des Driver Package für Linux (L4T), der Multimedia API, cuDNN, TensorRT (siehe Abschnitt \glqq Modellbeschleunigung mit TensorRT\grqq) und NVIDIAs DeepStreaming SDK. 
+
+Nach dem Booten präsentiert sich dem Benutzer die aufgeräumte grafische Benutzeroberfläche eines abgespeckten Ubuntu Linux in Full-HD (siehe Abbildung 2). Möchte man den Jetson Nano später \glqq head­less\grqq{} nutzen, ist dies seit Version 4.2.2 auch möglich. 
+
+\begin{figure}
+	\GRAPHICSC{0.4}{1.0}{Jetson/Zwergenkoenig/Desktop}
+	
+	\caption[Desktop von Ubuntu 18.04]{Der Desktop von Ubuntu 18.04 mit geöffnetem Chromium-Webbrowser. Links zur Dokumentation und alle nötigen Bibliotheken und Tools lassen sich bei angeschlossener Maus und Tastatur einfach erreichen (Abb. 2).}\label{fig:Zwerg:Abb2}
+\end{figure}
+
+\section{Entwicklertools und Programmierumgebung}
+
+Auf den ersten Blick enthält der Jetson Nano alle Tools, die man auf einem Linux-­System erwarten würde. Bei Bedarf lässt sich Software über den grafischen Installer oder über den Paketmanager apt nach­installieren. 
+
+Für die Bilderkennung ist die Open Source Computer Vision Library, kurz OpenCV, bereits vorinstalliert (siehe [1]). Diese eignet sich besonders gut, um eine angeschlossene Kamera zu testen. Ein einfaches Beispiel inklusive Gesichtserkennung findet sich im GitHub-Repository der JetsonHacks. CSI Camera erkennt Gesichter in Echtzeit, wenn sie von der Kamera erfasst werden. Folgende Zeilen in der Shell starten die Anwendung: 
+
+\begin{lstlisting}
+git clone https://github.com/JetsonHacksNano/ CSI-Camera.git
+cd CSI-Camera
+python3 face_detect.py
+\end{lstlisting}
+
+Um mehr als Gesichter zu erkennen, muss man andere Werkzeuge und Frameworks bemühen. Sogenannte \ac{cnn} sind hier der Stand der Technik. Diese Art künstlicher neuronaler Netze besteht verein­fachend gesagt aus vielen Schichten, durch die ein Bild oder Tensor (zum Beispiel Höhe × Breite × Anzahl Farbkanäle) so lange geschoben wird, bis das Netz darin enthaltene Objekte aus der Ausgangsschicht klassifizieren kann. Sowohl die Architektur besonders erfolgreicher \ac{cnn}s als auch bereits trainierte Modelle sind im Rahmen der gängigen Deep-Learning-­Frameworks wie PyTorch, Caffe, Keras, MXNet oder TensorFlow verfügbar. Sie bestehen in der Regel aus Zigtausenden von trainierten Gewichten, die gern mehrere Megabyte groß werden können. 
+
+
+\section{Modellbeschleunigung mit TensorRT}
+
+GPU-seitig nutzt NVIDIA die Eigenentwicklung TensorRT. Es handelt sich dabei um eine hochoptimierte Laufzeitumgebung zur Verarbeitung von Operationen auf Tensoren auf den eignen Grafikprozessoren. TensorRT ist spezialisiert auf Modelloptimierung und auf Inference. Die Runtime basiert auf der ebenfalls von NVIDIA entwickelten Compute Unified Device Architecture (CUDA) sowie auf der darauf aufbauenden Deep-Learning-­Bibliothek CuDNN. 
+
+Je nach Zielsystem bietet TensorRT unterschiedliche Optimierungen an. Auf dem Jetson Nano unterstützt die Software die hardwarenahe Beschleunigung von Modellen mit geringer Präzision mit INT8- und FP16-Werten. 
+
+Einen guten Ausgangspunkt für eigene Experimente mit TensorRT bietet Dustin Franklins Projekt jetson-inference auf GitHub. Das Repository ist mit 
+
+\begin{lstlisting}
+git clone https://github.com/dusty-nv/ jetson-inference.git
+\end{lstlisting}
+
+schnell auf dem Jetson Nano ausgecheckt und mit den Befehlen aus Listing 1 übersetzt und installiert. 
+
+
+
+Listing 1: jetson-inference auf dem Nano installieren 
+\begin{lstlisting}
+cd jetson-inference
+git submodule update --init
+mkdir build
+cd build
+cmake ..
+make
+sudo make install
+\end{lstlisting}
+
+Bei der Installation bietet der Model Downloader eine große Auswahl an vortrainierten Deep-Learning-Modellen zum Herunterladen an (siehe Abbildung \ref{{fig:Zwerg:Abb3}}). Darunter befinden sich bekannte wie das AlexNet von 2012 sowie verschiedene sogenannte Residual Neural Networks (ResNets) für die Bilderkennung. Ebenfalls dabei sind SSD-Mobilenet-v2, das 90 Objekte (von Apfel bis Zahnbürste) erkennt, und DeepScene der Universität Freiburg zur Erkennung von Objekten im Straßenverkehr (Verkehrsschilder, Fußgänger, Motorräder, Häuser …). 
+
+\begin{figure}
+	\GRAPHICSC{0.35}{1.0}{Jetson/Zwergenkoenig/Hilfsprogramm}
+	
+	\caption[Installation bekannter Deep-Learning-Modelle]{Das Hilfsprogramm für die Installation bekannter Deep-Learning-Modelle aus dem jetson-inference-Repository (Abb. 3)}\label{fig:Zwerg:Abb3}
+\end{figure}
+
+
+Im Verzeichnis /usr/local/bin installiert jetson-inference eine Reihe interessanter Beispielanwendungen. Die Tabelle \glqq Die wichtigsten Python-Beispielprogramme\ldots\grqq{} gibt einen Überblick über die enthaltenen Python-Beispiele. 
+
+
+\begin{table}
+	
+  \caption{Die wichtigsten Python-Beispielprogramme im jetson-inference-Repository}
+  		
+  \begin{tabular}{ll}
+  	Name                 & Beschreibung  \\ \hline
+    imagenet-console.py  & dateibasierter Bildklassifikator  \\
+    detectnet-console.py &  lokalisiert Objekte in einem Bild  \\
+    segnet-console.py    & segmentiert Objekte in Bildern  \\
+    imagenet-camera.py   & Bildklassifikation mit der Kamera  \\
+    detectnet-camera.py  & Objektlokalisierung im Kamerabild  \\
+    segnet-camera.py     & Objektsegmentierung im Kamerabild  \\
+  \end{tabular}
+\end{table}
+
+Ohne Kamera lassen sich am einfachsten eigene Bilder mit dem Nano verarbeiten. Der Aufruf 
+
+\begin{lstlisting}
+python3 imagenet-console.py --network=googlenet ~/Images/flugzeug.jpg output.jpg
+\end{lstlisting}
+
+klassifiziert mithilfe des GoogleNet-Modells das Objekt auf einem Foto vom Gate am Züricher Flughafen mit 0,916217-prozentiger Wahrscheinlichkeit als ‚Airliner‘ (siehe Abbildung \ref{fig:Zwerg:Abb4}). 
+
+\begin{figure}
+	\GRAPHICSC{0.4}{1.0}{Jetson/Zwergenkoenig/Flugzeug}
+	
+	\caption[Objekterkennung]{Das Objekt auf diesem Bild erkennt das ML-Modell als Flugzeug (Abb. 4).}\label{fig:Zwerg:Abb4}
+\end{figure}
+
+Auch die Anwendung detectnet-console.py erkennt viele Objekte auf einem Bild. Abbildung \ref{fig:Zwerg:Abb5} zeigt die Erkennung von Autos auf der Münchner Leopoldstraße. 
+
+\begin{figure}
+	\GRAPHICSC{0.4}{1.0}{Jetson/Zwergenkoenig/Strasse}
+	
+	\caption[Objektklassifizierung mit SSD-Mobilenet-v2]{Objektklassifizierung mit SSD-Mobilenet-v2 auf der Leopoldstraße in München (Abb. 5)}\label{fig:Zwerg:Abb5}
+\end{figure}
+
+Allen Anwendungen gemein ist, dass sie die Bild- oder Objekterkennung auf TensorRT-optimierten Modellen ausführen. Damit man andere bereits bestehende Modelle nutzen kann, müssen diese entweder konvertiert werden oder, wie im Fall von TensorFlow, direkt im Framework integriert sein. 
+
+\section{TensorRT und TensorFlow}\label{todoTensorRT}
+
+Seit Mai 2018 ist TensorRT vollständig in das von Google entwickelten Ma­chine-Learning-Framework TensorFlow inte­griert, sodass man keine zusätzlichen Werkzeuge bemühen muss. Ein TensorRT-­optimiertes Modell lässt sich sowohl aus einem gespeicherten als auch aus einem „eingefrorenen“ TensorFlow-Modell erzeugen (siehe Abbildung \ref{fig:Zwerg:Abb6}). 
+
+\begin{figure}
+	\GRAPHICSC{0.4}{1.0}{Jetson/Zwergenkoenig/Tensorflow}
+	
+	\caption[Zwei Wege, um auf einem TensorFlow-Modell zu schlussfolgern]{Zwei Wege, um auf einem TensorFlow-Modell zu schlussfolgern: Entweder konvertiert man das finale Modell direkt nach TensorRT oder man friert es auf einem bestehenden Trainings-Checkpoint ein und wandelt es dann in ein TensorRT-optimiertes Modell um. Letzteres ist sinnvoll, wenn man Modelle aus einem laufenden Training benötigt (Abb. 6). }\label{fig:Zwerg:Abb6}
+\end{figure}
+
+
+Auf dem so gespeicherten Modell führt TensorRT folgende Operationen aus: Zuerst scant und partitioniert es den TensorFlow-Graphen und optimiert diesen mithilfe der eingebauten GPU-optimierten Operatoren. Dann konvertiert es den TensorFlow-Layer in für TensorRT optimierte Layer. Zuletzt konvertiert es die partitionierten Graphen in die jeweils spezifische GPU-Variante von TensorRT. TensorRT-­optimierte Modelle sind in der Regel rund achtmal schneller, als wenn man sie in TensorFlow selbst ausführen würde. 
+
+Die aktuelle TensorFlow-Version lässt sich über die Kommondozeile mit folgenden Zeilen auf dem Nano installieren: 
+
+\begin{lstlisting}
+sudo pip3 install --pre --extra-index-url https://developer.download.nvidia.com/ compute/redist/jp/v42 tensorflow-gpu
+\end{lstlisting}
+
+Für die Modellerstellung für TensorRT kann man auch den kostenlosen Dienst Colab von Google nutzen. Der Vorteil dieser Herangehensweise ist, dass man sowohl eine GPU- als auch eine TPU-Instanz nutzen kann und dass TensorFlow bereits integriert ist. 
+
+\section{Bestehende Modelle für TensorRT aufbereiten}\label{todoTensorRT2}
+
+
+Im GitHub-Repository zu diesem Artikel findet sich das Jupyter-Notebook \PYTHON{keras\_model\_­t\_tensorrt.ipyn}. Es implementiert einen Beispiel-Konverter, der ein bestehendes, mithilfe der Deep-Learning-­Bibliothek Keras entwickeltes Modell in TensorRT umwandelt. 
+
+Der Konverter lädt das erstellte Modell mit den Anweisungen  
+
+\begin{lstlisting}
+from tensorflow.keras.applications. mobilenet_v2 import MobileNetV2 as mn
+...
+
+keras_model = mn(weights='imagenet')
+\end{lstlisting}
+
+
+herunter und speichert es lokal mit 
+
+\begin{lstlisting}
+keras_model.save(keras_model_filename)
+\end{lstlisting}
+
+Listing 2 friert das Modell ein, während Listing 3 es anschließend als TensorFlow-Modell abspeichert. Der Abschnitt in Listing 4 konvertiert es und speichert es in ein TensorRT-Modell im Protobuf-­Format ab. 
+
+
+\bigskip
+
+Listing 2: Modell einfrieren ... 
+\begin{lstlisting}
+def freeze_graph(graph, session, output, save_pb_dir='.', save_pb_name='frozen_model.pb',     save_pb_as_text=False):
+    with graph.as_default():
+        graphdef_inf = tf.graph_util.remove_training_nodes(graph.as_graph_def())
+        graphdef_frozen = tf.graph_util.convert_variables_to_constants(session, graphdef_inf, output)
+        graph_io.write_graph(graphdef_frozen, save_pb_dir, save_pb_name, as_text=save_pb_as_text)
+        return graphdef_frozen
+\end{lstlisting}
+
+\bigskip
+
+
+Listing 3: ... und es als TensorFlow-Modell abspeichern 
+\begin{lstlisting}
+...
+keras_model = load_model(keras_model_filename)
+...
+frozen_graph = freeze_graph(
+    session.graph, 
+    session, 
+    [out.op.name for out in keras_model.outputs], 
+    save_pb_dir=save_pb_dir
+)
+\end{lstlisting}
+
+
+
+Listing 4: Konvertierung und Speicherung 
+\begin{lstlisting}
+...
+trt_graph = trt.create_inference_graph(
+	input_graph_def=frozen_graph,
+	outputs=output_names,
+	max_batch_size=1,
+	max_workspace_size_bytes=1 << 25,
+    precision_mode='FP16',
+    minimum_segment_size=50
+)
+
+graph_io.write_graph(trt_graph, save_pb_dir, trt_model_fielname, as_text=False)
+\end{lstlisting}
+
+Das so erzeugte Modell lässt sich aus Google Colab heraus mit dem Codeausschnitt aus Listing 5 auf den Jetson Nano herunterladen. 
+
+
+Listing 5: Das TensorRT-Modell herunterladen 
+
+\begin{lstlisting}
+...
+from google.colab import files
+files.download(save_pb_dir+trt_model_filename)
+\end{lstlisting}
+
+Im selben Repository findet sich unter dem Namen \PYTHON{tensorrt-keras-prediction.py} ein vollständiges Python-Beispiel, das ein so gespeichertes TensorRT-Modell zur Bildklassifikation nutzt. Listing 6 lädt das gespeicherte Modell. Den Eingabe- und Ausgabe-Tensor des Modells holt man sich über den Code aus Listing 7. 
+
+
+Listing 6: Das gespeicherte Modell laden 
+\begin{lstlisting}
+...
+def get_frozen_graph(graph_file):
+    with tf.io.gfile.GFile(graph_file, "rb") as f:
+        graph_def = tf.compat.v1.GraphDef()
+        graph_def.ParseFromString(f.read())
+    return graph_def
+
+trt_graph = get_frozen_graph('./models/mobilenetv2-model-trt.pb')
+\end{lstlisting}
+
+
+Listing 7: Eingabe- und Ausgabe-Tensor holen 
+\begin{lstlisting}
+output_names = ['Logits/Softmax']
+input_names = ['input_1']
+input_tensor_name = input_names[0] + ":0"
+output_tensor_name = output_names[0] + ":0"
+
+output_tensor = tf_sess.graph.get_tensor_by_name(output_tensor_name)
+\end{lstlisting}
+
+
+Für die Bildklassifizierung wird das Bild über die Keras-Hilfsfunktion \PYTHON{tensorflow.keras.preprocessing} geladen und in die TensorFlow-Session injiziert. Danach wird das Ergebnis ausgegeben (Listing 8). 
+
+
+Listing 8: Die Bildverarbeitung und Ausgabe 
+\begin{lstlisting}
+from PIL import Image
+from tensorflow.keras.preprocessing import image
+img = image.load_img(img_path, target_size=image_size[:2])
+x = image.img_to_array(img)
+x = np.expand_dims(x, axis=0)
+x = preprocess_input(x)
+
+feed_dict = {
+	input_tensor_name: x
+}
+preds = tf_sess.run(output_tensor, feed_dict)
+
+print('Predicted:', decode_predictions(preds, top=3)[0])
+\end{lstlisting}
+
+Das Flugzeug aus Abbildung 4 wird nun richtig als 
+
+\begin{lstlisting}
+Predicted: [('n02690373', 'airliner', 0.70644724), ('n02687172', 'aircraft_carrier', 0.15092887), ('n04552348', 'warplane', 0.052062042)]
+\end{lstlisting}
+
+
+erkannt. 
+
+
+\section{Robotik und Rennwagen}
+
+Weitere Anwendungsbeispiele für den Jetson Nano finden sich auch auf der Community-Webseite von NVIDIA. Für die Analyse von innerstädtischem Straßenverkehr gibt es mit Open DataCam ein DIY-Projekt, das das leistungsfähige YOLO-Modell für die Echtzeiterkennung nutzt. 
+
+Neben der reinen Bildverarbeitung gibt es noch weitere interessante Anwendungsfelder. So bietet der JetBot einen preiswerten Einstieg in die autonome Robotik. Etwas weniger beschaulich geht es mit dem JetRacer zu, der einen Nano-basierten autonomen Rennwagen implementiert. Das Projekt ‚Hey, Jetson!‘ nutzt den Jetson Nano zur Spracherkennung, während das Jupyter-Notebook charRNN mit TensorRT ein zeichenbasiertes Sprachmodell mithilfe eines Recurrent Neural Network (RNN) optimiert. 
+
+
+\section{Der Jetson Nano und die Konkurrenz}
+
+Im unteren Preissegment sind in den letzten Jahren mehrere günstige Systeme auf den Markt gekommen, die sich zum Entwickeln von Anwendungen im Bereich maschinelles Lernen für eingebettete Systeme eignen. Dabei sind Chips und Systeme entstanden, die spezielle Berechnungskerne für solche Aufgaben mitbringen, bei gleichzeitig niedriger Leistungsaufnahme. Für Entwickler hat Intel zum Beispiel mit dem Neural Compute Stick eine preiswerte Lösung geschaffen, die sich per USB an bestehende Hardware wie einen Raspberry Pi anschließen lässt. Für rund 70 Euro bekommt man ein System mit 16 Kernen, das auf Intels eigenem Low-Power-Prozessorchip für die Bildverarbeitung Movidius basiert. 
+
+Die gleiche Zielgruppe versucht Google mit dem Google Edge TPU Boards anzusprechen. Für 80 Euro bekommt man eine Tensor Processing Unit (TPU), die ähnliche Hardware wie Google Cloud oder Googles Entwicklungsumgebung für Jupyter-Notebooks Colab verwendet und sich ebenfalls als USB-3-Dongle nutzen lässt. 
+
+Vergleichbare Technik findet sich mit dem A12 Bionic Chip mit 8 Kernen und 5 Billionen Operationen pro Sekunde auch in der neuesten Generation von Apples iPhone, in Samsungs Exynos 980 mit integrierter Neural Processing Unit (NPU) oder in Huaweis Kirin 990 mit gleich zwei NPUs. 
+
+\section{Fazit}
+
+Der Jetson Nano stellt einen guten Kompromiss zwischen kostengünstiger Hardware, Leistungsaufnahme und Rechen­power dar. Er ist besonders für Entwickler und Hobbyisten interessant, die schon erste Programmiererfahrungen mit Systemen wie dem Raspberry Pi gesammelt haben und auf der Suche nach geeigneter Hardware für Deep-Learning-Experimente sind. Die Jetson-Plattform ist gut in NVIDIAs sonstige Grafikhardwareprodukte integriert, sodass sich Projekte auch skalieren lassen. Besonders für Bild- und Objekterkennung sowie für Robotik-­Experimente eignet sich der Nano – Kenntnisse in Linux, C++ und Python vorausgesetzt. 
+
+Wer sich jetzt fragt, ob sich damit nicht auch wunderbar Kryptowährungen minen lassen, der muss jetzt ganz stark sein: ASICs (Application Specific Integrated Circuits) haben GPUs bei der Berechnung von Bitcoin- oder Ethereum-Hashes schon X-fach überflügelt. (akl@ix.de) 
+
+
+\section{Quellen}
+
+\begin{itemize}
+  \item [1] Mirco Lang, Mike Mischewski; Wer bin ich? Gesichtserkennung mit OpenCV und Python, Teil 1: OpenCV-Grundlagen; iX 11/2017, S. 112 
+  \item [2] Weiterführende Informationen sowie Listings unter ix.de/ztxt
+\end{itemize}

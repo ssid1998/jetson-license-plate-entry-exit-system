@@ -1,0 +1,102 @@
+%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% $Autor: Wings $
+% $Datum: 2019-07-09 09:26:07Z $
+% $Pfad: Vorlesungen/WS_19_20/Projekte/KandaNeuralnetwork/latex - Ausarbeitung/Kapitel/Hardware.tex $
+% $Version: 4440 $
+%
+%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+\section{Raspberry Pi Camera Module V2}\label{SmartPiCAM:Kamera}
+
+The Raspberry Pi camera module has a SONY IMX219 vision sensor and a resolution of 3280 $\times$ 2464 pixels. The camera software supports JPEG, JPEG + RAW, GIF, BMP, PNG, YUV420, RGB888 image formats and raw h.264 video formats. \cite{RaspberryPiCam:2016}
+% \href{https://uk.pi-supply.com/products/raspberry-pi-camera-board-v2-1-8mp-1080p}{raspberrypi-camera}
+The figure~\ref{SmartPiCam:Camera} represents the camera with the connection cable.
+
+\begin{table}[!htbp]
+  \begin{center}
+    \begin{tabular}{|c| c|} \hline
+      Specification & Camera V2\\ \hline\hline
+      Size & 25mm $\times$ 23mm $\times$ 9mm \\ \hline
+      Weight & 3g\\ \hline
+      Still image resolution & 8 megapixels \\ \hline
+      Video Mode & 1080P30,720P60 and 640x480P60/90\\ \hline
+      Sensor & Sony IMX219 \\ \hline
+      Sensor resolution & 3280 $\times$ 2464 pixels \\ \hline
+      Sensor image area & 3.68mm $\times$ 2.76mm \\ \hline
+      Pixel size & 1.12umx1.12um\\\hline
+      Optical size & 1/4"\\ \hline
+      Full frame SLR lens equivalent & 35mm\\ \hline
+      Focal length & 3.04mm\\hline
+      Horizontal field of view & $62.2^\circ$\\ \hline
+      Vertical field of view & $48.8^\circ$\\ \hline
+      Focal length ratio & 2.0\\
+   \end{tabular}
+   \caption{Raspberry Pi Camera Module V2 Specifications \cite{RaspberryPiCam:2016}}
+  
+  %Source:\href{https://www.raspberrypi.org/documentation/hardware/camera/}{raspberrypi-camera}
+  \end{center}
+\end{table}
+
+%Für dieses Projekt können Sie auch eine gewöhnliche USB-Webcam verwenden. Sie müssen allerdings der USB-Webcam auf dem Betriebssystem raspbian os entsprechende Befehle geben, um mit ihr arbeiten zu können. Zudem müssen Sie auch Änderungen in der Datei classify\underline{\ }capture.py vornehmen, welche der Standard-USB-Webcam entspricht.
+
+\begin{figure}
+	\centering
+	\includegraphics[angle=90,width=0.75\textwidth]{Camera/camera} 
+	\caption{Raspberry Pi Camera Module V2\cite{RaspberryPi3:2019}}\label{SmartPiCam:Camera}
+\end{figure}
+
+
+\subsection{Camera resolution}
+
+The v4l-utils tool is helpful in exploring the camera. It is used through
+
+
+\medskip
+    
+    \SHELL{\$ sudo apt-get install v4l-utils}
+    
+    \medskip
+
+installed. The available formats are then queried with the following command:
+
+\medskip
+
+\SHELL{\$ v4l2-ctl -{}-list-formats-ext} 
+
+
+
+
+
+\subsection{Camera cable}
+
+
+The cable is very flexible as standard and has the same contacts on each side; however, the metallic contacts are only on one side. In the figure~\ref{SmartPiCam:Camera} one cable and the side with the contacts are shown.  Since this is a very flexible and thin cable, the risk of breakage from mechanical stress is very high. The supplied cable has a length of about 100mm. If further distances need to be covered, cable lengths of up to 2000mm are also available. 
+
+\begin{figure}
+    \centering
+    \includegraphics[angle=90,width=0.5\textwidth]{Camera/cable} 
+    \quad 
+    \includegraphics[angle=90,width=0.2\textwidth]{Camera/cable2} 
+    \caption{Cable to the camera \cite{RaspberryPi3:2019}}\label{SmartPiCam:Camera}
+\end{figure}
+
+
+\bigskip
+%todo What is CSI-3? Spezification
+
+\subsection{CSI-3-Interface}
+
+
+The camera is controlled via a CSI-3 interface, which is regularly used to integrate digital still cameras, high-resolution and high-frame-rate sensors, teleconferencing and camcorder functionalities on a UniPro network. 
+
+A basic CSI-3 v1.1 link configuration using four forward lanes and one reverse lane (10 total wires) can support up to 14.88 Gbps (usable bit rate, including 8B10B and UniPro overhead) in the forward direction and typically supports 1 Mbps or more in the reverse direction. The UniPro stack itself uses some link bandwidth (primarily in the reverse direction) for the purpose of guaranteeing reliable packet delivery to the receiver. Cameras implementing a minimal MIPI CSI-3 configuration consisting of one forward and one reverse lane (four total wires) can transmit 12 BPP 4K video at about 40 FPS. \href{https://www.mipi.org/specifications/csi-3}{\color{blue}MIPI}
+
+
+
+
+
+
+

@@ -1,0 +1,95 @@
+%%%%%%
+%
+% $Autor: Wings $
+% $Datum: 2020-01-18 11:15:45Z $
+% $Pfad: WuSt/Skript/Produktspezifikation/powerpoint/ImageProcessing.tex $
+% $Version: 4620 $
+%
+%%%%%%
+
+
+
+\subsection{Inbetriebnahme der Kamera Raspberry Pi Camera beim Jetson Nano}
+
+Das Raspberry Pi-Kameramodul wird vom Jetson Nano Plug-and-Play unterstützt, was die Inbetriebnahme einfach macht. Die Gerätetreiber sind mit dem Betriebssystem bereits installiert. Sobald das Modul angeschlossen ist, sollte die Kamera unter \SHELL{/dev/video0} als Gerät angezeigt werden. Ist dies nicht der Fall, müssen die  Steckverbindungen überprüft werden. Insbesondere beim Transport kann sich die Steckverbindung auf der Oberseite der Platine lösen.
+
+Für die nächsten Schritte ist das Programm GStreamer hilfreich \cite{GStreamer:2021}. Das Programm kann sowohl als auch  Programm aufgerufen werden, aber auch in eigene Programm integriert werden. Es ermöglicht das Erstellen von Einzelaufnahmen und von Bildsequenzen. Mit den folgenden Befehlen kann GStreamer installiert werden:
+
+\medskip
+
+\SHELL{apt-get install libgstreamer1.0-0 gstreamer1.0-plugins-base   \textbackslash}
+
+\SHELL{\quad gstreamer1.0-plugins-good gstreamer1.0-plugins-bad \textbackslash}
+
+\SHELL{\quad gstreamer1.0-plugins-ugly gstreamer1.0-libav gstreamer1.0-doc \textbackslash}
+
+\SHELL{\quad gstreamer1.0-tools gstreamer1.0-x gstreamer1.0-alsa \textbackslash}
+
+\SHELL{\quad  gstreamer1.0-gl gstreamer1.0-gtk3 gstreamer1.0-qt5 \textbackslash}
+
+\SHELL{\quad  gstreamer1.0-pulseaudio}
+
+\medskip
+
+Mit der Eingabe 
+
+\medskip
+
+\SHELL{\$ gst-launch-1.0 nvarguscamerasrc sensor\_id=0 ! nvoverlaysink}
+
+\medskip
+
+kann die Kamera getestet werden. Der Befehl erzeugt ein Kamerabild im Vollbildmodus. Um die Anzeige zu beenden, muss \keys{\ctrl + C}  gedrückt werden.
+
+\medskip
+
+Es können auch weitere Einstellungen am Kamerabild vorgenommen werden. Um das Programm GStreamer aufzufordern, das Livebild der Kamera mit einer Breite von 3820 Pixeln und einer Höhe von 2464 Pixeln bei 21 Bildern pro Sekunde zu öffnen und in einem Fenster mit einer Breite von 960 Pixeln und einer Höhe von 616 Pixeln anzuzeigen, wird die folgende Zeile eingegeben:
+
+\medskip
+
+\SHELL{\$ gst-launch-1.0 nvarguscamerasrc sensor\_mode=0 !\textbackslash}
+
+\SHELL{\quad 'video/x-raw(memory:NVMM),width=3820, height=2464,\textbackslash}
+
+\SHELL{\quad framerate=21/1, format=NV12' ! nvvidconv flip-method=0 ! \textbackslash}
+
+\SHELL{\quad 'video/x-raw,width=960, height=616' ! nvvidconv ! \textbackslash}
+    
+\SHELL{\quad nvegltransform ! nveglglessink -e}
+%todo Apostrophe müssen gerade Striche sein, damit der Befehl per copy paste verwendet werden kann
+
+Wenn die Kamera an der Halterung am Jetson Nano befestigt ist, kann es sein, dass das Bild zunächst auf dem Kopf zu sehen ist. Wenn Sie \SHELL{flip-method=2} setzen, wird das Bild um $180^\circ$ gedreht. Weitere Optionen zum Drehen und Spiegeln des Bilds finden Sie in Tabelle~\ref{Flip}.
+
+\medskip
+
+\medskip
+\begin{table} [H]
+    \centering
+    \begin{tabular} {l c l}
+        none& 0 & keine Rotation \\
+        clockwise& 1 & Im Uhrzeigersinn um $90^\circ$ drehen \\
+        rotate-180& 2 &  Drehen um $180^\circ$ \\
+        counterclockwise& 3 & Gegen den Uhrzeigersinn um $90^\circ$ drehen \\
+        horizontal-flip& 4 & Horizontal spiegeln \\
+        vertical-flip& 5 & Vertikal spiegeln \\
+        upper-left-diagonal& 6 & Flip über obere linke/untere rechte Diagonale \\
+        upper-right-diagonal& 7 & Spiegeln über obere rechte/untere linke Diagonale\\
+        automatic& 8 & Flip-Methode basierend auf image-orientation tag\\
+    \end{tabular}
+    \caption{Operationen zum Drehen und Spiegeln des Bilds im GStreamer}
+    \label{Flip}
+\end{table}
+
+
+\medskip
+
+
+Die Dokumentation zu GSteamer findet sich unter \Cite{GStreamer:2021} und in einem GitHub-Projekt. Vom GitHub-Projekt kann die Dokumentation mittels
+
+\medskip
+
+\SHELL{git clone https://gitlab.freedesktop.org/gstreamer/gst-docs}
+
+\medskip
+
+installiert werden. Dort sind auch weitere PlugIns dokumentiert.
