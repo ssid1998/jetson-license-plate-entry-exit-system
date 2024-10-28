@@ -14,21 +14,72 @@
 %\chapter{Main Function}
 \chapter{Hardware Overview}
 
-\section{Specifications}
-\begin{itemize}[label=--,left=1.5em]
-	\item CPU: Quad-core ARM Cortex-A57
-	\item GPU: 128-core NVIDIA Maxwell
-	\item Memory: 4 GB 64-bit LPDDR4
-	\item Storage: MicroSD 16 GB eMMC 5.1
-	\item USB: 1*USB 3.0 type A, 2*USB 2.0 type A, 1*USB type C for device mode, 1*USB type C for 5V power input
-	\item Display: 1*HDMI 2.0 type A
-	\item Power Adapter: USB type-C 5V/3A
+
+\section{System Requirements}
+To ensure smooth operation of the Vehicle License Plate Detection System, please confirm that you have all necessary hardware and software components listed below.
+
+\subsection*{Hardware Requirements}
+\begin{itemize}[label=--, left=1.5em]
+	\item NVIDIA Jetson Nano J1010
+	\item Camera compatible with Jetson Nano
+	\item LED indicator (optional but recommended)
+	\item 5V/3A Type-C power adapter
+	\item MicroSD card (32GB or larger, pre-flashed with JetPack SDK)
+	\item USB Keyboard and mouse
+	\item Display screen with HDMI support
 \end{itemize}
 
-\section{Physical Dimensions}
-The Jetson Nano J1010 has the following physical dimensions:
-\begin{itemize}[label=--,left=1.5em]
-	\item Dimensions: 100 mm x 80 mm x 29 mm
-	\item 130 mm x 120 mm x 50 mm (with case)
-	\item Weight: 100g
+\subsection*{Software Requirements}
+\begin{itemize}[label=--, left=1.5em]
+	\item JetPack SDK (latest version recommended)
+	\item Vehicle license plate dataset (e.g. from Kaggle)
+	\item Python 3 environment with required libraries:
+	\begin{itemize}[label=$\bullet$, left=2.5em]
+		\item TensorFlow or PyTorch (for deep learning model inference)
+		\item OpenCV (for image processing)
+		\item GPIO libraries (for controlling the LED indicator)
+	\end{itemize}
 \end{itemize}
+
+
+
+
+%COMMENTED THE INITIAL SETUP BECAUSE i THOUGHT IT MAY BE TOO MUCH DETAIL!
+%\section{Initial Setup}
+%Follow these steps to set up the hardware and software components for first-time use:
+%
+%\begin{enumerate}
+%	\item \textbf{Flash JetPack SDK:} Download the latest JetPack SDK from https://developer.nvidia.com/embedded/jetpack {NVIDIA JetPack SDK} and flash it onto a compatible MicroSD card.
+%	\item \textbf{Assemble Hardware:} Insert the MicroSD card into the Jetson Nano J1010. Connect the camera, LED indicator, keyboard, mouse, and display screen. Ensure the power adapter is connected.
+%	\item \textbf{Boot Up:} Power on the Jetson Nano by connecting the 12V/2A adapter. Follow on-screen instructions to complete the initial setup.
+%	\item \textbf{Install Software Dependencies:} Open a terminal and install the required Python libraries:
+%	\begin{verbatim}
+%		sudo apt-get update
+%		sudo apt-get install python3-pip
+%		sudo pip3 install tensorflow opencv-python RPi.GPIO
+%	\end{verbatim}
+%	\item \textbf{Download Dataset:} Download the Kaggle dataset for vehicle license plate detection and place it in the designated project folder on the Jetson Nano.
+%\end{enumerate}
+%
+%After completing these steps, your system will be ready for further configuration and operation as detailed in the following chapters.
+
+
+%THIS IS THE JETSON NANO J1010 SPECIFICATIONS
+%\section{Specifications}
+%\begin{itemize}[label=--,left=1.5em]
+%	\item CPU: Quad-core ARM Cortex-A57
+%	\item GPU: 128-core NVIDIA Maxwell
+%	\item Memory: 4 GB 64-bit LPDDR4
+%	\item Storage: MicroSD 16 GB eMMC 5.1
+%	\item USB: 1*USB 3.0 type A, 2*USB 2.0 type A, 1*USB type C for device mode, 1*USB type C for 5V power input
+%	\item Display: 1*HDMI 2.0 type A
+%	\item Power Adapter: USB type-C 5V/3A
+%\end{itemize}
+%
+%\section{Physical Dimensions}
+%The Jetson Nano J1010 has the following physical dimensions:
+%\begin{itemize}[label=--,left=1.5em]
+%	\item Dimensions: 100 mm x 80 mm x 29 mm
+%	\item 130 mm x 120 mm x 50 mm (with case)
+%	\item Weight: 100g
+%\end{itemize}
