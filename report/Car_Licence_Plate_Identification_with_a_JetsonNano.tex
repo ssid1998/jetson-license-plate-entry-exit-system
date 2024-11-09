@@ -1,0 +1,137 @@
+%%%%%%%%%%%%%%%%%%%%%%%%
+% $Autor: MansourAhmadyPhoulady, RanjeetsingTawar, HemanthPrabhakaran$
+% $Pfad: Car_Licence_Plate_Identification_with_a_JetsonNano$
+% $Version: 4.0.0 $
+%
+% !TeX encoding = utf8
+%
+%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[openany,12pt,a4paper]{scrbook}
+% Choose the language (comment/uncomment as needed)
+\def\isEnglish{1}
+
+% -------------------------------------------------------------------------------
+% Packages and custom commands
+% -------------------------------------------------------------------------------
+\input{General/Packages}
+\input{General/commands}
+\input{General/tikzdefs}
+\input{General/acronyms}
+\input{General/Hyphenations}
+
+% Bibliography files
+\addbibresource{../Documents/Literature.bib}
+\addbibresource{../Documents/MyLiterature.bib}
+
+% Other packages
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage{pdfpages}
+\usepackage{rotating}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{biblatex}
+\usepackage{pdflscape}
+
+% -------------------------------------------------------------------------------
+% Document begins
+% -------------------------------------------------------------------------------
+\begin{document}
+	
+	% Title page
+	\InputLanguage{Chapters/}{Titlepage}
+	\newpage
+	
+	% Table of contents
+	\pagenumbering{roman}
+	\tableofcontents
+	\cleardoublepage
+	
+	% List of figures
+	\listoffigures
+	\cleardoublepage
+	
+	% List of tables
+	\listoftables
+	\cleardoublepage
+	
+	% Symbols
+	\InputLanguage{Chapters/}{Symbols}
+	
+	% Nomenclature
+	\printnomenclature
+	\cleardoublepage
+	
+	
+	% Acronyms
+	\addcontentsline{toc}{chapter}{Acronyms}
+	\printacronyms
+	\cleardoublepage
+	
+	% Main content begins
+	\pagenumbering{arabic}
+	
+	% Part: Introduction and Problem Description
+	\part{Introduction}
+	\InputLanguage{Chapters/}{Abstract}
+	\InputLanguage{Chapters/}{Problem}
+	\InputLanguage{Chapters/}{Introduction}
+%%%	\InputLanguage{Chapters/}{DataVersionControl}
+	
+	\part{Domain Knowledge}
+%%%	\InputLanguage{Chapters/}{Domain}
+%%%	\InputLanguage{Chapters/}{HardwareDescription}
+%%%	\InputLanguage{Chapters/}{Software}
+%%%	\InputLanguage{Chapters/}{Algorithm}
+
+	
+	% Part: KDD Process Structure
+	\part{KDD Process Structure}
+%%%	\InputLanguage{Chapters/}{KDD}
+%%%	\InputLanguage{Chapters/}{Development}
+%%%	\InputLanguage{Chapters/}{TensorflowLite}
+%%%	\InputLanguage{Chapters/}{Docdeveloper}
+%%%	\InputLanguage{Chapters/}{Programming}
+%%%	\InputLanguage{Chapters/}{Requirements}
+%%%	\InputLanguage{Chapters/}{Testsoftware}
+%%%	\InputLanguage{Chapters/}{Deployment}
+%%%	\InputLanguage{Chapters/}{Monitoring}
+%%%	\InputLanguage{Chapters/}{Programmeflowchart}
+%%%	\InputLanguage{Chapters/}{BOM}
+	
+	\part{Packages}
+	
+	\newpage
+	\InputLanguage{Chapters/}{Packages}
+	
+	\newpage
+%%%	\InputLanguage{Chapters/}{Numpy}
+	
+	\newpage
+%%%	\InputLanguage{Chapters/}{Pandas}
+	
+	\newpage
+%%%	\InputLanguage{Chapters/}{Matplotlib}
+	
+	\part{Conclusion}
+	
+	\newpage
+%%%	\InputLanguage{Chapters/}{Conclusion}
+	
+%%%	\InputLanguage{Chapters/}{DataSheet}
+	
+
+	\cleardoublepage
+	\addcontentsline{toc}{chapter}{\TRANS{Literaturverzeichnis}{Bibliography}}
+	
+	% Print bibliography
+	\printbibliography
+	\cleardoublepage
+	
+	% Document ends
+\end{document}
+\cleardoublepage

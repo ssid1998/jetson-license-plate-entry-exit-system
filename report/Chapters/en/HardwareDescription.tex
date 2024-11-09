@@ -1,0 +1,1323 @@
+%%%%%%%%%%%%%%%%%%%%%%%%
+% $Autor: MansourAhmadyPhoulady, RanjeetsingTawar, HemanthPrabhakaran$
+% $Pfad: Car_Licence_Plate_Identification_with_a_JetsonNano$
+% $Version: 4.0.0 $
+%
+% !TeX encoding = utf8
+%
+%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{Hardware Description}
+
+\section{Introduction to Nvidia Jetson Nano}
+The NVIDIA® Jetson NanoTM Developer Kit serves as an accessible AI computer for makers, learners, and developers, making the capabilities of modern artificial intelligence available on a low-power, user-friendly platform. It offers quick initiation with its inherent compatibility with a diverse array of popular peripherals, extensions, and pre-built projects.
+
+The \textbf{NVIDIA\textsuperscript{\textregistered} Jetson Nano} is bolstered by the extensive \textbf{NVIDIA\textsuperscript{\textregistered} JetPack\textsuperscript{\texttrademark} SDK}, delivering the essential performance and capabilities needed for the execution of contemporary AI workloads, which are outlined below. JetPack includes the following:
+
+\begin{enumerate}
+	\item Full desktop Linux with NVIDIA drivers
+	\item AI and Computer Vision libraries and APIs
+	\item Developer tools
+	\item Documentation and sample code
+\end{enumerate}
+
+
+
+\section{Hardware Requirements}
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=\textwidth]{Images/Hardware-planning}
+	\caption{Development and Deployment Process Flow}
+\end{figure}
+Nvidia Jetson Nano Developer Kit Box includes the following:
+\begin{itemize}
+	\item Nvidia Jeston device and reference carrier board
+	\item Small paper card with quick start and support information
+	\item Folder paper stand
+\end{itemize}
+
+\textbf{Additional requirement:}
+\begin{itemize}
+	\item MicroSD card [32 GB UNH-1 minimum recommended]
+	\item Micro-USB 
+	\item Computer Display
+	\item Keyboard and mouse
+\end{itemize}
+
+\textbf{Software requirement:}
+\begin{itemize}
+	\item Etcher: This software is used to write the Jetson Nano Developer Kit SD card Image to your microSD card.
+	
+	\item EULA: Nvidia Jetson software 
+\end{itemize}
+
+
+The Nvidia Jetson Nano developer kit can be used with GUI and without GUI. These are the 2 ways to use the NVIDIA Jetson Nano:
+\begin{enumerate}
+	\item With a display where the keyboard and mouse attached 
+	\item In headless mode via a connection from another computer
+\end{enumerate}
+
+\textbf{Setup Steps of Nvidia Jetson Nano:}
+\begin{enumerate}
+	\item Unfold the paper stand and place it inside the developer kit box
+	\item Insert the microSD card (with system image already in it) into the slot on the underside of the jetson Nano module
+	\item Set the developer kit on top of the paper stand
+	\item Power on the computer display and connect it
+	\item Connect your Micro-USB power supply
+\end{enumerate}
+
+
+\textbf{Booting Jetson nano for the first time:}
+As soon as the developer kit powers on after the Micro-USB connector. 
+A green LED next to the Micro-USB connector will light as soon as the developer kit powers on. The developer kit requires some initial setup, including the following:
+
+\begin{itemize}
+	\item Review and accept NVIDIA Jetson Software EULA
+	\item Select system language, keyboard layout and time zone
+	\item Create username, password and computer name
+	\item Select APP partition size- it is recommended to use the max size suggested
+\end{itemize}
+\textbf{Create ALPDR project:}
+Jetson Nano Developer Kit offers useful tools like the Jetson GPIO Python library and is compatible with common sensors and peripherals, including many from Raspberry Pi. Many popular AI frameworks like TensorFlow PyTorch, Caffe, and MXNet are supported, and jetson Nano is capable of running multiple neural networks in parallel to process data and drive action. 
+\\\\
+\textbf{Troubleshooting:}
+\textbf{Power:}
+If the Jetson Nano developer kit is not able to boot then there is a problem with the USB power supply. It is also important to have good quality connection connecting the power supply to the developer kit.
+It's good to use a power supply with a permanently attached cord. Shorter cables will drop voltage.
+\newpage
+
+
+
+\section{Logitech C270 HD Webcam}
+
+\subsection{Specifications:}
+\begin{itemize}
+	\item Resolution: 720p HD video calling (1280 x 720 pixels)
+	\item Frame Rate: Up to 30 frames per second
+	\item Lens: Fixed focus
+	\item Field of View: 60 degrees
+	\item Microphone: Built-in mono microphone with noise reduction
+	\item Connectivity: USB 2.0
+\end{itemize}
+
+\subsection{Additional Features:}
+\begin{itemize}
+	\item Compatibility: Compatible with various video conferencing applications, including Skype, Google Hangouts, and more.
+	\item Mounting Options: Universal clip that can be attached to laptops, LCD monitors, or placed on a desk.
+	\item Light Correction: Logitech’s RightLight technology helps improve image quality in different lighting conditions.
+\end{itemize}
+
+\subsection{System Requirements:}
+\begin{itemize}
+	\item Windows-based computer: Windows 7, Windows 8, Windows 10, or later
+	\item macOS: macOS 10.10 or later
+	\item Chrome OS
+	\item Basic requirements for video calling: 1 GHz processor, 512 MB RAM, and 200 MB hard drive space
+\end{itemize}
+
+\subsection{Connectivity:}
+The Logitech C270 HD Webcam typically connects to a computer via a USB 2.0 port. USB 2.0 is widely supported and provides sufficient bandwidth for the webcam’s 720p HD video.
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.7\linewidth]{Images/logitech.png}
+	\caption{Logitech Camera}
+\end{figure}
+
+
+\section{The Jetson Nano and the Competition}
+
+System-on-a-chip (SoC) systems provide a cost-effective entry point for the development of low-power, autonomous deep-learning applications, primarily tailored for inference, which involves applying pre-trained machine learning models to actual data. NVIDIA's Jetson Nano, the smallest AI module in the Jetson family, exemplifies such an SoC system, offering both high processing speeds and moderate power consumption. In the lower price range, numerous affordable systems have recently entered the market, designed for developing machine learning applications in embedded systems. These systems feature specialized computational kernels for efficient task execution while maintaining low power consumption. \cite{JetsonGettingStarted:2019}
+
+Intel has introduced an affordable option for developers, like the Neural Compute Stick, which can be easily connected to existing hardware such as a Raspberry Pi via USB. For approximately 70 euros, you can access a system with 16 cores that relies on Intel's low-power processor chip specialized for image processing known as Movidius. This Intel product utilizes the Movidius Myriad X Vision Processing Unit and is compatible with operating systems like Windows® 10, Ubuntu, or MacOS. \cite{IntelStickDataSheet:2019}
+
+Google is targeting the same audience with the Google Edge TPU Boards, which are available for 80 euros. These boards feature a Tensor Processing Unit (TPU) with hardware similar to what's used in Google Cloud and their development environment for Jupyter notebooks, Colab. Additionally, the Edge TPU Board can also function as a USB 3 dongle.
+\cite{Vincent:2018,GoogleTensorFlowModel:2019,GoogleCoral:2019}
+
+Similar technology is present in the most recent iteration of Apple's iPhone, featuring the A12 Bionic chip equipped with 8 cores and the capability to perform 5 trillion operations per second. Samsung's Exynos 980 includes an integrated Neural Processing Unit (NPU), and Huawei's Kirin 990 boasts the presence of two NPUs simultaneously. \cite{SamsungExynos980:2020,HuaweiKirin990:2020}
+
+\section{Applications of the Jetson Nano}
+
+The Jetson Nano offers a multitude of applications, ranging from simple tasks akin to those achievable with devices like the Raspberry Pi. Furthermore, it can serve as a compact yet robust computer for conventional purposes, including hosting web servers, internet browsing, document creation, or even as a budget-friendly gaming system. \cite{Kurniawan:2021}
+
+However, the true strength of the Jetson Nano lies in its seamless integration of artificial intelligence, made exceptionally accessible by the NVIDIA TensorRT software development kit. This kit facilitates high-performance deep learning inference, allowing pre-trained networks to be effortlessly implemented and adapted as they encounter new data pertinent to the specific application.
+
+NVidia's \cite{JetsonProjects:2020} website showcases a diverse range of projects contributed by the Jetson community. Beyond simple teleoperation, the Jetson Nano empowers the development of applications such as collision avoidance, object tracking, and even the creation of small autonomous vehicles. These projects extend beyond non-commercial use and include industrial applications. For instance, there's the Adaptive Traffic Controlling System, which employs visual traffic congestion analysis to optimize traffic light timings and alleviate congestion. Another project aids individuals with visual or reading impairments by converting recognized text, both printed and handwritten, into synthesized speech using only the Jetson Nano and the Pi camera. TensorFlow 2.0 and Google Colab are utilized for model training. Furthermore, the Jetson Nano, along with pre-trained models, can be harnessed for sign language, face, and object recognition.
+
+\subsection{Processing Power}
+
+
+The Jetson Nano is equipped with 472 GFLOPs of processing power, making it well-suited for handling contemporary Artificial Intelligence (AI) algorithms. It has the capability to run multiple neural networks simultaneously and process data from numerous high-resolution sensors, rendering it a valuable choice for Network Video Recorders (NVRs) and intelligent gateways.
+Its components include an NVIDIA MaxwellTM architecture GPU with 128 NVIDIA CUDA® cores, running at 0.5 TFLOPs (FP16), and a Quad-core ARM® Cortex®-A57 MPCore processor. With 4 GB of 64-bit LPDDR4 RAM operating at 1600MHz (25.6 GB/s) and 16 GB of storage (16 GB eMMC 5.1 Flash), it offers ample multitasking capability.
+
+\subsection{Connectivity}
+
+With the help of an add on chip, WiFi (802.11b/g/n) connection is possible. The connection can also be achieved with the help of a Ethernet cable. Based on the specification of the cable used (10/100/1000 BASE-T) the speed may vary.
+
+\section{NVIDIA Jetson Nano Developer Kit}
+
+The NVIDIA Jetson Nano is a Single-Board Computer (SBC) explicitly designed for the application of machine learning algorithms. It's constructed to provide direct access to its components, inputs, and outputs. However, to safeguard the computer, it's advisable to use a suitable enclosure.
+
+
+
+Similar to the Raspberry Pi, the Jetson Nano displays all its components and outputs openly. While the Jetson Nano kit's packaging can be used to assemble the Jetson Nano, for enhanced protection, it's recommended to place it in an additional case. An illustration \ref{Jetson:Aufloesungen} in the book demonstrates the Jetson Nano's orientation, which should be noted for clarity, especially concerning digital inputs and outputs.
+
+
+\section{Construction of the Jetson Nano}
+
+
+The NVIDIA Jetson Nano measures approximately $70 \times 45$mm when not enclosed in a case. The board is prominently marked by a substantial heat sink. Beneath this heat sink lies the formidable NVIDIA Tegra X1 microchip, housing four ARM application processor cores and 128 graphics processing units (GPUs). In one illustration, the top view of the NVIDIA Jetson Nano showcases its interfaces, while another provides a side view with the sockets.
+
+
+
+\subsection{External power supply}
+
+The Jetson Nano necessitates an external power source, specifically a DC power supply rated at 5V and 2A. This power supply can be connected to either the 5V DC interface or the Micro USB interface. When opting for the 5V DC interface, it's essential to use a jumper to connect the two pins of J48, situated between the camera and power supply connector, where the connector features a 2.1mm diameter with the center denoting the positive pole. Conversely, when utilizing the Micro USB interface, the jumper should be disconnected.
+
+
+\subsection{HDMI and display port}
+
+While not obligatory for later use, a monitor proves highly beneficial during setup and for specific applications. An external monitor can be linked to either the HDMI interface or the display port, offering diverse resolutions, including up to 4K.
+
+It's important to highlight that HDMI-to-DVI adapters are not compatible. Consequently, it is imperative to employ a monitor equipped with native HDMI or display port support. The supported image resolutions are outlined in the provided table.
+
+In scenarios where a monitor won't be used in the application, this consideration should be factored in when installing the operating system.
+
+
+\begin{table}
+	\centering
+	\begin{tabular}{cc}
+		\textbf{Video Encode}  & \textbf{250MP/sec} \\   \hline
+		H.264/H.265           & 1 $\times$  4K mit  30 f/sec \\
+		H.264/H.265	       & 2 $\times$ 1080p mit 60 f/sec \\
+		H.264/H.265	       & 4 $\times$ 1080p mit 30 f/sec \\
+		H.264/H.265	       & 4 $\times$ 720p mit 60 f/sec  \\
+		H.264/H.265	       & 9 $\times$ 720p mit 30 f/sec \\
+	\end{tabular}
+	\caption{Supported video encoding formats}\label{Jetson:Aufloesungen}
+\end{table}
+
+\subsection{$\mu$USB interface}
+
+An alternative power source, a power supply rated at 5V and 2A with a micro-USB ($\mu$USB) output, can also be connected to the $\mu$USB interface. The choice of $\mu$USB is due to its availability in the form of affordable power supplies. The maximum power consumption falls within the range of 5W to 10W, emphasizing the importance of selecting a high-quality power supply unit. Utilizing an incompatible power supply can result in the NVIDIA Jetson Nano failing to initiate. One practical solution is to opt for a power supply with a shorter cable, as this minimizes voltage drops.
+
+
+
+\subsection{USB 3.0 interfaces}
+
+The Jetson Nano has 4 USB 3.0 interfaces. The current consumption on a USB interface is limited to 100mA. If the connected device has a higher consumption, it must be equipped with an additional power supply. As a rule, the USB keyboard and mouse can be connected.
+
+
+\subsection{Ethernet interface}
+
+The Jetson Nano offers an Ethernet interface with an RJ45 connection that enables direct internet connectivity or communication with other computers. For Gigabit Ethernet, a patch cable can be connected to the router. The Jetson Nano supports Ethernet connections using 10/100/1000BASE-T. Alternatively, a WiFi connection can be established by using an optional USB dongle for wireless LAN (WLAN).
+
+
+\subsection{Status LED}
+
+The status LED serves as an indicator for the power status of the Jetson Nano. It will flash when the power supply provides either too little or too much power.
+
+
+
+
+\subsection{GPIOs}
+
+The Jetson Nano features an interface with 40 connections referred to as the J41 interface, which are designated as General Purpose Input Output (GPIO) pins. These GPIO pins allow for the attachment of custom circuits and the expansion of the board's functionality, enabling the connection of components like LEDs or motors. Additionally, the Jetson Nano provides other intriguing interfaces, including SPI, I2C, and I2S, offering a range of possibilities for diverse applications.
+
+
+\subsection{CSI connection for a camera}
+
+The Jetson Nano is also furnished with a CSI connector for cameras. It adheres to a precise specification, offering 12 lanes with configurations of either 3x4 or 4x2, complying with MIPI CSI-2 D-PHY 1.1 standards at a rate of 1.5 Gb/s per pair. With compatible software, the Jetson Nano can be harnessed for image recognition applications.
+
+\subsection{microSD card}
+
+
+The Jetson Nano lacks an onboard hard disk for the operating system, necessitating an alternative storage method. To address this, the Jetson Nano utilizes a microSD card, which houses both the operating system and application programs. Therefore, the selection of an appropriate SD card is crucial, with an emphasis on speed and capacity. A recommended minimum is a 16GB UHS-1 card. The card slot is located on the underside of the Jetson Nano.
+
+\subsection{Specifications of Jetson Nano}
+The specifications of the NVIDIA Jetson Nano is as given in the table below:\\
+\begin{table}
+	\begin{tabular}{||m{5cm}|m{10cm}||}
+		\hline
+		\textbf{Item} & \textbf{Specification}\\
+		\hline
+		GPU & NVIDIA Maxwell architecture with 128 NVIDIA CUDA® cores\\
+		\hline
+		CPU & Quad-core ARM Cortex-A57 MPCore processor\\
+		\hline
+		Memory & 4 GB 64-bit LPDDR4, 1600MHz 25.6 GB/s\\
+		\hline
+		Storage & 16 GB eMMC 5.1\\
+		\hline
+		Video encode & 250MP/sec
+		1x 4K @ 30 (HEVC)
+		2x 1080p @ 60 (HEVC)
+		4x 1080p @ 30 (HEVC)
+		4x 720p @ 60 (HEVC)
+		9x 720p @ 30 (HEVC)\\
+		\hline
+		Video decode & 500MP/sec
+		1x 4K @ 60 (HEVC)
+		2x 4K @ 30 (HEVC)
+		4x 1080p @ 60 (HEVC)
+		8x 1080p @ 30 (HEVC)
+		9x 720p @ 60 (HEVC)\\
+		\hline
+		Camera & 12 lanes (3x4 or 4x2) MIPI CSI-2 D-PHY 1.1 (1.5 Gb/s per pair)\\
+		\hline
+		Connectivity & Gigabit Ethernet, M.2 Key E\\
+		\hline
+		Display & HDMI 2.0 and eDP 1.4\\
+		\hline
+		USB & 4x USB 3.0, USB 2.0 Micro-B\\
+		\hline
+		Others & GPIO, I2C, I2S, SPI, UART\\
+		\hline
+		Mechanical & 69.6 mm x 45 mm
+		260-pin edge connector\\
+		\hline
+	\end{tabular}
+	\caption{\label{tab:NVIDIA Jetson Nano Specification} NVIDIA Jetson Nano General Specification}
+\end{table}
+
+{
+	
+	\begin{figure}
+		\begin{tikzpicture}
+			% Platine
+			\draw[greenblue,fill=greenblue] (0,0) -- (12.8,0) -- (12.8,10.1) -- (0,10.1) -- cycle;
+			
+			% J13 Camera
+			\foreach \i in {0,...,14}
+			{
+				\pgfmathsetmacro{\off}{- 0.1275 * \i}
+				\pgfmathsetmacro{\xmin}{0.31};
+				\pgfmathsetmacro{\xmax}{0.98};
+				\pgfmathsetmacro{\ymin}{6.79};
+				\pgfmathsetmacro{\ymax}{6.86};
+				\draw[copper,fill=copper] ({\xmin}, {\ymax + \off} ) -- (0.98, {\ymax + \off} ) -- (0.98, {\ymin + \off} ) -- ({\xmin}, {\ymin + \off}) -- cycle;
+			}
+			\draw[grayleft,fill=grayleft] (0.31,6.65) -- (0.47,6.75) -- (0.47,7.32) -- (0.8,7.32) -- (0.8,4.54) -- (0.47,4.54) -- (0.47, 5.1) -- (0.31,5.2) -- cycle;
+			\draw[black,fill=black] (0.67,6.95) -- (0.8,6.95) -- (0.8,4.9) --  (0.67, 4.9) -- cycle;
+			
+			
+			
+			% Anschlussprozessor
+			\foreach \i in {0,...,46}
+			{
+				\draw[copper,fill=copper] (1.95 + 0.095 * \i,4.0) -- (1.95+0.095*\i,3.76) -- (2+0.095*\i,3.76) -- (2+0.095*\i,4.0) -- cycle;
+			}
+			\foreach \i in {0,...,38}
+			{
+				\draw[copper,fill=copper] (6.67+ 0.095 * \i,4.0) -- (6.67+ 0.095 * \i,3.76) -- (6.72+ 0.095 * \i,3.76) -- (6.72+ 0.095 * \i,4.0) -- cycle;
+			}
+			\draw[greenenglish,line width=2pt,fill=darkpastelgreen] (1.5,7.0) -- (10.85,7.0) -- (10.85, 3.9) -- (1.5,3.9) -- cycle;
+			
+			
+			\draw[black,fill=black] (1.75,4.7) -- (10.65,4.7) -- (10.65,9.88) -- (1.75,9.88) -- cycle;
+			%Kühlkörper
+			\draw[fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft}] (1.8,8.822) -- (10.6,8.822) -- (10.6,9.83) -- (1.8,9.83) -- cycle;
+			\draw[fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft}] (1.8,8.773) -- (10.6,8.773) -- (10.6,8.521) -- (1.8,8.521) -- cycle;
+			
+			\draw[fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft}] (1.8,7.464) -- (10.6,7.464) -- (10.6,8.472) -- (1.8,8.472) -- cycle;
+			\draw[fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft}] (1.8,7.415) -- (10.6,7.415) -- (10.6,7.163) -- (1.8,7.163) -- cycle;
+			
+			\draw[fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft}] (1.8,6.106) -- (10.6,6.106) -- (10.6,7.114) -- (1.8,7.114) -- cycle;
+			\draw[fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft}] (1.8,6.057) -- (10.6,6.057) -- (10.6,5.805) -- (1.8,5.805) -- cycle;
+			
+			\draw[fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft}] (1.8,4.75) -- (10.6,4.75) -- (10.6,5.756) -- (1.8,5.756) -- cycle;
+			
+			\draw[fill=grayleft!30!graycircle, postaction={path fading=west,  fill=grayleft},domain=0:360] plot ({4.0+0.252*cos(\x)}, {9.326+0.252*sin(\x)});
+			\draw[fill=grayleft!30!graycircle, postaction={path fading=west,  fill=grayleft},domain=0:360] plot ({8.4+0.252*cos(\x)}, {9.326+0.252*sin(\x)});
+			
+			\draw[fill=grayleft!30!graycircle, postaction={path fading=west,  fill=grayleft},domain=0:360] plot ({4.0+0.252*cos(\x)}, {5.252+0.252*sin(\x)});
+			\draw[fill=grayleft!30!graycircle, postaction={path fading=west,  fill=grayleft},domain=0:360] plot ({8.4+0.252*cos(\x)}, {5.252+0.252*sin(\x)});
+			
+			\pgfmathsetmacro{\xmin}{12.2};
+			\pgfmathsetmacro{\xmax}{12.62};
+			\pgfmathsetmacro{\ymin}{1.42};
+			\pgfmathsetmacro{\ymax}{1.69};
+			\draw[darkpastelgreen,fill=greenyellow,
+			line width=1.6pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+			
+			% J40 Buttons
+			\pgfmathsetmacro{\xmin}{0.17};
+			\pgfmathsetmacro{\xmax}{0.82};
+			\pgfmathsetmacro{\ymin}{7.7};
+			\pgfmathsetmacro{\ymax}{9};
+			\draw[darkcyan,
+			line width=1.6pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+			
+			\foreach \j in {0,...,1}
+			{
+				\foreach \i in {0,...,3}
+				{
+					\pgfmathsetmacro{\d}{0.05}
+					\pgfmathsetmacro{\x}{0.35+0.312*\j};
+					\pgfmathsetmacro{\y}{7.87+0.312*\i};
+					\draw[yellow,fill=yellow] ({\x-\d}, {\y-\d} ) -- ({\x+\d}, {\y-\d}) -- ({\x+\d}, {\y+\d}) -- ({\x-\d}, {\y+\d}) -- cycle;
+				}
+			}
+			\pgfmathsetmacro{\d}{0.05}
+			\pgfmathsetmacro{\x}{0.35+0.312};
+			\pgfmathsetmacro{\y}{7.87+0.312*0};
+			\draw[yellow,thick,fill=fuchsia] ({\x-\d}, {\y-\d} ) -- ({\x+\d}, {\y-\d}) -- ({\x+\d}, {\y+\d}) -- ({\x-\d}, {\y+\d}) -- cycle;
+			
+			%J44 Serial
+			\pgfmathsetmacro{\xmin}{1.2};
+			\pgfmathsetmacro{\xmax}{1.5};
+			\pgfmathsetmacro{\ymin}{8.02};
+			\pgfmathsetmacro{\ymax}{9.95};
+			\draw[darkcyan,
+			line width=1.6pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+			
+			\foreach \j in {0,...,0}
+			{
+				\foreach \i in {0,...,5}
+				{
+					\pgfmathsetmacro{\d}{0.05}
+					\pgfmathsetmacro{\x}{1.35+0.312*\j};
+					\pgfmathsetmacro{\y}{8.2+0.312*\i};
+					\draw[yellow,fill=yellow] ({\x-\d}, {\y-\d} ) -- ({\x+\d}, {\y-\d}) -- ({\x+\d}, {\y+\d}) -- ({\x-\d}, {\y+\d}) -- cycle;
+				}
+			}
+			\pgfmathsetmacro{\d}{0.05}
+			\pgfmathsetmacro{\x}{1.35};
+			\pgfmathsetmacro{\y}{8.2+0.312*0};
+			\draw[yellow,thick,fill=fuchsia] ({\x-\d}, {\y-\d} ) -- ({\x+\d}, {\y-\d}) -- ({\x+\d}, {\y+\d}) -- ({\x-\d}, {\y+\d}) -- cycle;
+			
+			% J48 DC Jumper
+			\pgfmathsetmacro{\xmin}{0.175};
+			\pgfmathsetmacro{\xmax}{0.83};
+			\pgfmathsetmacro{\ymin}{3.908};
+			\pgfmathsetmacro{\ymax}{4.24};
+			\draw[darkcyan,
+			line width=1.6pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+			
+			\foreach \j in {0,...,1}
+			{
+				\foreach \i in {0,...,0}
+				{
+					\pgfmathsetmacro{\d}{0.05}
+					\pgfmathsetmacro{\x}{0.35+0.312*\j};
+					\pgfmathsetmacro{\y}{4.074 +0.312*\i};
+					\draw[yellow,fill=yellow] ({\x-\d}, {\y-\d} ) -- ({\x+\d}, {\y-\d}) -- ({\x+\d}, {\y+\d}) -- ({\x-\d}, {\y+\d}) -- cycle;
+				}
+			}
+			
+			% J38 PoE
+			\pgfmathsetmacro{\xmin}{11.95};
+			\pgfmathsetmacro{\xmax}{12.57};
+			\pgfmathsetmacro{\ymin}{9.27};
+			\pgfmathsetmacro{\ymax}{9.9};
+			\draw[darkcyan,
+			line width=1.6pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+			
+			\foreach \j in {0,...,1}
+			{
+				\foreach \i in {0,...,1}
+				{
+					\pgfmathsetmacro{\d}{0.05}
+					\pgfmathsetmacro{\x}{12.1+0.312*\j};
+					\pgfmathsetmacro{\y}{9.42 +0.312*\i};
+					\draw[yellow,fill=yellow] ({\x-\d}, {\y-\d} ) -- ({\x+\d}, {\y-\d}) -- ({\x+\d}, {\y+\d}) -- ({\x-\d}, {\y+\d}) -- cycle;
+				}
+			}
+			
+			% J41 Expansion
+			\pgfmathsetmacro{\xmin}{11.16};
+			\pgfmathsetmacro{\xmax}{11.8};
+			\pgfmathsetmacro{\ymin}{2.72};
+			\pgfmathsetmacro{\ymax}{9.1};
+			\draw[darkcyan,
+			line width=1.6pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+			
+			\foreach \j in {0,...,1}
+			{
+				\foreach \i in {0,...,19}
+				{
+					\pgfmathsetmacro{\d}{0.05}
+					\pgfmathsetmacro{\x}{11.325+0.312*\j};
+					\pgfmathsetmacro{\y}{2.86 +0.323*\i};
+					\draw[blue,fill=yellow] ({\x-\d}, {\y-\d} ) -- ({\x+\d}, {\y-\d}) -- ({\x+\d}, {\y+\d}) -- ({\x-\d}, {\y+\d}) -- cycle;
+				}
+			}
+			\pgfmathsetmacro{\d}{0.05}
+			\pgfmathsetmacro{\x}{11.325+0.312};
+			\pgfmathsetmacro{\y}{2.86};
+			\draw[yellow,thick,fill=fuchsia] ({\x-\d}, {\y-\d} ) -- ({\x+\d}, {\y-\d}) -- ({\x+\d}, {\y+\d}) -- ({\x-\d}, {\y+\d}) --    cycle;
+			
+			% J15 5V Fan
+			\pgfmathsetmacro{\xmin}{9.33};
+			\pgfmathsetmacro{\xmax}{10.55};
+			\pgfmathsetmacro{\ymin}{2.86};
+			\pgfmathsetmacro{\ymax}{3.55};
+			\draw[darkcyan,
+			line width=1.6pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+			
+			\pgfmathsetmacro{\xmin}{9.8};
+			\pgfmathsetmacro{\xmax}{10.45};
+			\pgfmathsetmacro{\ymin}{3.35};
+			\pgfmathsetmacro{\ymax}{3.55};
+			\draw[darkcyan,
+			line width=1.6pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+			
+			\foreach \j in {0,...,3}
+			{
+				\foreach \i in {0,...,0}
+				{
+					\pgfmathsetmacro{\d}{0.05}
+					\pgfmathsetmacro{\x}{9.45+0.317*\j};
+					\pgfmathsetmacro{\y}{3.18 +0.323*\i};
+					\draw[blue,fill=yellow] ({\x-\d}, {\y-\d} ) -- ({\x+\d}, {\y-\d}) -- ({\x+\d}, {\y+\d}) -- ({\x-\d}, {\y+\d}) -- cycle;
+				}
+			}
+			
+			\pgfmathsetmacro{\d}{0.05}
+			\pgfmathsetmacro{\d}{0.05}
+			\pgfmathsetmacro{\x}{9.45+0.951};
+			\pgfmathsetmacro{\y}{3.18};
+			
+			\draw[yellow,thick,fill=fuchsia] ({\x-\d}, {\y-\d} ) -- ({\x+\d}, {\y-\d}) -- ({\x+\d}, {\y+\d}) -- ({\x-\d}, {\y+\d}) -- cycle;
+			
+			
+			% Schwarze Flecken
+			\pgfmathsetmacro{\xmin}{0.902};
+			\pgfmathsetmacro{\xmax}{1.058};
+			\pgfmathsetmacro{\ymin}{8.12};
+			\pgfmathsetmacro{\ymax}{8.25};
+			\draw[black,fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft},
+			line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+			
+			\pgfmathsetmacro{\xmin}{0.902};
+			\pgfmathsetmacro{\xmax}{1.058};
+			\pgfmathsetmacro{\ymin}{8.74};
+			\pgfmathsetmacro{\ymax}{8.87};
+			\draw[black,fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft},
+			line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+			
+			\pgfmathsetmacro{\xmin}{0.942};
+			\pgfmathsetmacro{\xmax}{1.098};
+			\pgfmathsetmacro{\ymin}{7.29};
+			\pgfmathsetmacro{\ymax}{7.42};
+			\draw[black, fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft},
+			line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+			
+			\pgfmathsetmacro{\xmin}{1.382};
+			\pgfmathsetmacro{\xmax}{1.538};
+			\pgfmathsetmacro{\ymin}{7.74};
+			\pgfmathsetmacro{\ymax}{7.87};
+			\draw[black, fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft},
+			line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+			
+			\pgfmathsetmacro{\xmin}{1.35};
+			\pgfmathsetmacro{\xmax}{1.49};
+			\pgfmathsetmacro{\ymin}{7.2};
+			\pgfmathsetmacro{\ymax}{7.37};
+			\draw[black, fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft},
+			line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+			
+			\pgfmathsetmacro{\xmin}{1.13};
+			\pgfmathsetmacro{\xmax}{1.47};
+			\pgfmathsetmacro{\ymin}{3.43};
+			\pgfmathsetmacro{\ymax}{3.7};
+			\draw[black, fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft},
+			line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+			
+			\pgfmathsetmacro{\xmin}{0.97};
+			\pgfmathsetmacro{\xmax}{1.47};
+			\pgfmathsetmacro{\ymin}{2.81};
+			\pgfmathsetmacro{\ymax}{3.31};
+			\draw[black, fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft},
+			line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+			
+			% 5V DC (2.1mm ID, Positive Center)  Stecker
+			\pgfmathsetmacro{\xmin}{0.28};
+			\pgfmathsetmacro{\xmax}{1.51};
+			\pgfmathsetmacro{\ymin}{-0.1};
+			\pgfmathsetmacro{\ymax}{1.7};
+			\draw[black, fill=black,
+			line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+			
+			\pgfmathsetmacro{\xmin}{0.32};
+			\pgfmathsetmacro{\xmax}{1.47};
+			\pgfmathsetmacro{\ymin}{-0.06};
+			\pgfmathsetmacro{\ymax}{0.28};
+			\draw[black, fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft},
+			line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+			
+			\pgfmathsetmacro{\xmin}{0.32};
+			\pgfmathsetmacro{\xmax}{1.47};
+			\pgfmathsetmacro{\ymin}{0.32};
+			\pgfmathsetmacro{\ymax}{1.65};
+			\draw[left color=grayleft, right color=black, middle color=graycircle,
+			line width=0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+			
+			
+			% Display Port und HDMI
+			\pgfmathsetmacro{\xmin}{2.03};
+			\pgfmathsetmacro{\xmax}{4.08};
+			\pgfmathsetmacro{\ymin}{0};
+			\pgfmathsetmacro{\ymax}{2.15};
+			\draw[graycircle!50, fill=white!20!graylight, postaction={path fading=west,  fill=grayright!60},
+			line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+			
+			\draw[greenblue,fill=greenblue] 
+			(2.30, 0.7) -- (2.39, 0.22) -- (2.58,0.22) -- (2.68, 0.7) -- 
+			(2.52, 0.27) -- (2.46,0.27) -- cycle;
+			
+			\begin{scope}[xshift=27.3]
+				\draw[greenblue,fill=greenblue] 
+				(2.30, 0.7) -- (2.39, 0.22) -- (2.58,0.22) -- (2.68, 0.7) -- 
+				(2.52, 0.27) -- (2.46,0.27) -- cycle;
+			\end{scope}
+			
+			% USB 3.0 2-mal
+			\pgfmathsetmacro{\xmin}{4.6};
+			\pgfmathsetmacro{\xmax}{6.31};
+			\pgfmathsetmacro{\ymin}{-0.1};
+			\pgfmathsetmacro{\ymax}{2.05};
+			\draw[graycircle!50, fill=white!20!graylight, postaction={path fading=west,  fill=grayright!60},
+			line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+			
+			\draw[greenblue,fill=greenblue] 
+			(4.83, 0.82) -- (4.93, 0.07) -- (5.14,0.07) -- (5.25, 0.82) -- 
+			(5.08, 0.14) -- (5.0,0.14) -- cycle;
+			
+			\draw[greenblue,fill=greenblue] 
+			(5.63, 0.82) -- (5.73, 0.07) -- (5.94,0.07) -- (6.05, 0.82) -- 
+			(5.88, 0.14) -- (5.8,0.14) -- cycle;
+			
+			
+			% USB 3.0 2-mal
+			\begin{scope}[xshift=63]
+				\pgfmathsetmacro{\xmin}{4.6};
+				\pgfmathsetmacro{\xmax}{6.31};
+				\pgfmathsetmacro{\ymin}{-0.1};
+				\pgfmathsetmacro{\ymax}{2.05};
+				\draw[graycircle!50, fill=white!20!graylight, postaction={path fading=west,  fill=grayright!60},
+				line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+				
+				\draw[greenblue,fill=greenblue] 
+				(4.83, 0.82) -- (4.93, 0.07) -- (5.14,0.07) -- (5.25, 0.82) -- 
+				(5.08, 0.14) -- (5.0,0.14) -- cycle;
+				
+				\draw[greenblue,fill=greenblue] 
+				(5.63, 0.82) -- (5.73, 0.07) -- (5.94,0.07) -- (6.05, 0.82) -- 
+				(5.88, 0.14) -- (5.8,0.14) -- cycle;
+			\end{scope}
+			
+			% GigEth
+			\pgfmathsetmacro{\xmin}{8.84};
+			\pgfmathsetmacro{\xmax}{10.8};
+			\pgfmathsetmacro{\ymin}{-0.1};
+			\pgfmathsetmacro{\ymax}{2.62};
+			\draw[graycircle!50, fill=white!20!graylight, postaction={path fading=west,  fill=grayright!60},
+			line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+			
+			% Micro USB, PWR oder USB device
+			\pgfmathsetmacro{\xmin}{11.285};
+			\pgfmathsetmacro{\xmax}{12.225};
+			\pgfmathsetmacro{\ymin}{0};
+			\pgfmathsetmacro{\ymax}{0.83};
+			\draw[graycircle!50, fill=white!20!graylight, postaction={path fading=west,  fill=grayright!60},
+			line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+			
+			\draw[greenblue,fill=greenblue] 
+			(11.41, 0.38) -- (11.475, 0.08) -- (11.585,0.08) -- (11.65, 0.38) -- 
+			(11.55, 0.12) -- (11.52,0.12) -- cycle;
+			
+			\begin{scope}[xshift=12.5]
+				\draw[greenblue,fill=greenblue] 
+				(11.41, 0.38) -- (11.475, 0.08) -- (11.585,0.08) -- (11.65, 0.38) -- 
+				(11.55, 0.12) -- (11.52,0.12) -- cycle;
+			\end{scope}
+			
+		\end{tikzpicture}
+		\caption{Jetson Nano: Oversight}\label{JetsonAufsicht}
+	\end{figure}
+
+\begin{figure}
+	
+	\centering		
+	\begin{tikzpicture}[scale=0.75]
+		% Platine
+		\draw[greenblue,fill=greenblue] (0,0) -- (12.8,0) -- (12.8,10.1) -- (0,10.1) -- cycle;
+		
+		% J13 Camera
+		\foreach \i in {0,...,14}
+		{
+			\pgfmathsetmacro{\off}{- 0.1275 * \i}
+			\pgfmathsetmacro{\xmin}{0.31};
+			\pgfmathsetmacro{\xmax}{0.98};
+			\pgfmathsetmacro{\ymin}{6.79};
+			\pgfmathsetmacro{\ymax}{6.86};
+			\draw[copper,fill=copper] ({\xmin}, {\ymax + \off} ) -- (0.98, {\ymax + \off} ) -- (0.98, {\ymin + \off} ) -- ({\xmin}, {\ymin + \off}) -- cycle;
+		}
+		\draw[grayleft,fill=grayleft] (0.31,6.65) -- (0.47,6.75) -- (0.47,7.32) -- (0.8,7.32) -- (0.8,4.54) -- (0.47,4.54) -- (0.47, 5.1) -- (0.31,5.2) -- cycle;
+		\draw[black,fill=black] (0.67,6.95) -- (0.8,6.95) -- (0.8,4.9) --  (0.67, 4.9) -- cycle;
+		
+		\node (J13) at (-1,6) {\begin{tabular}{l} J13\\ Kamera \end{tabular}};
+		
+		
+		% Anschlussprozessor
+		\foreach \i in {0,...,46}
+		{
+			\draw[copper,fill=copper] (1.95 + 0.095 * \i,4.0) -- (1.95+0.095*\i,3.76) -- (2+0.095*\i,3.76) -- (2+0.095*\i,4.0) -- cycle;
+		}
+		\foreach \i in {0,...,38}
+		{
+			\draw[copper,fill=copper] (6.67+ 0.095 * \i,4.0) -- (6.67+ 0.095 * \i,3.76) -- (6.72+ 0.095 * \i,3.76) -- (6.72+ 0.095 * \i,4.0) -- cycle;
+		}
+		\draw[greenenglish,line width=2pt,fill=darkpastelgreen] (1.5,7.0) -- (10.85,7.0) -- (10.85, 3.9) -- (1.5,3.9) -- cycle;
+		
+		
+		\draw[black,fill=black] (1.75,4.7) -- (10.65,4.7) -- (10.65,9.88) -- (1.75,9.88) -- cycle;
+		%Kühlkörper
+		\draw[fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft}] (1.8,8.822) -- (10.6,8.822) -- (10.6,9.83) -- (1.8,9.83) -- cycle;
+		\draw[fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft}] (1.8,8.773) -- (10.6,8.773) -- (10.6,8.521) -- (1.8,8.521) -- cycle;
+		
+		\draw[fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft}] (1.8,7.464) -- (10.6,7.464) -- (10.6,8.472) -- (1.8,8.472) -- cycle;
+		\draw[fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft}] (1.8,7.415) -- (10.6,7.415) -- (10.6,7.163) -- (1.8,7.163) -- cycle;
+		
+		\draw[fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft}] (1.8,6.106) -- (10.6,6.106) -- (10.6,7.114) -- (1.8,7.114) -- cycle;
+		\draw[fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft}] (1.8,6.057) -- (10.6,6.057) -- (10.6,5.805) -- (1.8,5.805) -- cycle;
+		
+		\draw[fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft}] (1.8,4.75) -- (10.6,4.75) -- (10.6,5.756) -- (1.8,5.756) -- cycle;
+		
+		\draw[fill=grayleft!30!graycircle, postaction={path fading=west,  fill=grayleft},domain=0:360] plot ({4.0+0.252*cos(\x)}, {9.326+0.252*sin(\x)});
+		\draw[fill=grayleft!30!graycircle, postaction={path fading=west,  fill=grayleft},domain=0:360] plot ({8.4+0.252*cos(\x)}, {9.326+0.252*sin(\x)});
+		
+		\draw[fill=grayleft!30!graycircle, postaction={path fading=west,  fill=grayleft},domain=0:360] plot ({4.0+0.252*cos(\x)}, {5.252+0.252*sin(\x)});
+		\draw[fill=grayleft!30!graycircle, postaction={path fading=west,  fill=grayleft},domain=0:360] plot ({8.4+0.252*cos(\x)}, {5.252+0.252*sin(\x)});
+		
+		\pgfmathsetmacro{\xmin}{12.2};
+		\pgfmathsetmacro{\xmax}{12.62};
+		\pgfmathsetmacro{\ymin}{1.42};
+		\pgfmathsetmacro{\ymax}{1.69};
+		\draw[darkpastelgreen,fill=greenyellow,
+		line width=1.6pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+		
+		% J40 Buttons
+		\pgfmathsetmacro{\xmin}{0.17};
+		\pgfmathsetmacro{\xmax}{0.82};
+		\pgfmathsetmacro{\ymin}{7.7};
+		\pgfmathsetmacro{\ymax}{9};
+		\draw[darkcyan,
+		line width=1.6pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+		
+		\foreach \j in {0,...,1}
+		{
+			\foreach \i in {0,...,3}
+			{
+				\pgfmathsetmacro{\d}{0.05}
+				\pgfmathsetmacro{\x}{0.35+0.312*\j};
+				\pgfmathsetmacro{\y}{7.87+0.312*\i};
+				\draw[yellow,fill=yellow] ({\x-\d}, {\y-\d} ) -- ({\x+\d}, {\y-\d}) -- ({\x+\d}, {\y+\d}) -- ({\x-\d}, {\y+\d}) -- cycle;
+			}
+		}
+		\pgfmathsetmacro{\d}{0.05}
+		\pgfmathsetmacro{\x}{0.35+0.312};
+		\pgfmathsetmacro{\y}{7.87+0.312*0};
+		\draw[yellow,thick,fill=fuchsia] ({\x-\d}, {\y-\d} ) -- ({\x+\d}, {\y-\d}) -- ({\x+\d}, {\y+\d}) -- ({\x-\d}, {\y+\d}) -- cycle;
+		
+		\node (J40) at (-1,8.5) {\begin{tabular}{l}J40 \\ Buttons\end{tabular}};
+		
+		
+		%J44 Serial
+		\pgfmathsetmacro{\xmin}{1.2};
+		\pgfmathsetmacro{\xmax}{1.5};
+		\pgfmathsetmacro{\ymin}{8.02};
+		\pgfmathsetmacro{\ymax}{9.95};
+		\draw[darkcyan,
+		line width=1.6pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+		
+		\foreach \j in {0,...,0}
+		{
+			\foreach \i in {0,...,5}
+			{
+				\pgfmathsetmacro{\d}{0.05}
+				\pgfmathsetmacro{\x}{1.35+0.312*\j};
+				\pgfmathsetmacro{\y}{8.2+0.312*\i};
+				\draw[yellow,fill=yellow] ({\x-\d}, {\y-\d} ) -- ({\x+\d}, {\y-\d}) -- ({\x+\d}, {\y+\d}) -- ({\x-\d}, {\y+\d}) -- cycle;
+			}
+		}
+		\pgfmathsetmacro{\d}{0.05}
+		\pgfmathsetmacro{\x}{1.35};
+		\pgfmathsetmacro{\y}{8.2+0.312*0};
+		\draw[yellow,thick,fill=fuchsia] ({\x-\d}, {\y-\d} ) -- ({\x+\d}, {\y-\d}) -- ({\x+\d}, {\y+\d}) -- ({\x-\d}, {\y+\d}) -- cycle;
+		
+		\node (J13) at (1.8,10.6) {\begin{tabular}{l} J44\\ Serial \end{tabular}};
+		
+		% J48 DC Jumper
+		\pgfmathsetmacro{\xmin}{0.175};
+		\pgfmathsetmacro{\xmax}{0.83};
+		\pgfmathsetmacro{\ymin}{3.908};
+		\pgfmathsetmacro{\ymax}{4.24};
+		\draw[darkcyan,
+		line width=1.6pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+		
+		\foreach \j in {0,...,1}
+		{
+			\foreach \i in {0,...,0}
+			{
+				\pgfmathsetmacro{\d}{0.05}
+				\pgfmathsetmacro{\x}{0.35+0.312*\j};
+				\pgfmathsetmacro{\y}{4.074 +0.312*\i};
+				\draw[yellow,fill=yellow] ({\x-\d}, {\y-\d} ) -- ({\x+\d}, {\y-\d}) -- ({\x+\d}, {\y+\d}) -- ({\x-\d}, {\y+\d}) -- cycle;
+			}
+		}
+		\node (J48) at (-1,4) {\begin{tabular}{l}J48 \\ Jumper\end{tabular}};
+		
+		
+		% J38 PoE
+		\pgfmathsetmacro{\xmin}{11.95};
+		\pgfmathsetmacro{\xmax}{12.57};
+		\pgfmathsetmacro{\ymin}{9.27};
+		\pgfmathsetmacro{\ymax}{9.9};
+		\draw[darkcyan,
+		line width=1.6pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+		
+		\foreach \j in {0,...,1}
+		{
+			\foreach \i in {0,...,1}
+			{
+				\pgfmathsetmacro{\d}{0.05}
+				\pgfmathsetmacro{\x}{12.1+0.312*\j};
+				\pgfmathsetmacro{\y}{9.42 +0.312*\i};
+				\draw[yellow,fill=yellow] ({\x-\d}, {\y-\d} ) -- ({\x+\d}, {\y-\d}) -- ({\x+\d}, {\y+\d}) -- ({\x-\d}, {\y+\d}) -- cycle;
+			}
+		}
+		
+		\node[right] (J48) at (13.0,9.5) {\begin{tabular}{l}J38 \\ PoE\end{tabular}};
+		
+		
+		% J41 Expansion
+		\pgfmathsetmacro{\xmin}{11.16};
+		\pgfmathsetmacro{\xmax}{11.8};
+		\pgfmathsetmacro{\ymin}{2.72};
+		\pgfmathsetmacro{\ymax}{9.1};
+		\draw[darkcyan,
+		line width=1.6pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+		
+		\foreach \j in {0,...,1}
+		{
+			\foreach \i in {0,...,19}
+			{
+				\pgfmathsetmacro{\d}{0.05}
+				\pgfmathsetmacro{\x}{11.325+0.312*\j};
+				\pgfmathsetmacro{\y}{2.86 +0.323*\i};
+				\draw[blue,fill=yellow] ({\x-\d}, {\y-\d} ) -- ({\x+\d}, {\y-\d}) -- ({\x+\d}, {\y+\d}) -- ({\x-\d}, {\y+\d}) -- cycle;
+			}
+		}
+		\pgfmathsetmacro{\d}{0.05}
+		\pgfmathsetmacro{\x}{11.325+0.312};
+		\pgfmathsetmacro{\y}{2.86};
+		\draw[yellow,thick,fill=fuchsia] ({\x-\d}, {\y-\d} ) -- ({\x+\d}, {\y-\d}) -- ({\x+\d}, {\y+\d}) -- ({\x-\d}, {\y+\d}) --    cycle;
+		
+		\node[right] (J41) at (13,6) {\begin{tabular}{l}J41 \\ Expansion\end{tabular}};
+		
+		% J15 5V Fan
+		\pgfmathsetmacro{\xmin}{9.33};
+		\pgfmathsetmacro{\xmax}{10.55};
+		\pgfmathsetmacro{\ymin}{2.86};
+		\pgfmathsetmacro{\ymax}{3.55};
+		\draw[darkcyan,
+		line width=1.6pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+		
+		\pgfmathsetmacro{\xmin}{9.8};
+		\pgfmathsetmacro{\xmax}{10.45};
+		\pgfmathsetmacro{\ymin}{3.35};
+		\pgfmathsetmacro{\ymax}{3.55};
+		\draw[darkcyan,
+		line width=1.6pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+		
+		\foreach \j in {0,...,3}
+		{
+			\foreach \i in {0,...,0}
+			{
+				\pgfmathsetmacro{\d}{0.05}
+				\pgfmathsetmacro{\x}{9.45+0.317*\j};
+				\pgfmathsetmacro{\y}{3.18 +0.323*\i};
+				\draw[blue,fill=yellow] ({\x-\d}, {\y-\d} ) -- ({\x+\d}, {\y-\d}) -- ({\x+\d}, {\y+\d}) -- ({\x-\d}, {\y+\d}) -- cycle;
+			}
+		}
+		
+		\node[right] (J15) at (13,3.3) {\begin{tabular}{l}J15 \\ 5V Fan\end{tabular}};
+		
+		% Schwarze Flecken
+		\pgfmathsetmacro{\xmin}{0.902};
+		\pgfmathsetmacro{\xmax}{1.058};
+		\pgfmathsetmacro{\ymin}{8.12};
+		\pgfmathsetmacro{\ymax}{8.25};
+		\draw[black,fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft},
+		line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+		
+		\pgfmathsetmacro{\xmin}{0.902};
+		\pgfmathsetmacro{\xmax}{1.058};
+		\pgfmathsetmacro{\ymin}{8.74};
+		\pgfmathsetmacro{\ymax}{8.87};
+		\draw[black,fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft},
+		line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+		
+		\pgfmathsetmacro{\xmin}{0.942};
+		\pgfmathsetmacro{\xmax}{1.098};
+		\pgfmathsetmacro{\ymin}{7.29};
+		\pgfmathsetmacro{\ymax}{7.42};
+		\draw[black, fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft},
+		line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+		
+		\pgfmathsetmacro{\xmin}{1.382};
+		\pgfmathsetmacro{\xmax}{1.538};
+		\pgfmathsetmacro{\ymin}{7.74};
+		\pgfmathsetmacro{\ymax}{7.87};
+		\draw[black, fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft},
+		line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+		
+		\pgfmathsetmacro{\xmin}{1.35};
+		\pgfmathsetmacro{\xmax}{1.49};
+		\pgfmathsetmacro{\ymin}{7.2};
+		\pgfmathsetmacro{\ymax}{7.37};
+		\draw[black, fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft},
+		line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+		
+		\pgfmathsetmacro{\xmin}{1.13};
+		\pgfmathsetmacro{\xmax}{1.47};
+		\pgfmathsetmacro{\ymin}{3.43};
+		\pgfmathsetmacro{\ymax}{3.7};
+		\draw[black, fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft},
+		line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+		
+		\pgfmathsetmacro{\xmin}{0.97};
+		\pgfmathsetmacro{\xmax}{1.47};
+		\pgfmathsetmacro{\ymin}{2.81};
+		\pgfmathsetmacro{\ymax}{3.31};
+		\draw[black, fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft},
+		line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+		
+		% 5V DC (2.1mm ID, Positive Center)  Stecker
+		\pgfmathsetmacro{\xmin}{0.28};
+		\pgfmathsetmacro{\xmax}{1.51};
+		\pgfmathsetmacro{\ymin}{-0.1};
+		\pgfmathsetmacro{\ymax}{1.7};
+		\draw[black, fill=black,
+		line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+		
+		\pgfmathsetmacro{\xmin}{0.32};
+		\pgfmathsetmacro{\xmax}{1.47};
+		\pgfmathsetmacro{\ymin}{-0.06};
+		\pgfmathsetmacro{\ymax}{0.28};
+		\draw[black, fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft},
+		line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+		
+		\pgfmathsetmacro{\xmin}{0.32};
+		\pgfmathsetmacro{\xmax}{1.47};
+		\pgfmathsetmacro{\ymin}{0.32};
+		\pgfmathsetmacro{\ymax}{1.65};
+		\draw[left color=grayleft, right color=black, middle color=graycircle,
+		line width=0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+		
+		
+		% Display Port und HDMI
+		\pgfmathsetmacro{\xmin}{2.03};
+		\pgfmathsetmacro{\xmax}{4.08};
+		\pgfmathsetmacro{\ymin}{0};
+		\pgfmathsetmacro{\ymax}{2.15};
+		\draw[graycircle!50, fill=white!20!graylight, postaction={path fading=west,  fill=grayright!60},
+		line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+		
+		\draw[greenblue,fill=greenblue] 
+		(2.30, 0.7) -- (2.39, 0.22) -- (2.58,0.22) -- (2.68, 0.7) -- 
+		(2.52, 0.27) -- (2.46,0.27) -- cycle;
+		
+		\begin{scope}[xshift=27.3]
+			\draw[greenblue,fill=greenblue] 
+			(2.30, 0.7) -- (2.39, 0.22) -- (2.58,0.22) -- (2.68, 0.7) -- 
+			(2.52, 0.27) -- (2.46,0.27) -- cycle;
+		\end{scope}
+		
+		% USB 3.0 2-mal
+		\pgfmathsetmacro{\xmin}{4.6};
+		\pgfmathsetmacro{\xmax}{6.31};
+		\pgfmathsetmacro{\ymin}{-0.1};
+		\pgfmathsetmacro{\ymax}{2.05};
+		\draw[graycircle!50, fill=white!20!graylight, postaction={path fading=west,  fill=grayright!60},
+		line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+		
+		\draw[greenblue,fill=greenblue] 
+		(4.83, 0.82) -- (4.93, 0.07) -- (5.14,0.07) -- (5.25, 0.82) -- 
+		(5.08, 0.14) -- (5.0,0.14) -- cycle;
+		
+		\draw[greenblue,fill=greenblue] 
+		(5.63, 0.82) -- (5.73, 0.07) -- (5.94,0.07) -- (6.05, 0.82) -- 
+		(5.88, 0.14) -- (5.8,0.14) -- cycle;
+		
+		
+		% USB 3.0 2-mal
+		\begin{scope}[xshift=63]
+			\pgfmathsetmacro{\xmin}{4.6};
+			\pgfmathsetmacro{\xmax}{6.31};
+			\pgfmathsetmacro{\ymin}{-0.1};
+			\pgfmathsetmacro{\ymax}{2.05};
+			\draw[graycircle!50, fill=white!20!graylight, postaction={path fading=west,  fill=grayright!60},
+			line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+			
+			\draw[greenblue,fill=greenblue] 
+			(4.83, 0.82) -- (4.93, 0.07) -- (5.14,0.07) -- (5.25, 0.82) -- 
+			(5.08, 0.14) -- (5.0,0.14) -- cycle;
+			
+			\draw[greenblue,fill=greenblue] 
+			(5.63, 0.82) -- (5.73, 0.07) -- (5.94,0.07) -- (6.05, 0.82) -- 
+			(5.88, 0.14) -- (5.8,0.14) -- cycle;
+		\end{scope}
+		
+		% GigEth
+		\pgfmathsetmacro{\xmin}{8.84};
+		\pgfmathsetmacro{\xmax}{10.8};
+		\pgfmathsetmacro{\ymin}{-0.1};
+		\pgfmathsetmacro{\ymax}{2.62};
+		\draw[graycircle!50, fill=white!20!graylight, postaction={path fading=west,  fill=grayright!60},
+		line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+		
+		% Micro USB, PWR oder USB device
+		\pgfmathsetmacro{\xmin}{11.285};
+		\pgfmathsetmacro{\xmax}{12.225};
+		\pgfmathsetmacro{\ymin}{0};
+		\pgfmathsetmacro{\ymax}{0.83};
+		\draw[graycircle!50, fill=white!20!graylight, postaction={path fading=west,  fill=grayright!60},
+		line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+		
+		\draw[greenblue,fill=greenblue] 
+		(11.41, 0.38) -- (11.475, 0.08) -- (11.585,0.08) -- (11.65, 0.38) -- 
+		(11.55, 0.12) -- (11.52,0.12) -- cycle;
+		
+		\begin{scope}[xshift=12.5]
+			\draw[greenblue,fill=greenblue] 
+			(11.41, 0.38) -- (11.475, 0.08) -- (11.585,0.08) -- (11.65, 0.38) -- 
+			(11.55, 0.12) -- (11.52,0.12) -- cycle;
+		\end{scope}
+		
+		\node[right] (J15) at (13,1.3) {\begin{tabular}{l}PWR \\ LED\end{tabular}};
+		
+		
+	\end{tikzpicture}
+	\caption{Jetson Nano: Oversight with labels}\label{JetsonAufsicht}
+\end{figure}
+
+
+\begin{figure}
+	
+	\begin{tikzpicture}
+		% Platine
+		\draw[greenblue,fill=greenblue] (0,-0.02) -- (12.35,-0.02) -- (12.35,-0.2) -- (0,-0.2) -- cycle;
+		
+		% 5V 
+		\pgfmathsetmacro{\xmin}{0.2};
+		\pgfmathsetmacro{\xmax}{1.4};
+		\pgfmathsetmacro{\ymin}{0};
+		\pgfmathsetmacro{\ymax}{1.33};
+		\draw[black,  fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft},  line width=1.0pt] 
+		(\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+		
+		\draw[silver,fill=silver,domain=0:360] plot ({0.8+0.11*cos(\x)}, {0.75+0.11*sin(\x)});
+		\draw[silver,fill=silver,domain=230:310] plot ({0.8+0.4*cos(\x)}, {0.75+0.4*sin(\x)});
+		\draw[black,line width=1.0pt,domain=0:360] plot ({0.8+0.4*cos(\x)}, {0.75+0.4*sin(\x)});
+		
+		%Display Port und HDMI
+		\pgfmathsetmacro{\xmin}{1.9};
+		\pgfmathsetmacro{\xmax}{3.95};
+		\pgfmathsetmacro{\ymin}{0};
+		\pgfmathsetmacro{\ymax}{2.1};
+		\draw[graycircle!50, fill=white!20!graylight, postaction={path fading=west,  fill=grayright!60}, line width=1.0pt
+		] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+		
+		\draw[black,fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft},
+		line width=1.0pt]   (2.4, 0.17) -- (2.17,0.41) -- (2.17,0.64) -- (3.65,0.64) -- (3.65,0.41) -- (3.42,0.17) -- cycle;
+		
+		\pgfmathsetmacro{\xmin}{2.35};
+		\pgfmathsetmacro{\xmax}{3.48};
+		\pgfmathsetmacro{\ymin}{0.39};
+		\pgfmathsetmacro{\ymax}{0.42};
+		\draw[grayright,fill=grayright %graycircle!50, fill=white!20!graylight, postaction={path fading=west,  fill=grayright!60}, line width=1.0pt
+		] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+		
+		\draw[black,fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft},
+		line width=1.0pt] (2.33,1.42) -- (2.1, 1.65) -- (2.1,1.92) -- (3.66,1.92) -- (3.66,1.42) -- cycle;
+		\draw[grayright,fill=grayright] (2.47, 1.7) -- (2.47,1.6) -- (2.37, 1.6) -- (2.37,1.75) -- (3.47,1.75) -- (3.47,1.6) -- (3.37,1.6) -- (3.37,1.7) -- cycle;
+		
+		% USV 3.0 - 2 x 2 
+		\foreach \j in {0,...,1}
+		{
+			\pgfmathsetmacro{\xmin}{4.4+2.15*\j};
+			\pgfmathsetmacro{\xmax}{6.1+2.15*\j};
+			\pgfmathsetmacro{\ymin}{0};
+			\pgfmathsetmacro{\ymax}{1.8};
+			\draw[graycircle!50, fill=white!20!graylight, postaction={path fading=west,  fill=grayright!60}, line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+			
+			\foreach \i in {0,...,1}
+			{
+				\pgfmathsetmacro{\xmin}{4.54+2.16*\j};
+				\pgfmathsetmacro{\xmax}{5.96+2.16*\j};
+				\pgfmathsetmacro{\ymin}{0.27+0.86*\i};
+				\pgfmathsetmacro{\ymax}{0.78+0.86*\i};
+				\draw[black,fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft},
+				line width=1.0pt] 
+				(\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+				
+				\pgfmathsetmacro{\xmin}{4.6+2.16*\j};
+				\pgfmathsetmacro{\xmax}{5.91+2.16*\j};
+				\pgfmathsetmacro{\ymin}{0.52+0.82*\i};
+				\pgfmathsetmacro{\ymax}{0.73+0.82*\i};
+				\draw[cyan, fill=deepskyblue, line width=1.0pt] 
+				(\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+				
+				\foreach \k in {0,...,3}
+				{
+					\pgfmathsetmacro{\xmin}{4.75+2.16*\j+0.29*\k};
+					\pgfmathsetmacro{\xmax}{4.88+2.16*\j+0.29*\k};
+					\pgfmathsetmacro{\ymin}{0.44+0.83*\i};
+					\pgfmathsetmacro{\ymax}{0.48+0.83*\i};
+					\draw[copper,fill=copper] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+				}     
+			}
+		}
+		
+		% Ethernet
+		\pgfmathsetmacro{\xmin}{8.55};
+		\pgfmathsetmacro{\xmax}{10.5};
+		\pgfmathsetmacro{\ymin}{0};
+		\pgfmathsetmacro{\ymax}{1.5};
+		\draw[graycircle!50, fill=white!20!graylight, postaction={path fading=west,  fill=grayright!60}, line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+		
+		\pgfmathsetmacro{\xmin}{8.8};
+		\pgfmathsetmacro{\xmax}{10.2};
+		\pgfmathsetmacro{\ymin}{0};
+		\pgfmathsetmacro{\ymax}{1.25};
+		\draw[black,  fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft},  line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+		
+		\pgfmathsetmacro{\xmin}{8.8};
+		\pgfmathsetmacro{\xmax}{9.25};
+		\pgfmathsetmacro{\ymin}{0};
+		\pgfmathsetmacro{\ymax}{0.3};
+		\draw[darkpastelgreen,fill=greenyellow, line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+		
+		\pgfmathsetmacro{\xmin}{9.75};
+		\pgfmathsetmacro{\xmax}{10.2};
+		\pgfmathsetmacro{\ymin}{0};
+		\pgfmathsetmacro{\ymax}{0.3};
+		\draw[orange, fill=yellow, line width=1.0pt
+		] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+		
+		\foreach \j in {0,...,7}
+		{
+			\pgfmathsetmacro{\xmin}{9     + 0.13*\j};
+			\pgfmathsetmacro{\xmax}{9.068 + 0.13*\j};
+			\pgfmathsetmacro{\ymin}{0.92};
+			\pgfmathsetmacro{\ymax}{1.25};
+			\draw[copper,fill=copper]   (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+		}
+		
+		\pgfmathsetmacro{\xmin}{11.8};
+		\pgfmathsetmacro{\xmax}{12.25};
+		\pgfmathsetmacro{\ymin}{0};
+		\pgfmathsetmacro{\ymax}{0.1};
+		\draw[darkpastelgreen,fill=greenyellow, line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+		
+		% HDMI
+		\draw[silver,fill=silver, line width=1.0pt] (11.0, 0) -- (11.7,0) -- (11.9,0.17) -- (11.9, 0.35) -- (10.8,0.35) --  (10.8, 0.17) -- cycle;
+		
+		\draw[black,fill=black] (11.05, 0.125) -- (11.65,0.125) -- (11.75,0.22) -- (11.75, 0.25) -- (10.95,0.25) --  (10.95, 0.22) -- cycle;
+		
+		\node (P1) at (0.8,-0.6) {5V DC};
+		\node (P2) at (3,-0.8) {\begin{tabular}{c} Display Port \\ HDMI \end{tabular}};
+		\node (P2) at (5.2,-0.8) {\begin{tabular}{c} USB 3.0 \\ USB 3.0 \end{tabular}};
+		\node (P2) at (7.4,-0.8) {\begin{tabular}{c} USB 3.0 \\ USB 3.0 \end{tabular}};
+		\node (P2) at (9.5,-0.6) { GigEth };
+		\node (P2) at (11.8,-1) {\begin{tabular}{c} Micro USB\\ PWR And \\ USB Device\end{tabular}};
+		\node (P2) at (12.9,-1.8) {PWR LED};
+		
+	\end{tikzpicture}
+	\caption{Side view of the Jetson Nano with labels} \label{JetonSeite}
+\end{figure}	
+
+}
+
+\section{Jetson Nano Interfaces}
+\subsection{J41 Expansion Header Pinout - GPIO Pins}
+The Jetson Nano is capable of interfacing with other systems, and for the purpose of communication or external device control, it can be advantageous to have the ability to manage the pins on the J41 header.
+The pins allow different types of communication: 
+
+
+\begin{itemize}
+	\item Serial communication Universal Asynchronous Receiver Transmitter \ac{uart}
+	\item Communication via Inter-Integrated Circuit \ac{i2c}
+	\item Serial Peripheral Interface \ac{spi}
+	\item  Inter-IC Sound \ac{i2s}
+	\item Direct communication via \ac{gpio}
+\end{itemize}    
+
+Binary signals are exchanged between two systems through GPIO communication, making them essentially digital inputs and outputs that can be set as required. By default, all interface signal pins on the Jetson Nano are configured as GPIO, with the exception of pins 3, 5, 8, 9, 27, and 28. Pins 3 and 5, along with pins 27 and 28, are dedicated to the two I2C interfaces, providing the Serial Data (SDA) and Serial Clock (SCL) lines. Pins 8 and 10 are allocated for the receive line (Rx) and transmit line (Tx) of the UART.To use the GPIO, the GPIO library must be installed. \cite{JetsonUserManual:2020} 
+
+To use the \ac{gpio}, the GPIO library must be installed.\cite{GitHubGPIO:2020}.
+
+
+\begin{figure}
+	\centering
+	
+	\begin{tikzpicture}[scale=1.4]
+		%J44 Serial
+		\pgfmathsetmacro{\xmin}{1.2};
+		\pgfmathsetmacro{\xmax}{1.5};
+		\pgfmathsetmacro{\ymin}{8.02};
+		\pgfmathsetmacro{\ymax}{9.95};
+		\draw[darkcyan,fill=greenblue,
+		line width=1.6pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+		
+		\foreach \j in {0,...,0}
+		{
+			\foreach \i in {0,...,5}
+			{
+				\pgfmathsetmacro{\d}{0.05}
+				\pgfmathsetmacro{\x}{1.35+0.312*\j};
+				\pgfmathsetmacro{\y}{8.2+0.312*\i};
+				\draw[yellow,fill=yellow] ({\x-\d}, {\y-\d} ) -- ({\x+\d}, {\y-\d}) -- ({\x+\d}, {\y+\d}) -- ({\x-\d}, {\y+\d}) -- cycle;
+			}
+		}
+		\pgfmathsetmacro{\d}{0.05}
+		\pgfmathsetmacro{\x}{1.35};
+		\pgfmathsetmacro{\y}{8.2+0.312*0};
+		\draw[yellow,thick,fill=fuchsia] ({\x-\d}, {\y-\d} ) -- ({\x+\d}, {\y-\d}) -- ({\x+\d}, {\y+\d}) -- ({\x-\d}, {\y+\d}) -- cycle;
+		
+		\node[right]  (P5) at (1.7,9.81) {CTS};
+		\node[right]  (P5) at (1.7,9.48) {TXD};
+		\node[right]  (P4) at (1.7,9.16) {TXD};
+		\node[right]  (P3) at (1.7,8.82) {N/A};
+		\node[right]  (P2) at (1.7,8.51) {RTS};
+		\node[right]  (P1) at (1.7,8.16) {GND};
+	\end{tikzpicture}
+	
+	\caption{J44 Serial interface - 3.3V 115200 Baud, 8N1} 
+\end{figure}
+
+\begin{figure}
+	\centering
+	\begin{tikzpicture}[scale=1.4]
+		% J40 Buttons
+		\pgfmathsetmacro{\xmin}{0.17};
+		\pgfmathsetmacro{\xmax}{0.82};
+		\pgfmathsetmacro{\ymin}{7.7};
+		\pgfmathsetmacro{\ymax}{9};
+		\draw[darkcyan,fill=greenblue,
+		line width=1.6pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+		
+		\foreach \j in {0,...,1}
+		{
+			\foreach \i in {0,...,3}
+			{
+				\pgfmathsetmacro{\d}{0.05}
+				\pgfmathsetmacro{\x}{0.35+0.312*\j};
+				\pgfmathsetmacro{\y}{7.87+0.312*\i};
+				\draw[yellow,fill=yellow] ({\x-\d}, {\y-\d} ) -- ({\x+\d}, {\y-\d}) -- ({\x+\d}, {\y+\d}) -- ({\x-\d}, {\y+\d}) -- cycle;
+			}
+		}
+		\pgfmathsetmacro{\d}{0.05}
+		\pgfmathsetmacro{\x}{0.35+0.312};
+		\pgfmathsetmacro{\y}{7.87+0.312*0};
+		\draw[yellow,thick,fill=fuchsia] ({\x-\d}, {\y-\d} ) -- ({\x+\d}, {\y-\d}) -- ({\x+\d}, {\y+\d}) -- ({\x-\d}, {\y+\d}) -- cycle;
+		
+		\node[right]  (P4) at (1,8.85) {DIS (disable auto power-on)};
+		\node[right]  (P3) at (1,8.5) {RST (system reset)};
+		\node[right]  (P2) at (1,8.15) {FRC (board recovery mode))};
+		\node[right]  (P1) at (1,7.8) {ON (power on) )};
+		
+	\end{tikzpicture}
+	
+	\caption{J40 Buttons}
+\end{figure}  
+
+\begin{figure}
+	\centering
+	\begin{tikzpicture}[scale=1.4]
+		% J15 5V Fan
+		\pgfmathsetmacro{\xmin}{9.33};
+		\pgfmathsetmacro{\xmax}{10.55};
+		\pgfmathsetmacro{\ymin}{2.86};
+		\pgfmathsetmacro{\ymax}{3.55};
+		\draw[darkcyan,fill=greenblue,  line width=1.6pt] 
+		(\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+		
+		\pgfmathsetmacro{\xmin}{9.8};
+		\pgfmathsetmacro{\xmax}{10.45};
+		\pgfmathsetmacro{\ymin}{3.35};
+		\pgfmathsetmacro{\ymax}{3.55};
+		\draw[darkcyan,
+		line width=1.6pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
+		
+		\foreach \j in {0,...,3}
+		{
+			\foreach \i in {0,...,0}
+			{
+				\pgfmathsetmacro{\d}{0.05}
+				\pgfmathsetmacro{\x}{9.45+0.317*\j};
+				\pgfmathsetmacro{\y}{3.18 +0.323*\i};
+				\draw[blue,fill=yellow] ({\x-\d}, {\y-\d} ) -- ({\x+\d}, {\y-\d}) -- ({\x+\d}, {\y+\d}) -- ({\x-\d}, {\y+\d}) -- cycle;
+			}
+		}
+		
+		\draw[dotted] (9.45, 3.18) -- (9.45, 4.85) -- (9.6, 4.85);
+		\node[right]  (P4) at (9.6,4.85) {PWM};
+		\draw[dotted] (9.45+0.317, 3.18) -- (9.45+0.317, 4.5) -- (9.6+0.317, 4.5);
+		\node[right]  (P3) at (9.6+0.317,4.5) {Tach};
+		\draw[dotted] (9.45+0.317+0.317, 3.18) -- (9.45+0.317+0.317, 4.15) -- (9.6+0.317+0.317, 4.15);
+		\node[right]  (P2) at (9.6+0.317+0.317,4.15) {5V};
+		\draw[dotted] (9.45+0.317+0.317+0.317, 3.18) -- (9.45+0.317+0.317+0.317, 3.8) -- (9.6+0.317+0.317+0.317, 3.8);
+		\node[right]  (P1) at (9.6+0.317+0.317+0.317,3.8) {GND};
+		
+		\pgfmathsetmacro{\d}{0.05}
+		\pgfmathsetmacro{\x}{9.45+0.317*3};
+		\pgfmathsetmacro{\y}{3.18};
+		\draw[yellow,thick,fill=fuchsia] ({\x-\d}, {\y-\d} ) -- ({\x+\d}, {\y-\d}) -- ({\x+\d}, {\y+\d}) -- ({\x-\d}, {\y+\d}) -- cycle;
+		
+	\end{tikzpicture}
+	
+	\caption{J15 5V fan} 
+\end{figure}
+
+This section highlights some of the Jetson Nano Developer Kit interfaces.
+\begin{itemize}
+	\item Module
+	\begin{itemize}
+		\item [J501] Slot for a microSD card.
+		\item The passive heatsink supports 10W module power usage at 25° C ambient temperature. If your user case requires additional cooling, you can configure the	module to control a system fan.
+	\end{itemize}
+	\item Carrier Board
+	\begin{itemize}
+		\item (DS3) Power LED; lights when the developer kit is powered on.
+		\item (J2) SO-DIMM connector for Jetson Nano module.
+		\item (J6] HDMI and DP connector stack.
+		\item (J13) Camera connector; enables use of CSI cameras. Jetson Nano Developer Kit works with IMX219 camera modules, including Leopard Imaging LI-IMX219-MIPIFF-NANO camera module and Raspberry Pi Camera Module V2.
+		\item (J15) 4-pin fan control header. Pulse Width Modulation (PWM) output and tachometer input are supported.
+		\item (J18) M.2 Key E connector can be used for wireless networking cards; includes	interfaces for PCIe (x1), USB 2.0, UART, I2S, and I2C. To reach J18 you must detach the Jetson Nano module.
+		\item (J25) Power jack for 5V~4A power supply. Accepts a 2.1×5.5×9.5 mm plug with positive polarity.
+		\item (J28) Micro-USB 2.0 connector; can be used in either of two ways:
+		If J48 pins are not connected, you can power the developer kit from a 5V~2A
+		Micro-USB power supply.
+		If J48 pins are connected, operates in Device Mode.
+		\item (J32 and J33) are each a stack of two USB 3.0 Type A connectors. Each stack is limited
+		to 1A total power delivery. All four are connected to the Jetson Nano module via a
+		USB 3.0 hub built into the carrier board.
+		\item (J38) The Power over Ethernet (POE) header exposes any DC voltage present on J43 Ethernet jack per IEEE 802.3af.
+		\item (J40) 8-pin button header; brings out several system power, reset, and force recovery related signals.
+	\end{itemize}
+\end{itemize}
+
+
+\section{Conclusion}
+
+In conclusion, the implementation of the car license plate detection system using the NVIDIA Jetson Nano demonstrates the capabilities of edge computing in real-time computer vision applications. The Jetson Nano's GPU acceleration enables efficient processing of deep learning models, making it well-suited for tasks like license plate detection.
+
+The integration of a high-resolution camera module ensures accurate and reliable input to the system. The compact form factor and low power consumption of the Jetson Nano make it an ideal choice for deployment in resource-constrained environments, such as surveillance cameras, traffic monitoring systems, or smart city applications.
+
+The use of edge computing reduces the need for constant reliance on cloud services, enhancing the system's autonomy and responsiveness. The real-time processing capabilities of the Jetson Nano contribute to the overall efficiency of the license plate detection system, providing a robust solution for various applications in the field of computer vision and intelligent transportation systems.
+

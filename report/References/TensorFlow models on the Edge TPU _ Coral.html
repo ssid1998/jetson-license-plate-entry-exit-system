@@ -1,0 +1,1319 @@
+<!DOCTYPE html>
+<!-- saved from url=(0043)https://coral.ai/docs/edgetpu/models-intro/ -->
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+
+    <title>TensorFlow models on the Edge TPU | Coral</title>
+    <meta property="og:title" content="TensorFlow models on the Edge TPU | Coral">
+    <meta name="twitter:text:title" content="TensorFlow models on the Edge TPU | Coral">
+
+    <meta name="description" content="Details about how to create TensorFlow Lite models that are compatible with the Edge TPU">
+
+    <meta property="og:description" content="Details about how to create TensorFlow Lite models that are compatible with the Edge TPU">
+    <meta name="twitter:description" content="Details about how to create TensorFlow Lite models that are compatible with the Edge TPU">
+    <meta property="og:type" content="website">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#ff7060">
+    <meta name="application-name" content="Coral">
+    <meta property="og:site_name" content="Coral">
+    <meta name="twitter:card" content="summary_large_image">
+    <!-- <meta name="twitter:site" content="@coral" /> -->
+    <!-- <meta name="twitter:creator" content="@coral" /> -->
+
+    <meta name="msapplication-TileColor" content="#ff7060">
+    <meta name="msapplication-square70x70" content="/static/icons/mstile-70x70.png">
+    <meta name="msapplication-square144x144" content="/static/icons/mstile-144x144.png">
+    <meta name="msapplication-square150x150" content="/static/icons/mstile-150x150.png">
+    <meta name="msapplication-wide310x150" content="/static/icons/mstile-310x150.png">
+    <meta name="msapplication-square310x310" content="/static/icons/mstile-310x310.png">
+
+
+    <meta property="og:image" content="/static/images/social-horizontal.png">
+    <meta property="og:image:width" content="1024">
+    <meta property="og:image:height" content="512">
+
+    <meta name="twitter:image" content="/static/images/social-horizontal.png">
+    <meta name="twitter:image:width" content="1024">
+    <meta name="twitter:image:height" content="512">
+
+
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=yes">
+    <link rel="manifest" href="https://coral.ai/static/manifest.json?cache=1d9528d">
+    <link rel="apple-touch-icon" sizes="57x57" href="https://coral.ai/static/icons/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="https://coral.ai/static/icons/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="https://coral.ai/static/icons/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="https://coral.ai/static/icons/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="https://coral.ai/static/icons/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="https://coral.ai/static/icons/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="https://coral.ai/static/icons/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="https://coral.ai/static/icons/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://coral.ai/static/icons/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://coral.ai/static/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://coral.ai/static/icons/favicon-16x16.png">
+    <meta name="msapplication-TileColor" content="#ff7060">
+    <meta name="msapplication-TileImage" content="/static/icons/mstile-144x144.png">
+    <meta name="theme-color" content="#ff7060">
+
+
+    <script async="" src="./TensorFlow models on the Edge TPU _ Coral_files/js"></script>
+
+      <link href="./TensorFlow models on the Edge TPU _ Coral_files/main.min.css" media="all" rel="stylesheet" type="text/css">
+    <style type="text/css">
+      /* inlined because the css build does not parse (it breaks) @page pseudo-elements */
+      @media print {
+          @page {
+              margin-left: 0;
+              margin-right: 0;
+          }
+          @page:first {
+              margin-top: 0; /* so we can put the top border on the body */
+              margin-bottom: 20mm; /* very important to offset the removed top (10mm) margin; otherwise, page breaks don't work well later on */
+          }
+      }
+    </style>
+    <link href="./TensorFlow models on the Edge TPU _ Coral_files/icon" rel="stylesheet">
+    <link href="./TensorFlow models on the Edge TPU _ Coral_files/css" rel="stylesheet">
+
+    <noscript>
+      <style>
+        #header { transform: translate3d(0, 0, 0); }
+        #footer { opacity: 1; }
+        #content { opacity: 1 }
+        .module-type-header .title, .module-type-header .subhead { opacity: 1; transform: translate3d(0, 0, 0); }
+      </style>
+    </noscript>
+
+
+    <meta name="google-site-verification" content="myueX0o2GcnmU6ZPuhBIw5oCJjuVi7Dykjshg2QkQGQ">
+  <script charset="utf-8" src="./TensorFlow models on the Edge TPU _ Coral_files/doc.js.download"></script><link rel="stylesheet" type="text/css" href="./TensorFlow models on the Edge TPU _ Coral_files/textGroup-15.css"><script charset="utf-8" src="./TensorFlow models on the Edge TPU _ Coral_files/textGroup.js.download"></script></head>
+
+  <body tabindex="0" style="visibility: visible;">
+
+<header id="header" data-turbolinks-permanent="" class="show">
+	<div class="grid-container">
+		<div class="row center">
+			<nav class="col-mobile-14 col-tablet-30 col-small-desktop-28">
+				<span class="logo-container" style="opacity: 1;">
+					<a href="https://coral.ai/" data-label="homepage">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 857.7 263.37"><title>Coral</title><g><g fill="#FF5E4D"><path d="M327,78.73a92.32,92.32,0,1,0,92.32,92.32A92.32,92.32,0,0,0,327,78.73Zm0,141.38A49.06,49.06,0,1,1,376,171.05,49.06,49.06,0,0,1,327,220.12Z"></path><circle cx="548.65" cy="112.19" r="33.46"></circle><rect x="451.02" y="83.14" width="46.89" height="178.12"></rect><rect x="810.81" y="1.03" width="46.89" height="260.65"></rect><path d="M684.38,78.73a92.32,92.32,0,0,0-92.32,92.32c0,51,32.57,92.32,83.56,92.32,20,0,45.56-11,56.23-29.24v27.55h44V171.05C775.85,120.07,735.37,78.73,684.38,78.73Zm-.75,141.38a49.06,49.06,0,1,1,49.06-49.06A49.06,49.06,0,0,1,683.63,220.12Z"></path><path d="M131.36,216.09A84.73,84.73,0,1,1,195.41,75.91l35.74-30a131.11,131.11,0,0,0-99.8-46C58.93,0,0,58.93,0,131.36S58.93,262.71,131.36,262.71A131.34,131.34,0,0,0,216,231.8l-30.43-35.36A84.71,84.71,0,0,1,131.36,216.09Z"></path></g></g></svg>					</a>
+				</span>
+
+				<button id="menu-opener" class="menu-opener" aria-label="Open Menu" title="Open Menu" aria-expanded="false" aria-haspopup="true" aria-controls="navigation">
+					<span></span>
+					<span class="transformer">
+						<span></span>
+						<span></span>
+					</span>
+					<span></span>
+				</button>
+
+			  <ul class="navigation" id="navigation" role="menu" aria-labelledby="menu-opener">
+		        <li class="nav-item" role="none">
+		        	<a href="https://coral.ai/products/" data-label="Products" class="link-header color--black has-subitems" role="menuitem" tabindex="0">
+		        		Products
+						<span class="mobile-link-arrow">
+<!--?xml version="1.0" encoding="UTF-8"?-->
+<svg width="16px" height="9px" viewBox="0 0 16 9" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Navigation/-with-Search-Inactive" transform="translate(-1299.000000, -32.000000)" fill="#575757">
+            <path d="M1307.1284,37.9883272 L1313.22179,32.1400789 C1313.40856,31.953307 1313.59533,31.953307 1313.7821,32.1400789 L1314.8677,33.1906625 C1315.05447,33.3774343 1315.05447,33.5642018 1314.8677,33.7509737 L1307.40856,40.8949416 C1307.33852,40.9649809 1307.24514,41 1307.1284,41 C1307.01167,41 1306.91829,40.9649809 1306.84825,40.8949416 L1299.38911,33.7509737 C1299.20233,33.5642018 1299.20233,33.3774343 1299.38911,33.1906625 L1300.47471,32.1400789 C1300.66148,31.953307 1300.84825,31.953307 1301.03502,32.1400789 L1307.1284,37.9883272 Z" id="Fill-1"></path>
+        </g>
+    </g>
+</svg>						</span>
+		        	</a>
+						<ul class="sub-navigation" id="sub-nav" role="submenu" style="opacity:0;">
+								<li class="subnav-item mobile-only" role="none">
+									<a href="https://coral.ai/products/" data-label="Products" class="link-header color--black" role="menuitem">
+										Product gallery
+									</a>
+								</li>
+								<li class="subnav-item" role="none">
+									<a href="https://coral.ai/products/#prototyping-products" data-label="Prototyping" class="link-header color--black" role="menuitem">
+										Prototyping
+									</a>
+								</li>
+								<li class="subnav-item" role="none">
+									<a href="https://coral.ai/products/#production-products" data-label="Production" class="link-header color--black" role="menuitem">
+										Production
+									</a>
+								</li>
+								<li class="subnav-item" role="none">
+									<a href="https://coral.ai/products/#accessories" data-label="Accessories" class="link-header color--black" role="menuitem">
+										Accessories
+									</a>
+								</li>
+								<li class="subnav-item" role="none">
+									<a href="https://coral.ai/technology/" data-label="Technology" class="link-header color--black" role="menuitem">
+										Technology
+									</a>
+								</li>
+						</ul>
+		        </li>
+		        <li class="nav-item" role="none">
+		        	<a href="https://coral.ai/industries/" data-label="Industries" class="link-header color--black has-subitems" role="menuitem" tabindex="0">
+		        		Industries
+						<span class="mobile-link-arrow">
+<!--?xml version="1.0" encoding="UTF-8"?-->
+<svg width="16px" height="9px" viewBox="0 0 16 9" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Navigation/-with-Search-Inactive" transform="translate(-1299.000000, -32.000000)" fill="#575757">
+            <path d="M1307.1284,37.9883272 L1313.22179,32.1400789 C1313.40856,31.953307 1313.59533,31.953307 1313.7821,32.1400789 L1314.8677,33.1906625 C1315.05447,33.3774343 1315.05447,33.5642018 1314.8677,33.7509737 L1307.40856,40.8949416 C1307.33852,40.9649809 1307.24514,41 1307.1284,41 C1307.01167,41 1306.91829,40.9649809 1306.84825,40.8949416 L1299.38911,33.7509737 C1299.20233,33.5642018 1299.20233,33.3774343 1299.38911,33.1906625 L1300.47471,32.1400789 C1300.66148,31.953307 1300.84825,31.953307 1301.03502,32.1400789 L1307.1284,37.9883272 Z" id="Fill-1"></path>
+        </g>
+    </g>
+</svg>						</span>
+		        	</a>
+						<ul class="sub-navigation" id="sub-nav" role="submenu" style="opacity:0;">
+								<li class="subnav-item mobile-only" role="none">
+									<a href="https://coral.ai/industries/" data-label="Industries" class="link-header color--black" role="menuitem">
+										Our industries
+									</a>
+								</li>
+								<li class="subnav-item" role="none">
+									<a href="https://coral.ai/industries/smart-cities/" data-label="Smart cities" class="link-header color--black" role="menuitem">
+										Smart cities
+									</a>
+								</li>
+								<li class="subnav-item" role="none">
+									<a href="https://coral.ai/industries/manufacturing/" data-label="Manufacturing" class="link-header color--black" role="menuitem">
+										Manufacturing
+									</a>
+								</li>
+								<li class="subnav-item" role="none">
+									<a href="https://coral.ai/industries/automotive/" data-label="Automotive" class="link-header color--black" role="menuitem">
+										Automotive
+									</a>
+								</li>
+								<li class="subnav-item" role="none">
+									<a href="https://coral.ai/industries/healthcare/" data-label="Healthcare" class="link-header color--black" role="menuitem">
+										Healthcare
+									</a>
+								</li>
+								<li class="subnav-item" role="none">
+									<a href="https://coral.ai/industries/agriculture/" data-label="Agriculture" class="link-header color--black" role="menuitem">
+										Agriculture
+									</a>
+								</li>
+						</ul>
+		        </li>
+		        <li class="nav-item" role="none">
+		        	<a href="https://coral.ai/examples/" data-label="Examples" class="link-header color--black has-subitems" role="menuitem" tabindex="0">
+		        		Examples
+						<span class="mobile-link-arrow">
+<!--?xml version="1.0" encoding="UTF-8"?-->
+<svg width="16px" height="9px" viewBox="0 0 16 9" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Navigation/-with-Search-Inactive" transform="translate(-1299.000000, -32.000000)" fill="#575757">
+            <path d="M1307.1284,37.9883272 L1313.22179,32.1400789 C1313.40856,31.953307 1313.59533,31.953307 1313.7821,32.1400789 L1314.8677,33.1906625 C1315.05447,33.3774343 1315.05447,33.5642018 1314.8677,33.7509737 L1307.40856,40.8949416 C1307.33852,40.9649809 1307.24514,41 1307.1284,41 C1307.01167,41 1306.91829,40.9649809 1306.84825,40.8949416 L1299.38911,33.7509737 C1299.20233,33.5642018 1299.20233,33.3774343 1299.38911,33.1906625 L1300.47471,32.1400789 C1300.66148,31.953307 1300.84825,31.953307 1301.03502,32.1400789 L1307.1284,37.9883272 Z" id="Fill-1"></path>
+        </g>
+    </g>
+</svg>						</span>
+		        	</a>
+						<ul class="sub-navigation" id="sub-nav" role="submenu" style="opacity:0;">
+								<li class="subnav-item" role="none">
+									<a href="https://coral.ai/examples/#code-examples" data-label="Code examples" class="link-header color--black" role="menuitem">
+										Code examples
+									</a>
+								</li>
+								<li class="subnav-item" role="none">
+									<a href="https://coral.ai/examples/#partner-examples" data-label="Partner examples" class="link-header color--black" role="menuitem">
+										Partner examples
+									</a>
+								</li>
+								<li class="subnav-item" role="none">
+									<a href="https://coral.ai/examples/#project-tutorials" data-label="Project tutorials" class="link-header color--black" role="menuitem">
+										Project tutorials
+									</a>
+								</li>
+						</ul>
+		        </li>
+		        <li class="nav-item" role="none">
+		        	<a href="https://coral.ai/docs/" data-label="Docs &amp; Tools" class="link-header color--black selected has-subitems" role="menuitem" tabindex="0">
+		        		Docs &amp; Tools
+						<span class="mobile-link-arrow">
+<!--?xml version="1.0" encoding="UTF-8"?-->
+<svg width="16px" height="9px" viewBox="0 0 16 9" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Navigation/-with-Search-Inactive" transform="translate(-1299.000000, -32.000000)" fill="#575757">
+            <path d="M1307.1284,37.9883272 L1313.22179,32.1400789 C1313.40856,31.953307 1313.59533,31.953307 1313.7821,32.1400789 L1314.8677,33.1906625 C1315.05447,33.3774343 1315.05447,33.5642018 1314.8677,33.7509737 L1307.40856,40.8949416 C1307.33852,40.9649809 1307.24514,41 1307.1284,41 C1307.01167,41 1306.91829,40.9649809 1306.84825,40.8949416 L1299.38911,33.7509737 C1299.20233,33.5642018 1299.20233,33.3774343 1299.38911,33.1906625 L1300.47471,32.1400789 C1300.66148,31.953307 1300.84825,31.953307 1301.03502,32.1400789 L1307.1284,37.9883272 Z" id="Fill-1"></path>
+        </g>
+    </g>
+</svg>						</span>
+		        	</a>
+						<ul class="sub-navigation" id="sub-nav" role="submenu" style="opacity: 0; z-index: 5;">
+								<li class="subnav-item" role="none">
+									<a href="https://coral.ai/docs/" data-label="Documentation" class="link-header color--black" role="menuitem">
+										Documentation
+									</a>
+								</li>
+								<li class="subnav-item" role="none">
+									<a href="https://coral.ai/models/" data-label="Models" class="link-header color--black" role="menuitem">
+										Models
+									</a>
+								</li>
+								<li class="subnav-item" role="none">
+									<a href="https://coral.ai/software/" data-label="Software" class="link-header color--black" role="menuitem">
+										Software
+									</a>
+								</li>
+						</ul>
+		        </li>
+		        <li class="nav-item" role="none">
+		        	<a href="https://coral.ai/support/" data-label="Support" class="link-header color--black no-subitems" role="menuitem" tabindex="0">
+		        		Support
+		        	</a>
+		        </li>
+		        <li class="nav-item" role="none">
+		        	<a href="https://coral.ai/partnerships/" data-label="Partnerships" class="link-header color--black has-subitems" role="menuitem" tabindex="0">
+		        		Partnerships
+						<span class="mobile-link-arrow">
+<!--?xml version="1.0" encoding="UTF-8"?-->
+<svg width="16px" height="9px" viewBox="0 0 16 9" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Navigation/-with-Search-Inactive" transform="translate(-1299.000000, -32.000000)" fill="#575757">
+            <path d="M1307.1284,37.9883272 L1313.22179,32.1400789 C1313.40856,31.953307 1313.59533,31.953307 1313.7821,32.1400789 L1314.8677,33.1906625 C1315.05447,33.3774343 1315.05447,33.5642018 1314.8677,33.7509737 L1307.40856,40.8949416 C1307.33852,40.9649809 1307.24514,41 1307.1284,41 C1307.01167,41 1306.91829,40.9649809 1306.84825,40.8949416 L1299.38911,33.7509737 C1299.20233,33.5642018 1299.20233,33.3774343 1299.38911,33.1906625 L1300.47471,32.1400789 C1300.66148,31.953307 1300.84825,31.953307 1301.03502,32.1400789 L1307.1284,37.9883272 Z" id="Fill-1"></path>
+        </g>
+    </g>
+</svg>						</span>
+		        	</a>
+						<ul class="sub-navigation" id="sub-nav" role="submenu" style="opacity:0;">
+								<li class="subnav-item mobile-only" role="none">
+									<a href="https://coral.ai/partnerships/" data-label="Partnerships" class="link-header color--black" role="menuitem">
+										Partner hub
+									</a>
+								</li>
+								<li class="subnav-item" role="none">
+									<a href="https://coral.ai/partnerships/program-overview/" data-label="Program overview" class="link-header color--black" role="menuitem">
+										Program overview
+									</a>
+								</li>
+								<li class="subnav-item" role="none">
+									<a href="https://coral.ai/partnerships/our-partners/" data-label="Our partners" class="link-header color--black" role="menuitem">
+										Our partners
+									</a>
+								</li>
+								<li class="subnav-item" role="none">
+									<a href="https://coral.ai/partnerships/become-a-partner/" data-label="Become a partner" class="link-header color--black" role="menuitem">
+										Become a partner
+									</a>
+								</li>
+						</ul>
+		        </li>
+		        <li class="nav-item" role="none">
+		        	<a href="https://coral.ai/about-coral/" data-label="About" class="link-header color--black has-subitems" role="menuitem" tabindex="0">
+		        		About
+						<span class="mobile-link-arrow">
+<!--?xml version="1.0" encoding="UTF-8"?-->
+<svg width="16px" height="9px" viewBox="0 0 16 9" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Navigation/-with-Search-Inactive" transform="translate(-1299.000000, -32.000000)" fill="#575757">
+            <path d="M1307.1284,37.9883272 L1313.22179,32.1400789 C1313.40856,31.953307 1313.59533,31.953307 1313.7821,32.1400789 L1314.8677,33.1906625 C1315.05447,33.3774343 1315.05447,33.5642018 1314.8677,33.7509737 L1307.40856,40.8949416 C1307.33852,40.9649809 1307.24514,41 1307.1284,41 C1307.01167,41 1306.91829,40.9649809 1306.84825,40.8949416 L1299.38911,33.7509737 C1299.20233,33.5642018 1299.20233,33.3774343 1299.38911,33.1906625 L1300.47471,32.1400789 C1300.66148,31.953307 1300.84825,31.953307 1301.03502,32.1400789 L1307.1284,37.9883272 Z" id="Fill-1"></path>
+        </g>
+    </g>
+</svg>						</span>
+		        	</a>
+						<ul class="sub-navigation" id="sub-nav" role="submenu" style="opacity:0;">
+								<li class="subnav-item" role="none">
+									<a href="https://coral.ai/about-coral/" data-label="About Coral" class="link-header color--black" role="menuitem">
+										About Coral
+									</a>
+								</li>
+								<li class="subnav-item" role="none">
+									<a href="https://coral.ai/news/" data-label="News" class="link-header color--black" role="menuitem">
+										News
+									</a>
+								</li>
+								<li class="subnav-item" role="none">
+									<a href="https://g.co/coral/sales" data-label="Sales" class="link-header color--black" role="menuitem" target="_blank">
+										Sales
+									</a>
+								</li>
+								<li class="subnav-item" role="none">
+									<a href="https://coral.ai/legal/" data-label="Legal" class="link-header color--black" role="menuitem">
+										Legal
+									</a>
+								</li>
+						</ul>
+		        </li>
+				<li class="nav-item search-field collapsed">
+					<i class="material-icons icon-search">search</i>
+					<input type="text" placeholder="Search Coral">
+					<i class="material-icons icon-close">close</i>
+				</li>
+		    </ul>
+		   </nav>
+		 </div>
+	</div>
+</header>
+    <main id="content" class="show">
+  <section class="page-wrapper page-tutorial show" id="doc">
+    <div class="grid-container">
+      <div class="row">
+          <div class="col-mobile-offset-1 col-mobile-14 col-tablet-offset-1 col-tablet-30 col-small-desktop-offset-2 col-small-desktop-5 col-desktop-offset-2 col-desktop-6">
+
+<aside data-sticky-nav="" style="opacity: 1; left: 78.9583px;" class="module side-nav sticky-nav--collapsible sticky-nav--visible show" data-sticky-nav-collapsible="true" data-module-type="side-nav">
+  <nav data-sticky-nav-nav="" class="side-nav__nav" style="margin-left: 0px; margin-right: 0px;">
+    <button data-sticky-nav-toggle="" class="side-nav__button">Contents</button>
+    <ul data-sticky-nav="" data-sticky-nav-level="0" class="side-nav__list side-nav--level-0"><li class="side-nav__item side-nav--level-0" data-sticky-nav-for="Hardware">
+          <a data-sticky-nav-link="" data-sticky-nav-level="0" data-sticky-nav-for="Hardware" class="side-nav__label side-nav--level-0 sticky-nav--closed section-heading sticky-nav__label--ellipsis" data-sticky-nav-collapsible=" true " href="https://coral.ai/docs/edgetpu/models-intro/#" title="Hardware" data-turbolinks="false">Hardware</a>
+
+ <!-- add content for second level headings -->        </li><li class="side-nav__item side-nav--level-0" data-sticky-nav-for="Dev Board">
+          <a data-sticky-nav-link="" data-sticky-nav-level="0" data-sticky-nav-for="Dev Board" class="side-nav__label side-nav--level-0 sticky-nav--closed" data-sticky-nav-collapsible=" true " href="https://coral.ai/docs/edgetpu/models-intro/#" title="Dev Board" data-turbolinks="false">Dev Board</a>
+
+            <ul data-sticky-nav-list="" data-sticky-nav-level="1" data-sticky-nav-for="Dev Board" class="side-nav__list side-nav--level-1 sticky-nav--closed"><li class="side-nav__item side-nav--level-1" data-sticky-nav-for="/docs/dev-board/get-started/">
+                <a data-sticky-nav-link="" data-sticky-nav-level="1" data-sticky-nav-for="/docs/dev-board/get-started/" class="side-nav__label side-nav--level-1" href="https://coral.ai/docs/dev-board/get-started/" title="Get started">Get started</a></li><li class="side-nav__item side-nav--level-1" data-sticky-nav-for="/docs/dev-board/camera/">
+                <a data-sticky-nav-link="" data-sticky-nav-level="1" data-sticky-nav-for="/docs/dev-board/camera/" class="side-nav__label side-nav--level-1" href="https://coral.ai/docs/dev-board/camera/" title="Connect to a camera">Connect to a camera</a></li><li class="side-nav__item side-nav--level-1" data-sticky-nav-for="/docs/dev-board/gpio/">
+                <a data-sticky-nav-link="" data-sticky-nav-level="1" data-sticky-nav-for="/docs/dev-board/gpio/" class="side-nav__label side-nav--level-1" href="https://coral.ai/docs/dev-board/gpio/" title="Connect to the I/O pins">Connect to the I/O pins</a></li><li class="side-nav__item side-nav--level-1" data-sticky-nav-for="/docs/dev-board/serial-console/">
+                <a data-sticky-nav-link="" data-sticky-nav-level="1" data-sticky-nav-for="/docs/dev-board/serial-console/" class="side-nav__label side-nav--level-1" href="https://coral.ai/docs/dev-board/serial-console/" title="Connect to the serial console">Connect to the serial console</a></li><li class="side-nav__item side-nav--level-1" data-sticky-nav-for="/docs/dev-board/reflash/">
+                <a data-sticky-nav-link="" data-sticky-nav-level="1" data-sticky-nav-for="/docs/dev-board/reflash/" class="side-nav__label side-nav--level-1" href="https://coral.ai/docs/dev-board/reflash/" title="Update or flash the board">Update or flash the board</a></li><li class="side-nav__item side-nav--level-1" data-sticky-nav-for="/docs/dev-board/datasheet/">
+                <a data-sticky-nav-link="" data-sticky-nav-level="1" data-sticky-nav-for="/docs/dev-board/datasheet/" class="side-nav__label side-nav--level-1 sticky-nav__label--ellipsis" href="https://coral.ai/docs/dev-board/datasheet/" title="Datasheet">Datasheet</a></li></ul>
+        </li><li class="side-nav__item side-nav--level-0" data-sticky-nav-for="Dev Board Mini">
+          <a data-sticky-nav-link="" data-sticky-nav-level="0" data-sticky-nav-for="Dev Board Mini" class="side-nav__label side-nav--level-0 sticky-nav--closed" data-sticky-nav-collapsible=" true " href="https://coral.ai/docs/edgetpu/models-intro/#" title="Dev Board Mini" data-turbolinks="false">Dev Board Mini</a>
+
+            <ul data-sticky-nav-list="" data-sticky-nav-level="1" data-sticky-nav-for="Dev Board Mini" class="side-nav__list side-nav--level-1 sticky-nav--closed"><li class="side-nav__item side-nav--level-1" data-sticky-nav-for="/docs/dev-board-mini/get-started/">
+                <a data-sticky-nav-link="" data-sticky-nav-level="1" data-sticky-nav-for="/docs/dev-board-mini/get-started/" class="side-nav__label side-nav--level-1" href="https://coral.ai/docs/dev-board-mini/get-started/" title="Get started">Get started</a></li><li class="side-nav__item side-nav--level-1" data-sticky-nav-for="/docs/dev-board-mini/camera/">
+                <a data-sticky-nav-link="" data-sticky-nav-level="1" data-sticky-nav-for="/docs/dev-board-mini/camera/" class="side-nav__label side-nav--level-1" href="https://coral.ai/docs/dev-board-mini/camera/" title="Connect to a camera">Connect to a camera</a></li><li class="side-nav__item side-nav--level-1" data-sticky-nav-for="/docs/dev-board-mini/gpio/">
+                <a data-sticky-nav-link="" data-sticky-nav-level="1" data-sticky-nav-for="/docs/dev-board-mini/gpio/" class="side-nav__label side-nav--level-1" href="https://coral.ai/docs/dev-board-mini/gpio/" title="Connect to the I/O pins">Connect to the I/O pins</a></li><li class="side-nav__item side-nav--level-1" data-sticky-nav-for="/docs/dev-board-mini/serial-console/">
+                <a data-sticky-nav-link="" data-sticky-nav-level="1" data-sticky-nav-for="/docs/dev-board-mini/serial-console/" class="side-nav__label side-nav--level-1" href="https://coral.ai/docs/dev-board-mini/serial-console/" title="Connect to the serial console">Connect to the serial console</a></li><li class="side-nav__item side-nav--level-1" data-sticky-nav-for="/docs/dev-board-mini/reflash/">
+                <a data-sticky-nav-link="" data-sticky-nav-level="1" data-sticky-nav-for="/docs/dev-board-mini/reflash/" class="side-nav__label side-nav--level-1" href="https://coral.ai/docs/dev-board-mini/reflash/" title="Update or flash the board">Update or flash the board</a></li><li class="side-nav__item side-nav--level-1" data-sticky-nav-for="/docs/dev-board-mini/datasheet/">
+                <a data-sticky-nav-link="" data-sticky-nav-level="1" data-sticky-nav-for="/docs/dev-board-mini/datasheet/" class="side-nav__label side-nav--level-1 sticky-nav__label--ellipsis" href="https://coral.ai/docs/dev-board-mini/datasheet/" title="Datasheet">Datasheet</a></li></ul>
+        </li><li class="side-nav__item side-nav--level-0" data-sticky-nav-for="Dev Board Micro">
+          <a data-sticky-nav-link="" data-sticky-nav-level="0" data-sticky-nav-for="Dev Board Micro" class="side-nav__label side-nav--level-0 sticky-nav--closed" data-sticky-nav-collapsible=" true " href="https://coral.ai/docs/edgetpu/models-intro/#" title="Dev Board Micro" data-turbolinks="false">Dev Board Micro</a>
+
+            <ul data-sticky-nav-list="" data-sticky-nav-level="1" data-sticky-nav-for="Dev Board Micro" class="side-nav__list side-nav--level-1 sticky-nav--closed"><li class="side-nav__item side-nav--level-1" data-sticky-nav-for="/docs/dev-board-micro/get-started/">
+                <a data-sticky-nav-link="" data-sticky-nav-level="1" data-sticky-nav-for="/docs/dev-board-micro/get-started/" class="side-nav__label side-nav--level-1" href="https://coral.ai/docs/dev-board-micro/get-started/" title="Get started">Get started</a></li><li class="side-nav__item side-nav--level-1" data-sticky-nav-for="/docs/dev-board-micro/arduino/">
+                <a data-sticky-nav-link="" data-sticky-nav-level="1" data-sticky-nav-for="/docs/dev-board-micro/arduino/" class="side-nav__label side-nav--level-1" href="https://coral.ai/docs/dev-board-micro/arduino/" title="Get started with Arduino">Get started with Arduino</a></li><li class="side-nav__item side-nav--level-1" data-sticky-nav-for="/docs/dev-board-micro/freertos/">
+                <a data-sticky-nav-link="" data-sticky-nav-level="1" data-sticky-nav-for="/docs/dev-board-micro/freertos/" class="side-nav__label side-nav--level-1" href="https://coral.ai/docs/dev-board-micro/freertos/" title="Build apps with FreeRTOS">Build apps with FreeRTOS</a></li><li class="side-nav__item side-nav--level-1" data-sticky-nav-for="/docs/dev-board-micro/multicore/">
+                <a data-sticky-nav-link="" data-sticky-nav-level="1" data-sticky-nav-for="/docs/dev-board-micro/multicore/" class="side-nav__label side-nav--level-1" href="https://coral.ai/docs/dev-board-micro/multicore/" title="Create a multi-core app">Create a multi-core app</a></li><li class="side-nav__item side-nav--level-1" data-sticky-nav-for="/docs/dev-board-micro/serial-console/">
+                <a data-sticky-nav-link="" data-sticky-nav-level="1" data-sticky-nav-for="/docs/dev-board-micro/serial-console/" class="side-nav__label side-nav--level-1" href="https://coral.ai/docs/dev-board-micro/serial-console/" title="Connect to the serial console">Connect to the serial console</a></li><li class="side-nav__item side-nav--level-1" data-sticky-nav-for="/docs/dev-board-micro/wireless-addon/">
+                <a data-sticky-nav-link="" data-sticky-nav-level="1" data-sticky-nav-for="/docs/dev-board-micro/wireless-addon/" class="side-nav__label side-nav--level-1 sticky-nav__label--long-text" href="https://coral.ai/docs/dev-board-micro/wireless-addon/" title="Set up the Wireless Add-on board">Set up the Wireless Add-on board</a></li><li class="side-nav__item side-nav--level-1" data-sticky-nav-for="/docs/dev-board-micro/poe-addon/">
+                <a data-sticky-nav-link="" data-sticky-nav-level="1" data-sticky-nav-for="/docs/dev-board-micro/poe-addon/" class="side-nav__label side-nav--level-1" href="https://coral.ai/docs/dev-board-micro/poe-addon/" title="Set up the PoE Add-on board">Set up the PoE Add-on board</a></li><li class="side-nav__item side-nav--level-1" data-sticky-nav-for="/docs/dev-board-micro/datasheet/">
+                <a data-sticky-nav-link="" data-sticky-nav-level="1" data-sticky-nav-for="/docs/dev-board-micro/datasheet/" class="side-nav__label side-nav--level-1" href="https://coral.ai/docs/dev-board-micro/datasheet/" title="Dev Board Micro Datasheet">Dev Board Micro Datasheet</a></li><li class="side-nav__item side-nav--level-1" data-sticky-nav-for="/docs/dev-board-micro/wireless-datasheet/">
+                <a data-sticky-nav-link="" data-sticky-nav-level="1" data-sticky-nav-for="/docs/dev-board-micro/wireless-datasheet/" class="side-nav__label side-nav--level-1" href="https://coral.ai/docs/dev-board-micro/wireless-datasheet/" title="Wireless Add-on Datasheet">Wireless Add-on Datasheet</a></li><li class="side-nav__item side-nav--level-1" data-sticky-nav-for="/docs/dev-board-micro/poe-datasheet/">
+                <a data-sticky-nav-link="" data-sticky-nav-level="1" data-sticky-nav-for="/docs/dev-board-micro/poe-datasheet/" class="side-nav__label side-nav--level-1" href="https://coral.ai/docs/dev-board-micro/poe-datasheet/" title="PoE Add-on Datasheet">PoE Add-on Datasheet</a></li></ul>
+        </li><li class="side-nav__item side-nav--level-0" data-sticky-nav-for="USB Accelerator">
+          <a data-sticky-nav-link="" data-sticky-nav-level="0" data-sticky-nav-for="USB Accelerator" class="side-nav__label side-nav--level-0 sticky-nav--closed" data-sticky-nav-collapsible=" true " href="https://coral.ai/docs/edgetpu/models-intro/#" title="USB Accelerator" data-turbolinks="false">USB Accelerator</a>
+
+            <ul data-sticky-nav-list="" data-sticky-nav-level="1" data-sticky-nav-for="USB Accelerator" class="side-nav__list side-nav--level-1 sticky-nav--closed"><li class="side-nav__item side-nav--level-1" data-sticky-nav-for="/docs/accelerator/get-started/">
+                <a data-sticky-nav-link="" data-sticky-nav-level="1" data-sticky-nav-for="/docs/accelerator/get-started/" class="side-nav__label side-nav--level-1" href="https://coral.ai/docs/accelerator/get-started/" title="Get started">Get started</a></li><li class="side-nav__item side-nav--level-1" data-sticky-nav-for="/docs/accelerator/datasheet/">
+                <a data-sticky-nav-link="" data-sticky-nav-level="1" data-sticky-nav-for="/docs/accelerator/datasheet/" class="side-nav__label side-nav--level-1 sticky-nav__label--ellipsis" href="https://coral.ai/docs/accelerator/datasheet/" title="Datasheet">Datasheet</a></li></ul>
+        </li><li class="side-nav__item side-nav--level-0" data-sticky-nav-for="System-on-Module">
+          <a data-sticky-nav-link="" data-sticky-nav-level="0" data-sticky-nav-for="System-on-Module" class="side-nav__label side-nav--level-0 sticky-nav--closed sticky-nav__label--ellipsis" data-sticky-nav-collapsible=" true " href="https://coral.ai/docs/edgetpu/models-intro/#" title="System-on-Module" data-turbolinks="false">System-on-Module</a>
+
+            <ul data-sticky-nav-list="" data-sticky-nav-level="1" data-sticky-nav-for="System-on-Module" class="side-nav__list side-nav--level-1 sticky-nav--closed"><li class="side-nav__item side-nav--level-1" data-sticky-nav-for="/docs/som/get-started/">
+                <a data-sticky-nav-link="" data-sticky-nav-level="1" data-sticky-nav-for="/docs/som/get-started/" class="side-nav__label side-nav--level-1" href="https://coral.ai/docs/som/get-started/" title="Get started">Get started</a></li><li class="side-nav__item side-nav--level-1" data-sticky-nav-for="/docs/som/datasheet/">
+                <a data-sticky-nav-link="" data-sticky-nav-level="1" data-sticky-nav-for="/docs/som/datasheet/" class="side-nav__label side-nav--level-1 sticky-nav__label--ellipsis" href="https://coral.ai/docs/som/datasheet/" title="Datasheet">Datasheet</a></li></ul>
+        </li><li class="side-nav__item side-nav--level-0" data-sticky-nav-for="M.2 &amp; Mini PCIe Accelerator">
+          <a data-sticky-nav-link="" data-sticky-nav-level="0" data-sticky-nav-for="M.2 &amp; Mini PCIe Accelerator" class="side-nav__label side-nav--level-0 sticky-nav--closed" data-sticky-nav-collapsible=" true " href="https://coral.ai/docs/edgetpu/models-intro/#" title="M.2 &amp; Mini PCIe Accelerator" data-turbolinks="false">M.2 &amp; Mini PCIe Accelerator</a>
+
+            <ul data-sticky-nav-list="" data-sticky-nav-level="1" data-sticky-nav-for="M.2 &amp; Mini PCIe Accelerator" class="side-nav__list side-nav--level-1 sticky-nav--closed"><li class="side-nav__item side-nav--level-1" data-sticky-nav-for="/docs/m2/get-started/">
+                <a data-sticky-nav-link="" data-sticky-nav-level="1" data-sticky-nav-for="/docs/m2/get-started/" class="side-nav__label side-nav--level-1" href="https://coral.ai/docs/m2/get-started/" title="Get started">Get started</a></li><li class="side-nav__item side-nav--level-1" data-sticky-nav-for="/docs/m2/datasheet/">
+                <a data-sticky-nav-link="" data-sticky-nav-level="1" data-sticky-nav-for="/docs/m2/datasheet/" class="side-nav__label side-nav--level-1" href="https://coral.ai/docs/m2/datasheet/" title="M.2 Datasheet">M.2 Datasheet</a></li><li class="side-nav__item side-nav--level-1" data-sticky-nav-for="/docs/mini-pcie/datasheet/">
+                <a data-sticky-nav-link="" data-sticky-nav-level="1" data-sticky-nav-for="/docs/mini-pcie/datasheet/" class="side-nav__label side-nav--level-1" href="https://coral.ai/docs/mini-pcie/datasheet/" title="Mini PCIe Datasheet">Mini PCIe Datasheet</a></li><li class="side-nav__item side-nav--level-1" data-sticky-nav-for="/docs/m2-dual-edgetpu/datasheet/">
+                <a data-sticky-nav-link="" data-sticky-nav-level="1" data-sticky-nav-for="/docs/m2-dual-edgetpu/datasheet/" class="side-nav__label side-nav--level-1 sticky-nav__label--long-text" href="https://coral.ai/docs/m2-dual-edgetpu/datasheet/" title="M.2 with Dual Edge TPU Datasheet">M.2 with Dual Edge TPU Datasheet</a></li></ul>
+        </li><li class="side-nav__item side-nav--level-0" data-sticky-nav-for="Accelerator Module">
+          <a data-sticky-nav-link="" data-sticky-nav-level="0" data-sticky-nav-for="Accelerator Module" class="side-nav__label side-nav--level-0 sticky-nav--closed" data-sticky-nav-collapsible=" true " href="https://coral.ai/docs/edgetpu/models-intro/#" title="Accelerator Module" data-turbolinks="false">Accelerator Module</a>
+
+            <ul data-sticky-nav-list="" data-sticky-nav-level="1" data-sticky-nav-for="Accelerator Module" class="side-nav__list side-nav--level-1 sticky-nav--closed"><li class="side-nav__item side-nav--level-1" data-sticky-nav-for="/docs/module/datasheet/">
+                <a data-sticky-nav-link="" data-sticky-nav-level="1" data-sticky-nav-for="/docs/module/datasheet/" class="side-nav__label side-nav--level-1 sticky-nav__label--ellipsis" href="https://coral.ai/docs/module/datasheet/" title="Datasheet">Datasheet</a></li></ul>
+        </li><li class="side-nav__item side-nav--level-0" data-sticky-nav-for="Environmental Sensor">
+          <a data-sticky-nav-link="" data-sticky-nav-level="0" data-sticky-nav-for="Environmental Sensor" class="side-nav__label side-nav--level-0 sticky-nav--closed" data-sticky-nav-collapsible=" true " href="https://coral.ai/docs/edgetpu/models-intro/#" title="Environmental Sensor" data-turbolinks="false">Environmental Sensor</a>
+
+            <ul data-sticky-nav-list="" data-sticky-nav-level="1" data-sticky-nav-for="Environmental Sensor" class="side-nav__list side-nav--level-1 sticky-nav--closed"><li class="side-nav__item side-nav--level-1" data-sticky-nav-for="/docs/enviro-board/get-started/">
+                <a data-sticky-nav-link="" data-sticky-nav-level="1" data-sticky-nav-for="/docs/enviro-board/get-started/" class="side-nav__label side-nav--level-1" href="https://coral.ai/docs/enviro-board/get-started/" title="Get started">Get started</a></li><li class="side-nav__item side-nav--level-1" data-sticky-nav-for="/docs/enviro-board/datasheet/">
+                <a data-sticky-nav-link="" data-sticky-nav-level="1" data-sticky-nav-for="/docs/enviro-board/datasheet/" class="side-nav__label side-nav--level-1 sticky-nav__label--ellipsis" href="https://coral.ai/docs/enviro-board/datasheet/" title="Datasheet">Datasheet</a></li><li class="side-nav__item side-nav--level-1" data-sticky-nav-for="/docs/reference/enviro/coral.enviro.board/">
+                <a data-sticky-nav-link="" data-sticky-nav-level="1" data-sticky-nav-for="/docs/reference/enviro/coral.enviro.board/" class="side-nav__label side-nav--level-1 sticky-nav__label--ellipsis" href="https://coral.ai/docs/reference/enviro/coral.enviro.board/" title="coral.enviro.board">coral.enviro.board</a></li><li class="side-nav__item side-nav--level-1" data-sticky-nav-for="/docs/reference/enviro/coral.cloudiot.core/">
+                <a data-sticky-nav-link="" data-sticky-nav-level="1" data-sticky-nav-for="/docs/reference/enviro/coral.cloudiot.core/" class="side-nav__label side-nav--level-1 sticky-nav__label--ellipsis" href="https://coral.ai/docs/reference/enviro/coral.cloudiot.core/" title="coral.cloudiot.core">coral.cloudiot.core</a></li></ul>
+        </li><li class="side-nav__item side-nav--level-0" data-sticky-nav-for="Camera">
+          <a data-sticky-nav-link="" data-sticky-nav-level="0" data-sticky-nav-for="Camera" class="side-nav__label side-nav--level-0 sticky-nav--closed sticky-nav__label--ellipsis" data-sticky-nav-collapsible=" true " href="https://coral.ai/docs/edgetpu/models-intro/#" title="Camera" data-turbolinks="false">Camera</a>
+
+            <ul data-sticky-nav-list="" data-sticky-nav-level="1" data-sticky-nav-for="Camera" class="side-nav__list side-nav--level-1 sticky-nav--closed"><li class="side-nav__item side-nav--level-1" data-sticky-nav-for="/docs/camera/datasheet/">
+                <a data-sticky-nav-link="" data-sticky-nav-level="1" data-sticky-nav-for="/docs/camera/datasheet/" class="side-nav__label side-nav--level-1 sticky-nav__label--ellipsis" href="https://coral.ai/docs/camera/datasheet/" title="Datasheet">Datasheet</a></li></ul>
+        </li><li class="side-nav__item side-nav--level-0" data-sticky-nav-for="Tools">
+          <a data-sticky-nav-link="" data-sticky-nav-level="0" data-sticky-nav-for="Tools" class="side-nav__label side-nav--level-0 sticky-nav--closed section-heading sticky-nav__label--ellipsis" data-sticky-nav-collapsible=" true " href="https://coral.ai/docs/edgetpu/models-intro/#" title="Tools" data-turbolinks="false">Tools</a>
+
+ <!-- add content for second level headings -->        </li><li class="side-nav__item side-nav--level-0" data-sticky-nav-for="/docs/dev-board/mdt/">
+          <a data-sticky-nav-link="" data-sticky-nav-level="0" data-sticky-nav-for="/docs/dev-board/mdt/" class="side-nav__label side-nav--level-0 sticky-nav--closed no-opener" data-sticky-nav-collapsible=" false " href="https://coral.ai/docs/dev-board/mdt/" title="Mendel Development Tool">Mendel Development Tool</a>
+
+ <!-- add content for second level headings -->        </li><li class="side-nav__item side-nav--level-0" data-sticky-nav-for="/docs/edgetpu/compiler/">
+          <a data-sticky-nav-link="" data-sticky-nav-level="0" data-sticky-nav-for="/docs/edgetpu/compiler/" class="side-nav__label side-nav--level-0 sticky-nav--closed no-opener" data-sticky-nav-collapsible=" false " href="https://coral.ai/docs/edgetpu/compiler/" title="Edge TPU Compiler">Edge TPU Compiler</a>
+
+ <!-- add content for second level headings -->        </li><li class="side-nav__item side-nav--level-0" data-sticky-nav-for="Running a model">
+          <a data-sticky-nav-link="" data-sticky-nav-level="0" data-sticky-nav-for="Running a model" class="side-nav__label side-nav--level-0 sticky-nav--closed section-heading" data-sticky-nav-collapsible=" true " href="https://coral.ai/docs/edgetpu/models-intro/#" title="Running a model" data-turbolinks="false">Running a model</a>
+
+ <!-- add content for second level headings -->        </li><li class="side-nav__item side-nav--level-0" data-sticky-nav-for="/docs/edgetpu/inference/">
+          <a data-sticky-nav-link="" data-sticky-nav-level="0" data-sticky-nav-for="/docs/edgetpu/inference/" class="side-nav__label side-nav--level-0 sticky-nav--closed no-opener" data-sticky-nav-collapsible=" false " href="https://coral.ai/docs/edgetpu/inference/" title="Inferencing overview">Inferencing overview</a>
+
+ <!-- add content for second level headings -->        </li><li class="side-nav__item side-nav--level-0" data-sticky-nav-for="/docs/edgetpu/tflite-python/">
+          <a data-sticky-nav-link="" data-sticky-nav-level="0" data-sticky-nav-for="/docs/edgetpu/tflite-python/" class="side-nav__label side-nav--level-0 sticky-nav--closed no-opener" data-sticky-nav-collapsible=" false " href="https://coral.ai/docs/edgetpu/tflite-python/" title="Run inference with Python">Run inference with Python</a>
+
+ <!-- add content for second level headings -->        </li><li class="side-nav__item side-nav--level-0" data-sticky-nav-for="/docs/edgetpu/tflite-cpp/">
+          <a data-sticky-nav-link="" data-sticky-nav-level="0" data-sticky-nav-for="/docs/edgetpu/tflite-cpp/" class="side-nav__label side-nav--level-0 sticky-nav--closed no-opener" data-sticky-nav-collapsible=" false " href="https://coral.ai/docs/edgetpu/tflite-cpp/" title="Run inference with C++">Run inference with C++</a>
+
+ <!-- add content for second level headings -->        </li><li class="side-nav__item side-nav--level-0" data-sticky-nav-for="/docs/edgetpu/multiple-edgetpu/">
+          <a data-sticky-nav-link="" data-sticky-nav-level="0" data-sticky-nav-for="/docs/edgetpu/multiple-edgetpu/" class="side-nav__label side-nav--level-0 sticky-nav--closed no-opener sticky-nav__label--long-text" data-sticky-nav-collapsible=" false " href="https://coral.ai/docs/edgetpu/multiple-edgetpu/" title="Run multiple models with multiple Edge TPUs">Run multiple models with multiple Edge TPUs</a>
+
+ <!-- add content for second level headings -->        </li><li class="side-nav__item side-nav--level-0" data-sticky-nav-for="/docs/edgetpu/pipeline/">
+          <a data-sticky-nav-link="" data-sticky-nav-level="0" data-sticky-nav-for="/docs/edgetpu/pipeline/" class="side-nav__label side-nav--level-0 sticky-nav--closed no-opener sticky-nav__label--long-text" data-sticky-nav-collapsible=" false " href="https://coral.ai/docs/edgetpu/pipeline/" title="Pipeline a model with multiple Edge TPUs">Pipeline a model with multiple Edge TPUs</a>
+
+ <!-- add content for second level headings -->        </li><li class="side-nav__item side-nav--level-0" data-sticky-nav-for="Creating a model">
+          <a data-sticky-nav-link="" data-sticky-nav-level="0" data-sticky-nav-for="Creating a model" class="side-nav__label side-nav--level-0 sticky-nav--closed section-heading" data-sticky-nav-collapsible=" true " href="https://coral.ai/docs/edgetpu/models-intro/#" title="Creating a model" data-turbolinks="false">Creating a model</a>
+
+ <!-- add content for second level headings -->        </li><li class="side-nav__item side-nav--level-0" data-sticky-nav-for="/docs/edgetpu/models-intro/">
+          <a data-sticky-nav-link="" data-sticky-nav-level="0" data-sticky-nav-for="/docs/edgetpu/models-intro/" class="side-nav__label side-nav--level-0 sticky-nav--closed no-opener sticky-nav--active" data-sticky-nav-collapsible=" false " href="https://coral.ai/docs/edgetpu/models-intro/" title="TensorFlow models overview">TensorFlow models overview</a>
+
+ <!-- add content for second level headings --><ul data-sticky-nav-list="" data-sticky-nav-level="2" data-sticky-nav-for="/docs/edgetpu/models-intro/" class="side-nav__list side-nav--level-2"><li class="side-nav__item side-nav--level-2" data-sticky-nav-for="#compatibility-overview">
+    <a data-sticky-nav-link="" data-sticky-nav-level="2" data-sticky-nav-for="#compatibility-overview" class="side-nav__label side-nav--level-2" href="https://coral.ai/docs/edgetpu/models-intro/#compatibility-overview" title="Compatibility overview" data-turbolinks="false">Compatibility overview</a></li><li class="side-nav__item side-nav--level-2" data-sticky-nav-for="#transfer-learning">
+    <a data-sticky-nav-link="" data-sticky-nav-level="2" data-sticky-nav-for="#transfer-learning" class="side-nav__label side-nav--level-2" href="https://coral.ai/docs/edgetpu/models-intro/#transfer-learning" title="Transfer learning" data-turbolinks="false">Transfer learning</a><ul data-sticky-nav-list="" data-sticky-nav-level="3" data-sticky-nav-for="#transfer-learning" class="side-nav__list side-nav--level-3"><li class="side-nav__item side-nav--level-3" data-sticky-nav-for="#transfer-learning-on-device">
+          <a data-sticky-nav-link="" data-sticky-nav-level="3" class="side-nav__label side-nav--level-3" data-sticky-nav-for="#transfer-learning-on-device" href="https://coral.ai/docs/edgetpu/models-intro/#transfer-learning-on-device" title="Transfer learning on-device" data-turbolinks="false">Transfer learning on-device</a>
+        </li></ul></li><li class="side-nav__item side-nav--level-2" data-sticky-nav-for="#model-requirements">
+    <a data-sticky-nav-link="" data-sticky-nav-level="2" data-sticky-nav-for="#model-requirements" class="side-nav__label side-nav--level-2" href="https://coral.ai/docs/edgetpu/models-intro/#model-requirements" title="Model requirements" data-turbolinks="false">Model requirements</a><ul data-sticky-nav-list="" data-sticky-nav-level="3" data-sticky-nav-for="#model-requirements" class="side-nav__list side-nav--level-3"><li class="side-nav__item side-nav--level-3" data-sticky-nav-for="#supported-operations">
+          <a data-sticky-nav-link="" data-sticky-nav-level="3" class="side-nav__label side-nav--level-3" data-sticky-nav-for="#supported-operations" href="https://coral.ai/docs/edgetpu/models-intro/#supported-operations" title="Supported operations" data-turbolinks="false">Supported operations</a>
+        </li><li class="side-nav__item side-nav--level-3" data-sticky-nav-for="#quantization">
+          <a data-sticky-nav-link="" data-sticky-nav-level="3" class="side-nav__label side-nav--level-3 sticky-nav__label--ellipsis" data-sticky-nav-for="#quantization" href="https://coral.ai/docs/edgetpu/models-intro/#quantization" title="Quantization" data-turbolinks="false">Quantization</a>
+        </li><li class="side-nav__item side-nav--level-3" data-sticky-nav-for="#compiling">
+          <a data-sticky-nav-link="" data-sticky-nav-level="3" class="side-nav__label side-nav--level-3 sticky-nav__label--ellipsis" data-sticky-nav-for="#compiling" href="https://coral.ai/docs/edgetpu/models-intro/#compiling" title="Compiling" data-turbolinks="false">Compiling</a>
+        </li></ul></li></ul>        </li><li class="side-nav__item side-nav--level-0" data-sticky-nav-for="Colab training tutorials">
+          <a data-sticky-nav-link="" data-sticky-nav-level="0" data-sticky-nav-for="Colab training tutorials" class="side-nav__label side-nav--level-0 sticky-nav--closed" data-sticky-nav-collapsible=" true " href="https://coral.ai/docs/edgetpu/models-intro/#" title="Colab training tutorials" data-turbolinks="false">Colab training tutorials</a>
+
+            <ul data-sticky-nav-list="" data-sticky-nav-level="1" data-sticky-nav-for="Colab training tutorials" class="side-nav__list side-nav--level-1 sticky-nav--closed"><li class="side-nav__item side-nav--level-1" data-sticky-nav-for="https://colab.research.google.com/github/google-coral/tutorials/blob/master/retrain_classification_ptq_tf2.ipynb">
+                <a data-sticky-nav-link="" data-sticky-nav-level="1" data-sticky-nav-for="https://colab.research.google.com/github/google-coral/tutorials/blob/master/retrain_classification_ptq_tf2.ipynb" class="side-nav__label side-nav--level-1 sticky-nav__label--long-text" href="https://colab.research.google.com/github/google-coral/tutorials/blob/master/retrain_classification_ptq_tf2.ipynb" title="Retrain MobileNet V2 classifier">Retrain MobileNet V2 classifier</a></li><li class="side-nav__item side-nav--level-1" data-sticky-nav-for="https://colab.research.google.com/github/google-coral/tutorials/blob/master/retrain_classification_qat_tf1.ipynb">
+                <a data-sticky-nav-link="" data-sticky-nav-level="1" data-sticky-nav-for="https://colab.research.google.com/github/google-coral/tutorials/blob/master/retrain_classification_qat_tf1.ipynb" class="side-nav__label side-nav--level-1 sticky-nav__label--long-text" href="https://colab.research.google.com/github/google-coral/tutorials/blob/master/retrain_classification_qat_tf1.ipynb" title="Retrain MobileNet V1 classifier (quant-aware)">Retrain MobileNet V1 classifier (quant-aware)</a></li><li class="side-nav__item side-nav--level-1" data-sticky-nav-for="https://colab.research.google.com/github/google-coral/tutorials/blob/master/retrain_efficientdet_model_maker_tf2.ipynb">
+                <a data-sticky-nav-link="" data-sticky-nav-level="1" data-sticky-nav-for="https://colab.research.google.com/github/google-coral/tutorials/blob/master/retrain_efficientdet_model_maker_tf2.ipynb" class="side-nav__label side-nav--level-1 sticky-nav__label--long-text" href="https://colab.research.google.com/github/google-coral/tutorials/blob/master/retrain_efficientdet_model_maker_tf2.ipynb" title="Retrain EfficientDet-Lite detector">Retrain EfficientDet-Lite detector</a></li><li class="side-nav__item side-nav--level-1" data-sticky-nav-for="https://colab.research.google.com/github/google-coral/tutorials/blob/master/retrain_ssdlite_mobiledet_qat_tf1.ipynb">
+                <a data-sticky-nav-link="" data-sticky-nav-level="1" data-sticky-nav-for="https://colab.research.google.com/github/google-coral/tutorials/blob/master/retrain_ssdlite_mobiledet_qat_tf1.ipynb" class="side-nav__label side-nav--level-1 sticky-nav__label--long-text" href="https://colab.research.google.com/github/google-coral/tutorials/blob/master/retrain_ssdlite_mobiledet_qat_tf1.ipynb" title="Retrain SSDLite MobileDet detector">Retrain SSDLite MobileDet detector</a></li><li class="side-nav__item side-nav--level-1" data-sticky-nav-for="https://colab.research.google.com/github/google-coral/tutorials/blob/master/retrain_detection_qat_tf1.ipynb">
+                <a data-sticky-nav-link="" data-sticky-nav-level="1" data-sticky-nav-for="https://colab.research.google.com/github/google-coral/tutorials/blob/master/retrain_detection_qat_tf1.ipynb" class="side-nav__label side-nav--level-1 sticky-nav__label--long-text" href="https://colab.research.google.com/github/google-coral/tutorials/blob/master/retrain_detection_qat_tf1.ipynb" title="Retrain SSD MobileNet V1 detector (quant-aware)">Retrain SSD MobileNet V1 detector (quant-aware)</a></li><li class="side-nav__item side-nav--level-1" data-sticky-nav-for="https://colab.research.google.com/github/google-coral/tutorials/blob/master/train_lstm_timeseries_ptq_tf2.ipynb">
+                <a data-sticky-nav-link="" data-sticky-nav-level="1" data-sticky-nav-for="https://colab.research.google.com/github/google-coral/tutorials/blob/master/train_lstm_timeseries_ptq_tf2.ipynb" class="side-nav__label side-nav--level-1 sticky-nav__label--long-text" href="https://colab.research.google.com/github/google-coral/tutorials/blob/master/train_lstm_timeseries_ptq_tf2.ipynb" title="Build an LSTM time series model">Build an LSTM time series model</a></li></ul>
+        </li><li class="side-nav__item side-nav--level-0" data-sticky-nav-for="Docker training tutorials">
+          <a data-sticky-nav-link="" data-sticky-nav-level="0" data-sticky-nav-for="Docker training tutorials" class="side-nav__label side-nav--level-0 sticky-nav--closed" data-sticky-nav-collapsible=" true " href="https://coral.ai/docs/edgetpu/models-intro/#" title="Docker training tutorials" data-turbolinks="false">Docker training tutorials</a>
+
+            <ul data-sticky-nav-list="" data-sticky-nav-level="1" data-sticky-nav-for="Docker training tutorials" class="side-nav__list side-nav--level-1 sticky-nav--closed"><li class="side-nav__item side-nav--level-1" data-sticky-nav-for="/docs/edgetpu/retrain-classification/">
+                <a data-sticky-nav-link="" data-sticky-nav-level="1" data-sticky-nav-for="/docs/edgetpu/retrain-classification/" class="side-nav__label side-nav--level-1 sticky-nav__label--long-text" href="https://coral.ai/docs/edgetpu/retrain-classification/" title="Retrain a classification model in Docker (TF1)">Retrain a classification model in Docker (TF1)</a></li><li class="side-nav__item side-nav--level-1" data-sticky-nav-for="/docs/edgetpu/retrain-detection/">
+                <a data-sticky-nav-link="" data-sticky-nav-level="1" data-sticky-nav-for="/docs/edgetpu/retrain-detection/" class="side-nav__label side-nav--level-1 sticky-nav__label--long-text" href="https://coral.ai/docs/edgetpu/retrain-detection/" title="Retrain an object detection model in Docker (TF1)">Retrain an object detection model in Docker (TF1)</a></li></ul>
+        </li><li class="side-nav__item side-nav--level-0" data-sticky-nav-for="On-device training tutorials">
+          <a data-sticky-nav-link="" data-sticky-nav-level="0" data-sticky-nav-for="On-device training tutorials" class="side-nav__label side-nav--level-0 sticky-nav--closed" data-sticky-nav-collapsible=" true " href="https://coral.ai/docs/edgetpu/models-intro/#" title="On-device training tutorials" data-turbolinks="false">On-device training tutorials</a>
+
+            <ul data-sticky-nav-list="" data-sticky-nav-level="1" data-sticky-nav-for="On-device training tutorials" class="side-nav__list side-nav--level-1 sticky-nav--closed"><li class="side-nav__item side-nav--level-1" data-sticky-nav-for="/docs/edgetpu/retrain-classification-ondevice/">
+                <a data-sticky-nav-link="" data-sticky-nav-level="1" data-sticky-nav-for="/docs/edgetpu/retrain-classification-ondevice/" class="side-nav__label side-nav--level-1 sticky-nav__label--long-text" href="https://coral.ai/docs/edgetpu/retrain-classification-ondevice/" title="Retrain a classification model with weight imprinting">Retrain a classification model with weight imprinting</a></li><li class="side-nav__item side-nav--level-1" data-sticky-nav-for="/docs/edgetpu/retrain-classification-ondevice-backprop/">
+                <a data-sticky-nav-link="" data-sticky-nav-level="1" data-sticky-nav-for="/docs/edgetpu/retrain-classification-ondevice-backprop/" class="side-nav__label side-nav--level-1 sticky-nav__label--long-text" href="https://coral.ai/docs/edgetpu/retrain-classification-ondevice-backprop/" title="Retrain a classification model with backpropagation">Retrain a classification model with backpropagation</a></li></ul>
+        </li><li class="side-nav__item side-nav--level-0" data-sticky-nav-for="API Reference">
+          <a data-sticky-nav-link="" data-sticky-nav-level="0" data-sticky-nav-for="API Reference" class="side-nav__label side-nav--level-0 sticky-nav--closed section-heading" data-sticky-nav-collapsible=" true " href="https://coral.ai/docs/edgetpu/models-intro/#" title="API Reference" data-turbolinks="false">API Reference</a>
+
+ <!-- add content for second level headings -->        </li><li class="side-nav__item side-nav--level-0" data-sticky-nav-for="PyCoral API (Python)">
+          <a data-sticky-nav-link="" data-sticky-nav-level="0" data-sticky-nav-for="PyCoral API (Python)" class="side-nav__label side-nav--level-0 sticky-nav--closed" data-sticky-nav-collapsible=" true " href="https://coral.ai/docs/edgetpu/models-intro/#" title="PyCoral API (Python)" data-turbolinks="false">PyCoral API (Python)</a>
+
+            <ul data-sticky-nav-list="" data-sticky-nav-level="1" data-sticky-nav-for="PyCoral API (Python)" class="side-nav__list side-nav--level-1 sticky-nav--closed"><li class="side-nav__item side-nav--level-1" data-sticky-nav-for="/docs/reference/py/">
+                <a data-sticky-nav-link="" data-sticky-nav-level="1" data-sticky-nav-for="/docs/reference/py/" class="side-nav__label side-nav--level-1 sticky-nav__label--ellipsis" href="https://coral.ai/docs/reference/py/" title="Overview">Overview</a></li><li class="side-nav__item side-nav--level-1" data-sticky-nav-for="/docs/reference/py/pycoral.utils/">
+                <a data-sticky-nav-link="" data-sticky-nav-level="1" data-sticky-nav-for="/docs/reference/py/pycoral.utils/" class="side-nav__label side-nav--level-1 sticky-nav__label--ellipsis" href="https://coral.ai/docs/reference/py/pycoral.utils/" title="pycoral.utils">pycoral.utils</a></li><li class="side-nav__item side-nav--level-1" data-sticky-nav-for="/docs/reference/py/pycoral.adapters/">
+                <a data-sticky-nav-link="" data-sticky-nav-level="1" data-sticky-nav-for="/docs/reference/py/pycoral.adapters/" class="side-nav__label side-nav--level-1 sticky-nav__label--ellipsis" href="https://coral.ai/docs/reference/py/pycoral.adapters/" title="pycoral.adapters">pycoral.adapters</a></li><li class="side-nav__item side-nav--level-1" data-sticky-nav-for="/docs/reference/py/pycoral.pipeline/">
+                <a data-sticky-nav-link="" data-sticky-nav-level="1" data-sticky-nav-for="/docs/reference/py/pycoral.pipeline/" class="side-nav__label side-nav--level-1 sticky-nav__label--ellipsis" href="https://coral.ai/docs/reference/py/pycoral.pipeline/" title="pycoral.pipeline">pycoral.pipeline</a></li><li class="side-nav__item side-nav--level-1" data-sticky-nav-for="/docs/reference/py/pycoral.learn.backprop/">
+                <a data-sticky-nav-link="" data-sticky-nav-level="1" data-sticky-nav-for="/docs/reference/py/pycoral.learn.backprop/" class="side-nav__label side-nav--level-1 sticky-nav__label--ellipsis" href="https://coral.ai/docs/reference/py/pycoral.learn.backprop/" title="pycoral.learn.backprop">pycoral.learn.backprop</a></li><li class="side-nav__item side-nav--level-1" data-sticky-nav-for="/docs/reference/py/pycoral.learn.imprinting/">
+                <a data-sticky-nav-link="" data-sticky-nav-level="1" data-sticky-nav-for="/docs/reference/py/pycoral.learn.imprinting/" class="side-nav__label side-nav--level-1 sticky-nav__label--ellipsis" href="https://coral.ai/docs/reference/py/pycoral.learn.imprinting/" title="pycoral.learn.imprinting">pycoral.learn.imprinting</a></li></ul>
+        </li><li class="side-nav__item side-nav--level-0" data-sticky-nav-for="libcoral API (C++)">
+          <a data-sticky-nav-link="" data-sticky-nav-level="0" data-sticky-nav-for="libcoral API (C++)" class="side-nav__label side-nav--level-0 sticky-nav--closed" data-sticky-nav-collapsible=" true " href="https://coral.ai/docs/edgetpu/models-intro/#" title="libcoral API (C++)" data-turbolinks="false">libcoral API (C++)</a>
+
+            <ul data-sticky-nav-list="" data-sticky-nav-level="1" data-sticky-nav-for="libcoral API (C++)" class="side-nav__list side-nav--level-1 sticky-nav--closed"><li class="side-nav__item side-nav--level-1" data-sticky-nav-for="/docs/reference/cpp/">
+                <a data-sticky-nav-link="" data-sticky-nav-level="1" data-sticky-nav-for="/docs/reference/cpp/" class="side-nav__label side-nav--level-1 sticky-nav__label--ellipsis" href="https://coral.ai/docs/reference/cpp/" title="Overview">Overview</a></li><li class="side-nav__item side-nav--level-1" data-sticky-nav-for="/docs/reference/cpp/inference/">
+                <a data-sticky-nav-link="" data-sticky-nav-level="1" data-sticky-nav-for="/docs/reference/cpp/inference/" class="side-nav__label side-nav--level-1" href="https://coral.ai/docs/reference/cpp/inference/" title="Inferencing APIs">Inferencing APIs</a></li><li class="side-nav__item side-nav--level-1" data-sticky-nav-for="/docs/reference/cpp/pipeline/">
+                <a data-sticky-nav-link="" data-sticky-nav-level="1" data-sticky-nav-for="/docs/reference/cpp/pipeline/" class="side-nav__label side-nav--level-1" href="https://coral.ai/docs/reference/cpp/pipeline/" title="Pipelining APIs">Pipelining APIs</a></li><li class="side-nav__item side-nav--level-1" data-sticky-nav-for="/docs/reference/cpp/learn/">
+                <a data-sticky-nav-link="" data-sticky-nav-level="1" data-sticky-nav-for="/docs/reference/cpp/learn/" class="side-nav__label side-nav--level-1" href="https://coral.ai/docs/reference/cpp/learn/" title="Transfer learning APIs">Transfer learning APIs</a></li></ul>
+        </li><li class="side-nav__item side-nav--level-0" data-sticky-nav-for="coralmicro API (C++)">
+          <a data-sticky-nav-link="" data-sticky-nav-level="0" data-sticky-nav-for="coralmicro API (C++)" class="side-nav__label side-nav--level-0 sticky-nav--closed" data-sticky-nav-collapsible=" true " href="https://coral.ai/docs/edgetpu/models-intro/#" title="coralmicro API (C++)" data-turbolinks="false">coralmicro API (C++)</a>
+
+            <ul data-sticky-nav-list="" data-sticky-nav-level="1" data-sticky-nav-for="coralmicro API (C++)" class="side-nav__list side-nav--level-1 sticky-nav--closed"><li class="side-nav__item side-nav--level-1" data-sticky-nav-for="/docs/reference/micro/">
+                <a data-sticky-nav-link="" data-sticky-nav-level="1" data-sticky-nav-for="/docs/reference/micro/" class="side-nav__label side-nav--level-1 sticky-nav__label--ellipsis" href="https://coral.ai/docs/reference/micro/" title="Overview">Overview</a></li><li class="side-nav__item side-nav--level-1" data-sticky-nav-for="/docs/reference/micro/tensorflow/">
+                <a data-sticky-nav-link="" data-sticky-nav-level="1" data-sticky-nav-for="/docs/reference/micro/tensorflow/" class="side-nav__label side-nav--level-1" href="https://coral.ai/docs/reference/micro/tensorflow/" title="TensorFlow APIs">TensorFlow APIs</a></li><li class="side-nav__item side-nav--level-1" data-sticky-nav-for="/docs/reference/micro/camera/">
+                <a data-sticky-nav-link="" data-sticky-nav-level="1" data-sticky-nav-for="/docs/reference/micro/camera/" class="side-nav__label side-nav--level-1" href="https://coral.ai/docs/reference/micro/camera/" title="Camera APIs">Camera APIs</a></li><li class="side-nav__item side-nav--level-1" data-sticky-nav-for="/docs/reference/micro/audio/">
+                <a data-sticky-nav-link="" data-sticky-nav-level="1" data-sticky-nav-for="/docs/reference/micro/audio/" class="side-nav__label side-nav--level-1" href="https://coral.ai/docs/reference/micro/audio/" title="Audio APIs">Audio APIs</a></li><li class="side-nav__item side-nav--level-1" data-sticky-nav-for="/docs/reference/micro/pins/">
+                <a data-sticky-nav-link="" data-sticky-nav-level="1" data-sticky-nav-for="/docs/reference/micro/pins/" class="side-nav__label side-nav--level-1" href="https://coral.ai/docs/reference/micro/pins/" title="I/O pins APIs">I/O pins APIs</a></li><li class="side-nav__item side-nav--level-1" data-sticky-nav-for="/docs/reference/micro/filesystem/">
+                <a data-sticky-nav-link="" data-sticky-nav-level="1" data-sticky-nav-for="/docs/reference/micro/filesystem/" class="side-nav__label side-nav--level-1" href="https://coral.ai/docs/reference/micro/filesystem/" title="Filesystem APIs">Filesystem APIs</a></li><li class="side-nav__item side-nav--level-1" data-sticky-nav-for="/docs/reference/micro/network/">
+                <a data-sticky-nav-link="" data-sticky-nav-level="1" data-sticky-nav-for="/docs/reference/micro/network/" class="side-nav__label side-nav--level-1" href="https://coral.ai/docs/reference/micro/network/" title="Network APIs">Network APIs</a></li><li class="side-nav__item side-nav--level-1" data-sticky-nav-for="/docs/reference/micro/bluetooth/">
+                <a data-sticky-nav-link="" data-sticky-nav-level="1" data-sticky-nav-for="/docs/reference/micro/bluetooth/" class="side-nav__label side-nav--level-1" href="https://coral.ai/docs/reference/micro/bluetooth/" title="Bluetooth APIs">Bluetooth APIs</a></li><li class="side-nav__item side-nav--level-1" data-sticky-nav-for="/docs/reference/micro/usb/">
+                <a data-sticky-nav-link="" data-sticky-nav-level="1" data-sticky-nav-for="/docs/reference/micro/usb/" class="side-nav__label side-nav--level-1" href="https://coral.ai/docs/reference/micro/usb/" title="USB APIs">USB APIs</a></li><li class="side-nav__item side-nav--level-1" data-sticky-nav-for="/docs/reference/micro/system/">
+                <a data-sticky-nav-link="" data-sticky-nav-level="1" data-sticky-nav-for="/docs/reference/micro/system/" class="side-nav__label side-nav--level-1" href="https://coral.ai/docs/reference/micro/system/" title="System APIs">System APIs</a></li><li class="side-nav__item side-nav--level-1" data-sticky-nav-for="/docs/reference/micro/crypto/">
+                <a data-sticky-nav-link="" data-sticky-nav-level="1" data-sticky-nav-for="/docs/reference/micro/crypto/" class="side-nav__label side-nav--level-1" href="https://coral.ai/docs/reference/micro/crypto/" title="Cryptography APIs">Cryptography APIs</a></li><li class="side-nav__item side-nav--level-1" data-sticky-nav-for="/docs/reference/micro/utils/">
+                <a data-sticky-nav-link="" data-sticky-nav-level="1" data-sticky-nav-for="/docs/reference/micro/utils/" class="side-nav__label side-nav--level-1" href="https://coral.ai/docs/reference/micro/utils/" title="Utility APIs">Utility APIs</a></li><li class="side-nav__item side-nav--level-1" data-sticky-nav-for="/docs/reference/micro/arduino/">
+                <a data-sticky-nav-link="" data-sticky-nav-level="1" data-sticky-nav-for="/docs/reference/micro/arduino/" class="side-nav__label side-nav--level-1" href="https://coral.ai/docs/reference/micro/arduino/" title="Arduino APIs">Arduino APIs</a></li></ul>
+        </li><li class="side-nav__item side-nav--level-0" data-sticky-nav-for="/docs/reference/cpp/edgetpu/">
+          <a data-sticky-nav-link="" data-sticky-nav-level="0" data-sticky-nav-for="/docs/reference/cpp/edgetpu/" class="side-nav__label side-nav--level-0 sticky-nav--closed no-opener" data-sticky-nav-collapsible=" false " href="https://coral.ai/docs/reference/cpp/edgetpu/" title="libedgetpu API (C++)">libedgetpu API (C++)</a>
+
+ <!-- add content for second level headings -->        </li><li class="side-nav__item side-nav--level-0" data-sticky-nav-for="Edge TPU Python API (deprecated)">
+          <a data-sticky-nav-link="" data-sticky-nav-level="0" data-sticky-nav-for="Edge TPU Python API (deprecated)" class="side-nav__label side-nav--level-0 sticky-nav--closed sticky-nav__label--long-text" data-sticky-nav-collapsible=" true " href="https://coral.ai/docs/edgetpu/models-intro/#" title="Edge TPU Python API (deprecated)" data-turbolinks="false">Edge TPU Python API (deprecated)</a>
+
+            <ul data-sticky-nav-list="" data-sticky-nav-level="1" data-sticky-nav-for="Edge TPU Python API (deprecated)" class="side-nav__list side-nav--level-1 sticky-nav--closed"><li class="side-nav__item side-nav--level-1" data-sticky-nav-for="/docs/edgetpu/api-intro/">
+                <a data-sticky-nav-link="" data-sticky-nav-level="1" data-sticky-nav-for="/docs/edgetpu/api-intro/" class="side-nav__label side-nav--level-1 sticky-nav__label--ellipsis" href="https://coral.ai/docs/edgetpu/api-intro/" title="Overview">Overview</a></li><li class="side-nav__item side-nav--level-1" data-sticky-nav-for="/docs/reference/edgetpu.basic.basic_engine/">
+                <a data-sticky-nav-link="" data-sticky-nav-level="1" data-sticky-nav-for="/docs/reference/edgetpu.basic.basic_engine/" class="side-nav__label side-nav--level-1 sticky-nav__label--ellipsis" href="https://coral.ai/docs/reference/edgetpu.basic.basic_engine/" title="edgetpu.basic.basic_engine">edgetpu.basic.basic_engine</a></li><li class="side-nav__item side-nav--level-1" data-sticky-nav-for="/docs/reference/edgetpu.basic.edgetpu_utils/">
+                <a data-sticky-nav-link="" data-sticky-nav-level="1" data-sticky-nav-for="/docs/reference/edgetpu.basic.edgetpu_utils/" class="side-nav__label side-nav--level-1 sticky-nav__label--ellipsis" href="https://coral.ai/docs/reference/edgetpu.basic.edgetpu_utils/" title="edgetpu.basic.edgetpu_utils">edgetpu.basic.edgetpu_utils</a></li><li class="side-nav__item side-nav--level-1" data-sticky-nav-for="/docs/reference/edgetpu.classification.engine/">
+                <a data-sticky-nav-link="" data-sticky-nav-level="1" data-sticky-nav-for="/docs/reference/edgetpu.classification.engine/" class="side-nav__label side-nav--level-1 sticky-nav__label--ellipsis" href="https://coral.ai/docs/reference/edgetpu.classification.engine/" title="edgetpu.classification.engine">edgetpu.classification.engine</a></li><li class="side-nav__item side-nav--level-1" data-sticky-nav-for="/docs/reference/edgetpu.detection.engine/">
+                <a data-sticky-nav-link="" data-sticky-nav-level="1" data-sticky-nav-for="/docs/reference/edgetpu.detection.engine/" class="side-nav__label side-nav--level-1 sticky-nav__label--ellipsis" href="https://coral.ai/docs/reference/edgetpu.detection.engine/" title="edgetpu.detection.engine">edgetpu.detection.engine</a></li><li class="side-nav__item side-nav--level-1" data-sticky-nav-for="/docs/reference/edgetpu.learn.backprop.softmax_regression/">
+                <a data-sticky-nav-link="" data-sticky-nav-level="1" data-sticky-nav-for="/docs/reference/edgetpu.learn.backprop.softmax_regression/" class="side-nav__label side-nav--level-1 sticky-nav__label--ellipsis" href="https://coral.ai/docs/reference/edgetpu.learn.backprop.softmax_regression/" title="edgetpu.learn.backprop.softmax_regression">edgetpu.learn.backprop.softmax_regression</a></li><li class="side-nav__item side-nav--level-1" data-sticky-nav-for="/docs/reference/edgetpu.learn.imprinting.engine/">
+                <a data-sticky-nav-link="" data-sticky-nav-level="1" data-sticky-nav-for="/docs/reference/edgetpu.learn.imprinting.engine/" class="side-nav__label side-nav--level-1 sticky-nav__label--ellipsis" href="https://coral.ai/docs/reference/edgetpu.learn.imprinting.engine/" title="edgetpu.learn.imprinting.engine">edgetpu.learn.imprinting.engine</a></li><li class="side-nav__item side-nav--level-1" data-sticky-nav-for="/docs/reference/edgetpu.utils.dataset_utils/">
+                <a data-sticky-nav-link="" data-sticky-nav-level="1" data-sticky-nav-for="/docs/reference/edgetpu.utils.dataset_utils/" class="side-nav__label side-nav--level-1 sticky-nav__label--ellipsis" href="https://coral.ai/docs/reference/edgetpu.utils.dataset_utils/" title="edgetpu.utils.dataset_utils">edgetpu.utils.dataset_utils</a></li><li class="side-nav__item side-nav--level-1" data-sticky-nav-for="/docs/reference/edgetpu.utils.image_processing/">
+                <a data-sticky-nav-link="" data-sticky-nav-level="1" data-sticky-nav-for="/docs/reference/edgetpu.utils.image_processing/" class="side-nav__label side-nav--level-1 sticky-nav__label--ellipsis" href="https://coral.ai/docs/reference/edgetpu.utils.image_processing/" title="edgetpu.utils.image_processing">edgetpu.utils.image_processing</a></li></ul>
+        </li><li class="side-nav__item side-nav--level-0" data-sticky-nav-for="Application notes">
+          <a data-sticky-nav-link="" data-sticky-nav-level="0" data-sticky-nav-for="Application notes" class="side-nav__label side-nav--level-0 sticky-nav--closed section-heading" data-sticky-nav-collapsible=" true " href="https://coral.ai/docs/edgetpu/models-intro/#" title="Application notes" data-turbolinks="false">Application notes</a>
+
+ <!-- add content for second level headings -->        </li><li class="side-nav__item side-nav--level-0" data-sticky-nav-for="/docs/notes/build-coral/">
+          <a data-sticky-nav-link="" data-sticky-nav-level="0" data-sticky-nav-for="/docs/notes/build-coral/" class="side-nav__label side-nav--level-0 sticky-nav--closed no-opener" data-sticky-nav-collapsible=" false " href="https://coral.ai/docs/notes/build-coral/" title="Build Coral for your platform">Build Coral for your platform</a>
+
+ <!-- add content for second level headings -->        </li><li class="side-nav__item side-nav--level-0" data-sticky-nav-for="/docs/pcie-parameters/">
+          <a data-sticky-nav-link="" data-sticky-nav-level="0" data-sticky-nav-for="/docs/pcie-parameters/" class="side-nav__label side-nav--level-0 sticky-nav--closed no-opener sticky-nav__label--long-text" data-sticky-nav-collapsible=" false " href="https://coral.ai/docs/pcie-parameters/" title="Manage the PCIe module temperature">Manage the PCIe module temperature</a>
+
+ <!-- add content for second level headings -->        </li><li class="side-nav__item side-nav--level-0" data-sticky-nav-for="Appendix">
+          <a data-sticky-nav-link="" data-sticky-nav-level="0" data-sticky-nav-for="Appendix" class="side-nav__label side-nav--level-0 sticky-nav--closed section-heading sticky-nav__label--ellipsis" data-sticky-nav-collapsible=" true " href="https://coral.ai/docs/edgetpu/models-intro/#" title="Appendix" data-turbolinks="false">Appendix</a>
+
+ <!-- add content for second level headings -->        </li><li class="side-nav__item side-nav--level-0" data-sticky-nav-for="/docs/edgetpu/benchmarks/">
+          <a data-sticky-nav-link="" data-sticky-nav-level="0" data-sticky-nav-for="/docs/edgetpu/benchmarks/" class="side-nav__label side-nav--level-0 sticky-nav--closed no-opener" data-sticky-nav-collapsible=" false " href="https://coral.ai/docs/edgetpu/benchmarks/" title="Performance benchmarks">Performance benchmarks</a>
+
+ <!-- add content for second level headings -->        </li><li class="side-nav__item side-nav--level-0" data-sticky-nav-for="/docs/edgetpu/faq/">
+          <a data-sticky-nav-link="" data-sticky-nav-level="0" data-sticky-nav-for="/docs/edgetpu/faq/" class="side-nav__label side-nav--level-0 sticky-nav--closed no-opener" data-sticky-nav-collapsible=" false " href="https://coral.ai/docs/edgetpu/faq/" title="Frequently asked questions">Frequently asked questions</a>
+
+ <!-- add content for second level headings -->        </li></ul>
+  </nav>
+</aside>          </div>
+        <div class="col-mobile-offset-0 col-mobile-16 col-tablet-offset-0 col-tablet-32 col-small-desktop-offset-9 col-small-desktop-22 col-desktop-offset-1 col-desktop-22">
+
+
+
+
+  <header class="module-type-header show" data-module-type="header-text">
+    <div class="grid-container">
+
+      <div class="row">
+        <div class="col-mobile-14 col-mobile-offset-1 col-tablet-28 col-small-desktop-26 col-desktop-32 col-tablet-offset-1 col-small-desktop-offset-2 col-desktop-offset-2 text-align-left">
+          <h1 class="page-headline title">
+            TensorFlow models on the Edge TPU
+          </h1>
+        </div>
+      </div>
+      
+    </div>
+  </header>
+
+
+
+
+
+
+
+
+
+<section class="module show" data-module-type="text">
+  <div class="grid-container">
+    <div class="row">
+      <div class="col-mobile-14 col-mobile-offset-1 col-tablet-30 col-small-desktop-28 col-desktop-28 col-tablet-offset-1 col-small-desktop-offset-2 col-desktop-offset-2 text-align-left module-text-copy">
+        <div class="markdown-container">
+          <p class=" body-copy mk-paragraph">In order for the Edge TPU to provide high-speed neural network performance with a low-power cost,
+the Edge TPU supports a specific set of neural network operations and architectures. This page
+describes what types of models are compatible with the Edge TPU and how you can create them, either
+by compiling your own TensorFlow model or retraining an existing model with transfer-learning.</p>
+
+<p class=" body-copy mk-paragraph">If you're looking for information about how to run a model, read the <a class="mk-link" href="https://coral.ai/docs/edgetpu/inference/">Edge TPU inferencing
+overview</a>.</p>
+
+<p class=" body-copy mk-paragraph">Or if you just want to try some models, check out our <a class="mk-link" href="https://coral.ai/models">trained models</a>.</p>
+
+<h2 class=" section-headline mk-heading" id="compatibility-overview">Compatibility overview<a href="https://coral.ai/docs/edgetpu/models-intro/#compatibility-overview" data-turbolinks="false" class="link-container"><i class="material-icons icon-link">link</i></a></h2>
+
+<p class=" body-copy mk-paragraph">The Edge TPU is capable of executing deep feed-forward neural networks such as convolutional neural
+networks (CNN). It supports only TensorFlow Lite models that are fully 8-bit quantized and then
+compiled specifically for the Edge TPU.</p>
+
+<p class=" body-copy mk-paragraph">If you're not familiar with <a class="mk-link" target="_blank" rel="noopener noreferrer" href="https://www.tensorflow.org/lite">TensorFlow Lite</a>, it's a lightweight
+version of TensorFlow designed for mobile and embedded devices. It achieves low-latency inference in
+a small binary size—both the TensorFlow Lite models and interpreter kernels are much smaller.
+TensorFlow Lite models can be made even smaller and more efficient through quantization, which
+converts 32-bit parameter data into 8-bit representations (which is required by the Edge TPU).</p>
+
+<p class=" body-copy mk-paragraph">You cannot train a model directly with TensorFlow Lite; instead you must convert your model from a
+TensorFlow file (such as a <code>.pb</code> file) to a TensorFlow Lite file (a <code>.tflite</code> file), using the
+<a class="mk-link" target="_blank" rel="noopener noreferrer" href="https://www.tensorflow.org/lite/convert/">TensorFlow Lite converter</a>.</p>
+
+<p class=" body-copy mk-paragraph">Figure 1 illustrates the basic process to create a model that's compatible with the
+Edge TPU. Most of the workflow uses standard TensorFlow tools. Once you have a TensorFlow Lite
+model, you then use our <a class="mk-link" href="https://coral.ai/docs/edgetpu/compiler/">Edge TPU compiler</a> to create a <code>.tflite</code> file
+that's compatible with the Edge TPU.</p>
+
+<figure style="max-width:800px;">
+    <img src="./TensorFlow models on the Edge TPU _ Coral_files/compile-workflow.png" alt="" style="max-width:800px;" data-expandable="true">
+    <figcaption><b>Figure 1.</b> The basic workflow to create a model for the Edge TPU</figcaption>
+</figure>
+
+<p class=" body-copy mk-paragraph">However, you don't need to follow this whole process to create a good model for the Edge
+TPU. Instead, you can leverage existing TensorFlow models that are compatible with the Edge TPU by
+retraining them with your own dataset. For example, MobileNet is a popular image
+classification/detection model architecture that's compatible with the Edge TPU. We've created
+several versions of this model that you can use as a starting point to create your own model that
+recognizes different objects. To get started, see the next section about how to retrain
+an existing model with <a class="mk-link" href="https://coral.ai/docs/edgetpu/models-intro/#transfer-learning" data-turbolinks="false">transfer learning</a>.</p>
+
+<p class=" body-copy mk-paragraph">If you have designed—or plan to design—your own model architecture, then you should
+read the section below about <a class="mk-link" href="https://coral.ai/docs/edgetpu/models-intro/#model-requirements" data-turbolinks="false">model requirements</a>.</p>
+
+<h2 class=" section-headline mk-heading" id="transfer-learning">Transfer learning<a href="https://coral.ai/docs/edgetpu/models-intro/#transfer-learning" data-turbolinks="false" class="link-container"><i class="material-icons icon-link">link</i></a></h2>
+
+<p class=" body-copy mk-paragraph">Instead of building your own model and then training it from
+scratch, you can retrain an existing model that's already compatible with the Edge TPU, using a
+technique called transfer learning (sometimes also called "fine tuning").</p>
+
+<p class=" body-copy mk-paragraph">Training a neural network from scratch (when it has no computed weights or bias) can take days-worth
+of computing time and requires a vast amount of training data. But transfer learning allows you to
+start with a model that's already trained for a related task and then perform further training to
+teach the model new classifications using a smaller training dataset.  You can do this by retraining
+the whole model (adjusting the weights across the whole network), but you can also achieve very
+accurate results by simply removing the final layer that performs classification, and training a new
+layer on top that recognize your new classes.</p>
+
+<p class=" body-copy mk-paragraph">Using this process, with sufficient training data and some adjustments to the hyperparameters, you
+can create a highly accurate TensorFlow model in a single sitting. Once you're happy with the
+model's performance, simply <a class="mk-link" target="_blank" rel="noopener noreferrer" href="https://www.tensorflow.org/lite/convert">convert it to TensorFlow Lite</a>
+and then <a class="mk-link" href="https://coral.ai/docs/edgetpu/compiler/">compile it for the Edge TPU</a>. And because the
+model architecture doesn't change during transfer learning, you know it will fully compile for
+the Edge TPU (assuming you start with a compatible model).</p>
+
+<p class=" body-copy mk-paragraph">To get started without any setup, <a target="_blank" rel="noopener noreferrer" href="https://github.com/google-coral/tutorials#colab-tutorials-for-coral" data-ga-event-category="link" data-ga-event-action="exit_site" data-ga-event-label="Docs:
+github.com/google-coral/tutorials" data-turbolinks="false">try our Google Colab retraining tutorials</a>. All these tutorials
+perform transfer learning in cloud-hosted Jupyter notebooks.</p>
+
+<h3 class=" secondary-headline mk-heading" id="transfer-learning-on-device">Transfer learning on-device<a href="https://coral.ai/docs/edgetpu/models-intro/#transfer-learning-on-device" data-turbolinks="false" class="link-container"><i class="material-icons icon-link">link</i></a></h3>
+
+<p class=" body-copy mk-paragraph">If you're using an image classification model, you can also perform accelerated transfer learning
+on the Edge TPU. Our Python and C++ APIs offer two different techniques for on-device transfer
+learning:</p>
+
+<ul class=" mk-list">
+<li class=" mk-list-item body-copy">Weight imprinting on the last layer
+    (<code>ImprintingEngine</code> in <a class="mk-link" href="https://coral.ai/docs/reference/py/pycoral.learn.imprinting/">Python</a> or
+    <a class="mk-link" href="https://coral.ai/docs/reference/cpp/learn/#weight-imprinting" data-turbolinks="false">C++</a>)</li>
+<li class=" mk-list-item body-copy">Backpropagation on the last layer
+    (<code>SoftmaxRegression</code> in <a class="mk-link" href="https://coral.ai/docs/reference/py/pycoral.learn.backprop/">Python</a> or
+    <a class="mk-link" href="https://coral.ai/docs/reference/cpp/learn/#backpropagation" data-turbolinks="false">C++</a>)</li>
+</ul>
+
+<p class=" body-copy mk-paragraph">In both cases, you must provide a model that's specially designed to allow training on the last
+layer. The required model structure is different for each API, but the result is basically the same:
+the last fully-connected layer where classification occurs is separated from the base of the graph.
+Then only the base of the graph is compiled for the Edge TPU, which leaves the weights in the last
+layer accessible for training. More detail about the model architecture is available in the
+corresponding documents below. For now, let's compare how retraining works for each technique:</p>
+
+<ul class=" mk-list">
+<li class=" mk-list-item body-copy">
+<p class=" body-copy mk-paragraph">Weight imprinting takes the output (the embedding vectors) from the base model, adjusts
+the activation vectors with L2-normalization, and uses those values to compute new weights in
+the final layer—it averages the new vectors with those already in the last layer's weights. This
+allows for effective training of new classes with very few sample images.</p>
+</li>
+<li class=" mk-list-item body-copy">
+<p class=" body-copy mk-paragraph">Backpropagation is an abbreviated version of traditional backpropagation. Instead of
+backpropagating new weights to all layers in the graph, it updates only the fully-connected layer at
+the end of the graph with new weights. This is the more traditional training strategy that
+generally achieves higher accuracy, but it requires more images and multiple training iterations.</p>
+</li>
+</ul>
+
+<p class=" body-copy mk-paragraph">When choosing between these training techniques, you might consider the following factors:</p>
+
+<ul class=" mk-list">
+<li class=" mk-list-item body-copy">
+<p class=" body-copy mk-paragraph"><strong>Training sample size:</strong> Weight imprinting is more effective if you have a relatively small set
+of training samples: anywhere from 1 to 200 sample images for each class (as few as 5 can be
+effective and the API sets a maximum of 200). If you have more samples available for
+training, you'll likely achieve higher accuracy by using them all with backpropagation.</p>
+</li>
+<li class=" mk-list-item body-copy">
+<p class=" body-copy mk-paragraph"><strong>Training sample variance:</strong> Backpropagation is more effective if your dataset includes large
+intra-class variance. That is, if the images within a given class show the subject in significantly
+different ways, such as in angle or size, then backpropagation probably works better. But if your
+application operates in an environment where such variance is low, and your training samples thus
+also have little intra-class variance, then weight imprinting can work very well.</p>
+</li>
+<li class=" mk-list-item body-copy">
+<p class=" body-copy mk-paragraph"><strong>Adding new classes:</strong> Only weight imprinting allows you to add new classes to the
+model after you've begun training. If you're using backpropagation, adding a new class
+after you've begun training requires that you restart training for all classes. Additionally,
+weight imprinting allows you to retain the classes from the pre-trained model (those trained
+before converting the model for the Edge TPU); whereas backpropagation requires all classes to be
+learned on-device.</p>
+</li>
+<li class=" mk-list-item body-copy">
+<p class=" body-copy mk-paragraph"><strong>Model compatibility:</strong> Backpropagation is compatible with more model architectures "out of the
+box"; you can convert existing, pre-trained MobileNet and Inception models into embedding extractors
+that are compatible with on-device backpropagation. To use weight imprinting, you must use a model
+with some very specific layers and then train it in a particular manner before using it for
+on-device training (currently, we offer a version of MobileNet v1 with the proper modifications).</p>
+</li>
+</ul>
+
+<p class=" body-copy mk-paragraph">In both cases, the vast majority of the training process is accelerated by the Edge TPU. And when
+performing inferences with the retrained model, the Edge TPU accelerates everything except the final
+classification layer, which runs on the CPU. But because this last layer accounts for only a small
+portion of the model, running this last layer on the CPU should not significantly affect your
+inference speed.</p>
+
+<p class=" body-copy mk-paragraph">To learn more about each technique and try some sample code, see the following pages:</p>
+
+<ul class=" mk-list">
+<li class=" mk-list-item body-copy"><a class="mk-link" href="https://coral.ai/docs/edgetpu/retrain-classification-ondevice/">Retrain a classification model on-device with weight imprinting</a></li>
+<li class=" mk-list-item body-copy"><a class="mk-link" href="https://coral.ai/docs/edgetpu/retrain-classification-ondevice-backprop/">Retrain a classification model on-device with backpropagation</a></li>
+</ul>
+
+<h2 class=" section-headline mk-heading" id="model-requirements">Model requirements<a href="https://coral.ai/docs/edgetpu/models-intro/#model-requirements" data-turbolinks="false" class="link-container"><i class="material-icons icon-link">link</i></a></h2>
+
+<p class=" body-copy mk-paragraph">If you want to build a TensorFlow model that takes full advantage of the Edge TPU for accelerated
+inferencing, the model must meet these basic requirements:</p>
+
+<ul class=" mk-list">
+<li class=" mk-list-item body-copy"><strong>Tensor parameters are quantized</strong> (8-bit fixed-point numbers; int8 or uint8).</li>
+<li class=" mk-list-item body-copy"><strong>Tensor sizes are constant at compile-time</strong> (no dynamic sizes).</li>
+<li class=" mk-list-item body-copy"><strong>Model parameters (such as bias tensors) are constant at compile-time</strong>.</li>
+<li class=" mk-list-item body-copy"><strong>Tensors are either 1-, 2-, or 3-dimensional</strong>. If a tensor has more than 3 dimensions, then
+    only the 3 innermost dimensions may have a size greater than 1.</li>
+<li class=" mk-list-item body-copy"><strong>The model uses only the operations supported by the Edge TPU</strong> (see <a class="mk-link" href="https://coral.ai/docs/edgetpu/models-intro/#ops-table" data-turbolinks="false">table 1</a> below).</li>
+</ul>
+
+<p class=" body-copy mk-paragraph">Failure to meet these requirements could mean your model cannot compile for the Edge TPU at all,
+or only a portion of it will be accelerated, as described in the section below about
+<a class="mk-link" href="https://coral.ai/docs/edgetpu/models-intro/#compiling" data-turbolinks="false">compiling</a>.</p>
+
+<div class="note"><b>Note:</b>
+    If you pass a model to the <a href="https://coral.ai/docs/edgetpu/compiler/">Edge TPU Compiler</a> that uses float inputs, the compiler leaves a
+quantize op at the beginning of your graph (which runs on the CPU). So as long as your tensor
+parameters are quantized, it's okay if the input and output tensors are float because they'll be
+converted on the CPU.
+</div>
+
+<h3 class=" secondary-headline mk-heading" id="supported-operations">Supported operations<a href="https://coral.ai/docs/edgetpu/models-intro/#supported-operations" data-turbolinks="false" class="link-container"><i class="material-icons icon-link">link</i></a></h3>
+
+<p class=" body-copy mk-paragraph">When building your own model architecture, be aware that only the operations in the following
+table are supported by the Edge TPU. If your architecture uses operations not listed here, then
+only a portion of the model will compile for the Edge TPU and the remaining
+ops will execute on the CPU.</p>
+
+<div class="note"><b>Note:</b>
+When creating a new TensorFlow model, refer to the list of <a target="_blank" rel="noopener noreferrer" href="https://www.tensorflow.org/mlir/tfl_ops">operations compatible with
+TensorFlow Lite</a>. Also beware that, if you're using the <a href="https://coral.ai/products/dev-board-micro">Dev Board Micro</a>, any model operations
+that execute on the MCU (instead of the Edge TPU) must be compatible with <a target="_blank" rel="noopener noreferrer" href="https://www.tensorflow.org/lite/microcontrollers">TensorFlow Lite for
+Microcontrollers</a>, which supports fewer operations than TensorFlow Lite.
+</div>
+
+<table id="ops-table">
+<caption>
+    <b>Table 1.</b> All operations supported by the Edge TPU and any known limitations
+</caption>
+<thead>
+<tr>
+<th><strong>Operation name</strong></th>
+<th><strong>Runtime version*</strong></th>
+<th><strong>Known limitations</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Add</td>
+<td>All</td>
+<td></td>
+</tr>
+<tr>
+<td>AveragePool2d</td>
+<td>All</td>
+<td>No fused activation function.</td>
+</tr>
+<tr>
+<td>Concatenation</td>
+<td>All</td>
+<td>No fused activation function.<br>
+If any input is a compile-time constant tensor, there must be only 2 inputs, and this
+constant tensor must be all zeros (effectively, a zero-padding op).</td>
+</tr>
+<tr>
+<td>Conv2d</td>
+<td>All</td>
+<td>Must use the same dilation in x and y dimensions.</td>
+</tr>
+<tr>
+<td rowspan="2">DepthwiseConv2d</td>
+<td>≤12</td>
+<td>Dilated conv kernels are not supported.</td>
+</tr>
+<tr>
+<td>≥13</td>
+<td>Must use the same dilation in x and y dimensions.</td>
+</tr>
+<tr>
+<td>ExpandDims</td>
+<td>≥13</td>
+<td></td>
+</tr>
+<tr>
+<td>FullyConnected</td>
+<td>All</td>
+<td>Only the default format is supported for fully-connected weights. Output tensor is
+one-dimensional.</td>
+</tr>
+<tr>
+<td>L2Normalization</td>
+<td>All</td>
+<td></td>
+</tr>
+<tr>
+<td>Logistic</td>
+<td>All</td>
+<td></td>
+</tr>
+<tr>
+<td>LSTM</td>
+<td>≥14</td>
+<td>Unidirectional LSTM only.</td>
+</tr>
+<tr>
+<td>Maximum</td>
+<td>All</td>
+<td></td>
+</tr>
+<tr>
+<td>MaxPool2d</td>
+<td>All</td>
+<td>No fused activation function.</td>
+</tr>
+<tr>
+<td rowspan="2">Mean</td>
+<td>≤12</td>
+<td>No reduction in batch dimension.
+Supports reduction along x- and/or y-dimensions only.</td>
+</tr>
+<tr>
+<td>≥13</td>
+<td>No reduction in batch dimension.
+If a z-reduction, the z-dimension must be multiple of 4.</td>
+</tr>
+<tr>
+<td>Minimum</td>
+<td>All</td>
+<td></td>
+</tr>
+<tr>
+<td>Mul</td>
+<td>All</td>
+<td></td>
+</tr>
+<tr>
+<td>Pack</td>
+<td>≥13</td>
+<td>No packing in batch dimension.</td>
+</tr>
+<tr>
+<td rowspan="2">Pad</td>
+<td>≤12</td>
+<td>No padding in batch dimension.
+Supports padding along x- and/or y-dimensions only.</td>
+</tr>
+<tr>
+<td>≥13</td>
+<td>No padding in batch dimension.</td>
+</tr>
+<tr>
+<td>PReLU</td>
+<td>≥13</td>
+<td>Alpha must be 1-dimensional (only the innermost dimension can be &gt;1 size).
+    If using Keras PReLU with 4D input (batch, height, width, channels), then
+    shared_axes must be [1,2] so each filter has only one set of parameters.</td>
+</tr>
+<tr>
+<td>Quantize</td>
+<td>≥13</td>
+<td></td>
+</tr>
+<tr>
+<td>ReduceMax</td>
+<td>≥14</td>
+<td>Cannot operate on the batch dimension.</td>
+</tr>
+<tr>
+<td>ReduceMin</td>
+<td>≥14</td>
+<td>Cannot operate on the batch dimension.</td>
+</tr>
+<tr>
+<td>ReLU</td>
+<td>All</td>
+<td></td>
+</tr>
+<tr>
+<td>ReLU6</td>
+<td>All</td>
+<td></td>
+</tr>
+<tr>
+<td>ReLUN1To1</td>
+<td>All</td>
+<td></td>
+</tr>
+<tr>
+<td>Reshape</td>
+<td>All</td>
+<td>Certain reshapes might not be mapped for large tensor sizes.</td>
+</tr>
+<tr>
+<td>ResizeBilinear</td>
+<td>All</td>
+<td>Input/output is a 3-dimensional tensor. Depending on input/output size, this operation might not
+be mapped to the Edge TPU to avoid loss in precision.</td>
+</tr>
+<tr>
+<td>ResizeNearestNeighbor</td>
+<td>All</td>
+<td>Input/output is a 3-dimensional tensor. Depending on input/output size, this operation might not
+be mapped to the Edge TPU to avoid loss in precision.</td>
+</tr>
+<tr>
+<td>Rsqrt</td>
+<td>≥14</td>
+<td></td>
+</tr>
+<tr>
+<td>Slice</td>
+<td>All</td>
+<td></td>
+</tr>
+<tr>
+<td>Softmax</td>
+<td>All</td>
+<td>Supports only 1-D input tensor with a max of 16,000 elements.</td>
+</tr>
+<tr>
+<td>SpaceToDepth</td>
+<td>All</td>
+<td></td>
+</tr>
+<tr>
+<td>Split</td>
+<td>All</td>
+<td>No splitting in batch dimension.</td>
+</tr>
+<tr>
+<td rowspan="2">Squeeze</td>
+<td>≤12</td>
+<td>Supported only when input tensor dimensions that have leading 1s (that is, no relayout needed).
+For example input tensor with [y][x][z] = 1,1,10 or 1,5,10 is ok. But [y][x][z] = 5,1,10 is not
+supported.</td>
+</tr>
+<tr>
+<td>≥13</td>
+<td>None.</td>
+</tr>
+<tr>
+<td>StridedSlice</td>
+<td>All</td>
+<td>Supported only when all strides are equal to 1 (that is, effectively a Stride op), and with
+ellipsis-axis-mask == 0, and new-axis-max == 0.</td>
+</tr>
+<tr>
+<td>Sub</td>
+<td>All</td>
+<td></td>
+</tr>
+<tr>
+<td>Sum</td>
+<td>≥13</td>
+<td>Cannot operate on the batch dimension.</td>
+</tr>
+<tr>
+<td>Squared-difference</td>
+<td>≥14</td>
+<td></td>
+</tr>
+<tr>
+<td>Tanh</td>
+<td>All</td>
+<td></td>
+</tr>
+<tr>
+<td>Transpose</td>
+<td>≥14</td>
+<td></td>
+</tr>
+<tr>
+<td>TransposeConv</td>
+<td>≥13</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+
+<p class=" body-copy mk-paragraph" style="margin-top:10px">
+    * <em>You must use a version of the Edge TPU Compiler that corresponds to <a href="https://coral.ai/docs/edgetpu/compiler/#compiler-and-runtime-versions" data-turbolinks="false">the runtime version</a>.</em>
+</p>
+
+<p class=" body-copy mk-paragraph">Regardless of the operations you use, be sure you abide by the <a class="mk-link" href="https://coral.ai/docs/edgetpu/models-intro/#model-requirements" data-turbolinks="false">basic model
+requirements</a> above.</p>
+
+<h3 class=" secondary-headline mk-heading" id="quantization">Quantization<a href="https://coral.ai/docs/edgetpu/models-intro/#quantization" data-turbolinks="false" class="link-container"><i class="material-icons icon-link">link</i></a></h3>
+
+<p class=" body-copy mk-paragraph">Quantizing your model means converting all the 32-bit floating-point numbers (such as
+weights and activation outputs) to the nearest 8-bit fixed-point numbers. This makes the model
+smaller and faster. And although these 8-bit representations can be less precise, the inference
+accuracy of the neural network is not significantly affected.</p>
+
+<p class=" body-copy mk-paragraph">For compatibility with the Edge TPU, you must use either quantization-aware training
+(recommended) or full integer post-training quantization.</p>
+
+<p class=" body-copy mk-paragraph"><a class="mk-link" target="_blank" rel="noopener noreferrer" href="https://github.com/tensorflow/tensorflow/tree/r1.15/tensorflow/contrib/quantize#quantization-aware-training" data-turbolinks="false">Quantization-aware training (for TensorFlow 1)</a>
+uses "fake" quantization nodes in the neural network graph to simulate the effect of 8-bit values
+during training. Thus, this technique requires modification to the network before initial training.
+This generally results in a higher accuracy model (compared to post-training quantization) because
+it makes the model more tolerant of lower precision values, due to the fact that the 8-bit weights
+are learned through training rather than being converted later. It's also currently compatible with
+more operations than post-training quantization.</p>
+
+<div class="note"><b>Note:</b>
+    As of August, 2021, the <a target="_blank" rel="noopener noreferrer" href="https://www.tensorflow.org/model_optimization/guide/quantization/training">quantization-aware training API with TF2</a> is not compatible with the object detection API;
+    it is compatible with image classification models only. For more compatibility, including with
+    the object detection API, you may use
+    <a target="_blank" rel="noopener noreferrer" href="https://github.com/tensorflow/tensorflow/tree/r1.15/tensorflow/contrib/quantize#quantization-aware-training" data-turbolinks="false">quantization-aware training with TF1</a> or use post-training quantization with TF2.
+</div>
+
+<p class=" body-copy mk-paragraph"><a class="mk-link" target="_blank" rel="noopener noreferrer" href="https://www.tensorflow.org/lite/performance/post_training_quantization">Full integer post-training quantization</a>
+doesn't require any modifications to the network, so you can use this technique to convert a
+previously-trained network into a quantized model. However, this conversion process requires that
+you supply a representative dataset. That is, you need a dataset that's formatted the same as the
+original training dataset (uses the same data range) and is of a similar style (it does not need to
+contain all the same classes, though you may use previous training/evaluation data). This
+representative dataset allows the quantization process to measure the dynamic range of activations
+and inputs, which is critical to finding an accurate 8-bit representation of each weight and
+activation value.</p>
+
+<p class=" body-copy mk-paragraph">However, not all TensorFlow Lite operations are currently implemented with an integer-only
+specification (they cannot be quantized using post-training quantization). By default, the
+TensorFlow Lite converter leaves those operations in their float format, which is not compatible
+with the Edge TPU. As described below, the <a class="mk-link" href="https://coral.ai/docs/edgetpu/models-intro/#compiling" data-turbolinks="false">Edge TPU Compiler</a> stops compiling when it
+encounters an incompatible operation (such as a non-quantized op), and the remainder of the model
+executes on the CPU. So to enforce integer-only quantization, you can instruct the converter to
+throw an error if it encounters a non-quantizable operation. Read more about <a class="mk-link" target="_blank" rel="noopener noreferrer" href="https://www.tensorflow.org/lite/performance/post_training_quantization#integer_only" data-turbolinks="false">integer-only
+quantization</a>.</p>
+
+<p class=" body-copy mk-paragraph">For examples of each quantization strategy, see our <a class="mk-link" target="_blank" rel="noopener noreferrer" href="https://github.com/google-coral/tutorials#readme" data-turbolinks="false">Google Colab tutorials for model
+training</a>.</p>
+
+<p class=" body-copy mk-paragraph">For more details about how quantization works, read the <a class="mk-link" target="_blank" rel="noopener noreferrer" href="https://www.tensorflow.org/lite/performance/quantization_spec">TensorFlow Lite 8-bit quantization spec</a>.</p>
+
+<h4 class=" small-headline mk-heading" id="float-input-and-output-tensors">Float input and output tensors</h4>
+
+<p class=" body-copy mk-paragraph">As mentioned in the <a class="mk-link" href="https://coral.ai/docs/edgetpu/models-intro/#model-requirements" data-turbolinks="false">model requirements</a>, the Edge TPU requires 8-bit quantized
+input tensors. However, if you pass the Edge TPU Compiler a model that's internally quantized but
+still uses float inputs, the compiler leaves a quantize op at the beginning of your graph (which
+runs on the CPU). Likewise, the output is dequantized at the end.</p>
+
+<p class=" body-copy mk-paragraph">So it's okay if your TensorFlow Lite model uses float inputs/outputs.
+But beware that if your model uses float input and output, then there will be some amount of
+latency added due to the data format conversion, though it should be negligible for most models
+(the bigger the input tensor, the more latency you'll see).</p>
+
+<p class=" body-copy mk-paragraph">To achieve the best performance possible, we recommend fully quantizing your model so the input and
+output use int8 or uint8 data, which you can do by setting the input and output type with the
+TF Lite converter, as shown in the TensorFlow docs for <a class="mk-link" target="_blank" rel="noopener noreferrer" href="https://www.tensorflow.org/lite/performance/post_training_quantization#integer_only" data-turbolinks="false">integer-only
+quantization</a>.</p>
+
+<h3 class=" secondary-headline mk-heading" id="compiling">Compiling<a href="https://coral.ai/docs/edgetpu/models-intro/#compiling" data-turbolinks="false" class="link-container"><i class="material-icons icon-link">link</i></a></h3>
+
+<p class=" body-copy mk-paragraph">After you train and convert your model to TensorFlow Lite (with quantization), the final step is
+to compile it with the <a class="mk-link" href="https://coral.ai/docs/edgetpu/compiler/">Edge TPU Compiler</a>.</p>
+
+<p class=" body-copy mk-paragraph">If your model does not meet all the requirements listed at the <a class="mk-link" href="https://coral.ai/docs/edgetpu/models-intro/#model-requirements" data-turbolinks="false">top of this
+section</a>, it can still compile, but only a portion of the model will execute on
+the Edge TPU. At the first point in the model graph where an unsupported operation occurs, the
+compiler partitions the graph into two parts. The first part of the graph that contains only
+supported operations is compiled into a custom operation that executes on the Edge TPU, and
+everything else executes on the CPU, as illustrated in figure 2.</p>
+
+<div class="note"><b>Note:</b> If you're using the <a href="https://coral.ai/products/dev-board-micro">Dev Board Micro</a>, any model operations that
+execute on the MCU (because they do not compile for the Edge TPU) must be
+compatible with <a target="_blank" rel="noopener noreferrer" href="https://www.tensorflow.org/lite/microcontrollers">TensorFlow Lite for
+Microcontrollers</a>, which supports fewer operations than TensorFlow
+Lite. Also beware that large models might not fit into the Dev Board Micro
+memory.</div>
+
+<div class="note"><b>Note:</b>
+Currently, the Edge TPU compiler cannot partition the model more than once,
+so as soon as an unsupported operation occurs, that operation and everything after it executes on
+the CPU, even if supported operations occur later.
+</div>
+
+<figure style="max-width:600px;">
+    <img src="./TensorFlow models on the Edge TPU _ Coral_files/compile-tflite-to-edgetpu.png" alt="" style="max-width:600px;" data-expandable="true">
+    <figcaption><b>Figure 2.</b> The compiler creates a single custom op for all Edge TPU
+    compatible ops, until it encounters an unsupported op; the rest stays the same and runs
+    on the CPU</figcaption>
+</figure>
+
+<p class=" body-copy mk-paragraph">If you inspect your compiled model (with a tool such as
+<a class="mk-link" target="_blank" rel="noopener noreferrer" href="https://github.com/tensorflow/tensorflow/blob/master/tensorflow/lite/tools/visualize.py"><code>visualize.py</code></a>),
+you'll see that it's still a TensorFlow Lite model except it now has a custom operation at the
+beginning of the graph. This custom operation is the only part of your model that is actually
+compiled—it contains all the operations that run on the Edge TPU. The rest of the graph (beginning
+with the first unsupported operation) remains the same and runs on the CPU.</p>
+
+<p class=" body-copy mk-paragraph">If part of your model executes on the CPU, you should expect a significantly degraded inference
+speed compared to a model that executes entirely on the Edge TPU. We cannot predict how much slower
+your model will perform in this situation, so you should experiment with different architectures and
+strive to create a model that is 100% compatible with the Edge TPU. That is, your compiled model
+should contain only the Edge TPU custom operation.</p>
+
+<div class="note"><b>Note:</b>
+When compilation completes, the <a class="mk-link" href="https://coral.ai/docs/edgetpu/compiler/">Edge TPU
+compiler</a> tells you how many operations can execute on the Edge TPU and how many must instead
+execute on the CPU (if any at all). But beware that the percentage of operations that execute on the
+Edge TPU versus the CPU does not correspond to the overall performance impact—if even a small
+fraction of your model executes on the CPU, it can potentially slow the inference speed by an order
+of magnitude (compared to a version of the model that runs entirely on the Edge TPU). </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+        </div>
+      </div>
+    </div>
+
+
+<section class="feedback-component show" id="legacy-feedback-component">
+	<div class="grid-container">
+		<div class="row center">
+			<div class="col-mobile-14 col-tablet-30 col-small-desktop-28 col-desktop-28">
+				<hr class="separater" data-module-type="separator">
+			</div>
+		</div>
+
+		<div class="row feedback-row">
+			<div class="feedback-container col-mobile-14 col-tablet-13 col-small-desktop-12 col-desktop-28">
+				<p class="cta-primary-body">Is this content helpful?</p>
+
+				<div>
+					<button class="thumb thumb-up" fdprocessedid="km0ts"><svg width="100%" height="100%" viewBox="0 0 34 41" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <path d="M21.1334,40.0344336 L21.1323966,40.0344256 C15.9572291,39.9899108 13.9114176,39.7127631 10.9459171,38.2588016 C6.72320136,36.1884374 4.7682668,35.8231657 3.40837849,36.2047375 C3.3592638,36.2185186 3.32142401,36.22968 3.29222438,36.2357757 C3.21112527,36.2675855 3.1137127,36.2973032 3.03213342,36.3150799 L2.60662684,36.407801 L2.31517319,36.0842152 C1.4810202,35.1580983 1.02520694,30.2921887 1.36301421,25.7438928 C1.56576937,23.0033161 2.00198174,21.3215689 2.52738106,20.7643136 L2.7932753,20.4822977 L3.17712605,20.5360689 L3.31550715,20.5555326 C4.22302116,20.6960422 4.54235861,20.658501 5.66200204,20.1859414 C6.5663511,19.8023815 7.79240412,18.4291469 8.95089124,16.7251562 C9.5666636,15.8212177 10.2306443,15.1968385 11.3099221,14.4079817 C11.4552871,14.3017328 11.5663219,14.2220193 11.8405981,14.0262142 C12.688555,13.4148223 12.8664102,13.2835078 13.2671584,12.9600922 L13.5007269,12.7714778 C15.4657648,11.1902985 16.0827196,10.4054647 17.1382738,7.68797605 C17.5118043,6.72427343 17.7210115,6.01030898 18.1049713,4.51823794 C18.7266049,2.0862657 19.0123165,1.46707924 20.0749358,1.27515138 C21.050799,1.09208918 21.768429,1.78121656 22.5681548,3.28971194 C23.4604529,4.98013679 22.9051993,8.43980821 21.1030393,11.8083372 C20.2663728,13.37784 20.1271175,14.5863676 20.5975156,15.4503829 C21.1213524,16.4073498 22.3777752,17.0092997 24.532372,17.2287067 C24.9786193,17.2757197 25.4144698,17.3003462 26.3188976,17.337046 C30.9738159,17.5363428 32.7501953,18.0872299 32.7501953,20.3711573 C32.7501953,21.3589925 32.505512,21.8606696 31.8522751,22.6217703 C31.7519773,22.7402952 31.720547,22.7778629 31.6732469,22.8367101 C31.3586512,23.2281062 31.2201411,23.5343213 31.213425,23.9621715 C31.204863,24.4197401 31.3193941,24.6884414 31.5735992,24.9697175 C31.6233789,25.0247983 31.6600117,25.0621453 31.7638214,25.1653583 C31.8300849,25.230289 31.8635804,25.2636366 31.9031634,25.3049728 C32.3423297,25.7635905 32.4979229,26.253213 32.4185523,27.0726945 C32.2945049,28.3826525 31.8931434,28.9248253 30.969158,29.4651272 C30.5440667,29.7131193 30.4091307,29.8458502 30.3686172,30.0825477 C30.2959679,30.5120756 30.3737038,30.764873 30.6034408,31.0739645 C30.6374548,31.1197274 30.6635911,31.1529683 30.7324887,31.2390634 C31.1921894,31.8084637 31.3367827,32.1980669 31.2499621,32.9961785 C31.1659622,33.7484823 30.9479332,34.0833432 30.401973,34.5100382 C30.2779199,34.6088744 30.2247836,34.6530384 30.1632489,34.7104864 C29.9083851,34.9484236 29.7739192,35.2067547 29.7378845,35.6657031 C29.7135533,35.9430622 29.7252962,36.1349773 29.7755358,36.5229335 C29.8705039,37.2535999 29.8399059,37.6813976 29.5570156,38.4867458 C29.0795402,39.8460502 27.629086,40.1553699 23.0433977,40.0611286 C22.3795339,40.0477524 21.7444886,40.0388723 21.1334,40.0344336 Z" stroke="#000000" stroke-width="1.5" fill="#FFFFFF" fill-rule="nonzero"></path>
+    </g>
+</svg></button>
+					<button class="thumb thumb-down" fdprocessedid="6gyikg"><svg width="100%" height="100%" viewBox="0 0 34 41" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <path d="M21.1334,40.0344336 L21.1323966,40.0344256 C15.9572291,39.9899108 13.9114176,39.7127631 10.9459171,38.2588016 C6.72320136,36.1884374 4.7682668,35.8231657 3.40837849,36.2047375 C3.3592638,36.2185186 3.32142401,36.22968 3.29222438,36.2357757 C3.21112527,36.2675855 3.1137127,36.2973032 3.03213342,36.3150799 L2.60662684,36.407801 L2.31517319,36.0842152 C1.4810202,35.1580983 1.02520694,30.2921887 1.36301421,25.7438928 C1.56576937,23.0033161 2.00198174,21.3215689 2.52738106,20.7643136 L2.7932753,20.4822977 L3.17712605,20.5360689 L3.31550715,20.5555326 C4.22302116,20.6960422 4.54235861,20.658501 5.66200204,20.1859414 C6.5663511,19.8023815 7.79240412,18.4291469 8.95089124,16.7251562 C9.5666636,15.8212177 10.2306443,15.1968385 11.3099221,14.4079817 C11.4552871,14.3017328 11.5663219,14.2220193 11.8405981,14.0262142 C12.688555,13.4148223 12.8664102,13.2835078 13.2671584,12.9600922 L13.5007269,12.7714778 C15.4657648,11.1902985 16.0827196,10.4054647 17.1382738,7.68797605 C17.5118043,6.72427343 17.7210115,6.01030898 18.1049713,4.51823794 C18.7266049,2.0862657 19.0123165,1.46707924 20.0749358,1.27515138 C21.050799,1.09208918 21.768429,1.78121656 22.5681548,3.28971194 C23.4604529,4.98013679 22.9051993,8.43980821 21.1030393,11.8083372 C20.2663728,13.37784 20.1271175,14.5863676 20.5975156,15.4503829 C21.1213524,16.4073498 22.3777752,17.0092997 24.532372,17.2287067 C24.9786193,17.2757197 25.4144698,17.3003462 26.3188976,17.337046 C30.9738159,17.5363428 32.7501953,18.0872299 32.7501953,20.3711573 C32.7501953,21.3589925 32.505512,21.8606696 31.8522751,22.6217703 C31.7519773,22.7402952 31.720547,22.7778629 31.6732469,22.8367101 C31.3586512,23.2281062 31.2201411,23.5343213 31.213425,23.9621715 C31.204863,24.4197401 31.3193941,24.6884414 31.5735992,24.9697175 C31.6233789,25.0247983 31.6600117,25.0621453 31.7638214,25.1653583 C31.8300849,25.230289 31.8635804,25.2636366 31.9031634,25.3049728 C32.3423297,25.7635905 32.4979229,26.253213 32.4185523,27.0726945 C32.2945049,28.3826525 31.8931434,28.9248253 30.969158,29.4651272 C30.5440667,29.7131193 30.4091307,29.8458502 30.3686172,30.0825477 C30.2959679,30.5120756 30.3737038,30.764873 30.6034408,31.0739645 C30.6374548,31.1197274 30.6635911,31.1529683 30.7324887,31.2390634 C31.1921894,31.8084637 31.3367827,32.1980669 31.2499621,32.9961785 C31.1659622,33.7484823 30.9479332,34.0833432 30.401973,34.5100382 C30.2779199,34.6088744 30.2247836,34.6530384 30.1632489,34.7104864 C29.9083851,34.9484236 29.7739192,35.2067547 29.7378845,35.6657031 C29.7135533,35.9430622 29.7252962,36.1349773 29.7755358,36.5229335 C29.8705039,37.2535999 29.8399059,37.6813976 29.5570156,38.4867458 C29.0795402,39.8460502 27.629086,40.1553699 23.0433977,40.0611286 C22.3795339,40.0477524 21.7444886,40.0388723 21.1334,40.0344336 Z" stroke="#000000" stroke-width="1.5" fill="#FFFFFF" fill-rule="nonzero"></path>
+    </g>
+</svg></button>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+  </section>
+    </main>
+
+
+<footer id="footer" data-turbolinks-permanent="" class="show">
+  <div class="grid-container">
+    <div class="row">
+      <div class="col-mobile-14 col-mobile-offset-1 col-tablet-17 col-tablet-offset-1 col-small-desktop-16 col-small-desktop-offset-2 col-desktop-16 col-desktop-offset-2 links-and-copyright">
+        <ul role="menu" class="footer-items">
+          <li class="item" role="none">
+            <a href="https://coral.ai/about-coral/" data-label="About Coral" class="cta-primary-body color--white item-link" role="menuitem">About Coral</a>
+          </li>
+          <li class="item" role="none">
+            <a href="https://coral.ai/news/" data-label="News" class="cta-primary-body color--white item-link" role="menuitem">News</a>
+          </li>
+          <li class="item" role="none">
+            <a href="https://www.blog.google/technology/ai/ai-principles/" data-label="Google AI principles" target="_blank" rel="noopener" class="cta-primary-body color--white item-link" role="menuitem">Google AI principles</a>
+          </li>
+          <li class="item" role="none">
+            <a href="https://policies.google.com/terms?hl=en" data-label="Terms of service" target="_blank" rel="noopener" class="cta-primary-body color--white item-link" role="menuitem">Terms of service</a>
+          </li>
+          <li class="item" role="none">
+            <a href="https://policies.google.com/privacy?hl=en" data-label="Privacy policy" target="_blank" rel="noopener" class="cta-primary-body color--white item-link" role="menuitem">Privacy policy</a>
+          </li>
+          <li class="item" role="none">
+            <a href="https://coral.ai/docs/" data-label="Documentation" class="cta-primary-body color--white item-link" role="menuitem">Documentation</a>
+          </li>
+          <li class="item" role="none">
+            <a href="https://coral.ai/examples/" data-label="Examples" class="cta-primary-body color--white item-link" role="menuitem">Examples</a>
+          </li>
+          <li class="item" role="none">
+            <a href="https://coral.ai/support/" data-label="Support" class="cta-primary-body color--white item-link" role="menuitem">Support</a>
+          </li>
+          <li class="item" role="none">
+            <a href="https://g.co/coral/sales" data-label="Contact sales" target="_blank" rel="noopener" class="cta-primary-body color--white item-link" role="menuitem">Contact sales</a>
+          </li>
+          <li class="item" role="none">
+            <a href="https://coral.ai/legal/" data-label="Legal" class="cta-primary-body color--white item-link" role="menuitem">Legal</a>
+          </li>
+        </ul>
+        <div class="copyright-container row">
+          <div class="col-mobile-16 col-tablet-28">
+            <div class="logo">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 88" width="260" height="88">
+    <path d="M33 40.24v-8.75h30.48c.32 1.6.48 3.55.48 5.63 0 6.72-1.84 15.04-7.76 20.96-5.76 6-13.12 9.2-22.88 9.2C15.24 67.28.04 52.56.04 34.48s15.2-32.8 33.28-32.8c10 0 17.12 3.92 22.48 9.04l-6.32 6.32c-3.84-3.6-9.04-6.4-16.16-6.4-13.2 0-23.52 10.64-23.52 23.84s10.32 23.84 23.52 23.84c8.56 0 13.44-3.44 16.56-6.56 2.56-2.56 4.28-6.48 4.92-11.52H33zm76.7 5.92c0 12.16-9.52 21.12-21.2 21.12s-21.2-8.96-21.2-21.12c0-12.24 9.52-21.12 21.2-21.12s21.2 8.88 21.2 21.12zm-9.28 0c0-7.6-5.52-12.8-11.92-12.8s-11.92 5.2-11.92 12.8c0 7.52 5.52 12.8 11.92 12.8s11.92-5.28 11.92-12.8zm55.28 0c0 12.16-9.52 21.12-21.2 21.12s-21.2-8.96-21.2-21.12c0-12.24 9.52-21.12 21.2-21.12s21.2 8.88 21.2 21.12zm-9.28 0c0-7.6-5.52-12.8-11.92-12.8s-11.92 5.2-11.92 12.8c0 7.52 5.52 12.8 11.92 12.8s11.92-5.28 11.92-12.8zm53.39-19.84v37.92c0 15.6-9.2 22-20.08 22-10.24 0-16.4-6.88-18.72-12.48l8.08-3.36c1.44 3.44 4.96 7.52 10.64 7.52 6.96 0 11.28-4.32 11.28-12.4v-3.04h-.32c-2.08 2.56-6.08 4.8-11.12 4.8-10.56 0-20.24-9.2-20.24-21.04 0-11.92 9.68-21.2 20.24-21.2 5.04 0 9.04 2.24 11.12 4.72h.32v-3.44h8.8zm-8.16 19.92c0-7.44-4.96-12.88-11.28-12.88-6.4 0-11.76 5.44-11.76 12.88 0 7.36 5.36 12.72 11.76 12.72 6.32 0 11.28-5.36 11.28-12.72zM215.29 4v62h-9.28V4h9.28zm35.9 49.12l7.2 4.8c-2.32 3.44-7.92 9.36-17.6 9.36-12 0-20.96-9.28-20.96-21.12 0-12.56 9.04-21.12 19.92-21.12 10.96 0 16.32 8.72 18.08 13.44l.96 2.4-28.24 11.68c2.16 4.24 5.52 6.4 10.24 6.4 4.72 0 8-2.32 10.4-5.84zm-22.16-7.6l18.88-7.84c-1.04-2.64-4.16-4.48-7.84-4.48-4.72 0-11.28 4.16-11.04 12.32z"></path>
+</svg>            </div>
+            <p class="color--white copyright">Copyright 2020 Google LLC. All rights reserved.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-mobile-14 col-mobile-offset-1 col-tablet-10 col-tablet-offset-3 col-small-desktop-9 col-small-desktop-offset-3 col-desktop-7 col-desktop-offset-5 newsletter-form">
+        <h2>Stay up-to-date</h2>
+        <p>Sign up to receive our newsletter</p>
+<form>
+    <input type="text" placeholder="Name" name="name" fdprocessedid="boefi5">
+    <div class="error-message name">
+<svg viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path d="M9 13h2v2H9v-2zm0-8h2v6H9V5zm.99-5C4.47 0 0 4.48 0 10s4.47 10 9.99 10C15.52 20 20 15.52 20 10S15.52 0 9.99 0zM10 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z" id="path-1"></path></defs><g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><g id="ic/error_outline" transform="translate(-2 -2)"><g id="ic_error_outline_24px" transform="translate(2 2)"><mask id="mask-15" fill="#fff"><use xlink:href="#path-1"></use></mask><g id="🎨-Color" mask="url(#mask-15)" fill="#FFA700"><path d="M9 13h2v2H9v-2zm0-8h2v6H9V5zm.99-5C4.47 0 0 4.48 0 10s4.47 10 9.99 10C15.52 20 20 15.52 20 10S15.52 0 9.99 0zM10 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z" id="path-1"></path></g></g></g></g></svg><span></span>
+    </div>
+    <input type="text" placeholder="Company (optional)" name="company" fdprocessedid="8vkyzr">
+    <input type="text" placeholder="Email" name="email" fdprocessedid="nvdpq">
+    <div class="error-message email">
+<svg viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path d="M9 13h2v2H9v-2zm0-8h2v6H9V5zm.99-5C4.47 0 0 4.48 0 10s4.47 10 9.99 10C15.52 20 20 15.52 20 10S15.52 0 9.99 0zM10 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z" id="path-1"></path></defs><g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><g id="ic/error_outline" transform="translate(-2 -2)"><g id="ic_error_outline_24px" transform="translate(2 2)"><mask id="mask-15" fill="#fff"><use xlink:href="#path-1"></use></mask><g id="🎨-Color" mask="url(#mask-15)" fill="#FFA700"><path d="M9 13h2v2H9v-2zm0-8h2v6H9V5zm.99-5C4.47 0 0 4.48 0 10s4.47 10 9.99 10C15.52 20 20 15.52 20 10S15.52 0 9.99 0zM10 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z" id="path-1"></path></g></g></g></g></svg><span></span>
+    </div>
+    <div class="terms-checkbox">
+    <input type="checkbox" name="terms" id="terms">
+    <label for="terms">I accept Google's <a href="https://www.google.com/intl/en/policies/terms/" target="_blank">Terms and Conditions</a> and acknowledge that my information will be used in accordance with Google's <a href="https://www.google.com/intl/en/policies/privacy/" target="_blank">Privacy Policy</a>.</label>
+    </div>
+
+
+
+
+    <a disabled="" href="https://coral.ai/docs/edgetpu/models-intro/#" data-turbolinks="false" class="cta form-send-cta bg-color--ice" target="_blank" rel="noopener">
+
+	<span>Subscribe</span>
+
+    </a>
+    <div class="return-message">
+    <div class="success"><svg viewBox="0 0 55 55" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="M-5-5h64v64H-5V-5zm0 0h64v64H-5V-5z"></path><path d="M39.725 15.698L22.152 33.272l-9.574-9.547-3.76 3.76 13.334 13.333 21.333-21.333-3.76-3.787zM27.485.818C12.765.818.818 12.765.818 27.485c0 14.72 11.947 26.667 26.667 26.667 14.72 0 26.667-11.947 26.667-26.667 0-14.72-11.947-26.667-26.667-26.667zm0 48c-11.787 0-21.333-9.546-21.333-21.333 0-11.787 9.546-21.333 21.333-21.333 11.787 0 21.333 9.546 21.333 21.333 0 11.787-9.546 21.333-21.333 21.333z" fill="#25B6BB" fill-rule="nonzero"></path></g></svg></div>
+    <div class="error"><svg viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path d="M9 13h2v2H9v-2zm0-8h2v6H9V5zm.99-5C4.47 0 0 4.48 0 10s4.47 10 9.99 10C15.52 20 20 15.52 20 10S15.52 0 9.99 0zM10 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z" id="path-1"></path></defs><g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><g id="ic/error_outline" transform="translate(-2 -2)"><g id="ic_error_outline_24px" transform="translate(2 2)"><mask id="mask-15" fill="#fff"><use xlink:href="#path-1"></use></mask><g id="🎨-Color" mask="url(#mask-15)" fill="#FFA700"><path d="M9 13h2v2H9v-2zm0-8h2v6H9V5zm.99-5C4.47 0 0 4.48 0 10s4.47 10 9.99 10C15.52 20 20 15.52 20 10S15.52 0 9.99 0zM10 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z" id="path-1"></path></g></g></g></g></svg></div>
+    <span>You are subscribed! Thanks!</span>
+    </div>
+</form>      </div>
+    </div>
+  </div>
+</footer>
+<section class="image-expanded-component">
+
+  <div class="modal">
+    <img class="image-expanded">
+    <a href="https://coral.ai/docs/edgetpu/models-intro/#" class="close-modal image-expanded-close">
+<!--?xml version="1.0" encoding="UTF-8"?-->
+<svg width="19px" height="19px" viewBox="0 0 19 19" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 53.2 (72643) - https://sketchapp.com -->
+    <title>Close</title>
+    <desc>Created with Sketch.</desc>
+    <g id="08---Product-Distributors" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Coral-Product-Distributors-Modal---1440px_@2x" transform="translate(-838.000000, -387.000000)" fill="#4a4a4a">
+            <g id="Modal" transform="translate(548.000000, 348.000000)">
+                <polygon id="Close-Icon" points="309 40.9127517 301.412752 48.5 309 56.0872483 307.087248 58 299.5 50.4127517 291.912752 58 290 56.0872483 297.587248 48.5 290 40.9127517 291.912752 39 299.5 46.5872483 307.087248 39"></polygon>
+            </g>
+        </g>
+    </g>
+</svg>    </a>
+  </div>
+
+</section>
+      <script defer="" src="./TensorFlow models on the Edge TPU _ Coral_files/main.min.js.download"></script>
+
+
+  
+</body></html>

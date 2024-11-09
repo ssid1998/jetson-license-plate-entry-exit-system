@@ -1,0 +1,75 @@
+%%%%%%%%%%%%%%%%%%%%%%%%
+% $Autor: MansourAhmadyPhoulady, RanjeetsingTawar, HemanthPrabhakaran$
+% $Pfad: Car_Licence_Plate_Identification_with_a_JetsonNano$
+% $Version: 4.0.0 $
+%
+% !TeX encoding = utf8
+%
+%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{Data Version Control}
+
+Data Version Control (DVC) is an essential practice in managing data science, machine learning projects, and software development, especially when collaboration is involved. It extends version control systems to handle large data files, models, and experiments, ensuring reproducibility, collaboration efficiency, and resource management.
+
+Here are some reasons that we should have the data version control plan during the project:
+
+\begin{enumerate}
+	\item \textbf{Track Changes:} Our source code, data changes over time. Tracking these changes allows you to revert to previous versions if needed and understand how your data evolved.
+	\item \textbf{Collaboration:} When working on projects with others, it’s crucial to ensure everyone uses the same version of datasets and models. Version control helps synchronize data across teams.
+	\item \textbf{Experimentation:} Machine learning involves lots of experimentation. Tracking data versions alongside code changes helps in reproducing experiments accurately.
+\end{enumerate}
+
+\section{Plan}
+
+The first step is to finish the installation of GitHub among all the teammates and have the same version as our version control on the report, manual, and even presentations mainly builds on Git’s versioning capabilities. After completion of the installation, we asked for the professor to release the right for us to join the repository and initialize on our side about the project. To update our report and other documents, everyone would send a message in our communicating group first so others would not fetch and push new updates at that moment so crushing on the documents can also be prevented.
+
+Secondly, for our different software that we used in the project, we have firstly aligned our software version among everyone to make sure all the results replicate under the same environment and prevent issues due to the version difference. All the software aligned versions are stated in the following table.
+
+Thirdly, the data version control of the dataset is only done on one computer of our teammates. Therefore, every change in our dataset will stay in one computer to prevent the data or code corruption from the others. Moreover, our dataset would save every week as a new version in the local computer so that we can track the code again in case there are issues generated in the new version. Our data model and dataset can still step back to make sure they can run and get results properly.
+
+
+\begin{table}[h!]
+	\centering
+	\caption{Software and Package Versions}
+	\begin{tabular}{|l|l|}
+		\hline
+		\textbf{Software/Package} & \textbf{Version} \\
+		\hline
+		GitHub & Version 3.3.8 (x64) \\
+		\hline
+		TeXstudio & TeXstudio 4.6.3 \\
+		\hline
+		PyCharm & 2023.2.1 \\
+		\hline
+		Python & 3.10.12 \\
+		\hline
+		TensorFlow & 2.15.0 \\
+		\hline
+		NumPy & 1.23.5 \\
+		\hline
+		pandas & 1.5.3 \\
+		\hline
+		matplotlib.pyplot & 3.7.1 \\
+		\hline
+		os (Built-in Python) & 3.10.12 \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\section{Installation}
+
+\begin{enumerate}
+	\item \textbf{Install DVC}: Begin by installing DVC on your system. You can typically install DVC via pip, conda, or from source. The official DVC documentation provides comprehensive installation instructions for various platforms {\url{https://dvc.org/doc/install}}.
+	
+	\item \textbf{Set Up GitHub Repository}: Ensure that you have a GitHub repository set up for your project. If not, create one on GitHub's website {\url{https://github.com}}.
+	
+	\item \textbf{Initialize DVC}: Navigate to your project directory and initialize DVC by running the \texttt{dvc init} command in your terminal. This initializes DVC within your project and sets up the necessary files and directories.
+	
+	\item \textbf{Add Data to DVC}: Use the \texttt{dvc add} command to add your data files to DVC. This command tracks the data files and generates corresponding DVC metafiles.
+	
+	\item \textbf{Connect DVC with GitHub}: Once your data is added to DVC, you need to connect DVC with your GitHub repository. This is typically done using cloud storage services like Amazon S3, Google Cloud Storage, or Azure Blob Storage. Detailed instructions on setting up remote storage with GitHub are provided in the DVC documentation {\url{https://dvc.org/doc/user-guide/setup-remote-storage}}.
+	
+	\item \textbf{Commit and Push to GitHub}: After configuring remote storage, commit your changes to your local Git repository using standard Git commands (\texttt{git add}, \texttt{git commit}, \texttt{git push}). This ensures that your DVC metafiles and any changes to your project files are saved in your GitHub repository.
+	
+	\item \textbf{Collaborate with Teammates}: Share the GitHub repository link with your teammates, and ensure they have DVC installed on their systems. They can then clone the GitHub repository and use DVC commands to track and manage data files collaboratively.
+\end{enumerate}
