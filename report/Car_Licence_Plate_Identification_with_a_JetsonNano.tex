@@ -24,6 +24,7 @@
 \addbibresource{../Documents/Literature.bib}
 \addbibresource{../Documents/MyLiterature.bib}
 
+
 % Other packages
 \usepackage{float}
 \usepackage{hyperref}
@@ -36,6 +37,45 @@
 \usepackage{tikz}
 \usepackage{biblatex}
 \usepackage{pdflscape}
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage[utf8]{inputenc}
+
+
+% Define JSON language
+\lstdefinelanguage{JSON}{
+	basicstyle=\ttfamily,
+	morestring=[b]",
+	morecomment=[l]{//},
+	morekeywords={true, false, null},
+	keywordstyle=\color{blue},
+	stringstyle=\color{red!70},
+	commentstyle=\color{green!70!black},
+	backgroundcolor=\color{gray!10},
+}
+
+% Define Python style for code snippets
+\lstdefinestyle{python}{
+	language=Python,
+	basicstyle=\ttfamily\small,
+	backgroundcolor=\color{gray!10},
+	frame=single,
+	showstringspaces=false,
+	keywordstyle=\bfseries\color{blue},
+	stringstyle=\color{red!70},
+	commentstyle=\color{green!70!black},
+	morekeywords={np, torch},
+}
+
+% Define JSON style
+\lstdefinestyle{json}{
+	language=JSON,
+	basicstyle=\ttfamily\small,
+	backgroundcolor=\color{gray!10},
+	frame=single,
+	showstringspaces=false,
+	stringstyle=\color{red!70},
+}
 
 % -------------------------------------------------------------------------------
 % Document begins
@@ -84,7 +124,7 @@
 	
 	\part{Domain Knowledge}
 %%%	\InputLanguage{Chapters/}{Domain}
-%%%	\InputLanguage{Chapters/}{HardwareDescription}
+	\InputLanguage{Chapters/}{HardwareDescription}
 %%%	\InputLanguage{Chapters/}{Software}
 %%%	\InputLanguage{Chapters/}{Algorithm}
 
