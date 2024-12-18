@@ -142,6 +142,69 @@ The webcam is compatible with a wide range of operating systems and hardware con
 	\item Hard Drive Space: 200 MB for installation and operation.
 \end{itemize}
 
+\section{Library for Logitech C270 HD Webcam Integration}
+
+The \textbf{Logitech C270 HD Webcam} is a versatile and budget-friendly USB camera, making it suitable for computer vision tasks such as car license plate identification. The following section describes the library implementation for interfacing this webcam with the Jetson Nano, ensuring compatibility, efficient video streaming, and capturing images for processing.
+
+\subsection{Dependencies}
+
+To work with the Logitech C270 on the Jetson Nano, the following libraries and frameworks are required:
+
+\begin{itemize}
+	\item \textbf{OpenCV}: For video capture and frame processing.\\
+	\textit{Installation}: \texttt{sudo apt-get install python3-opencv}
+	\item \textbf{GStreamer}: Optimizes video pipeline on the Jetson Nano.\\
+	Pre-installed on most Jetson Nano setups, but can be installed or updated via:\\
+	\texttt{sudo apt-get install gstreamer1.0-tools}
+	\item \textbf{uvcvideo kernel module}: Ensures compatibility with USB webcams.
+\end{itemize}
+
+\section{Calibration}
+
+To achieve accurate license plate detection and recognition, it is essential to calibrate the Logitech C270 HD Webcam. Calibration minimizes distortion, ensures geometrically accurate image capture, and aligns the camera's field of view with the Jetson Nano's processing pipeline.
+
+\subsection{Calibration Steps}
+
+\begin{enumerate}
+	\item \textbf{Prepare for Calibration}
+	\begin{itemize}
+		\item Print a chessboard pattern with known dimensions (e.g., a 9x6 grid with 25mm squares).
+		\item Secure the chessboard on a flat, stable surface or attach it to a wall.
+		\item Ensure the Logitech C270 is connected to the Jetson Nano via USB.
+	\end{itemize}
+	
+	\item \textbf{Install Required Libraries}
+	Install the following libraries on the Jetson Nano:
+	\begin{itemize}
+		\item \texttt{sudo apt-get install python3-opencv}
+		\item \texttt{sudo apt-get install gstreamer1.0-tools}
+	\end{itemize}
+	
+	\item \textbf{Capture Calibration Images}
+	Use the Logitech C270 to capture multiple images of the chessboard from different angles and distances:
+	\begin{itemize}
+		\item Place the chessboard in the camera's field of view.
+		\item Ensure good lighting and avoid shadows on the chessboard.
+	\end{itemize}
+\end{enumerate}
+
+\subsection{Benefits of Calibration}
+
+\begin{itemize}
+	\item \textbf{Distortion Correction}: Corrects the lens distortion inherent in the Logitech C270 webcam, ensuring accurate geometric representation of license plates.
+	\item \textbf{Enhanced Detection}: Reduces errors in edge detection and object localization for license plates.
+	\item \textbf{Optimized Pipeline}: Aligns image capture with the requirements of downstream computer vision algorithms.
+\end{itemize}
+
+\subsection{Features}
+
+\begin{itemize}
+	\item \textbf{Resolution Control}: The library supports various resolutions, with a maximum resolution of 1280x720 pixels for the Logitech C270.
+	\item \textbf{Frame Rate Management}: Adjustable frames per second (FPS), ensuring smooth video feeds.
+	\item \textbf{Real-Time Capture}: Enables real-time video streaming and image capture, suitable for car license plate recognition.
+	\item \textbf{Error Handling}: Handles issues like device unavailability or capture errors gracefully.
+\end{itemize}
+
 \subsection{Connectivity:}
 \begin{itemize}
 	\item \textbf{Interface:} Connects via USB 2.0, ensuring a stable and efficient connection for HD video streaming and data transfer.
@@ -153,10 +216,205 @@ The Logitech C270 is a budget-friendly yet efficient webcam, capable of deliveri
 
 \begin{figure}
 	\centering
-	\includegraphics[width=0.7\linewidth]{Images/logitech.png}
+	\includegraphics[width=0.7\linewidth]{Images/Logitech C270 HD Webcam.png}
 	\caption{Logitech Camera}
 \end{figure}
 
+\section{Sample Python Code}
+
+Below is the Python code used to generate a simulated camera frame with a simple gradient, using \texttt{matplotlib} and \texttt{numpy}.
+
+\begin{lstlisting}
+	import matplotlib.pyplot as plt
+	import numpy as np
+	
+	def generate_camera_frame():
+	# Create a simple gradient to simulate a camera feed (720p resolution)
+	frame = np.zeros((720, 1280, 3), dtype=np.uint8)
+	
+	# Simulating a simple gradient or light effect that might be seen in a camera feed
+	for i in range(720):
+	frame[i, :, :] = [i % 256, 128, 255]  # Generate a gradient effect across the image
+	
+	return frame
+	
+	def show_image(image):
+	# Display the image in a window
+	plt.imshow(image)
+	plt.axis('off')  # Hide axes for clarity
+	plt.show()
+	
+	def main():
+	# Generate a "camera-like" frame
+	camera_frame = generate_camera_frame()
+	
+	# Display the simulated camera image
+	show_image(camera_frame)
+	
+	if __name__ == "__main__":
+	main()
+\end{lstlisting}
+
+\section{Applications of Logitech C270 HD Webcam}
+The simple application developed for the Logitech C270 webcam aims to facilitate webcam access and display live video feed in a GUI environment. This basic application allows users to view and interact with the webcam feed, capturing still images from the live stream.
+
+\subsection{Components of the Application}
+
+\subsection*{Webcam Feed Capture}
+At the core of the application is the ability to interface with the Logitech C270 webcam using OpenCV. The \texttt{cv2.VideoCapture(0)} function is used to open the webcam stream, where 0 refers to the default camera (in this case, the Logitech C270). This function captures the webcam feed frame-by-frame, providing real-time video input.
+
+\subsection*{Display Video Feed}
+The real-time video feed from the Logitech C270 is displayed within the GUI using Tkinter. A Tkinter \texttt{Label} widget is used to display the current frame as an image in the window. OpenCV captures the frame in BGR (Blue-Green-Red) format, which is then converted to RGB (Red-Green-Blue) format to match the color system used by Tkinter. The frame is then converted into a format that Tkinter can display (using PIL - Python Imaging Library), and updated at a fast rate to create a smooth video feed.
+
+\subsection*{Image Capture}
+A key feature of the application is the ability to capture a snapshot from the webcam feed. By pressing a button in the GUI, users can capture the current frame and save it as an image file (in JPEG format). This is achieved using the \texttt{cv2.imwrite()} function, which saves the current frame to the disk.
+
+\subsection*{Graphical User Interface (GUI)}
+The GUI is designed to be simple, with just two main elements:
+\begin{itemize}
+	\item A video display area showing the webcam feed.
+	\item A capture button, which allows the user to take a snapshot of the current frame.
+\end{itemize}
+The application window is kept minimal to ensure ease of use and focus on the core functionality—capturing and displaying the webcam feed.
+
+\subsection{Benefits of the Simple Application}
+
+\subsection*{Real-Time Video Stream}
+The application provides users with a real-time video stream from the Logitech C270 webcam. This can be beneficial in various use cases where live video capture is required, such as monitoring, surveillance, or interactive applications. The use of OpenCV enables efficient handling of the video stream and ensures smooth performance.
+
+\subsection*{User Interaction}
+By integrating the Tkinter library, the application enables basic user interaction. Users can easily take snapshots with a single button click, which is intuitive and user-friendly. This simplicity is ideal for users who need quick access to webcam functionality without dealing with complex interfaces.
+
+\subsection*{Cross-Platform Functionality}
+Both OpenCV and Tkinter are cross-platform libraries. The application can run on multiple operating systems such as Windows, macOS, and Linux. This ensures broad accessibility and compatibility, making the webcam application versatile for different environments.
+
+\subsection*{Extensibility}
+Although the application is simple, it can serve as a foundation for more complex computer vision tasks. For example, the application could be extended to include features such as:
+\begin{itemize}
+	\item Object detection or tracking.
+	\item Real-time video processing (e.g., edge detection, face recognition).
+	\item Integration with machine learning models for tasks like license plate recognition.
+\end{itemize}
+
+\section{Test Cases for Logitech C270 HD Webcam}
+\subsection{Test Case: Webcam Initialization}
+\textbf{Objective:} Verify that the Logitech C270 webcam can be successfully initialized and opened for use by the system.
+
+\textbf{Steps:}
+\begin{enumerate}
+	\item Connect the Logitech C270 webcam to the system.
+	\item Open a webcam application (e.g., OpenCV, default system camera application).
+	\item Attempt to open the webcam stream using \texttt{cv2.VideoCapture(0)} in OpenCV or through another application.
+\end{enumerate}
+
+\textbf{Expected Result:}
+\begin{itemize}
+	\item The webcam should initialize successfully without errors.
+	\item No errors related to device connection or permissions should be thrown.
+\end{itemize}
+
+\textbf{Pass Criteria:} 
+The webcam stream opens without any error messages or issues.
+
+\subsection{Test Case: Resolution Check}
+\textbf{Objective:} Ensure that the webcam supports the desired resolution settings (e.g., 1280x720).
+
+\textbf{Steps:}
+\begin{enumerate}
+	\item Using a software application or script (e.g., OpenCV), configure the resolution to 1280x720.
+	\item Check the camera settings and capture a few frames.
+	\item Check the actual resolution of the captured frames.
+\end{enumerate}
+
+\textbf{Expected Result:}
+\begin{itemize}
+	\item The webcam should capture at the set resolution (1280x720).
+	\item The frames should match the resolution in the output image.
+\end{itemize}
+
+\textbf{Pass Criteria:} 
+The captured frames should be at the desired resolution, i.e., 1280x720 pixels.
+
+\subsection{Test Case: Frame Rate (FPS) Test}
+\textbf{Objective:} Verify that the webcam supports the expected frame rate (e.g., 30 FPS) and that it maintains smooth video capture.
+
+\textbf{Steps:}
+\begin{enumerate}
+	\item Use OpenCV to capture video from the webcam (\texttt{cv2.VideoCapture()}).
+	\item Display the frame rate while capturing (or use a frame counter).
+	\item Measure the frame rate of the captured video.
+	\item Record the frame rate for comparison (e.g., using OpenCV's \texttt{cv2.CAP\_PROP\_FPS}).
+\end{enumerate}
+
+\textbf{Expected Result:}
+\begin{itemize}
+	\item The webcam should operate smoothly at a frame rate of 30 FPS (or as configured in the application).
+	\item If using OpenCV, the \texttt{cv2.CAP\_PROP\_FPS} property should return a value close to 30.
+\end{itemize}
+
+\textbf{Pass Criteria:} 
+The frame rate is consistent and meets expectations (e.g., 30 FPS).
+
+\subsection{Test Case: Focus and Image Quality}
+\textbf{Objective:} Ensure that the Logitech C270 webcam captures clear, focused images without distortion or blurriness.
+
+\textbf{Steps:}
+\begin{enumerate}
+	\item Position the webcam at various distances from an object or subject.
+	\item Capture images or video at different distances and orientations.
+	\item Check the clarity and focus of the image at different distances (close-up and far distances).
+	\item Inspect the captured images for any distortion, blurring, or focus issues.
+\end{enumerate}
+
+\textbf{Expected Result:}
+\begin{itemize}
+	\item The webcam should capture clear and sharp images at a variety of distances (within the effective focus range).
+	\item Images should not exhibit excessive blur or distortion at reasonable distances.
+\end{itemize}
+
+\textbf{Pass Criteria:} 
+The webcam captures clear and sharp images with no visible blurring or distortion.
+
+\subsection{Test Case: Low-Light Performance}
+\textbf{Objective:} Test the webcam’s performance in low-light conditions.
+
+\textbf{Steps:}
+\begin{enumerate}
+	\item Capture video or images with the webcam in a low-light environment (e.g., dimly lit room).
+	\item Observe how well the camera handles the lighting and whether the image is clear or noisy.
+\end{enumerate}
+
+\textbf{Expected Result:}
+\begin{itemize}
+	\item The camera should perform reasonably well in low-light environments.
+	\item The images should be usable with acceptable noise levels.
+\end{itemize}
+
+\textbf{Pass Criteria:} 
+The camera performs acceptably in low-light conditions with minimal noise and visible details.
+
+\section{Further Readings for Logitech C270 HD Webcam}
+
+The following resources provide additional insights into the Logitech C270 HD Webcam, its capabilities, and how to integrate it with computer vision applications such as video capture and calibration.
+
+\begin{itemize}
+	\item \textbf{Logitech C270 HD Webcam Official Product Page}:  
+	The official Logitech product page for the C270 HD Webcam provides detailed specifications, features, and user information, including setup guides and performance details.  
+	URL: \url{https://www.logitech.com/en-in/products/webcams/c270-hd-webcam.960-000584.html}
+	
+	\item \textbf{Logitech C270 HD Webcam User Manual}:  
+	This user manual provides detailed instructions on setting up and using the Logitech C270 HD Webcam, including troubleshooting tips and usage scenarios.  
+	URL: \url{https://www.logitech.com/assets/31702/2/c270620-002802003403gsamr.pdf}
+	
+	\item \textbf{OpenCV Camera Calibration Tutorial}:  
+	A tutorial on how to calibrate cameras for computer vision applications, providing essential techniques to eliminate distortion and improve image accuracy, which is especially useful for tasks such as license plate recognition.  
+	URL: \url{https://docs.opencv.org/4.x/dc/dbb/tutorial_py_calibration.html}
+	
+	\item \textbf{OpenCV VideoCapture Class Documentation}:  
+	The OpenCV documentation for the VideoCapture class, which allows users to interface with webcams like the Logitech C270 to capture video feeds, process frames, and apply computer vision algorithms.  
+	URL: \url{https://docs.opencv.org/3.4/d8/dfe/classcv_1_1VideoCapture.html}
+	
+\end{itemize}
 
 \section{The Jetson Nano and the Competition}
 
@@ -1518,13 +1776,130 @@ This section highlights some of the Jetson Nano Developer Kit interfaces.
 
 \subsection{Sensor Input Constraints}
 \begin{itemize}[leftmargin=1.5cm]
-	\item Limited to supported interfaces like Camera Serial Interface (CSI) and GPIO, which may not be compatible with all sensor types without additional hardware.
+	\item Limited to supported interfaces like Camera Serial Interface (CSI) and GPIO. Which may not be compatible with all sensor types without additional hardware.
 \end{itemize}
 
 \subsection{Performance Constraints}
 \begin{itemize}[leftmargin=1.5cm]
-	\item While capable of handling multiple neural networks, the 472 GFLOPs performance and 4 GB RAM limit scalability for extremely complex models or high-speed real-time processing.
+	\item While capable of handling multiple neural networks \\ the 472 GFLOPs performance and 4 GB RAM limit scalability for extremely complex models or high-speed real-time processing.\newline \newline
 \end{itemize}
+
+\section{Sample Python Code} 
+
+\begin{lstlisting}[language=Python]
+	import numpy as np
+	import time
+	import matplotlib.pyplot as plt
+	
+	class SimulatedCamera:
+	def __init__(self, name="Logitech C270", resolution="720p", frame_rate="30fps"):
+	self.name = name
+	self.resolution = resolution
+	self.frame_rate = frame_rate
+	# Simulate the hardware description for the camera
+	print(f"Initializing {self.name} Camera with {self.resolution} resolution and {self.frame_rate} frame rate.")
+	
+	def capture_image(self):
+	"""
+	Simulates image capture from the camera.
+	Returns a mock image (RGB) using NumPy array.
+	"""
+	print(f"Capturing image with {self.name} at {self.resolution}...")
+	# Create a mock image using NumPy array (representing pixel data)
+	# Example: 100x100 image with random RGB values
+	image_data = np.random.randint(0, 256, (100, 100, 3), dtype=np.uint8)
+	return image_data
+	
+	def show_image(self, image_data):
+	"""
+	Simulates displaying the captured image using matplotlib.
+	"""
+	print("Displaying the captured image...")
+	plt.imshow(image_data)  # Display image using matplotlib
+	plt.axis('off')  # Hide axes for a cleaner view
+	plt.show()  # Show the image in a window
+	
+	class SimulatedLED:
+	def __init__(self):
+	self.state = "OFF"  # Initial state of the LED
+	# Simulate the hardware description for LED
+	print("Initializing LED...")
+	
+	def turn_on(self):
+	"""
+	Simulates turning the LED on.
+	"""
+	self.state = "ON"
+	print("LED ON")
+	
+	def turn_off(self):
+	"""
+	Simulates turning the LED off.
+	"""
+	self.state = "OFF"
+	print("LED OFF")
+	
+	def blink(self, blink_count=5, delay=0.5):
+	"""
+	Simulates the LED blinking a given number of times.
+	"""
+	for _ in range(blink_count):
+	self.turn_on()
+	time.sleep(delay)  # Wait for 'delay' seconds
+	self.turn_off()
+	time.sleep(delay)
+	
+	class SimulatedJetsonNano:
+	def __init__(self):
+	# Simulating the hardware characteristics of the Jetson Nano
+	print("Initializing Jetson Nano Developer Kit...")
+	self.gpu = "128-core Maxwell GPU"
+	self.cpu = "Quad-core ARM Cortex-A57"
+	self.memory = "4GB LPDDR4"
+	self.storage = "16GB eMMC"
+	self.resolution = "720p"  # Simulating camera resolution
+	self.frame_rate = "30fps"  # Simulating frame rate
+	
+	def show_hardware_specs(self):
+	print("\nHardware Specifications of Simulated Jetson Nano:")
+	print(f"GPU: {self.gpu}")
+	print(f"CPU: {self.cpu}")
+	print(f"Memory: {self.memory}")
+	print(f"Storage: {self.storage}")
+	
+	# Main simulation
+	if __name__ == "__main__":
+	# Simulate Jetson Nano hardware
+	jetson = SimulatedJetsonNano()
+	jetson.show_hardware_specs()
+	
+	# Create instances of the LED and Camera simulators
+	led = SimulatedLED()
+	camera = SimulatedCamera()
+	
+	# Simulate LED blinking (as part of the hardware's feedback system)
+	print("\nStarting LED blink simulation...")
+	led.blink(blink_count=3, delay=1)  # LED blinks 3 times with a 1-second delay
+	
+	# Simulate capturing and displaying an image (camera processing)
+	time.sleep(1)  # Simulate time delay after blinking
+	print("\nSimulating image capture...")
+	image_data = camera.capture_image()  # Capture the image
+	camera.show_image(image_data)  # Display the captured image
+	print("\nSimulated image displayed.")
+\end{lstlisting}
+
+\section{Explanation and Output of Code}
+
+The code is structured as follows:
+
+\begin{itemize}
+	\item \texttt{SimulatedCamera}: This class simulates a camera that captures images. The image is generated as a random 100x100 RGB array using NumPy.
+	\item \texttt{SimulatedLED}: This class simulates an LED that can be turned on, turned off, or blink a set number of times with a given delay.
+	\item \texttt{SimulatedJetsonNano}: This class simulates the Jetson Nano hardware, including a GPU, CPU, memory, and storage, and can display its specifications.
+\end{itemize}
+
+The main section of the code simulates the initialization of the Jetson Nano hardware, then proceeds with the LED blinking simulation and image capturing and display.
 
 
 \section{Conclusion}
@@ -1535,3 +1910,31 @@ The Jetson Nano's compact form factor and low power consumption make it especial
 
 Furthermore, by utilizing edge computing, the need for continuous reliance on cloud services is minimized, improving system autonomy and responsiveness. The real-time processing capabilities of the Jetson Nano enable faster decision-making, enhancing the overall efficiency of the license plate detection system. This makes the system a robust and scalable solution for a variety of intelligent transportation and computer vision applications.
 
+\chapter{Bill of Materials}
+
+\section{Hardware Bill of Materials}
+The following BOM has been identified for the Hardware:
+\begin{table}[h!]
+	\begin{tabular}{||m{1cm}|m{2.2cm}|m{2.5cm}|m{1.5cm}|m{1.7cm}|m{1cm}|m{3cm}||}
+		\hline
+		\textbf{Units} & \textbf{Hardware} & \textbf{Description} & \textbf{Picture} & \textbf{Quantity} & \textbf{Price} & \textbf{Link}\\
+		\hline
+		1 & NVIDIA Jetson Nano Developer Kit & GPU Based AI controller and its Kit & \includegraphics[width=1.5cm]{Images/JetsonKit} & 1 & 344€ & \href{https://eckstein-shop.de/WaveShare-Jetson-Nano-Dev-Kit-A-Carrier-Board-with-Jetson-Nano-and-Accessories}{Jetson-Nano}\\
+		\hline
+		1 & Micro SD card & Minimum 32GB UHS-1 & \includegraphics[width=1cm]{Images/Micro_SD} & 1 & 13€ & \href{https://eckstein-shop.de/32GBMicroSDCardClass10SpeicherkartemitAdapter}{SD-Card}\\
+		\hline
+		1 & Micro USB cable & Standard USB to Micro USB cable & \includegraphics[width=1cm]{Images/USB_Cable} & 1 & 5€ & \href{https://eckstein-shop.de/12C3mUSBVerlC3A4ngerungskabelTypeAMaletoFemaleExtensionCable}{USB Cable}\\
+		\hline
+		1 & Computer Display & Either a laptop display or independent Display & \includegraphics[width=1.5cm]{Images/Computer_Display} & 1 & 90€ & \href{https://eckstein-shop.de/Waveshare7inch1024x600HDMILCDIPSDisplayCapacitiveTouchRaspberryPiComputermonitor}{Monitor}\\
+		\hline
+		1 & Keyboard & Standard American/German language & \includegraphics[width=1.5cm]{Images/Keyboard} & 1 & 23€ & \href{https://www.reichelt.de/funk-tastatur-usb-schwarz-delock-12004-p293085.html?&trstct=pol_0&nbc=1}{Keyboard}\\
+		\hline
+		1 & Mouse & Standard 3-button wired or wireless & \includegraphics[width=1.5cm]{Images/Mouse} & 1 & 11€ & \href{https://www.reichelt.de/maus-mouse-funk-schwarz-rot-delock-12493-p207513.html?&trstct=pol_1&nbc=1}{Mouse}\\
+		\hline
+		1 & Laptop & Capable of running deep learning algorithms & \includegraphics[width=1.5cm]{Images/Laptop} & 1 & 740€ & \href{https://www.reichelt.com/de/en/shop/product/laptop_probook_440_i5_16_gb_512_gb-375444}{Laptop}\\
+		\hline
+		1 & Logitech C270 HD Webcam & 3 MP Maximum 30fps and 1280 x 720 resolution & \includegraphics[width=1.5cm]{Images/Logitech C270 HD Webcam} & 1 & 19.99€ & \href{https://www.coolblue.de/produkt/838636/logitech-c270-hd-webcam.html?cmt=c_b%2Ccp_532530061%2Caid_1354600906373878%2Ct_pla-4588262031974841%2Cn_o%2Cd_c%2Clp_&msclkid=584a4cb31a77123ffa4c2bd28a3f8062&utm_source=bing&utm_medium=cpc&utm_campaign=%5BBing%5D+%5BPT%3AALL%5D+%5BRL1%3AGermany%5D+%5BPTID%3A0%5D+%5BCO%3ADE%5D+%5BLAN%3ADE%5D+%5BDEV%3AALL%5D+%5BFL%3AALL%5D+%5BCH%3AShopping%5D&utm_term=4588262031974841&utm_content=%5BPT%3AAll+other+products%5D}{Camera}\\
+		\hline
+	\end{tabular}
+	\caption{\label{tab:Hardware BOM} Hardware BOM}
+\end{table}
