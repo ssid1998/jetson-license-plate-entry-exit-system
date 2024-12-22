@@ -10,35 +10,52 @@
 \chapter{Hardware Description}
 
 \section{Introduction to Nvidia Jetson Nano}
-The NVIDIA® Jetson Nano™ Developer Kit is a cost-effective, compact AI computing platform designed for makers, learners, and developers. It brings the advanced capabilities of modern artificial intelligence into the hands of a wide range of users through a low-power, user-friendly interface. This platform supports rapid development and prototyping, thanks to its compatibility with a broad spectrum of peripherals, add-ons, and pre-configured projects.
 
-The \textbf{NVIDIA\textsuperscript{\textregistered} Jetson Nano} stands out by leveraging the powerful  \textbf{NVIDIA\textsuperscript{\textregistered} JetPack\textsuperscript{\texttrademark} SDK}, which provides the tools and resources required to execute cutting-edge AI and machine learning workloads seamlessly. The JetPack SDK equips developers with:
+The NVIDIA Jetson Nano board is an advanced example of edge computing, offering exceptional processing capabilities for AI and machine learning tasks. It is specifically designed for real-time AI applications and supports high-performance GPU computing, making it ideal for a variety of embedded systems and IoT applications \cite{NVI:2019}. The board features a 128-core Maxwell GPU, which enables efficient parallel processing and accelerates AI workloads such as computer vision, speech recognition, and robotics. Additionally, it is equipped with a quad-core ARM Cortex-A57 CPU, providing the computational power needed for multitasking and data-intensive applications \cite{NVI:2021}
 
-\begin{enumerate}
-	\item A full-featured desktop Linux OS integrated with NVIDIA drivers
-	\item Advanced AI and computer vision libraries and APIs to enable robust AI processing and data analysis
-	\item Comprehensive developer tools for coding, debugging, and optimizing applications
-	\item Documentation and sample code for quicker learning and efficient development
-	\cite{NVI:2024}
-\end{enumerate}
+The Jetson Nano includes multiple input/output interfaces, such as GPIO pins, USB ports, and CSI camera interfaces, making it versatile for connecting external devices like cameras, sensors, and other peripherals. This allows for seamless integration in projects requiring video processing or sensor data acquisition \cite{NPD:2023}. With its ability to process multiple streams of high-definition video, the board is particularly suitable for applications like real-time object detection, surveillance, and license plate recognition systems.
 
+The Jetson Nano operates on a low power budget, requiring as little as 5 watts, making it suitable for portable and battery-powered devices \cite{NVI:2021}. Despite its compact size, it supports a variety of AI frameworks, such as TensorFlow, PyTorch, and OpenCV, ensuring compatibility with popular machine learning models.
+
+Furthermore, the Jetson Nano provides developers with access to JetPack SDK, a comprehensive software suite that includes libraries, tools, and example applications. JetPack simplifies the development process and accelerates the deployment of AI solutions on edge devices \cite{NVJ:2023}. Programs are typically developed on a host computer using the Jetson Nano Development Kit, then compiled and deployed to the board for execution, similar to other microcontroller environments.
+
+The board's connectivity options include Gigabit Ethernet for high-speed network communication and microSD card support for extended storage. The platform is designed to handle demanding AI inference tasks efficiently while maintaining cost-effectiveness and energy efficiency.
+
+Lastly, NVIDIA offers different models within the Jetson family, including Jetson Xavier NX and Jetson AGX Orin, for scalability in performance and capabilities. In this project, we primarily utilize the NVIDIA Jetson Nano 4GB model, leveraging its GPU, CPU, and camera support for tasks like license plate detection and recognition. The following description and hardware tests are based on the board NVIDIA Jetson Nano 4GB, focusing on its real-time AI performance and versatility.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\textwidth]{Images/image1.png} % Image in the same folder
+	\caption{Camera Module PCB Board}
+	\label{fig:camera_module}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\textwidth]{Images/image2.png} % Image in the same folder
+	\caption{NVIDIA Jetson Nano Ports Overview}
+	\label{fig:jetson_ports}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\textwidth]{Images/image3.png} % Image in the same folder
+	\caption{NVIDIA Jetson Nano Internal Components with Case}
+	\label{fig:jetson_internal}
+\end{figure}
 
 
 \section{Hardware Requirements}
-\begin{figure}[h!]
-	\centering
-	\includegraphics[width=\textwidth]{Images/Hardware-planning}
-	\caption{Development and Deployment Process Flow}
-\end{figure}
-\textbf{Contents of the Developer Kit Box}\\
+
+\subsection{Contents of the Developer Kit Box}
 The NVIDIA Jetson Nano Developer Kit package includes the following items:
 \begin{itemize}
 	\item \textbf{Jetson Nano Module and Carrier Board}: The core of the system, ready for AI development.
 	\item \textbf{Quick Start Guide:} A concise paper card providing setup instructions and support details.
-	\item \textbf{Folder Paper Stand:} For easy positioning and stability of the kit during use.
+	\item \textbf{Box:} For secure storage and protection of the kit during transportation and storage
 \end{itemize}
 
-\textbf{Additional requirement:}\\
+\subsection{Additional requirement:}
 To get started with the Jetson Nano, you’ll need:
 \begin{itemize}
 	\item \textbf{MicroSD Card:} At least 32 GB, UHS-1 recommended, to store the system image and data.
@@ -47,21 +64,21 @@ To get started with the Jetson Nano, you’ll need:
 	\item \textbf{Keyboard and Mouse:} For interaction in GUI-based setups.
 \end{itemize}
 
-\textbf{Software requirement:}
+\subsection{Software requirement:}
 \begin{itemize}
 	\item \textbf{Etcher Software}: Required for flashing the Jetson Nano system image onto the microSD card.
 	
 	\item \textbf{NVIDIA Jetson Software EULA:} Required for the End User License Agreement during setup. 
 \end{itemize}
 
-\textbf{Operational Modes}\\
+\subsection{Operational Modes}
 The Jetson Nano Supports two modes of operation:
 \begin{enumerate}
 	\item \textbf{Graphical User Interface (GUI) Mode:} Operate with a display, keyboard, and mouse connected.
 	\item\textbf{Headless Mode:} Control the system remotely from another computer, ideal for compact setups.
 \end{enumerate}
 
-\textbf{Setting Up the Jetson Nano Developer Kit:}\\
+\subsection{Setting Up the Jetson Nano Developer Kit:}
 Follow these steps to prepare Jetson Nano for use:
 \begin{enumerate}
 	\item \textbf{Prepare the Stand:} Assemble the included paper stand and place it inside the kit box.
@@ -72,7 +89,7 @@ Follow these steps to prepare Jetson Nano for use:
 \end{enumerate}
 
 
-\textbf{First Boot Process:}\\
+\subsection{First Boot Process:}
 When powered, a green LED near the Micro-USB connector indicates the system is active. During the initial boot, the system will prompt you to:
 
 \begin{itemize}
@@ -82,7 +99,7 @@ When powered, a green LED near the Micro-USB connector indicates the system is a
 	\item \textbf{Define Partition Size:} Opt for the maximum suggested size for optimal use.
 \end{itemize}
 
-\textbf{Creating AI Projects:}\\
+\subsection{Creating AI Projects:}
 The Jetson Nano Developer Kit is equipped with tools and compatibility to support extensive AI and machine learning projects. Features include:
 \begin{itemize}
 	\item \textbf{GPIO Python Library:} Facilitates interaction with sensors and peripherals, including those from Raspberry Pi.
@@ -90,8 +107,8 @@ The Jetson Nano Developer Kit is equipped with tools and compatibility to suppor
 	\item \textbf{Neural Network Execution:} Capable of running multiple AI models in parallel for real-time data processing and action.
 \end{itemize}
 
-\textbf{Troubleshooting:}\\
-\textbf{Power Supply Issues:}
+\subsection{Troubleshooting:}
+\subsection*{Power Supply Issues:}
 \begin{itemize}
 	\item If the Jetson Nano doesn’t boot, check the quality of the USB power supply.
 	\item Use a power source with a permanently attached cord to ensure stable voltage.
