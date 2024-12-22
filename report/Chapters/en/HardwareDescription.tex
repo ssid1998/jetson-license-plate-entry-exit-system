@@ -81,9 +81,9 @@ The Jetson Nano Supports two modes of operation:
 \subsection{Setting Up the Jetson Nano Developer Kit:}
 Follow these steps to prepare Jetson Nano for use:
 \begin{enumerate}
-	\item \textbf{Prepare the Stand:} Assemble the included paper stand and place it inside the kit box.
+	\item \textbf{Prepare the Stand:} Ensure the Jetson Nano is placed securely inside the kit box or a stable enclosure to prevent movement.
 	\item \textbf{Insert the MicroSD Card:} Load the microSD card with the pre-installed system image into the slot on the underside of the Nano module.
-	\item \textbf{Position the Kit:} Mount the Jetson Nano on the paper stand for stability.
+	\item \textbf{Position the Kit:} Place the kit in a stable location within the box, ensuring the Jetson Nano is properly supported and not at risk of damage.
 	\item \textbf{Connect Display:} Power on the monitor and attach it to the Jetson Nano.
 	\item \textbf{Power the Kit:} Plug in the Micro-USB power supply to turn on the device.  \cite{JET:2024}
 \end{enumerate}
@@ -240,37 +240,74 @@ The Logitech C270 is a budget-friendly yet efficient webcam, capable of deliveri
 
 \section{Sample Python Code}
 
-Below is the Python code used to generate a simulated camera frame with a simple gradient, using \texttt{matplotlib} and \texttt{numpy}.
+This section provides the source code for a Python script that generates and displays images representing an LED in the ON and OFF states. The LED's state is simulated using circles, where the LED in the "ON" state is represented by a green circle, and the "OFF" state is represented by a red circle.
 
-\begin{lstlisting}
-	import matplotlib.pyplot as plt
-	import numpy as np
+\section{Code Explanation}
+
+The following Python code generates two images representing the LED in its "ON" and "OFF" states. It uses the \texttt{PIL} library to create images and simulate the LED.
+
+\begin{lstlisting}[language=Python, caption=LED ON/OFF Image Generator Script]
+	from PIL import Image, ImageDraw
 	
-	def generate_camera_frame():
-	# Create a simple gradient to simulate a camera feed (720p resolution)
-	frame = np.zeros((720, 1280, 3), dtype=np.uint8)
+	# Doxygen Documentation:
+	# @file BlinkDemo.IPYNB
+	# @brief This script generates and displays images of an LED in the ON and OFF states.
+	# @details The script creates an image of a green circle to simulate the LED being ON
+	#          and a red circle to simulate the LED being OFF. It displays each image once 
+	#          and stops the execution after displaying both images.
+	# @author Ranjeetsing Tawar
+	# @date 2024-12-22
 	
-	# Simulating a simple gradient or light effect that might be seen in a camera feed
-	for i in range(720):
-	frame[i, :, :] = [i % 256, 128, 255]  # Generate a gradient effect across the image
+	# Function to create an image simulating the LED state (ON/OFF)
+	# @param state The state of the LED (either "ON" or "OFF")
+	# @return img The generated image representing the LED state
+	def create_led_image(state="OFF"):
+	"""
+	Create an image representing an LED in either the ON or OFF state.
 	
-	return frame
+	@param state The state of the LED. Accepted values are "ON" and "OFF".
+	@return img The generated image representing the LED state.
+	"""
+	# Create a blank white image
+	img = Image.new('RGB', (200, 200), color='white')
+	draw = ImageDraw.Draw(img)
 	
-	def show_image(image):
-	# Display the image in a window
-	plt.imshow(image)
-	plt.axis('off')  # Hide axes for clarity
-	plt.show()
+	# Draw a circle to simulate the LED
+	if state == "ON":
+	# Green color for LED ON
+	draw.ellipse((50, 50, 150, 150), fill="green")
+	else:
+	# Red color for LED OFF
+	draw.ellipse((50, 50, 150, 150), fill="red")
 	
-	def main():
-	# Generate a "camera-like" frame
-	camera_frame = generate_camera_frame()
+	return img
 	
-	# Display the simulated camera image
-	show_image(camera_frame)
+	# Generate and show LED ON and OFF states
+	# @brief This function generates and shows images of the LED ON (green) and OFF (red) states.
+	# @details The function first generates an image for the LED being ON and shows it.
+	#          Then, it generates an image for the LED being OFF and shows it.
+	#          The program stops after displaying both images.
+	def generate_led_images():
+	"""
+	Generate and display images for the LED ON and OFF states.
 	
-	if __name__ == "__main__":
-	main()
+	@details This function generates two images:
+	1. The LED ON state (green).
+	2. The LED OFF state (red).
+	Each image is shown once, and the program stops after displaying both.
+	"""
+	# Generate LED ON image
+	img_on = create_led_image(state="ON")
+	img_on.show()  # Display the image with the LED ON
+	print("LED ON - Image displayed")
+	
+	# Generate LED OFF image
+	img_off = create_led_image(state="OFF")
+	img_off.show()  # Display the image with the LED OFF
+	print("LED OFF - Image displayed")
+	
+	# Run the function to generate the images once
+	generate_led_images()
 \end{lstlisting}
 
 \section{Applications of Logitech C270 HD Webcam}
@@ -434,16 +471,6 @@ The following resources provide additional insights into the Logitech C270 HD We
 	
 \end{itemize}
 
-\section{The Jetson Nano and the Competition}
-
-System-on-a-Chip (SoC) platforms offer a cost-effective solution for developing low-power, autonomous deep-learning applications, particularly focusing on inference tasks where pre-trained machine learning models are applied to real-world data. Among these, the NVIDIA Jetson Nano stands out as the smallest AI module in the Jetson family, delivering high processing performance with moderate energy requirements. Designed to meet the growing demand for machine learning applications in embedded systems, the Jetson Nano provides a compact and efficient solution. The increasing availability of affordable SoC systems in the lower price range has further democratized access to such technology. These systems incorporate specialized computational kernels, enabling efficient execution of AI workloads while maintaining low power consumption, making them ideal for developers and innovators in edge computing and AI integration. \cite{NVI2024}
-
-Intel offers an affordable solution for developers with the Neural Compute Stick, a compact device designed to easily integrate with existing hardware like Raspberry Pi via a USB connection. Priced at approximately €70, this device features 16 cores powered by the Movidius Myriad X Vision Processing Unit, a low-power processor optimized for image processing tasks. The Neural Compute Stick is compatible with major operating systems, including Windows 10, Ubuntu, and macOS, making it a versatile tool for AI development and deployment in diverse environments. \cite{IntelStickDataSheet:2019}
-
-Google caters to the same audience with its Google Edge TPU Boards, priced at approximately €80. These boards are equipped with a Tensor Processing Unit (TPU), leveraging hardware similar to the technology used in Google Cloud for high-performance AI processing. They are fully compatible with popular development tools such as Jupyter Notebooks and Google Colab, providing a streamlined environment for AI experimentation and deployment. Additionally, the Edge TPU Board doubles as a USB 3.0 dongle, offering flexibility for integration with various systems and workflows.
-\cite{Vincent:2018,GoogleTensorFlowModel:2019,GoogleCoral:2019}
-
-Similar advancements can be seen in the latest iterations of consumer technology. Apple’s A12 Bionic chip, featured in recent iPhone models, is equipped with 8 cores and can execute up to 5 trillion operations per second, showcasing exceptional computational power for AI tasks. Meanwhile, Samsung’s Exynos 980 integrates a Neural Processing Unit (NPU) for efficient AI processing, and Huawei’s Kirin 990 takes it a step further by incorporating two NPUs, enabling enhanced parallel AI performance. \cite{SamsungExynos980:2020,HuaweiKirin990:2020}
 
 \section{Applications of the Jetson Nano}
 
@@ -1804,79 +1831,74 @@ This section highlights some of the Jetson Nano Developer Kit interfaces.
 
 \section{Sample Python Code} 
 
-\begin{lstlisting}[language=Python]
+\lstset{style=pythonstyle}
+\begin{lstlisting}
 	import numpy as np
 	import time
 	import matplotlib.pyplot as plt
 	
 	class SimulatedCamera:
+	"""
+	Simulates a camera that captures and displays images.
+	
+	Attributes:
+	name (str): Name of the camera.
+	resolution (str): Resolution of the camera.
+	frame_rate (str): Frame rate of the camera.
+	"""
 	def __init__(self, name="Logitech C270", resolution="720p", frame_rate="30fps"):
 	self.name = name
 	self.resolution = resolution
 	self.frame_rate = frame_rate
-	# Simulate the hardware description for the camera
 	print(f"Initializing {self.name} Camera with {self.resolution} resolution and {self.frame_rate} frame rate.")
 	
 	def capture_image(self):
-	"""
-	Simulates image capture from the camera.
-	Returns a mock image (RGB) using NumPy array.
-	"""
 	print(f"Capturing image with {self.name} at {self.resolution}...")
-	# Create a mock image using NumPy array (representing pixel data)
-	# Example: 100x100 image with random RGB values
 	image_data = np.random.randint(0, 256, (100, 100, 3), dtype=np.uint8)
 	return image_data
 	
 	def show_image(self, image_data):
-	"""
-	Simulates displaying the captured image using matplotlib.
-	"""
 	print("Displaying the captured image...")
-	plt.imshow(image_data)  # Display image using matplotlib
-	plt.axis('off')  # Hide axes for a cleaner view
-	plt.show()  # Show the image in a window
+	plt.imshow(image_data)
+	plt.axis('off')
+	plt.show()
 	
 	class SimulatedLED:
+	"""
+	Simulates an LED light with ON/OFF functionality and blinking.
+	"""
 	def __init__(self):
-	self.state = "OFF"  # Initial state of the LED
-	# Simulate the hardware description for LED
+	self.state = "OFF"
 	print("Initializing LED...")
 	
 	def turn_on(self):
-	"""
-	Simulates turning the LED on.
-	"""
 	self.state = "ON"
 	print("LED ON")
 	
 	def turn_off(self):
-	"""
-	Simulates turning the LED off.
-	"""
 	self.state = "OFF"
 	print("LED OFF")
 	
 	def blink(self, blink_count=5, delay=0.5):
-	"""
-	Simulates the LED blinking a given number of times.
-	"""
+	print(f"Blinking LED {blink_count} times with {delay} second delay...")
 	for _ in range(blink_count):
 	self.turn_on()
-	time.sleep(delay)  # Wait for 'delay' seconds
+	time.sleep(delay)
 	self.turn_off()
 	time.sleep(delay)
 	
 	class SimulatedJetsonNano:
+	"""
+	Simulates the Jetson Nano Developer Kit hardware specifications.
+	"""
 	def __init__(self):
-	# Simulating the hardware characteristics of the Jetson Nano
 	print("Initializing Jetson Nano Developer Kit...")
 	self.gpu = "128-core Maxwell GPU"
 	self.cpu = "Quad-core ARM Cortex-A57"
 	self.memory = "4GB LPDDR4"
 	self.storage = "16GB eMMC"
-	self.resolution = "720p"  # Simulating camera resolution
-	self.frame_rate = "30fps"  # Simulating frame rate
+	self.resolution = "720p"
+	self.frame_rate = "30fps"
 	
 	def show_hardware_specs(self):
 	print("\nHardware Specifications of Simulated Jetson Nano:")
@@ -1885,25 +1907,20 @@ This section highlights some of the Jetson Nano Developer Kit interfaces.
 	print(f"Memory: {self.memory}")
 	print(f"Storage: {self.storage}")
 	
-	# Main simulation
 	if __name__ == "__main__":
-	# Simulate Jetson Nano hardware
 	jetson = SimulatedJetsonNano()
 	jetson.show_hardware_specs()
 	
-	# Create instances of the LED and Camera simulators
 	led = SimulatedLED()
 	camera = SimulatedCamera()
 	
-	# Simulate LED blinking (as part of the hardware's feedback system)
 	print("\nStarting LED blink simulation...")
-	led.blink(blink_count=3, delay=1)  # LED blinks 3 times with a 1-second delay
+	led.blink(blink_count=3, delay=1)
 	
-	# Simulate capturing and displaying an image (camera processing)
-	time.sleep(1)  # Simulate time delay after blinking
+	time.sleep(1)
 	print("\nSimulating image capture...")
-	image_data = camera.capture_image()  # Capture the image
-	camera.show_image(image_data)  # Display the captured image
+	image_data = camera.capture_image()
+	camera.show_image(image_data)
 	print("\nSimulated image displayed.")
 \end{lstlisting}
 
