@@ -11,80 +11,79 @@
 
 \section{Introduction}
 
-NumPy (Numerical Python) is an open source Python library that’s used in almost every field of science and engineering. It’s the universal standard for working with numerical data in Python, and it’s at the core of the scientific Python and PyData ecosystems. NumPy users include everyone from beginning coders to experienced researchers doing state-of-the-art scientific and industrial research and development. The NumPy API is used extensively in Pandas, SciPy, Matplotlib, scikit-learn, scikit-image and most other data science and scientific Python packages.\cite{NumPy:2024}
+NumPy, short for Numerical Python, is a widely-used open-source Python library that serves as a cornerstone in various scientific and engineering fields. Renowned for its robust capabilities in handling numerical data, it has become the universal standard for numerical computing in Python and forms the foundation of the scientific Python and PyData ecosystems. NumPy is utilized by a diverse audience, ranging from novice programmers to seasoned researchers engaged in cutting-edge scientific and industrial research. Moreover, its API is a critical component of many prominent Python libraries, including Pandas, SciPy, Matplotlib, scikit-learn, scikit-image, and other data science tools.\cite{NumPy:2024}
 
-\bigskip
+At the heart of NumPy lies its support for multidimensional arrays and matrix data structures, encapsulated in its efficient ndarray object. This object allows users to perform a vast range of mathematical operations with ease. NumPy empowers Python with powerful data structures designed for efficient computations involving arrays and matrices, complemented by an extensive library of high-level mathematical functions. These features not only enhance computational efficiency but also simplify the implementation of complex mathematical models and algorithms.
 
-The NumPy library contains multidimensional array and matrix data structures (you’ll find more information about this in later sections). It provides ndarray, a homogeneous n-dimensional array object, with methods to efficiently operate on it. NumPy can be used to perform a wide variety of mathematical operations on arrays. It adds powerful data structures to Python that guarantee efficient calculations with arrays and matrices and it supplies an enormous library of high-level mathematical functions that operate on these arrays and matrices. give latex code.
+In addition to its core functionality, NumPy plays a pivotal role in fostering collaboration and innovation within the data science and scientific computing communities. Its interoperability with other Python libraries ensures seamless workflows, making it indispensable for tasks like data preprocessing, numerical simulations, and machine learning. By bridging the gap between high-level programming and optimized performance, NumPy enables researchers and developers to focus on solving real-world problems effectively. \cite{NumPy:2024}
 
 \section{Description}
 
-NumPy is the fundamental package for scientific computing in Python. It is a Python library that provides a multidimensional array object, various derived objects (such as masked arrays and matrices), and an assortment of routines for fast operations on arrays, including mathematical, logical, shape manipulation, sorting, selecting, I/O, discrete Fourier transforms, basic linear algebra, basic statistical operations, random simulation and much more.\cite{NumPy:2024}
+NumPy is an essential library for scientific computing in Python. It provides a powerful framework that includes a multidimensional array object, derived objects such as masked arrays and matrices, and a wide range of functions for fast operations on arrays. These operations cover various mathematical, logical, and statistical tasks, shape manipulation, sorting, selection, I/O, discrete Fourier transforms, basic linear algebra, random simulations, and more \cite{NumPy:2024}.
 
-At the core of the NumPy package, is the \texttt{ndarray} object. This encapsulates n-dimensional arrays of homogeneous data types, with many operations being performed in compiled code for performance. There are several important differences between NumPy arrays and the standard Python sequences:
+The core of the NumPy library is the ndarray object, which supports n-dimensional arrays of homogeneous data types. Many of its operations are executed in compiled code, which significantly improves performance. NumPy arrays differ from standard Python sequences in several key ways:
 
 \begin{itemize}
-	\item NumPy arrays have a fixed size at creation, unlike Python lists (which can grow dynamically). Changing the size of an \texttt{ndarray} will create a new array and delete the original.\cite{NumPy:2024}
-	\item The elements in a NumPy array are all required to be of the same data type, and thus will be the same size in memory. The exception: one can have arrays of (Python, including NumPy) objects, thereby allowing for arrays of different sized elements.
-	\item NumPy arrays facilitate advanced mathematical and other types of operations on large numbers of data. Typically, such operations are executed more efficiently and with less code than is possible using Python’s built-in sequences.
+	\item \textbf{Fixed Size:} Unlike Python lists that can dynamically grow, NumPy arrays have a fixed size upon creation. Changing the size of an ndarray will create a new array, deleting the original one \cite{NumPy:2024}.
+	\item \textbf{Homogeneous Data Types:} All elements in a NumPy array must be of the same data type, which ensures that they occupy the same amount of memory. However, arrays of Python objects (including NumPy objects) can store elements of varying sizes.
+	\item \textbf{Efficiency:} NumPy arrays are optimized for advanced mathematical and other operations on large datasets. These operations are typically faster and require less code compared to using Python’s built-in sequences.
 \end{itemize}
 
-A growing plethora of scientific and mathematical Python-based packages are using NumPy arrays; though these typically support Python-sequence input, they convert such input to NumPy arrays prior to processing, and they often output NumPy arrays. In other words, in order to efficiently use much (perhaps even most) of today’s scientific/mathematical Python-based software, just knowing how to use Python’s built-in sequence types is insufficient - one also needs to know how to use NumPy arrays.
+Many scientific and mathematical Python packages rely on NumPy arrays, converting Python sequence inputs into NumPy arrays before processing and often outputting NumPy arrays as well. Consequently, to effectively use a significant portion of modern scientific and mathematical Python software, it is crucial to understand how to work with NumPy arrays, beyond just using Python’s built-in sequence types.
 
 \subsection{Why is NumPy Fast?}
 
-Vectorization describes the absence of any explicit looping, indexing, etc., in the code - these things are taking place, of course, just “behind the scenes” in optimized, pre-compiled C code. Vectorized code has many advantages, among which are:
+Vectorization refers to the absence of explicit loops, indexing, or other manual operations in the code. Although these actions occur in the background, they are executed efficiently through optimized, pre-compiled C code. The benefits of vectorized code include:
 
 \begin{itemize}
-	\item Vectorized code is more concise and easier to read.
-	\item Fewer lines of code generally means fewer bugs.
-	\item The code more closely resembles standard mathematical notation (making it easier, typically, to correctly code mathematical constructs).
-	\item Vectorization results in more “Pythonic” code. Without vectorization, our code would be littered with inefficient and difficult to read for loops.
+	\item \textbf{Conciseness and Readability:} Vectorized code is more compact and easier to understand.
+	\item \textbf{Reduced Bugs:} With fewer lines of code, there are typically fewer chances for errors.
+	\item \textbf{Mathematical Precision:} The code often mirrors standard mathematical notation, making it simpler to implement mathematical operations correctly.
+	\item \textbf{More Pythonic Code:} Vectorization leads to cleaner, more efficient code compared to code cluttered with loops that are harder to read and understand.
 \end{itemize}
 
-Broadcasting is the term used to describe the implicit element-by-element behavior of operations; generally speaking, in NumPy all operations, not just arithmetic operations, but logical, bit-wise, functional, etc., behave in this implicit element-by-element fashion, i.e., they broadcast \cite{NumPy:2024} .Moreover, in the example above, $a$ and $b$ could be multidimensional arrays of the same shape, or a scalar and an array, or even two arrays with different shapes, provided that the smaller array is “expandable” to the shape of the larger in such a way that the resulting broadcast is unambiguous.
+Broadcasting is a concept in NumPy that refers to the implicit element-by-element operation behavior. It is used not only for arithmetic but also for logical, bitwise, and functional operations. In NumPy, many operations operate element-wise by default, meaning that even if arrays have different shapes, as long as they can be expanded to match, the operation can be performed correctly. This flexibility allows for the use of scalars, arrays, or multidimensional arrays in operations without needing explicit loops \cite{NumPy:2024}.
 
 \subsection{Key Features of NumPy}
 
 \begin{itemize}
-	\item N-dimensional array object (\texttt{ndarray}): NumPy provides a powerful array object, \texttt{ndarray}, which allows efficient storage and manipulation of large datasets in multiple dimensions.
-	\item Vectorized operations: NumPy enables efficient computation by performing operations on entire arrays at once, eliminating the need for explicit looping over individual elements.
-	\item Broadcasting: NumPy supports broadcasting, allowing arrays with different shapes to be combined in arithmetic operations, making code concise and intuitive.
-	\item Element-wise operations: NumPy offers a comprehensive set of mathematical functions for element-wise operations on arrays, including arithmetic, trigonometric, and logarithmic functions.
-	\item Array indexing and slicing: NumPy provides advanced indexing and slicing capabilities for accessing and manipulating elements within arrays, facilitating data manipulation.
-	\item Linear algebra operations: NumPy includes functions for essential linear algebra operations such as matrix multiplication, decomposition, eigenvalue computation, and solving linear equations.
-	\item Random number generation: NumPy provides tools for generating random numbers from various distributions, as well as functions for shuffling arrays and generating random samples.\cite{NumPy:2024}
-	\item Integration with other libraries: NumPy seamlessly integrates with other scientific computing libraries in Python, such as SciPy, matplotlib, and pandas, facilitating complex computational workflows.
-	\item Efficient memory management: NumPy's array data structure is implemented in C, allowing for efficient memory management and low-level optimizations, making it suitable for handling large datasets.
-	\item Open-source and community-driven: NumPy is an open-source project with a large and active community of developers and users, continuously maintained and improved with regular releases.
+	\item \textbf{N-dimensional array object (ndarray):} NumPy provides the ndarray object, which is a versatile and efficient array structure designed to store and manipulate large datasets across multiple dimensions.
+	\item \textbf{Vectorized operations:} NumPy supports efficient computation by enabling operations on entire arrays simultaneously, eliminating the need for manual iteration over individual elements.
+	\item \textbf{Broadcasting:} With broadcasting, NumPy allows arrays of different shapes to be combined in arithmetic operations, making the code more concise and easier to understand.
+	\item \textbf{Element-wise operations:} NumPy offers a wide range of mathematical functions that perform element-wise operations, such as arithmetic, trigonometric, and logarithmic functions, on arrays.
+	\item \textbf{Array indexing and slicing:} NumPy provides advanced indexing and slicing techniques, enabling efficient access and manipulation of array elements, which enhances data processing.
+	\item \textbf{Linear algebra operations:} NumPy includes built-in functions for essential linear algebra tasks like matrix multiplication, matrix decomposition, eigenvalue computation, and solving linear equations.
+	\item \textbf{Random number generation:} NumPy offers tools for generating random numbers from different distributions, as well as functions for shuffling arrays and generating random samples \cite{NumPy:2024}.
+	\item \textbf{Integration with other libraries:} NumPy integrates smoothly with other Python libraries used in scientific computing, such as SciPy, matplotlib, and pandas, facilitating complex computational workflows.
+	\item \textbf{Efficient memory management:} NumPy's array structure is implemented in C, which ensures efficient memory handling and optimizations, making it well-suited for managing large datasets.
+	\item \textbf{Open-source and community-driven:} As an open-source project, NumPy benefits from a large and active community, which ensures its ongoing development and improvement with regular updates.
 \end{itemize}
 
 \section{Installation}
 
-The only prerequisite for installing NumPy is Python itself. If you don’t have Python yet and want the simplest way to get started, we recommend you use the Anaconda Distribution - it includes Python, NumPy, and many other commonly used packages for scientific computing and data science.
+To install NumPy, the only requirement is Python. If you haven't installed Python yet and are looking for an easy way to get started, we recommend using the Anaconda Distribution, which includes Python, NumPy, and various other popular packages for scientific computing and data science.
 
-NumPy can be installed with \texttt{conda}, with \texttt{pip}, with a package manager on macOS and Linux, or from source. For more detailed instructions, consult our Python and NumPy installation guide below.
+NumPy can be installed using methods like \texttt{conda}, \texttt{pip}, package managers on macOS and Linux, or by compiling from the source. For more comprehensive installation instructions, refer to below Python and NumPy installation guide.
+
 
 \subsection{Python package management}
-Managing packages is a challenging problem, and, as a result, there are lots of tools. For web and general purpose Python development there’s a whole host of tools complementary with pip. For high-performance computing (HPC), Spack is worth considering. For most NumPy users though, conda and pip are the two most popular tools.
-
-\textbf{Pip \& conda}
+Package management can be a complex task, which has led to the development of various tools. For general Python development, there are numerous tools that complement pip, and for high-performance computing (HPC), Spack is a useful option. However, for most NumPy users, \textbf{Pip \& conda} are the two most commonly used tools.
 
 \bigskip
 
-The two main tools that install Python packages are pip and conda. Their functionality partially overlaps (e.g. both can install numpy), however, they can also work together. We’ll discuss the major differences between pip and conda here - this is important to understand if you want to manage packages effectively.
+Package management can be a complex task, which has led to the development of various tools. For general Python development, there are numerous tools that complement pip, and for high-performance computing (HPC), Spack is a useful option. However, for most NumPy users, conda and pip are the two most commonly used tools.
 
 \bigskip
 
-The first difference is that conda is cross-language and it can install Python, while pip is installed for a particular Python on your system and installs other packages to that same Python install only. This also means conda can install non-Python libraries and tools you may need (e.g. compilers, CUDA, HDF5), while pip can’t.
+One major difference is that conda is cross-language and can install Python itself, while pip is specific to a particular Python installation and can only install packages for that Python. This means conda can also handle non-Python libraries and tools, such as compilers, CUDA, or HDF5, while pip cannot.
 
 \bigskip
 
-The second difference is that pip installs from the Python Packaging Index (PyPI), while conda installs from its own channels (typically “defaults” or “conda-forge”). PyPI is the largest collection of packages by far, however, all popular packages are available for conda as well.
+Another distinction is that pip installs packages from the Python Packaging Index (PyPI), which is the largest package repository, whereas conda installs from its own channels, like "defaults" or "conda-forge." While PyPI has a broader selection, popular packages are also available through conda.
 
 \bigskip
 
-The third difference is that conda is an integrated solution for managing packages, dependencies and environments, while with pip you may need another tool (there are many!) for dealing with environments or complex dependencies.
+Lastly, conda offers an integrated solution for managing packages, dependencies, and environments, whereas with pip, you may need additional tools to manage environments or handle complex dependencies.
 
 \subsubsection{Installing with Anaconda}
 
@@ -108,81 +107,82 @@ If you use pip, you can install NumPy with:
 
 \subsection{Required dependencies}
 
-NumPy requires the following dependencies:
+To install NumPy, the following dependencies are required:
 
 \begin{enumerate}
-	\item Python: NumPy is a Python library, so you need to have Python installed on your system. NumPy supports Python versions 3.7 and above.
+	\item \textbf{Python:} Since NumPy is a Python library, you must have Python installed on your system. It supports Python versions 3.7 and newer.
 	
-	\item Compiler: If you're installing NumPy using pip, you need to have a compiler installed on your system. For Windows users, this typically means having Microsoft Visual C++ Build Tools or MinGW installed. For Linux users, you may need to install build-essential or an equivalent package.
+	\item \textbf{Compiler:} When installing NumPy with pip, a compiler is needed on your system. On Windows, this typically involves installing Microsoft Visual C++ Build Tools or MinGW. On Linux, you may need to install a package like build-essential.
 	
-	\item NumPy: Of course, you'll need to install NumPy itself. You can install it via pip, the Python package manager, using the command \texttt{pip install numpy}.
+	\item \textbf{NumPy:} Finally, you will need to install NumPy itself. This can be done easily using pip, the Python package manager, by running the command \texttt{pip install numpy}.
+	
 \end{enumerate}
 
 \section{Example - Manual}
 
 \subsection{User Manual for the Example Python File in PyCharm}
 
-\subsubsection{Installation and Setup}
+\subsection*{Installation and Setup}
 
 \begin{enumerate}
 	
 	\item \textbf{Download and install Python:}
 	
-	Visit the official Python website \url{https://www.python.org} and download the latest version of Python for your operating system. Follow the installation instructions provided.
+	Visit the official Python website \url{https://www.python.org} and download the most recent version of Python for your operating system. Follow the given instructions to complete the installation process.
 	
 	\item \textbf{Install PyCharm: }
 	
-	Visit the JetBrains website \url{https://www.jetbrains.com/pycharm} and download PyCharm Community Edition, which is the free version. Install PyCharm by following the installation instructions specific to your operating system.
+	Visit the JetBrains website \url{https://www.jetbrains.com/pycharm} and download the free PyCharm Community Edition. Follow the installation guide specific to your operating system to set it up.
 	
 \end{enumerate}
 
-\subsubsection{Opening the Python File in PyCharm}
+\subsection*{Opening the Python File in PyCharm}
 
 \begin{enumerate}
 	
-	\item Launch PyCharm: Open the PyCharm application from your desktop or applications menu.
+	\item \textbf{Launch PyCharm:} Open the PyCharm application from your desktop or the applications menu.
 	
-	\item Create a new project: Click on \texttt{Create New Project} or go to \texttt{File} $\rightarrow$ \texttt{New Project}. Choose a suitable location for your project and provide a name.
+	\item \textbf{Create a new project:} Click on \texttt{"Create New Project"} or go to \texttt{"File"} $\rightarrow$ \texttt{"New Project"}. Choose a appropriate location for your project and provide a name.
+		
+	\item \textbf{Open the Python file:} After creating the project, navigate to the project directory in the PyCharm project view. Right-click on the desired folder and select \texttt{"New"} $\rightarrow$ \texttt{"Python File"}. Provide a name for the file and click \texttt{"OK"}.
 	
-	\item Open the Python file: Once the project is created, navigate to the project directory in the PyCharm project view. Right-click on the desired folder and select \texttt{New} $\rightarrow$ \texttt{Python File}. Provide a name for the file and click \texttt{OK}.
+	\item \textbf{Copy your Python code:} Open your Python file (with .py extension) in any text editor and copy the contents.
 	
-	\item Copy your Python code: Open your Python file (with .py extension) in a text editor and copy the contents.
-	
-	\item Paste the code: Paste the copied code into the newly created Python file in PyCharm.
+	\item \textbf{Paste the code:} Paste the copied code into the newly created Python file in PyCharm.
 	
 \end{enumerate}
 
-\subsubsection{Working with the Python File}
+\subsection*{Working with the Python File}
 
 \begin{enumerate}
 	
-	\item Running the script: To run the Python script, right-click anywhere within the Python file and select \texttt{Run} $\rightarrow$ \texttt{Run ExampleManual.py}. Alternatively, you can use the keyboard shortcut \texttt{Shift + F10}. The script will execute, and the output will be displayed in the PyCharm console.
+	\item \textbf{Running the script:} To run the Python script, right-click anywhere within the Python file and select \texttt{"Run"} $\rightarrow$ \texttt{"Run ExampleManual.py"}. Alternatively, you can use the keyboard shortcut \texttt{"Shift + F10"}. The script will execute, and the output will be displayed in the PyCharm console.
 	
-	\item Debugging the script: To debug the Python script and set breakpoints for analysis, click on the left gutter of the Python file, next to the line where you want to set the breakpoint. A red dot will appear, indicating the breakpoint. Click on the \texttt{Debug} button or use the keyboard shortcut \texttt{Shift + F9} to start debugging the script.
+	\item \textbf{Debugging the script:} To debug the script and set breakpoints, click on the left margin of the Python file next to the line where you want to place the breakpoint. A red dot will appear, indicating the breakpoint. Click on the \texttt{Debug} button or use the keyboard shortcut \texttt{"Shift + F9"} to start debugging the script.
 	
-	\item Interacting with the script: If your script expects user input or provides interactive prompts, you can provide the input in the PyCharm console. The console allows you to interact with the script while it is running.
+	\item \textbf{Interacting with the script:} If your script prompts for user input, you can provide the necessary input directly in the PyCharm console. The console enables interaction with the script as it runs.
 	
 \end{enumerate}
 
-\subsubsection{Modifying the Python File}
+\subsection*{Modifying the Python File}
 
 \begin{enumerate}
 	
-	\item Editing the code: To make changes to the Python code, simply locate the section you want to modify and edit the code accordingly.
+	\item \textbf{Editing the code:} To modify the Python code, find the section you want to change and make the necessary edits.
 	
-	\item Saving the changes: PyCharm automatically saves your changes as you work. However, you can manually save the file by going to \texttt{File} $\rightarrow$ \texttt{Save} or using the keyboard shortcut \texttt{Ctrl + S}.
+	\item \textbf{Saving the changes:} PyCharm automatically saves your work as you go. However, you can also save the file manually by selecting \texttt{"File"} $\rightarrow$ \texttt{"Save"} or using the keyboard shortcut \texttt{"Ctrl + S"}.
 	
 \end{enumerate}
 
-\subsubsection{Further Assistance and Resources}
+\subsection*{Further Assistance and Resources}
 
 \begin{itemize}
 	
-	\item PyCharm Documentation: PyCharm offers comprehensive documentation to help you understand its features and functionality. You can access it online at \texttt{https://www.jetbrains.com/help/pycharm}.
+	\item \textbf{PyCharm Documentation:} PyCharm offers comprehensive documentation to help you understand its features and functionality. You can access it online at \texttt{https://www.jetbrains.com/help/pycharm}.
 	
-	\item Python Documentation: The official Python documentation provides detailed information about the Python language, libraries, and best practices. It is available at \url{https://docs.python.org}.
+	\item \textbf{Python Documentation:} The official Python documentation provides detailed information about the Python language, libraries, and best practices. It is available at \url{https://docs.python.org}.
 	
-	\item Online Python Communities: Joining online communities like Stack Overflow \url{https://stackoverflow.com} or the Python subreddit \url{https://www.reddit.com/r/Python} can provide valuable insights and assistance from experienced Python developers.
+	\item \textbf{Online Python Communities:} Joining online communities like Stack Overflow \url{https://stackoverflow.com} or the Python subreddit \url{https://www.reddit.com/r/Python} can provide valuable insights and assistance from experienced Python developers.
 	
 \end{itemize}
 
@@ -286,10 +286,10 @@ In NumPy, you can import and export data from various file formats such as text 
 NumPy, like many other libraries in Python, provides error handling mechanisms to manage exceptions and errors that may occur during numerical computations and array operations. These techniques are crucial for diagnosing and addressing issues that arise during data manipulation and analysis. Below are some common error handling techniques in NumPy:
 
 \begin{itemize}
-	\item Try-Except Blocks: Use try-except blocks to catch and handle specific exceptions during NumPy operations, ensuring smooth execution of code even in the presence of errors.
-	\item Error Reporting: NumPy provides descriptive error messages and tracebacks to pinpoint the location and nature of errors, aiding in effective debugging and troubleshooting.
-	\item Error Handling Functions: Utilize NumPy functions like \texttt{np.seterr()} to control error handling modes, such as raising exceptions, displaying warnings, or ignoring errors altogether.
-	\item Error Handling with Arrays: Employ array bounds checking and special value detection functions like \texttt{np.isnan()} and \texttt{np.isinf()} to prevent errors and handle exceptional conditions when working with NumPy arrays.
+	\item \textbf{Try-Except Blocks:} Use try-except blocks to catch and handle specific exceptions during NumPy operations, ensuring smooth execution of code even in the presence of errors.
+	\item \textbf{Error Reporting:} NumPy provides descriptive error messages and tracebacks to pinpoint the location and nature of errors, aiding in effective debugging and troubleshooting.
+	\item \textbf{Error Handling Functions:} Utilize NumPy functions like \texttt{np.seterr()} to control error handling modes, such as raising exceptions, displaying warnings, or ignoring errors altogether.
+	\item \textbf{Error Handling with Arrays:} Employ array bounds checking and special value detection functions like \texttt{np.isnan()} and \texttt{np.isinf()} to prevent errors and handle exceptional conditions when working with NumPy arrays.
 \end{itemize}
 
 
@@ -297,22 +297,22 @@ NumPy, like many other libraries in Python, provides error handling mechanisms t
 
 \begin{enumerate}
 	\item \textbf{NumPy User Guide:} \\
-	The official NumPy user guide provides comprehensive documentation on NumPy's functionality, including array creation, manipulation, mathematical operations, and more. \\
-	\url{https://numpy.org/doc/stable/user/index.html}
+	The official NumPy user guide provides comprehensive documentation on NumPy's functionality, including array creation, manipulation, mathematical operations, and more. 
+	\href{https://numpy.org/doc/stable/user/index.html}{NumPy User Guide}
 	
 	\item \textbf{Python Data Science Handbook:} \\
-	This book by Jake VanderPlas covers essential tools and techniques for data science in Python, with a significant focus on NumPy. It provides practical examples and explanations of NumPy's usage in data manipulation, analysis, and visualization. \\
-	\url{https://jakevdp.github.io/PythonDataScienceHandbook/}
+	This book by Jake VanderPlas covers essential tools and techniques for data science in Python, with a significant focus on NumPy. It provides practical examples and explanations of NumPy's usage in data manipulation, analysis, and visualization. 
+	\href{https://jakevdp.github.io/PythonDataScienceHandbook/}{Python Data Science Handbook}
 	
 	\item \textbf{NumPy Official Documentation:} \\
-	The official documentation for NumPy is an invaluable resource for learning about NumPy's functions, methods, and usage patterns. It provides detailed explanations and examples for each aspect of the library \cite{NumPy:2024}. \\
-	\url{https://numpy.org/doc/stable/}
+	The official documentation for NumPy is an invaluable resource for learning about NumPy's functions, methods, and usage patterns. It provides detailed explanations and examples for each aspect of the library \cite{NumPy:2024}. 
+	\href{https://numpy.org/doc/stable/}{NumPy Official Documentation}
 	
 	\item \textbf{Numerical Python:} \\
-	This book by Robert Johansson offers a comprehensive introduction to NumPy and its applications in scientific computing. It covers fundamental concepts, advanced techniques, and practical examples to help you master NumPy. \\
-	\url{https://www.apress.com/gp/book/9781484242452}
+	This book by Robert Johansson offers a comprehensive introduction to NumPy and its applications in scientific computing. It covers fundamental concepts, advanced techniques, and practical examples to help you master NumPy. 
+	\href{https://www.apress.com/gp/book/9781484242452}{Numerical Python}
 	
 	\item \textbf{NumPy Cookbook:} \\
-	The NumPy Cookbook by Ivan Idris and Eli Bressert provides a collection of recipes for common tasks and challenges encountered in numerical computing with NumPy. It offers practical solutions and insights for optimizing performance and solving real-world problems. \\
-	\url{https://www.packtpub.com/product/numpy-1-5-cookbook/9781849515306}
+	The NumPy Cookbook by Ivan Idris and Eli Bressert provides a collection of recipes for common tasks and challenges encountered in numerical computing with NumPy. It offers practical solutions and insights for optimizing performance and solving real-world problems. 
+	\href{https://www.packtpub.com/product/numpy-1-5-cookbook/9781849515306}{NumPy Cookbook}
 \end{enumerate}
