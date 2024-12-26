@@ -171,7 +171,7 @@ The Jetson Nano supports WiFi connectivity through an add-on chip, allowing it t
 \subsection*{Real-Time Processing Requirements}
 \begin{itemize}[leftmargin=1.5cm]
 	\item For applications such as license plate recognition, the Jetson Nano must process incoming data in real-time.
-	\item Ensuring low-latency data transmission from sensors and efficient handling by the system is key to maintaining quality.
+	\item Ensuring low-latency data transmission from sensors and efficient handling by the system is key to maintaining quality. \cite{NVF:2024}
 \end{itemize}
 
 \subsection{Data Quantity}
@@ -245,7 +245,7 @@ The Jetson Nano supports WiFi connectivity through an add-on chip, allowing it t
 
 \subsection*{Annotation Data}
 \begin{itemize}[leftmargin=1.5cm]
-	\item Structured data for supervised learning tasks, often stored in JSON or XML format, containing bounding boxes, labels, and other metadata.
+	\item Structured data for supervised learning tasks, often stored in JSON or XML format, containing bounding boxes, labels, and other metadata. \cite{PIJ:2020}
 \end{itemize}
 
 \subsection{Data Structures}
@@ -290,7 +290,7 @@ The trained models (e.g., neural networks) are typically represented as weights 
 \end{lstlisting}
 
 \subsection*{Sensor Data}
-Data from connected sensors (e.g., temperature, motion, or proximity sensors) is often stored in lists or dataframes. These structures store time-series data for real-time processing.
+Data from connected sensors (e.g., temperature, motion, or proximity sensors) is often stored in lists or dataframes. These structures store time-series data for real-time processing. \cite{PTD:2018}
 
 \textbf{Example:}
 \begin{lstlisting}[style=python]
@@ -300,25 +300,25 @@ Data from connected sensors (e.g., temperature, motion, or proximity sensors) is
 
 \section{NVIDIA Jetson Nano Developer Kit}
 
-The NVIDIA Jetson Nano is a Single-Board Computer (SBC) specifically designed for running machine learning algorithms. It provides direct access to its components, inputs, and outputs, making it highly versatile for embedded applications. However, to ensure the protection and longevity of the device, it is recommended to place the board in an appropriate enclosure. Like the Raspberry Pi, the Jetson Nano exposes all its components and connectors, making it easy to use but also susceptible to damage. While the included packaging can be used to assemble the Nano, a dedicated case is advised for better protection. An illustration in the book (Figure 5.1) shows the proper orientation of the Jetson Nano, which is important to note, particularly for understanding the arrangement of digital inputs and outputs.
+The NVIDIA Jetson Nano is a Single-Board Computer (SBC) specifically designed for running machine learning algorithms. It provides direct access to its components, inputs, and outputs, making it highly versatile for embedded applications. However, to ensure the protection and longevity of the device, it is recommended to place the board in an appropriate enclosure. Like the Raspberry Pi, the Jetson Nano exposes all its components and connectors, making it easy to use but also susceptible to damage. While the included packaging can be used to assemble the Nano, a dedicated case is advised for better protection. An illustration in the book (Figure 5.1) shows the proper orientation of the Jetson Nano, which is important to note, particularly for understanding the arrangement of digital inputs and outputs. \cite{NVI:2019}
 
 
 
 \section{Construction of the Jetson Nano}
 
 
-The Jetson Nano board measures approximately 70 × 45 mm when not enclosed in a case. A significant heat sink is attached to the board to help dissipate heat during operation. Beneath the heat sink, the powerful NVIDIA Tegra X1 microchip is located, containing four ARM application processor cores and 128 graphics processing units (GPUs). One illustration in the book shows a top view of the Jetson Nano, highlighting its various interfaces, while another provides a side view, showcasing the board's sockets and connectors.
+The Jetson Nano board measures approximately 70 × 45 mm when not enclosed in a case. A significant heat sink is attached to the board to help dissipate heat during operation. Beneath the heat sink, the powerful NVIDIA Tegra X1 microchip is located, containing four ARM application processor cores and 128 graphics processing units (GPUs). One illustration in the book shows a top view of the Jetson Nano, highlighting its various interfaces, while another provides a side view, showcasing the board's sockets and connectors. \cite{NVI:2019}
 
 
 
 \subsection{External power supply}
 
-The Jetson Nano requires an external power supply, specifically a 5V DC, 2A power source. This can be connected either through the 5V DC interface or the Micro USB interface. When using the 5V DC interface, a jumper must be used to connect the two pins of J48, located between the camera and power supply connector. The connector has a 2.1mm diameter, with the center pin representing the positive pole. If opting for the Micro USB interface, the jumper should be removed to avoid any interference with the power supply connection.
+The Jetson Nano requires an external power supply, specifically a 5V DC, 2A power source. This can be connected either through the 5V DC interface or the Micro USB interface. When using the 5V DC interface, a jumper must be used to connect the two pins of J48, located between the camera and power supply connector. The connector has a 2.1mm diameter, with the center pin representing the positive pole. If opting for the Micro USB interface, the jumper should be removed to avoid any interference with the power supply connection. \cite{NVI:2021}
 
 
 \subsection{HDMI and display port}
 
-While not essential for all applications, a monitor is extremely useful during setup and for certain tasks. You can connect an external monitor through either the HDMI or DisplayPort interface, both of which support various resolutions, including up to 4K. It is important to note that HDMI-to-DVI adapters are incompatible, so you should use a monitor that supports either native HDMI or DisplayPort. Supported image resolutions are listed in the accompanying table. If a monitor is not required for the application, this should be considered when installing the operating system.
+While not essential for all applications, a monitor is extremely useful during setup and for certain tasks. You can connect an external monitor through either the HDMI or DisplayPort interface, both of which support various resolutions, including up to 4K. It is important to note that HDMI-to-DVI adapters are incompatible, so you should use a monitor that supports either native HDMI or DisplayPort. Supported image resolutions are listed in the accompanying table. If a monitor is not required for the application, this should be considered when installing the operating system. \cite{NVI:2019}
 
 
 \begin{table}
@@ -366,9 +366,9 @@ The Jetson Nano has a CSI connector for camera modules, compliant with the MIPI 
 \subsection{microSD card}
 
 
-As the Jetson Nano does not have an onboard hard drive, it uses a microSD card for storage, including the operating system and application programs. Selecting an appropriate microSD card is crucial for performance, with a minimum recommendation of a 16GB UHS-1 card. The card slot is located on the underside of the board.
+As the Jetson Nano does not have an onboard hard drive, it uses a microSD card for storage, including the operating system and application programs. Selecting an appropriate microSD card is crucial for performance, with a minimum recommendation of a 16GB UHS-1 card. The card slot is located on the underside of the board. \cite{NVI:2019}
 
-\subsection{Specifications of Jetson Nano}
+\subsection{Specifications of Jetson Nano} 
 The specifications of the NVIDIA Jetson Nano is as given in the table below:\\
 \begin{table}
 	\begin{tabular}{||m{5cm}|m{10cm}||}
@@ -1593,7 +1593,8 @@ The Logitech C270 HD Webcam is a versatile and reliable peripheral, suitable for
 	\item \textbf{Lens Type:} Fixed focus, optimized for general-purpose use.
 	\item \textbf{Field of View:} 60-degree angle, providing a balanced frame.
 	\item \textbf{Microphone:} Integrated mono microphone with noise reduction for better audio clarity.
-	\item \textbf{Connectivity:} USB 2.0 interface for a reliable and easy connection.
+	\item \textbf{Connectivity:} USB 2.0 interface for a reliable and easy connection.\cite{LHW:2024}
+	
 \end{itemize}
 
 \begin{figure}
@@ -1643,7 +1644,7 @@ To work with the Logitech C270 on the Jetson Nano, the following libraries and f
 	\item \textbf{GStreamer}: Optimizes video pipeline on the Jetson Nano.\\
 	Pre-installed on most Jetson Nano setups, but can be installed or updated via:\\
 	\texttt{sudo apt-get install gstreamer1.0-tools}
-	\item \textbf{uvcvideo kernel module}: Ensures compatibility with USB webcams.
+	\item \textbf{uvcvideo kernel module}: Ensures compatibility with USB webcams. \cite{UBT:2024}
 \end{itemize}
 
 \section{Calibration}
@@ -1967,4 +1968,76 @@ The following BOM has been identified for the Hardware:
 		\hline
 	\end{tabular}
 	\caption{\label{tab:Hardware BOM} Hardware BOM}
+\end{table}
+
+
+\section{Software Bill of Materials}
+Below are the specifications and the Bill of Materials (BOM) for the software and packages utilized in the project.
+
+
+\begin{table}[h!]
+	\centering
+	\begin{tabular}{|p{6cm}|p{3cm}|p{2.5cm}|@{}p{2.2cm}@{}|p{4cm}|}
+		\hline
+		\rowcolor{lightgray} \textbf{Software/Framework/Package} & \textbf{Open Source/License} & \textbf{Version} \\
+		\hline
+		\href{https://pypi.org/project/absl-py/}{absl-py} & Open Source & 2.1.0 \\
+		\hline
+		\href{https://pypi.org/project/apache-beam/}{apache-beam} & Apache License 2.0 & 2.54.0 \\
+		\hline
+		\href{https://pypi.org/project/debugpy/}{debugpy} & Open Source & 1.8.0 \\
+		\hline
+		\href{https://pypi.org/project/decorator/}{decorator} & Open Source & 5.1.1 \\
+		\hline
+		\href{https://pypi.org/project/google-api-core/}{google-api-core} & Apache License 2.0 & 2.8.0 \\
+		\hline
+		\href{https://pypi.org/project/ipykernel/}{ipykernel} & BSD License & 6.29.0 \\
+		\hline
+		\href{https://pypi.org/project/ipython/}{ipython} & BSD License & 8.21.0 \\
+		\hline
+		\href{https://pypi.org/project/jupyter-client/}{jupyter-client} & BSD License & 8.6.0 \\
+		\hline
+		\href{https://pypi.org/project/keras/}{keras} & MIT License & 2.15.0 \\
+		\hline
+		\href{https://pypi.org/project/matplotlib/}{matplotlib} & PSF License & 3.8.2 \\
+		\hline
+		\href{https://pypi.org/project/matplotlib-inline/}{matplotlib-inline} & BSD License & 0.1.6 \\
+		\hline
+		\href{https://pypi.org/project/numpy/}{numpy} & BSD License & 1.26.3 \\
+		\hline
+		\href{https://pypi.org/project/object-detection/}{object-detection} & Apache License 2.0 & 0.1 \\
+		\hline
+		\href{https://pypi.org/project/opencv-python/}{opencv-python} & MIT License & 4.9.0.80 \\
+		\hline
+		\href{https://pypi.org/project/matplotlib/}{matplotlib} & PSF License & 3.8.2 \\
+		\hline
+		\href{https://pypi.org/project/numpy/}{numpy} & BSD License & 1.26.3 \\
+		\hline
+		\href{https://pypi.org/project/object-detection/}{object-detection} & Apache License 2.0 & 0.1 \\
+		\hline
+		\href{https://pypi.org/project/opencv-python/}{opencv-python} & MIT License & 4.9.0.80 \\
+		\hline
+		\href{https://pypi.org/project/packaging/}{packaging} & BSD License or Apache License 2.0 & 23.2 \\
+		\hline
+		\href{https://pypi.org/project/pandas/}{pandas} & BSD License & 2.2.0 \\
+		\hline
+		\href{https://pypi.org/project/Pillow/}{Pillow} & Open Source (HPND License) & 10.2.0 \\
+		\hline
+		\href{https://pypi.org/project/pip/}{pip} & MIT License & 24.0 \\
+		\hline
+		\href{https://pypi.org/project/protobuf/}{protobuf} & BSD License & 3.20.0 \\
+		\hline
+		\href{https://pypi.org/project/pytz/}{pytz} & MIT License & 2024.1 \\
+		\hline
+		\href{https://pypi.org/project/PyYAML/}{PyYAML} & MIT License & 6.0.1 \\
+		\hline
+		\href{https://pypi.org/project/regex/}{regex} & Apache License 2.0 & 2023.12.25 \\
+		\hline	
+		\href{https://pypi.org/project/tensorflow/}{tensorflow} & Apache License 2.0 & 2.15.0 \\
+		\hline	
+		\href{https://github.com/ultralytics/yolov5}{YOLOv5} & MIT License & 5.0 \\
+		\hline
+	\end{tabular}
+	\caption{Package Descriptions}
+	\label{tab:packages}
 \end{table}
