@@ -535,17 +535,21 @@ Practical insights and implementation guidance can be gleaned from tutorials and
 
 \section{Convolutional Neural Networks}
 
-Complex tasks such as pattern and object recognition with high-dimensional data sets lead to convergence problems and high computation times with conventional approaches. Such tasks can be solved with deep learning algorithms. To this class belong CNN. They can solve tasks with less preprocessing than is usual for other classification algorithms. Moreover, the filters used do not have to be designed by the user, but are learned by the network itself during training. \cite{Saha:2018}
+\subsection{Description}
 
-According to \cite{Sharma:2018}, one of the first successful implementations of CNNs was the recognition of handwritten digits in 1998, which is described in the paper \glqq Gradient-Based Learning Applied to Document Recognition\grqq \cite{LeCun:1998}. In the meantime, CNNs have been able to prove themselves in many application areas. The typical application for CNNs is processing data that has a known network topology. For example, they can recognise objects in images or patterns in time series. \cite{Namatevs:2017} Besides image classification, object recognition and tracking, text, speech and gesture recognition are also typical applications \cite{Gu:2018} describes. But CNNs are also used in industry for defect detection. \cite{LopezdeLacalle:2020}
+Complex tasks such as pattern and object recognition involving high-dimensional datasets often face convergence issues and require significant computation time when tackled with traditional methods. However, these challenges can be addressed using deep learning algorithms, particularly Convolutional Neural Networks (CNNs). CNNs are capable of handling such tasks with minimal preprocessing compared to other classification techniques. Furthermore, the filters utilized in CNNs are not manually designed by the user; instead, they are automatically learned by the network during the training process. \cite{Saha:2018}
 
-In general, cnn are composed of the building blocks Convolutional Layer, Pooling Layer and Fully Connected Layer, where each building block is usually used more than once. These building blocks are described below. The primary assumption is the use of cnn for image classification.
+As noted by \cite{Sharma:2018}, one of the earliest successful applications of CNNs was the recognition of handwritten digits in 1998, detailed in the seminal paper Gradient-Based Learning Applied to Document Recognition \cite{LeCun:1998}. Since then, CNNs have demonstrated their effectiveness across various domains. A primary use case for CNNs involves processing data with an inherent network topology, such as identifying objects in images or recognizing patterns in time-series data \cite{Namatevs:2017}. Beyond image classification and object detection, CNNs are also widely applied in areas like text analysis, speech and gesture recognition, and industrial defect detection. \cite{LopezdeLacalle:2020}
 
+Typically, CNNs are constructed from three main components: Convolutional Layers, Pooling Layers, and Fully Connected Layers. These components are usually used repeatedly within the network. The following sections provide an overview of these building blocks, focusing primarily on their application in image classification tasks.
+
+
+\subsection{Requirement}
 \subsection{Convolutional Layer}
 
-The main component of CNN are filters that are applied to the input data/images in the Convolutional Layer. As input, the Convolutional Layer receives an n-dimensional tensor, for example an image with three colour channels, and applies several kernels to it. By convolution of tensor and kernel, the image is filtered. The results of the convolution with the different filters are stacked so that the result is again a tensor. \cite{Michelucci:2019}
+The core components of CNNs are filters applied to input data or images within the Convolutional Layer. This layer processes an n-dimensional tensor, such as an image with three color channels, by applying multiple kernels. Through the convolution of the tensor and these kernels, the image undergoes filtering. The results of these convolutions, each produced by a distinct filter, are then combined to form another tensor. \cite{Michelucci:2019}
 
-The operation of convolution between two matrices or tensors means the addition of the products of the multiplication of the corresponding elements of both matrices or tensors. Since the convolution in the Convolutional Layer usually takes place between a tensor with many entries and a small kernel, the convolution must be carried out separately for individual parts of the input tensor. Usually, one starts with the first entries at the top left and, metaphorically speaking, shifts the kernel after the first convolution relative to the input tensor by a certain number of columns and calculates the convolution again. When one has reached the right edge, the kernel is shifted in the row and the process is repeated. The value called stride indicates by how many columns and rows the kernel is shifted relative to the input tensor. In addition, an activation function is usually applied for each calculated pixel. \cite{Michelucci:2019}
+Convolution, in the context of matrices or tensors, involves summing the products of corresponding elements. Given that convolution in the Convolutional Layer typically occurs between a large tensor and a smaller kernel, the operation is performed incrementally across portions of the input tensor. Beginning at the top-left corner, the kernel is shifted across columns by a defined step size, known as the stride, and the convolution is recalculated. After reaching the right edge of the tensor, the kernel moves to the next row, repeating the process. For each calculated pixel value, an activation function is often applied. \cite{Michelucci:2019}
 
 In this process, a tensor with dimensions $h_1 \times w_1 \times d_1$ and kernels each with dimension $h_2 \times w_2 \times d_1$, which are stacked to form dimensions $h_2 \times w_2 \times d_2$, becomes an output tensor with dimensions $h_3 \times w_3 \times d_2$. \cite{Arunava:2018}
 
@@ -557,7 +561,7 @@ The parameters learned in a CNN are the filters themselves. For $k$ filters of d
 
 The convolutional layer does not necessarily have to be the first layer, but can also receive preprocessed data as input. Usually, multiple Convolutional Layers are used.\cite{Michelucci:2019}
 
-The filters of the first Convolutional Layer detect low-level features such as colours, edges and curves, while higher layers detect more abstract features. By stacking multiple Convolutional and Pooling Layers, higher level feature representations can be progressively extracted. Moreover, the dimensionality is also reduced continuously, which reduces the computational cost. \cite{Gu:2018,Saha:2018}
+he Convolutional Layer does not always need to be the initial layer; it can process preprocessed data and is often used in multiple layers. Filters in the initial Convolutional Layer identify basic features such as edges, colors, and curves, while deeper layers capture more abstract features. By stacking multiple Convolutional and Pooling Layers, progressively higher-level features are extracted, while the dimensionality of the data is reduced, lowering computational requirement. \cite{Gu:2018,Saha:2018}
 
 
 \subsection{Pooling Layer}
@@ -577,14 +581,42 @@ After several convolutional and pooling layers, the image is flattened into a si
 
 The ReLu function is usually used as the activation function. In the output layer, the softmax function is used to reflect the probabilities of each class to be assigned. \cite{Arunava:2018}
 
+\subsection{Relevance of Convolutional Neural Networks (CNNs)}
+
+Convolutional Neural Networks (CNNs) are highly relevant to the \textit{Car License Plate Recognition} project for several reasons:
+
+\subsection*{Feature Extraction Capability}
+\begin{itemize}
+	\item CNNs excel in extracting hierarchical features from images, making them ideal for detecting and analyzing patterns on license plates, such as characters, numbers, and symbols.
+\end{itemize}
+
+\subsection*{Robustness to Variations}
+\begin{itemize}
+	\item CNNs are designed to handle variations in scale, rotation, and illumination, which are common challenges in real-world license plate recognition scenarios.
+	\item This ensures consistent performance, even under challenging environmental conditions.
+\end{itemize}
+
+\subsection*{Efficiency in Object Detection}
+\begin{itemize}
+	\item CNN-based architectures like YOLO and Faster R-CNN are widely used for object detection tasks, including identifying and localizing license plates in images or video frames.
+	\item They process images efficiently, making them suitable for real-time applications, such as toll collection or traffic monitoring.
+\end{itemize}
+
+\subsection*{Pre-trained Models for Transfer Learning}
+\begin{itemize}
+	\item Many pre-trained CNN models (e.g., ResNet, VGG, YOLO) can be fine-tuned for specific tasks like license plate recognition.
+	\item This reduces training time and computational requirements, making the approach feasible for hardware like Jetson Nano.
+\end{itemize}
+
+
 
 \subsection{Hyperparameter}
 
-When building and/or training a CNN , several parameters need to be considered. The architecture of the network and the order of the layers need to be determined. There are new approaches to different convolutional methods from which to choose. In addition, the size and number of filters and the stride must be defined. The pooling procedure must also be defined, as well as the activation functions in the fully networked layers. Likewise, it must be defined how many neurons the input layer should have (this influences the possible image size) and how many layers and neurons per layer the Fully Connected Layer should be composed of.
+When designing and training a CNN, several key parameters must be taken into account. These include determining the network architecture and the sequence of its layers. A variety of modern convolutional methods are available to choose from, and decisions must be made regarding the size and number of filters, the stride, and the pooling method. Additionally, appropriate activation functions for the fully connected layers need to be selected. It is also crucial to define the number of neurons in the input layer, which affects the allowable image size, as well as the number of layers and neurons in each Fully Connected Layer.
 
-Many considerations must be made regarding the database. The complexity of the network to be trained depends mainly on whether only one input channel (black and white or greyscale) is used or three (RGB). If only one colour channel is to be used to reduce complexity, the images must be prepared accordingly. Likewise, the size (number of pixels, height and width) of the images may need to be adjusted to fit the architecture used. Normalising the images can also be helpful.
+The database used for training requires careful consideration as well. The complexity of the network is largely influenced by the number of input channels—whether a single channel (black and white or greyscale) or three channels (RGB) is used. If complexity needs to be reduced by using a single color channel, the images must be preprocessed accordingly. Similarly, the dimensions of the images (height, width, and pixel count) may need to be adjusted to align with the network architecture. Normalizing the images can also improve the training process.
 
-Since the images are presented to the neural network as data arrays, the file format does not play a direct role. Indirectly, however, the different image qualities of the various formats can influence the performance of the networks. For example, networks trained with high-resolution images may produce poor results when they are asked to classify compressed images. \cite{Dodge:2016} Differences can also arise from the different compressions, so different file formats should not be mixed.
+Although the file format of the images does not directly impact the network since images are presented as data arrays, it can indirectly affect performance. Variations in image quality between file formats can influence the network’s output. For instance, a network trained on high-resolution images might perform poorly when classifying compressed images \cite{Dodge:2016}. Differences arising from compression methods also highlight the importance of avoiding mixing file formats in the dataset.
 
 \subsection{Fine-tuning}
 
@@ -625,10 +657,9 @@ AlexNet consists of five Convolutional Layers and three Fully Connected Layers. 
 	\label{ConvAlex}
 \end{table}
 
-In total, AlexNet consists of 650000 neurons. About 60 million parameters need to be trained. \cite{Krizhevsky:2012}
+AlexNet comprises approximately 650,000 neurons and requires training around 60 million parameters. \cite{Krizhevsky:2012}
 
-This puts it about in the middle compared to the number of learnable parameters in other successful CNNs.
-
+This positions it roughly in the middle range compared to the number of trainable parameters in other successful CNN architectures.
 
 The input images for AlexNet need to be cropped to size $227 \times 227$. Three colour channels are used (see table \ref{ConvAlex}), so no conversion to greyscale is necessary, but one usually normalises the data to mean 0 and standard deviation 1.\cite{Alake:2020}
 
@@ -637,8 +668,10 @@ The input images for AlexNet need to be cropped to size $227 \times 227$. Three 
 \subsection{Image Classification with CNN}
 
 
-The classification of images is divided into two areas: image classification and object classification. 
-Object classification attempts to identify one or more objects. The identification is done by assigning them to predefined classes. As a rule, the results are given with probabilities. Image classification attempts to identify a suitable description for the image; in this case, the image is recorded and interpreted in its entirety. \cite{Zhiqiang:2017}
+Image classification can be broadly categorized into two types: image classification and object classification.
+
+Object classification focuses on identifying one or more objects within an image and assigning them to predefined classes. The results are typically expressed as probabilities.
+Image classification, on the other hand, aims to determine an overall description of the image, analyzing and interpreting it as a whole. \cite{Zhiqiang:2017}
 
 Several challenges exist when classifying images. If one uses images, one is processing larger amount of data. An image with $200 \times 200$ pixels has 40,000 pixels. If it is a colour image with three colour channels, one processes 120,000 attributes. 
 Furthermore, it is desirable that the result of the classification is independent of affine mappings. That is, the result is independent of scaling or rotation of the image. If only a section of the image is examined, the corresponding result should still be delivered. The mapping represents an image with corresponding operations.  
@@ -661,7 +694,7 @@ The classic \glqq Lena\grqq{} of image processing is used as the basis of the de
 
 \subsection{Representation of Images}
 
-For a computer programme, an image is a matrix of numbers. The type of matrix is determined by the resolution, the number of colours and the colour depth. The resolution is the pair of values of how many elements, called pixels, the matrix has in height and in width. A simple example is shown in the image. The image has a resolution of 10 pixels in width and in height. The values can be either 0 or 1; in this illustration the value 0 represents the colour black, 0 the colour white.
+For a computer program, an image is represented as a matrix of numerical values. The characteristics of this matrix are determined by factors such as resolution, the number of colors, and the color depth. Resolution refers to the dimensions of the matrix, expressed as the number of elements, or pixels, in its height and width. For instance, an image with a resolution of 10 pixels by 10 pixels is shown in the example. In this case, the values in the matrix are either 0 or 1, where 0 corresponds to the color black and 1 represents white.
 
 
 \begin{figure}
@@ -804,8 +837,7 @@ The above weights are empirically determined and are proportional to the sensiti
 \end{figure}
 
 
-However, the quality of the image does not only depend on the parameters mentioned. The sharpness of the image also contributes to it. However, there is unfortunately no simple definition here, but is often shaped by subjective perception. On the other hand, it is possible to influence image sharpness by mathematical operations.  Blurring of an image can be achieved by blurring. 
-Each pixel value is thereby represented by the average of the pixel values in a small window centred on the pixel. 
+The quality of an image is not solely determined by the parameters mentioned earlier; image sharpness also plays a crucial role. However, sharpness does not have a straightforward definition and is often influenced by subjective perception. On the other hand, image sharpness can be adjusted through mathematical operations. For example, blurring can be applied to an image by averaging the pixel values within a small window centered around each pixel.
 
 The resolution of the image affects the amount of computation required. For an image with a resolution of $674 \times 1200$ and a window size of $101 \times 101$, the new pixel value must be calculated separately for all three colour channels. In total this results in
 
@@ -823,7 +855,7 @@ operations. An example is shown in the figure with a filter size $5 \times 5$.
 \end{figure}
 
 
-Another possibility of image processing is edge detection. With edge detection, the goal is to identify regions of the image where intensities of colour differ greatly. This is used to delineate objects and for object recognition. An example is given in Figure.
+Another technique in image processing is edge detection, which aims to identify areas in the image where there are significant changes in color intensity. This method is used to define the boundaries of objects and assist in object recognition. An example is shown in the figure.
 
 \begin{figure}
 	\centering
@@ -844,7 +876,7 @@ One focus for machine learning is the interpretation of images. Two cases must b
 	
 \end{enumerate}. 
 
-When detecting objects, an image is examined to see if one or more objects can be identified. If an object is detected, the coordinates of the surrounding rectangle and the class or classes of the object are returned with a respective probability. With the segmentation\index{segmentation}, instead of the coordinates of the surrounding rectangle, a polygon course is returned that surrounds the object. In contrast, when classifying an image, a description of the image is searched for. In both cases CNN are commonly used and are described in the following section. 
+In object detection, an image is analyzed to determine if one or more objects can be identified. If an object is detected, the coordinates of the bounding box around the object are provided, along with the object's class or classes and their respective probabilities. In segmentation, instead of a bounding box, a polygonal outline surrounding the object is returned. In contrast, image classification focuses on finding a description for the entire image. In both object detection and segmentation, CNNs are commonly used, as discussed in the following section.
 
 A CNN expects an image as input information. If images do not contain colour information, they are represented as matrices whose number of columns and rows correspond to the number of pixels in width and height. In the case that an image contains colour information, such a matrix is created for each colour. In this case, one speaks of colour channel or simply of channel{index{channel}.
 	
@@ -879,7 +911,7 @@ A CNN expects an image as input information. If images do not contain colour inf
 	
 	\subsection*{AlexNet\index{AlexNet}} 
 	
-	The AlexNet architecture was the first to use CNN models implemented on GPUs .  In 2012, this really connected the growing computing power with Deep Learning. AlexNet is significantly deeper and more complex than LeNet They also started using ReLU activations instead of sigmoid or tanh, which helped train better models. AlexNet not only won the 2012 ImageNet classification competition, but beat the runner-up by a margin that suddenly made non-neural models almost obsolete. \cite{Krizhevsky:2012}
+	The AlexNet architecture was the first to implement CNN models on GPUs, marking a pivotal moment in 2012 that bridged the increasing computational power with Deep Learning. AlexNet is much deeper and more complex than LeNet, and it introduced ReLU activations in place of sigmoid or tanh, which greatly improved model training. AlexNet not only won the 2012 ImageNet classification competition but also outperformed the runner-up by such a large margin that it made non-neural models nearly obsolete. \cite{Krizhevsky:2012}
 	
 	
 	
@@ -902,17 +934,17 @@ A CNN expects an image as input information. If images do not contain colour inf
 	
 	\subsection*{MobileNet \& MobileNetV2\index{MobileNet}\index{MobileNetV2}} 
 	
-	The MobileNet architecture is designed for edge computers and smart phones that are limited in memory and computing power. This has opened up a large field of new applications. This is in contrast to the previous strategy of increasing the size of architectures by introducing separable convolutions. In simple terms, a two-dimensional convolutional kernel is split into two separate convolutions, namely the depth convolution, which is responsible for collecting the spatial information for each individual channel, and the point convolution, which is responsible for the interaction between the different channels. Later, MobileNetV2 was also introduced with residual connections and other optimisations in the architecture to further reduce the model size. \cite{Howard:2017,MobileNet:2018}
+	The MobileNet architecture is designed for edge devices and smartphones, which have limited memory and computing power, enabling a wide range of new applications. This approach contrasts with previous strategies that focused on increasing the size of architectures by using separable convolutions. Essentially, a two-dimensional convolutional kernel is divided into two separate convolutions: depth convolution, which captures spatial information for each individual channel, and point convolution, which handles interactions between different channels. Later, MobileNetV2 was introduced, featuring residual connections and other optimizations to further reduce the model size. \cite{Howard:2017,MobileNet:2018}
 	
 	\subsection*{EfficientNet\index{EfficientNet}} 
-	The architecture is the result of considering that the various architectures to date, focus on either performance or computational efficiency. The authors of \cite{Tan:2020} claimed that these two problems can be solved by similar architectures. They proposed a common CNN skeleton architecture and three parameters, namely the width, the depth and the resolution. The width of the model refers to the number of channels present in the different layers, the depth refers to the number of layers in the model and the resolution refers to the size of the input image to the model. They claimed that by keeping all these parameters small, one can create a competitive yet computationally efficient CNN model. On the other hand, by increasing the value of these parameters, one can create a model that is designed for accuracy.
+	The architecture stems from the idea that most existing architectures prioritize either performance or computational efficiency. According to the authors of \cite{Tan:2020}, these two challenges can be addressed with similar architectures. They proposed a common CNN framework defined by three parameters: width, depth, and resolution. The width refers to the number of channels in the layers, depth indicates the number of layers in the model, and resolution denotes the size of the input image. They suggested that by keeping these parameters small, a competitive and computationally efficient CNN model can be created. Conversely, increasing these parameters can lead to a model optimized for accuracy.
 	
 	
 	\subsection{General Structure}
 	
 	
 	
-	In the description of the architectures, some elements necessary for the construction were mentioned. All building blocks can be listed as follows:
+	The description of the architectures has mentioned some essential components required for their construction. All the building blocks can be listed as follows:\\
 	
 	\begin{itemize}
 		\item Convolutional layer (convolution)
@@ -952,10 +984,7 @@ A CNN expects an image as input information. If images do not contain colour inf
 	
 	
 	\subsection*{Input and Output}
-	
-	When a model receives an image as input, fields with pixel values are transferred. The height, the width and the number of colour channels determine the size of the fields. The elements of the fields then contain values between zero and 255. This value is the intensity of the pixel. The model then determines probabilities of how to classify an image based on these fields. For example, the result could be that $81\%$ of the image is a turtle, $11\%$ is a gun and $8\%$ is a chocolate bar.
-	
-	
+	When a model receives an image as input, fields containing pixel values are passed through. The size of these fields is determined by the height, width, and number of color channels. The elements within the fields have values ranging from zero to 255, representing the pixel intensity. The model then calculates the probabilities of classifying the image based on these fields. For instance, the output could show that $81\%$ of the image is a turtle, $11\%$ is a gun, and $8\%$ is a chocolate bar.
 	
 	
 	\subsection*{Convolution Layer}\label{subsec:conv2d}
@@ -1082,10 +1111,12 @@ A CNN expects an image as input information. If images do not contain colour inf
 		
 	\end{figure}
 	
-	When defining the filters, make sure that the filter is defined for each channel.
-	To capture the features in an image, the values in the filter must match the structure of the original pixel values of the image. Basically, if there is a shape in the input image that generally resembles the curve that this filter represents, then the convolution will result in a large value.
+	When defining the filters, ensure that each filter is defined for every channel.
 	
-	As a rule, several filters are used in parallel. The result is so-called feature maps\index{feature maps}. Further convolution layers are then applied to this result, which in turn generate feature maps. 
+	To capture the features in an image, the values in the filter should align with the structure of the original pixel values of the image. Essentially, if there is a shape in the input image that closely resembles the curve represented by the filter, the convolution will produce a high value.
+	
+	As a rule, several filters are used in parallel. The result is so-called feature maps\index{feature maps}. Additional convolution layers are then applied to these feature maps, generating further feature maps.
+	
 	
 	
 	\subsection{Feature Identification}
@@ -1106,7 +1137,6 @@ A CNN expects an image as input information. If images do not contain colour inf
 	$$  
 	
 	This filter can also be visualised as images:
-	
 	
 	
 	To demonstrate the effect of the filter, a sample image~\ref{concept:FilterCat} is considered:
@@ -1164,7 +1194,7 @@ A CNN expects an image as input information. If images do not contain colour inf
 	\right)
 	$$  
 	
-	The basic property of filters is clarified. If there is a shape in the input image that generally resembles the filter, then large values result. A probability is then assigned via the activation function. Various filters are then defined and applied in the convolution layer. The result is then the feature map. The figure shows some examples of concrete visualisations of filters of the first convolutional layer of a trained network. 
+	The fundamental property of filters is explained: if a shape in the input image closely matches the filter, large values will be produced. An activation function is then used to assign a probability. Multiple filters are defined and applied in the convolution layer, producing the feature map. The figure illustrates some examples of actual visualizations of filters from the first convolutional layer of a trained network.
 	
 	
 	\subsection{Edge Detection}
@@ -1270,6 +1300,8 @@ A CNN expects an image as input information. If images do not contain colour inf
 	
 	
 	
+	
+	
 	\subsection*{Activation function}\label{subsec:activation}
 	
 	The activation function is applied to the respective output of a layer and determines how the output value should be interpreted by applying a defined function. Here, the respective input values, as well as a bias, are included in the calculation and determine whether the neuron is triggered \cite{Nwankpa:2018}. In this example, the ReLU function is used for this: for input values less than or equal to zero, the function returns zero; for positive values, it behaves linearly \cite{Agarap:2018}. Thus, only positive values are returned (\ref{fig:relu}).
@@ -1300,7 +1332,7 @@ A CNN expects an image as input information. If images do not contain colour inf
 	\subsection*{Pooling}
 	
 	
-	After the use of convolutional layers, pooling layers are often used in CNN to reduce the size of the representation, to also speed up the calculations as well as to make some of the detection functions a bit more robust. A distinction is usually made between two pooling methods.
+	After applying convolutional layers, pooling layers are commonly used in CNNs to reduce the size of the representation, speed up calculations, and make some detection functions more robust. Typically, two types of pooling methods are distinguished.
 	
 	\begin{itemize}
 		\item Max Pooling
@@ -1309,8 +1341,7 @@ A CNN expects an image as input information. If images do not contain colour inf
 	
 	In pooling, areas of a matrix are combined. The ranges are defined by two values $n$ and $m$. The ranges are submatrices of the matrix of size $n \times m$. A function is then applied to each submatrix.
 	
-	In max-pooling, the maximum value of the submatrix is determined and entered as the result. In the case of average pooling, the average value of the matrix elements is determined instead of the maximum value and used further.
-	
+	In max-pooling, the highest value within the submatrix is selected and used as the result. In average pooling, instead of the maximum value, the average of the matrix elements is calculated and used for further processing.
 	
 	In the case of pooling, a window with a defined size is moved over the input matrix and the corresponding value within the window is taken over as a pooled value. The step size with which the window moves over the matrix is defined via a parameter \cite{Dumoulin:2016}. The default value corresponds to the size of the sub-matrix. An example is shown in the representation~\ref{fig:maxpooling2d}: a 4x4 matrix is defined with size \PYTHON{pool\_size}  2x2and a step size \PYTHON{stride\_size} 2x2 processed. Since two values are combined into each dimension, the dimensions of the output matrix are halved in contrast to the input matrix. \cite{Britz:2015}
 	
@@ -1431,15 +1462,15 @@ A CNN expects an image as input information. If images do not contain colour inf
 	
 	\subsection*{Dense Layer}\label{subsec:dense}
 	
-	In a layer, or fully-connected layer, is a layer that uses a neural network. This means that each of the previous outputs are fed into each of the inputs of the layer. Similarly, each output is linked to each of the subsequent inputs. This type of layer is usually used to be able to classify using the feature maps generated by the convolution.  \cite{Keras:2020b} It is determined by the number of neurons and the associated activation function.
+	A fully-connected layer is a layer that utilizes a neural network, where each output from the previous layer is connected to each input of the current layer. Likewise, each output of this layer is connected to each subsequent input. This type of layer is typically used to classify the feature maps generated by the convolution layers. \cite{Keras:2020b} The fully-connected layer is defined by the number of neurons and the associated activation function.
 	
 	
 	
 	\subsection*{Model used for a CIFAR 10 classification}\label{sec:usedmodel}
 	
-	The model used is an object \textbf{keras.models.Sequential}. With the help of the method add, the individual layers can be added to this model. The structure of the model is modelled on the Tensorflow tutorial for CNN \cite{GoogleTensorFlowCNN:2020}. The structure of the model is shown in \cref{fig:networklayers}.
+	The model used is an object of type \textbf{keras.models.Sequential}. Individual layers can be added to this model using the add method. The model's structure is based on the TensorFlow tutorial for CNNs \cite{GoogleTensorFlowCNN:2020}. The architecture of the model is shown in \cref{fig:networklayers}.
 	
-	The layers described previously are now used to create a model for classifying the dataset CIFAR-10 with Keras. Here we look at how these layers are applied in the Python environment and how the size and dimension of the data changes between each layer. The dimensions of the input as well as output data of the individual layers are mapped in \cref{fig:networklayers}.
+	The layers described earlier are now utilized to build a model for classifying the CIFAR-10 dataset using Keras. In this section, we will explore how these layers are implemented in the Python environment and observe how the size and dimensions of the data change between each layer. The input and output dimensions of each individual layer are illustrated in the following diagram. \cref{fig:networklayers}.
 	
 	\begin{lstlisting}[language=MyPython, numbers=left]
 		MODEL = models.Sequential()
@@ -1479,7 +1510,7 @@ A CNN expects an image as input information. If images do not contain colour inf
 	
 	\subsection{Python Code Example}
 	
-	The identification of regional patterns within an image is facilitated by the convolutional layer. Following the convolutional layer, the max pooling layer is employed to diminish dimensionality. 
+	The convolutional layer enables the detection of regional patterns within an image, while the max pooling layer that follows is utilized to reduce dimensionality.
 	
 	It is crucial to initially standardize all images to a uniform size. The initial convolution layer necessitates an additional parameter, \PYTHON{input.shape()}. The focus here is on training a Convolutional Neural Network (CNN) for image classification using the CIFAR-10 database. CIFAR-10 comprises 60,000 color images, each of size $32 \times 32$. These images are categorized into 10 classes, with 6,000 images per category, namely airplane, automobile, bird, cat, dog, deer, frog, horse, ship, and truck.
 	
