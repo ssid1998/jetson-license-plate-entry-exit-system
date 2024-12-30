@@ -1,5 +1,5 @@
 %%%%%%%%%%%%%%%%%%%%%%%%
-% $Autor: MansourAhmadyPhoulady, RanjeetsingTawar, HemanthPrabhakaran$
+% $Autor: RanjeetsingTawar$
 % $Pfad: Car_Licence_Plate_Identification_with_a_JetsonNano$
 % $Version: 4.0.0 $
 %
@@ -7,64 +7,48 @@
 %
 %%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Data Mining}
-Inventors have long wanted to create machines that can think since the time of the Ancient Greek Civilisation. When Computers were first invented, many people wondered whether computers would become self-thinking / self-aware, a few hundred years before the invention of Artificial Intelligence (AI). Artificial Intelligence (AI) is a broad term that encompasses several different technologies such as Machine Learning , Deep Learning  and Artificial Neural Networks . Humans have always been fascinated with inventing machines that think and behave like humans and the closest we have gotten to that point is the invention of algorithms known as Artificial Neural Networks , based loosely on how the organic brain makes decisions. Today, researchers have invented several different technologies capable of solving very complex mathematical problems inspired by the workings of the natural world. The following sections will examine the workings of some of the most common Machine Learning  and Deep Learning  algorithms.
+For centuries, inventors have aspired to create machines capable of thought, a concept dating back to Ancient Greek civilization. The advent of computers sparked curiosity about whether these machines could ever become self-aware, centuries before the emergence of Artificial Intelligence (AI). AI is an umbrella term covering a variety of technologies, including Machine Learning, Deep Learning, and Artificial Neural Networks. Humans have always been captivated by the idea of building machines that mimic human thought and behavior. The closest achievement to this vision is the development of Artificial Neural Networks, inspired by the decision-making processes of the human brain. Today, numerous advanced technologies, modeled on the principles of the natural world, are capable of tackling highly complex mathematical challenges. The sections that follow explore the mechanisms of some of the most widely used Machine Learning and Deep Learning algorithms.
 
 \section{Machine Learning}
-Machine Learning (ML) refers to a set of algorithms that have the ability to learn automatically and improve from experience without explicitly being programmed to do so. “A computer program is said to learn from experience E with respect to some class of tasks T and performance measure P, if its performance at tasks in T, as measured by P, improves with experience E” \cite{Mitchell:1997}. Machine Learning is generally categorized into Supervised Learning, Unsupervised Learning and Reinforcement Learning.
+Machine Learning (ML) encompasses algorithms that can autonomously learn and improve through experience without requiring explicit programming for every task. As defined by Mitchell (1997), "A computer program is considered to learn from experience E concerning a class of tasks T and a performance measure P if its performance on tasks in T, evaluated by P, improves with experience E" \cite{Mitchell:1997}. Machine Learning is typically divided into three main categories: Supervised Learning, Unsupervised Learning, and Reinforcement Learning.
 
 \subsection{Supervised Learning}
-A function that, given a sample of data and desired outputs, most closely approximates the relationship between input and output shown in the data is what is known as supervised learning. “ Supervised learning entails learning a mapping between a set of input variables X and an output variable Y and applying this mapping to predict the outputs for unseen data” \cite{Cord:2008}. Simply put, supervised learning refers to algorithms that can learn and make predictions on their own given a set of inputs and correctly labelled outputs. Problems involving classification and regression respond well to supervised learning. Supervised Learning entails 2 phases. In the first phase, which is known as the training phase, labelled data sets are provided into the system to tell it what output corresponds to each particular input value. The larger the dataset, the better the learning outcome but one has to be wary of choosing the correct dataset to avoid pitfalls such as overfitting and if the data chosen for training is inadequate, it can lead to underfitting. Once the system is trained using the appropriate data, it must be tested to make sure that the predictions made by the system are accurate. In the next phase, testing data is fed to the trained model. Testing data will not contain any labels. This is to measure the accuracy of the system.
+Supervised learning is the process of finding a function that best approximates the relationship between input data and corresponding outputs based on a given dataset. According to Cord (2008), "Supervised learning entails learning a mapping between a set of input variables X and an output variable Y and applying this mapping to predict the outputs for unseen data" \cite{Cord:2008}. In essence, it refers to algorithms that learn and make predictions independently, given labeled input-output pairs.
+
+Supervised learning is particularly effective for problems involving classification and regression. It involves two main phases:
+
+Training Phase: During this phase, the system is provided with labeled datasets to associate specific inputs with their corresponding outputs. A larger dataset generally leads to better learning outcomes; however, selecting an appropriate dataset is crucial to avoid pitfalls like overfitting (when the model performs well on training data but poorly on unseen data) or underfitting (when the model fails to learn adequately due to insufficient or poor-quality data).
+
+Testing Phase: After training, the system is evaluated using a separate dataset, which lacks labels, to measure its predictive accuracy. This phase ensures that the model can generalize its learning to new, unseen data effectively.
 
 \subsection{Unsupervised Learning}
-Unsupervised Learning refers to algorithms that analyse and cluster datasets based on certain trends in the datasets. There are no labels present in unsupervised learning. The algorithm has to analyse the dataset and recognise patterns. Finding the underlying structure of a dataset, classifying the data into groups based on similarities, and representing the dataset in a compressed format are the objectives of unsupervised learning. Unsupervised algorithms are classified into two types broadly, they are clustering and association. 
+Unsupervised Learning involves algorithms that analyze and group datasets based on inherent patterns or trends within the data. Unlike supervised learning, unsupervised learning does not rely on labeled data. Instead, the algorithm must identify patterns and relationships on its own. The primary goals of unsupervised learning include uncovering the underlying structure of a dataset, grouping data into categories based on similarities, and compressing the dataset into a more manageable representation.
+
+Unsupervised algorithms are generally categorized into two types: clustering and association.
 \begin{enumerate}
-	\item Clustering Algorithms: Using the clustering technique, items are grouped into clusters so that those who share the most similarities stay in one group and share little to none with those in another. The data objects are classified based on the existence or lack of commonalities discovered by cluster analysis. \cite{JavaTPoint:2021}
-	\item Association Algorithms: Association rule is used to uncover the connections among the variables in a sizable database. It establishes the group of items that co-occur in the collection.
+	\item Clustering Algorithms: These algorithms group items into clusters based on their similarities. Items within the same cluster share significant commonalities, while those in different clusters have minimal or no similarities. Cluster analysis helps classify data objects based on the presence or absence of shared characteristics \cite{GFG:2024}.
+	\item Association Algorithms: These algorithms use association rules to discover relationships between variables within a large dataset. They identify groups of items that frequently occur together in the data.
 \end{enumerate}
 
 \subsection{Reinforcement Learning}
-Reinforcement Learning is a technique based on feedback. There are no labelled datasets in reinforcement learning. In the case of supervised learning, the dataset with correct labels is given as input to the learning algorithm to make decisions based on said labels, whereas, in the case of reinforcement learning, the reinforcement agent has to decide what to do to perform a given task; whether or not the task has been performed correctly is given through a feedback system aka reinforcement. Making decisions consecutively is the foundation of reinforcement learning. Simply said, the next input depends on the output of the previous input and the output depends on the state of the current input. While negative reinforcement reduces the frequency of a behaviour, positive reinforcement enhances it. Since it enables models to perform at their highest potential on a given task, positive reinforcement is typically the most prevalent type of reinforcement utilized in reinforcement learning.
+Reinforcement learning is a technique that relies on feedback, without the need for labeled datasets. Unlike supervised learning, where the algorithm is provided with labeled data to make decisions, reinforcement learning requires the agent to determine actions to accomplish a task. The correctness of these actions is evaluated through feedback, or reinforcement. In reinforcement learning, decision-making is sequential, meaning each action depends on the previous output, and the outcome of an action is influenced by the current state. Positive reinforcement increases the likelihood of a behavior occurring, while negative reinforcement decreases it. Positive reinforcement is more commonly used in reinforcement learning because it helps models reach their full potential in completing a task.
 
-\subsection{Some General Machine Learning Algorithms}
-\subsection{Decision Trees}
-“Decision tree learning is a method for approximating discrete-valued target functions, in which the learned function is represented by a decision tree” \cite{Mitchell:1997}. A decision tree is a supervised learning technique used mainly to solve classification and regression problems. A decision tree is used to visually represent the decision-making process. A decision tree is usually represented as an upside-down tree with the root at the top, representing the decision to be made. The root will have several branches for different questions to be asked and these are known as internal nodes, in turn, each internal node will have more branches leading to more decisions. If the node does not have more decisions to be made, in essence, if it does not branch out further, such a node is called a leaf. In conclusion, decision trees have a root node on the top and several internal nodes connected through branches and terminate with leaf nodes. Below is the representation of a decision tree. \cite{Prashant:2017}
-
-\begin{figure}[h]
-	\centering
-	\includegraphics{Images/DecisionTrees}
-	\caption{Simple Example of a Decision Tree \cite{Mitchell.1997}}
-\end{figure}
-
-\subsection{Random Forests}
-A random forest combines several trees and picks the most-voted decision tree. Random forests are best suited for classification and regression problems. Random forest assumes that individual decision trees perform better when considered as a group than they do individually. Each tree provides a classification or a "vote" when using Random Forest for categorization. The classification with the most "votes" is chosen by the forest. When performing regression with Random Forest, the forest selects the mean of all tree outputs. A random forest is a collection of single decision trees, however instead of each tree developing independently, they are all mixed together at random. A regular decision tree will create a set of rules that it will use to make predictions when given a training dataset with features and labels. If a Random Forest algorithm is given the same data, it would randomly choose observations and features to create multiple decision trees, and then average the outcomes. \cite{RachaelMeltzer.2021}
-
-\subsection{K-Nearest Neighbours }
-The k-nearest neighbours algorithm is a non-parametric, supervised learning classifier that relies on closeness to produce classifications or predictions about the grouping of a single data point. Although it can be applied to classification or regression problems, it is commonly employed as a classification algorithm because it relies on the idea that comparable points can be discovered close to one another. \cite{Raschka:2017}
-The following figure illustrates the working of  in two dimensions. The training examples are displayed as blue dots in the left subpanel, and a query point that has to be classified is displayed as a question mark. Assuming a Euclidean distance metric, the dashed line in the right subpanel shows the query point's closest neighbour, and the class labels are located there. The training set's nearest data point's class label serves as the anticipated class label. \cite{Raschka:2017} 
-\begin{figure}[h]
-	\centering
-	\includegraphics{Images/KNN}
-	\caption{How  works \cite{Raschka:2017}}
-\end{figure}
+\subsection{Machine Learning Algorithms}
 
 \subsection{YOLOv5 and CNNs}
-Yolov5 and CNN use extracted features from the input image by all the convolutional layers in the detection module. As the number of layers increases, the number of channels increases and the size of the feature map decreases progressively. \cite{Redmon:2016}
-The later feature map has higher-level features extracted and thus is more beneficial for recognizing the LP and predicting its area of interest box. 
+YOLOv5 and CNN both extract features from the input image through all the convolutional layers in the detection module. As the number of layers increases, the number of channels grows, while the size of the feature map progressively decreases. \cite{Redmon:2016} The later feature maps contain higher-level features, which are more useful for recognizing the license plate (LP) and predicting its area of interest box.
 
-In this project TensorFlow 2.9.1 and TensorFlow 2.3.1 for YOLO v5.
-YOLO V5 works on PyTorch. YOLO V5 is cloned from \url{https://github.com/ultralytics/yolo5} by running the command
-! git clone https://github.com/ultralytics/yolo5. This will create the folder structure for YOLO V5.
+In this project, TensorFlow versions 2.9.1 and 2.3.1 are used for YOLOv5. Although YOLOv5 is based on PyTorch, it can be cloned from \url{https://github.com/ultralytics/yolo5} by executing the command: ! git clone https://github.com/ultralytics/yolo5, which creates the necessary folder structure for YOLOv5.
 
-Dataset is divided into training and validation datasets. 80\% of the data for training and 20\% data for validation.
-YOLOv5 first exploits the Box Regression layer to predict the bounding box. Then, referring to the relative position of the bounding box in each feature map, EasyOcr extracts the region of interest from several already rendered feature maps, merge them after pooling and feeds the combined features maps to the subsequent Classifiers.
+The dataset is split into training and validation sets, with 80% used for training and 20% for validation. YOLOv5 first utilizes the Box Regression layer to predict the bounding boxes. Then, EasyOCR extracts the region of interest from the feature maps based on the relative position of the bounding boxes, merges the feature maps after pooling, and feeds the combined maps into the subsequent classifiers.
 
-The YOLO v5 model was trained on the CLPD data set. As part of the custom data model, YOLO v5 is used and tuned according to the characteristics of a dataset. In the training pipeline pass the input file and crop out the LP from the whole image, passing that to EasyOCR and recognizing the text. The file structure and the weights of the dataset are prerequisites for YOLO V5. \cite{Redmon:2016}
+The YOLOv5 model was trained on the CLPD dataset, and it was customized and fine-tuned according to the dataset’s specific characteristics. During the training pipeline, the input file is processed by cropping the LP from the full image, which is then passed to EasyOCR for text recognition. The file structure and dataset weights are prerequisites for YOLOv5. \cite{Redmon:2016}
 
-Images that are used for modelling are first converted from BGR to RGB. These processed images are passed to the detector. The detector will plot the boxes around the LP. The region of boxes will be called the area of interest. These functions After getting results, frames and classes, filter out the boundary boxes based on the probability threshold. All the boundary boxes which have a threshold greater than 0.55 are considered for further processing.
+The images used for modeling are first converted from BGR to RGB format. These processed images are passed to the detector, which plots bounding boxes around the LP. The region inside these boxes is referred to as the area of interest. After obtaining the results, frames, and classes, the boundary boxes are filtered based on the probability threshold. Only those bounding boxes with a threshold greater than 0.55 are considered for further processing.
 
 \begin{figure}[h!]
 	\centering
-	\includegraphics[width=0.7\textwidth]{Images/YOlOv5}
+	\includegraphics[width=0.7\textwidth]{Images/Two-Bounding-Boxes-Around-the-Number-Plate-There-are-two-bounding-boxes-in-figure-5-with}
 	\caption{YOLOv5 Result}
 \end{figure}
 
@@ -120,7 +104,7 @@ Keras CNN consists of three convolutional layers with ReLU and Batch Normalizati
 
 \index{Example}
 
-\subsection{Introduction}
+\subsection{Description}
 
 ALDPR uses EasyOCR for transforming the raw images of LP. After detecting the area of interest from car images OCR is used in the segmentation of characters. It isolates the character and number from the LP and recognizes the whole sequence of characters.
 
@@ -131,30 +115,126 @@ EasyOCR breakdowns the blobs to locate the character and their bounding box, usi
 	\item Repaste objects mode: The blob is grouped into characters of nominal size. When a blob is big it can be split automatically.
 \end{enumerate}
 
-Easy OCR processes the character images to normalize the size into a bounding box, extract relevant feature and stores them in a font file. The patterns in a form are stored as arrays of pixels defined by pattern width and pattern height
+Easy OCR processes the character images to normalize the size into a bounding box, extract relevant feature and stores them in a font file. The patterns in a form are stored as arrays of pixels defined by pattern width and pattern height.
 
-\subsection{Description}
-Hyperparameter for EasyOCR Segmentation: \cite{EasyOCR:2018}
+\subsection{Applications of EasyOCR}
+
+\subsection*{Automated Vehicle Monitoring Systems} 
+
+\begin{itemize}
+	\item EasyOCR aids in real-time recognition of license plates in busy environments such as highways, parking lots, and toll booths.
+	\item Enables seamless vehicle tracking without human intervention.
+\end{itemize}
+\subsection*{Traffic Law Enforcement}
+\begin{itemize}
+\item Facilitates automated detection of traffic violations by capturing license plates of vehicles breaking speed limits, running red lights, or engaging in other infractions.
+\item Helps in issuing automated tickets and maintaining records for offenders.
+\end{itemize}
+\subsection*{Parking Management Systems}
+\begin{itemize}
+\item Integrates with access control systems in gated parking areas to identify vehicles and grant or deny entry based on pre-registered license plates.
+\item Reduces manual efforts and improves security in commercial and residential spaces.
+\end{itemize}
+\subsection*{Toll Collection and Highways}
+\begin{itemize}
+\item Allows automated toll collection by reading license plates as vehicles pass through toll booths.
+\item Minimizes congestion and ensures smooth operation of toll plazas with real-time OCR processing.
+
+\end{itemize}
+
+\subsection{Hyperparameters}
+\subsection*{Hyperparameter for EasyOCR Segmentation:} \cite{EasyOCR:2018}
 \begin{enumerate}
 	\item \textbf{Threshold:} A too-high value thickens black characters on a white background and may cause merging, a too-small value makes parts disappear. 
 	\item \textbf{NoiseArea:} Blob areas smaller than this value are discarded. Make sure small character features are preserved.
-	\item MaxCharWidth,MaxCharHeight: Maximum character size. If a blob does not fit in a rectangle with these dimensions, it is discarded or split into several parts using vertical cutting lines.
+	\item \textbf{MaxCharWidth,MaxCharHeight:} Maximum character size. If a blob does not fit in a rectangle with these dimensions, it is discarded or split into several parts using vertical cutting lines.
 	\item \textbf{CharSpacing:} The width of the smallest gap between adjacent letters. If it is larger than MaxCharWidth it has no effect. If the gap between two characters is wider than this, they are treated as different characters. This stops thin characters being incorrectly grouped together.
 	\item \textbf{RemoveBorder:}Blobs near image/ROI edges cannot normally be exploited for character recognition.
 \end{enumerate}
-Hyperparameters for EasyOCR Recognition: \cite{EasyOCR:2018}
+\subsection*{Hyperparameters for EasyOCR Recognition:} \cite{EasyOCR:2018}
 \begin{enumerate}
-	\item Load: reads a pre-recorded font from a disk file.
-	\item BuildObjects: The image is segmented into objects or blobs (connected components) which help find the characters. This step can be bypassed if the exact position of the characters is known. If the character isolation process is bypassed, you must specify the known locations of the characters: AddChars and EmptyChars.
-	\item FindAllChars: selects the objects considered as characters and sorts them from top to bottom then left to right.
-	\item ReadText: performs the matching and filters characters if the marking structure is fixed or a character set filter was provided.
-	\item Character recognition: The characters are compared to a set of patterns, called a font.
+	\item \textbf{Load:} reads a pre-recorded font from a disk file.
+	\item \textbf{BuildObjects:} The image is segmented into objects or blobs (connected components) which help find the characters. This step can be bypassed if the exact position of the characters is known. If the character isolation process is bypassed, you must specify the known locations of the characters: AddChars and EmptyChars.
+	\item \textbf{FindAllChars:} selects the objects considered as characters and sorts them from top to bottom then left to right.
+	\item \textbf{ReadText:} performs the matching and filters characters if the marking structure is fixed or a character set filter was provided.
+	\item \textbf{Character recognition:} The characters are compared to a set of patterns, called a font.
 	\item The best match is stretched to fit in a predefined rectangle and compared to each normalized template in the font database.
 	\item A Character set filter can improve recognition reliability and run time by restricting the range of characters to be compared. For instance, if a marking always consists of two uppercase letters followed by five digits, the last of which is always even, it is possible to assign each character a class (maximum 32 classes) then set the character filter to allow the following classes at recognition time: two uppercase, four even or odd digits, one even digit.
 \end{enumerate}
 
-\subsection{Installation}
-Prerequisite and installation of EasyOCR:
+\subsection{Input of EasyOCR}
+
+\subsection*{Image Data}
+\begin{itemize}
+	\item \textbf{Captured still images of vehicles containing license plates.}
+	\item \textbf{Format:} PNG, JPEG, or other standard image formats supported by EasyOCR.
+	\item \textbf{Examples:} Photos from traffic cameras, parking lot cameras, or manually uploaded images.
+\end{itemize}
+
+\subsection*{Video Frames (if video feed is used)}
+\begin{itemize}
+	\item Individual frames extracted from video streams recorded by the Jetson Nano’s connected camera.
+	\item \textbf{Resolution:} Moderate to high (depending on the camera and system requirements).
+\end{itemize}
+
+\subsection*{Camera Feed}
+\begin{itemize}
+	\item Live video feed from a Logitech C270 or similar camera connected to the Jetson Nano.
+	\item Input stream resolution should match the EasyOCR capability for text extraction.
+\end{itemize}
+
+\subsection*{Preprocessed Image Data}
+\begin{itemize}
+	\item Cropped regions of interest (ROI) where the license plate is located.
+	\item Includes enhancements like noise reduction, resizing, and brightness adjustments to improve recognition accuracy.
+\end{itemize}
+
+\subsection{Output of EasyOCR}
+\subsection*{Recognized Text}
+\begin{itemize}
+	\item The alphanumeric characters on the license plate extracted by EasyOCR.
+	\item \textbf{Output format:} Plain text or string (e.g., MH12AB1234).
+\end{itemize}
+
+\subsection*{Bounding Box Coordinates}
+\begin{itemize}
+	\item Coordinates of the recognized license plate area in the input image.
+	\item \textbf{Format:} List of coordinates (e.g., [x1, y1, x2, y2]).
+\end{itemize}
+
+\subsection*{Confidence Score}
+\begin{itemize}
+	\item A numeric value indicating the accuracy or confidence level of the text recognition.
+	\item \textbf{Format:} Decimal (e.g., 0.95).
+\end{itemize}
+
+\subsection*{Processed Image with Overlay}
+\begin{itemize}
+	\item The input image with a bounding box drawn around the detected license plate and the recognized text overlayed.
+	\item \textbf{Format:} Modified image saved as PNG/JPEG or displayed in real-time.
+\end{itemize}
+
+\subsection*{Logs or Database Entry}
+\begin{itemize}
+	\item Logs of recognized license plates for future reference.
+	\item \textbf{Format:} Stored as CSV, JSON, or in a relational database.
+\end{itemize}
+
+\subsection*{Access Control Decision (if integrated)}
+\begin{itemize}
+	\item Based on the recognized license plate, the system could output an authorization decision (e.g., "Access Granted" or "Access Denied").
+	\item \textbf{Format:} Boolean or text response.
+\end{itemize}
+
+\subsection*{Alerts or Notifications}
+\begin{itemize}
+	\item In case of mismatches or unregistered license plates, notifications or alarms can be triggered.
+	\item \textbf{Format:} System event or UI display.
+\end{itemize}
+
+
+\subsection{Requirements}
+\subsection*{Prerequisite and installation of EasyOCR}
 
 PyTorch is a core dependency for installing the EasyOCR. 
 
