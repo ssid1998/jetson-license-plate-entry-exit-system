@@ -9,67 +9,70 @@
 
 \chapter{Data Version Control}
 
-Data Version Control (DVC) is an essential practice in managing data science, machine learning projects, and software development, especially when collaboration is involved. It extends version control systems to handle large data files, models, and experiments, ensuring reproducibility, collaboration efficiency, and resource management.
+Effective management of data, models, and experiments is critical in data science, machine learning, and collaborative software development projects. Data Version Control (DVC) extends the capabilities of traditional version control systems, enabling the seamless tracking of large data files and machine learning artifacts. By integrating DVC into a project workflow, teams can ensure reproducibility, facilitate collaboration, and optimize resource management.
 
-Here are some reasons that we should have the data version control plan during the project:
+\section{Why Data Version Control?}
+
+Implementing a data version control strategy offers several key benefits for machine learning projects:
 
 \begin{enumerate}
-	\item \textbf{Track Changes:} Our source code, data changes over time. Tracking these changes allows you to revert to previous versions if needed and understand how your data evolved.
-	\item \textbf{Collaboration:} When working on projects with others, it’s crucial to ensure everyone uses the same version of datasets and models. Version control helps synchronize data across teams.
-	\item \textbf{Experimentation:} Machine learning involves lots of experimentation. Tracking data versions alongside code changes helps in reproducing experiments accurately.
+	\item \textbf{Tracking Changes:} Datasets and source code evolve throughout the lifecycle of a project. DVC allows you to monitor these changes, providing the ability to revert to earlier versions if necessary and ensuring transparency in how data transforms over time.
+	\item \textbf{Facilitating Collaboration:} In team projects, consistent use of datasets and models across all members is essential. DVC helps synchronize data and code, reducing conflicts and ensuring a unified project workflow.
+	\item \textbf{Streamlining Experimentation:} Machine learning requires frequent experimentation. By linking data versions to specific code changes, DVC ensures reproducibility and simplifies the comparison of experimental results.
 \end{enumerate}
 
-\section{Plan}
+\section{Implementation Plan}
 
-The first step is to finish the installation of GitHub among all the teammates and have the same version as our version control on the report, manual, and even presentations mainly builds on Git’s versioning capabilities. After completion of the installation, we asked for the professor to release the right for us to join the repository and initialize on our side about the project. To update our report and other documents, everyone would send a message in our communicating group first so others would not fetch and push new updates at that moment so crushing on the documents can also be prevented.
+The implementation of data version control in this project involved a structured approach to ensure consistency and collaboration:
 
-Secondly, for our different software that we used in the project, we have firstly aligned our software version among everyone to make sure all the results replicate under the same environment and prevent issues due to the version difference. All the software aligned versions are stated in the following table.
+\subsection*{Version Control for Project Files}
+The first step was establishing GitHub as the central version control system for all project-related files, including the report, manual, and presentations. Team members were required to install Git and align their configurations to match the project's GitHub repository version. The repository served as the primary source for updates, and a communication protocol was established: team members would notify the group before making updates to prevent conflicts during simultaneous fetch and push operations.
 
-Thirdly, the data version control of the dataset is only done on one computer of our teammates. Therefore, every change in our dataset will stay in one computer to prevent the data or code corruption from the others. Moreover, our dataset would save every week as a new version in the local computer so that we can track the code again in case there are issues generated in the new version. Our data model and dataset can still step back to make sure they can run and get results properly.
+\subsection*{Software Version Alignment}
+To maintain consistency across computational environments, the team standardized software versions for all tools and packages used in the project. Aligning versions ensured that results could be replicated without discrepancies caused by variations in software behavior. A summary of aligned versions is provided in Table \ref{tab:software-versions}.
 
+\subsection*{Dataset Version Control}
+To avoid data corruption and conflicts, dataset version control was centralized on a single team member's system. Weekly backups were created, preserving previous versions to safeguard against accidental overwrites or errors in new versions. This approach ensured that the dataset and trained models remained accessible and reproducible throughout the project.
 
 \begin{table}[h!]
 	\centering
 	\caption{Software and Package Versions}
+	\label{tab:software-versions}
 	\begin{tabular}{|l|l|}
 		\hline
 		\textbf{Software/Package} & \textbf{Version} \\
 		\hline
-		GitHub & Version 3.3.8 (x64) \\
-		\hline
-		TeXstudio & TeXstudio 4.6.3 \\
-		\hline
-		PyCharm & 2023.2.1 \\
-		\hline
-		Python & 3.10.12 \\
-		\hline
-		TensorFlow & 2.15.0 \\
-		\hline
-		NumPy & 1.23.5 \\
-		\hline
-		pandas & 1.5.3 \\
-		\hline
-		matplotlib.pyplot & 3.7.1 \\
-		\hline
-		os (Built-in Python) & 3.10.12 \\
+		GitHub                   & Version 3.4.12 (x64) \\
+		TeXstudio                & TeXstudio 4.7.3     \\
+		PyCharm                  & 2024.2.2            \\
+		Python                   & 3.13  (x64)             \\
+		TensorFlow               & 2.16.1              \\
+		NumPy                    & 1.25.2              \\
+		pandas                   & 2.2.3               \\
+		matplotlib.pyplot        & 3.10.0               \\
+		os (Built-in Python)     & 3.12.1             \\
 		\hline
 	\end{tabular}
 \end{table}
 
-\section{Installation}
+\section{Installation Steps}
+
+To implement DVC in the project workflow, the following steps were followed:
 
 \begin{enumerate}
-	\item \textbf{Install DVC}: Begin by installing DVC on your system. You can typically install DVC via pip, conda, or from source. The official DVC documentation provides comprehensive installation instructions for various platforms {\url{https://dvc.org/doc/install}}.
+	\item \textbf{Install DVC:} DVC was installed using \texttt{pip}, \texttt{conda}, or system-specific methods. Detailed installation instructions are available in the official DVC documentation: \url{https://dvc.org/doc/install}.
 	
-	\item \textbf{Set Up GitHub Repository}: Ensure that you have a GitHub repository set up for your project. If not, create one on GitHub's website {\url{https://github.com}}.
+	\item \textbf{Set Up GitHub Repository:} A dedicated GitHub repository was created to house project files, including DVC metadata. Team members were invited to the repository and granted appropriate access permissions.
 	
-	\item \textbf{Initialize DVC}: Navigate to your project directory and initialize DVC by running the \texttt{dvc init} command in your terminal. This initializes DVC within your project and sets up the necessary files and directories.
+	\item \textbf{Initialize DVC:} Within the project directory, DVC was initialized using the \texttt{dvc init} command. This step created the necessary configuration files for managing data and metadata.
 	
-	\item \textbf{Add Data to DVC}: Use the \texttt{dvc add} command to add your data files to DVC. This command tracks the data files and generates corresponding DVC metafiles.
+	\item \textbf{Add Data to DVC:} Data files were added to DVC using the \texttt{dvc add} command, which generated corresponding metafiles. These files were subsequently tracked using Git, ensuring synchronization between DVC and GitHub.
 	
-	\item \textbf{Connect DVC with GitHub}: Once your data is added to DVC, you need to connect DVC with your GitHub repository. This is typically done using cloud storage services like Amazon S3, Google Cloud Storage, or Azure Blob Storage. Detailed instructions on setting up remote storage with GitHub are provided in the DVC documentation {\url{https://dvc.org/doc/user-guide/setup-remote-storage}}.
+	\item \textbf{Configure Remote Storage:} A remote storage solution (e.g., Amazon S3, Google Cloud Storage) was configured to store large data files and enable easy sharing. The configuration process followed guidelines provided in the DVC documentation: \url{https://dvc.org/doc/user-guide/setup-remote-storage}.
 	
-	\item \textbf{Commit and Push to GitHub}: After configuring remote storage, commit your changes to your local Git repository using standard Git commands (\texttt{git add}, \texttt{git commit}, \texttt{git push}). This ensures that your DVC metafiles and any changes to your project files are saved in your GitHub repository.
+	\item \textbf{Commit and Push Changes:} Changes to the project directory, including DVC metadata, were committed using Git commands (\texttt{git add}, \texttt{git commit}, \texttt{git push}) to ensure synchronization across the team.
 	
-	\item \textbf{Collaborate with Teammates}: Share the GitHub repository link with your teammates, and ensure they have DVC installed on their systems. They can then clone the GitHub repository and use DVC commands to track and manage data files collaboratively.
+	\item \textbf{Collaborate:} Team members cloned the repository and used DVC commands to pull datasets and track updates. Regular communication ensured smooth collaboration and minimized conflicts.
 \end{enumerate}
+
+By adopting these practices, the project successfully managed datasets, models, and experiments, ensuring reproducibility and streamlined collaboration across the team.
