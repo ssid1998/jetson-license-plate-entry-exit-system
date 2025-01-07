@@ -64,12 +64,6 @@ To get started with the Jetson Nano, you’ll need:
 	\item \textbf{Keyboard and Mouse:} For interaction in GUI-based setups.
 \end{itemize}
 
-\subsection{Software requirement:}
-\begin{itemize}
-	\item \textbf{Etcher Software}: Required for flashing the Jetson Nano system image onto the microSD card.
-	
-	\item \textbf{NVIDIA Jetson Software EULA:} Required for the End User License Agreement during setup. 
-\end{itemize}
 
 \subsection{Operational Modes}
 The Jetson Nano Supports two modes of operation:
@@ -115,8 +109,126 @@ The Jetson Nano Developer Kit is equipped with tools and compatibility to suppor
 	\item Avoid long cables that can cause voltage drops.
 \end{itemize}
 
+
+
 \newpage
 
+\section{Operating System}
+\section*{Linux Operating System on Jetson Nano}
+
+The NVIDIA Jetson Nano runs on a Linux-based operating system called \textbf{Jetson Linux} (formerly known as Linux for Tegra or L4T). This is a customized version of Ubuntu tailored specifically for the Jetson family of devices. The operating system is optimized to leverage the unique hardware capabilities of the Jetson Nano, such as the GPU for accelerated computing, making it an ideal platform for edge AI and embedded applications like license plate recognition. \cite{NSM:2025}
+
+\subsection{Key Features of Jetson Linux on Jetson Nano}
+
+\begin{itemize}
+	\item \textbf{Base OS:} Jetson Linux is based on Ubuntu (currently Ubuntu 18.04 or 20.04 for newer versions). It provides a familiar Linux environment for developers.
+	\item \textbf{Kernel Customization:} Jetson Linux includes a custom Linux kernel designed to support NVIDIA GPUs, enabling hardware acceleration for applications requiring high computational power.
+	\item \textbf{Package Management:} The system uses the standard \texttt{apt} package manager, allowing users to install and update software easily.
+	\item \textbf{NVIDIA JetPack SDK:}
+	\begin{itemize}
+		\item JetPack is a comprehensive software development kit for the Jetson platform. It includes libraries, APIs, and tools for AI, computer vision, and deep learning applications.
+		\item Key components include TensorRT, cuDNN, CUDA, and multimedia libraries optimized for NVIDIA GPUs.
+	\end{itemize}
+\end{itemize}
+
+\subsection{Advantages of Using Linux for Jetson Nano}
+
+\begin{itemize}
+	\item \textbf{Open-Source Flexibility:} Linux provides access to a vast array of open-source libraries and tools.
+	\item \textbf{Hardware Optimization:} Jetson Linux is optimized to utilize the Jetson Nano's GPU (NVIDIA Maxwell architecture with 128 CUDA cores) for parallel processing tasks.
+	\item \textbf{Ease of Development:} With a user-friendly GUI (Ubuntu desktop environment), developers can easily code, debug, and deploy applications.
+	\item \textbf{Long-Term Support:} NVIDIA regularly updates Jetson Linux to support newer Jetson devices and maintain compatibility with AI/ML frameworks.
+\end{itemize}
+
+\subsection{Typical Workflow with Jetson Linux}
+
+\begin{enumerate}
+	\item \textbf{Flashing the OS:}
+	\begin{itemize}
+		\item The Jetson Nano's SD card is flashed with the Jetson Linux image using tools like Balena Etcher.
+		\item Official images can be downloaded from NVIDIA's Jetson Download Center
+	\end{itemize}
+	\item \textbf{Initial Setup:}
+	\begin{itemize}
+		\item After flashing, users configure the OS by setting up the username, password, and network.
+	\end{itemize}
+	\item \textbf{Installing Development Tools:}
+	\begin{itemize}
+		\item NVIDIA JetPack SDK is installed via the SDK Manager or using pre-installed tools in the Jetson Linux image.
+
+	\end{itemize}
+	\item \textbf{Application Development:}
+	\begin{itemize}
+		\item Applications can be developed using Python with libraries like OpenCV, TensorFlow, or PyTorch.
+		\item Optimized AI models can be deployed using NVIDIA TensorRT for inference.
+	\end{itemize}
+\end{enumerate}
+
+\subsection{Applications of Jetson Linux}
+
+\begin{itemize}
+	\item \textbf{Edge AI:} Run AI inference tasks locally on the device without depending on cloud resources.
+	\item \textbf{IoT Devices:} Integrate with sensors and other hardware for industrial IoT applications.
+	\item \textbf{Computer Vision:} Perform tasks such as object detection, facial recognition, and license plate identification.
+\end{itemize}
+
+\section{Software Interfaces:}
+\subsection{Etcher Software}
+\begin{itemize}
+	\item \textbf{Etcher Software} Required for flashing the Jetson Nano system image onto the microSD card. Etcher (now known as balenaEtcher) is an open-source, cross-platform tool used for flashing disk images (such as operating system images) onto SD cards or USB drives. It's widely used to flash operating system images onto SD cards for devices like the Jetson Nano. \cite{BAC:2025}
+\end{itemize}
+
+\subsection*{Key Features of Etcher}
+\begin{itemize}
+	\item \textbf{Cross-Platform Compatibility}: Etcher works on Windows, macOS, and Linux, making it accessible for developers using different systems.
+	\item \textbf{Simple User Interface}: It offers a streamlined, easy-to-use interface for flashing images, making it ideal for beginners and advanced users alike.
+	\item \textbf{Safe Flashing Process}: Etcher verifies the flashing process to ensure that the image is correctly written to the storage device, helping to prevent errors or corrupt files.
+	\item \textbf{Support for Various Image Formats}: Etcher supports a wide range of image formats, including .img, .iso, and .zip files.
+\end{itemize}
+
+\subsection*{How Etcher Works}
+\begin{enumerate}
+	\item \textbf{Select Image}: The user chooses the operating system image (e.g., Jetson Linux for Jetson Nano).
+	\item \textbf{Select Target}: The user selects the SD card or USB drive where the image will be written.
+	\item \textbf{Flashing Process}: Etcher writes the image to the storage device and verifies the process to ensure data integrity.
+	\item \textbf{Validation}: Once the flashing process is complete, Etcher will perform a validation to ensure the image is correctly written without corruption.
+\end{enumerate}
+
+\subsection*{Protocols Involved in Etcher}
+\begin{itemize}
+	\item \textbf{USB Protocol}: Etcher communicates with USB drives or SD cards using the USB protocol for data transfer.
+	\item \textbf{File I/O Protocol}: Etcher uses standard file I/O protocols for reading and writing disk images to the selected device.
+\end{itemize}
+
+\subsection*{Use Case}
+\textbf{Flashing OS for Jetson Nano}: Etcher is used to flash the Jetson Linux operating system onto the Jetson Nano’s SD card to boot the device and set up the operating system. \cite{BAC:2025}
+
+\subsection{Software EULA (End User License Agreement)}
+\begin{itemize}
+	\item \textbf{NVIDIA Jetson Software EULA} Required for the End User License Agreement during setup. The NVIDIA Jetson Software EULA is a legal agreement between the user and NVIDIA, governing the use of Jetson software, including Jetson Linux, JetPack SDK, and other development tools provided by NVIDIA for the Jetson family of devices. \cite{NJE:2025}
+\end{itemize}
+
+\subsection*{Key Aspects of the NVIDIA Jetson Software EULA}
+\begin{itemize}
+	\item \textbf{License Grant}: The EULA grants users the right to install, use, and distribute Jetson software for development and research purposes. It often comes with restrictions for commercial use.
+	\item \textbf{Prohibited Uses}: The software is typically licensed for non-commercial use, and commercial use may require additional licensing or agreements.
+	\item \textbf{Modifications}: The agreement may prohibit modifications to the software, unless explicitly stated.
+	\item \textbf{Transfer Restrictions}: Users may not transfer the software or license to another entity without permission from NVIDIA.
+	\item \textbf{Support and Updates}: NVIDIA typically offers support and updates for the software as part of the EULA, but these may come with specific conditions or limitations on the scope of support.
+	\item \textbf{Indemnification}: The agreement often includes clauses limiting NVIDIA’s liability and stating that users are responsible for any legal claims or issues arising from their use of the software.
+\end{itemize}
+
+\subsection*{Protocols Involved in Jetson Software EULA}
+The Jetson Software EULA itself is not directly associated with any specific software protocols, as it is a legal document. However, the software covered under the agreement (such as Jetson Linux and JetPack) may involve several protocols and interfaces for installation, usage, and network communication.
+
+\subsection*{Key Protocols Related to Jetson Software}
+\begin{itemize}
+	\item \textbf{Licensing Management}: The EULA may specify how users should handle licensing, which could involve digital certificates or online authentication protocols.
+	\item \textbf{Software Updates}: The Jetson software might communicate with NVIDIA’s servers to check for software updates, involving HTTP/HTTPS for secure communication.
+\end{itemize}
+
+\subsection*{Use Case}
+\textbf{Installing Jetson Software}: When setting up Jetson Linux or using the JetPack SDK, users are required to accept the EULA, ensuring they comply with NVIDIA's terms for software usage. \cite{NJE:2025}
 
 \section{Applications of the Jetson Nano}
 
