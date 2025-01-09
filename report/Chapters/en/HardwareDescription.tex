@@ -113,122 +113,6 @@ The Jetson Nano Developer Kit is equipped with tools and compatibility to suppor
 
 \newpage
 
-\section{Operating System}
-\section*{Linux Operating System on Jetson Nano}
-
-The NVIDIA Jetson Nano runs on a Linux-based operating system called \textbf{Jetson Linux} (formerly known as Linux for Tegra or L4T). This is a customized version of Ubuntu tailored specifically for the Jetson family of devices. The operating system is optimized to leverage the unique hardware capabilities of the Jetson Nano, such as the GPU for accelerated computing, making it an ideal platform for edge AI and embedded applications like license plate recognition. \cite{NSM:2025}
-
-\subsection{Key Features of Jetson Linux on Jetson Nano}
-
-\begin{itemize}
-	\item \textbf{Base OS:} Jetson Linux is based on Ubuntu (currently Ubuntu 18.04 or 20.04 for newer versions). It provides a familiar Linux environment for developers.
-	\item \textbf{Kernel Customization:} Jetson Linux includes a custom Linux kernel designed to support NVIDIA GPUs, enabling hardware acceleration for applications requiring high computational power.
-	\item \textbf{Package Management:} The system uses the standard \texttt{apt} package manager, allowing users to install and update software easily.
-	\item \textbf{NVIDIA JetPack SDK:}
-	\begin{itemize}
-		\item JetPack is a comprehensive software development kit for the Jetson platform. It includes libraries, APIs, and tools for AI, computer vision, and deep learning applications.
-		\item Key components include TensorRT, cuDNN, CUDA, and multimedia libraries optimized for NVIDIA GPUs.
-	\end{itemize}
-\end{itemize}
-
-\subsection{Advantages of Using Linux for Jetson Nano}
-
-\begin{itemize}
-	\item \textbf{Open-Source Flexibility:} Linux provides access to a vast array of open-source libraries and tools.
-	\item \textbf{Hardware Optimization:} Jetson Linux is optimized to utilize the Jetson Nano's GPU (NVIDIA Maxwell architecture with 128 CUDA cores) for parallel processing tasks.
-	\item \textbf{Ease of Development:} With a user-friendly GUI (Ubuntu desktop environment), developers can easily code, debug, and deploy applications.
-	\item \textbf{Long-Term Support:} NVIDIA regularly updates Jetson Linux to support newer Jetson devices and maintain compatibility with AI/ML frameworks.
-\end{itemize}
-
-\subsection{Typical Workflow with Jetson Linux}
-
-\begin{enumerate}
-	\item \textbf{Flashing the OS:}
-	\begin{itemize}
-		\item The Jetson Nano's SD card is flashed with the Jetson Linux image using tools like Balena Etcher.
-		\item Official images can be downloaded from NVIDIA's Jetson Download Center
-	\end{itemize}
-	\item \textbf{Initial Setup:}
-	\begin{itemize}
-		\item After flashing, users configure the OS by setting up the username, password, and network.
-	\end{itemize}
-	\item \textbf{Installing Development Tools:}
-	\begin{itemize}
-		\item NVIDIA JetPack SDK is installed via the SDK Manager or using pre-installed tools in the Jetson Linux image.
-
-	\end{itemize}
-	\item \textbf{Application Development:}
-	\begin{itemize}
-		\item Applications can be developed using Python with libraries like OpenCV, TensorFlow, or PyTorch.
-		\item Optimized AI models can be deployed using NVIDIA TensorRT for inference.
-	\end{itemize}
-\end{enumerate}
-
-\subsection{Applications of Jetson Linux}
-
-\begin{itemize}
-	\item \textbf{Edge AI:} Run AI inference tasks locally on the device without depending on cloud resources.
-	\item \textbf{IoT Devices:} Integrate with sensors and other hardware for industrial IoT applications.
-	\item \textbf{Computer Vision:} Perform tasks such as object detection, facial recognition, and license plate identification.
-\end{itemize}
-
-\section{Software Interfaces:}
-\subsection{Etcher Software}
-\begin{itemize}
-	\item \textbf{Etcher Software} Required for flashing the Jetson Nano system image onto the microSD card. Etcher (now known as balenaEtcher) is an open-source, cross-platform tool used for flashing disk images (such as operating system images) onto SD cards or USB drives. It's widely used to flash operating system images onto SD cards for devices like the Jetson Nano. \cite{BAC:2025}
-\end{itemize}
-
-\subsection*{Key Features of Etcher}
-\begin{itemize}
-	\item \textbf{Cross-Platform Compatibility}: Etcher works on Windows, macOS, and Linux, making it accessible for developers using different systems.
-	\item \textbf{Simple User Interface}: It offers a streamlined, easy-to-use interface for flashing images, making it ideal for beginners and advanced users alike.
-	\item \textbf{Safe Flashing Process}: Etcher verifies the flashing process to ensure that the image is correctly written to the storage device, helping to prevent errors or corrupt files.
-	\item \textbf{Support for Various Image Formats}: Etcher supports a wide range of image formats, including .img, .iso, and .zip files.
-\end{itemize}
-
-\subsection*{How Etcher Works}
-\begin{enumerate}
-	\item \textbf{Select Image}: The user chooses the operating system image (e.g., Jetson Linux for Jetson Nano).
-	\item \textbf{Select Target}: The user selects the SD card or USB drive where the image will be written.
-	\item \textbf{Flashing Process}: Etcher writes the image to the storage device and verifies the process to ensure data integrity.
-	\item \textbf{Validation}: Once the flashing process is complete, Etcher will perform a validation to ensure the image is correctly written without corruption.
-\end{enumerate}
-
-\subsection*{Protocols Involved in Etcher}
-\begin{itemize}
-	\item \textbf{USB Protocol}: Etcher communicates with USB drives or SD cards using the USB protocol for data transfer.
-	\item \textbf{File I/O Protocol}: Etcher uses standard file I/O protocols for reading and writing disk images to the selected device.
-\end{itemize}
-
-\subsection*{Use Case}
-\textbf{Flashing OS for Jetson Nano}: Etcher is used to flash the Jetson Linux operating system onto the Jetson Nano’s SD card to boot the device and set up the operating system. \cite{BAC:2025}
-
-\subsection{Software EULA (End User License Agreement)}
-\begin{itemize}
-	\item \textbf{NVIDIA Jetson Software EULA} Required for the End User License Agreement during setup. The NVIDIA Jetson Software EULA is a legal agreement between the user and NVIDIA, governing the use of Jetson software, including Jetson Linux, JetPack SDK, and other development tools provided by NVIDIA for the Jetson family of devices. \cite{NJE:2025}
-\end{itemize}
-
-\subsection*{Key Aspects of the NVIDIA Jetson Software EULA}
-\begin{itemize}
-	\item \textbf{License Grant}: The EULA grants users the right to install, use, and distribute Jetson software for development and research purposes. It often comes with restrictions for commercial use.
-	\item \textbf{Prohibited Uses}: The software is typically licensed for non-commercial use, and commercial use may require additional licensing or agreements.
-	\item \textbf{Modifications}: The agreement may prohibit modifications to the software, unless explicitly stated.
-	\item \textbf{Transfer Restrictions}: Users may not transfer the software or license to another entity without permission from NVIDIA.
-	\item \textbf{Support and Updates}: NVIDIA typically offers support and updates for the software as part of the EULA, but these may come with specific conditions or limitations on the scope of support.
-	\item \textbf{Indemnification}: The agreement often includes clauses limiting NVIDIA’s liability and stating that users are responsible for any legal claims or issues arising from their use of the software.
-\end{itemize}
-
-\subsection*{Protocols Involved in Jetson Software EULA}
-The Jetson Software EULA itself is not directly associated with any specific software protocols, as it is a legal document. However, the software covered under the agreement (such as Jetson Linux and JetPack) may involve several protocols and interfaces for installation, usage, and network communication.
-
-\subsection*{Key Protocols Related to Jetson Software}
-\begin{itemize}
-	\item \textbf{Licensing Management}: The EULA may specify how users should handle licensing, which could involve digital certificates or online authentication protocols.
-	\item \textbf{Software Updates}: The Jetson software might communicate with NVIDIA’s servers to check for software updates, involving HTTP/HTTPS for secure communication.
-\end{itemize}
-
-\subsection*{Use Case}
-\textbf{Installing Jetson Software}: When setting up Jetson Linux or using the JetPack SDK, users are required to accept the EULA, ensuring they comply with NVIDIA's terms for software usage. \cite{NJE:2025}
 
 \section{Applications of the Jetson Nano}
 
@@ -249,171 +133,10 @@ The Jetson Nano boasts 472 GFLOPs of processing power, making it highly capable 
 
 The Jetson Nano supports WiFi connectivity through an add-on chip, allowing it to connect via 802.11b/g/n. Alternatively, an Ethernet cable can be used for network access, with speed varying depending on the type of cable (10/100/1000 BASE-T).
 
-\subsection{Data Quality}
-
-\subsection*{Input Data Resolution}
-\begin{itemize}[leftmargin=1.5cm]
-	\item The system relies on high-resolution image data from sensors like the Logitech C270 HD Webcam, which supports 720p video.
-	\item Ensuring that input images are clear, well-lit, and free from motion blur is essential for accurate AI processing.
-\end{itemize}
-
-\subsection*{Sensor Accuracy}
-\begin{itemize}[leftmargin=1.5cm]
-	\item The camera and other connected sensors must be calibrated for precise data capture.
-	\item Poor calibration can result in distorted images or erroneous data, affecting AI inference accuracy.
-\end{itemize}
-
-\subsection*{Noise and Signal Integrity}
-\begin{itemize}[leftmargin=1.5cm]
-	\item Image data should have minimal noise to ensure reliable detection and recognition.
-	\item Environmental factors such as low light, glare, or reflections can degrade data quality and require preprocessing or enhancement techniques.
-\end{itemize}
-
-\subsection*{Consistency in Data Capture}
-\begin{itemize}[leftmargin=1.5cm]
-	\item To maintain uniformity in AI performance, data must be consistently captured under similar conditions (e.g., resolution, frame rate, angle).
-	\item Variability in data input can reduce model accuracy.
-\end{itemize}
-
-\subsection*{Data Preparation for AI Models}
-\begin{itemize}[leftmargin=1.5cm]
-	\item Before feeding data into AI algorithms, preprocessing steps like resizing, normalization, and augmentation (e.g., flipping, rotation) should be applied to improve the robustness of the model.
-\end{itemize}
-
-\subsection*{Real-Time Processing Requirements}
-\begin{itemize}[leftmargin=1.5cm]
-	\item For applications such as license plate recognition, the Jetson Nano must process incoming data in real-time.
-	\item Ensuring low-latency data transmission from sensors and efficient handling by the system is key to maintaining quality. \cite{NVF:2024}
-\end{itemize}
-
-\subsection{Data Quantity}
-
-\subsection*{Training Data Requirements}
-\begin{itemize}[leftmargin=1.5cm]
-	\item To effectively train machine learning models on the Jetson Nano, datasets must include thousands of diverse examples. For instance:
-	\begin{itemize}
-		\item \textbf{License Plate Recognition:} Datasets should have thousands of images representing different fonts, plate designs, angles, and lighting conditions.
-		\item \textbf{Object Detection:} Large datasets, such as COCO or custom datasets, are necessary to ensure model robustness and accuracy.
-	\end{itemize}
-\end{itemize}
-
-\subsection*{Real-Time Data Handling}
-\begin{itemize}[leftmargin=1.5cm]
-	\item The Jetson Nano processes real-time data from connected sensors. For a camera streaming at 30 frames per second (fps) in 720p resolution:
-	\begin{itemize}
-		\item Each frame is approximately 1 MB, leading to a data throughput of ~30 MB/s.
-		\item This requires efficient processing to ensure no frame is dropped.
-	\end{itemize}
-\end{itemize}
-
-\subsection*{Model Size Considerations}
-\begin{itemize}[leftmargin=1.5cm]
-	\item Models used for inference on the Jetson Nano need to be optimized for the board’s memory limitations.
-	\item Pre-trained models, such as YOLO or SSD, typically range from 50 MB to several hundred MB and should be quantized or pruned to fit within 4 GB RAM constraints.
-\end{itemize}
-
-\subsection*{Storage for Collected Data}
-\begin{itemize}[leftmargin=1.5cm]
-	\item For storing training data, processed outputs, and model weights, the onboard 16 GB eMMC is limited.
-	\item External storage, such as an SD card or USB drive, is necessary for larger datasets.
-\end{itemize}
-
-\subsection*{Balance of Volume and Quality}
-\begin{itemize}[leftmargin=1.5cm]
-	\item While large datasets improve generalizability, the focus should remain on high-quality, annotated data to maximize model accuracy with minimal computational overhead.
-\end{itemize}
-
-\subsection{Data Types}
-
-\subsection*{Image Data}
-\begin{itemize}[leftmargin=1.5cm]
-	\item Primary data type processed by the Jetson Nano for applications like object detection, license plate recognition, and facial recognition.
-	\item Images are typically captured in formats such as JPEG or PNG from connected cameras (e.g., Logitech C270 HD Webcam).
-\end{itemize}
-
-\subsection*{Video Data}
-\begin{itemize}[leftmargin=1.5cm]
-	\item Streams from connected cameras or pre-recorded files, usually in MP4 or AVI format.
-	\item Video is processed frame-by-frame for real-time applications like surveillance or autonomous vehicles.
-\end{itemize}
-
-\subsection*{Text Data}
-\begin{itemize}[leftmargin=1.5cm]
-	\item Extracted from images or video frames via Optical Character Recognition (OCR) tools.
-	\item Examples include license plate numbers or other textual information embedded in visual data.
-\end{itemize}
-
-\subsection*{Sensor Data}
-\begin{itemize}[leftmargin=1.5cm]
-	\item Data from peripheral sensors connected via GPIO, I2C, or SPI interfaces.
-	\item This may include motion, temperature, or proximity sensor data for multi-modal AI applications.
-\end{itemize}
-
-\subsection*{Model Data}
-\begin{itemize}[leftmargin=1.5cm]
-	\item Pre-trained or custom-trained machine learning models used for inference.
-	\item These are typically in formats like ONNX, TensorFlow SavedModel, or PyTorch PT files.
-\end{itemize}
-
-\subsection*{Annotation Data}
-\begin{itemize}[leftmargin=1.5cm]
-	\item Structured data for supervised learning tasks, often stored in JSON or XML format, containing bounding boxes, labels, and other metadata. \cite{PIJ:2020}
-\end{itemize}
-
-\subsection{Data Structures}
-
-\subsection*{Image Arrays}
-Images are stored as NumPy arrays or TensorFlow/PyTorch tensors representing pixel values. For instance:
-\begin{itemize}
-	\item \textbf{Grayscale images:} 2D arrays with pixel intensity values.
-	\item \textbf{Color images:} 3D arrays with RGB values for each pixel.
-\end{itemize}
-
-\textbf{Example:}
-\begin{lstlisting}[style=python]
-	image = np.array([[255, 128, 0], [255, 0, 255]], dtype=np.uint8)  # RGB image
-\end{lstlisting}
-
-\subsection*{Bounding Box Coordinates}
-For object detection tasks (e.g., license plate detection), bounding boxes are represented as tuples or lists containing the coordinates $(xmin, ymin, xmax, ymax)$ of the detected object.
-
-\textbf{Example:}
-\begin{lstlisting}[style=python]
-	bbox = (50, 60, 200, 150)  # Bounding box for license plate
-\end{lstlisting}
-
-\subsection*{Labels and Annotations}
-Annotations for images are stored in JSON or XML format. These typically include bounding boxes, object labels, and metadata.
-
-\textbf{Example (JSON):}
-\begin{lstlisting}[style=json]
-	{
-		"image": "car_image.jpg",
-		"annotations": [{"label": "license_plate", "bbox": [50, 60, 200, 150]}]
-	}
-\end{lstlisting}
-
-\subsection*{Model Weights and Parameters}
-The trained models (e.g., neural networks) are typically represented as weights and biases stored in files like HDF5 or TorchScript. These files contain the parameters required for inference.
-
-\textbf{Example:}
-\begin{lstlisting}[style=python]
-	model_weights = torch.load('model_weights.pth')
-\end{lstlisting}
-
-\subsection*{Sensor Data}
-Data from connected sensors (e.g., temperature, motion, or proximity sensors) is often stored in lists or dataframes. These structures store time-series data for real-time processing. \cite{PTD:2018}
-
-\textbf{Example:}
-\begin{lstlisting}[style=python]
-	sensor_data = {'time': [1, 2, 3], 'temperature': [22.5, 23.0, 23.5]}
-\end{lstlisting}
-
 
 \section{NVIDIA Jetson Nano Developer Kit}
 
 The NVIDIA Jetson Nano is a Single-Board Computer (SBC) specifically designed for running machine learning algorithms. It provides direct access to its components, inputs, and outputs, making it highly versatile for embedded applications. However, to ensure the protection and longevity of the device, it is recommended to place the board in an appropriate enclosure. Like the Raspberry Pi, the Jetson Nano exposes all its components and connectors, making it easy to use but also susceptible to damage. While the included packaging can be used to assemble the Nano, a dedicated case is advised for better protection. An illustration in the book (Figure 5.1) shows the proper orientation of the Jetson Nano, which is important to note, particularly for understanding the arrangement of digital inputs and outputs. \cite{NVI:2019}
-
 
 
 \section{Construction of the Jetson Nano}
@@ -480,6 +203,7 @@ The Jetson Nano has a CSI connector for camera modules, compliant with the MIPI 
 
 As the Jetson Nano does not have an onboard hard drive, it uses a microSD card for storage, including the operating system and application programs. Selecting an appropriate microSD card is crucial for performance, with a minimum recommendation of a 16GB UHS-1 card. The card slot is located on the underside of the board. \cite{NVI:2019}
 
+
 \subsection{Specifications of Jetson Nano} 
 The specifications of the NVIDIA Jetson Nano is as given in the table below:\\
 \begin{table}
@@ -526,871 +250,32 @@ The specifications of the NVIDIA Jetson Nano is as given in the table below:\\
 	\caption{\label{tab:NVIDIA Jetson Nano Specification} NVIDIA Jetson Nano General Specification}
 \end{table}
 
-{
-	
-	\begin{figure}
-		\begin{tikzpicture}
-			% Platine
-			\draw[greenblue,fill=greenblue] (0,0) -- (12.8,0) -- (12.8,10.1) -- (0,10.1) -- cycle;
-			
-			% J13 Camera
-			\foreach \i in {0,...,14}
-			{
-				\pgfmathsetmacro{\off}{- 0.1275 * \i}
-				\pgfmathsetmacro{\xmin}{0.31};
-				\pgfmathsetmacro{\xmax}{0.98};
-				\pgfmathsetmacro{\ymin}{6.79};
-				\pgfmathsetmacro{\ymax}{6.86};
-				\draw[copper,fill=copper] ({\xmin}, {\ymax + \off} ) -- (0.98, {\ymax + \off} ) -- (0.98, {\ymin + \off} ) -- ({\xmin}, {\ymin + \off}) -- cycle;
-			}
-			\draw[grayleft,fill=grayleft] (0.31,6.65) -- (0.47,6.75) -- (0.47,7.32) -- (0.8,7.32) -- (0.8,4.54) -- (0.47,4.54) -- (0.47, 5.1) -- (0.31,5.2) -- cycle;
-			\draw[black,fill=black] (0.67,6.95) -- (0.8,6.95) -- (0.8,4.9) --  (0.67, 4.9) -- cycle;
-			
-			
-			
-			% Anschlussprozessor
-			\foreach \i in {0,...,46}
-			{
-				\draw[copper,fill=copper] (1.95 + 0.095 * \i,4.0) -- (1.95+0.095*\i,3.76) -- (2+0.095*\i,3.76) -- (2+0.095*\i,4.0) -- cycle;
-			}
-			\foreach \i in {0,...,38}
-			{
-				\draw[copper,fill=copper] (6.67+ 0.095 * \i,4.0) -- (6.67+ 0.095 * \i,3.76) -- (6.72+ 0.095 * \i,3.76) -- (6.72+ 0.095 * \i,4.0) -- cycle;
-			}
-			\draw[greenenglish,line width=2pt,fill=darkpastelgreen] (1.5,7.0) -- (10.85,7.0) -- (10.85, 3.9) -- (1.5,3.9) -- cycle;
-			
-			
-			\draw[black,fill=black] (1.75,4.7) -- (10.65,4.7) -- (10.65,9.88) -- (1.75,9.88) -- cycle;
-			%Kühlkörper
-			\draw[fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft}] (1.8,8.822) -- (10.6,8.822) -- (10.6,9.83) -- (1.8,9.83) -- cycle;
-			\draw[fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft}] (1.8,8.773) -- (10.6,8.773) -- (10.6,8.521) -- (1.8,8.521) -- cycle;
-			
-			\draw[fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft}] (1.8,7.464) -- (10.6,7.464) -- (10.6,8.472) -- (1.8,8.472) -- cycle;
-			\draw[fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft}] (1.8,7.415) -- (10.6,7.415) -- (10.6,7.163) -- (1.8,7.163) -- cycle;
-			
-			\draw[fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft}] (1.8,6.106) -- (10.6,6.106) -- (10.6,7.114) -- (1.8,7.114) -- cycle;
-			\draw[fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft}] (1.8,6.057) -- (10.6,6.057) -- (10.6,5.805) -- (1.8,5.805) -- cycle;
-			
-			\draw[fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft}] (1.8,4.75) -- (10.6,4.75) -- (10.6,5.756) -- (1.8,5.756) -- cycle;
-			
-			\draw[fill=grayleft!30!graycircle, postaction={path fading=west,  fill=grayleft},domain=0:360] plot ({4.0+0.252*cos(\x)}, {9.326+0.252*sin(\x)});
-			\draw[fill=grayleft!30!graycircle, postaction={path fading=west,  fill=grayleft},domain=0:360] plot ({8.4+0.252*cos(\x)}, {9.326+0.252*sin(\x)});
-			
-			\draw[fill=grayleft!30!graycircle, postaction={path fading=west,  fill=grayleft},domain=0:360] plot ({4.0+0.252*cos(\x)}, {5.252+0.252*sin(\x)});
-			\draw[fill=grayleft!30!graycircle, postaction={path fading=west,  fill=grayleft},domain=0:360] plot ({8.4+0.252*cos(\x)}, {5.252+0.252*sin(\x)});
-			
-			\pgfmathsetmacro{\xmin}{12.2};
-			\pgfmathsetmacro{\xmax}{12.62};
-			\pgfmathsetmacro{\ymin}{1.42};
-			\pgfmathsetmacro{\ymax}{1.69};
-			\draw[darkpastelgreen,fill=greenyellow,
-			line width=1.6pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
-			
-			% J40 Buttons
-			\pgfmathsetmacro{\xmin}{0.17};
-			\pgfmathsetmacro{\xmax}{0.82};
-			\pgfmathsetmacro{\ymin}{7.7};
-			\pgfmathsetmacro{\ymax}{9};
-			\draw[darkcyan,
-			line width=1.6pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
-			
-			\foreach \j in {0,...,1}
-			{
-				\foreach \i in {0,...,3}
-				{
-					\pgfmathsetmacro{\d}{0.05}
-					\pgfmathsetmacro{\x}{0.35+0.312*\j};
-					\pgfmathsetmacro{\y}{7.87+0.312*\i};
-					\draw[yellow,fill=yellow] ({\x-\d}, {\y-\d} ) -- ({\x+\d}, {\y-\d}) -- ({\x+\d}, {\y+\d}) -- ({\x-\d}, {\y+\d}) -- cycle;
-				}
-			}
-			\pgfmathsetmacro{\d}{0.05}
-			\pgfmathsetmacro{\x}{0.35+0.312};
-			\pgfmathsetmacro{\y}{7.87+0.312*0};
-			\draw[yellow,thick,fill=fuchsia] ({\x-\d}, {\y-\d} ) -- ({\x+\d}, {\y-\d}) -- ({\x+\d}, {\y+\d}) -- ({\x-\d}, {\y+\d}) -- cycle;
-			
-			%J44 Serial
-			\pgfmathsetmacro{\xmin}{1.2};
-			\pgfmathsetmacro{\xmax}{1.5};
-			\pgfmathsetmacro{\ymin}{8.02};
-			\pgfmathsetmacro{\ymax}{9.95};
-			\draw[darkcyan,
-			line width=1.6pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
-			
-			\foreach \j in {0,...,0}
-			{
-				\foreach \i in {0,...,5}
-				{
-					\pgfmathsetmacro{\d}{0.05}
-					\pgfmathsetmacro{\x}{1.35+0.312*\j};
-					\pgfmathsetmacro{\y}{8.2+0.312*\i};
-					\draw[yellow,fill=yellow] ({\x-\d}, {\y-\d} ) -- ({\x+\d}, {\y-\d}) -- ({\x+\d}, {\y+\d}) -- ({\x-\d}, {\y+\d}) -- cycle;
-				}
-			}
-			\pgfmathsetmacro{\d}{0.05}
-			\pgfmathsetmacro{\x}{1.35};
-			\pgfmathsetmacro{\y}{8.2+0.312*0};
-			\draw[yellow,thick,fill=fuchsia] ({\x-\d}, {\y-\d} ) -- ({\x+\d}, {\y-\d}) -- ({\x+\d}, {\y+\d}) -- ({\x-\d}, {\y+\d}) -- cycle;
-			
-			% J48 DC Jumper
-			\pgfmathsetmacro{\xmin}{0.175};
-			\pgfmathsetmacro{\xmax}{0.83};
-			\pgfmathsetmacro{\ymin}{3.908};
-			\pgfmathsetmacro{\ymax}{4.24};
-			\draw[darkcyan,
-			line width=1.6pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
-			
-			\foreach \j in {0,...,1}
-			{
-				\foreach \i in {0,...,0}
-				{
-					\pgfmathsetmacro{\d}{0.05}
-					\pgfmathsetmacro{\x}{0.35+0.312*\j};
-					\pgfmathsetmacro{\y}{4.074 +0.312*\i};
-					\draw[yellow,fill=yellow] ({\x-\d}, {\y-\d} ) -- ({\x+\d}, {\y-\d}) -- ({\x+\d}, {\y+\d}) -- ({\x-\d}, {\y+\d}) -- cycle;
-				}
-			}
-			
-			% J38 PoE
-			\pgfmathsetmacro{\xmin}{11.95};
-			\pgfmathsetmacro{\xmax}{12.57};
-			\pgfmathsetmacro{\ymin}{9.27};
-			\pgfmathsetmacro{\ymax}{9.9};
-			\draw[darkcyan,
-			line width=1.6pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
-			
-			\foreach \j in {0,...,1}
-			{
-				\foreach \i in {0,...,1}
-				{
-					\pgfmathsetmacro{\d}{0.05}
-					\pgfmathsetmacro{\x}{12.1+0.312*\j};
-					\pgfmathsetmacro{\y}{9.42 +0.312*\i};
-					\draw[yellow,fill=yellow] ({\x-\d}, {\y-\d} ) -- ({\x+\d}, {\y-\d}) -- ({\x+\d}, {\y+\d}) -- ({\x-\d}, {\y+\d}) -- cycle;
-				}
-			}
-			
-			% J41 Expansion
-			\pgfmathsetmacro{\xmin}{11.16};
-			\pgfmathsetmacro{\xmax}{11.8};
-			\pgfmathsetmacro{\ymin}{2.72};
-			\pgfmathsetmacro{\ymax}{9.1};
-			\draw[darkcyan,
-			line width=1.6pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
-			
-			\foreach \j in {0,...,1}
-			{
-				\foreach \i in {0,...,19}
-				{
-					\pgfmathsetmacro{\d}{0.05}
-					\pgfmathsetmacro{\x}{11.325+0.312*\j};
-					\pgfmathsetmacro{\y}{2.86 +0.323*\i};
-					\draw[blue,fill=yellow] ({\x-\d}, {\y-\d} ) -- ({\x+\d}, {\y-\d}) -- ({\x+\d}, {\y+\d}) -- ({\x-\d}, {\y+\d}) -- cycle;
-				}
-			}
-			\pgfmathsetmacro{\d}{0.05}
-			\pgfmathsetmacro{\x}{11.325+0.312};
-			\pgfmathsetmacro{\y}{2.86};
-			\draw[yellow,thick,fill=fuchsia] ({\x-\d}, {\y-\d} ) -- ({\x+\d}, {\y-\d}) -- ({\x+\d}, {\y+\d}) -- ({\x-\d}, {\y+\d}) --    cycle;
-			
-			% J15 5V Fan
-			\pgfmathsetmacro{\xmin}{9.33};
-			\pgfmathsetmacro{\xmax}{10.55};
-			\pgfmathsetmacro{\ymin}{2.86};
-			\pgfmathsetmacro{\ymax}{3.55};
-			\draw[darkcyan,
-			line width=1.6pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
-			
-			\pgfmathsetmacro{\xmin}{9.8};
-			\pgfmathsetmacro{\xmax}{10.45};
-			\pgfmathsetmacro{\ymin}{3.35};
-			\pgfmathsetmacro{\ymax}{3.55};
-			\draw[darkcyan,
-			line width=1.6pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
-			
-			\foreach \j in {0,...,3}
-			{
-				\foreach \i in {0,...,0}
-				{
-					\pgfmathsetmacro{\d}{0.05}
-					\pgfmathsetmacro{\x}{9.45+0.317*\j};
-					\pgfmathsetmacro{\y}{3.18 +0.323*\i};
-					\draw[blue,fill=yellow] ({\x-\d}, {\y-\d} ) -- ({\x+\d}, {\y-\d}) -- ({\x+\d}, {\y+\d}) -- ({\x-\d}, {\y+\d}) -- cycle;
-				}
-			}
-			
-			\pgfmathsetmacro{\d}{0.05}
-			\pgfmathsetmacro{\d}{0.05}
-			\pgfmathsetmacro{\x}{9.45+0.951};
-			\pgfmathsetmacro{\y}{3.18};
-			
-			\draw[yellow,thick,fill=fuchsia] ({\x-\d}, {\y-\d} ) -- ({\x+\d}, {\y-\d}) -- ({\x+\d}, {\y+\d}) -- ({\x-\d}, {\y+\d}) -- cycle;
-			
-			
-			% Schwarze Flecken
-			\pgfmathsetmacro{\xmin}{0.902};
-			\pgfmathsetmacro{\xmax}{1.058};
-			\pgfmathsetmacro{\ymin}{8.12};
-			\pgfmathsetmacro{\ymax}{8.25};
-			\draw[black,fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft},
-			line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
-			
-			\pgfmathsetmacro{\xmin}{0.902};
-			\pgfmathsetmacro{\xmax}{1.058};
-			\pgfmathsetmacro{\ymin}{8.74};
-			\pgfmathsetmacro{\ymax}{8.87};
-			\draw[black,fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft},
-			line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
-			
-			\pgfmathsetmacro{\xmin}{0.942};
-			\pgfmathsetmacro{\xmax}{1.098};
-			\pgfmathsetmacro{\ymin}{7.29};
-			\pgfmathsetmacro{\ymax}{7.42};
-			\draw[black, fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft},
-			line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
-			
-			\pgfmathsetmacro{\xmin}{1.382};
-			\pgfmathsetmacro{\xmax}{1.538};
-			\pgfmathsetmacro{\ymin}{7.74};
-			\pgfmathsetmacro{\ymax}{7.87};
-			\draw[black, fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft},
-			line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
-			
-			\pgfmathsetmacro{\xmin}{1.35};
-			\pgfmathsetmacro{\xmax}{1.49};
-			\pgfmathsetmacro{\ymin}{7.2};
-			\pgfmathsetmacro{\ymax}{7.37};
-			\draw[black, fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft},
-			line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
-			
-			\pgfmathsetmacro{\xmin}{1.13};
-			\pgfmathsetmacro{\xmax}{1.47};
-			\pgfmathsetmacro{\ymin}{3.43};
-			\pgfmathsetmacro{\ymax}{3.7};
-			\draw[black, fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft},
-			line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
-			
-			\pgfmathsetmacro{\xmin}{0.97};
-			\pgfmathsetmacro{\xmax}{1.47};
-			\pgfmathsetmacro{\ymin}{2.81};
-			\pgfmathsetmacro{\ymax}{3.31};
-			\draw[black, fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft},
-			line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
-			
-			% 5V DC (2.1mm ID, Positive Center)  Stecker
-			\pgfmathsetmacro{\xmin}{0.28};
-			\pgfmathsetmacro{\xmax}{1.51};
-			\pgfmathsetmacro{\ymin}{-0.1};
-			\pgfmathsetmacro{\ymax}{1.7};
-			\draw[black, fill=black,
-			line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
-			
-			\pgfmathsetmacro{\xmin}{0.32};
-			\pgfmathsetmacro{\xmax}{1.47};
-			\pgfmathsetmacro{\ymin}{-0.06};
-			\pgfmathsetmacro{\ymax}{0.28};
-			\draw[black, fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft},
-			line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
-			
-			\pgfmathsetmacro{\xmin}{0.32};
-			\pgfmathsetmacro{\xmax}{1.47};
-			\pgfmathsetmacro{\ymin}{0.32};
-			\pgfmathsetmacro{\ymax}{1.65};
-			\draw[left color=grayleft, right color=black, middle color=graycircle,
-			line width=0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
-			
-			
-			% Display Port und HDMI
-			\pgfmathsetmacro{\xmin}{2.03};
-			\pgfmathsetmacro{\xmax}{4.08};
-			\pgfmathsetmacro{\ymin}{0};
-			\pgfmathsetmacro{\ymax}{2.15};
-			\draw[graycircle!50, fill=white!20!graylight, postaction={path fading=west,  fill=grayright!60},
-			line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
-			
-			\draw[greenblue,fill=greenblue] 
-			(2.30, 0.7) -- (2.39, 0.22) -- (2.58,0.22) -- (2.68, 0.7) -- 
-			(2.52, 0.27) -- (2.46,0.27) -- cycle;
-			
-			\begin{scope}[xshift=27.3]
-				\draw[greenblue,fill=greenblue] 
-				(2.30, 0.7) -- (2.39, 0.22) -- (2.58,0.22) -- (2.68, 0.7) -- 
-				(2.52, 0.27) -- (2.46,0.27) -- cycle;
-			\end{scope}
-			
-			% USB 3.0 2-mal
-			\pgfmathsetmacro{\xmin}{4.6};
-			\pgfmathsetmacro{\xmax}{6.31};
-			\pgfmathsetmacro{\ymin}{-0.1};
-			\pgfmathsetmacro{\ymax}{2.05};
-			\draw[graycircle!50, fill=white!20!graylight, postaction={path fading=west,  fill=grayright!60},
-			line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
-			
-			\draw[greenblue,fill=greenblue] 
-			(4.83, 0.82) -- (4.93, 0.07) -- (5.14,0.07) -- (5.25, 0.82) -- 
-			(5.08, 0.14) -- (5.0,0.14) -- cycle;
-			
-			\draw[greenblue,fill=greenblue] 
-			(5.63, 0.82) -- (5.73, 0.07) -- (5.94,0.07) -- (6.05, 0.82) -- 
-			(5.88, 0.14) -- (5.8,0.14) -- cycle;
-			
-			
-			% USB 3.0 2-mal
-			\begin{scope}[xshift=63]
-				\pgfmathsetmacro{\xmin}{4.6};
-				\pgfmathsetmacro{\xmax}{6.31};
-				\pgfmathsetmacro{\ymin}{-0.1};
-				\pgfmathsetmacro{\ymax}{2.05};
-				\draw[graycircle!50, fill=white!20!graylight, postaction={path fading=west,  fill=grayright!60},
-				line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
-				
-				\draw[greenblue,fill=greenblue] 
-				(4.83, 0.82) -- (4.93, 0.07) -- (5.14,0.07) -- (5.25, 0.82) -- 
-				(5.08, 0.14) -- (5.0,0.14) -- cycle;
-				
-				\draw[greenblue,fill=greenblue] 
-				(5.63, 0.82) -- (5.73, 0.07) -- (5.94,0.07) -- (6.05, 0.82) -- 
-				(5.88, 0.14) -- (5.8,0.14) -- cycle;
-			\end{scope}
-			
-			% GigEth
-			\pgfmathsetmacro{\xmin}{8.84};
-			\pgfmathsetmacro{\xmax}{10.8};
-			\pgfmathsetmacro{\ymin}{-0.1};
-			\pgfmathsetmacro{\ymax}{2.62};
-			\draw[graycircle!50, fill=white!20!graylight, postaction={path fading=west,  fill=grayright!60},
-			line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
-			
-			% Micro USB, PWR oder USB device
-			\pgfmathsetmacro{\xmin}{11.285};
-			\pgfmathsetmacro{\xmax}{12.225};
-			\pgfmathsetmacro{\ymin}{0};
-			\pgfmathsetmacro{\ymax}{0.83};
-			\draw[graycircle!50, fill=white!20!graylight, postaction={path fading=west,  fill=grayright!60},
-			line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
-			
-			\draw[greenblue,fill=greenblue] 
-			(11.41, 0.38) -- (11.475, 0.08) -- (11.585,0.08) -- (11.65, 0.38) -- 
-			(11.55, 0.12) -- (11.52,0.12) -- cycle;
-			
-			\begin{scope}[xshift=12.5]
-				\draw[greenblue,fill=greenblue] 
-				(11.41, 0.38) -- (11.475, 0.08) -- (11.585,0.08) -- (11.65, 0.38) -- 
-				(11.55, 0.12) -- (11.52,0.12) -- cycle;
-			\end{scope}
-			
-		\end{tikzpicture}
-		\caption{Jetson Nano: Oversight}\label{JetsonAufsicht}
-	\end{figure}
-
-\begin{figure}
-	
-	\centering		
-	\begin{tikzpicture}[scale=0.75]
-		% Platine
-		\draw[greenblue,fill=greenblue] (0,0) -- (12.8,0) -- (12.8,10.1) -- (0,10.1) -- cycle;
-		
-		% J13 Camera
-		\foreach \i in {0,...,14}
-		{
-			\pgfmathsetmacro{\off}{- 0.1275 * \i}
-			\pgfmathsetmacro{\xmin}{0.31};
-			\pgfmathsetmacro{\xmax}{0.98};
-			\pgfmathsetmacro{\ymin}{6.79};
-			\pgfmathsetmacro{\ymax}{6.86};
-			\draw[copper,fill=copper] ({\xmin}, {\ymax + \off} ) -- (0.98, {\ymax + \off} ) -- (0.98, {\ymin + \off} ) -- ({\xmin}, {\ymin + \off}) -- cycle;
-		}
-		\draw[grayleft,fill=grayleft] (0.31,6.65) -- (0.47,6.75) -- (0.47,7.32) -- (0.8,7.32) -- (0.8,4.54) -- (0.47,4.54) -- (0.47, 5.1) -- (0.31,5.2) -- cycle;
-		\draw[black,fill=black] (0.67,6.95) -- (0.8,6.95) -- (0.8,4.9) --  (0.67, 4.9) -- cycle;
-		
-		\node (J13) at (-1,6) {\begin{tabular}{l} J13\\ Kamera \end{tabular}};
-		
-		
-		% Anschlussprozessor
-		\foreach \i in {0,...,46}
-		{
-			\draw[copper,fill=copper] (1.95 + 0.095 * \i,4.0) -- (1.95+0.095*\i,3.76) -- (2+0.095*\i,3.76) -- (2+0.095*\i,4.0) -- cycle;
-		}
-		\foreach \i in {0,...,38}
-		{
-			\draw[copper,fill=copper] (6.67+ 0.095 * \i,4.0) -- (6.67+ 0.095 * \i,3.76) -- (6.72+ 0.095 * \i,3.76) -- (6.72+ 0.095 * \i,4.0) -- cycle;
-		}
-		\draw[greenenglish,line width=2pt,fill=darkpastelgreen] (1.5,7.0) -- (10.85,7.0) -- (10.85, 3.9) -- (1.5,3.9) -- cycle;
-		
-		
-		\draw[black,fill=black] (1.75,4.7) -- (10.65,4.7) -- (10.65,9.88) -- (1.75,9.88) -- cycle;
-		%Kühlkörper
-		\draw[fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft}] (1.8,8.822) -- (10.6,8.822) -- (10.6,9.83) -- (1.8,9.83) -- cycle;
-		\draw[fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft}] (1.8,8.773) -- (10.6,8.773) -- (10.6,8.521) -- (1.8,8.521) -- cycle;
-		
-		\draw[fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft}] (1.8,7.464) -- (10.6,7.464) -- (10.6,8.472) -- (1.8,8.472) -- cycle;
-		\draw[fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft}] (1.8,7.415) -- (10.6,7.415) -- (10.6,7.163) -- (1.8,7.163) -- cycle;
-		
-		\draw[fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft}] (1.8,6.106) -- (10.6,6.106) -- (10.6,7.114) -- (1.8,7.114) -- cycle;
-		\draw[fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft}] (1.8,6.057) -- (10.6,6.057) -- (10.6,5.805) -- (1.8,5.805) -- cycle;
-		
-		\draw[fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft}] (1.8,4.75) -- (10.6,4.75) -- (10.6,5.756) -- (1.8,5.756) -- cycle;
-		
-		\draw[fill=grayleft!30!graycircle, postaction={path fading=west,  fill=grayleft},domain=0:360] plot ({4.0+0.252*cos(\x)}, {9.326+0.252*sin(\x)});
-		\draw[fill=grayleft!30!graycircle, postaction={path fading=west,  fill=grayleft},domain=0:360] plot ({8.4+0.252*cos(\x)}, {9.326+0.252*sin(\x)});
-		
-		\draw[fill=grayleft!30!graycircle, postaction={path fading=west,  fill=grayleft},domain=0:360] plot ({4.0+0.252*cos(\x)}, {5.252+0.252*sin(\x)});
-		\draw[fill=grayleft!30!graycircle, postaction={path fading=west,  fill=grayleft},domain=0:360] plot ({8.4+0.252*cos(\x)}, {5.252+0.252*sin(\x)});
-		
-		\pgfmathsetmacro{\xmin}{12.2};
-		\pgfmathsetmacro{\xmax}{12.62};
-		\pgfmathsetmacro{\ymin}{1.42};
-		\pgfmathsetmacro{\ymax}{1.69};
-		\draw[darkpastelgreen,fill=greenyellow,
-		line width=1.6pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
-		
-		% J40 Buttons
-		\pgfmathsetmacro{\xmin}{0.17};
-		\pgfmathsetmacro{\xmax}{0.82};
-		\pgfmathsetmacro{\ymin}{7.7};
-		\pgfmathsetmacro{\ymax}{9};
-		\draw[darkcyan,
-		line width=1.6pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
-		
-		\foreach \j in {0,...,1}
-		{
-			\foreach \i in {0,...,3}
-			{
-				\pgfmathsetmacro{\d}{0.05}
-				\pgfmathsetmacro{\x}{0.35+0.312*\j};
-				\pgfmathsetmacro{\y}{7.87+0.312*\i};
-				\draw[yellow,fill=yellow] ({\x-\d}, {\y-\d} ) -- ({\x+\d}, {\y-\d}) -- ({\x+\d}, {\y+\d}) -- ({\x-\d}, {\y+\d}) -- cycle;
-			}
-		}
-		\pgfmathsetmacro{\d}{0.05}
-		\pgfmathsetmacro{\x}{0.35+0.312};
-		\pgfmathsetmacro{\y}{7.87+0.312*0};
-		\draw[yellow,thick,fill=fuchsia] ({\x-\d}, {\y-\d} ) -- ({\x+\d}, {\y-\d}) -- ({\x+\d}, {\y+\d}) -- ({\x-\d}, {\y+\d}) -- cycle;
-		
-		\node (J40) at (-1,8.5) {\begin{tabular}{l}J40 \\ Buttons\end{tabular}};
-		
-		
-		%J44 Serial
-		\pgfmathsetmacro{\xmin}{1.2};
-		\pgfmathsetmacro{\xmax}{1.5};
-		\pgfmathsetmacro{\ymin}{8.02};
-		\pgfmathsetmacro{\ymax}{9.95};
-		\draw[darkcyan,
-		line width=1.6pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
-		
-		\foreach \j in {0,...,0}
-		{
-			\foreach \i in {0,...,5}
-			{
-				\pgfmathsetmacro{\d}{0.05}
-				\pgfmathsetmacro{\x}{1.35+0.312*\j};
-				\pgfmathsetmacro{\y}{8.2+0.312*\i};
-				\draw[yellow,fill=yellow] ({\x-\d}, {\y-\d} ) -- ({\x+\d}, {\y-\d}) -- ({\x+\d}, {\y+\d}) -- ({\x-\d}, {\y+\d}) -- cycle;
-			}
-		}
-		\pgfmathsetmacro{\d}{0.05}
-		\pgfmathsetmacro{\x}{1.35};
-		\pgfmathsetmacro{\y}{8.2+0.312*0};
-		\draw[yellow,thick,fill=fuchsia] ({\x-\d}, {\y-\d} ) -- ({\x+\d}, {\y-\d}) -- ({\x+\d}, {\y+\d}) -- ({\x-\d}, {\y+\d}) -- cycle;
-		
-		\node (J13) at (1.8,10.6) {\begin{tabular}{l} J44\\ Serial \end{tabular}};
-		
-		% J48 DC Jumper
-		\pgfmathsetmacro{\xmin}{0.175};
-		\pgfmathsetmacro{\xmax}{0.83};
-		\pgfmathsetmacro{\ymin}{3.908};
-		\pgfmathsetmacro{\ymax}{4.24};
-		\draw[darkcyan,
-		line width=1.6pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
-		
-		\foreach \j in {0,...,1}
-		{
-			\foreach \i in {0,...,0}
-			{
-				\pgfmathsetmacro{\d}{0.05}
-				\pgfmathsetmacro{\x}{0.35+0.312*\j};
-				\pgfmathsetmacro{\y}{4.074 +0.312*\i};
-				\draw[yellow,fill=yellow] ({\x-\d}, {\y-\d} ) -- ({\x+\d}, {\y-\d}) -- ({\x+\d}, {\y+\d}) -- ({\x-\d}, {\y+\d}) -- cycle;
-			}
-		}
-		\node (J48) at (-1,4) {\begin{tabular}{l}J48 \\ Jumper\end{tabular}};
-		
-		
-		% J38 PoE
-		\pgfmathsetmacro{\xmin}{11.95};
-		\pgfmathsetmacro{\xmax}{12.57};
-		\pgfmathsetmacro{\ymin}{9.27};
-		\pgfmathsetmacro{\ymax}{9.9};
-		\draw[darkcyan,
-		line width=1.6pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
-		
-		\foreach \j in {0,...,1}
-		{
-			\foreach \i in {0,...,1}
-			{
-				\pgfmathsetmacro{\d}{0.05}
-				\pgfmathsetmacro{\x}{12.1+0.312*\j};
-				\pgfmathsetmacro{\y}{9.42 +0.312*\i};
-				\draw[yellow,fill=yellow] ({\x-\d}, {\y-\d} ) -- ({\x+\d}, {\y-\d}) -- ({\x+\d}, {\y+\d}) -- ({\x-\d}, {\y+\d}) -- cycle;
-			}
-		}
-		
-		\node[right] (J48) at (13.0,9.5) {\begin{tabular}{l}J38 \\ PoE\end{tabular}};
-		
-		
-		% J41 Expansion
-		\pgfmathsetmacro{\xmin}{11.16};
-		\pgfmathsetmacro{\xmax}{11.8};
-		\pgfmathsetmacro{\ymin}{2.72};
-		\pgfmathsetmacro{\ymax}{9.1};
-		\draw[darkcyan,
-		line width=1.6pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
-		
-		\foreach \j in {0,...,1}
-		{
-			\foreach \i in {0,...,19}
-			{
-				\pgfmathsetmacro{\d}{0.05}
-				\pgfmathsetmacro{\x}{11.325+0.312*\j};
-				\pgfmathsetmacro{\y}{2.86 +0.323*\i};
-				\draw[blue,fill=yellow] ({\x-\d}, {\y-\d} ) -- ({\x+\d}, {\y-\d}) -- ({\x+\d}, {\y+\d}) -- ({\x-\d}, {\y+\d}) -- cycle;
-			}
-		}
-		\pgfmathsetmacro{\d}{0.05}
-		\pgfmathsetmacro{\x}{11.325+0.312};
-		\pgfmathsetmacro{\y}{2.86};
-		\draw[yellow,thick,fill=fuchsia] ({\x-\d}, {\y-\d} ) -- ({\x+\d}, {\y-\d}) -- ({\x+\d}, {\y+\d}) -- ({\x-\d}, {\y+\d}) --    cycle;
-		
-		\node[right] (J41) at (13,6) {\begin{tabular}{l}J41 \\ Expansion\end{tabular}};
-		
-		% J15 5V Fan
-		\pgfmathsetmacro{\xmin}{9.33};
-		\pgfmathsetmacro{\xmax}{10.55};
-		\pgfmathsetmacro{\ymin}{2.86};
-		\pgfmathsetmacro{\ymax}{3.55};
-		\draw[darkcyan,
-		line width=1.6pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
-		
-		\pgfmathsetmacro{\xmin}{9.8};
-		\pgfmathsetmacro{\xmax}{10.45};
-		\pgfmathsetmacro{\ymin}{3.35};
-		\pgfmathsetmacro{\ymax}{3.55};
-		\draw[darkcyan,
-		line width=1.6pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
-		
-		\foreach \j in {0,...,3}
-		{
-			\foreach \i in {0,...,0}
-			{
-				\pgfmathsetmacro{\d}{0.05}
-				\pgfmathsetmacro{\x}{9.45+0.317*\j};
-				\pgfmathsetmacro{\y}{3.18 +0.323*\i};
-				\draw[blue,fill=yellow] ({\x-\d}, {\y-\d} ) -- ({\x+\d}, {\y-\d}) -- ({\x+\d}, {\y+\d}) -- ({\x-\d}, {\y+\d}) -- cycle;
-			}
-		}
-		
-		\node[right] (J15) at (13,3.3) {\begin{tabular}{l}J15 \\ 5V Fan\end{tabular}};
-		
-		% Schwarze Flecken
-		\pgfmathsetmacro{\xmin}{0.902};
-		\pgfmathsetmacro{\xmax}{1.058};
-		\pgfmathsetmacro{\ymin}{8.12};
-		\pgfmathsetmacro{\ymax}{8.25};
-		\draw[black,fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft},
-		line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
-		
-		\pgfmathsetmacro{\xmin}{0.902};
-		\pgfmathsetmacro{\xmax}{1.058};
-		\pgfmathsetmacro{\ymin}{8.74};
-		\pgfmathsetmacro{\ymax}{8.87};
-		\draw[black,fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft},
-		line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
-		
-		\pgfmathsetmacro{\xmin}{0.942};
-		\pgfmathsetmacro{\xmax}{1.098};
-		\pgfmathsetmacro{\ymin}{7.29};
-		\pgfmathsetmacro{\ymax}{7.42};
-		\draw[black, fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft},
-		line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
-		
-		\pgfmathsetmacro{\xmin}{1.382};
-		\pgfmathsetmacro{\xmax}{1.538};
-		\pgfmathsetmacro{\ymin}{7.74};
-		\pgfmathsetmacro{\ymax}{7.87};
-		\draw[black, fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft},
-		line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
-		
-		\pgfmathsetmacro{\xmin}{1.35};
-		\pgfmathsetmacro{\xmax}{1.49};
-		\pgfmathsetmacro{\ymin}{7.2};
-		\pgfmathsetmacro{\ymax}{7.37};
-		\draw[black, fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft},
-		line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
-		
-		\pgfmathsetmacro{\xmin}{1.13};
-		\pgfmathsetmacro{\xmax}{1.47};
-		\pgfmathsetmacro{\ymin}{3.43};
-		\pgfmathsetmacro{\ymax}{3.7};
-		\draw[black, fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft},
-		line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
-		
-		\pgfmathsetmacro{\xmin}{0.97};
-		\pgfmathsetmacro{\xmax}{1.47};
-		\pgfmathsetmacro{\ymin}{2.81};
-		\pgfmathsetmacro{\ymax}{3.31};
-		\draw[black, fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft},
-		line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
-		
-		% 5V DC (2.1mm ID, Positive Center)  Stecker
-		\pgfmathsetmacro{\xmin}{0.28};
-		\pgfmathsetmacro{\xmax}{1.51};
-		\pgfmathsetmacro{\ymin}{-0.1};
-		\pgfmathsetmacro{\ymax}{1.7};
-		\draw[black, fill=black,
-		line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
-		
-		\pgfmathsetmacro{\xmin}{0.32};
-		\pgfmathsetmacro{\xmax}{1.47};
-		\pgfmathsetmacro{\ymin}{-0.06};
-		\pgfmathsetmacro{\ymax}{0.28};
-		\draw[black, fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft},
-		line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
-		
-		\pgfmathsetmacro{\xmin}{0.32};
-		\pgfmathsetmacro{\xmax}{1.47};
-		\pgfmathsetmacro{\ymin}{0.32};
-		\pgfmathsetmacro{\ymax}{1.65};
-		\draw[left color=grayleft, right color=black, middle color=graycircle,
-		line width=0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
-		
-		
-		% Display Port und HDMI
-		\pgfmathsetmacro{\xmin}{2.03};
-		\pgfmathsetmacro{\xmax}{4.08};
-		\pgfmathsetmacro{\ymin}{0};
-		\pgfmathsetmacro{\ymax}{2.15};
-		\draw[graycircle!50, fill=white!20!graylight, postaction={path fading=west,  fill=grayright!60},
-		line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
-		
-		\draw[greenblue,fill=greenblue] 
-		(2.30, 0.7) -- (2.39, 0.22) -- (2.58,0.22) -- (2.68, 0.7) -- 
-		(2.52, 0.27) -- (2.46,0.27) -- cycle;
-		
-		\begin{scope}[xshift=27.3]
-			\draw[greenblue,fill=greenblue] 
-			(2.30, 0.7) -- (2.39, 0.22) -- (2.58,0.22) -- (2.68, 0.7) -- 
-			(2.52, 0.27) -- (2.46,0.27) -- cycle;
-		\end{scope}
-		
-		% USB 3.0 2-mal
-		\pgfmathsetmacro{\xmin}{4.6};
-		\pgfmathsetmacro{\xmax}{6.31};
-		\pgfmathsetmacro{\ymin}{-0.1};
-		\pgfmathsetmacro{\ymax}{2.05};
-		\draw[graycircle!50, fill=white!20!graylight, postaction={path fading=west,  fill=grayright!60},
-		line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
-		
-		\draw[greenblue,fill=greenblue] 
-		(4.83, 0.82) -- (4.93, 0.07) -- (5.14,0.07) -- (5.25, 0.82) -- 
-		(5.08, 0.14) -- (5.0,0.14) -- cycle;
-		
-		\draw[greenblue,fill=greenblue] 
-		(5.63, 0.82) -- (5.73, 0.07) -- (5.94,0.07) -- (6.05, 0.82) -- 
-		(5.88, 0.14) -- (5.8,0.14) -- cycle;
-		
-		
-		% USB 3.0 2-mal
-		\begin{scope}[xshift=63]
-			\pgfmathsetmacro{\xmin}{4.6};
-			\pgfmathsetmacro{\xmax}{6.31};
-			\pgfmathsetmacro{\ymin}{-0.1};
-			\pgfmathsetmacro{\ymax}{2.05};
-			\draw[graycircle!50, fill=white!20!graylight, postaction={path fading=west,  fill=grayright!60},
-			line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
-			
-			\draw[greenblue,fill=greenblue] 
-			(4.83, 0.82) -- (4.93, 0.07) -- (5.14,0.07) -- (5.25, 0.82) -- 
-			(5.08, 0.14) -- (5.0,0.14) -- cycle;
-			
-			\draw[greenblue,fill=greenblue] 
-			(5.63, 0.82) -- (5.73, 0.07) -- (5.94,0.07) -- (6.05, 0.82) -- 
-			(5.88, 0.14) -- (5.8,0.14) -- cycle;
-		\end{scope}
-		
-		% GigEth
-		\pgfmathsetmacro{\xmin}{8.84};
-		\pgfmathsetmacro{\xmax}{10.8};
-		\pgfmathsetmacro{\ymin}{-0.1};
-		\pgfmathsetmacro{\ymax}{2.62};
-		\draw[graycircle!50, fill=white!20!graylight, postaction={path fading=west,  fill=grayright!60},
-		line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
-		
-		% Micro USB, PWR oder USB device
-		\pgfmathsetmacro{\xmin}{11.285};
-		\pgfmathsetmacro{\xmax}{12.225};
-		\pgfmathsetmacro{\ymin}{0};
-		\pgfmathsetmacro{\ymax}{0.83};
-		\draw[graycircle!50, fill=white!20!graylight, postaction={path fading=west,  fill=grayright!60},
-		line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
-		
-		\draw[greenblue,fill=greenblue] 
-		(11.41, 0.38) -- (11.475, 0.08) -- (11.585,0.08) -- (11.65, 0.38) -- 
-		(11.55, 0.12) -- (11.52,0.12) -- cycle;
-		
-		\begin{scope}[xshift=12.5]
-			\draw[greenblue,fill=greenblue] 
-			(11.41, 0.38) -- (11.475, 0.08) -- (11.585,0.08) -- (11.65, 0.38) -- 
-			(11.55, 0.12) -- (11.52,0.12) -- cycle;
-		\end{scope}
-		
-		\node[right] (J15) at (13,1.3) {\begin{tabular}{l}PWR \\ LED\end{tabular}};
-		
-		
-	\end{tikzpicture}
-	\caption{Jetson Nano: Oversight with labels}\label{JetsonAufsicht}
-\end{figure}
-
-
-\begin{figure}
-	
-	\begin{tikzpicture}
-		% Platine
-		\draw[greenblue,fill=greenblue] (0,-0.02) -- (12.35,-0.02) -- (12.35,-0.2) -- (0,-0.2) -- cycle;
-		
-		% 5V 
-		\pgfmathsetmacro{\xmin}{0.2};
-		\pgfmathsetmacro{\xmax}{1.4};
-		\pgfmathsetmacro{\ymin}{0};
-		\pgfmathsetmacro{\ymax}{1.33};
-		\draw[black,  fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft},  line width=1.0pt] 
-		(\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
-		
-		\draw[silver,fill=silver,domain=0:360] plot ({0.8+0.11*cos(\x)}, {0.75+0.11*sin(\x)});
-		\draw[silver,fill=silver,domain=230:310] plot ({0.8+0.4*cos(\x)}, {0.75+0.4*sin(\x)});
-		\draw[black,line width=1.0pt,domain=0:360] plot ({0.8+0.4*cos(\x)}, {0.75+0.4*sin(\x)});
-		
-		%Display Port und HDMI
-		\pgfmathsetmacro{\xmin}{1.9};
-		\pgfmathsetmacro{\xmax}{3.95};
-		\pgfmathsetmacro{\ymin}{0};
-		\pgfmathsetmacro{\ymax}{2.1};
-		\draw[graycircle!50, fill=white!20!graylight, postaction={path fading=west,  fill=grayright!60}, line width=1.0pt
-		] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
-		
-		\draw[black,fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft},
-		line width=1.0pt]   (2.4, 0.17) -- (2.17,0.41) -- (2.17,0.64) -- (3.65,0.64) -- (3.65,0.41) -- (3.42,0.17) -- cycle;
-		
-		\pgfmathsetmacro{\xmin}{2.35};
-		\pgfmathsetmacro{\xmax}{3.48};
-		\pgfmathsetmacro{\ymin}{0.39};
-		\pgfmathsetmacro{\ymax}{0.42};
-		\draw[grayright,fill=grayright %graycircle!50, fill=white!20!graylight, postaction={path fading=west,  fill=grayright!60}, line width=1.0pt
-		] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
-		
-		\draw[black,fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft},
-		line width=1.0pt] (2.33,1.42) -- (2.1, 1.65) -- (2.1,1.92) -- (3.66,1.92) -- (3.66,1.42) -- cycle;
-		\draw[grayright,fill=grayright] (2.47, 1.7) -- (2.47,1.6) -- (2.37, 1.6) -- (2.37,1.75) -- (3.47,1.75) -- (3.47,1.6) -- (3.37,1.6) -- (3.37,1.7) -- cycle;
-		
-		% USV 3.0 - 2 x 2 
-		\foreach \j in {0,...,1}
-		{
-			\pgfmathsetmacro{\xmin}{4.4+2.15*\j};
-			\pgfmathsetmacro{\xmax}{6.1+2.15*\j};
-			\pgfmathsetmacro{\ymin}{0};
-			\pgfmathsetmacro{\ymax}{1.8};
-			\draw[graycircle!50, fill=white!20!graylight, postaction={path fading=west,  fill=grayright!60}, line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
-			
-			\foreach \i in {0,...,1}
-			{
-				\pgfmathsetmacro{\xmin}{4.54+2.16*\j};
-				\pgfmathsetmacro{\xmax}{5.96+2.16*\j};
-				\pgfmathsetmacro{\ymin}{0.27+0.86*\i};
-				\pgfmathsetmacro{\ymax}{0.78+0.86*\i};
-				\draw[black,fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft},
-				line width=1.0pt] 
-				(\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
-				
-				\pgfmathsetmacro{\xmin}{4.6+2.16*\j};
-				\pgfmathsetmacro{\xmax}{5.91+2.16*\j};
-				\pgfmathsetmacro{\ymin}{0.52+0.82*\i};
-				\pgfmathsetmacro{\ymax}{0.73+0.82*\i};
-				\draw[cyan, fill=deepskyblue, line width=1.0pt] 
-				(\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
-				
-				\foreach \k in {0,...,3}
-				{
-					\pgfmathsetmacro{\xmin}{4.75+2.16*\j+0.29*\k};
-					\pgfmathsetmacro{\xmax}{4.88+2.16*\j+0.29*\k};
-					\pgfmathsetmacro{\ymin}{0.44+0.83*\i};
-					\pgfmathsetmacro{\ymax}{0.48+0.83*\i};
-					\draw[copper,fill=copper] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
-				}     
-			}
-		}
-		
-		% Ethernet
-		\pgfmathsetmacro{\xmin}{8.55};
-		\pgfmathsetmacro{\xmax}{10.5};
-		\pgfmathsetmacro{\ymin}{0};
-		\pgfmathsetmacro{\ymax}{1.5};
-		\draw[graycircle!50, fill=white!20!graylight, postaction={path fading=west,  fill=grayright!60}, line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
-		
-		\pgfmathsetmacro{\xmin}{8.8};
-		\pgfmathsetmacro{\xmax}{10.2};
-		\pgfmathsetmacro{\ymin}{0};
-		\pgfmathsetmacro{\ymax}{1.25};
-		\draw[black,  fill=grayleft!30!grayright, postaction={path fading=west,  fill=grayleft},  line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
-		
-		\pgfmathsetmacro{\xmin}{8.8};
-		\pgfmathsetmacro{\xmax}{9.25};
-		\pgfmathsetmacro{\ymin}{0};
-		\pgfmathsetmacro{\ymax}{0.3};
-		\draw[darkpastelgreen,fill=greenyellow, line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
-		
-		\pgfmathsetmacro{\xmin}{9.75};
-		\pgfmathsetmacro{\xmax}{10.2};
-		\pgfmathsetmacro{\ymin}{0};
-		\pgfmathsetmacro{\ymax}{0.3};
-		\draw[orange, fill=yellow, line width=1.0pt
-		] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
-		
-		\foreach \j in {0,...,7}
-		{
-			\pgfmathsetmacro{\xmin}{9     + 0.13*\j};
-			\pgfmathsetmacro{\xmax}{9.068 + 0.13*\j};
-			\pgfmathsetmacro{\ymin}{0.92};
-			\pgfmathsetmacro{\ymax}{1.25};
-			\draw[copper,fill=copper]   (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
-		}
-		
-		\pgfmathsetmacro{\xmin}{11.8};
-		\pgfmathsetmacro{\xmax}{12.25};
-		\pgfmathsetmacro{\ymin}{0};
-		\pgfmathsetmacro{\ymax}{0.1};
-		\draw[darkpastelgreen,fill=greenyellow, line width=1.0pt] (\xmin, \ymin) -- (\xmin, \ymax) -- (\xmax,\ymax) -- (\xmax, \ymin) -- cycle;
-		
-		% HDMI
-		\draw[silver,fill=silver, line width=1.0pt] (11.0, 0) -- (11.7,0) -- (11.9,0.17) -- (11.9, 0.35) -- (10.8,0.35) --  (10.8, 0.17) -- cycle;
-		
-		\draw[black,fill=black] (11.05, 0.125) -- (11.65,0.125) -- (11.75,0.22) -- (11.75, 0.25) -- (10.95,0.25) --  (10.95, 0.22) -- cycle;
-		
-		\node (P1) at (0.8,-0.6) {5V DC};
-		\node (P2) at (3,-0.8) {\begin{tabular}{c} Display Port \\ HDMI \end{tabular}};
-		\node (P2) at (5.2,-0.8) {\begin{tabular}{c} USB 3.0 \\ USB 3.0 \end{tabular}};
-		\node (P2) at (7.4,-0.8) {\begin{tabular}{c} USB 3.0 \\ USB 3.0 \end{tabular}};
-		\node (P2) at (9.5,-0.6) { GigEth };
-		\node (P2) at (11.8,-1) {\begin{tabular}{c} Micro USB\\ PWR And \\ USB Device\end{tabular}};
-		\node (P2) at (12.9,-1.8) {PWR LED};
-		
-	\end{tikzpicture}
-	\caption{Side view of the Jetson Nano with labels} \label{JetonSeite}
-\end{figure}	
-
-}
 
 \section{Jetson Nano Interfaces}
 \subsection{J41 Expansion Header Pinout - GPIO Pins}
 The Jetson Nano can interface with various external systems, and the ability to control the pins on the J41 header is essential for communication and device management. The pins on the header support several communication protocols:
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\textwidth]{Images/Front_view_JN} % Image in the same folder
+	\caption{Jetson Nano Ports}
+	\label{fig:camera_module}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1.2\textwidth, height=5\textheight, keepaspectratio]{Images/Top_View_JN}
+	\caption{Jetson Nano Ports}
+	\label{fig:camera_module}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\textwidth]{Images/Rare_View_JN} % Image in the same folder
+	\caption{Jetson Nano Rear View}
+	\label{fig:camera_module}
+\end{figure}
+
 
 
 \begin{itemize}
@@ -1587,6 +472,308 @@ This section highlights some of the Jetson Nano Developer Kit interfaces.
 	\item While capable of handling multiple neural networks \\ the 472 GFLOPs performance and 4 GB RAM limit scalability for extremely complex models or high-speed real-time processing.\newline \newline
 \end{itemize}
 
+\section{Windows Operating System for Jetson Nano}
+While the NVIDIA Jetson Nano itself runs on a Linux-based operating system (Jetson Linux), Windows OS serves as an essential companion for development, configuration, and communication with the Jetson Nano. Windows provides a powerful environment for developers to write, debug, and deploy applications remotely on the Jetson Nano, enabling seamless interaction between the two systems.
+
+\subsection{Key Features of Windows OS in Jetson Nano Projects}
+\subsection*{Development Environment}
+\begin{itemize}
+	\item \textbf{IDE Support:} Windows supports popular IDEs like Visual Studio Code, PyCharm, and Jupyter Notebooks for Python development.
+	\item \textbf{Remote Development:} Extensions like Remote - SSH in Visual Studio Code allow direct coding on the Jetson Nano from a Windows machine.
+\end{itemize}
+
+\subsection*{File Transfer and Management}
+\begin{itemize}
+	\item Tools like WinSCP, FileZilla, or native SCP commands enable secure file transfer between Windows and Jetson Nano.
+\end{itemize}
+
+\subsection*{Connectivity and Communication}
+\begin{itemize}
+	\item SSH clients such as PuTTY or Windows Terminal are used to manage and control the Jetson Nano remotely.
+	\item Networking via Ethernet or Wi-Fi enables seamless communication.
+\end{itemize}
+
+\subsection*{Compatibility}
+\begin{itemize}
+	\item Windows supports flashing tools like Balena Etcher to prepare the microSD card with Jetson Linux.
+	\item USB drivers for UART or serial communication (e.g., CP210x, FTDI drivers) ensure smooth interaction with the Jetson Nano hardware.
+\end{itemize}
+
+\subsection{Advantages of Using Windows OS for Jetson Nano Development}
+\subsection*{User-Friendly Interface}
+A GUI-rich environment makes it easy to manage files, install software, and configure the development workflow.
+
+\subsection*{Tool Availability}
+Widely available development and file transfer tools simplify the process of connecting and working with the Jetson Nano.
+
+\subsection*{Broad Hardware Support}
+Windows OS supports a variety of USB devices and peripherals, enabling easy integration with the Jetson Nano.
+
+\subsection*{Remote Access and Debugging}
+Tools like Visual Studio Code and PuTTY allow efficient remote debugging and monitoring of Jetson Nano applications.
+
+\subsection{Typical Workflow with Windows OS}
+\subsection*{Flashing the OS}
+\begin{enumerate}
+	\item Download the JetPack SDK image from the NVIDIA website.
+	\item Use Balena Etcher on Windows to flash the Jetson Linux image onto a microSD card.
+\end{enumerate}
+
+\subsection*{Initial Configuration}
+\begin{itemize}
+	\item Connect the Jetson Nano to the laptop via USB, Ethernet, or serial console.
+	\item Access the Jetson Nano using SSH or serial tools like PuTTY.
+\end{itemize}
+
+\subsection*{Development Setup}
+\begin{itemize}
+	\item Install an IDE like Visual Studio Code and configure the Remote - SSH extension for direct coding on the Jetson Nano.
+	\item Use Python or C++ to write applications leveraging libraries like OpenCV or TensorFlow.
+\end{itemize}
+
+\subsection*{File Transfer}
+\begin{itemize}
+	\item Use WinSCP or FileZilla to transfer files and manage data on the Jetson Nano.
+\end{itemize}
+
+\subsection*{Testing and Deployment}
+\begin{itemize}
+	\item Run and debug applications on the Jetson Nano using remote tools or terminal access from the Windows machine.
+\end{itemize}
+
+\subsection{Applications of Windows OS in Jetson Nano Projects}
+\subsection*{Development and Testing}
+Write and test AI and computer vision code on Windows before deploying it to the Jetson Nano.
+
+\subsection*{File Management}
+Use Windows tools to organize and transfer project files to the Jetson Nano.
+
+\subsection*{Monitoring and Debugging}
+Monitor Jetson Nano performance, manage packages, and troubleshoot issues via SSH or serial tools.
+
+\subsection*{Flashing and Setup}
+Prepare the microSD card and configure the Jetson Nano for development. \cite{NVS:2025}
+
+
+\section{Software Interfaces:}
+\subsection{Etcher Software}
+\begin{itemize}
+	\item \textbf{Etcher Software} Required for flashing the Jetson Nano system image onto the microSD card. Etcher (now known as balenaEtcher) is an open-source, cross-platform tool used for flashing disk images (such as operating system images) onto SD cards or USB drives. It's widely used to flash operating system images onto SD cards for devices like the Jetson Nano. \cite{BAC:2025}
+\end{itemize}
+
+\subsection*{Key Features of Etcher}
+\begin{itemize}
+	\item \textbf{Cross-Platform Compatibility}: Etcher works on Windows, macOS, and Linux, making it accessible for developers using different systems.
+	\item \textbf{Simple User Interface}: It offers a streamlined, easy-to-use interface for flashing images, making it ideal for beginners and advanced users alike.
+	\item \textbf{Safe Flashing Process}: Etcher verifies the flashing process to ensure that the image is correctly written to the storage device, helping to prevent errors or corrupt files.
+	\item \textbf{Support for Various Image Formats}: Etcher supports a wide range of image formats, including .img, .iso, and .zip files.
+\end{itemize}
+
+\subsection*{How Etcher Works}
+\begin{enumerate}
+	\item \textbf{Select Image}: The user chooses the operating system image (e.g., Jetson Linux for Jetson Nano).
+	\item \textbf{Select Target}: The user selects the SD card or USB drive where the image will be written.
+	\item \textbf{Flashing Process}: Etcher writes the image to the storage device and verifies the process to ensure data integrity.
+	\item \textbf{Validation}: Once the flashing process is complete, Etcher will perform a validation to ensure the image is correctly written without corruption.
+\end{enumerate}
+
+\subsection*{Protocols Involved in Etcher}
+\begin{itemize}
+	\item \textbf{USB Protocol}: Etcher communicates with USB drives or SD cards using the USB protocol for data transfer.
+	\item \textbf{File I/O Protocol}: Etcher uses standard file I/O protocols for reading and writing disk images to the selected device.
+\end{itemize}
+
+\subsection*{Use Case}
+\textbf{Flashing OS for Jetson Nano}: Etcher is used to flash the Jetson Linux operating system onto the Jetson Nano’s SD card to boot the device and set up the operating system. \cite{BAC:2025}
+
+\subsection{Software EULA (End User License Agreement)}
+\begin{itemize}
+	\item \textbf{NVIDIA Jetson Software EULA} Required for the End User License Agreement during setup. The NVIDIA Jetson Software EULA is a legal agreement between the user and NVIDIA, governing the use of Jetson software, including Jetson Linux, JetPack SDK, and other development tools provided by NVIDIA for the Jetson family of devices. \cite{NJE:2025}
+\end{itemize}
+
+\subsection*{Key Aspects of the NVIDIA Jetson Software EULA}
+\begin{itemize}
+	\item \textbf{License Grant}: The EULA grants users the right to install, use, and distribute Jetson software for development and research purposes. It often comes with restrictions for commercial use.
+	\item \textbf{Prohibited Uses}: The software is typically licensed for non-commercial use, and commercial use may require additional licensing or agreements.
+	\item \textbf{Modifications}: The agreement may prohibit modifications to the software, unless explicitly stated.
+	\item \textbf{Transfer Restrictions}: Users may not transfer the software or license to another entity without permission from NVIDIA.
+	\item \textbf{Support and Updates}: NVIDIA typically offers support and updates for the software as part of the EULA, but these may come with specific conditions or limitations on the scope of support.
+	\item \textbf{Indemnification}: The agreement often includes clauses limiting NVIDIA’s liability and stating that users are responsible for any legal claims or issues arising from their use of the software.
+\end{itemize}
+
+\subsection*{Protocols Involved in Jetson Software EULA}
+The Jetson Software EULA itself is not directly associated with any specific software protocols, as it is a legal document. However, the software covered under the agreement (such as Jetson Linux and JetPack) may involve several protocols and interfaces for installation, usage, and network communication.
+
+\subsection*{Key Protocols Related to Jetson Software}
+\begin{itemize}
+	\item \textbf{Licensing Management}: The EULA may specify how users should handle licensing, which could involve digital certificates or online authentication protocols.
+	\item \textbf{Software Updates}: The Jetson software might communicate with NVIDIA’s servers to check for software updates, involving HTTP/HTTPS for secure communication.
+\end{itemize}
+
+\subsection*{Use Case}
+\textbf{Installing Jetson Software}: When setting up Jetson Linux or using the JetPack SDK, users are required to accept the EULA, ensuring they comply with NVIDIA's terms for software usage. \cite{NJE:2025}
+
+
+\subsection{Data Quality}
+
+\subsection*{Input Data Resolution}
+\begin{itemize}[leftmargin=1.5cm]
+	\item The system relies on high-resolution image data from sensors like the Logitech C270 HD Webcam, which supports 720p video.
+	\item Ensuring that input images are clear, well-lit, and free from motion blur is essential for accurate AI processing.
+\end{itemize}
+
+\subsection*{Sensor Accuracy}
+\begin{itemize}[leftmargin=1.5cm]
+	\item The camera and other connected sensors must be calibrated for precise data capture.
+	\item Poor calibration can result in distorted images or erroneous data, affecting AI inference accuracy.
+\end{itemize}
+
+\subsection*{Noise and Signal Integrity}
+\begin{itemize}[leftmargin=1.5cm]
+	\item Image data should have minimal noise to ensure reliable detection and recognition.
+	\item Environmental factors such as low light, glare, or reflections can degrade data quality and require preprocessing or enhancement techniques.
+\end{itemize}
+
+\subsection*{Consistency in Data Capture}
+\begin{itemize}[leftmargin=1.5cm]
+	\item To maintain uniformity in AI performance, data must be consistently captured under similar conditions (e.g., resolution, frame rate, angle).
+	\item Variability in data input can reduce model accuracy.
+\end{itemize}
+
+\subsection*{Data Preparation for AI Models}
+\begin{itemize}[leftmargin=1.5cm]
+	\item Before feeding data into AI algorithms, preprocessing steps like resizing, normalization, and augmentation (e.g., flipping, rotation) should be applied to improve the robustness of the model.
+\end{itemize}
+
+\subsection*{Real-Time Processing Requirements}
+\begin{itemize}[leftmargin=1.5cm]
+	\item For applications such as license plate recognition, the Jetson Nano must process incoming data in real-time.
+	\item Ensuring low-latency data transmission from sensors and efficient handling by the system is key to maintaining quality. \cite{NVF:2024}
+\end{itemize}
+
+\subsection{Data Quantity}
+
+\subsection*{Training Data Requirements}
+\begin{itemize}[leftmargin=1.5cm]
+	\item To effectively train machine learning models on the Jetson Nano, datasets must include thousands of diverse examples. For instance:
+	\begin{itemize}
+		\item \textbf{License Plate Recognition:} Datasets should have thousands of images representing different fonts, plate designs, angles, and lighting conditions.
+		\item \textbf{Object Detection:} Large datasets, such as COCO or custom datasets, are necessary to ensure model robustness and accuracy.
+	\end{itemize}
+\end{itemize}
+
+\subsection*{Real-Time Data Handling}
+\begin{itemize}[leftmargin=1.5cm]
+	\item The Jetson Nano processes real-time data from connected sensors. For a camera streaming at 30 frames per second (fps) in 720p resolution:
+	\begin{itemize}
+		\item Each frame is approximately 1 MB, leading to a data throughput of ~30 MB/s.
+		\item This requires efficient processing to ensure no frame is dropped.
+	\end{itemize}
+\end{itemize}
+
+\subsection*{Model Size Considerations}
+\begin{itemize}[leftmargin=1.5cm]
+	\item Models used for inference on the Jetson Nano need to be optimized for the board’s memory limitations.
+	\item Pre-trained models, such as YOLO or SSD, typically range from 50 MB to several hundred MB and should be quantized or pruned to fit within 4 GB RAM constraints.
+\end{itemize}
+
+\subsection*{Storage for Collected Data}
+\begin{itemize}[leftmargin=1.5cm]
+	\item For storing training data, processed outputs, and model weights, the onboard 16 GB eMMC is limited.
+	\item External storage, such as an SD card or USB drive, is necessary for larger datasets.
+\end{itemize}
+
+\subsection*{Balance of Volume and Quality}
+\begin{itemize}[leftmargin=1.5cm]
+	\item While large datasets improve generalizability, the focus should remain on high-quality, annotated data to maximize model accuracy with minimal computational overhead.
+\end{itemize}
+
+\subsection{Data Types}
+
+\subsection*{Image Data}
+\begin{itemize}[leftmargin=1.5cm]
+	\item Primary data type processed by the Jetson Nano for applications like object detection, license plate recognition, and facial recognition.
+	\item Images are typically captured in formats such as JPEG or PNG from connected cameras (e.g., Logitech C270 HD Webcam).
+\end{itemize}
+
+\subsection*{Video Data}
+\begin{itemize}[leftmargin=1.5cm]
+	\item Streams from connected cameras or pre-recorded files, usually in MP4 or AVI format.
+	\item Video is processed frame-by-frame for real-time applications like surveillance or autonomous vehicles.
+\end{itemize}
+
+\subsection*{Text Data}
+\begin{itemize}[leftmargin=1.5cm]
+	\item Extracted from images or video frames via Optical Character Recognition (OCR) tools.
+	\item Examples include license plate numbers or other textual information embedded in visual data.
+\end{itemize}
+
+\subsection*{Sensor Data}
+\begin{itemize}[leftmargin=1.5cm]
+	\item Data from peripheral sensors connected via GPIO, I2C, or SPI interfaces.
+	\item This may include motion, temperature, or proximity sensor data for multi-modal AI applications.
+\end{itemize}
+
+\subsection*{Model Data}
+\begin{itemize}[leftmargin=1.5cm]
+	\item Pre-trained or custom-trained machine learning models used for inference.
+	\item These are typically in formats like ONNX, TensorFlow SavedModel, or PyTorch PT files.
+\end{itemize}
+
+\subsection*{Annotation Data}
+\begin{itemize}[leftmargin=1.5cm]
+	\item Structured data for supervised learning tasks, often stored in JSON or XML format, containing bounding boxes, labels, and other metadata. \cite{PIJ:2020}
+\end{itemize}
+
+\subsection{Data Structures}
+
+\subsection*{Image Arrays}
+Images are stored as NumPy arrays or TensorFlow/PyTorch tensors representing pixel values. For instance:
+\begin{itemize}
+	\item \textbf{Grayscale images:} 2D arrays with pixel intensity values.
+	\item \textbf{Color images:} 3D arrays with RGB values for each pixel.
+\end{itemize}
+
+\textbf{Example:}
+\begin{lstlisting}[style=python]
+	image = np.array([[255, 128, 0], [255, 0, 255]], dtype=np.uint8)  # RGB image
+\end{lstlisting}
+
+\subsection*{Bounding Box Coordinates}
+For object detection tasks (e.g., license plate detection), bounding boxes are represented as tuples or lists containing the coordinates $(xmin, ymin, xmax, ymax)$ of the detected object.
+
+\textbf{Example:}
+\begin{lstlisting}[style=python]
+	bbox = (50, 60, 200, 150)  # Bounding box for license plate
+\end{lstlisting}
+
+\subsection*{Labels and Annotations}
+Annotations for images are stored in JSON or XML format. These typically include bounding boxes, object labels, and metadata.
+
+\textbf{Example (JSON):}
+\begin{lstlisting}[style=json]
+	{
+		"image": "car_image.jpg",
+		"annotations": [{"label": "license_plate", "bbox": [50, 60, 200, 150]}]
+	}
+\end{lstlisting}
+
+\subsection*{Model Weights and Parameters}
+The trained models (e.g., neural networks) are typically represented as weights and biases stored in files like HDF5 or TorchScript. These files contain the parameters required for inference.
+
+\textbf{Example:}
+\begin{lstlisting}[style=python]
+	model_weights = torch.load('model_weights.pth')
+\end{lstlisting}
+
+\subsection*{Sensor Data}
+Data from connected sensors (e.g., temperature, motion, or proximity sensors) is often stored in lists or dataframes. These structures store time-series data for real-time processing. \cite{PTD:2018}
+
+\textbf{Example:}
+\begin{lstlisting}[style=python]
+	sensor_data = {'time': [1, 2, 3], 'temperature': [22.5, 23.0, 23.5]}
+\end{lstlisting}
+
 \section{Sample Python Code} 
 \lstset{style=pythonstyle}
 \begin{lstlisting}
@@ -1692,6 +879,8 @@ The code is structured as follows:
 \end{itemize}
 
 The main section of the code simulates the initialization of the Jetson Nano hardware, then proceeds with the LED blinking simulation and image capturing and display.
+
+
 
 \section{Logitech C270 HD Webcam}
 
@@ -2068,9 +1257,9 @@ The following BOM has been identified for the Hardware:
 		\hline
 		1 & Micro SD card & Minimum 32GB UHS-1 & \includegraphics[width=1cm]{Images/Micro_SD} & 1 & 13€ & \href{https://eckstein-shop.de/32GBMicroSDCardClass10SpeicherkartemitAdapter}{SD-Card}\\
 		\hline
-		1 & Micro USB cable & Standard USB to Micro USB cable & \includegraphics[width=1cm]{Images/USB_Cable} & 1 & 5€ & \href{https://eckstein-shop.de/12C3mUSBVerlC3A4ngerungskabelTypeAMaletoFemaleExtensionCable}{USB Cable}\\
+		1 & USB cable & Standard type C to USB 2.0 & \includegraphics[width=1cm]{Images/USB_Cable} & 1 & 5€ & \href{https://eckstein-shop.de/12C3mUSBVerlC3A4ngerungskabelTypeAMaletoFemaleExtensionCable}{USB Cable}\\
 		\hline
-		1 & Computer Display & Either a laptop display or independent Display & \includegraphics[width=1.5cm]{Images/Computer_Display} & 1 & 90€ & \href{https://eckstein-shop.de/Waveshare7inch1024x600HDMILCDIPSDisplayCapacitiveTouchRaspberryPiComputermonitor}{Monitor}\\
+		1 & HDMI cable & HDMI cable (to external monitor) & \includegraphics[width=1cm]{Images/HDMI Cable} & 1 & 7€ & \href{https://www.amazon.de/-/en/Cable-Metre-Certified-Highwings-48Gbps-black/dp/B0BRKCN4XK/ref=sr_1_3?crid=3ERIU9FNN935P&dib=eyJ2IjoiMSJ9.vJ-V2NeYqgPNg3v5BWMJKNFl1tRonp4bpvOyXCMItYxPfO0Zoc58RrIRFFa0FT_sR8UfW6qJrMXG1B6MThNYf3x_gCloObFHyUS2Ns2Z9WyK-QMAl3p6zUkLWVRYaeZmN9qaeNtrzg6VCmrzgbk4s9laFGvhau6MrrCUkiSu-UOxGgfsUfzZwUV1ii68tF7bIl_Ay8oh4PVtM1WbbC-PxkioMAOEjOb1BJZeuDmdqMo.Tl1YE9_f8pOJpy250pFm5eNIpQYdaEnIPQf2u25ftkU&dib_tag=se&keywords=hdmi+kabel&nsdOptOutParam=true&qid=1736459098&sprefix=HDMI+%2Caps%2C112&sr=8-3}{HDMI Cable}\\
 		\hline
 		1 & Keyboard & Standard American/German language & \includegraphics[width=1.5cm]{Images/Keyboard} & 1 & 23€ & \href{https://www.reichelt.de/funk-tastatur-usb-schwarz-delock-12004-p293085.html?&trstct=pol_0&nbc=1}{Keyboard}\\
 		\hline
