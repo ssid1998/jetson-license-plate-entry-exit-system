@@ -6,16 +6,19 @@
 % !TeX encoding = utf8
 %
 %%%%%%%%%%%%%%%%%%%%%%%%
+
+
 \chapter{Requirements.txt}
 
-The \texttt{requirements.txt} file lists all the Python packages required for the project to run. Here is the complete list of packages and their versions:
+The \texttt{requirements.txt} file serves as a crucial component of Python projects, as it contains a comprehensive list of all the Python packages and their specific versions required to successfully run the project. This file ensures that the project dependencies are consistently installed across different environments, thereby enhancing reproducibility and minimizing potential compatibility issues.
+
+Below is the detailed list of the packages and their respective versions required for this project:
 
 \begin{verbatim}
 	# requirements.txt
 	
-	# This file lists all the Python packages required for the project to run.
+	# List of Python packages and their versions for the project dependencies.
 	
-	# Complete list of packages and versions
 	absl-py==2.1.0
 	apache-beam==2.54.0rc1
 	asttokens==2.4.1
@@ -125,12 +128,29 @@ The \texttt{requirements.txt} file lists all the Python packages required for th
 	wheel==0.42.0
 \end{verbatim}
 
-\section{Explanation of How to Get the requirements.txt File}
+\section{Steps to Create a requirements.txt File}
 
-Generated a \texttt{requirements.txt} file by using one of the following methods:
+The \texttt{requirements.txt} file can be generated through several methods. Here are the commonly used approaches:
 
 \begin{enumerate}
-	\item \textbf{Using pip freeze:} Run \texttt{pip freeze > requirements.txt} in your terminal or command prompt while in the Python environment where your project dependencies are installed. This command will list all installed packages along with their versions and save them to a file named \texttt{requirements.txt}.
-	\item \textbf{Manually compiling:} Manually compile a \texttt{requirements.txt} file by listing the required packages along with their versions. This can be based on your project's dependencies or by referencing an existing \texttt{requirements.txt} file generated using \texttt{pip freeze}.
-	\item \textbf{Using a virtual environment:} It is recommended to use a virtual environment for your Python projects to isolate dependencies. Activate your virtual environment, install the required packages, and then generate the \texttt{requirements.txt} file using \texttt{pip freeze}.
+	\item \textbf{Using \texttt{pip freeze}:} To generate the file directly from an environment, run the following command in your terminal:
+	\begin{lstlisting}[language=bash]
+		pip freeze > requirements.txt
+	\end{lstlisting}
+	This command lists all installed packages in the current Python environment along with their versions and saves them into a file named \texttt{requirements.txt}.
+	
+	\item \textbf{Manually Creating the File:} If you already know the packages required for your project, you can manually create a \texttt{requirements.txt} file. Each package name should be listed on a new line, optionally followed by a specific version number for consistency across environments.
+	
+	\item \textbf{From a Virtual Environment:} Using a virtual environment is a best practice to manage dependencies in Python projects. After activating the virtual environment and installing the necessary packages, use the \texttt{pip freeze} command to export the installed dependencies into a \texttt{requirements.txt} file. This ensures isolation and prevents conflicts between dependencies in different projects.
 \end{enumerate}
+
+\section{Benefits of Using requirements.txt}
+
+\begin{itemize}
+	\item \textbf{Reproducibility:} Ensures that the same versions of dependencies are installed across different environments, minimizing discrepancies during project execution.
+	\item \textbf{Ease of Deployment:} Simplifies the process of setting up new environments by automating the installation of required dependencies.
+	\item \textbf{Collaboration:} Facilitates smooth collaboration among team members by ensuring consistency in the development environment.
+	\item \textbf{Version Control:} Helps in tracking and managing changes to dependencies over time, which is crucial for maintaining and upgrading projects.
+\end{itemize}
+
+By leveraging a \texttt{requirements.txt} file, developers can streamline the development, deployment, and maintenance processes, ensuring smooth operation and efficient collaboration within teams.
