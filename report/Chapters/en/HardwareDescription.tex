@@ -422,17 +422,18 @@ This section highlights some of the Jetson Nano Developer Kit interfaces.
 	\end{itemize}
 	\item Carrier Board
 	\begin{itemize}
-		\item (DS3) Power LED; which lights up when the developer kit is powered on.
-		\item (J2) SO-DIMM connector for attaching the Jetson Nano module.
-		\item (J6] HDMI and DisplayPort (DP) connectors.
-		\item (J13) Camera connector for CSI cameras. The Jetson Nano is compatible with IMX219 camera modules, including the Leopard Imaging LI-IMX219-MIPIFF-NANO camera module and the Raspberry Pi Camera Module V2.
-		\item (J15) 4-pin fan control header, supporting Pulse Width Modulation (PWM) output and tachometer input.
-		\item (J18) M.2 Key E connector, suitable for wireless networking cards. It provides interfaces for PCIe (x1), USB 2.0, UART, I2S, and I2C. To access J18, the Jetson Nano module must be detached.
-		\item (J25) Power jack for a 5V 4A power supply, compatible with a 2.1×5.5×9.5 mm plug with positive polarity.
-		\item (J28) Micro-USB 2.0 connector, which can serve two purposes: If the J48 pins are not connected, it can power the developer kit with a 5V 2A Micro-USB power supply. If the J48 pins are connected, it operates in Device Mode.
-		\item (J32 and J33) Two stacks of USB 3.0 Type-A connectors. Each stack has a total power delivery limit of 1A. All four connectors are linked to the Jetson Nano module through a built-in USB 3.0 hub on the carrier board.
-		\item (J38) Power over Ethernet (PoE) header, which passes any DC voltage present on the J43 Ethernet jack, in accordance with IEEE 802.3af standards.
-		\item (J40) 8-pin button header, which exposes various system signals related to power, reset, and force recovery.
+		\item (DS1) Power LED which lights up when the developer kit is powered on.
+		\item (J1) SO-DIMM connector for attaching the Jetson Nano module.
+		\item (J6) 40-pin Expansion Header for GPIO and other peripheral interfaces.
+		\item (J5) Camera connector supports CSI cameras, compatible with IMX219 camera modules, such as the Leopard Imaging LI-IMX219-MIPIFF-NANO and Raspberry Pi Camera Module V2.
+		\item (J7) 4-pin Fan Header supports PWM (Pulse Width Modulation) output and tachometer input.
+		\item (J10) USB 2.0 Type-A (x2) for connecting USB 2.0 devices.
+		\item (J9) USB 3.0 Type-A High-speed USB interface for data transfer.
+		\item (J4) HDMI Type-A Video output for monitors or displays.
+		\item (J2) USB Type-C Power Connector Supplies power to the board.
+		\item (J3) Ethernet Jack for network connectivity.
+		\item (J12) Button Header exposes system signals for power, reset, and force recovery.
+		\item (J13) USB Micro-B: Can function for powering the kit (5V 2A) or operate in device mode if J48 pins are connected.
 	\end{itemize}
 \end{itemize}
 
@@ -1223,11 +1224,14 @@ The camera performs acceptably in low-light conditions with minimal noise and vi
 The following resources provide additional insights into the Logitech C270 HD Webcam, its capabilities, and how to integrate it with computer vision applications such as video capture and calibration.
 
 \begin{itemize}
-	\item \textbf{\href{https://www.logitech.com/en-in/products/webcams/c270-hd-webcam.960-000584.html}{Logitech C270 HD Webcam Official Product Page:}}  
-	The official Logitech product page for the C270 HD Webcam provides detailed specifications, features, and user information, including setup guides and performance details.
+	\item 	The official Logitech product page for the C270 HD Webcam provides detailed specifications, features, and user information, including setup guides and performance details. Find it here:  
+	\href{https://www.logitech.com/en-in/products/webcams/c270-hd-webcam.960-000584.html}{https://www.logitech.com/en-in/products/webcams/c270-hd-webcam.960-000584.html}.
 	
-	\item \textbf{\href{https://www.logitech.com/assets/31702/2/c270620-002802003403gsamr.pdf}{Logitech C270 HD Webcam User Manual:}}  
-	This user manual provides detailed instructions on setting up and using the Logitech C270 HD Webcam, including troubleshooting tips and usage scenarios.
+
+	
+	\item This user manual provides detailed instructions on setting up and using the Logitech C270 HD Webcam, including troubleshooting tips and usage scenarios. Find it here:  
+	\href{https://www.logitech.com/assets/31702/2/c270620-002802003403gsamr.pdf}{https://www.logitech.com/assets/31702/2/c270620-002802003403gsamr.pdf}.
+	
 	
 	\item \textbf{\href{https://docs.opencv.org/4.x/dc/dbb/tutorial_py_calibration.html}{OpenCV Camera Calibration Tutorial:}}  
 	A tutorial on how to calibrate cameras for computer vision applications, providing essential techniques to eliminate distortion and improve image accuracy, which is especially useful for tasks such as license plate recognition.
@@ -1244,16 +1248,16 @@ The Jetson Nano's compact form factor and low power consumption make it especial
 
 Furthermore, by utilizing edge computing, the need for continuous reliance on cloud services is minimized, improving system autonomy and responsiveness. The real-time processing capabilities of the Jetson Nano enable faster decision-making, enhancing the overall efficiency of the license plate detection system. This makes the system a robust and scalable solution for a variety of intelligent transportation and computer vision applications.
 
-\chapter{Bill of Materials}
+\chapter{List of Materials}
 
-\section{Hardware Bill of Materials}
-The following BOM has been identified for the Hardware:
+\section{Hardware List and Bill of Materials}
+The following List and Bill of Materials has been identified for the Hardware:
 \begin{table}[h!]
 	\begin{tabular}{||m{1cm}|m{2.2cm}|m{2.5cm}|m{1.5cm}|m{1.7cm}|m{1cm}|m{3cm}||}
 		\hline
 		\textbf{Units} & \textbf{Hardware} & \textbf{Description} & \textbf{Picture} & \textbf{Quantity} & \textbf{Price} & \textbf{Link}\\
 		\hline
-		1 & NVIDIA Jetson Nano Developer Kit & 128-core Maxwell GPU, a quad-core ARM Cortex-A57 CPU, 3GB LPDDR4 memory & \includegraphics[width=1.5cm]{Images/Developer_Kit} & 1 & 214€ & \href{https://www.seeedstudio.com/Jetson-10-1-A0-p-5336.html}{Jetson-Nano}\\
+		1 & NVIDIA Jetson Nano Developer Kit & 128-core Maxwell GPU, a quad-core ARM Cortex-A57 CPU, 4GB LPDDR4 memory & \includegraphics[width=1.5cm]{Images/Developer_Kit} & 1 & 214€ & \href{https://www.seeedstudio.com/Jetson-10-1-A0-p-5336.html}{Jetson-Nano}\\
 		\hline
 			1 & Logitech C270 HD Webcam & 3 MP Maximum 30fps and 1280 x 720 resolution & \includegraphics[width=1.5cm]{Images/Logitech C270 HD Webcam} & 1 & 19.99€ & \href{https://www.coolblue.de/produkt/838636/logitech-c270-hd-webcam.html?cmt=c_b%2Ccp_532530061%2Caid_1354600906373878%2Ct_pla-4588262031974841%2Cn_o%2Cd_c%2Clp_&msclkid=584a4cb31a77123ffa4c2bd28a3f8062&utm_source=bing&utm_medium=cpc&utm_campaign=%5BBing%5D+%5BPT%3AALL%5D+%5BRL1%3AGermany%5D+%5BPTID%3A0%5D+%5BCO%3ADE%5D+%5BLAN%3ADE%5D+%5BDEV%3AALL%5D+%5BFL%3AALL%5D+%5BCH%3AShopping%5D&utm_term=4588262031974841&utm_content=%5BPT%3AAll+other+products%5D}{Camera}\\
 		\hline
@@ -1271,6 +1275,24 @@ The following BOM has been identified for the Hardware:
 	\end{tabular}
 	\caption{\label{tab:Hardware BOM} Hardware BOM}
 \end{table}
+
+\subsection{Description of Materials}
+
+\begin{itemize}[left=0pt]
+	\item \textbf{NVIDIA Jetson Nano Developer Kit}: The Jetson Nano, equipped with a 128-core Maxwell GPU and a quad-core ARM Cortex-A57 CPU, is the brain of the car license plate identification system. With 4GB of LPDDR4 memory, it is capable of running complex machine learning models for real-time image and video processing. The Jetson Nano is ideal for tasks like optical character recognition (OCR) and computer vision, which are essential for detecting and identifying license plates from car images or videos captured by the camera. \cite{SED:2025}
+	
+	\item \textbf{Logitech C270 HD Webcam}: The Logitech C270 HD webcam is used to capture high-definition video footage of vehicles for license plate detection. With its 1280 x 720 resolution at 30fps, this webcam provides clear video, which is crucial for accurately capturing license plate details. The webcam’s plug-and-play functionality makes it easy to integrate with the Jetson Nano, and its 3 MP camera ensures that fine details like the text on the license plate are captured with clarity. \cite{CLB:2025}
+	
+	\item \textbf{Micro SD Card (Minimum 32GB UHS-1)}: The 32GB UHS-1 microSD card is used for storing the Jetson Nano’s operating system, machine learning models, and captured data. With high read/write speeds, this card ensures fast access to the system and quick data processing, which is vital when processing video footage of cars in real time for license plate recognition. \cite{ECK:2025}
+	
+	\item \textbf{Raspberry Pi Power Supply (5V/3A Type-C)}: The 5V/3A Type-C power supply is essential for providing stable and sufficient power to the Jetson Nano. The power supply ensures that the Jetson Nano can handle the processing demands of the license plate identification software, such as running deep learning models and managing the high throughput of video data from the webcam. \cite{eBay:2025}
+	
+	\item \textbf{HDMI Cable}: The HDMI cable is used to connect the Jetson Nano to an external monitor for visual output during development and testing. It allows you to view live video feeds and monitor the results of the license plate identification system, providing real-time feedback on the system's accuracy and performance. \cite{AMZ:2025}
+	
+	\item \textbf{Keyboard}: The keyboard is used for system configuration and interacting with the Jetson Nano during setup and testing. It enables input for coding, running scripts, and configuring the license plate recognition system, ensuring that any necessary adjustments or debugging steps can be performed efficiently. \cite{RCT:2025}
+	
+	\item \textbf{Mouse (Standard 3-Button Wired or Wireless)}: The mouse is used to interact with the system’s graphical user interface (GUI) for configuration and monitoring. It is essential for selecting options, navigating through the application, and checking results during the operation of the car license plate identification system. \cite{RMS:2025}
+\end{itemize}
 
 
 \section{Software Bill of Materials}
