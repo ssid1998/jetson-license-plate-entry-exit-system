@@ -14,7 +14,17 @@
 
 %Packages
 \usepackage[utf8]{inputenc} %Für Umlaute, da BibLaTeX
-\usepackage[german]{babel}
+
+\ifdefined\isGerman
+  \usepackage[ngerman]{babel}
+\else
+  \ifdefined\isEnglish
+    \usepackage[english]{babel}
+  \else
+    \usepackage[ngerman]{babel}
+  \fi
+\fi
+
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{amssymb}

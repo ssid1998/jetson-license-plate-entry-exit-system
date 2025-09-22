@@ -1,0 +1,453 @@
+%%%%%%
+%
+% $Author: Sadegh Naderi $
+% $Datum: 2023-10-15  $
+% $Pfad: ML23-01-Keyword-Spotting-with-an-Arduino-Nano-33-BLE-Sense\Presentations\SadeghNaderi\LiteratureReview\slides\ContentLiteratureReview.tex $
+% $Version: 3.0 $
+% $Review Date: 2023-12-16 $
+%
+%
+% !TeX encoding = utf8
+% !TeX root = Rename
+%
+%%%%%%
+
+
+\Mysection{Design of a Speech Anger Recognition System on Arduino Nano 33 BLE Sense}
+
+\STANDARD{Description}
+{ 
+	The article \cite{Waqar:2021} discusses the creation of a Speech Anger Recognition System (a branch of Speech Emotion Recognition (SER) systems) on an Board Arduino Nano 33 BLE Sense using Tiny Machine Learning (TinyML) and a Convolutional Neural Network (CNN) architecture. The article describes the methodology, software design, hardware design, the proposed CNN architecture and the process of converting the model into TensorFlow Lite format for deployment. The article concludes with a prototype validation: system's ability to detect not angry, about to be angry, and angry emotions in speech signals.
+	
+	\bigskip
+	
+	\textbf{Limitation:} while the article provides valuable insights into using the Board Arduino Nano 33 BLE Sense and implementing machine learning models, it does not address the challenges or considerations related to keyword spotting.
+	
+	\scriptsize{\textbf{Keywords:} Speech Anger Recognition System, Speech Emotion Recognition (SER), Arduino Nano 33 BLE Sense, Tiny Machine Learning (TinyML), Convolutional Neural Network (CNN), Software Design, Hardware Design, TensorFlow Lite}
+}
+
+
+\Mysection{On-Device Training of Machine Learning Models on Microcontrollers with Federated Learning}
+\STANDARD{Description}
+{ 
+	This article \cite{Gimenez:2022a} examines federated learning for on-device training in Tiny Machine Learning (TinyML) on microcontrollers, focusing on a keyword spotting task. It evaluates trade-offs between federated learning rounds, resource usage, model accuracy, and training time using real microcontroller boards. The results reveal the advantages of on-device federated learning, along with challenges like bandwidth usage, energy consumption, and data distribution issues in real-world scenarios. The article offers practical insights and future directions for on-device training in IoT and TinyML.
+	
+	\bigskip
+	
+	\textbf{Limitation:} The results and insights presented in the article do not generalize well to different microcontroller models or scenarios, which could limit the broader applicability of the findings. 
+	
+	\scriptsize{\textbf{Keywords:} Federated Learning, TinyML, Microcontrollers, Keyword Spotting, Bandwidth Usage, Energy Consumption, Data Distribution, IoT}
+}
+
+
+\Mysection{TinyML Meets IoT: A Comprehensive Survey}
+\STANDARD{Description}
+{ 
+	This article \cite{Dutta:2021} offers a comprehensive overview of Tiny Machine Learning (TinyML) in the context of the Internet of Things (IoT). TinyML allows the implementation of machine learning on low-power IoT devices. The article highlights TinyML's advantages, like low latency, data safety, and cost reduction. It also discusses the role of 5G, recent research, challenges, and opportunities in TinyML. The authors suggest that TinyML can enhance IoT by enabling on-device processing, reducing cloud dependence, and addressing connectivity issues, emphasizing the need for benchmarking in different IoT environments.
+	
+	\bigskip
+	
+	\textbf{Limitation:} One negative aspect of the article is that it focuses on the broader concept of TinyML in the context of IoT, providing a comprehensive overview of the technology and its applications. While it discusses the benefits and potential of TinyML, it may lack specific implementation details or insights relevant to our project.
+	
+	\scriptsize{\textbf{Keywords:} TinyML, Internet of Things (IoT), Machine Learning, On-Device Processing, Benchmarking}
+}
+
+
+\Mysection{A Review on TinyML: State-of-the-art and Prospects}
+\STANDARD{Description}
+{ 
+	This article \cite{Ray:2022} provides a comprehensive review of TinyML, a cutting- paradigm in machine learning that focuses on deploying machine learning models on resource-constrained embedded devices at the edge of the network. It discusses the background of TinyML, the tools and enablers required for its implementation, state-of-the-art frameworks, and various use cases in which TinyML can be applied. The article also highlights the challenges and proposes a roadmap for the future development of TinyML, emphasizing its potential to bring machine learning capabilities to devices with limited resources in the context of edge computing and IoT.
+	
+	\bigskip
+	
+	\textbf{Limitation:} A potential limitation of the article is that it lacks specific technical details related to implementing TinyML on an Arduino Nano 33 BLE Sense device.
+	
+	\scriptsize{\textbf{Keywords:} TinyML, Machine Learning, Resource-Constrained Embedded Devices, Edge Computing, IoT}
+}
+
+
+\Mysection{Comparison of Two Microcontroller Boards for On-Device Model Training in a Keyword Spotting Task}
+\STANDARD{Description}
+{ 
+	This article \cite{Gimenez:2022b} discusses a comparison of two microcontroller boards, Arduino Nano 33 BLE Sense and Arduino Portenta H7, for on-device model training in a keyword spotting task. The authors use feedforward neural networks with a single hidden layer for their models. The Arduino Portenta H7 outperforms the Arduino Nano 33 BLE Sense, achieving significantly higher inference accuracy and faster training. The article highlights the potential of on-device training for resource-constrained devices, emphasizing the benefits of the Arduino Portenta H7's larger memory capacity for more complex models. 
+	
+	\bigskip
+	
+	\textbf{Limitation:} It primarily focuses on the comparison between the two microcontroller boards without discussing in depth the broader implications, challenges, or drawbacks of on-device training in a real-world scenario.
+	
+	\scriptsize{\textbf{Keywords:} Microcontroller, Arduino Nano 33 BLE Sense, Arduino Portenta H7, On-device Model Training, Keyword Spotting, Feedforward Neural Networks, On-Device Training, Resource-Constrained Devices}
+}
+
+
+\Mysection{Neural Network Exploration for Keyword Spotting on Edge Devices}
+\STANDARD{Description}
+{ 
+	This article \cite{Bushur:2023} delves into optimizing neural network architectures for keyword spotting on edge devices, which is crucial for digital assistants. Six neural network models are implemented using the Google Speech Commands dataset. The study assesses their performance based on factors like model size, memory consumption, inference latency, and accuracy. The research showcases the deployment of a DS-CNN model on both an Arduino Nano 33 BLE microcontroller board and a Digilent Nexys 4 FPGA board. These findings provide insights into choosing the right neural network and quantization method for resource-constrained edge devices, with applications beyond keyword spotting.
+	
+	\bigskip
+	
+	\textbf{Limitation:} It lacks a comprehensive discussion on the potential ethical implications and privacy concerns associated with deploying keyword spotting systems.
+	
+	\scriptsize{\textbf{Keywords:} Neural Network Architectures, Keyword Spotting, Edge Devices, Digital Assistants,  Google Speech Commands Dataset,  DS-CNN Model, Arduino Nano 33 BLE, Digilent Nexys 4 FPGA, Neural Network}
+}
+
+
+\Mysection{TinyML - Machine Learning with TensorFlow Lite on Arduino and Ultra-Low-Power Microcontrollers}
+\STANDARD{Description}
+{ 
+	This book \cite{Warden:2019} focuses on the field of Tiny Machine Learning (TinyML), which is about running machine learning models on extremely resource-constrained devices (edge computers) like Arduino and other microcontrollers. It provides insights into how to deploy TensorFlow Lite models on such platforms for various applications that require low-power and real-time processing, such as IoT devices. The book covers topics related to training, converting, and running machine learning models on these devices.
+	
+	\bigskip
+	
+	\textbf{Limitation:} One of the drawbacks of the book is that it assumes a certain level of prior knowledge and doesn't serve as an introductory resource to machine learning.
+	
+	\scriptsize{\textbf{Keywords:} Tiny Machine Learning (TinyML), Arduino, Microcontrollers, TensorFlow Lite, IoT Devices}
+}
+
+
+\Mysection{The KDD Process for Extracting Useful Knowledge from Volumes of Data}
+\STANDARD{Description}
+{ 
+	\textbf{Limitation:} This article \cite{Fayyad:1996} delves into the challenges and potential of knowledge discovery in databases (KDD) and data mining. It addresses issues like data overload, user interaction, and the extraction of valuable knowledge from massive datasets. The authors discuss the KDD process, emphasizing challenges such as overfitting, missing data, and pattern recognition. They also highlight research areas, including integration with databases and handling nonstandard and multimedia data. While acknowledging successes, the report stresses the responsibility of managing expectations and recognizes the ongoing evolution of this dynamic field.
+	
+	\bigskip
+	
+	\textbf{Limitation:} The report lacks sufficient emphasis on real-world applications, making it challenging for readers to bridge the gap between theoretical discussions and practical implementations in knowledge discovery in databases.
+	
+	\scriptsize{\textbf{Keywords:} Knowledge Discovery in Databases (KDD), Data Overload, User Interaction, Overfitting, Missing Data, Pattern Recognition, Multimedia Data}
+}
+
+
+\Mysection{Recent Advances in Convolutional Neural Networks}
+\STANDARD{Description}
+{ 
+	This article \cite{Gu:2018} offers an overview of CNNs, delving into their components and exploring advancements in layer design, activation functions, loss functions, regularization, optimization, and fast computation. Also, the paper examines the applications of CNNs across tasks such as image classification, object detection, pose estimation, text detection, and more in computer vision, speech, and natural language processing. Despite these achievements, the article highlights challenges in CNNs and outlines potential avenues for future research.
+	
+	\bigskip
+	
+	\textbf{Limitation:} Even though the title of the article is "Recent Advances in Convolutional Neural Networks," The date of the publication is 2018 and it seems to be outdated. Therefore, readers should be cautious about the timeliness of the information provided.
+	
+	\scriptsize{\textbf{Keywords:} Convolutional Neural Network (CNN), Layer Design, Activation Function, Loss Function, Regularization, Optimization, Fast Computation, Applications, Image Classification, Object Detection, Pose Estimation, Text Detection, Computer Vision, Speech, Natural Language Processing, Challenges, Future Research}
+}
+
+
+\Mysection{A Survey of Convolutional Neural Networks: Analysis, Applications, and Prospects}
+\STANDARD{Description}
+{ 
+	This review \cite{Li:2021} aims to provide a fresh perspective on CNN by introducing novel ideas and prospects. Covering not only 2-D but also 1-D and multidimensional convolutions, it delves into the network's history, various convolution types, classic and advanced models, experimental analysis, applications, and hardware implementation. The review concludes with promising directions for future CNN research.
+	
+	\bigskip
+	
+	\textbf{Limitation:} One potential negative aspect of this article is the lack of a critical examination of limitations or challenges associated with convolutional neural networks (CNNs). A more balanced approach would involve discussing potential drawbacks, challenges, or areas where CNNs may not perform optimally
+	
+	\scriptsize{\textbf{Keywords:} Convolutional Neural Network(CNN), 1-D and 2-D and Multidimensional Convolutions, History, Convolution Types, Classic and Advanced Models, Experimental Analysis, Applications, Hardware Implementation}
+}
+
+
+\Mysection{Practical Convolutional Neural Networks: Implement Advanced Deep Learning Models Using Python}
+\STANDARD{Description}
+{ 
+	A guide to cutting-edge CNN architectures for tasks like image classification, transfer learning, object detection, and Generative adversarial networks. The book \cite{Sewak:2018} includes real-world examples, explores advanced use-cases such as image captioning and reinforcement learning, and covers topics like recurrent attention models. Beginning with an overview of deep neural networks, it leads readers through building CNNs, transfer learning, and auto-encoders for powerful models with limited labeled data. The book is also filled with Python examples.
+	
+	\bigskip
+	
+	\textbf{Limitation:} The book does not sufficiently cover troubleshooting strategies, debugging techniques, or discussions on potential issues that practitioners might face when working on complex projects. 
+	
+	\scriptsize{\textbf{Keywords:} Convolutional Neural Network, Deep Learning Model, Python, Image Classification, Transfer Learning, Object Detection, Generative Adversarial Network, Image Captioning, Reinforcement Learning, Recurrent Attention Models, Deep Neural Networks, Auto-Encoders}
+}
+
+
+\Mysection{WaveNet: A Generative Model for Raw Audio}
+\STANDARD{Description}
+{ 
+	
+	This paper \cite{Oord:2016} introduces WaveNet, a deep neural network for generating high-quality audio waveforms. Despite being fully probabilistic and autoregressive, it efficiently trains on datasets with high sample rates. In text-to-speech, it outperforms parametric and concatenative systems in English and Mandarin, impressing human listeners with its natural sound. WaveNet excels at capturing diverse speaker characteristics and seamlessly switching between them. In music modeling, it produces realistic and novel musical fragments. Additionally, it serves as a discriminative model, showing promise in phoneme recognition.
+	
+	\bigskip
+	
+	\textbf{Limitation:} One potential limitation of the paper is the lack of detailed discussion or exploration of computational efficiency and real-time applications. This aspect is crucial for practical applications, such as interactive systems or live implementations, where low latency is often a critical factor. 
+	
+	\scriptsize{\textbf{Keywords:} WaveNet, Deep Neural Network, Audio Waveform, Text-to-Speech, Music Modeling, Phoneme Recognition}
+}
+
+
+\Mysection{Get Started With Machine Learning on Arduino}
+\STANDARD{Description}
+{ 
+	
+	
+	This webpage \cite{Arduino:2023} guides users through initiating machine learning on Board Arduino Nano 33 BLE Sense. It showcases the collaboration between Arduino and TensorFlow Lite Micro. The guide covers installation, running pre-trained models for speech and gesture recognition, and explores TinyML fundamentals. It emphasizes the role of microcontrollers in IoT, utilizing onboard sensors for various applications. The guide encourages hands-on experimentation, providing concise steps for capturing sensor data, training custom models, and deploying them on the Arduino board. Suitable for both beginners and experienced developers, it serves as a valuable resource in the emerging field of TinyML.
+	
+	\bigskip
+	
+	\textbf{Limitation:} This is a webpage and is not regarded as a reliable source for a scientific report.
+	
+	\scriptsize{\textbf{Keywords:} Machine Learning, Board Arduino Nano 33 BLE Sense, TensorFlow Lite Micro, Installation, Speech and Gesture Recognition, TinyML, IoT, Sensors}
+}
+
+
+\Mysection{Getting started with Arduino}
+\STANDARD{Description}
+{ 
+	
+	The book \cite{Banzi:2022} serves as an introductory guide to Arduino, covering the basics of electronics and programming using the Arduino platform. It's a popular resource for beginners who are new to the world of microcontrollers and want to learn how to create interactive projects with Arduino. The book typically covers fundamental concepts, basic projects, and provides hands-on examples to help readers get started with their own Arduino projects.
+	
+	\bigskip
+	
+	\textbf{Limitation:} One potential limitation is that it may focus more on introductory concepts and projects. As readers advance in their Arduino knowledge, they might find that the book doesn't delve deeply into more advanced topics or intricate project development. 
+	
+	\scriptsize{\textbf{Keywords:} Arduino, Electronics, Programming, Microcontrollers}
+}
+
+
+\Mysection{Python for Machine Learning}
+\STANDARD{Description}
+{ 
+	
+	The webpage \cite{Bhargav:2023} highlights Python's advantages in machine learning, emphasizing its readability, simplicity, scalability, and integration capabilities. The tutorial introduces key Python machine learning frameworks and explores alternatives like C/C++, Matlab, R, and Node.js. It concludes by emphasizing Python's suitability for coding machine learning solutions due to its simplicity, flexibility, rich library support, and an active community.
+	
+	\bigskip
+	
+	\textbf{Limitation:} This is a webpage and is not regarded as a reliable source for a scientific report.
+	
+	\scriptsize{\textbf{Keywords:} Python, Machine Learning, C/C++, Matlab, R, Node.js}
+}
+
+
+\Mysection{Anomaly Detection with Machine Learning: An Introduction}
+\STANDARD{Description}
+{ 
+	
+	This webpage \cite{Johnson:2023} introduces the role of anomaly detection in distributed software systems, emphasizing both manual and machine learning-based approaches. It explores three settings—supervised, clean, and unsupervised—based on the data condition. The article underscores the need for large datasets and skilled machine learning engineers for effective anomaly detection. It briefly touches on benchmarking and provides resources for those interested in starting with machine learning anomaly detection, making it a concise guide for individuals in this domain.
+	
+	\bigskip
+	
+	\textbf{Limitation:} This is a webpage and is not regarded as a reliable source for a scientific report.
+	
+	\scriptsize{\textbf{Keywords:} Anomaly Detection, Distributed Software Systems, Machine Learning, Supervised, Unsupervised, Benchmarking}
+}
+
+
+\Mysection{TensorFlow Lite: Real-Time Computer Vision on Edge Devices}
+\STANDARD{Description}
+{ 
+	This webpage \cite{Boesch:2021} explores TensorFlow Lite (TFLite), a toolkit by Google designed for converting and optimizing TensorFlow models for mobile and edge devices, enabling on-device machine learning. It addresses TFLite's advantages, including model conversion, low latency, user-friendliness, and offline inference. The piece outlines steps for generating TFLite models, using existing models, and creating custom ones. It emphasizes the importance of lightweight AI models for scalable computer vision solutions on edge devices and mentions Viso Suite as a platform for deploying TensorFlow Lite in real-world applications.
+	
+	\bigskip
+	
+	\textbf{Limitation:} This is a webpage and is not regarded as a reliable source for a scientific report.
+	
+	\scriptsize{\textbf{Keywords:} TensorFlow Lite, Google, Model, Mobile, On-device Machine Learning, Model Conversion, Low Latency, User-Friendliness, Offline Inference, Computer Vision, Edge Devices, Viso Suite}
+}
+
+
+\Mysection{How to Detect Outliers in Machine Learning: 4 Methods for Outlier Detection}
+\STANDARD{Description}
+{ 
+	This webpage \cite{C:2022} is a guide on detecting outliers in machine learning using methods such as standard deviation, Z-score, interquartile range (IQR), and percentiles. It emphasizes the significance of data cleaning and preprocessing in the machine learning pipeline and stresses the need for domain expertise in outlier detection. The methods are explained with practical code examples using a student scores dataset. The article concludes with best practices, cautioning against mislabeling data due to a wide distribution and advocating awareness of evolving trends and domain knowledge.
+	
+	\bigskip
+	
+	\textbf{Limitation:} This is a webpage and is not regarded as a reliable source for a scientific report.
+	
+	\scriptsize{\textbf{Keywords:} Outlier, Outlier Detection, Machine Learning, Standard Deviation, Z-score, Interquartile Range (IQR), Percentile, Data Cleaning, Preprocessing, Pipeline, Domain Expertise, Domain Knowledge, Code Examples}
+}
+
+
+\Mysection{Pro Git}
+\STANDARD{Description}
+{ 
+	The book \cite{Chacon:2014} is a comprehensive guide, offering a thorough exploration of the Git version control system. Ideal for beginners and seasoned developers, the book covers fundamental concepts, practical commands, and advanced features like branching, merging and collaboration strategies. With clear explanations and practical examples, it serves as an essential reference for mastering Git workflows in software development projects.
+	
+	\bigskip
+	
+	\textbf{Limitation:} Written in 2014, one potential limitation is that it might not always keep up with the latest updates or changes in the Git system. 
+	
+	\scriptsize{\textbf{Keywords:} Git, Version Control System, Branching, Merging, Collaboration Strategy}
+}
+
+
+\Mysection{Improving Audio Anomalies Recognition Using Temporal Convolutional  Attention Network}
+\STANDARD{Description}
+{ 
+	The article \cite{Huang:2021} introduces the Temporal Convolutional Attention Network (TCAN) as a novel approach to enhance audio anomaly recognition in speech recordings. TCAN combines temporal convolutional networks (TCN) with attention mechanisms, addressing issues like voice distortion and external noise. Evaluation on the TIMIT dataset with various audio distortions shows TCAN outperforming strong baseline methods by $3\sim10\%$. The study emphasizes the importance of classifying audio anomalies for applications in anomaly detection and audio quality improvement across industries.
+	
+	
+	\bigskip
+	
+	\textbf{Limitation:} A limitation of the article is that it does not extensively discuss potential challenges or drawbacks associated with the proposed Temporal Convolutional Attention Network (TCAN)
+	
+	\scriptsize{\textbf{Keywords:} Temporal Convolutional Attention Network (TCAN), Audio Anomaly Recognition, Speech Recordings, Temporal Convolutional Networks (TCN),  Attention Mechanisms, Voice Distortion, External Noise, TIMIT Dataset}
+}
+
+
+\Mysection{5 Anomaly Detection Algorithms to Know}
+\STANDARD{Description}
+{ 
+	This article \cite{Kumar:2023} delves into five anomaly detection algorithms—Isolation Forest, Local Outlier Factor, Robust Covariance, One-Class SVM, and One-Class SVM with SGD. The piece explores their applications and assesses their performance using visualizations, emphasizing their importance in addressing data corruption and errors. Kumar highlights their effectiveness in fraud and disease detection, especially in scenarios with imbalanced class distributions. The article concludes by underscoring the algorithms' role in improving model performance through the removal of anomalies from training samples.
+	
+	\bigskip
+	
+	\textbf{Limitation:} One limitation of the article is its brevity, as it provides only a concise overview of the discussed anomaly detection algorithms without delving deeply into their intricacies or potential challenges in real-world applications. 
+	
+	\scriptsize{\textbf{Keywords:} Anomaly Detection Algorithm, Isolation Forest, Local Outlier Factor, Robust Covariance, One-Class SVM, SGD, Applications, Data Corruption, Fraud and Disease Detection}
+}
+
+
+\Mysection{LSM9DS1 Data Sheet -- iNEMO Inertial Module: 3D Accelerometer, 3D Gyroscope, 3D Magnetometer}
+\STANDARD{Description}
+{ 
+	The LSM9DS1 is a versatile iNEMO inertial module featuring a 3D accelerometer, 3D gyroscope, and 3D magnetometer. This datasheet \cite{LSM9DS1:2015} provides essential information on its features, including multiple channels for acceleration, angular rate, and magnetic field, adjustable full-scale ranges, SPI/I2C interfaces, and power-saving modes. Applications range from indoor navigation to gaming input devices. The document covers pin descriptions, specifications, and register mappings for easy integration. 
+	
+	\bigskip
+	
+	\textbf{Limitation:} None
+	
+	\scriptsize{\textbf{Keywords:} LSM9DS1, Data Sheet, iNEMO, 3D Accelerometer, 3D Gyroscope, 3D Magnetometer, SPI/I2C Interfaces, Power-Saving Mode}
+}
+
+
+\Mysection{Tutorial: How to Calibrate a Compass (and Accelerometer) with Arduino}
+\STANDARD{Description}
+{ 
+	This webpage \cite{Mallon:2015} offers a tutorial on calibrating a compass and accelerometer with Arduino for a flow sensor. The author shares their experiences, highlighting challenges like hard-iron and soft-iron interference. They discuss calibration methods, reference external sources, and demonstrate the use of tools like Plotly, FreeIMU, and Magneto v1.2. Emphasizing the importance of calibration in the final operating environment, the tutorial concludes with insights on testing platforms, featuring the 2-Module Classroom data logger for accelerometer evaluation.
+	
+	\bigskip
+	
+	\textbf{Limitation:} One limitation of the text is its extensive technical detail, which may be overwhelming for readers with limited background knowledge in Arduino programming, sensor calibration, or related concepts. Also, this is a webpage and is not regarded as a reliable source for a scientific report.
+	
+	\scriptsize{\textbf{Keywords:} Calibrate, Compass, Accelerometer, Arduino, Flow Sensor, Hard-Iron and Soft-Iron Interference, Plotly, FreeIMU, Magneto}
+}
+
+
+\Mysection{Introduction to TinyML: What is it and Why does it Matter?}
+\STANDARD{Description}
+{ 
+	This webpage \cite{Mishra:2023} provides an introduction to TinyML, a field integrating machine learning into small hardware components. Emphasizing the need for low-power, on-device machine learning, it discusses applications and relevance, citing the Board Arduino Nano 33 BLE Sense and TensorFlow Lite for Microcontrollers as key components.
+	
+	\bigskip
+	
+	\textbf{Limitation:} The text lacks specific examples or illustrations of TinyML applications and projects, making it challenging for readers to visualize or understand practical implementations of the discussed concepts. Also, this is a webpage and is not regarded as a reliable source for a scientific report.
+	
+	\scriptsize{\textbf{Keywords:} TinyML, On-Device Machine Learning, Arduino Nano 33 BLE Sense, TensorFlow Lite for Microcontrollers}
+}
+
+
+\Mysection{Programming Arduino: Getting Started with Sketches}
+\STANDARD{Description}
+{ 
+	
+	The book \cite{Monk:2016} is a step-by-step guide for programming all Arduino models. It covers Arduino hardware basics, software setup, C language fundamentals, and practical applications such as storing data, interfacing with displays, and connecting to the Internet for IoT projects. Written for beginners, the book includes easy-to-follow explanations, fun examples, and downloadable sample programs. It also provides hands-on coverage of C++, library creation, and programming Arduino for IoT. No prior programming experience is necessary.
+	
+	\bigskip
+	
+	\textbf{Limitation:} The fast-evolving nature of technology may result in some information becoming outdated over time, requiring readers to seek supplementary resources for the latest updates in Arduino programming.
+	
+	\scriptsize{\textbf{Keywords:} Programming, Arduino, Software Setup, C Language, Storing Data, Interfacing with Displays, Internet, IoT, C++}
+}
+
+
+\Mysection{MP34DT06J: MEMS Audio Sensor Omnidirectional Digital Microphone}
+\STANDARD{Description}
+{ 
+	
+	The MP34DT06J datasheet \cite{MP34DT06J:2021} is a concise technical document detailing the features and specifications of an ultra-compact digital MEMS microphone. It includes information on acoustic and electrical characteristics, timing, frequency response, and application recommendations. The microphone features a capacitive sensing element and an IC interface, providing omnidirectional sensitivity with low distortion. The datasheet serves as a valuable resource for engineers, designers, and users seeking to understand the microphone's capabilities and application guidelines.
+	
+	\bigskip
+	
+	\textbf{Limitation:} None
+	
+	\scriptsize{\textbf{Keywords:} MP34DT06J, MEMS Microphone, Acoustic Characteristics, Electrical Characteristics, Timing, Frequency Response, Application}
+}
+
+
+\Mysection{Outliers in Machine Learning}
+\STANDARD{Description}
+{ 
+	
+	This webpage \cite{Nichani:2020} explores outliers in machine learning, defining them as abnormal observations affecting model accuracy. It covers reasons for their occurrence, detection methods (visualization, z-score, clustering), and emphasizes the importance of treating outliers to avoid skewed results. The webpage offers concise insights into understanding and addressing outliers in machine learning datasets.
+	
+	\bigskip
+	
+	\textbf{Limitation:} This is a webpage and is not regarded as a reliable source for a scientific report.
+	
+	\scriptsize{\textbf{Keywords:} Outliers, Machine Learning, Detection Methods, Visualization, X-score, Clustering}
+}
+
+
+\Mysection{The Ultimate Guide To Speech Recognition With Python}
+\STANDARD{Description}
+{ 
+	This webpage \cite{Amos:2018} is a comprehensive guide on integrating speech recognition into Python projects. Covering the basics, it explores Python packages, especially focusing on the practical use of SpeechRecognition. The tutorial provides step-by-step instructions for installation, working with audio files, handling noise, and includes a fun example—a "Guess the Word" game. Whether for beginners or experienced developers, the guide simplifies the process of adding speech recognition capabilities to Python applications.
+	
+	\bigskip
+	
+	\textbf{Limitation:} One limitation of the text is its extensive focus on the SpeechRecognition package, potentially overlooking other available speech recognition solutions and limiting the exploration of alternative tools or techniques.
+	
+	\scriptsize{\textbf{Keywords:} Speech Recognition, Python, SpeechRecognition Package, Installation, Noise}
+}
+
+
+\Mysection{Arduino Nano 33 {BLE} Sense Review - What's New and How to Get Started?}
+\STANDARD{Description}
+{ 
+	The webpage \cite{Raj:2019} is a review of the Board Arduino Nano 33 BLE Sense. The board is highlighted for its advanced features, including built-in sensors such as accelerometer, gyroscope, and more. The review covers hardware details, technical specifications, and software improvements with support for ARM Mbed OS. It concludes with instructions for setting up the Arduino IDE and provides a sample code for reading sensor data. The author expresses the intention to explore projects using the board's sensors and Bluetooth Low Energy capabilities.
+	
+	\bigskip
+	
+	\textbf{Limitation:} 
+	
+	\scriptsize{\textbf{Keywords:} Board Arduino Nano 33 BLE Sense, Built-In Sensors, Accelerometer, Gyroscope, Hardware, Software, ARM Mbed OS, Arduino IDE, Bluetooth}
+}
+
+
+\Mysection{What is TinyML, and Why does it Matter?}
+\STANDARD{Description}
+{ 
+	The webpage \cite{Ribeiro:2020} explores Tiny Machine Learning (TinyML), a technique for deploying optimized machine learning applications on low-energy systems. TinyML enables on-device analytics at the edge of the cloud, with potential widespread adoption in smart Internet of Things (IoT) devices. The piece highlights economic forecasts and introduces tools like TensorFlow Lite for TinyML implementation, concluding with recommendations for resources and anticipating the transformative impact of TinyML on various IoT devices, envisioning widespread integration of intelligent functionalities.
+	
+	\bigskip
+	
+	\textbf{Limitation:} One limitation of the text is that it lacks specific examples or case studies to illustrate real-world applications of TinyML. 
+	
+	\scriptsize{\textbf{Keywords:} TinyML, Low-energy Systems, On-Device Analytics, Edge of the Cloud, Internet of Things (IoT), TensorFlow Lite}
+}
+
+
+\Mysection{Implementation Of Tiny Machine Learning Models On Arduino 33 BLE For Gesture And Speech Recognition}
+\STANDARD{Description}
+{ 
+	This article \cite{Viswanatha:2022} explores the implementation of Tiny Machine Learning (TinyML) on Board Arduino 33 BLE Sense for gesture and speech recognition. Using EdgeImpulse and Arduino Nano 33 BLE Sense, the author demonstrates creating models that recognize hand movements and control an RGB LED based on spoken keywords. The benefits of TinyML, such as portability and low power consumption, are highlighted. The article provides a concise overview of the design approach, methodology, tools, and hardware, showcasing successful applications in human-computer interaction.
+	
+	\bigskip
+	
+	\textbf{Limitation:} The article lacks a critical examination of potential challenges or limitations associated with the implementation of Tiny Machine Learning (TinyML) on Arduino 33 BLE. 
+	
+	\scriptsize{\textbf{Keywords:} TinyML, Board Arduino 33 BLE Sense, Gesture and Speech Recognition, EdgeImpulse, RGB LED, Benefits, Design, Methodology, Tools, Hardware}
+}
+
+
+\Mysection{Hands-On Machine Learning with Scikit-Learn, Keras, and TensorFlow}
+\STANDARD{Description}
+{ 
+	Discover the power of deep learning in machine learning through practical examples using Scikit-Learn, Keras, and TensorFlow. In this concise guide \cite{Geron:2022}, Aurélien Géron simplifies complex concepts, from linear regression to deep neural networks, making it accessible even for those with minimal programming experience. Learn to track machine-learning projects with Scikit-Learn, leverage TensorFlow for neural network development, and explore various models and architectures, including support vector machines and convolutional nets. With exercises in each chapter, gain hands-on experience in training and scaling deep neural networks.
+	
+	\bigskip
+	
+	\textbf{Limitation:} One limitation of this book is that it may become quickly outdated in the near future due to the rapid evolution of machine learning technologies. 
+	
+	\scriptsize{\textbf{Keywords:} Deep Learning, Machine Learning, Scikit-Learn, Keras, TensorFlow, Linear Regression, Deep Neural Networks, Support Vector Machine}
+}
+
+
+\Mysection{Inference Speed and Quantisation of Neural Networks with TensorFlow Lite for Microcontrollers Framework}
+\STANDARD{Description}
+{ 
+	This article \cite{Dokic:2020} investigates the inference speed and quantization of neural networks using the TensorFlow Lite for Microcontrollers framework, focusing on the Arduino Nano 33 BLE Sense microcontroller. Microcontrollers' increased power has led to their use in machine learning projects. The study analyzes fully connected neural networks with varying neuron numbers, aiming for a fourfold reduction in model size through quantization. The paper discusses the evolution of microcontrollers over almost fifty years and the recent revolution in implementing machine learning on these devices. Sections cover related work, materials/methods, testing/results, and a discussion of implications and conclusions.
+	
+	\bigskip
+	
+	\textbf{Limitation:} One limitation of this article is that it primarily focuses on a single microcontroller model.
+	
+	\scriptsize{\textbf{Keywords:} Inference Speed, Quantization, Neural Networks, TensorFlow Lite for Microcontrollers, Arduino Nano 33 BLE Sense, Machine Learning, Fully Connected Neural Networks, Implications}
+}
