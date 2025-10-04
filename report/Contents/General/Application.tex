@@ -1,13 +1,158 @@
-%%%
+%%%%%%%%%%%%%%%%%%%%%%%%
 %
-% $Autor: Wings $
-% $Date: 2024-10-31 11:15:45Z $
-% $File: file.tex $
+% $Autor: Gautam Ramesh$
+% $Datum: 2025-10-04 10:19:20Z $
+% $Pfad: /Users/gautamramesh/Documents/githubNew/ML26-03-Car-Licence-Plate-Identification-with-a-Jetson-Nano/report/Contents/General/Application.tex $
 % $Version: 1 $
 %
-% Project: 
+% !TeX encoding = utf8
+% !TeX root = Rename
 %
-%%%
+%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-\chapter{\textcolor{red}{Application}}
+
+
+% Application.tex
+\chapter{Application Domain Knowledge}
+
+%=== Domain Knowledge: Application (ANPR on Jetson Nano) ======================
+\section{Part Domain Knowledge — Application}
+\label{sec:domain-knowledge-application}
+
+\noindent\textbf{Context.}
+We deploy \emph{Automatic Number Plate Recognition (ANPR)} on an embedded edge device (NVIDIA Jetson Nano B01 + USB UVC camera) to detect plates with a real-time object detector and read text via OCR. Typical use cases include barrierless parking, campus access control, and vehicle audit trails where on-device inference reduces latency and preserves data sovereignty \cite{nvidiaJetsonNano, anprSurvey, yolov5, easyocr, edgePrivacy}.
+
+%----------------------------- High-level Application Table -------------------
+\begin{table}[H]
+	\centering
+	\caption{Domain checklist for edge ANPR (what matters and why)}
+	\label{tab:domain-checklist}
+	\begin{tabular}{p{3.3cm} p{10.5cm}}
+		\toprule
+		\textbf{Dimension} & \textbf{What it means for our project} \\
+		\midrule
+		Application & Barrierless entry/exit and logging on a closed site; on-device inference: low latency, no WAN dependence, and lower privacy risk \cite{edgePrivacy}. \\
+		Problem & Detect EU/German plates in unconstrained scenes (day/night, rain, glare), crop plates robustly, OCR the text, and attach policy (e.g., whitelist/exception) in near real time. \\
+		Data acquisition & We use a UVC USB camera (Microsoft LifeCam Show) mounted at \SI{2.0}{m}–\SI{3.0}{m} height; focal direction tuned to capture rear/front plates at \SI{3}{m}–\SI{8}{m}. Optional synthetic augmentation fills rare cases \cite{dataAug}. \\
+		Data quantity & For robust training/fine-tuning: \(\sim\)5–10k annotated plate instances for detection; \(\sim\)100–300 samples per frequent character trigram for OCR calibration; continuous logging for evaluation. \\
+		Data quality & Sharp plates with plate height \(\ge\) 40–50 px in the crop, minimal motion blur (\(<\)1 px PSF), correct exposure (\(\le\)1\% saturated pixels in plate region). \\
+		Data relevance & German/EU plate layout (DE/EU bands, DIN 1451/FE-Schrift) and local fonts dominate; include neighboring countries’ layouts for transferability \cite{anprSurvey, ocrSurvey}. \\
+		Outliers & Novel vanity formats, dirty/damaged plates, temporary paper plates, tow hooks occluding characters, non-plate rectangular signs triggering false positives. \\
+		Anomalies & Spoofed/fake plates, adversarial stickers, reflections producing duplicated contours, multi-plate scenes (car + bike rack), frames with no vehicle but high-contrast text. \\
+		\bottomrule
+	\end{tabular}
+\end{table}
+
+%----------------------------- Problem Definition -----------------------------
+\subsection{Problem}
+Given a live RGB stream, output tuples \(\langle\)timestamp, plate\_id, bbox, confidences, plate\_text, policy\(\rangle\) with end-to-end latency \(\le\) \SI{200}{ms} at \(\ge\) \SI{15}{fps}. The system must be robust to weather (rain, snow), illumination (night, headlight glare), and pose (yaw/pitch) typical for driveway/parking entrances \cite{anprSurvey}.
+
+%----------------------------- Data Acquisition -------------------------------
+\subsection{Data Acquisition (Camera and Setup)}
+\textbf{Camera:} Microsoft LifeCam Show, UVC USB 2.0, 2\,MP sensor. Operated at 640\(\times\)480 or 1280\(\times\)720 for stable fps on Nano.
+\textbf{Mounting:} Rigid pole/wall, angle $10^\circ$–$25^\circ$ downward; avoid facing bright road signs. 
+\textbf{Exposure:} Lock exposure/white balance where possible to reduce inter-frame variance; enable short shutter and higher gain at night to reduce motion blur.
+\textbf{Ingestion:} V4L2/GStreamer to NVMM (zero-copy) where possible to keep GPU busy \cite{nvidiaJetsonNano}.
+
+%----------------------------- Data Quantity ----------------------------------
+\subsection{Data Quantity}
+\begin{itemize}[leftmargin=1.1em]
+	\item \textbf{Detection:} At least 5k diverse plate instances for fine-tuning (angles, distances, weather, day/night).
+	\item \textbf{OCR:} Balancing samples across characters and common bigrams/trigrams (e.g., \texttt{AA}, \texttt{ER}, \texttt{MÜ}) to reduce bias \cite{ocrSurvey}.
+	\item \textbf{Evaluation:} 10–20\% held-out sequences per condition (day, night, rain) and at least 1 week of continuous logs for drift checks.
+\end{itemize}
+
+%----------------------------- Data Quality -----------------------------------
+\subsection{Data Quality}
+Quality gates before training/inference:
+\begin{enumerate}[leftmargin=1.1em]
+	\item \textbf{Sharpness}: Laplacian variance \(>\) threshold; reject blurred frames.
+	\item \textbf{Brightness}: Mean plate ROI within [0.2, 0.8] (normalized); cap highlights.
+	\item \textbf{Plate Size}: Minimum plate height in frame and in crop; upscale only within 1.5\(\times\) to limit artifacts.
+	\item \textbf{Label Consistency}: IoU agreement \(>\)0.5 across annotators for detection; OCR string validator (regex for country format).
+\end{enumerate}
+
+%----------------------------- Relevance --------------------------------------
+\subsection{Data Relevance (Formats \& Policies)}
+German/EU plates follow regulated layouts (country band, district code, letters–digits, inspection badge positions). We encode format-aware validators and country-specific regex to improve OCR post-processing and reduce false accepts \cite{anprSurvey, euPlateStd}.
+
+%----------------------------- Outliers & Anomalies ---------------------------
+\subsection{Outliers and Anomalies Handling}
+\begin{table}[H]
+	\centering
+	\caption{Operational outliers/anomalies and mitigations}
+	\label{tab:outliers}
+	\begin{tabular}{p{3.6cm} p{10.2cm}}
+		\toprule
+		\textbf{Case} & \textbf{Mitigation} \\
+		\midrule
+		Dirty/damaged plates & Multi-crop super-resolution fallback; OCR with CTC and edit-distance voting; allow 1–2 char wildcard for whitelist hit. \\
+		Headlight glare/night & HDR exposure bracket or temporal fusion; polarized shield; train with synthetic flare/glare. \\
+		Non-plate text & Two-stage filtering: YOLO plate class \(\rightarrow\) geometry/AR check \(\rightarrow\) OCR; reject crops with invalid layout. \\
+		Fake/spoofed plates & Cross-check checksum-like constraints and blacklist patterns; temporal consistency across frames; optional backend verification. \\
+		Multiple plates & Track-by-detection; associate crops to tracks; per-track OCR majority vote to stabilize. \\
+		\bottomrule
+	\end{tabular}
+\end{table}
+
+%----------------------------- Data Sources & Licensing -----------------------
+\subsection{Data Sources \& Licensing}
+\begin{table}[H]
+	\centering
+	\caption{Typical data sources and legal considerations (fill concrete sources you use)}
+	\label{tab:data-sources}
+	\begin{tabular}{p{3.6cm} p{6.6cm} p{3.6cm}}
+		\toprule
+		\textbf{Source} & \textbf{Use} & \textbf{Notes} \\
+		\midrule
+		Public ANPR datasets & Detector/OCR benchmarking & Check license; ensure EU plate coverage \cite{anprDataset}. \\
+		Own site recordings & Fine-tuning, domain fit & Obtain signage/consent; keep retention short; hash plates at rest \cite{gdpr}. \\
+		Synthetic generation & Rare cases, augmentations & Vary font/spacing, weather, motion blur; helpful for low-resource layouts \cite{dataAug}. \\
+		\bottomrule
+	\end{tabular}
+\end{table}
+
+%----------------------------- TikZ Pipeline ----------------------------------
+\subsection{Edge Inference Pipeline (TikZ)}
+\begin{figure}[H]
+	\centering
+	\begin{tikzpicture}[
+		node distance=9mm,
+		box/.style={rectangle, rounded corners, draw, minimum width=24mm, minimum height=7mm, align=center},
+		arr/.style={-Stealth, thick}
+		]
+		\node[box] (cam) {UVC Camera\\(LifeCam Show)};
+		\node[box, right=of cam] (ing) {V4L2 / GStreamer\\(NVMM)};
+		\node[box, right=of ing] (prep) {Preprocess\\(resize, norm)};
+		\node[box, right=of prep] (det) {YOLO Plate\\Detection \cite{yolov5}};
+		\node[box, right=of det] (crop) {Plate Crop(s)};
+		\node[box, right=of crop] (ocr) {OCR (EasyOCR/CRNN) \cite{easyocr, ocrSurvey}};
+		\node[box, below=12mm of ocr] (post) {Postproc\\(regex, votes)};
+		\node[box, left=of post] (db) {SQLite DB\\(whitelist, logs)};
+		\node[box, right=of post] (act) {Action\\(gate, alert)};
+		
+		\draw[arr] (cam) -- (ing);
+		\draw[arr] (ing) -- (prep);
+		\draw[arr] (prep) -- (det);
+		\draw[arr] (det) -- (crop);
+		\draw[arr] (crop) -- (ocr);
+		\draw[arr] (ocr) -- (post);
+		\draw[arr] (post) -- (act);
+		\draw[arr] (post) -- (db);
+	\end{tikzpicture}
+	\caption{On-device ANPR pipeline on Jetson Nano.}
+	\label{fig:tikz-pipeline}
+\end{figure}
+
+%----------------------------- Notes on Privacy -------------------------------
+\subsection{Privacy and Policy Notes (GDPR-aware)}
+Perform on-device inference; store only hashed plate strings plus salted last-4 preview where policy allows; enforce minimal retention and role-based access; display site signage and document purpose/legitimate interest \cite{gdpr, edgePrivacy}.
+
+%----------------------------- What we will measure ---------------------------
+\subsection{Operational KPIs}
+\begin{itemize}[leftmargin=1.1em]
+	\item Detection AP\(_{50}\) on held-out day/night; OCR CER/WER on plate crops.
+	\item End-to-end latency (camera \(\rightarrow\) decision), fps stability over \SI{30}{min}.
+	\item False accept / false reject on whitelist; drift rate vs. weather/time-of-day.
+\end{itemize}

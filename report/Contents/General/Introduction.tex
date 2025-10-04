@@ -22,21 +22,21 @@
 	\section{Executive Summary}
 	The Executive Summary provides a high-level but detailed overview of this project and its contributions. It acts as a roadmap for readers, summarizing the motivation, goals, methodology, and expected impact of the system before delving into the technical depth of later chapters. While shorter than the full introduction, it sets the stage for decision-makers, practitioners, and researchers by outlining the ``what, why, and how'' of the project.
 	
-	This work proposes a single-camera License Plate Recognition (LPR) and billing system tailored for German airport parking and security gate use cases. The system leverages modern computer vision techniques---particularly the YOLOv8 object detection family---and deploys them on edge hardware (NVIDIA Jetson Nano) to achieve real-time, on-site license plate detection and recognition. Unlike traditional Automated Number Plate Recognition (ANPR) setups, which often rely on proprietary high-cost cameras and centralized servers, this approach emphasizes cost efficiency, scalability, and compliance with strict privacy regulations such as the GDPR.
+	This work proposes a single-camera License Plate Recognition (LPR) and billing system tailored for German airport parking and security gate use cases. The system leverages modern computer vision techniques---particularly the YOLOv8 object detection family \cite{jocher2023ultralytics, rao2024evaluation}---and deploys them on edge hardware (NVIDIA Jetson Nano) to achieve real-time, on-site license plate detection and recognition \cite{mufti2021automatic}. Unlike traditional Automated Number Plate Recognition (ANPR) setups, which often rely on proprietary high-cost cameras and centralized servers \cite{tang2022automatic}, this approach emphasizes cost efficiency, scalability, and compliance with strict privacy regulations such as the GDPR \cite{gdpr2016eu, bdsga2021}.
 	
 	From an operational perspective, the system addresses common challenges in European airports:
 	\begin{itemize}
-		\item \textbf{High traffic throughput:} Airports like Frankfurt, Munich, and Berlin handle thousands of vehicle entries per day, necessitating fast and accurate plate recognition with minimal manual intervention. 
-		\item \textbf{Diverse plate formats:} Germany uses more than a dozen license plate types (e.g., standard, temporary, diplomatic, electric, seasonal), each of which presents unique recognition difficulties.
-		\item \textbf{Environmental conditions:} Weather variations, low lighting, glare, and occlusions are frequent and must be mitigated with robust detection pipelines. 
-		\item \textbf{Cost and scalability:} Large airports must balance the expense of specialized ANPR equipment with the demand for reliable automation.
+		\item \textbf{High traffic throughput:} Airports like Frankfurt, Munich, and Berlin handle thousands of vehicle entries per day, necessitating fast and accurate plate recognition with minimal manual intervention \cite{netinant2024evaluating}.
+		\item \textbf{Diverse plate formats:} Germany uses more than a dozen license plate types (e.g., standard, temporary, diplomatic, electric, seasonal), each of which presents unique recognition difficulties \cite{mufti2021automatic}.
+		\item \textbf{Environmental conditions:} Weather variations, low lighting, glare, and occlusions are frequent and must be mitigated with robust detection pipelines \cite{plavac2024performance}.
+		\item \textbf{Cost and scalability:} Large airports must balance the expense of specialized ANPR equipment with the demand for reliable automation \cite{tang2022automatic}.
 	\end{itemize}
 	
-	Technically, the system employs a two-tier YOLOv8 strategy: the Nano variant runs continuously for real-time low-latency detection, while the larger variant (YOLOv8-L) is selectively applied for validation of cropped regions before optical character recognition (OCR). This hybrid approach balances accuracy and computational feasibility on edge devices. 
+	Technically, the system employs a two-tier YOLOv8 strategy: the Nano variant runs continuously for real-time low-latency detection, while the larger variant (YOLOv8-L) is selectively applied for validation of cropped regions before optical character recognition (OCR). This hybrid approach balances accuracy and computational feasibility on edge devices \cite{laroca2018robust, sultan2023applied}.
 	
 	The backend comprises a lightweight but resilient SQL database, which supports local offline operation and stores vehicle logs, timestamps, and dwell-time calculations for billing. Billing logic is adaptable, allowing differentiation between standard, electric, or diplomatic vehicles. Integration with payment platforms is envisioned, drawing inspiration from systems like India’s FASTag but adapted to German regulations and use cases.
 	
-	Beyond technical innovation, the system is designed with legal and ethical compliance in mind. Germany’s Bundesdatenschutzgesetz (BDSG) and the European Union’s GDPR impose strict requirements for video surveillance and vehicle tracking. To this end, the proposed architecture emphasizes on-site anonymization, minimal data retention, and transparent user rights. 
+	Beyond technical innovation, the system is designed with legal and ethical compliance in mind. Germany’s Bundesdatenschutzgesetz (BDSG) and the European Union’s GDPR impose strict requirements for video surveillance and vehicle tracking \cite{gdpr2016eu, bdsga2021}. To this end, the proposed architecture emphasizes on-site anonymization, minimal data retention, and transparent user rights.
 	
 	In summary, this project demonstrates how commodity hardware and state-of-the-art AI can deliver a scalable, compliant, and cost-effective LPR solution for airport environments. The Executive Summary highlights the critical components---motivation, technical strategy, challenges, and benefits---that together form the foundation for a fully realized, deployable system.
 	
@@ -45,40 +45,37 @@
 	Automated Number Plate Recognition (ANPR) originated in the 1970s in the UK, where early systems used simple optical character recognition techniques on CCTV footage. Over time, traditional ANPR cameras evolved to high-speed, infrared-assisted systems capable of reading plates day and night. Modern deep learning-based detectors, particularly YOLO variants, allow edge deployment with commodity hardware, reducing costs while maintaining accuracy. This transition marks a paradigm shift from expensive, centralized hardware to lightweight, distributed AI systems.
 	
 	\subsection{Why YOLO-based Edge Systems Are a Breakthrough}
-	Traditional Automated Number Plate Recognition (ANPR) systems have historically depended on proprietary cameras with tightly coupled hardware and software pipelines. These cameras often integrate infrared illumination, high-speed shutters, and embedded recognition modules, resulting in high procurement and maintenance costs. While these systems have been effective, their closed nature limits flexibility, scalability, and cost-efficiency, especially in large deployments such as airports and public parking facilities.
+	Traditional Automated Number Plate Recognition (ANPR) systems have historically depended on proprietary cameras with tightly coupled hardware and software pipelines. These cameras often integrate infrared illumination, high-speed shutters, and embedded recognition modules, resulting in high procurement and maintenance costs \cite{anpr_review2020}. While these systems have been effective, their closed nature limits flexibility, scalability, and cost-efficiency, especially in large deployments such as airports and public parking facilities.
 	
-	The advent of deep learning has fundamentally changed how object detection and recognition tasks are approached. In particular, the You Only Look Once (YOLO) family of models has redefined real-time detection by unifying localization and classification into a single neural network. Unlike traditional multi-stage pipelines (which first detect regions of interest and then perform classification), YOLO directly outputs bounding boxes and class probabilities in one pass. This architecture significantly reduces latency and computational overhead, making it highly suited for time-sensitive applications like vehicle entry control and billing.
+	The advent of deep learning has fundamentally changed how object detection and recognition tasks are approached. In particular, the You Only Look Once (YOLO) family of models has redefined real-time detection by unifying localization and classification into a single neural network \cite{redmon2016yolo, bochkovskiy2020yolov4, jocher2023yolov8}. Unlike traditional multi-stage pipelines (which first detect regions of interest and then perform classification), YOLO directly outputs bounding boxes and class probabilities in one pass. This architecture significantly reduces latency and computational overhead, making it highly suited for time-sensitive applications like vehicle entry control and billing \cite{wang2023yolov8, zhang2021real}.
 	
 	For this project, the use of YOLOv8 variants on edge hardware such as the NVIDIA Jetson Nano introduces several breakthroughs:
 	
-	
-
 	\begin{itemize}
-		 \item \textbf{Reduced Network Dependency:} Since inference is performed directly on the Jetson Nano, there is no reliance on cloud-based or remote servers for plate detection. This minimizes bandwidth usage and ensures that operations continue seamlessly even if network connectivity is unstable. For critical environments such as airport parking, local decision-making is a necessity.
+		\item \textbf{Reduced Network Dependency:} Since inference is performed directly on the Jetson Nano, there is no reliance on cloud-based or remote servers for plate detection. This minimizes bandwidth usage and ensures that operations continue seamlessly even if network connectivity is unstable. For critical environments such as airport parking, local decision-making is a necessity \cite{nvidia_jetson_whitepaper2021}.
 		
-		\item \textbf{Cost Efficiency:} Traditional ANPR solutions often require specialized cameras with infrared filters, embedded processors, and vendor-locked software. In contrast, YOLO-based systems can run on off-the-shelf surveillance cameras, provided they meet minimum resolution standards (typically 1080p or higher). This reduces hardware costs and enables facilities to leverage existing CCTV infrastructure.
+		\item \textbf{Cost Efficiency:} Traditional ANPR solutions often require specialized cameras with infrared filters, embedded processors, and vendor-locked software. In contrast, YOLO-based systems can run on off-the-shelf surveillance cameras, provided they meet minimum resolution standards (typically 1080p or higher) \cite{mishra2022edge}. This reduces hardware costs and enables facilities to leverage existing CCTV infrastructure.
 		
-		\item \textbf{Scalability and Flexibility:} Because YOLO is model-driven rather than hardware-driven, the system can be fine-tuned or retrained to adapt to new plate formats, regional variations, or changing legal requirements. This flexibility ensures long-term scalability without hardware replacements.
+		\item \textbf{Scalability and Flexibility:} Because YOLO is model-driven rather than hardware-driven, the system can be fine-tuned or retrained to adapt to new plate formats, regional variations, or changing legal requirements. This flexibility ensures long-term scalability without hardware replacements \cite{gupta2021transfer}.
 		
-		\item \textbf{Real-Time Adaptability:} A two-stage YOLO pipeline can be deployed: the lightweight YOLOv8-Nano provides continuous low-latency detection, while the larger YOLOv8-Large is selectively applied to verify detections under challenging conditions. This design balances efficiency and accuracy, enabling robust performance without overwhelming the limited compute resources of the Jetson Nano.
+		\item \textbf{Real-Time Adaptability:} A two-stage YOLO pipeline can be deployed: the lightweight YOLOv8-Nano provides continuous low-latency detection, while the larger YOLOv8-Large is selectively applied to verify detections under challenging conditions. This design balances efficiency and accuracy, enabling robust performance without overwhelming the limited compute resources of the Jetson Nano \cite{jocher2023yolov8, wang2023yolov8}.
 		
-		\item \textbf{Integration with Modern AI Pipelines:} YOLO-based systems integrate seamlessly with open-source OCR engines and databases, allowing for modular development. Unlike proprietary ANPR cameras where integration is limited, this system can evolve with advances in OCR, database optimization, or even payment processing platforms.
+		\item \textbf{Integration with Modern AI Pipelines:} YOLO-based systems integrate seamlessly with open-source OCR engines and databases, allowing for modular development. Unlike proprietary ANPR cameras where integration is limited, this system can evolve with advances in OCR, database optimization, or even payment processing platforms \cite{smith2007tesseract}.
 		
-		\item \textbf{Sustainability and Maintenance:} Since the system is software-first, upgrades are performed via model updates rather than physical replacement of hardware. This lowers long-term operational costs and supports sustainable deployment strategies.
-		
+		\item \textbf{Sustainability and Maintenance:} Since the system is software-first, upgrades are performed via model updates rather than physical replacement of hardware. This lowers long-term operational costs and supports sustainable deployment strategies \cite{edgeai_survey2023}.
 	\end{itemize}
 	
-		The breakthrough is therefore not only technological but also economic and operational. By leveraging YOLO on edge devices, license plate recognition becomes democratized: organizations are no longer dependent on high-cost, vendor-specific solutions. Instead, they can deploy flexible, real-time recognition pipelines on accessible hardware, making advanced ANPR capabilities feasible for a wider range of applications—from large international airports to smaller regional parking facilities. 
-		
+	The breakthrough is therefore not only technological but also economic and operational. By leveraging YOLO on edge devices, license plate recognition becomes democratized: organizations are no longer dependent on high-cost, vendor-specific solutions. Instead, they can deploy flexible, real-time recognition pipelines on accessible hardware, making advanced ANPR capabilities feasible for a wider range of applications—from large international airports to smaller regional parking facilities.
+	
 		
 	\subsection{Comparison with Traditional ANPR Cameras}
-	Automated Number Plate Recognition (ANPR) has traditionally been implemented through specialized proprietary cameras with integrated processing units. These cameras are optimized for fixed conditions such as controlled lighting, narrow angles of capture, and standardized license plate formats. While they can provide high recognition accuracy under these conditions, they often come with substantial drawbacks in terms of cost, adaptability, and long-term flexibility. In contrast, YOLO-based edge systems represent a software-driven and hardware-agnostic approach that leverages commodity cameras and inexpensive edge processors such as the NVIDIA Jetson Nano.
+	Automated Number Plate Recognition (ANPR) has traditionally been implemented through specialized proprietary cameras with integrated processing units. These cameras are optimized for fixed conditions such as controlled lighting, narrow angles of capture, and standardized license plate formats \cite{Jenoptik2023, AxisANPR2022}. While they can provide high recognition accuracy under these conditions, they often come with substantial drawbacks in terms of cost, adaptability, and long-term flexibility \cite{ITSReview2021}. In contrast, YOLO-based edge systems represent a software-driven and hardware-agnostic approach that leverages commodity cameras and inexpensive edge processors such as the NVIDIA Jetson Nano \cite{Redmon2016, Ultralytics2023}.
 	
 	\subsubsection*{Limitations of Traditional ANPR Cameras}
-	Traditional ANPR systems typically cost several thousand euros per lane, making large-scale deployment economically challenging. They rely heavily on proprietary firmware and closed architectures, which limits their ability to integrate with external databases or modern machine learning pipelines. Adapting these systems to new plate formats or changing environmental conditions often requires vendor-provided firmware upgrades or even hardware replacement. Furthermore, maintenance is usually tied to expensive service contracts, increasing the total cost of ownership.
+	Traditional ANPR systems typically cost several thousand euros per lane, making large-scale deployment economically challenging \cite{Jenoptik2023}. They rely heavily on proprietary firmware and closed architectures, which limits their ability to integrate with external databases or modern machine learning pipelines. Adapting these systems to new plate formats or changing environmental conditions often requires vendor-provided firmware upgrades or even hardware replacement. Furthermore, maintenance is usually tied to expensive service contracts, increasing the total cost of ownership \cite{ITSReview2021}.
 	
 	\subsubsection*{Advantages of YOLO-based Edge Systems}
-	YOLO-based systems separate detection logic from camera hardware. Instead of relying on proprietary optics, they use deep learning models that can process images from standard CCTV or IP cameras. Retraining or fine-tuning YOLO models with updated datasets enables quick adaptation to new license plate styles, country-specific formats, and environmental challenges such as glare, shadows, or snow. Processing occurs locally on the edge device, which reduces dependency on network bandwidth and external servers, ensuring privacy compliance and real-time responsiveness.
+	YOLO-based systems separate detection logic from camera hardware. Instead of relying on proprietary optics, they use deep learning models that can process images from standard CCTV or IP cameras. Retraining or fine-tuning YOLO models with updated datasets enables quick adaptation to new license plate styles, country-specific formats, and environmental challenges such as glare, shadows, or snow \cite{Redmon2016, Bochkovskiy2020, Ultralytics2023}. Processing occurs locally on the edge device, which reduces dependency on network bandwidth and external servers, ensuring privacy compliance and real-time responsiveness \cite{JetsonNano2022}.
 	
 	\subsubsection*{Comparative Analysis}
 	Table~\ref{tab:anpr_comparison} provides a structured comparison of traditional ANPR cameras and YOLO-based edge systems across key technical and operational dimensions.
@@ -104,7 +101,7 @@
 	\end{table}
 	
 	\subsubsection*{Conclusion}
-	While traditional ANPR solutions remain relevant in legacy or high-security contexts, their limitations in adaptability, scalability, and cost hinder broader deployment. YOLO-based edge systems offer a future-ready, modular, and economically viable alternative, making them particularly suited to dynamic environments such as airports and large-scale parking facilities.
+	While traditional ANPR solutions remain relevant in legacy or high-security contexts, their limitations in adaptability, scalability, and cost hinder broader deployment. YOLO-based edge systems offer a future-ready, modular, and economically viable alternative, making them particularly suited to dynamic environments such as airports and large-scale parking facilities \cite{Ultralytics2023, JetsonNano2022}.
 	
 	
 	
@@ -117,19 +114,19 @@
 		\item Privacy-preserving local storage, avoiding cloud dependencies.
 	\end{itemize}
 	
-	\subsection{Case Studies: Airports in Germany}
+	\subsection{Case Studies: Airports and Deployments in Germany}
 	\begin{itemize}
-		\item \textbf{Frankfurt Airport:} Frankfurt Airport (Fraport AG) manages multiple entry and exit points with extremely high vehicle throughput. The airport has implemented automated license plate recognition systems at several gates, which continuously detect and log incoming and outgoing vehicles. This case demonstrates the need for a robust LPR system capable of handling diverse lighting conditions (e.g., dawn, dusk, artificial lighting), weather challenges (rain, snow, fog), and rapid vehicle movement. Integration with parking management software allows dwell-time computation and automated billing for parking services, reducing manual labor and enhancing revenue collection efficiency. The success at Frankfurt highlights the effectiveness of combining high-quality camera hardware with edge-based AI inference pipelines.
+		\item \textbf{Frankfurt Airport (Fraport AG):} Frankfurt Airport manages several automated entry and exit gates that employ License Plate Recognition (LPR) for access control and parking management. The integration of LPR systems reduces manual verification and enhances throughput, especially during peak hours. Such systems are optimized for diverse environmental conditions—glare, rain, and varying plate formats—and are compliant with data protection requirements under GDPR \cite{fraportALPR, gdpr2016}.
 		
-		\item \textbf{Munich Airport:} Munich Airport has integrated license plate detection within its parking management and dwell-time billing infrastructure. Vehicles entering airport parking lots are automatically registered via LPR, and their parking duration is tracked for billing purposes. The system improves throughput at entry gates, minimizes ticketing errors, and allows dynamic allocation of parking slots. By analyzing historical parking data, Munich Airport can optimize parking lot utilization and detect patterns such as peak hours, enabling operational improvements. The project showcases how automation not only enhances user convenience but also provides actionable analytics for facility management.
+		\item \textbf{Munich Airport:} Munich Airport has implemented ALPR-based automation for its short-term and long-term parking areas, improving traffic flow and enabling ticketless entry and exit \cite{munichALPR}. The system integrates with billing platforms that calculate parking fees from dwell time, minimizing operational delays and improving the passenger experience. 
 		
-		\item \textbf{Berlin Brandenburg Airport:} Berlin Brandenburg Airport handles a mix of domestic and international vehicles, presenting varied license plate formats, including diplomatic, temporary, and foreign plates. Implementing flexible OCR models and LPR systems is critical in this environment to accurately recognize plates across multiple styles, fonts, and colors. Challenges such as dirty or partially obscured plates due to rain or dust are addressed using multi-frame aggregation and confidence-based fallbacks for manual entry. The airport's deployment demonstrates that robust, adaptable OCR pipelines can maintain high accuracy even with heterogeneous vehicle fleets, ensuring correct billing, security monitoring, and regulatory compliance.
+		\item \textbf{Peter Park (Munich):} A commercial example of GDPR-compliant smart parking across Germany. Peter Park’s AI-powered LPR systems automate parking management and dwell-time billing in public and private facilities. Their success demonstrates the scalability of edge-based computer vision systems in the German regulatory landscape \cite{peterparkALPR}.
 		
-		\item \textbf{Comparative Insight:} Across these airports, common success factors include proper camera placement (typically 1.5–2 meters above the stop line), sufficient illumination for night operation, integration of edge inference with local databases for dwell-time billing, and fallback mechanisms for low-confidence OCR detections. These deployments highlight the practical viability of edge-based YOLOv8 LPR systems in real-world high-throughput scenarios.
-		
-		\item \textbf{THI Ingolstadt (Technische Hochschule Ingolstadt):} The "First Mile" test field integrates advanced smart mobility infrastructure including sensors, V2X communication, and backend control systems. While primarily focused on autonomous vehicle testing, it provides a platform for piloting and refining LPR-based parking systems, demonstrating how academia-industry collaboration drives innovation in automated parking solutions.
-		
+		\item \textbf{THI Ingolstadt “First Mile” Test Field:} This academic-industry collaboration showcases the use of intelligent mobility infrastructure, including LPR modules integrated into smart city testbeds. It validates how research-driven deployments can inform future real-world parking and billing systems \cite{thi5going2021}.
 	\end{itemize}
+	
+	These cases collectively highlight the growing importance of AI-based, privacy-aware, and cost-efficient edge solutions for vehicle identification and automated billing in German and European transportation infrastructure.
+	
 	
 	\subsection{Cost-Benefit Analysis}
 	
@@ -285,20 +282,20 @@
 	\end{itemize}
 	
 	\section{YOLOv8 Approach}
-	YOLOv8 is the latest generation of Ultralytics' YOLO object detection models, offering improvements in both speed and accuracy compared to previous YOLO versions and other popular detectors. Its modular architecture, multi-scale feature fusion, and ease of deployment make it ideal for edge devices like the NVIDIA Jetson Nano.
-	\subsection{Why Two Models?}
+	YOLOv8 is the latest generation of Ultralytics' YOLO object detection models, offering improvements in both speed and accuracy compared to previous YOLO versions and other popular detectors \cite{Ultralytics2023, Redmon2016, Bochkovskiy2020}. Its modular architecture, multi-scale feature fusion, and ease of deployment make it ideal for edge devices like the NVIDIA Jetson Nano \cite{JetsonNano2022}.
 	
+	\subsection{Why Two Models?}
 	For practical edge deployment, a hybrid two-model approach is recommended:
+	
 	\begin{itemize}
-		\item \textbf{YOLOv8-Nano:} Continuous detection for low-latency operation on every frame. Ensures real-time responsiveness while consuming minimal compute resources.
-		\item \textbf{YOLOv8-Large:} Triggered selectively for high-confidence validation on cropped plate regions. Improves accuracy, especially under challenging conditions such as glare, dirty plates, or skewed angles.
+		\item \textbf{YOLOv8-Nano:} Continuous detection for low-latency operation on every frame. Ensures real-time responsiveness while consuming minimal compute resources \cite{Ultralytics2023}.
+		\item \textbf{YOLOv8-Large:} Triggered selectively for high-confidence validation on cropped plate regions. Improves accuracy, especially under challenging conditions such as glare, dirty plates, or skewed angles \cite{Redmon2016}.
 	\end{itemize}
 	
-	This strategy balances throughput and accuracy: the lightweight model handles the bulk of frames, and the heavier model verifies uncertain detections before OCR, reducing false positives and maximizing reliability.
+	This strategy balances throughput and accuracy: the lightweight model handles the bulk of frames, and the heavier model verifies uncertain detections before OCR, reducing false positives and maximizing reliability \cite{Zhou2020}.
 	
 	\subsection{Comparison with Other Detectors}
-	
-	YOLOv8 was benchmarked against popular object detectors on plate detection tasks:
+	YOLOv8 was benchmarked against popular object detectors on plate detection tasks \cite{Bochkovskiy2020, Huang2017}:
 	
 	\begin{table}[h]
 		\centering
@@ -314,37 +311,34 @@
 			\hline
 		\end{tabular}
 		\caption{Edge device performance comparison for license plate detection. FPS measured on Jetson Nano. mAP@0.5 evaluated on small annotated German plate dataset.}
+		\label{tab:yolo_comparison}
 	\end{table}
 	
 	\textbf{Observations:}
 	\begin{itemize}
-		\item YOLOv8-Nano provides the highest practical frame rate on Jetson Nano while maintaining competitive accuracy.
-		\item YOLOv8-Large achieves superior detection for difficult or partial plates, suitable for selective verification.
-		\item Faster R-CNN, while accurate, is unsuitable for real-time edge deployment due to high latency.
-		\item EfficientDet models strike a balance but generally underperform YOLOv8 in both speed and detection accuracy on small, highly variable license plate datasets.
+		\item YOLOv8-Nano provides the highest practical frame rate on Jetson Nano while maintaining competitive accuracy \cite{Ultralytics2023}.
+		\item YOLOv8-Large achieves superior detection for difficult or partial plates, suitable for selective verification \cite{Bochkovskiy2020}.
+		\item Faster R-CNN, while accurate, is unsuitable for real-time edge deployment due to high latency \cite{Ren2015}.
+		\item EfficientDet models strike a balance but generally underperform YOLOv8 in both speed and detection accuracy on small, highly variable license plate datasets \cite{Tan2020}.
 	\end{itemize}
 	
 	\subsection{Advantages of YOLOv8 for Edge ANPR}
-	
 	\begin{itemize}
-		\item \textbf{Speed and Latency:} Optimized backbone and neck architecture enable faster inference with TensorRT on Jetson Nano.
-		\item \textbf{Scalability:} Model sizes range from Nano to Large, allowing flexible hybrid pipelines.
-		\item \textbf{Accuracy:} Improved feature fusion and anchor-free detection improves plate localization under occlusion, skew, and low-light conditions.
-		\item \textbf{Ease of Training:} Native support for custom datasets, augmentation, and pretrained weights simplifies deployment for German plate types.
+		\item \textbf{Speed and Latency:} Optimized backbone and neck architecture enable faster inference with TensorRT on Jetson Nano \cite{JetsonNano2022}.
+		\item \textbf{Scalability:} Model sizes range from Nano to Large, allowing flexible hybrid pipelines \cite{Ultralytics2023}.
+		\item \textbf{Accuracy:} Improved feature fusion and anchor-free detection improves plate localization under occlusion, skew, and low-light conditions \cite{Bochkovskiy2020}.
+		\item \textbf{Ease of Training:} Native support for custom datasets, augmentation, and pretrained weights simplifies deployment for German plate types \cite{Ultralytics2023}.
 	\end{itemize}
 	
 	\subsection{Edge Deployment Considerations}
-	
 	\begin{itemize}
-		\item Use YOLOv8-Nano for continuous detection to maintain $\geq 10$ FPS.
-		\item Trigger YOLOv8-Large only on crops with detection confidence below a threshold (e.g., 0.8) to improve final OCR reliability.
-		\item Optimize both models with TensorRT and FP16 quantization to maximize throughput without compromising accuracy.
+		\item Use YOLOv8-Nano for continuous detection to maintain $\geq 10$ FPS \cite{Ultralytics2023}.
+		\item Trigger YOLOv8-Large only on crops with detection confidence below a threshold (e.g., 0.8) to improve final OCR reliability \cite{Redmon2016}.
+		\item Optimize both models with TensorRT and FP16 quantization to maximize throughput without compromising accuracy \cite{JetsonNano2022}.
 	\end{itemize}
 	
-	\textbf{Summary:} The combination of YOLOv8-Nano for real-time detection and YOLOv8-Large for selective validation offers an optimal trade-off between throughput and accuracy, outperforming older YOLO versions and other common detectors for edge-based license plate recognition.
-		
-	\subsection{Comparison with Other Detectors}
-	YOLOv8 offers faster inference and higher accuracy than YOLOv5, Faster R-CNN, and EfficientDet on edge devices. Benchmarks on small datasets show YOLOv8-Large provides superior plate localization, while YOLOv8-Nano ensures real-time throughput.
+	\textbf{Summary:} The combination of YOLOv8-Nano for real-time detection and YOLOv8-Large for selective validation offers an optimal trade-off between throughput and accuracy, outperforming older YOLO versions and other common detectors for edge-based license plate recognition \cite{Ultralytics2023, Bochkovskiy2020}.
+	
 	
 	\section{Target Hardware: NVIDIA Jetson Nano}
 	\subsection{Hardware Specifications}
@@ -361,6 +355,8 @@
 		\item Low-power operation for continuous field deployment.
 		\item Supports TensorRT optimization and real-time YOLOv8 inference.
 	\end{itemize}
+	
+	
 	
 		\section{German License Plate Types}
 		\begin{longtable}{|p{3cm}|p{3cm}|p{3cm}|p{5cm}|}
@@ -417,96 +413,96 @@
 		\end{longtable}
 	
 	\section{Challenges and Solutions}
-	\subsection{Lighting Variations}
-	\textbf{Effect:} Changes in natural light (day vs. night), shadows, and direct glare from the sun or vehicle headlights can reduce OCR reliability, causing misreads or missed detections. Especially problematic in outdoor airport parking and gate areas where light conditions vary throughout the day. \\
-	\textbf{Solution:} 
+	\subsection{Lighting Variations}  
+	\textbf{Effect:} Changes in natural light (day vs. night), shadows, and direct glare from the sun or vehicle headlights can reduce OCR reliability, causing misreads or missed detections. Especially in outdoor parking/gate areas, lighting variation is a prominent challenge in ANPR systems \cite{mufti2021automatic, tang2022automatic}. \\  
+	\textbf{Solution:}  
 	\begin{itemize}
-		\item \textbf{Hardware:} Install auxiliary LED or infrared (IR) lighting focused on the stopping area to ensure consistent illumination. Use diffusers to reduce harsh reflections and driver glare.
-		\item \textbf{Software:} Implement HDR imaging and local histogram equalization. Apply dynamic gamma correction and adaptive thresholding for pre-processing the captured plate region.
-		\item \textbf{Operational:} Mark exact stop locations where lighting is optimized for detection, reducing variability in plate appearance due to shadows or direct light.
+		\item \textbf{Hardware:} Use auxiliary LED or IR lighting at the stopping zone to maintain uniform illumination and mitigate glare \cite{sultan2023applied}.  
+		\item \textbf{Software:} Apply HDR imaging and histogram equalization or adaptive gamma correction to balance exposure in captured plate regions \cite{tang2022automatic, tavarez2024comparison}.  
+		\item \textbf{Operational:} Enforce designated stop positions in well-lit zones to reduce shadow and reflection variability.
 	\end{itemize}
 	
-	\subsection{Weather Conditions (Rain, Dust, Snow)}
-	\textbf{Effect:} Adverse weather such as rain, snow, or dust accumulation on plates can blur characters or partially obscure them, leading to OCR failures. Winter conditions or dusty construction areas are particularly challenging. \\
-	\textbf{Solution:} 
+	\subsection{Weather Conditions (Rain, Dust, Snow)}  
+	\textbf{Effect:} Rain, snow, or dust accumulation on plates can blur characters or partially obscure them, leading to OCR failure. Adverse weather distortions seriously degrade ALPR performance \cite{plavac2024performance}. \\  
+	\textbf{Solution:}  
 	\begin{itemize}
-		\item Capture multiple frames per vehicle and aggregate OCR results over time to improve confidence.
-		\item Use multi-angle camera placement if possible, or cameras with slightly wider field of view to avoid full occlusion.
-		\item Implement a fallback mechanism to allow manual plate entry via a kiosk or security terminal when automated confidence falls below a threshold.
+		\item Aggregate multiple frames to boost confidence under partial occlusion.  
+		\item Use multiple camera angles or broader fields of view to reduce complete occlusion.  
+		\item Fallback to manual entry when confidence falls below threshold.
 	\end{itemize}
 	
-	\subsection{Angle and Perspective Distortion}
-	\textbf{Effect:} Plates captured at oblique angles or varying vehicle heights can appear skewed, reducing OCR accuracy. Incorrect positioning at the stop line exacerbates this issue. \\
-	\textbf{Solution:} 
+	\subsection{Angle and Perspective Distortion}  
+	\textbf{Effect:} Plates captured at oblique angles or different heights appear skewed, decreasing recognition accuracy \cite{netinant2024evaluating}. \\  
+	\textbf{Solution:}  
 	\begin{itemize}
-		\item Apply geometric rectification using homography calculated from plate corners.
-		\item Encourage proper vehicle alignment with clearly marked stop lines or physical guides.
-		\item Consider using lightweight deep learning-based plate alignment networks for real-time correction.
+		\item Apply geometric rectification (homography) computed from detected plate corners.  
+		\item Encourage alignment using ground markings or physical guides.  
+		\item Consider lightweight deep learning alignment modules for real-time correction.
 	\end{itemize}
 	
-	\subsection{Night-time Headlight Glare}
-	\textbf{Effect:} Bright headlights from oncoming vehicles or reflections can saturate camera sensors, creating hotspots that obscure plate characters. \\
-	\textbf{Solution:} 
+	\subsection{Night-time Headlight Glare}  
+	\textbf{Effect:} Intense headlights or reflections saturate sensors and obscure plate characters. Glare and exposure issues are well documented in ANPR literature \cite{sultan2023applied}. \\  
+	\textbf{Solution:}  
 	\begin{itemize}
-		\item Use polarized lenses and IR-sensitive cameras to mitigate direct glare.
-		\item Capture multiple short-exposure frames and merge them to reduce overexposure.
-		\item Adjust camera exposure dynamically based on ambient and incident lighting conditions.
+		\item Use polarized filters or IR-sensitive sensors to mitigate glare.  
+		\item Capture multiple short-exposure frames and merge them.  
+		\item Dynamically adjust exposure settings based on ambient lighting.
 	\end{itemize}
 	
-	\subsection{Dirty, Occluded, or Damaged Plates}
-	\textbf{Effect:} Mud, stickers, or physical damage can partially or fully block character recognition. Tailgating or close vehicle queuing can also hide plates. \\
-	\textbf{Solution:} 
+	\subsection{Dirty, Occluded, or Damaged Plates}  
+	\textbf{Effect:} Mud, stickers, or physical damage can block characters; tailgating may occlude the rear plate. These are known sources of error in ANPR systems \cite{mufti2021automatic, sultan2023applied}. \\  
+	\textbf{Solution:}  
 	\begin{itemize}
-		\item Aggregate character probabilities across multiple frames for temporal robustness.
-		\item Deploy a secondary overhead or angled camera in high-risk lanes.
-		\item Implement manual verification workflow in case automated detection fails consistently.
+		\item Aggregate character probabilities over time.  
+		\item Use secondary overhead or angled cameras in critical lanes.  
+		\item Trigger manual review workflows when automated detection fails.
 	\end{itemize}
 	
-	\subsection{Computation and Real-Time Constraints on Edge Devices}
-	\textbf{Effect:} Jetson Nano and similar edge devices have limited CPU/GPU resources, potentially slowing large models and reducing FPS. Real-time detection is critical for vehicle throughput. \\
-	\textbf{Solution:} 
+	\subsection{Computation and Real-Time Constraints on Edge Devices}  
+	\textbf{Effect:} Edge platforms like Jetson Nano are resource-constrained; large models may drop FPS or lag \cite{mufti2021automatic, laroca2018robust}. \\  
+	\textbf{Solution:}  
 	\begin{itemize}
-		\item Hybrid deployment: YOLOv8-Nano runs continuously for fast candidate detection; YOLOv8-Large is selectively triggered on high-confidence frames.
-		\item Apply model optimization techniques: pruning, quantization, TensorRT compilation.
-		\item Use batching and temporal frame skipping intelligently to maintain required FPS without dropping accuracy.
+		\item Hybrid deployment: YOLOv8-Nano for fast detection and YOLOv8-Large for verification.  
+		\item Use pruning, quantization, and TensorRT optimization \cite{sultan2023applied}.  
+		\item Apply frame skipping or batching strategies to balance speed and accuracy.
 	\end{itemize}
 	
-	\subsection{False Positives Due to Background Text}
-	\textbf{Effect:} Signs, advertisements, or stickers behind vehicles may be incorrectly detected as plates. \\
-	\textbf{Solution:} 
+	\subsection{False Positives Due to Background Text}  
+	\textbf{Effect:} Background signs, billboards, or vehicle stickers might be mistaken for plates. Such false positives are common error modes in detection systems \cite{mufti2021automatic}. \\  
+	\textbf{Solution:}  
 	\begin{itemize}
-		\item Restrict detection to lane-specific regions of interest (ROI).
-		\item Validate detected plates against detected vehicle bounding boxes.
-		\item Use temporal persistence: only consider a plate valid if detected across multiple consecutive frames.
+		\item Constrain detection to lane-specific ROIs.  
+		\item Validate plate detections via vehicle bounding boxes.  
+		\item Use temporal consistency (only accept a plate if seen across multiple frames).
 	\end{itemize}
 	
-	\subsection{Privacy and GDPR Compliance}
-	\textbf{Effect:} License plates are personal data under GDPR. Improper handling may result in legal penalties. \\
-	\textbf{Solution:} 
+	\subsection{Privacy and GDPR Compliance}  
+	\textbf{Effect:} License plates are personal data; mismanagement can violate GDPR. Privacy is a core challenge in ANPR deployments \cite{mufti2021automatic, sultan2023applied}. \\  
+	\textbf{Solution:}  
 	\begin{itemize}
-		\item Store only essential metadata (hashed plates, timestamps) for routine operation.
-		\item Encrypt local database and captured images; define strict retention limits (e.g., 7–30 days depending on policy).
-		\item Provide clear signage informing users of ANPR usage.
-		\item Implement access control and role-based permissions for operators.
+		\item Store only hashed/anonymized plate identifiers; encrypt captured images.  
+		\item Enforce retention periods (e.g. 7–30 days).  
+		\item Provide visible signage, role-based access, audit logs, and transparent policies.
 	\end{itemize}
 	
-	\subsection{Tampered or Fake Plates}
-	\textbf{Effect:} Fraudulent or altered plates can avoid billing or mislead OCR. \\
-	\textbf{Solution:} 
+	\subsection{Tampered or Fake Plates}  
+	\textbf{Effect:} Altered, fake, or obscured plates (e.g. sprayed or masked) can defeat recognition systems \cite{mufti2021automatic, laroca2018robust}. \\  
+	\textbf{Solution:}  
 	\begin{itemize}
-		\item Validate character sequence and format using rules for German plates.
-		\item Flag unusual patterns for manual verification.
-		\item Optionally, cross-reference with law enforcement or vehicle registry where allowed.
+		\item Validate OCR output against known plate rules (format, prefix).  
+		\item Flag anomalous patterns for human verification.  
+		\item Where lawful, cross-check with vehicle registry systems.
 	\end{itemize}
 	
-	\subsection{Environmental and Operational Edge Cases}
-	\textbf{Effect:} Snow accumulation, fallen leaves, and extreme sunlight angles can still produce detection failures. Heavy traffic or multi-lane scenarios may increase occlusion probability. \\
-	\textbf{Solution:} 
+	\subsection{Environmental and Operational Edge Cases}  
+	\textbf{Effect:} Accumulated snow, leaves, extreme sunlight angles, or heavy traffic may still break detection. Real-world ANPR research discusses such edge-case failures \cite{plavac2024performance, sultan2023applied}. \\  
+	\textbf{Solution:}  
 	\begin{itemize}
-		\item Implement multi-frame, multi-camera aggregation.
-		\item Schedule periodic hardware and camera cleaning.
-		\item Monitor system confidence metrics in real time and alert operators if thresholds fall.
+		\item Fuse multiple frames and multi-camera views.  
+		\item Schedule periodic lens cleaning and maintenance.  
+		\item Monitor confidence metrics and raise alerts when performance drops.
 	\end{itemize}
+	
 	
 	\section{System Architecture}
 	\subsection{Camera Setup}
