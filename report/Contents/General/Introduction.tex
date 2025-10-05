@@ -505,6 +505,48 @@ Number Plate Recognition systems deployed in real-world environments face numero
 	\item Schedule routine maintenance such as lens cleaning, angle calibration, and housing inspection.
 	\item Continuously monitor performance metrics (e.g., detection confidence) and trigger alerts or model retraining when degradation is observed.
 \end{itemize}
+\begin{figure}[htbp]
+	\centering
+	\begin{tikzpicture}[node distance=1.2cm and 3.5cm, >=Stealth, font=\scriptsize]
+		
+		% --- Left column: Challenges ---
+		\node[rectangle, draw, fill=red!10, text width=4cm, align=center, rounded corners] (light) {Lighting Variation};
+		\node[rectangle, draw, fill=red!10, below=of light, text width=4cm, align=center, rounded corners] (weather) {Weather (Rain, Snow, Dust)};
+		\node[rectangle, draw, fill=red!10, below=of weather, text width=4cm, align=center, rounded corners] (angle) {Angle / Perspective Distortion};
+		\node[rectangle, draw, fill=red!10, below=of angle, text width=4cm, align=center, rounded corners] (glare) {Night-time Headlight Glare};
+		\node[rectangle, draw, fill=red!10, below=of glare, text width=4cm, align=center, rounded corners] (dirty) {Dirty or Occluded Plates};
+		\node[rectangle, draw, fill=red!10, below=of dirty, text width=4cm, align=center, rounded corners] (compute) {Computation Constraints};
+		\node[rectangle, draw, fill=red!10, below=of compute, text width=4cm, align=center, rounded corners] (false) {False Positives (Background Text)};
+		\node[rectangle, draw, fill=red!10, below=of false, text width=4cm, align=center, rounded corners] (privacy) {Privacy \& GDPR Compliance};
+		\node[rectangle, draw, fill=red!10, below=of privacy, text width=4cm, align=center, rounded corners] (tamper) {Tampered / Fake Plates};
+		\node[rectangle, draw, fill=red!10, below=of tamper, text width=4cm, align=center, rounded corners] (env) {Environmental \& Edge Cases};
+		
+		% --- Right column: Solutions ---
+		\node[rectangle, draw, fill=green!10, right=of light, text width=5cm, align=center, rounded corners] (light_sol) {LED/IR lighting, HDR imaging, gamma correction};
+		\node[rectangle, draw, fill=green!10, right=of weather, text width=5cm, align=center, rounded corners] (weather_sol) {Weatherproof housing, hydrophobic lens, multi-frame fusion};
+		\node[rectangle, draw, fill=green!10, right=of angle, text width=5cm, align=center, rounded corners] (angle_sol) {Homography correction, camera alignment, CNN normalization};
+		\node[rectangle, draw, fill=green!10, right=of glare, text width=5cm, align=center, rounded corners] (glare_sol) {Polarized filters, short-exposure fusion, ISO adjustment};
+		\node[rectangle, draw, fill=green!10, right=of dirty, text width=5cm, align=center, rounded corners] (dirty_sol) {Frame aggregation, multi-angle cameras, human review};
+		\node[rectangle, draw, fill=green!10, right=of compute, text width=5cm, align=center, rounded corners] (compute_sol) {YOLOv8-N/L hybrid, TensorRT optimization, pruning};
+		\node[rectangle, draw, fill=green!10, right=of false, text width=5cm, align=center, rounded corners] (false_sol) {ROI restriction, temporal filtering, vehicle bbox verification};
+		\node[rectangle, draw, fill=green!10, right=of privacy, text width=5cm, align=center, rounded corners] (privacy_sol) {Hashing IDs, encryption, auto deletion \& audit logs};
+		\node[rectangle, draw, fill=green!10, right=of tamper, text width=5cm, align=center, rounded corners] (tamper_sol) {Format validation, anomaly detection, DB cross-check};
+		\node[rectangle, draw, fill=green!10, right=of env, text width=5cm, align=center, rounded corners] (env_sol) {Sensor fusion, maintenance routines, performance alerts};
+		
+		% --- Arrows ---
+		\foreach \x/\y in {light/light_sol, weather/weather_sol, angle/angle_sol, glare/glare_sol, dirty/dirty_sol, compute/compute_sol, false/false_sol, privacy/privacy_sol, tamper/tamper_sol, env/env_sol}
+		\draw[->, thick] (\x) -- (\y);
+		
+		% --- Titles ---
+		\node[above=0.6cm of light, font=\bfseries] (title1) {Challenges};
+		\node[above=0.6cm of light_sol, font=\bfseries] (title2) {Corresponding Solutions};
+		
+	\end{tikzpicture}
+	\caption{Comprehensive mapping of challenges and practical solutions in number plate recognition deployment.}
+	\label{fig:challenges_solutions_full}
+\end{figure}
+
+\clearpage
 
 \section{System Architecture}
 \subsection{Camera Setup}
@@ -587,6 +629,8 @@ Certain vehicles are automatically exempt from charges, detected via **plate typ
 	\item \textbf{NATO vehicles} -- Rare; EXEMPT.
 \end{itemize}
 
+
+
 \subsubsection{Plate Classification for Billing}
 Charges are determined by plate type detected by OCR and verified in the database. Example mapping:
 
@@ -636,6 +680,32 @@ Charges are determined by plate type detected by OCR and verified in the databas
 	Free buffer 10 min → 70 min chargeable → 14 blocks × \texteuro{}2 = \texteuro{}28 → Capped at daily max \texteuro{}25
 \end{itemize}
 
+\begin{figure}[htbp]
+	\centering
+	\begin{tikzpicture}[node distance=1.5cm and 2cm, >=Stealth]
+		
+		\node[ellipse, draw, fill=gray!20, text width=3cm, align=center] (start) {Start};
+		\node[rectangle, draw, rounded corners, fill=blue!10, below=of start, text width=3.5cm, align=center] (detect) {Detect Plate (YOLOv8-N)};
+		\node[rectangle, draw, rounded corners, fill=green!10, below=of detect, text width=3.5cm, align=center] (validate) {Validate (YOLOv8-L)};
+		\node[diamond, draw, fill=orange!15, below=of validate, aspect=2, text width=3cm, align=center] (check) {Is Plate Exempt?};
+		\node[rectangle, draw, rounded corners, fill=yellow!10, right=of check, text width=3.5cm, align=center] (exempt) {Mark as EXEMPT};
+		\node[rectangle, draw, rounded corners, fill=blue!10, below=of check, text width=3.5cm, align=center] (charge) {Compute Fee (Dwell Time)};
+		\node[ellipse, draw, fill=gray!20, below=of charge, text width=3cm, align=center] (end) {Update DB};
+		
+		\draw[->, thick] (start) -- (detect);
+		\draw[->, thick] (detect) -- (validate);
+		\draw[->, thick] (validate) -- (check);
+		\draw[->, thick] (check) -- node[above]{Yes} (exempt);
+		\draw[->, thick] (check) -- node[right]{No} (charge);
+		\draw[->, thick] (exempt) |- (end);
+		\draw[->, thick] (charge) -- (end);
+		
+	\end{tikzpicture}
+	\caption{Flowchart of billing and exemption logic for detected plates.}
+	\label{fig:billing_flowchart}
+\end{figure}
+
+
 \subsubsection{Operational Notes}
 \begin{itemize}
 	\item Plates failing OCR or classification are flagged for **manual review**.
@@ -644,6 +714,7 @@ Charges are determined by plate type detected by OCR and verified in the databas
 	\item Daily caps ensure long-term parkers do not exceed reasonable airport rates.
 \end{itemize}
 
+\clearpage
 
 \section{OCR Methods}
 The system evaluates multiple OCR methods suitable for license plate recognition in Germany:
