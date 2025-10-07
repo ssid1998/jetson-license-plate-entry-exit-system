@@ -14,28 +14,146 @@
 
 \chapter{Hints}
 
-Please, use  \textbf{\texttt{biber.exe}}.
+\begin{tcolorbox}[colback=blue!5!white,colframe=blue!60!black,title={\faCar\hspace{0.5em}Manaul - Licence plate detection using Jetson nano }]
+	This project implements an \textbf{Automatic License Plate Detection and Recognition System} using the \textbf{NVIDIA Jetson Nano} edge device.
+	
+	The system captures live video from a USB camera, detects vehicle license plates using the \textbf{YOLOv8} model, and extracts the plate number using \textbf{EasyOCR}.  
+	Recognized plate data are stored locally in an \textbf{SQLite database} with timestamps and confidence values.  
+	It is designed for real-time \textbf{vehicle logging, parking automation}, and \textbf{access control}.
+\end{tcolorbox}
 
-\bigskip
+% --------------------------------------------------
+% Section 1: Safety Guidelines
+% --------------------------------------------------
+\section{Safety Guidelines}
 
+Safety is an essential aspect of setting up and operating the \textbf{License Plate Detection System} on the NVIDIA Jetson Nano platform.  
+The following guidelines ensure safe operation, hardware longevity, and data protection.
 
-
+\subsection{Electrical Safety}
 \begin{itemize}
-	\item Welcome - Description of the general function
-	\item Safety Guidelines
-	\item Overview
-	\begin{itemize}
-		\item Hardware description from the operator's point of view
-		\item Preparation, e.g. placing the unit, installation, power supply
-		\item \ldots
-	\end{itemize}
-	\item Operation - List of functions
-	\begin{itemize}
-		\item Function 1: Description of each individual function from the user's point of view
-		\item Function 2: Description of each individual function from the user's point of view
-		\item \ldots
-	\end{itemize}
-	\item Troubleshooting - Possible errors, causes of errors and their elimination
-	\item Specifications 
+	\item Always use the original or a certified \textbf{5V/4A USB-C power adapter} to avoid undervoltage or overcurrent damage.
+	\item Ensure that all power connections are properly inserted before switching on the unit.
+	\item Do not power the Jetson Nano directly from unstable USB ports or laptop chargers.
+	\item Disconnect power before connecting or disconnecting the USB camera, HDMI cable, or other peripherals.
+	\item Avoid operating the system in wet or humid environments to prevent electrical short circuits.
 \end{itemize}
 
+\subsection{Thermal and Environmental Safety}
+\begin{itemize}
+	\item The reComputer J1010 enclosure provides \textbf{passive cooling} through its aluminum case; do not cover ventilation areas during operation.
+	\item Maintain ambient room temperature below \textbf{40°C} for optimal performance.
+	\item Avoid placing the system near direct sunlight, heaters, or enclosed cabinets without airflow.
+	\item If prolonged high workloads are expected (e.g., continuous YOLO inference), consider adding a small external fan.
+\end{itemize}
+
+\subsection{Operational Safety}
+\begin{itemize}
+	\item Place the device on a \textbf{flat, stable, and non-conductive} surface to prevent vibration or accidental falls.
+	\item Handle the Jetson Nano carefully to avoid static discharge; use anti-static wrist straps when touching internal components.
+	\item Avoid abrupt system shutdowns during model training or database write operations, as this can corrupt files.
+	\item Ensure cables are not under tension or twisted while the system is powered.
+\end{itemize}
+
+\subsection{Data and Software Safety}
+\begin{itemize}
+	\item Always back up the \textbf{SQLite database} and configuration files before major software updates.
+	\item Use secure file permissions and avoid storing personal or sensitive vehicle data in plain text.
+	\item Do not interrupt the model inference or OCR process during execution, as it may cause temporary resource lockups.
+	\item Regularly check the system logs to monitor for overheating, low power warnings, or database errors.
+\end{itemize}
+
+\subsection{General Precautions}
+\begin{itemize}
+	\item Operate only under adult supervision in lab or test environments.
+	\item Do not attempt to disassemble the Jetson module or heat sink assembly.
+	\item Keep liquids, metallic objects, and magnetic fields away from the hardware setup.
+	\item Ensure compliance with local data privacy and recording laws when using the camera in public areas.
+\end{itemize}
+
+% --------------------------------------------------
+% Section 2: Overview
+% --------------------------------------------------
+\section{Overview}
+
+\subsection{Hardware Description (Operator’s View)}
+The setup includes a \textbf{Seeed Studio reComputer J1010} (Jetson Nano 4 GB) enclosed in an aluminum case.  
+It is connected to a \textbf{Microsoft LifeCam Show USB} camera, an HDMI display, and powered by a 5 V / 4 A adapter.  
+This configuration allows continuous video capture and AI inference directly at the edge.
+
+\subsection{Preparation}
+\begin{itemize}
+	\item Place the unit on a flat, ventilated surface.
+	\item Connect the USB camera, HDMI monitor, and power adapter.
+	\item Insert the microSD card flashed with \textbf{JetPack 5.1.2 (Ubuntu 20.04)}.
+	\item Power on the device and log in to the Ubuntu desktop.
+	\item Launch the detection program via terminal or GUI.
+\end{itemize}
+
+% --------------------------------------------------
+% TikZ Diagram – Hardware Connection
+% --------------------------------------------------
+\begin{figure}[h!]
+	\centering
+	\begin{tikzpicture}[node distance=2.8cm,>=stealth,thick]
+		
+		\tikzstyle{block}=[rectangle, draw=blue!50!black, fill=blue!10,
+		rounded corners, align=center, text width=3.5cm, minimum height=1cm]
+		
+		\node[block] (camera) {\faCamera\\Camera\\(Microsoft LifeCam)};
+		\node[block, right=of camera] (nano) {\faMicrochip\\Jetson Nano\\(reComputer J1010)};
+		\node[block, right=of nano] (display) {\faDesktop\\HDMI Display};
+		\node[block, below=of nano] (db) {\faDatabase\\SQLite Database};
+		
+		\draw[->, thick] (camera) -- node[above]{USB 2.0} (nano);
+		\draw[->, thick] (nano) -- node[above]{HDMI Output} (display);
+		\draw[->, thick] (nano) -- node[left]{Data Logging} (db);
+	\end{tikzpicture}
+	\caption{Hardware connection overview for License Plate Detection System}
+	\label{fig:hardware_connection}
+\end{figure}
+
+% --------------------------------------------------
+% Section 3: Operation
+% --------------------------------------------------
+\section{Operation – List of Functions}
+
+\begin{itemize}
+	\item \textbf{Function 1: Live Detection} — Captures real-time video and detects license plates with YOLOv8.
+	\item \textbf{Function 2: OCR Recognition} — Extracts text from detected plates via EasyOCR.
+	\item \textbf{Function 3: Database Logging} — Stores results in SQLite with timestamps.
+	\item \textbf{Function 4: Exception Handling} — Skips billing for registered emergency vehicles.
+	\item \textbf{Function 5: Reporting \& Display} — Shows detection results and logs on screen.
+\end{itemize}
+
+% --------------------------------------------------
+% Section 4: Troubleshooting (Keep Box)
+% --------------------------------------------------
+\begin{tcolorbox}[colback=red!5!white,colframe=red!60!black,title={\faTools\hspace{0.5em}Troubleshooting}]
+	\begin{itemize}
+		\item \textbf{No Camera Feed:} Check USB connection; test with \texttt{ls /dev/video*}.
+		\item \textbf{Low FPS:} Lower resolution or use the YOLOv8-Nano model.
+		\item \textbf{Model Error:} Verify weights directory and filenames.
+		\item \textbf{Database Locked:} Close previous app sessions and retry.
+		\item \textbf{Overheating:} Ensure ventilation or add a small cooling fan.
+	\end{itemize}
+\end{tcolorbox}
+
+% --------------------------------------------------
+% Section 5: Specifications
+% --------------------------------------------------
+\section{Specifications}
+
+\begin{center}
+	\begin{tabular}{ll}
+		\textbf{Device:} & Seeed Studio reComputer J1010 (Jetson Nano 4 GB)\\
+		\textbf{OS:} & JetPack 5.1.2 (Ubuntu 20.04)\\
+		\textbf{Processor:} & Quad-core ARM Cortex-A57 CPU\\
+		\textbf{GPU:} & 128-core Maxwell\\
+		\textbf{Memory:} & 4 GB LPDDR4\\
+		\textbf{Storage:} & 64 GB microSD card\\
+		\textbf{Camera:} & Microsoft LifeCam Show (USB 2.0)\\
+		\textbf{Power:} & 5 V / 4 A USB-C\\
+		\textbf{Software:} & YOLOv8 + EasyOCR + SQLite + OpenCV + Python 3.8\\
+	\end{tabular}
+\end{center}
