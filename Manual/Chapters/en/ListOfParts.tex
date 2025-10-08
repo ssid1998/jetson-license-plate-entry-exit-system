@@ -13,3 +13,68 @@
 
 \chapter{List Of Parts}
 
+\section{List of Parts}
+
+This section provides a detailed overview of all hardware components used in the \textbf{License Plate Detection System}.  
+Each part listed below was selected for compatibility, durability, and seamless operation with the NVIDIA Jetson Nano edge AI platform.  
+All items are off-the-shelf components, easily replaceable or upgradable for future iterations of the system.
+
+\vspace{0.5cm}
+
+\begin{table}[h!]
+	\centering
+	\caption{List of Materials  – Jetson Nano License Plate Detection System}
+	\label{tab:listofparts}
+	\renewcommand{\arraystretch}{1.3}
+	\begin{tabular}{|p{3.1cm}|p{6.3cm}|p{3.1cm}|p{1.8cm}|}
+		\hline
+		\textbf{Part Name} & \textbf{Description / Specification} & \textbf{Manufacturer / Model} & \textbf{Quantity} \\
+		\hline
+		\textbf{Main Processing Unit} & NVIDIA Jetson Nano 4GB Developer Kit with passive heatsink, integrated into Seeed Studio reComputer J1010 aluminum enclosure & Seeed Studio / NVIDIA & 1 \\
+		\hline
+		\textbf{Camera} & USB 2.0 HD camera for live video capture (2.0 MP resolution), used for license plate detection and OCR input & Microsoft LifeCam Show (Model 1139) & 1 \\
+		\hline
+		\textbf{Camera Mounting Rod / Stand} & Vertical metallic rod with adjustable clamp base for stable camera positioning and angle alignment (approx. 35–40 cm height) & Generic Steel Stand / Custom Mount & 1 \\
+		\hline
+		\textbf{Power Supply} & 5V / 4A regulated adapter with USB-C connector & Seeed Studio (or certified equivalent) & 1 \\
+		\hline
+		\textbf{Storage} & 64 GB microSD card (Class 10 or UHS-I) preloaded with JetPack 5.1.2 (Ubuntu 20.04) & SanDisk / Samsung Evo+ & 1 \\
+		\hline
+		\textbf{Display} & HDMI display for real-time output visualization (minimum 1080p resolution) & Generic HDMI Monitor / 15.6-inch & 1 \\
+		\hline
+		\textbf{Networking Cable (Optional)} & Gigabit Ethernet cable for direct connection or remote control access & Cat 6 / 1.5 m length & 1 \\
+		\hline
+		\textbf{Casing and Mount} & Aluminum reComputer J1010 case with passive heat sink and rubber base for vibration damping & Seeed Studio & 1 \\
+		\hline
+		\textbf{Peripherals (Optional)} & Wireless keyboard and mouse for setup and debugging & Logitech MK220 (or equivalent) & 1 set \\
+		\hline
+		\textbf{Software Frameworks} & YOLOv8 (object detection), EasyOCR (text extraction), SQLite (logging), OpenCV (image processing) & Open Source / Python 3.8 Environment & -- \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\vspace{0.4cm}
+\noindent
+The \textbf{Microsoft LifeCam Show} is mounted on a stable \textbf{vertical metallic stand} that allows flexible height and tilt adjustment to ensure optimal plate visibility during image capture.  
+This setup helps maintain consistent camera alignment and minimizes vibration or misfocus during real-time detection.
+
+\vspace{0.3cm}
+\noindent
+The \textbf{Jetson Nano} acts as the central processing hub, receiving the camera feed via USB, performing YOLOv8 inference, extracting text through EasyOCR, and logging results into an SQLite database.  
+All components are designed for compact, plug-and-play integration, with power delivered through a single 5V/4A USB-C supply.
+
+\vspace{0.3cm}
+\noindent
+For scalability, additional cameras can be connected through the available USB ports or via a powered USB hub, enabling multi-angle detection or extended lane monitoring for advanced future deployments.
+
+\vspace{0.3cm}
+\noindent
+The system’s modular structure simplifies both \textbf{maintenance and portability}.  
+Each module—camera, Jetson Nano, or display—can be detached and reassembled within minutes, enabling quick field deployment or hardware replacement.  
+The aluminum enclosure further enhances protection against dust and minor impacts during transportation.
+
+\vspace{0.3cm}
+\noindent
+The design also emphasizes \textbf{energy efficiency and operational reliability}.  
+With an average power consumption of under 10 W, the entire setup can run continuously using a portable power bank or vehicle adapter.  
+This makes the system suitable for both indoor and outdoor use cases, such as temporary checkpoints or parking-lot trials.

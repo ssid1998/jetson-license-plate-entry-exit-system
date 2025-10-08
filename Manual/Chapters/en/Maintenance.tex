@@ -13,7 +13,140 @@
 
 \chapter{Maintenance}
 
+\section{Maintenance}
+
+Regular maintenance ensures that the \textbf{License Plate Detection System} remains stable, efficient, and secure over long-term operation. 
+This section outlines both hardware and software maintenance procedures to guarantee continuous and reliable system performance on the NVIDIA Jetson Nano.
+
+% ==========================================================
+\subsection{Hardware Maintenance}
+
+\begin{itemize}
+	\item \textbf{Cleaning and Environment:}  
+	Keep the Jetson Nano unit and aluminum casing free from dust using a dry air blower or microfiber cloth.  
+	Avoid exposing the camera lens to direct sunlight, moisture, or fingerprints.
+	
+	\item \textbf{Connections and Ports:}  
+	Inspect USB, HDMI, and power ports monthly for loose or corroded connectors.  
+	Avoid frequent plug–unplug cycles to prevent physical wear.
+	
+	\item \textbf{Cooling and Temperature:}  
+	Ensure unobstructed airflow around the case.  
+	For continuous operation above 30°C ambient temperature, attach an auxiliary 5V fan.  
+	Normal GPU operating range: \textbf{40–70°C}.
+	
+	\item \textbf{Power Supply Check:}  
+	Use only the certified 5V/4A USB-C power adapter.  
+	Sudden shutdowns or random reboots usually indicate unstable power.
+	
+	\item \textbf{Camera Alignment:}  
+	Periodically verify that the Microsoft LifeCam Show is firmly mounted and properly focused on the target area.
+\end{itemize}
+
+\begin{figure}[h!]
+	\centering
+	\begin{tikzpicture}[node distance=1.5cm, >=stealth, thick]
+		\tikzstyle{block}=[rectangle, draw=gray!80!black, fill=gray!10, rounded corners, text width=4.5cm, minimum height=1cm, align=center]
+		\tikzstyle{arrow}=[->, thick]
+		
+		\node[block] (check1) {Clean Jetson Case and Camera};
+		\node[block, below=of check1] (check2) {Inspect Power and USB Ports};
+		\node[block, below=of check2] (check3) {Monitor GPU Temperature};
+		\node[block, below=of check3] (check4) {Verify Camera Focus and Angle};
+		
+		\draw[arrow] (check1) -- (check2);
+		\draw[arrow] (check2) -- (check3);
+		\draw[arrow] (check3) -- (check4);
+	\end{tikzpicture}
+	\caption{Routine hardware maintenance workflow.}
+	\label{fig:maintenance_flow}
+\end{figure}
+
+% ==========================================================
+\subsection{Software Maintenance}
+
+\begin{itemize}
+	\item \textbf{System Updates:}  
+	Keep JetPack and Ubuntu packages up to date using:  
+	\texttt{sudo apt update \&\& sudo apt upgrade}  
+	Update CUDA and TensorRT libraries only when NVIDIA releases compatible versions for JetPack 5.1.2.
+	
+	\item \textbf{Model Re-training and Optimization:}  
+	Retrain or fine-tune the YOLOv8 model periodically using newer number plate datasets to maintain accuracy.  
+	Convert new models to TensorRT format for optimal inference on the Jetson GPU.
+	
+	\item \textbf{Python Dependencies:}  
+	Maintain an up-to-date \texttt{requirements.txt} and reinstall packages using  
+	\texttt{pip install -r requirements.txt} when system restoration is needed.
+	
+	\item \textbf{Database Cleanup:}  
+	Purge duplicate or expired entries monthly using SQL commands:  
+	\texttt{DELETE FROM plates WHERE date < '2024-01-01';}  
+	Export records as CSV for long-term archival.
+	
+	\item \textbf{Log Management:}  
+	Review application logs stored in \texttt{/logs/system.log}.  
+	Rotate logs regularly to avoid storage saturation.
+\end{itemize}
+
+% ==========================================================
+\subsection{Backup and Recovery}
+
+\begin{itemize}
+	\item \textbf{MicroSD Backup:}  
+	Clone the Jetson Nano microSD card using tools like \texttt{balenaEtcher} or \texttt{Win32DiskImager}.  
+	Keep one backup image offsite.
+	
+	\item \textbf{Database Export:}  
+	Schedule weekly exports of \texttt{plates.db} using:  
+	\texttt{sqlite3 plates.db .dump > backup.sql}
+	
+	\item \textbf{Configuration Files:}  
+	Backup configuration files such as \texttt{config.yaml}, \texttt{exceptions.json}, and model weights.
+	
+	\item \textbf{Recovery:}  
+	In case of system corruption, re-flash JetPack OS and restore the backup image.
+\end{itemize}
+
+% ==========================================================
+\subsection{Security and Version Control}
+
+\begin{itemize}
+	\item Use SSH key authentication instead of passwords for remote access.  
+	\item Store all source code in a Git repository with version tags (e.g., \texttt{v1.0, v1.1}).  
+	\item Restrict camera and database permissions to authorized users only.  
+	\item Regularly update \texttt{pip}, \texttt{OpenCV}, and \texttt{ultralytics} to patch vulnerabilities.  
+\end{itemize}
+
+% ==========================================================
+\subsection{Maintenance Schedule}
+
+\begin{table}[h!]
+	\centering
+	\caption{Recommended Maintenance Schedule}
+	\begin{tabular}{|l|l|l|}
+		\hline
+		\textbf{Task} & \textbf{Frequency} & \textbf{Responsible Unit} \\ \hline
+		Clean hardware and camera & Monthly & Operator \\ \hline
+		Check software updates & Monthly & System Admin \\ \hline
+		Backup database & Weekly & Operator \\ \hline
+		Model retraining and test & Quarterly & Developer \\ \hline
+		Inspect power and ports & Bi-monthly & Technician \\ \hline
+	\end{tabular}
+\end{table}
+
+% ==========================================================
 
 
+\subsection*{Maintenance Summary}
+
+Proper maintenance extends hardware lifespan, preserves model accuracy, and prevents data loss.  
+Following these procedures ensures the License Plate Detection System operates continuously with high reliability and low downtime.  
+Regular inspection of both software and hardware components reduces unexpected failures and stabilizes long-term performance in real-world environments.  
+
+Additionally, maintaining consistent backups, applying JetPack and dependency updates, and retraining the detection model ensure that the system remains adaptable to new vehicle types and changing lighting conditions.  
+Adhering to the defined maintenance schedule and logging all interventions also helps in fault traceability and system audits, which are essential for operational safety and compliance in industrial or research environments.  
+
+In conclusion, a well-maintained Jetson-based system not only guarantees optimal inference speed and accuracy but also minimizes operational costs, thereby ensuring sustainable, uninterrupted, and scalable deployment over its lifetime.
 
 
