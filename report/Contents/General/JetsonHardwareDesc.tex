@@ -46,6 +46,7 @@ Other commercial SoCs, such as Apple’s A-series chips (A12~Bionic), Samsung’
 The Jetson Nano, in contrast, remains \textbf{developer-oriented, open, and extensible}, offering a balance between computational performance, power efficiency, and cost (approximately 180–250~\texteuro{} in Germany). 
 It serves as the foundation for the current project on \textbf{real-time license plate detection}, enabling efficient on-device image inference without the need for cloud processing. Overall, the Jetson Nano’s combination of GPU parallelism, open-source software ecosystem, and compatibility with AI frameworks makes it one of the most accessible and powerful tools for academic and industrial AI deployment at the edge.
 
+\newpage
 %----------------------------------------------------------
 \section{Applications of the Jetson Nano}
 \label{subsec:applications}
@@ -94,110 +95,120 @@ In accessibility-focused research, the Jetson Nano has been used for projects th
 Jetson Nano’s ability to process video streams in real time makes it ideal for traffic congestion analysis and license plate recognition systems — the focus of this project.  
 Its edge-processing capability ensures privacy compliance and low latency compared to cloud-based analytics.
 
-\bigskip
 In summary, the Jetson Nano bridges the gap between experimental AI research and real-world embedded deployment. 
 Its balance of performance, cost, and open-source accessibility enables both academic and industrial innovation in fields like automation, surveillance, and intelligent transportation systems.
 
+\newpage
 \section{Construction}
 \label{subsec:construction}
 
-The complete hardware configuration is based on the \textbf{Seeed Studio reComputer J1010} system, which integrates the \textbf{NVIDIA Jetson Nano (4 GB, B01 revision)} module on the \textbf{J101 carrier board}. 
-The Jetson Nano module itself measures approximately 69.6 mm $\times$ 45 mm and is dominated by an aluminum heatsink that covers the NVIDIA Tegra X1 system-on-chip.  
-Hidden beneath the heatsink, the Tegra X1 combines a quad-core ARM Cortex-A57 CPU cluster and a 128-core Maxwell GPU fabricated in a 20 nm process, providing up to 0.5 TFLOPs (FP16) of compute performance at a typical power draw of 5–10 W \cite{jetsonNanoDatasheet}.  
-The module connects to the carrier board through a 260-pin SODIMM edge connector, exposing all high-speed I/O lines.
+The complete hardware configuration of this project is based on the \textbf{Seeed Studio reComputer J1010} system, which integrates the \textbf{NVIDIA Jetson Nano (4~GB, B01 revision)} module on the \textbf{J101 carrier board}. 
+The Jetson Nano module measures approximately $69.6\,\text{mm}\times45\,\text{mm}$ and is equipped with an aluminum heatsink that covers the NVIDIA Tegra~X1 system-on-chip (SoC). 
+This SoC integrates a quad-core ARM Cortex-A57 CPU and a 128-core Maxwell GPU, providing up to 0.5~TFLOPs (FP16) of compute performance at a typical power draw of 5–10~W \cite{jetsonNanoDatasheet}.  
+The module connects to the J101 carrier board through a 260-pin SODIMM edge connector, which exposes high-speed I/O lines, camera interfaces, and peripheral buses to the carrier.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\linewidth]{HardwareDesc/body.png}
+	\caption{Exploded view of the Seeed Studio reComputer~J1010 enclosure showing the Jetson Nano module and carrier board assembly within the anodized aluminum case \cite{seeedJ101Manual}.}
+	\label{fig:recomputer_body}
+\end{figure}
 
 \bigskip
 \textbf{Physical Layout:}  
-The carrier board has approximate dimensions of 100 mm $\times$ 80 mm $\times$ 29 mm and is mounted inside an anodized aluminum case supplied by Seeed Studio.  
-Figure \ref{fig:recomputer_layout} (official top-view diagram) labels the major connectors, including the USB-C power port (J1), HDMI output (J3), dual USB 2.0 Type-A ports (J5), USB 3.0 Type-A (J4), RJ-45 Ethernet (J6), MIPI-CSI camera connectors (J9/J13), and 40-pin GPIO header (J10).  
-A passive heatsink ensures adequate cooling for continuous inference workloads; an optional 5 V PWM fan can be attached to the J8 header for active thermal control.
-
-\bigskip
-\textbf{Core Components:}
-\begin{itemize}
-	\item \textbf{Compute Module:} NVIDIA Jetson Nano (B01 SoC, 4 GB LPDDR4 memory, 16 GB eMMC 5.1 flash)
-	\item \textbf{Carrier Board:} Seeed Studio J101 with USB, HDMI, CSI, M.2 Key E, Ethernet, and 40-pin GPIO
-	\item \textbf{Power Supply:} 5 V DC $\pm$ 0.25 V, 4 A via USB-C input (J1); reverse-current protection integrated
-	\item \textbf{Storage:} microSD card (64–128 GB, UHS-I recommended) used for OS image and dataset storage
-	\item \textbf{Networking:} RJ-45 Gigabit Ethernet port (10/100/1000 BASE-T)
-	\item \textbf{Camera:} MIPI CSI-2 camera (IMX219, 8 MP, 4-lane)
-	\item \textbf{Cooling:} Passive aluminum heatsink; optional PWM-controlled 5 V fan (J8)
-\end{itemize}
+The J101 carrier board has dimensions of approximately $100\,\text{mm}\times80\,\text{mm}\times29\,\text{mm}$ and is mounted within an anodized aluminum enclosure supplied by Seeed Studio.  
+It provides direct access to peripheral connectors, including USB, HDMI, CSI, M.2~Key~E, and Ethernet, while maintaining compact form-factor integration suitable for embedded deployment.  
+The passive aluminum heatsink ensures thermal stability during continuous inference workloads, and an optional 5~V~PWM fan can be connected to header~J8 for active cooling.  
+Figure~\ref{fig:recomputerJ101v2} shows the top view of the reComputer~J1010 board with major connectors labeled (refer to Section~\ref{sec:Interfaces} for detailed pin-level descriptions).
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.9\linewidth]{HardwareDesc/reComputerJ101v2.png}
-	\caption{Top view of the Seeed Studio reComputer J1010 showcasing major connectors and components, including power input, USB ports, HDMI, CSI camera slots, and the 40-pin GPIO header \cite{seeedJ101Manual}.}
+	\caption{Top view of the Seeed Studio reComputer~J1010 showcasing major connectors and components, including power input, USB ports, HDMI, CSI camera slots, and the 40-pin GPIO header \cite{seeedJ101Manual}.}
 	\label{fig:recomputerJ101v2}
 \end{figure}
 
 \bigskip
+The front panel of the reComputer~J1010 enclosure provides access to six primary external connectors, as illustrated in Figure~\ref{fig:jetson_side} and summarized in Table~\ref{tab:j1010_interfaces}.  
+These ports include power, display, communication, and peripheral interfaces essential for system integration and debugging.
 
-\noindent\textbf{\textcolor{red}{ TODO: Convert to TikZ/Image diagram (Top View)}}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\linewidth]{HardwareDesc/jetson-side.png}
+	\caption{Front I/O panel of the Seeed Studio reComputer~J1010 showing labeled external connectors (1--6). These correspond to the physical ports accessible from the device enclosure \cite{seeedJ101Manual}.}
+	\label{fig:jetson_side}
+\end{figure}
+
+\begin{table}[H]
+	\centering
+	\caption{Labeled external connectors on the Seeed Studio reComputer~J1010 front I/O panel}
+	\label{tab:j1010_interfaces}
+	\begin{tabular}{|c|l|l|}
+		\hline
+		\textbf{No.} & \textbf{Name} & \textbf{Function / Note} \\ \hline
+		1 & DCIN (USB Type-C interface) & Power supply input (5~V~DC,~4~A~max) \\ \hline
+		2 & HDMI & Display output (HDMI~2.0 up to 4K@60Hz) \\ \hline
+		3 & USB~3.0 Type-A port & High-speed data and peripheral connection \\ \hline
+		4 & Dual USB~2.0 Type-A ports & Peripheral interfaces (keyboard, mouse, etc.) \\ \hline
+		5 & Gigabit Ethernet (LAN) & Network connectivity (10/100/1000~Mbps) \\ \hline
+		6 & USB~Type-C port & Data interface only (no power delivery) \\ \hline
+	\end{tabular}
+\end{table}
+
 
 \bigskip
+The complete reComputer~J1010 assembly consists of the following major hardware components, summarized in Table~\ref{tab:core_components}.
 
-
-\textbf{Mechanical Arrangement:}  
-The Jetson Nano module is fixed to the carrier through four M2.5 mounting screws.  
-The board assembly is then secured inside the aluminum enclosure with standoffs that provide isolation and airflow channels.  
-Cut-outs on the side panels align precisely with the external I/O ports, allowing straightforward access during prototyping and debugging.
-
-\bigskip
-\textbf{Power Architecture:}  
-The J101 board features a single 5 V rail that powers the SoC, USB hub, and Ethernet PHY through onboard DC-DC converters.  
-An internal power-management IC monitors undervoltage events and initiates a safe power-down sequence.  
-Average consumption during neural-network inference (YOLOv8 Tiny model, 30 FPS 1080p input) is approximately 7.5 W, measured at 5 V input.  
-Peak loads of 9–10 W can occur during model initialization, which justifies the use of a 4 A supply.
-
-\bigskip
-\textbf{Peripheral Integration:}  
-The reComputer’s J10 40-pin header maintains the Raspberry Pi-compatible pinout, permitting connection of sensors, relays, and GPIO-controlled modules through standard ribbon cables.  
-Two CSI camera ports (J9 and J13) enable stereo vision or dual-camera processing, though only one port is utilized in this project for license-plate detection.  
-The M.2 Key E slot supports Wi-Fi and Bluetooth modules through PCIe x1 and USB 2.0 lanes.  
-The RTC header (J18) can house a CR2032 cell to preserve system time when powered off.  
+\begin{table}[H]
+	\centering
+	\caption{Core Components of the reComputer~J1010 System}
+	\label{tab:core_components}
+	\begin{tabular}{|p{4cm}|p{9cm}|}
+		\hline
+		\textbf{Component} & \textbf{Description} \\ \hline
+		Compute Module & NVIDIA Jetson Nano (B01 revision) with 4~GB LPDDR4 memory and integrated Tegra~X1 SoC (CPU + GPU) \\ \hline
+		Carrier Board & Seeed Studio J101 carrier board with USB, HDMI, CSI, M.2~Key~E, Ethernet, and 40-pin GPIO expansion header \\ \hline
+		Power Supply & 5~V~DC~$\pm$~0.25~V, up to~4~A via USB-C (J1); reverse-current protection integrated \\ \hline
+		Storage & microSD~card (64–128~GB, UHS-I recommended) used for JetPack OS image and dataset storage \\ \hline
+		Networking & RJ-45 Gigabit Ethernet (10/100/1000~BASE-T) for LAN and SSH connectivity \\ \hline
+		Camera & MIPI CSI-2 interface (IMX219 sensor, 8~MP, 4-lane) connected via CSI ports (J9/J13) \\ \hline
+		Cooling & Passive aluminum heatsink; optional 5~V~PWM fan connected to header~J8 for active cooling \\ \hline
+	\end{tabular}
+\end{table}
 
 \bigskip
-\textbf{Connectivity and Display:}  
-For configuration and monitoring, a display may be attached to the HDMI 2.0 port (J3) supporting resolutions up to 3840 × 2160 @ 60 Hz.  
-During unattended operation, the system runs headless and communicates over Ethernet SSH.  
-Gigabit Ethernet provides sufficient bandwidth for remote dataset transfer and model updates.  
+\textbf{Mechanical and Power Integration:}  
+The Jetson Nano module is mounted on the J101 carrier board using M2.5~screws and standoffs, providing both structural rigidity and airflow clearance beneath the PCB.  
+The complete assembly is enclosed within a metal housing that includes cut-outs for all major I/O ports.  
+Power is supplied through the USB-C~port~(J1) from a 5~V,~4~A~regulated adapter.  
+Onboard DC-DC converters distribute regulated voltages to the SoC, USB~hub, and Ethernet PHY with undervoltage monitoring for protection.  
+Typical consumption during YOLOv8 inference (1080p~@~30~FPS) is approximately~7.5~W, with peak loads of~9–10~W during initialization.
 
 \bigskip
-\textbf{Storage and Operating System:}  
-The microSD card serves as the main boot device and storage medium.  
-JetPack 5.x (derived from Ubuntu 20.04 LTS) is flashed onto the card using NVIDIA’s SDK Manager.  
-This OS package includes CUDA 10.2, cuDNN, TensorRT, and OpenCV 4.x libraries pre-optimized for the Tegra X1 architecture.
+\textbf{System Assembly for the Project:}  
+In this project, the reComputer~J1010 unit is mounted on an acrylic base plate with vibration-isolated spacers.  
+The CSI camera is fixed to an adjustable stand at an angle of 20–25° relative to the vehicle direction and at a height of approximately~1.5~m to ensure optimal license-plate capture.  
+The system communicates with a host laptop via Ethernet for SSH access, dataset transfer, and remote model updates.
 
 \bigskip
-\textbf{Thermal and Environmental Considerations:}  
-Under sustained GPU utilization, SoC temperature typically stabilizes between 55 °C and 65 °C with the passive heatsink.  
-In warmer environments (> 30 °C ambient), a 5 V PWM fan connected to J8 is recommended.  
-The board operates reliably between 0 °C and 40 °C ambient and at relative humidity up to 90 \% non-condensing.
+Overall, the modular construction of the Seeed Studio reComputer~J1010 provides mechanical robustness, efficient thermal design, and ease of expansion, making it a reliable platform for continuous real-time AI inference at the edge \cite{seeedJ101Manual, edgeAIbook}.
 
-\bigskip
-\textbf{System Assembly in the Project:}  
-For the License Plate Detection application, the Jetson Nano is mounted on an acrylic base plate with vibration-absorbing spacers.  
-The CSI camera is fixed on an adjustable stand at a 20–25° angle relative to vehicle direction, ensuring clear plate capture at a 1.5 m height.  
-Ethernet provides Internet access for model updates and data synchronization with the host laptop used for training.
-
-\bigskip
-Overall, the modular construction of the Seeed Studio reComputer J1010 simplifies expansion, maintenance, and cooling, making it a reliable platform for continuous AI inference at the edge \cite{seeedJ101Manual,edgeAIbook}.
-
-
+\newpage
 \section{Interfaces}
 The Seeed Studio J101 carrier board exposes multiple connectors for communication, expansion, and debugging. 
 Each interface corresponds to the labeled connector on the PCB as defined in the official datasheet \cite{seeedJ101Manual}.
 
-\subsection{J10 – 40-Pin Expansion Header (GPIO)}
+\subsection{J1 - J19 Connectors}
+
+\subsubsection{J10 – 40-Pin Expansion Header (GPIO)}
 Provides 3.3~V general-purpose I/O pins supporting digital I/O, I\textsuperscript{2}C, SPI, UART, I\textsuperscript{2}S, and PWM. 
 Compatible with the Jetson.GPIO Python library for user-space control.
 
-\subsection{J14 – Serial and Button Header (UART / Debug)}
+\subsubsection{J14 – Serial and Button Header (UART / Debug)}
 Exposes UART2 (TX/RX) for serial debugging, along with SYS\_RESET, PWR\_BTN, and FORCE\_RECOVERY pins for power and firmware control. 
 Auto power-on can be disabled by shorting pins~5--6.
 
-\subsection{J1–J5 – USB Interfaces}
+\subsubsection{J1–J5 – USB Interfaces}
 \begin{itemize}
 	\item \textbf{J1:} USB-C power input (5~V, up to 4~A)
 	\item \textbf{J2:} USB-C data/recovery port
@@ -205,31 +216,31 @@ Auto power-on can be disabled by shorting pins~5--6.
 	\item \textbf{J5:} Dual USB~2.0 Type-A (480~Mbps total, 2~A shared VBUS)
 \end{itemize}
 
-\subsection{J6 – Gigabit Ethernet Interface}
+\subsubsection{J6 – Gigabit Ethernet Interface}
 Standard RJ-45 connector supporting 10/100/1000~BASE-T with link (green) and activity (yellow) LEDs. 
 Optional Power-over-Ethernet (PoE) is supported via additional circuitry.
 
-\subsection{J3 – HDMI Interface}
+\subsubsection{J3 – HDMI Interface}
 HDMI~2.0 Type-A connector supporting up to 4K~@~60~Hz video output with audio, CEC, and DDC communication.
 
-\subsection{J11 – M.2 Key E Socket}
+\subsubsection{J11 – M.2 Key E Socket}
 Provides PCIe~x1, USB~2.0, UART, I\textsuperscript{2}S, and I\textsuperscript{2}C interfaces for Wi-Fi/Bluetooth modules.
 
-\subsection{J9 \& J13 – Camera (CSI) Interfaces}
+\subsubsection{J9 \& J13 – Camera (CSI) Interfaces}
 Two 15-pin MIPI CSI-2 connectors supporting dual 4-lane cameras. 
 Controlled through I\textsuperscript{2}C lines for power and sensor configuration.
 
-\subsection{J8 – Fan Connector}
+\subsubsection{J8 – Fan Connector}
 4-pin PWM header (5~V, PWM, Tach, GND) for optional active cooling. 
 PWM control is available via GPIO14, and tachometer feedback via GPIO08.
 
-\subsection{J18 – RTC Coin Cell Battery Holder}
+\subsubsection{J18 – RTC Coin Cell Battery Holder}
 Provides backup power for the Real-Time Clock (RTC) using a CR2032 cell.
 
-\subsection{J19 – SDIO Interface}
+\subsubsection{J19 – SDIO Interface}
 Dedicated microSD interface supporting 1.8~V/3.3~V operation for SD cards or SDIO peripherals.
 
-\subsection{Summary of Jetson Nano Interfaces}
+\subsubsection{Summary of Jetson Nano Interfaces}
 \begin{table}[H]
 	\centering
 	\caption{Summary of Jetson Nano Interfaces (reComputer J1010)}
@@ -254,40 +265,14 @@ Dedicated microSD interface supporting 1.8~V/3.3~V operation for SD cards or SDI
 	\end{tabular}
 \end{table}
 
-\subsubsection{ External Interfaces of Jetson Nano}
 
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.9\linewidth]{HardwareDesc/jetson-side.png}
-	\caption{Front I/O panel of the Seeed Studio reComputer J1010 with labeled external interfaces (1--6) corresponding to Table~\ref{tab:j1010_interfaces} \cite{seeedJ101Manual}.}
-	\label{fig:jetson_side}
-\end{figure}
-
-\noindent\textbf{\textcolor{red}{ TODO: Convert to TikZ/Image diagram (Side View)}}
-
-\begin{table}[H]
-	\centering
-	\caption{External interfaces of the Seeed Studio reComputer J1010}
-	\label{tab:j1010_interfaces}
-	\begin{tabular}{|c|l|l|}
-		\hline
-		\textbf{No.} & \textbf{Name} & \textbf{Note} \\ \hline
-		1 & DCIN (Type-C interface) & Power supply only \\ \hline
-		2 & HDMI & \\ \hline
-		3 & 1x USB 3.0 Type-A port & \\ \hline
-		4 & 2x USB 2.0 Type-A ports & \\ \hline
-		5 & LAN & \\ \hline
-		6 & USB Type-C port & Data transmitted only \\ \hline
-	\end{tabular}
-\end{table}
-
-
-\section{Pin Configuration}
+\subsection{Pin Configuration}
 All general-purpose I/O pins on J10 operate at \textbf{3.3~V logic levels}. 
 They support configurable modes such as digital I/O, PWM, SPI, UART, I\textsuperscript{2}C, and I\textsuperscript{2}S. 
 Over-voltage above 3.3~V can damage the SoC pins. 
 Pin control and configuration are performed through the Jetson.GPIO library or the device tree \cite{seeedJ101Manual}.
 
+\newpage
 \section{Data Quality}
 The Jetson Nano offers consistent high-resolution image capture through its dedicated MIPI CSI-2 interface, minimizing latency compared to USB cameras. 
 GPU-accelerated image preprocessing ensures robust frame quality and stability for license plate detection under variable illumination \cite{edgeAIbook}.
