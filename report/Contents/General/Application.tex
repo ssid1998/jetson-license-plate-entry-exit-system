@@ -16,143 +16,210 @@
 % Application.tex
 \chapter{Application Domain Knowledge}
 
-%=== Domain Knowledge: Application (ANPR on Jetson Nano) ======================
-\section{Part Domain Knowledge — Application}
-\label{sec:domain-knowledge-application}
+%=== Domain Knowledge: Application  ======================
+% =========================================================
+% Application Domain Knowledge — License Plate Detection
+% Project: Jetson Nano + YOLOv8 + EasyOCR + SQLite
+% Style: Section-only, no page breaks, LaTeX manual tone
+% =========================================================
 
-\noindent\textbf{Context.}
-We deploy \emph{Automatic Number Plate Recognition (ANPR)} on an embedded edge device (NVIDIA Jetson Nano B01 + USB UVC camera) to detect plates with a real-time object detector and read text via OCR. Typical use cases include barrierless parking, campus access control, and vehicle audit trails where on-device inference reduces latency and preserves data sovereignty \cite{nvidiaJetsonNano, anprSurvey, yolov5, easyocr, edgePrivacy}.
+\section{Application Domain Knowledge}
 
-%----------------------------- High-level Application Table -------------------
-\begin{table}[H]
-	\centering
-	\caption{Domain checklist for edge ANPR (what matters and why)}
-	\label{tab:domain-checklist}
-	\begin{tabular}{p{3.3cm} p{10.5cm}}
-		\toprule
-		\textbf{Dimension} & \textbf{What it means for our project} \\
-		\midrule
-		Application & Barrierless entry/exit and logging on a closed site; on-device inference: low latency, no WAN dependence, and lower privacy risk \cite{edgePrivacy}. \\
-		Problem & Detect EU/German plates in unconstrained scenes (day/night, rain, glare), crop plates robustly, OCR the text, and attach policy (e.g., whitelist/exception) in near real time. \\
-		Data acquisition & We use a UVC USB camera (Microsoft LifeCam Show) mounted at \SI{2.0}{m}–\SI{3.0}{m} height; focal direction tuned to capture rear/front plates at \SI{3}{m}–\SI{8}{m}. Optional synthetic augmentation fills rare cases \cite{dataAug}. \\
-		Data quantity & For robust training/fine-tuning: \(\sim\)5–10k annotated plate instances for detection; \(\sim\)100–300 samples per frequent character trigram for OCR calibration; continuous logging for evaluation. \\
-		Data quality & Sharp plates with plate height \(\ge\) 40–50 px in the crop, minimal motion blur (\(<\)1 px PSF), correct exposure (\(\le\)1\% saturated pixels in plate region). \\
-		Data relevance & German/EU plate layout (DE/EU bands, DIN 1451/FE-Schrift) and local fonts dominate; include neighboring countries’ layouts for transferability \cite{anprSurvey, ocrSurvey}. \\
-		Outliers & Novel vanity formats, dirty/damaged plates, temporary paper plates, tow hooks occluding characters, non-plate rectangular signs triggering false positives. \\
-		Anomalies & Spoofed/fake plates, adversarial stickers, reflections producing duplicated contours, multi-plate scenes (car + bike rack), frames with no vehicle but high-contrast text. \\
-		\bottomrule
-	\end{tabular}
-\end{table}
+\subsection{Domain Knowledge — Application Domain}
+The proposed system lies in the domain of \textbf{Smart Mobility} and \textbf{Airport Traffic Automation}, specifically focusing on \textbf{Edge-Based License Plate Detection and Parking Management}.  
+It uses a single fixed camera at the airport gate to automatically detect the entry and exit of vehicles, record timestamps, and calculate \textbf{dwell time}. If the stay exceeds a predefined threshold (10 minutes), the system automatically computes and logs a \textbf{parking charge}.
 
-%----------------------------- Problem Definition -----------------------------
-\subsection{Problem}
-Given a live RGB stream, output tuples \(\langle\)timestamp, plate\_id, bbox, confidences, plate\_text, policy\(\rangle\) with end-to-end latency \(\le\) \SI{200}{ms} at \(\ge\) \SI{15}{fps}. The system must be robust to weather (rain, snow), illumination (night, headlight glare), and pose (yaw/pitch) typical for driveway/parking entrances \cite{anprSurvey}.
+Deployed on an \textbf{NVIDIA Jetson Nano}, the system operates completely offline, combining \textbf{YOLOv8} for plate detection, \textbf{EasyOCR} for recognition, and a lightweight \textbf{SQLite} database for event tracking.  
+This allows real-time monitoring, instant detection, and local billing without any need for cloud infrastructure \cite{anpr-survey-2020, easyocr-2020, nvidia-jetson}.
 
-%----------------------------- Data Acquisition -------------------------------
-\subsection{Data Acquisition (Camera and Setup)}
-\textbf{Camera:} Microsoft LifeCam Show, UVC USB 2.0, 2\,MP sensor. Operated at 640\(\times\)480 or 1280\(\times\)720 for stable fps on Nano.
-\textbf{Mounting:} Rigid pole/wall, angle $10^\circ$–$25^\circ$ downward; avoid facing bright road signs. 
-\textbf{Exposure:} Lock exposure/white balance where possible to reduce inter-frame variance; enable short shutter and higher gain at night to reduce motion blur.
-\textbf{Ingestion:} V4L2/GStreamer to NVMM (zero-copy) where possible to keep GPU busy \cite{nvidiaJetsonNano}.
-
-%----------------------------- Data Quantity ----------------------------------
-\subsection{Data Quantity}
-\begin{itemize}[leftmargin=1.1em]
-	\item \textbf{Detection:} At least 5k diverse plate instances for fine-tuning (angles, distances, weather, day/night).
-	\item \textbf{OCR:} Balancing samples across characters and common bigrams/trigrams (e.g., \texttt{AA}, \texttt{ER}, \texttt{MÜ}) to reduce bias \cite{ocrSurvey}.
-	\item \textbf{Evaluation:} 10–20\% held-out sequences per condition (day, night, rain) and at least 1 week of continuous logs for drift checks.
+\vspace{0.5em}
+\noindent\textbf{Why edge?}  
+The airport environment demands continuous operation, minimal latency, and secure local data handling. Edge AI ensures:
+\begin{itemize}
+	\item Operation even during network outages.
+	\item Low latency ($\approx$15–25 FPS) suitable for vehicle flow.
+	\item GDPR-compliant local storage.
+	\item Lower operating costs compared to cloud-connected ANPR systems.
 \end{itemize}
 
-%----------------------------- Data Quality -----------------------------------
-\subsection{Data Quality}
-Quality gates before training/inference:
-\begin{enumerate}[leftmargin=1.1em]
-	\item \textbf{Sharpness}: Laplacian variance \(>\) threshold; reject blurred frames.
-	\item \textbf{Brightness}: Mean plate ROI within [0.2, 0.8] (normalized); cap highlights.
-	\item \textbf{Plate Size}: Minimum plate height in frame and in crop; upscale only within 1.5\(\times\) to limit artifacts.
-	\item \textbf{Label Consistency}: IoU agreement \(>\)0.5 across annotators for detection; OCR string validator (regex for country format).
-\end{enumerate}
-
-%----------------------------- Relevance --------------------------------------
-\subsection{Data Relevance (Formats \& Policies)}
-German/EU plates follow regulated layouts (country band, district code, letters–digits, inspection badge positions). We encode format-aware validators and country-specific regex to improve OCR post-processing and reduce false accepts \cite{anprSurvey, euPlateStd}.
-
-%----------------------------- Outliers & Anomalies ---------------------------
-\subsection{Outliers and Anomalies Handling}
-\begin{table}[H]
-	\centering
-	\caption{Operational outliers/anomalies and mitigations}
-	\label{tab:outliers}
-	\begin{tabular}{p{3.6cm} p{10.2cm}}
-		\toprule
-		\textbf{Case} & \textbf{Mitigation} \\
-		\midrule
-		Dirty/damaged plates & Multi-crop super-resolution fallback; OCR with CTC and edit-distance voting; allow 1–2 char wildcard for whitelist hit. \\
-		Headlight glare/night & HDR exposure bracket or temporal fusion; polarized shield; train with synthetic flare/glare. \\
-		Non-plate text & Two-stage filtering: YOLO plate class \(\rightarrow\) geometry/AR check \(\rightarrow\) OCR; reject crops with invalid layout. \\
-		Fake/spoofed plates & Cross-check checksum-like constraints and blacklist patterns; temporal consistency across frames; optional backend verification. \\
-		Multiple plates & Track-by-detection; associate crops to tracks; per-track OCR majority vote to stabilize. \\
-		\bottomrule
-	\end{tabular}
-\end{table}
-
-%----------------------------- Data Sources & Licensing -----------------------
-\subsection{Data Sources \& Licensing}
-\begin{table}[H]
-	\centering
-	\caption{Typical data sources and legal considerations (fill concrete sources you use)}
-	\label{tab:data-sources}
-	\begin{tabular}{p{3.6cm} p{6.6cm} p{3.6cm}}
-		\toprule
-		\textbf{Source} & \textbf{Use} & \textbf{Notes} \\
-		\midrule
-		Public ANPR datasets & Detector/OCR benchmarking & Check license; ensure EU plate coverage \cite{anprDataset}. \\
-		Own site recordings & Fine-tuning, domain fit & Obtain signage/consent; keep retention short; hash plates at rest \cite{gdpr}. \\
-		Synthetic generation & Rare cases, augmentations & Vary font/spacing, weather, motion blur; helpful for low-resource layouts \cite{dataAug}. \\
-		\bottomrule
-	\end{tabular}
-\end{table}
-
-%----------------------------- TikZ Pipeline ----------------------------------
-\subsection{Edge Inference Pipeline (TikZ)}
-\begin{figure}[H]
+% ------------------- TikZ Diagram (Airport Scenario) -----------------------
+\begin{figure}[h!]
 	\centering
 	\begin{tikzpicture}[
-		node distance=9mm,
-		box/.style={rectangle, rounded corners, draw, minimum width=24mm, minimum height=7mm, align=center},
-		arr/.style={-Stealth, thick}
+		node distance=10mm and 10mm,
+		font=\small,
+		every node/.style={align=center},
+		car/.style={rectangle,rounded corners=2pt,draw=black,fill=gray!10,minimum width=1.2cm,minimum height=0.6cm,font=\scriptsize},
+		block/.style={draw,rounded corners=4pt,fill=orange!10,minimum width=2.8cm,minimum height=1.1cm,text width=2.8cm,align=center},
+		db/.style={draw,cylinder,shape border rotate=90,aspect=0.25,fill=green!10,minimum height=1.3cm,minimum width=1.3cm,align=center},
+		arrow/.style={-Stealth,thick},
+		cam/.style={circle,draw,fill=blue!10,minimum size=0.9cm,align=center,font=\scriptsize},
+		output/.style={draw,rounded corners=4pt,fill=purple!10,minimum width=3cm,minimum height=1cm,align=center,font=\scriptsize}
 		]
-		\node[box] (cam) {UVC Camera\\(LifeCam Show)};
-		\node[box, right=of cam] (ing) {V4L2 / GStreamer\\(NVMM)};
-		\node[box, right=of ing] (prep) {Preprocess\\(resize, norm)};
-		\node[box, right=of prep] (det) {YOLO Plate\\Detection \cite{yolov5}};
-		\node[box, right=of det] (crop) {Plate Crop(s)};
-		\node[box, right=of crop] (ocr) {OCR (EasyOCR/CRNN) \cite{easyocr, ocrSurvey}};
-		\node[box, below=12mm of ocr] (post) {Postproc\\(regex, votes)};
-		\node[box, left=of post] (db) {SQLite DB\\(whitelist, logs)};
-		\node[box, right=of post] (act) {Action\\(gate, alert)};
 		
-		\draw[arr] (cam) -- (ing);
-		\draw[arr] (ing) -- (prep);
-		\draw[arr] (prep) -- (det);
-		\draw[arr] (det) -- (crop);
-		\draw[arr] (crop) -- (ocr);
-		\draw[arr] (ocr) -- (post);
-		\draw[arr] (post) -- (act);
-		\draw[arr] (post) -- (db);
+		% ---- Airport Layout ----
+		\node[draw,fill=gray!20,minimum width=12cm,minimum height=3cm,rounded corners=5pt,label={[font=\bfseries]above:Airport Drop-off Zone}] (zone) {};
+		
+		% ---- Entry/Exit path ----
+		\draw[thick,gray!60,dashed] (-5.2,-0.2) -- (5.2,-0.2);
+		\draw[->,thick,gray!70] (-5.1,-0.2) -- (-1.2,-0.2) node[midway,below,yshift=-2mm]{\textbf{Entry}};
+		\draw[->,thick,gray!70] (1.2,-0.2) -- (5.1,-0.2) node[midway,below,yshift=-2mm]{\textbf{Exit}};
+		
+		% ---- Camera node ----
+		\node[cam] (camera) at (0,0.6) {\textbf{Camera}};
+		\draw[thick,gray!70] (0,0.6) -- (0,-0.2);
+		\node at (0,1.4) {\includegraphics[width=0.7cm]{example-image-a}}; % (optional: replace with camera icon image)
+		
+		% ---- Cars ----
+		\node[car,fill=yellow!20,draw=black] (carin) at (-3.5,-0.2) {\textbf{Car A}};
+		\node[car,fill=orange!20,draw=black] (carout) at (3.5,-0.2) {\textbf{Car A (Exit)}};
+		
+		% ---- Processing chain below ----
+		\node[block,below=2.0cm of camera,yshift=-1mm] (detect) {\textbf{YOLOv8 Detection}\\Plate Localization};
+		\node[block,below=of detect] (ocr) {\textbf{EasyOCR}\\Character Recognition};
+		\node[block,below=of ocr] (logic) {\textbf{Event Logic}\\Timestamp + Duration};
+		\node[db,below=of logic] (sqlite) {\textbf{SQLite}\\Vehicle Log};
+		\node[output,below=of sqlite] (alert) {\textbf{Billing \& Alert}\\Triggered if $>$10 min stay};
+		
+		% ---- Arrows ----
+		\draw[arrow] (camera) -- (detect);
+		\draw[arrow] (detect) -- (ocr);
+		\draw[arrow] (ocr) -- (logic);
+		\draw[arrow] (logic) -- (sqlite);
+		\draw[arrow] (sqlite) -- (alert);
+		
+		% ---- Text labels ----
+		\node[font=\scriptsize,align=center,fill=white,draw,rounded corners=3pt] at (-3.5,0.9)
+		{Entry detected\\Timestamp $T_1$};
+		\node[font=\scriptsize,align=center,fill=white,draw,rounded corners=3pt] at (3.5,0.9)
+		{Exit detected\\Timestamp $T_2$};
+		\node[font=\scriptsize,align=center,fill=white,draw,rounded corners=3pt] at (2.9,-4.7)
+		{If $(T_2 - T_1) > 10\,\text{min}$\\$\Rightarrow$ Charge Applied};
+		
+		% ---- Decorative legend ----
+		\node[draw,fill=blue!10,rounded corners=2pt,below right=0.5cm and -0.2cm of alert,font=\scriptsize,text width=2.3cm,align=center] (l1) {On-site Data Capture};
+		\node[draw,fill=orange!10,rounded corners=2pt,right=2mm of l1,font=\scriptsize,text width=2.3cm,align=center] (l2) {Edge AI Inference};
+		\node[draw,fill=green!10,rounded corners=2pt,right=2mm of l2,font=\scriptsize,text width=2.3cm,align=center] (l3) {Local Database};
+		\node[draw,fill=purple!10,rounded corners=2pt,right=2mm of l3,font=\scriptsize,text width=2.3cm,align=center] (l4) {Billing / Action};
+		
 	\end{tikzpicture}
-	\caption{On-device ANPR pipeline on Jetson Nano.}
-	\label{fig:tikz-pipeline}
+	\caption{Airport ANPR system architecture: a single Jetson Nano camera detects vehicle entry and exit, logs timestamps locally, and triggers billing when dwell time exceeds 10 minutes.}
+	\label{fig:airport-anpr-advanced}
 \end{figure}
 
-%----------------------------- Notes on Privacy -------------------------------
-\subsection{Privacy and Policy Notes (GDPR-aware)}
-Perform on-device inference; store only hashed plate strings plus salted last-4 preview where policy allows; enforce minimal retention and role-based access; display site signage and document purpose/legitimate interest \cite{gdpr, edgePrivacy}.
-
-%----------------------------- What we will measure ---------------------------
-\subsection{Operational KPIs}
-\begin{itemize}[leftmargin=1.1em]
-	\item Detection AP\(_{50}\) on held-out day/night; OCR CER/WER on plate crops.
-	\item End-to-end latency (camera \(\rightarrow\) decision), fps stability over \SI{30}{min}.
-	\item False accept / false reject on whitelist; drift rate vs. weather/time-of-day.
+\subsection{Application Problem}
+At airports, vehicles frequently stop near terminals to pick up or drop passengers.  
+Security rules usually allow short stays (e.g., under 10 minutes). Manual enforcement using human officers or ticket machines is inefficient and inconsistent.  
+Our system eliminates manual logging by:
+\begin{itemize}
+	\item Automatically detecting and recognizing plates at both entry and exit using a \textbf{single camera}.
+	\item Computing the \textbf{time difference} between entry and exit for each vehicle.
+	\item Automatically triggering a \textbf{charge} when the stay exceeds 10 minutes.
 \end{itemize}
+This enables efficient, unattended management of short-term parking and drop-off areas.
+
+\subsection{Data Acquisition}
+\textbf{Operational data:} Continuous video stream from a single fixed camera at the airport gate (1080p, 25 FPS).  
+\textbf{Data pipeline:} YOLOv8 detects license plate bounding boxes → EasyOCR extracts alphanumeric text → timestamps are stored in SQLite as either \emph{entry} or \emph{exit} events.  
+The same camera detects both, using logic to compare time differences.  
+\textbf{Training/validation data:} Public datasets (CCPD, OpenALPR) plus airport-captured samples to adapt to real lighting, glare, and plate types \cite{ccpd-2018, openalpr-benchmark, eu-anpr}.
+
+\begin{table}[h!]
+	\centering
+	\small
+	\begin{tabular}{p{3.5cm} p{2.5cm} p{2.5cm} p{5.5cm}}
+		\toprule
+		\textbf{Dataset} & \textbf{Region} & \textbf{Scale} & \textbf{Usage} \\
+		\midrule
+		CCPD (City Parking) & CN & 200k+ & Pretraining for detection robustness under variable light. \\
+		OpenALPR Benchmark & Mixed & 10k & Testing generalization and OCR performance. \\
+		EU License Plate Sets & EU & 5–20k & Adapting detection to EU/German plate patterns. \\
+		Custom Airport Dataset & DE & 3k+ & Captures of real entry/exit under terminal lighting. \\
+		\bottomrule
+	\end{tabular}
+	\caption{Datasets used for pretraining and fine-tuning of the airport ANPR system.}
+	\label{tab:datasets-airport}
+\end{table}
+
+\subsection{Data Quantity}
+\begin{itemize}
+	\item Training dataset size: $\sim$20k images combining open datasets and airport footage.
+	\item Runtime: real-time detection at 20–25 FPS.
+	\item Each vehicle generates 2 records — \emph{entry} and \emph{exit} — stored in SQLite.
+	\item SQLite handles up to $\sim$10$^6$ records with date, time, and license ID.
+	\item Historical data exported periodically for audit and analytics.
+\end{itemize}
+
+\subsection{Data Quality}
+Quality determines billing precision:
+\begin{itemize}
+	\item \textbf{Preprocessing:} CLAHE contrast enhancement and denoising before OCR.
+	\item \textbf{Confidence gating:} Accept YOLO detections only when confidence $>0.6$.
+	\item \textbf{Time consistency:} Duplicate detections within 5 seconds are suppressed.
+	\item \textbf{Regex validation:} Only valid EU/German plate formats are stored.
+	\item \textbf{Lighting calibration:} Camera auto-gain and exposure tuned for day/night operation.
+\end{itemize}
+
+\subsection{Data Relevance}
+All collected data directly supports the parking time computation task:
+\begin{enumerate}
+	\item Only valid plate events (entry/exit) are recorded; irrelevant frames are discarded.
+	\item Events are timestamped precisely (milliseconds) for accurate dwell-time calculation.
+	\item Region-specific plate formats ensure relevance to local regulations.
+	\item Logs are stored locally for privacy and regulatory compliance.
+\end{enumerate}
+
+\subsection{Outliers}
+Outliers refer to detections that do not follow the normal entry-exit pattern:
+\begin{itemize}
+	\item Vehicles detected multiple times without leaving (false multiple exits).
+	\item Blurred plates or partially visible text.
+	\item Vehicles without visible plates (blocked or dirty).
+\end{itemize}
+\textbf{Mitigation:} System uses timestamp grouping and last-seen confidence to identify invalid sequences and exclude them from billing.
+
+\subsection{Anomalies}
+Anomalies indicate irregular operational conditions:
+\begin{itemize}
+	\item \textbf{Double detections:} Same vehicle logged twice within seconds.
+	\item \textbf{Exit-before-entry:} Clock or logic errors (handled with checks).
+	\item \textbf{OCR mismatch:} Entry and exit plates differ by 1–2 characters (e.g., due to reflection).
+\end{itemize}
+\textbf{Resolution:} Pattern matching and fuzzy string similarity (\texttt{difflib}) handle small OCR variations before billing logic is triggered.
+
+\begin{table}[h!]
+	\centering
+	\small
+	\begin{tabular}{p{4cm} p{2.5cm} p{6cm}}
+		\toprule
+		\textbf{Anomaly Type} & \textbf{Impact} & \textbf{Mitigation Strategy} \\
+		\midrule
+		Duplicate Entry Logs & Billing inconsistency & Temporal filtering, 10-sec cooldown. \\
+		OCR Character Swap & Wrong plate ID & Levenshtein/fuzzy match correction. \\
+		Missed Exit Event & Overcharge & Periodic event reconciliation from camera buffer. \\
+		\bottomrule
+	\end{tabular}
+	\caption{Common anomalies and mitigation strategies for the airport ANPR system.}
+	\label{tab:anomalies-airport}
+\end{table}
+
+\subsection*{Summary}
+The application domain integrates \textbf{computer vision}, \textbf{edge AI}, and \textbf{local data management} to automate vehicle monitoring within airport terminals.  
+A single Jetson Nano-based camera recognizes both \textbf{entry and exit} events, records timestamps, calculates \textbf{dwell time}, and automatically triggers billing for vehicles exceeding the permitted 10-minute duration.  
+This fully automated workflow eliminates the need for manual ticketing or human monitoring, improving \textbf{efficiency}, \textbf{accuracy}, and \textbf{24/7 operational reliability}.
+
+From a data perspective, the system maintains high \textbf{data quality} through real-time validation, confidence-based filtering, and local persistence of relevant information only.  
+It adheres to \textbf{GDPR-compliant practices} by processing and storing data directly on the Jetson Nano without cloud transmission.  
+This edge-first approach minimizes latency, reduces maintenance costs, and ensures continued functionality even in network-restricted environments.
+
+Beyond airport use, the developed framework can be scaled for other domains such as:
+\begin{itemize}
+	\item \textbf{Smart parking lots} for retail, hospitals, or universities.  
+	\item \textbf{Logistics hubs} for tracking delivery vehicle dwell times.  
+	\item \textbf{High-security facilities} (embassies, military zones) where controlled access logging is critical.  
+\end{itemize}
+
+Furthermore, integration with \textbf{Vehicle-to-Infrastructure (V2I)} and \textbf{Vehicle-to-Vehicle (V2V)} communication systems can transform this into a connected mobility module.  
+Such extensions will enable dynamic traffic coordination, \textbf{real-time gate availability broadcasting}, and automated security alerts — key components of next-generation \textbf{Smart Airport Infrastructure}.  
+
+Overall, the proposed solution demonstrates how lightweight embedded AI can deliver high-impact automation with measurable social, operational, and economic benefits, supporting the transition toward \textbf{autonomous, intelligent, and sustainable transportation ecosystems} \cite{smart-parking, privacy-edge, nvidia-jetson}.
