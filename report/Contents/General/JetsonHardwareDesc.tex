@@ -95,6 +95,7 @@ In accessibility-focused research, the Jetson Nano has been used for projects th
 Jetson Nano’s ability to process video streams in real time makes it ideal for traffic congestion analysis and license plate recognition systems — the focus of this project.  
 Its edge-processing capability ensures privacy compliance and low latency compared to cloud-based analytics.
 
+\bigskip
 In summary, the Jetson Nano bridges the gap between experimental AI research and real-world embedded deployment. 
 Its balance of performance, cost, and open-source accessibility enables both academic and industrial innovation in fields like automation, surveillance, and intelligent transportation systems.
 
@@ -195,82 +196,346 @@ Overall, the modular construction of the Seeed Studio reComputer~J1010 provides 
 
 \newpage
 \section{Interfaces}
-The Seeed Studio J101 carrier board exposes multiple connectors for communication, expansion, and debugging. 
-Each interface corresponds to the labeled connector on the PCB as defined in the official datasheet \cite{seeedJ101Manual}.
+\label{sec:interfaces}
+The Seeed Studio J101 carrier board provides multiple connectors (J1--J19) for power input, display output, data communication, and peripheral expansion.  
+Figure~\ref{fig:interfaces_layout} illustrates the physical locations of these connectors on the board, including power (J1, J2), USB and HDMI ports (J3--J5), Ethernet (J6), camera interfaces (J9, J13), GPIO header (J10), and auxiliary modules such as the M.2~Key~E and RTC header.  
+This section describes the purpose and electrical characteristics of each connector based on the official Seeed Studio documentation \cite{seeedJ101Manual,reComputer_HardwareLayout}.
 
-\subsection{J1 - J19 Connectors}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.95\linewidth]{HardwareDesc/interfaces.png}
+	\caption{Labeled layout of the Seeed Studio reComputer~J1010 carrier board showing connector positions (J1--J19), including power, USB, HDMI, CSI camera ports, GPIO header, and M.2~Key~E slot \cite{seeedJ101Manual,reComputer_HardwareLayout}.}
+	\label{fig:interfaces_layout}
+\end{figure}
 
-\subsubsection{J10 – 40-Pin Expansion Header (GPIO)}
-Provides 3.3~V general-purpose I/O pins supporting digital I/O, I\textsuperscript{2}C, SPI, UART, I\textsuperscript{2}S, and PWM. 
-Compatible with the Jetson.GPIO Python library for user-space control.
+\bigskip
+\noindent\textbf{\textcolor{red}{TODO: Convert this to TikZ/illustration diagram later.}}
+\bigskip
 
-\subsubsection{J14 – Serial and Button Header (UART / Debug)}
-Exposes UART2 (TX/RX) for serial debugging, along with SYS\_RESET, PWR\_BTN, and FORCE\_RECOVERY pins for power and firmware control. 
-Auto power-on can be disabled by shorting pins~5--6.
+\subsection{J1--J19 Connectors }
 
-\subsubsection{J1–J5 – USB Interfaces}
+\subsubsection{J1--J5: Power and USB}
 \begin{itemize}
-	\item \textbf{J1:} USB-C power input (5~V, up to 4~A)
-	\item \textbf{J2:} USB-C data/recovery port
-	\item \textbf{J4:} USB~3.0 Type-A (5~Gbps)
-	\item \textbf{J5:} Dual USB~2.0 Type-A (480~Mbps total, 2~A shared VBUS)
+	\item \textbf{J1 (USB Type-C, DCIN):} 5~V~DC input (up to 4~A). Primary system power rail. 
+	\item \textbf{J2 (USB Type-C, Data/Recovery):} USB~2.0 device mode for data and recovery.
+	\item \textbf{J3 (HDMI Type-A):} HDMI~2.0 display output up to 3840$\times$2160 @ 60~Hz with audio, CEC, and DDC.
+	\item \textbf{J4 (USB~3.0 Type-A):} 5~Gbps host port for high-speed peripherals (e.g., cameras, SSD enclosures).
+	\item \textbf{J5 (Dual USB~2.0 Type-A):} 480~Mbps host ports for keyboard, mouse, and low-power devices.
 \end{itemize}
 
-\subsubsection{J6 – Gigabit Ethernet Interface}
-Standard RJ-45 connector supporting 10/100/1000~BASE-T with link (green) and activity (yellow) LEDs. 
-Optional Power-over-Ethernet (PoE) is supported via additional circuitry.
+\subsubsection{J6: Gigabit Ethernet}
+Standard RJ-45 connector supporting 10/100/1000~BASE-T with link/activity LEDs. PoE is supported only with additional circuitry; not provided by default on J101 \cite{seeedJ101Manual}.
 
-\subsubsection{J3 – HDMI Interface}
-HDMI~2.0 Type-A connector supporting up to 4K~@~60~Hz video output with audio, CEC, and DDC communication.
+\subsubsection{J8: Fan Header}
+4-pin PWM fan header (5~V, PWM, TACH, GND) for optional active cooling. PWM control and tach feedback are routed to GPIO pins via the carrier board pinmux \cite{seeedJ101Manual}.
 
-\subsubsection{J11 – M.2 Key E Socket}
-Provides PCIe~x1, USB~2.0, UART, I\textsuperscript{2}S, and I\textsuperscript{2}C interfaces for Wi-Fi/Bluetooth modules.
+\subsubsection{J9 and J13: MIPI-CSI Camera}
+Two 15-pin CSI-2 connectors supporting 4-lane cameras. Camera control is provided via I\textsuperscript{2}C; ribbon orientation and latch direction follow the datasheet mechanical drawing \cite{seeedJ101Manual,reComputer_HardwareLayout}.
 
-\subsubsection{J9 \& J13 – Camera (CSI) Interfaces}
-Two 15-pin MIPI CSI-2 connectors supporting dual 4-lane cameras. 
-Controlled through I\textsuperscript{2}C lines for power and sensor configuration.
+\subsubsection{J10: 40-Pin Expansion Header (GPIO)}
+Raspberry~Pi-compatible 40-pin header exposing 3.3~V logic GPIO and multiplexed buses (I\textsuperscript{2}C, SPI, UART, I\textsuperscript{2}S, PWM). 
+Use the Jetson.GPIO Python library for user-space access; detailed electrical behavior is described in Section~\ref{subsec:pinconfig} \cite{reComputer_Jetson_GPIO}.
 
-\subsubsection{J8 – Fan Connector}
-4-pin PWM header (5~V, PWM, Tach, GND) for optional active cooling. 
-PWM control is available via GPIO14, and tachometer feedback via GPIO08.
+\bigskip
+\noindent\textbf{\textcolor{red}{TODO: Add 40pin TikZ/illustration diagram.}} 
+\newline\noindent\textbf{\textcolor{red}{TODO: Add the 40 pin description table.}}
+\bigskip
 
-\subsubsection{J18 – RTC Coin Cell Battery Holder}
-Provides backup power for the Real-Time Clock (RTC) using a CR2032 cell.
 
-\subsubsection{J19 – SDIO Interface}
-Dedicated microSD interface supporting 1.8~V/3.3~V operation for SD cards or SDIO peripherals.
+\subsubsection{J11: M.2 Key~E}
+Provides PCIe~x1, USB~2.0, UART, I\textsuperscript{2}S, and I\textsuperscript{2}C for Wi-Fi/Bluetooth modules (e.g., Intel/Qualcomm combo cards) \cite{seeedJ101Manual}.
 
-\subsubsection{Summary of Jetson Nano Interfaces}
+\subsubsection{J14: Serial and Button Header (Debug)}
+Exposes UART2~(TX/RX) for serial console, plus SYS\_RESET, PWR\_BTN, and FORCE\_RECOVERY signals for firmware and power control. 
+Auto power-on can be disabled by shorting pins~5--6 as specified by Seeed \cite{seeedJ101Manual}.
+
+\subsubsection{J18: RTC Coin-Cell}
+Two-pin holder for CR2032 cell to back up the real-time clock.
+
+\subsubsection{J19: SDIO}
+Dedicated microSD/SDIO interface (1.8~V/3.3~V) used for bootable storage or SDIO peripherals \cite{seeedJ101Manual}.
+
+
+
+\subsection{Pin Configuration (J10)}
+\label{subsec:pinconfig}
+All user-accessible GPIO on J10 operate at \textbf{3.3~V logic} and are not 5~V tolerant. 
+Use level shifters for 5~V peripherals and external drivers for loads (motors, relays). 
+Pin control is performed in user space via the \texttt{Jetson.GPIO} library; peripheral buses may require enabling via Jetson-IO (device-tree overlay utility) \cite{reComputer_Jetson_GPIO,seeedJ101Manual}.
+
+\paragraph{Numbering conventions.}
+To avoid ambiguity, this report uses \textbf{BOARD} numbering (physical pins 1--40). 
+\texttt{Jetson.GPIO} also supports a BCM-like scheme, but BOARD is recommended for consistency with the silkscreen and Seeed tables \cite{reComputer_Jetson_GPIO}.
+
+\paragraph{Power and ground pins.}
+Pins 1 (3.3~V), 2 and 4 (5~V) provide power; multiple GND pins are distributed across the header (e.g., 6, 9, 14, 20, 25, 30, 34, 39).
+
+\paragraph{Default bus mapping (common use).}
+The J101 header follows the widely used Raspberry~Pi layout:
+\begin{itemize}
+	\item \textbf{I\textsuperscript{2}C bus} on pins \textbf{3 (SDA)} and \textbf{5 (SCL)} (bus \#1 by default).
+	\item \textbf{SPI bus} on pins \textbf{19 (MOSI)}, \textbf{21 (MISO)}, \textbf{23 (SCLK)}, and chip selects \textbf{24 (CE0)}, \textbf{26 (CE1)}.
+	\item \textbf{UART (3.3~V TTL)} on pins \textbf{8 (TXD)} and \textbf{10 (RXD)} mapped to the Jetson serial controller (console-capable) \cite{seeedJ101Manual}.
+	\item \textbf{PWM outputs} are available on selected pins (e.g., physical \textbf{32}, \textbf{33}) depending on pinmux; frequency and duty can be configured via the PWM sysfs or libraries.
+\end{itemize}
+
+\paragraph{Selected J10 pin map (BOARD numbers).}
 \begin{table}[H]
 	\centering
-	\caption{Summary of Jetson Nano Interfaces (reComputer J1010)}
-	\begin{tabular}{|p{1.5cm}|p{3cm}|p{4cm}|p{2.5cm}|p{3cm}|}
+	\caption{Selected J10 pins and typical default functions on reComputer~J1010 \cite{reComputer_Jetson_GPIO,seeedJ101Manual}.}
+	\label{tab:j10_selected}
+	\begin{tabular}{|c|l|c|l|}
 		\hline
-		\textbf{Header / Port} & \textbf{Type / Connector} & \textbf{Key Functions} & \textbf{Voltage / Speed} & \textbf{Remarks} \\
-		\hline
-		J1 & USB-C & Power Input & 5~V~$\pm$~0.25~V, 4~A & Main power supply \\
-		J2 & USB-C & Data / Recovery & USB~2.0 & Device mode \\
-		J3 & HDMI Type-A & Display Output & HDMI~2.0 (4K@60~Hz) & With audio \\
-		J4 & USB~3.0 Type-A & Host Port & 5~Gbps & Camera or SSD \\
-		J5 & Dual USB~2.0 Type-A & Peripheral Ports & 480~Mbps & Keyboard, Mouse \\
-		J6 & RJ-45 Ethernet & Networking & 1~Gbps & PoE optional \\
-		J8 & 4-Pin Fan & Cooling Control & 5~V PWM & Optional fan \\
-		J9 / J13 & 15-Pin CSI & Camera Input & 4-Lane MIPI & Dual camera support \\
-		J10 & 40-Pin Header & GPIO / I$^2$C / SPI / UART / I$^2$S & 3.3~V logic & Expansion header \\
-		J11 & M.2 Key E & PCIe~x1, USB2, I$^2$C & 3.3~V & Wireless modules \\
-		J14 & Button / UART & Power \& Debug Control & 3.3~V & System interface \\
-		J18 & Coin Cell Holder & RTC Backup & 3~V & CR2032 battery \\
-		J19 & SDIO Interface & Storage Interface & 1.8~V/3.3~V & microSD slot \\
-		\hline
+		\textbf{Pin} & \textbf{Function} & \textbf{Pin} & \textbf{Function} \\ \hline
+		1 & 3.3~V Power      & 2  & 5~V Power \\ \hline
+		3 & I$^2$C SDA (Bus~1) & 4  & 5~V Power \\ \hline
+		5 & I$^2$C SCL (Bus~1) & 6  & GND \\ \hline
+		8 & UART TXD (3.3~V)  & 10 & UART RXD (3.3~V) \\ \hline
+		19 & SPI MOSI         & 21 & SPI MISO \\ \hline
+		23 & SPI SCLK         & 24 & SPI CE0 \\ \hline
+		26 & SPI CE1          & 32 & PWM (pinmux dependent) \\ \hline
+		33 & PWM (pinmux dep.) & 34 & GND \\ \hline
 	\end{tabular}
 \end{table}
 
+%\paragraph{Safe-use guidance.}
+%Avoid sourcing more than a few mA from a single GPIO; drive external loads through a transistor/MOSFET or a driver IC. 
+%For 5~V sensors/actuators, use a bidirectional level shifter on data lines. 
+%Enable/disable SPI, I\textsuperscript{2}C, UART, and PWM via \texttt{sudo /opt/nvidia/jetson-io/jetson-io.py} and reboot to apply the device-tree overlay \cite{reComputer_Jetson_GPIO}.
+%
+%\paragraph{Examples.}
+%\textit{GPIO toggle (BOARD numbering):}
+%\begin{lstlisting}[language=Python]
+%	import Jetson.GPIO as GPIO, time
+%	LED = 12                 # physical pin 12
+%	GPIO.setmode(GPIO.BOARD)
+%	GPIO.setup(LED, GPIO.OUT, initial=GPIO.LOW)
+%	try:
+%	while True:
+%	GPIO.output(LED, not GPIO.input(LED))
+%	time.sleep(0.5)
+%	finally:
+%	GPIO.cleanup()
+%\end{lstlisting}
+%
+%\textit{I2C device scan (Bus 1):}
+%\begin{lstlisting}[language=Python]
+%	import smbus2
+%	bus = smbus2.SMBus(1)
+%	found = []
+%	for addr in range(0x03, 0x78):
+%	try:
+%	bus.read_byte(addr)
+%	found.append(hex(addr))
+%	except OSError:
+%	pass
+%	print("I2C devices:", found)
+%\end{lstlisting}
 
-\subsection{Pin Configuration}
-All general-purpose I/O pins on J10 operate at \textbf{3.3~V logic levels}. 
-They support configurable modes such as digital I/O, PWM, SPI, UART, I\textsuperscript{2}C, and I\textsuperscript{2}S. 
-Over-voltage above 3.3~V can damage the SoC pins. 
-Pin control and configuration are performed through the Jetson.GPIO library or the device tree \cite{seeedJ101Manual}.
+\newpage
+\subsection{Enable SPI Interface on Jetson-Nano}
+\label{subsec:enable_spi}
+
+\subsubsection{Introduction}
+\label{subsubsec:spi_intro}
+
+The Jetson Nano features two SPI interfaces multiplexed with GPIOs, but SPI is not enabled by default. 
+This section uses the \textbf{SPI1} controller as an example and provides a method for enabling SPI functionality on the Jetson Nano. 
+Note that this method must be applied \textbf{before flashing the image to the Jetson device} \cite{seeedJ101Manual,reComputer_FlashGuide}.
+
+\subsubsection{Modify SPI and Flashing}
+\label{subsubsec:spi_modify}
+
+First, you need to short the \textbf{REC} pin and \textbf{GND} pin on the Jetson Nano to enter recovery mode. 
+Then, on your host PC, prepare the image you intend to flash. 
+However, do not flash it to the Jetson Nano until you have completed the SPI modifications. 
+You can refer to the \textit{Flashing JetPack OS via Command Line} tutorial for the J101, and make sure to use the \textbf{Command Line} method only.
+
+\bigskip
+\noindent Download the version of your choice from the \textbf{NVIDIA Developer website}, including the \textit{BSP} and the \textit{Sample Root Filesystem}.
+
+\noindent Place the BSP and the Sample Root Filesystem in the same directory, then follow the instructions below to extract them and run the \texttt{apply\_binaries.sh} script:
+
+\begin{small}
+	\begin{verbatim}
+		tar xf Jetson-210_Linux_R32.7.2_aarch64.tbz2
+		cd Linux_for_Tegra/rootfs/
+		sudo tar xpf ../../Tegra_Linux_Sample-Root-Filesystem_R32.7.2_aarch64.tbz2
+		cd ..
+		sudo ./apply_binaries.sh
+	\end{verbatim}
+\end{small}
+
+
+\noindent Create a new \texttt{.sh} file in the \texttt{Linux\_for\_Tegra} directory, and run the script. 
+The script content is as follows:
+
+\begin{small}
+	\begin{verbatim}
+		modify_spi.sh
+		sudo bash modify_spi.sh
+	\end{verbatim}
+\end{small}
+
+\bigskip
+After running \texttt{modify\_spi.sh}, this script will update the SPI1 configuration in the device tree, recompile it, and overwrite the old one. 
+If you want to enable SPI2, simply replace the keyword \texttt{spi1} with \texttt{spi2} in the \texttt{modify\_spi.sh} script.
+
+\bigskip
+After modifying the device tree, flash the image to the Jetson Nano using:
+
+\begin{small}
+	\begin{verbatim}
+		sudo ./flash.sh jetson-nano-emmc mmcblk0p1
+	\end{verbatim}
+\end{small}
+
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.5\linewidth]{HardwareDesc/enable_spi1.png}
+	\caption{Flashing process output confirming successful Jetson Nano SPI modification and OS installation \cite{reComputer_FlashGuide}.}
+	\label{fig:enable_spi1}
+\end{figure}
+
+\bigskip
+After rebooting, the \textbf{SPI0\_MOSI}, \textbf{SPI0\_MISO}, \textbf{SPI0\_CS0}, and \textbf{SPI0\_CS1} pins on the 40-pin header will be available for use.
+
+
+\subsubsection{Testing the SPI1 on Jetson-Nano}
+\label{subsubsec:spi_test}
+
+Short \textbf{pin~19} and \textbf{pin~21}, which correspond to \textbf{SPI0\_MOSI} and \textbf{SPI0\_MISO} respectively, to perform a loopback test using the SPI1 controller.
+
+%\begin{figure}[H]
+%	\centering
+%	\includegraphics[width=0.85\linewidth]{HardwareDesc/enable_spi2.jpg}
+%	\caption{SPI1 loopback setup on the Jetson Nano showing shorted pins (MOSI--MISO) for testing SPI communication \cite{reComputer_FlashGuide}.}
+%	\label{fig:enable_spi2}
+%\end{figure}
+
+%\begin{table}
+%	
+%	\centering	
+%	{\small%\scriptsize
+%		\begin{tabular}{|c|c|a|a|c|c|} \hline
+%			\rowcolor{white}	 Sysfs GPIO &   \begin{tabular}{c} \textcolor{white}{I}\\ \textcolor{white}{I}\end{tabular}    Name   \begin{tabular}{c} \textcolor{white}{I}\\ \textcolor{white}{I}\end{tabular}     & Pin & Pin & Name & Sysfs GPIO  \\ \hline
+%			gpio78 & \begin{tabular}{c}I2S\_4\_SDOUT \\ D21 \\ \end{tabular}  & 40 & 39 & \GND   &  \\ \hline
+%			gpio77 & \begin{tabular}{c}I2S\_4\_SDIN  \\ D20 \\ \end{tabular}  & 38 & 37 & \begin{tabular}{c}SPI\_2\_MOSI  \\ D26 \\ \end{tabular}  & gpio12  \\ \hline
+%			gpio51 & \begin{tabular}{c}UART\_2\_CTS  \\ D16 \\ \end{tabular}  & 36 & 35 & \begin{tabular}{c}I2S\_4\_LRCK  \\ D19 \\ \end{tabular}  & gpio76  \\ \hline
+%			& \GND                                                     & 34 & 33 & \begin{tabular}{c}GPIO\_PE6  \\ D13 \\ \end{tabular}     & gpio38  \\ \hline
+%			gpio168& \begin{tabular}{c}LCD\_BL\_PWM \\ D12 \\ \end{tabular}   & 32 & 31 & \begin{tabular}{c}GPIO\_PZ0  \\ D6 \\ \end{tabular}      & gpio200  \\ \hline
+%			& \GND                                                     & 30 & 29 & \begin{tabular}{c}CAM\_AF\_EN  \\ D5 \\ \end{tabular}    & gpio149  \\ \hline
+%			&\begin{tabular}{c}I2C\_1\_SCL\\D1/I2C Bus 0\\\end{tabular} & 28 & 27 & \begin{tabular}{c}I2C\_1\_SDA\\ D0/I2C Bus 0\\\end{tabular}  &         \\   \hline     
+%			gpio20 & \begin{tabular}{c}SPI\_1\_CS1\\ D7\\\end{tabular}    & 26 & 25 &\GND        &          \\ \hline
+%			gpio19 & \begin{tabular}{c}SPI\_1\_CS0\\ D8\\\end{tabular}    & 24 & 23 & \begin{tabular}{c}SPI\_1\_SCK\\ D11\\\end{tabular}            & gpio18  \\ \hline
+%			gpio13 & \begin{tabular}{c}SPI\_2\_MISO\\ D25\\\end{tabular}  & 22 & 21 & \begin{tabular}{c}SPI\_1\_MISO\\ D9\\\end{tabular}            & gpio17   \\  \hline
+%			&      \GND                                            & 20 & 19 & \begin{tabular}{c}SPI\_1\_MOSI\\ D10\\\end{tabular}           & gpio16  \\ \hline
+%			gpio15 & \begin{tabular}{c}SPI\_2\_CS0\\ D24\\\end{tabular}   & 18 & 17 & \Vd        &         \\  \hline 
+%			gpio232& \begin{tabular}{c}SPI\_2\_CS1\\ D23\\\end{tabular}   & 16 & 15 & \begin{tabular}{c}LCD\_TE\\ D22\\\end{tabular}       & gpio194 \\   \hline
+%			&      \GND                                            & 14 & 13 & \begin{tabular}{c}SPI\_2\_SCK\\ D27\\\end{tabular}   & gpio14  \\ \hline
+%			gpio79 & \begin{tabular}{c}I2S\_4\_SCLK\\ D18\\\end{tabular}  & 12 & 11 & \begin{tabular}{c}UART\_2\_RTS\\ D17\\\end{tabular}  & gpio50  \\ \hline
+%			& \begin{tabular}{c}UART\_2\_RX\\ /dev/ttyTHS1 - D15\\\end{tabular}  & 10 &  9 &\GND        &         \\ \hline
+%			& \begin{tabular}{c}UART\_2\_TX\\ /dev/ttyTHS1 - D14\\\end{tabular}  &  8 &  7 & \begin{tabular}{c}AUDIO\_MCLK\\ D4\\\end{tabular}        & gpio216 \\ \hline
+%			&\GND       &  6 &  5 & \begin{tabular}{c}I2C\_2\_SCL\\ I2C Bus 1 - D3\\\end{tabular}     &         \\ \hline
+%			& \Vf       &  4 &  3 & \begin{tabular}{c}I2C\_2\_SDA\\ I2C Bus 1 - D2\\\end{tabular}     &         \\ \hline
+%			& \Vf       &  2 &  1 & \Vd        &     \begin{tabular}{c} \textcolor{white}{I}\\ \textcolor{white}{I}\end{tabular}              \\ \hline
+%		\end{tabular}
+%	}
+%	
+%	\caption{Pinout of the GPIOs of the Jetson Nano} \label{Jetson:gpio}
+%\end{table}
+					
+						
+\begin{table}[H]
+	\centering
+	\resizebox{0.99\textwidth}{!}{%
+		{\small
+			\begin{tabular}{|c|c|c|c|c|c|}
+				\hline
+				\textbf{Sysfs GPIO} & \textbf{Name} & \textbf{Pin} & \textbf{Pin} & \textbf{Name} & \textbf{Sysfs GPIO} \\ \hline
+				gpio78 & I2S\_4\_SDOUT / D21 & 40 & 39 & GND &  \\ \hline
+				gpio77 & I2S\_4\_SDIN / D20 & 38 & 37 & SPI\_2\_MOSI / D26 & gpio12 \\ \hline
+				gpio51 & UART\_2\_CTS / D16 & 36 & 35 & I2S\_4\_LRCK / D19 & gpio76 \\ \hline
+				-- & GND & 34 & 33 & GPIO\_PE6 / D13 & gpio38 \\ \hline
+				gpio168 & LCD\_BL\_PWM / D12 & 32 & 31 & GPIO\_PZ0 / D6 & gpio200 \\ \hline
+				-- & GND & 30 & 29 & CAM\_AF\_EN / D5 & gpio149 \\ \hline
+				-- & I2C\_1\_SCL / D1 (I2C Bus 0) & 28 & 27 & I2C\_1\_SDA / D0 (I2C Bus 0) & -- \\ \hline
+				gpio20 & SPI\_1\_CS1 / D7 & 26 & 25 & GND & -- \\ \hline
+				gpio19 & SPI\_1\_CS0 / D8 & 24 & 23 & SPI\_1\_SCK / D11 & gpio18 \\ \hline
+				gpio13 & SPI\_2\_MISO / D25 & 22 & 21 & SPI\_1\_MISO / D9 & gpio17 \\ \hline
+				-- & GND & 20 & 19 & SPI\_1\_MOSI / D10 & gpio16 \\ \hline
+				gpio15 & SPI\_2\_CS0 / D24 & 18 & 17 & 3.3V & -- \\ \hline
+				gpio232 & SPI\_2\_CS1 / D23 & 16 & 15 & LCD\_TE / D22 & gpio194 \\ \hline
+				-- & GND & 14 & 13 & SPI\_2\_SCK / D27 & gpio14 \\ \hline
+				gpio79 & I2S\_4\_SCLK / D18 & 12 & 11 & UART\_2\_RTS / D17 & gpio50 \\ \hline
+				-- & UART\_2\_RX (/dev/ttyTHS1 - D15) & 10 & 9 & GND & -- \\ \hline
+				-- & UART\_2\_TX (/dev/ttyTHS1 - D14) & 8 & 7 & AUDIO\_MCLK / D4 & gpio216 \\ \hline
+				-- & GND & 6 & 5 & I2C\_2\_SCL / D3 (I2C Bus 1) & -- \\ \hline
+				-- & 5V & 4 & 3 & I2C\_2\_SDA / D2 (I2C Bus 1) & -- \\ \hline
+				-- & 5V & 2 & 1 & 3.3V & -- \\ \hline
+			\end{tabular}
+	}}
+	\caption{Pinout of the GPIOs of the Jetson Nano}
+	\label{Jetson:gpio}
+\end{table}
+
+\bigskip
+The physical connection diagram is shown below:
+
+\bigskip
+\noindent\textbf{\textcolor{red}{TODO: Add image of physical connection diagram after procuring the hardware.}}
+
+\bigskip
+\noindent Load the SPI driver module, then download and compile the test program:
+\begin{verbatim}
+	sudo modprobe spidev
+	git clone https://github.com/rm-hull/spidev-test
+	cd spidev-test/
+	gcc spidev_test.c -o spidev_test
+\end{verbatim}
+
+\bigskip
+\noindent Run the test program and specify \texttt{spidev0.0} (corresponding to SPI1):
+\begin{verbatim}
+	./spidev_test -v -D /dev/spidev0.0 -p "Test"
+\end{verbatim}
+
+\bigskip
+The test result is shown below, indicating that SPI1 has successfully completed the loopback transmission. 
+You can also run the command below to check the available SPI controllers:
+\begin{verbatim}
+	ls /dev/spidev*
+\end{verbatim}
+
+\noindent\textbf{\textcolor{red}{TODO: Add image of terminal confirming loopback transmission.}}
+
+
+\subsection{Summary of Jetson Nano Interfaces}
+\begin{table}[H]
+	\centering
+	\caption{Summary of interfaces on reComputer~J1010 (compiled from the official datasheet) \cite{seeedJ101Manual}.}
+	\label{tab:iface_summary}
+	\begin{tabular}{|p{1.4cm}|p{3.0cm}|p{4.2cm}|p{2.7cm}|p{3.0cm}|}
+		\hline
+		\textbf{Header} & \textbf{Connector} & \textbf{Key Functions} & \textbf{Voltage/Speed} & \textbf{Remarks} \\
+		\hline
+		J1 & USB-C & Power input & 5~V~$\pm$~0.25~V, 4~A & Main supply \\
+		J2 & USB-C & Data / Recovery & USB~2.0 & Device mode \\
+		J3 & HDMI Type-A & Display output & HDMI~2.0 (4K@60~Hz) & With audio \\
+		J4 & USB~3.0 Type-A & Host port & 5~Gbps & Camera/SSD \\
+		J5 & Dual USB~2.0 Type-A & Peripheral ports & 480~Mbps & KB/Mouse \\
+		J6 & RJ-45 Ethernet & Networking & 1~Gbps & PoE optional \\
+		J8 & 4-pin Fan & Cooling control & 5~V PWM & Optional \\
+		J9/J13 & 15-pin CSI & Camera input & 4-lane MIPI & Dual camera \\
+		J10 & 40-pin Header & GPIO / I$^2$C / SPI / UART / I$^2$S & 3.3~V logic & Expansion \\
+		J11 & M.2 Key E & PCIe x1, USB2, I$^2$C & 3.3~V & Wireless card \\
+		J14 & Button/UART & Power \& debug & 3.3~V & Console \\
+		J18 & Coin cell & RTC backup & 3~V & CR2032 \\
+		J19 & SDIO & Storage interface & 1.8/3.3~V & microSD \\
+		\hline
+	\end{tabular}
+\end{table}
 
 \newpage
 \section{Data Quality}
@@ -321,25 +586,319 @@ A 64--128~GB microSD card or USB~3.0 SSD provides sufficient capacity for long-d
 	\item Total Weight: approximately 300~g (including case and heatsink)
 \end{itemize}
 
-\section{Simple Code for Jetson Nano Reference Carrier Board}
-The following Python program demonstrates GPIO functionality by blinking an LED connected to pin~12 on the J10 header.
+\section{JetPack OS Setup and System Initialization}
+\label{sec:jetpack}
 
-\begin{lstlisting}[language=Python, caption={LED Blink Test on Jetson Nano}]
-	import Jetson.GPIO as GPIO
-	import time
-	
-	LED_PIN = 12
-	GPIO.setmode(GPIO.BOARD)
-	GPIO.setup(LED_PIN, GPIO.OUT, initial=GPIO.LOW)
-	
-	try:
-	while True:
-	GPIO.output(LED_PIN, GPIO.HIGH)
-	time.sleep(0.5)
-	GPIO.output(LED_PIN, GPIO.LOW)
-	time.sleep(0.5)
-	except KeyboardInterrupt:
-	GPIO.cleanup()
-\end{lstlisting}
+\noindent
+\textbf{Introduction:} \\
+\textbf{NVIDIA JetPack~OS} is the official operating system for all Jetson devices, including the Jetson~Nano module used in this project. 
+It is based on Ubuntu~20.04~LTS and comes pre-integrated with NVIDIA’s AI and computer-vision frameworks such as CUDA, cuDNN, TensorRT, and DeepStream. 
+JetPack~OS provides a ready-to-use software environment for developing and deploying deep-learning, multimedia, and robotics applications on the edge \cite{reComputer_FlashGuide}.
 
-This code verifies GPIO operation and confirms the Jetson Nano’s correct hardware configuration under JetPack~5.x.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.95\linewidth]{HardwareDesc/jetpackos_1.jpg}
+	\caption{Ubuntu desktop environment displayed after successful installation of JetPack OS on the NVIDIA Jetson Nano. The JetPack environment provides integrated access to CUDA, TensorRT, and other NVIDIA SDK tools for AI and computer vision development \cite{reComputer_FlashGuide}.}
+	\label{fig:jetpackos_1}
+\end{figure}
+
+\bigskip
+Since the carrier board of the \textbf{Seeed Studio reComputer~J1010} follows the same hardware layout and pin configuration as NVIDIA’s official Jetson~Nano Developer Kit, the system supports two standard methods for flashing JetPack~OS onto the device storage.
+
+\bigskip
+\textbf{Flashing Methods:}
+\begin{itemize}
+	\item \textbf{Option~1 – Flashing JetPack~OS via NVIDIA SDK Manager:}  
+	The \textbf{NVIDIA SDK Manager} provides a graphical interface on the Linux host PC to automatically download, configure, and flash JetPack~OS onto the Jetson device.  
+	This method provides a simplified and reliable workflow suitable for users setting up the Jetson platform for the first time.  
+	See Section~\ref{subsec:flash_sdk_manager} for detailed steps.
+	
+	\item \textbf{Option~2 – Flashing JetPack~OS via Command Line:}  
+	Advanced users can manually install JetPack using the \textbf{NVIDIA Linux Driver Package} (L4T) through terminal commands.  
+	This approach provides more control over the flashing process and system partitions.  
+	Detailed instructions are provided in Section~\ref{subsec:flash_commandline}.
+\end{itemize}
+
+\bigskip
+\noindent\textbf{Note:}  
+For Jetson~Nano Developer Kits that boot directly from a microSD card, NVIDIA also provides pre-built JetPack~OS images that can be written to the card using tools such as \textbf{Balena Etcher}.  
+Balena Etcher is a cross-platform imaging utility that allows users to flash \texttt{.img} or \texttt{.zip} system images to removable storage without requiring recovery mode or the NVIDIA SDK Manager.  
+However, the \textbf{reComputer J1010} follows the official flashing procedure using either the SDK Manager or the command-line L4T package, as these ensure correct device initialization and driver configuration \cite{reComputer_FlashGuide,balenaEtcherDoc}.
+
+\bigskip
+Before flashing, both methods require basic software and hardware preparation, including setting up the host computer and placing the Jetson~Nano into recovery mode.  
+The following subsections describe these preparation steps in detail.
+
+%\subsection{Software Preparation}
+%\label{subsec:software_prep}
+%
+%\subsection{Hardware Preparation}
+%\label{subsec:hardware_prep}
+%
+%\subsection{Flashing JetPack OS via NVIDIA SDK Manager}
+%\label{subsec:flash_sdk_manager}
+%
+%\subsubsection{Step 1: Install NVIDIA SDK Manager on the Linux Host PC}
+%\label{subsubsec:sdk_install}
+%
+%\subsubsection{Step 2: Open NVIDIA SDK Manager and Login}
+%\label{subsubsec:sdk_login}
+%
+%\subsubsection{Step 3: Select the Target Device}
+%\label{subsubsec:select_target}
+%
+%\subsubsection{Step 4: Review Wanted Components}
+%\label{subsubsec:review_components}
+%
+%\subsubsection{Step 5: Install the System}
+%\label{subsubsec:install_system}
+%
+%\subsubsection{(Optional) Step 6: Install the SDK Components}
+%\label{subsubsec:install_sdk}
+%
+%\subsection{Flashing JetPack OS via Command Line}
+%\label{subsec:flash_commandline}
+%
+%\subsubsection{Step 1: Download the Proper NVIDIA Linux Driver Package}
+%\label{subsubsec:cmd_download}
+%
+%\subsubsection{Step 2: Unzip Package Files and Assemble the Rootfs via Command Line}
+%\label{subsubsec:cmd_rootfs}
+%
+%\subsubsection{Step 3: Flash the System to reComputer}
+%\label{subsubsec:cmd_flash}
+%
+%\subsection{Troubleshooting}
+%\label{subsec:troubleshooting}
+%
+%\subsubsection{Troubleshooting Installation with NVIDIA SDK Manager}
+%\label{subsubsec:troubleshoot_sdk}
+%
+%\subsubsection{Troubleshooting Installation Using the Command Line}
+%\label{subsubsec:troubleshoot_cmd}
+
+
+\subsection{Software Preparation}
+\label{subsec:software_prep}
+
+NVIDIA account \\
+Linux Host Computer with Ubuntu 18.04 OS (or above)
+
+\subsection{Hardware Preparation (Force Recovery Mode)}
+\label{subsec:hardware_prep}
+
+Before we can move on to the installation steps, we need to make sure that our reComputer is in the force recovery mode.
+
+\begin{enumerate}
+	\item Before you start, you need to disconnect power of the reComputer.
+	\item Use a jumper to connect the \textbf{FC REC} pin and the \textbf{GND} pin.
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.85\linewidth]{HardwareDesc/hardware_prep.png}
+		\caption{Button header pinout on the Seeed Studio reComputer J1010 carrier board showing the \textbf{FC REC} and \textbf{GND} pins used to enter Force Recovery Mode. A jumper should connect these two pins before powering the device for JetPack OS flashing \cite{reComputer_FlashGuide}.}
+		\label{fig:hardware_prep}
+	\end{figure}
+	
+	\item Power up the reComputer with a Type-C cable on the left of the reComputer and use another cable to connect the Linux Host PC on the right of the reComputer.
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.9\linewidth]{HardwareDesc/hardware_prep2.png}
+		\caption{Connection layout of the Seeed Studio reComputer J1010 showing the correct use of the USB Type-C ports. 
+			The left (Type-C DCIN) port is used to connect the power supply, while the right (Type-C Data Transmitter) port connects to the Linux Host PC for data transfer during JetPack OS flashing \cite{reComputer_FlashGuide}.}
+		\label{fig:hardware_prep2}
+	\end{figure}
+	
+	\textbf{Attention:} Before wiring, please pay attention to the power connector and data connector, please do not connect the data connector directly to DC power.
+	
+	\item Under the command line window of the host computer, enter the command:
+	\begin{verbatim}
+		lsusb
+	\end{verbatim}
+	When the returned content has the ID \texttt{0955:7f21 NVidia Corp.} in it, it means that the reComputer is in the force recovery mode and we can proceed to the subsequent operations.
+\end{enumerate}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.85\linewidth]{HardwareDesc/hardware_prep3.png}
+	\caption{Verification of \textbf{Force Recovery Mode} using the \texttt{lsusb} command on the Linux Host PC. 
+		The output shows the device ID \texttt{0955:7f21 NVIDIA Corp.}, confirming that the reComputer J1010 is successfully detected and ready for flashing JetPack OS \cite{reComputer_FlashGuide}.}
+	\label{fig:hardware_prep3}
+\end{figure}
+
+\subsection{Flashing JetPack OS via NVIDIA SDK Manager}
+\label{subsec:flash_sdk_manager}
+
+Next we will go through the tutorial about installing the system via NVIDIA SDK Manager. The NVIDIA SDK Manager is an all-in-one tool that bundles developer software and provides an end-to-end development environment setup solution for NVIDIA SDKs. Thus, it is recommended for beginners.
+
+\subsubsection{Step 1: Install NVIDIA SDK Manager on the Linux Host PC}
+\label{subsubsec:sdk_install}
+
+We need to open the browser on the Linux Host PC and download the NVIDIA SDK Manager from the NVIDIA official website.
+
+\subsubsection{Step 2: Open NVIDIA SDK Manager and Login}
+\label{subsubsec:sdk_login}
+
+On the Linux host PC screen, we can right click the mouse and open a Terminal. Then we can type the command below to start the SDK Manager:
+
+The first time you use NVIDIA SDK Manager, a web page will pop up prompting you to log in with your previously registered NVIDIA account.
+
+\subsubsection{Step 3: Select the Target Device}
+\label{subsubsec:select_target}
+
+After logging in, you will be taken to the first screen where the first step of installing begins. Since we have already connected the reComputer J1010, there will be a window pop up to let you select the hardware device.
+
+The reComputer J1010 has equipped with NVIDIA Jetson Nano 4GB module, so we can choose the first one.
+
+There are more selections for you to choose in the first screen:
+
+\begin{itemize}
+	\item The \textbf{Jetson} in the Product Category panel needs to be selected.
+	\item In the Hardware Configuration panel, we recommend that you do not select Host Machine. This will take more time to install the NVIDIA components for your current Ubuntu host. You can choose it if you need.
+	\item In the Target Operating System panel, we can select different operating systems and JetPack versions. But be careful with the version of JetPack, different modules may support different types of JetPack. We recommend “JetPack 4.6.1” here.
+	\item In the Additional SDKs, since the storage space of eMMC is only 16GB, it will be out of memory if we install DeepStream here.
+\end{itemize}
+
+Click \textbf{Continue} to proceed to the next step.
+
+\subsubsection{Step 4: Review Wanted Components}
+\label{subsubsec:review_components}
+
+From Details and License, you can expand the host components and target components panels to review the components that will be installed on your system.
+
+If you only need to install the system, you can uncheck the SDK component.
+
+\textbf{Tip:} When choosing which components to install, you may want to keep an eye on the capacity used. The built-in eMMC size is only 16GB, please allocate and use this space wisely according to your actual needs.
+
+After actual testing, there is only about 500MB of eMMC space left after installing the full set of SDK components.
+
+If you want to check how to solve the problem of insufficient capacity, please refer to Troubleshooting.
+
+If you want SDK Manager to download all the files to a location other than the default path, go to the Download \& Install Options located at the bottom of the screen, then select the path you wish to use.
+
+Select \textbf{Continue} to proceed to the next step.
+
+\subsubsection{Step 5: Install the System}
+\label{subsubsec:install_system}
+
+Before the installation begins, SDK Manager prompts you to enter your \texttt{sudo} password.
+
+After a while, we will be asked to set up the new system for our reComputer. Since we manually forced into recovery mode, we select \textbf{Manual setup: set the target to Force Recovery Mode via manual operations} here. Meanwhile, we choose the default Pre-Config.
+
+After that, we need to enter the name and password of our new Jetson system to our reComputer, it is set by yourself.
+
+When ready, click \textbf{Flash} to continue.
+
+The display shows the progress of the download and installation of the software. Please wait patiently for the installation to complete.
+
+\subsubsection{(Optional) Step 6: Install the SDK Components}
+\label{subsubsec:install_sdk}
+
+If you checked the installation of the component in the previous step 4, you will need to go through this step.
+
+After a moment, you will be able to see a new window pop up in the NVIDIA SDK Manager, prompting you that you need to connect to your device via IP address. It means the system has been already installed and the components installation will be proceeded.
+
+In this case, we can pull out the jumper and restart the reComputer. Then we need to connect the reComputer to a monitor via HDMI, enter the password you entered in step 4, and log in to the main interface.
+
+At this point, you need to connect the reComputer to the same LAN as the Linux host PC and determine the IP address of the Jetson by using the command:
+\begin{verbatim}
+	ifconfig
+\end{verbatim}
+
+Go back to the Linux host PC and enter the IP address you just obtained. NVIDIA SDK Manager will try to connect to the Jetson device and proceed to complete the installation of the next SDK components.
+
+When you see the following window appear, the installation has been done. You can start using Jetson or continue to follow the steps below to complete some basic configuration of your new system.
+
+\textbf{Attention:} Be sure to unplug the jumper and exit force recovery mode before re-powering into the system.
+
+\subsection{Flashing JetPack OS via Command Line}
+\label{subsec:flash_commandline}
+
+Thanks to the freedom to customize the BSP (NVIDIA Linux Driver Package), flashing JetPack OS via command line can be very easy for Linux knowledge-based users.
+
+\subsubsection{Step 1: Download the Proper NVIDIA Linux Driver Package}
+\label{subsubsec:cmd_download}
+
+On the Linux host PC, we need to open a browser and go to the Jetson Linux Archive. First we should check if the version of Jetson Linux supports our reComputer Jetson module.
+
+Once you find the proper version, click to go to the download page. Find and click the \textbf{L4T Driver Package (BSP)} and \textbf{Sample Root Filesystem} to download the driver files. The names of the files are like:
+
+\texttt{Tegra\_Linux\_Sample-Root-Filesystem\_Rxx.x.x\_aarch64.tbz2} \\
+\texttt{Jetson-210\_Linux\_Rxx.x.x\_aarch64.tbz2}
+
+As an example, we choose the NVIDIA L4T 32.7.1 version since it is included as part of JetPack 4.6.1 and supports the Jetson Nano module. The names of the files:
+
+\begin{verbatim}
+	Tegra_Linux_Sample-Root-Filesystem_R32.7.2_aarch64.tbz2
+	Jetson-210_Linux_R32.7.2_aarch64.tbz2
+\end{verbatim}
+
+\subsubsection{Step 2: Unzip Package Files and Assemble the Rootfs via Command Line}
+\label{subsubsec:cmd_rootfs}
+
+On the Linux host PC, we should find a folder and store the package files we downloaded before. Then open a command line window (Terminal) at the folder and use the commands below to unzip the files and assemble the rootfs:
+
+\begin{verbatim}
+	tar xf ${L4T_RELEASE_PACKAGE}
+	cd Linux_for_Tegra/rootfs/
+	sudo tar xpf ../../${SAMPLE_FS_PACKAGE}
+	cd ..
+	sudo ./apply_binaries.sh
+\end{verbatim}
+
+As an example of NVIDIA L4T 32.7.1, the downloaded files are stored in \texttt{/Desktop/L4T\_Drivers}, so under the \texttt{/Desktop/L4T\_Drivers} path we open the command line window (Terminal) and execute the following commands:
+
+\begin{verbatim}
+	tar xf Jetson-210_Linux_R32.7.1_aarch64.tbz2
+	cd Linux_for_Tegra/rootfs/
+	sudo tar xpf ../../Tegra_Linux_Sample-Root-Filesystem_R32.7.1_aarch64.tbz2
+	cd ..
+	sudo ./apply_binaries.sh
+\end{verbatim}
+
+\subsubsection{Step 3: Flash the System to reComputer}
+\label{subsubsec:cmd_flash}
+
+Since we already forced the reComputer J1010 into recovery mode and the module is Jetson Nano, we can directly flash the system into the reComputer by executing the following command:
+
+\begin{verbatim}
+	sudo ./flash.sh jetson-nano-devkit-emmc mmcblk0p1
+\end{verbatim}
+
+Flashing L4T takes about 10 minutes, or more under a slow host computer.
+
+At this moment, we can unplug the jumper and then power up the reComputer again to use it.
+
+\subsection{Troubleshooting}
+\label{subsec:troubleshooting}
+
+\subsubsection{Troubleshooting Installation with NVIDIA SDK Manager}
+\label{subsubsec:troubleshoot_sdk}
+
+There are many causes of various installation errors. Below is a checklist of common installation issues, which may help you recover from a broken installation.
+
+\begin{enumerate}
+	\item Review the summary table to identify which component failed.
+	\item Expand the group with the "Error" status.
+	\item When you find the failed component, click the details icon to the right of Install Error to be redirected to the Terminal tab, which will display the exact error.
+\end{enumerate}
+
+If the error is related to an environment issue, such as a broken apt repository or missing prerequisite, try to fix it manually, then click the \textbf{Retry Failed Items} button.
+
+Retrying the installation is also available in two other ways:
+\begin{enumerate}
+	\item From Flashing to eMMC with SDK Manager -- Step 3, use the Repair/Uninstall button to get to the Manage NVIDIA SDKs page. If needed, expand the SDK that has the "Broken" status, then click Repair for the relevant part (Host or Target).
+	\item At Flashing to eMMC with SDK Manager -- Step 3, select the required SDK and run through the installation again.
+\end{enumerate}
+
+Finally, try to uninstall and reinstall the relevant SDK.
+
+\subsubsection{Troubleshooting Installation Using the Command Line}
+\label{subsubsec:troubleshoot_cmd}
+
+The command line installation method is relatively simple, and is often prone to error in scenarios where force recovery mode is used.
+
+If you encounter the error shown below in Flashing to eMMC with command-line -- Step 2, you probably did not succeed in getting the Jetson-101 Carrier Board into force recovery mode. Please pay special attention, do not enter force recovery mode with the Jetson-101 Carrier Board powered on, as this is not valid.
+
+If you can't get into the system in Flashing to eMMC with command-line -- Step 3 and are stuck on the boot up display command line, you probably did not exit force recovery mode. Likewise, it is not valid for you to unplug the jumper to exit force recovery mode while the Jetson-101 Carrier Board is powered up, this all needs to be done while you are powered down.
