@@ -667,20 +667,20 @@ Visual variance across 1000 frames of static test scenes was below 1.2~\% in ave
 In summary, the Jetson Nano demonstrates robust handling of real-time video data, maintaining consistent quality in spatial, numerical, and temporal domains.  
 When paired with TensorRT’s mixed-precision optimization and sufficient cooling, the platform delivers deterministic, low-latency AI inference suitable for continuous embedded vision applications.
 
-\subsection{Data Formats Summary}
-\begin{table}[H]
-	\centering
-	\caption{Summary of primary data types and formats processed by the Jetson Nano \cite{jetson_nano_doc,opencv_doc_2024}}
-	\label{tab:jetson_data_types}
-	\begin{tabular}{|p{4cm}|p{4cm}|p{6cm}|}
-		\hline
-		\textbf{Data Type} & \textbf{Format / Precision} & \textbf{Description} \\ \hline
-		Input Frames & RGB888 / uint8 & Captured via USB camera (OpenCV / GStreamer) \\ \hline
-		Preprocessed Images & FP32 Tensor & Normalized and resized (640$\times$640) \\ \hline
-		Inference Outputs & FP16 / FP32 Tensor & Bounding boxes and class confidence values \\ \hline
-		System Logs & ASCII / CSV & Temperature, utilization, and power metrics \\ \hline
-	\end{tabular}
-\end{table}
+%\subsection{Data Formats Summary}
+%\begin{table}[H]
+%	\centering
+%	\caption{Summary of primary data types and formats processed by the Jetson Nano \cite{jetson_nano_doc,opencv_doc_2024}}
+%	\label{tab:jetson_data_types}
+%	\begin{tabular}{|p{4cm}|p{4cm}|p{6cm}|}
+%		\hline
+%		\textbf{Data Type} & \textbf{Format / Precision} & \textbf{Description} \\ \hline
+%		Input Frames & RGB888 / uint8 & Captured via USB camera (OpenCV / GStreamer) \\ \hline
+%		Preprocessed Images & FP32 Tensor & Normalized and resized (640$\times$640) \\ \hline
+%		Inference Outputs & FP16 / FP32 Tensor & Bounding boxes and class confidence values \\ \hline
+%		System Logs & ASCII / CSV & Temperature, utilization, and power metrics \\ \hline
+%	\end{tabular}
+%\end{table}
 
 \subsection{Data Flow Efficiency}
 The Jetson Nano’s unified memory architecture and GPU-accelerated TensorRT engine reduce latency between data acquisition and inference.  
