@@ -1,0 +1,107 @@
+%%%%%%
+%
+% $Autor: Wings $
+% $Datum: 2020-01-18 11:15:45Z $
+% $Pfad: WuSt/Skript/Produktspezifikation/powerpoint/ImageProcessing.tex $
+% $Version: 4620 $
+%
+%%%%%%
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+\ifdefined\isGerman
+\usepackage[ngerman]{babel}
+\else
+\ifdefined\isEnglish
+\usepackage[english]{babel}
+\else
+\usepackage[ngerman]{babel}
+\fi
+\fi
+% Floats
+\usepackage{float} % enables [H] placement
+
+% Units (nice formatting for V, A, etc.)
+\usepackage{siunitx}
+\sisetup{detect-all=true}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{tcolorbox}
+\usepackage{fontawesome5}
+\usepackage{tikz}
+\usetikzlibrary{shapes, arrows, positioning}
+\usepackage{fontawesome5}
+\usepackage[table]{xcolor}
+% Paket Internetrefferenzen
+\usepackage{hyperref}
+\usetikzlibrary{positioning}
+\usepackage{tikz}
+\usetikzlibrary{
+	positioning,       % <— fixes right=of / below=of errors
+	shapes.geometric,  % for diamond and ellipse shapes
+	arrows.meta,       % for nice arrow heads
+	fit,               % for grouped node boxes
+	calc               % for advanced positioning
+}
+\usepackage{blindtext}
+\usepackage{upgreek}
+\usepackage{tabularx}
+\usetikzlibrary{fit, positioning, shapes, arrows, decorations.pathmorphing}
+\usepackage{listings}
+
+\usepackage{enumitem,amssymb}
+\newlist{todolist}{itemize}{2}
+\setlist[todolist]{label=$\square$}
+
+\usepackage{color,soul}
+%\usepackage{ulem} % farbiges unterstreichen
+
+% Farben
+\usepackage{xcolor}
+\usepackage{alltt,xcolor}
+
+
+% Automatisches erstellen und referenzieren eines Abkürzungsverzeichnisses
+\usepackage[tooltip]{acro}
+
+
+
+\usepackage[left=2.50cm, right=2.50cm, top=2.00cm, bottom=2.00cm,
+bindingoffset=8mm, includehead, includefoot]{geometry} % Loesung 8.2
+
+\usepackage{blindtext}
+
+
+\usepackage[style=ieee-alphabetic]{biblatex}
+
+% --- Graphics / TikZ ---
+\usepackage{tikz}
+\usetikzlibrary{positioning,arrows.meta,shapes.geometric,shapes.misc,fit,calc}
+
+% --- Floats (for [H]) ---
+\usepackage{float}
+
+% --- Units (nice V, A, etc.) ---
+\usepackage{siunitx}
+\sisetup{detect-all=true}
+
+% --- Circuit diagrams ---
+\usepackage[siunitx]{circuitikz}
+
+% --- Plots (if you later use pgfplots) ---
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+% --- Quotation handling (babel/polyglossia warning) ---
+\usepackage{csquotes}
+
+\usepackage{makeidx}
+\makeindex
+
+\usepackage[intoc]{nomencl}
+\renewcommand{\nomname}{Symbolverzeichnis}
+\renewcommand{\nomlabel}[1]{#1 \dotfill}
+\makenomenclature
