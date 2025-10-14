@@ -1,15 +1,134 @@
-%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%
 %
-% $Autor: Wings $
-% $Datum: 2019-03-05 08:03:15Z $
-% $Pfad: Maintenance.tex $
-% $Version: 4250 $
-% !TeX spellcheck = en_GB/de_DE
+% $Autor: Gautam Ramesh$
+% $Datum: 2025-10-14 21:49:26Z $
+% $Pfad: /Users/gautamramesh/githubNew/ML26-03-Car-Licence-Plate-Identification-with-a-Jetson-Nano/Assembly - edit/Chapters/en/Maintenance.tex $
+% $Version: 1 $
+%
 % !TeX encoding = utf8
-% !TeX root = manual 
-% !TeX TXS-program:bibliography = txs:///biber
+% !TeX root = Rename
 %
-%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%
 
-\chapter{Maintenance}
 
+
+\chapter{Maintenance and Preventive Care}
+
+Regular maintenance ensures long-term stability, performance, and safety of the Jetson Nano-based License Plate Detection System.  
+This section provides practical instructions for cleaning, inspecting, updating, and servicing the hardware to maximize uptime and lifespan.
+
+% -------------------------------------------------------
+\section{General Maintenance Guidelines}
+
+\begin{itemize}
+	\item \textbf{Power Off Before Service:} Always shut down the Jetson Nano safely using the desktop interface or \texttt{sudo poweroff} before disconnecting cables.
+	\item \textbf{Avoid Static Damage:} Ground yourself before touching GPIO or USB ports to prevent electrostatic discharge (ESD).
+	\item \textbf{Cable Management:} Ensure cables are untangled and securely seated; label connections for quick reference.
+	\item \textbf{Physical Cleanliness:} Remove dust buildup on heatsinks, fans, and camera lens every month using compressed air or a soft brush.
+	\item \textbf{Environmental Control:} Maintain ambient temperatures between \SI{10}{\celsius}–\SI{35}{\celsius}; avoid high humidity or enclosed spaces without ventilation.
+\end{itemize}
+
+\vspace{0.5cm}
+
+% -------------------------------------------------------
+\section{Periodic Maintenance Schedule}
+
+\begin{table}[H]
+	\centering
+	\caption{Recommended Maintenance Schedule}
+	\begin{tabular}{|L{3.2cm}|L{7.8cm}|L{3.0cm}|}
+		\hline
+		\textbf{Component} & \textbf{Task} & \textbf{Frequency} \\ \hline
+		Jetson Nano Board & Inspect GPIO pins, connectors, and heatsink; verify SD card slot alignment & Monthly \\ \hline
+		Cooling System (Fan / Heatsink) & Clean dust and test fan rotation; check noise levels & Every 2 months \\ \hline
+		USB Camera & Wipe lens gently with microfiber; test frame rate and focus accuracy & Monthly \\ \hline
+		Power Adapter / Barrel Jack & Ensure 5V/4A output with multimeter; inspect for loose connectors & Every 3 months \\ \hline
+		HDMI and USB Cables & Test connectivity and cable integrity; replace if frayed or loose & Every 3 months \\ \hline
+		microSD Card & Backup and clone working OS image; check filesystem integrity & Quarterly \\ \hline
+	\end{tabular}
+\end{table}
+
+\vspace{0.4cm}
+
+Routine adherence to this schedule minimizes failures caused by overheating, dust accumulation, or storage corruption.
+
+% -------------------------------------------------------
+\section{Software and System Maintenance}
+
+\begin{itemize}
+	\item \textbf{System Updates:} Keep JetPack and Ubuntu packages updated using:
+	\begin{verbatim}
+		sudo apt update && sudo apt upgrade -y
+	\end{verbatim}
+	
+	\item \textbf{Backup Configuration:} Regularly copy the following folders:
+	\begin{itemize}
+		\item \texttt{/home/jetson/ANPR/} – Source code and models
+		\item \texttt{/etc/network/interfaces} – Network settings
+		\item \texttt{/var/log/} – Operation logs for debugging
+	\end{itemize}
+	
+	\item \textbf{Model Refresh:} Retrain YOLOv8 or EasyOCR models every 6–12 months if license plate formats or fonts change.
+	\item \textbf{Database Optimization:} Vacuum and clean the SQLite database periodically:
+	\begin{verbatim}
+		sqlite3 plates.db "VACUUM;"
+	\end{verbatim}
+	\item \textbf{Swap File Check:} Ensure swap memory is active for stable inference on long runs:
+	\begin{verbatim}
+		free -h
+	\end{verbatim}
+\end{itemize}
+
+% -------------------------------------------------------
+\section{Visual Maintenance Overview}
+
+\begin{figure}[H]
+	\centering
+	\begin{tikzpicture}[
+		every node/.style={font=\scriptsize, align=center},
+		comp/.style={draw, rounded corners=3pt, fill=blue!10, minimum width=2.8cm, minimum height=1.0cm},
+		task/.style={draw, rounded corners=3pt, fill=orange!10, minimum width=3.2cm, minimum height=1.0cm},
+		arr/.style={-{Latex[length=2mm]}, thick}
+		]
+		\node[comp] (nano) {Jetson Nano\\(Board)};
+		\node[task, above left=1.2cm and 2.4cm of nano] (clean) {Clean Heatsink / Fan};
+		\node[task, above=1.2cm of nano] (update) {Run Software Updates};
+		\node[task, above right=1.2cm and 2.4cm of nano] (backup) {Backup SD / Logs};
+		
+		\node[comp, below left=1.2cm and 2.4cm of nano] (camera) {USB Camera};
+		\node[comp, below=1.2cm of nano] (psu) {Power Adapter};
+		\node[comp, below right=1.2cm and 2.4cm of nano] (display) {HDMI Display};
+		
+		\draw[arr] (clean.south) -- (nano.north west);
+		\draw[arr] (update.south) -- (nano.north);
+		\draw[arr] (backup.south) -- (nano.north east);
+		\draw[arr] (camera.north) -- (nano.south west);
+		\draw[arr] (psu.north) -- (nano.south);
+		\draw[arr] (display.north) -- (nano.south east);
+	\end{tikzpicture}
+	\caption{Maintenance overview: routine checks for board, peripherals, power, and software updates.}
+\end{figure}
+
+% -------------------------------------------------------
+\section{Backup and Replacement Procedure}
+
+\begin{enumerate}
+	\item Clone the working microSD card using \texttt{balenaEtcher} or \texttt{dd} to create a fallback image.
+	\item Label the cloned card clearly.
+	\item Store backup images on a separate USB drive or network share.
+	\item Replace damaged components with same-rated parts only (e.g., \SI{5}{\volt}/\SI{4}{\ampere} adapter).
+	\item Document every replacement or major update in a maintenance log file.
+\end{enumerate}
+
+% -------------------------------------------------------
+\section{Safety and Warranty Considerations}
+
+\begin{itemize}
+	\item Avoid modifying the mainboard or GPIO layout without referencing the official NVIDIA Jetson Nano Developer Kit manual.
+	\item Using non-certified power supplies may void warranty or damage the board.
+	\item Handle peripherals gently; avoid connecting or disconnecting under power.
+	\item Follow ESD safety practices while handling camera or GPIO accessories.
+\end{itemize}
+
+\vspace{0.6cm}
+\noindent
