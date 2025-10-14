@@ -1,0 +1,52 @@
+%%%%%%%%%%%%
+%
+% $Autor: Wings $
+% $Datum: 2019-03-05 08:03:15Z $
+% $Pfad: Maintenance.tex $
+% $Version: 4250 $
+% !TeX spellcheck = en_GB/de_DE
+% !TeX encoding = utf8
+% !TeX root = manual 
+% !TeX TXS-program:bibliography = txs:///biber
+%
+%%%%%%%%%%%%
+
+\chapter{Troubleshooting}
+
+This chapter provides solutions for common issues that may arise while using the Vehicle License Plate Detection System with the Jetson Nano.
+
+\section{System Not Powering On}
+\begin{itemize}[label=--, left=1.5em]
+	\item \textbf{Check Power Connection:} Ensure the power adapter is securely connected to the Jetson Nano and that the power supply is functional.
+	\item \textbf{Confirm Power Specifications:} Verify that you are using a 5V/3A adapter, as inadequate power may prevent startup.
+\end{itemize}
+
+\section{Camera Not Detected}
+\begin{itemize}[label=--, left=1.5em]
+	\item \textbf{Verify Camera Connection:} Confirm the camera is properly connected to the designated port on the Jetson Nano.
+	\item \textbf{Install Required Drivers:} Ensure camera drivers are installed. Run \texttt{sudo apt-get install v4l-utils} if necessary.
+\end{itemize}
+
+\section{LED Indicator Not Activating}
+\begin{itemize}[label=--, left=1.5em]
+	\item \textbf{Check GPIO Setup:} Confirm that the LED is connected to the correct GPIO pin and that the pin setup in your code matches the physical connection.
+	\item \textbf{Test GPIO Output:} Run a simple GPIO test script to verify that the pin outputs correctly.
+\end{itemize}
+
+\section{Model Failing to Detect License Plates}
+\begin{itemize}[label=--, left=1.5em]
+	\item \textbf{Verify Model Path:} Ensure the detection model file is correctly loaded in your script and that the path is accurate.
+	\item \textbf{Check Input Dimensions:} Ensure the input image dimensions are compatible with the model’s requirements. Adjust the camera feed size if necessary.
+\end{itemize}
+
+\section{Low Detection Accuracy}
+\begin{itemize}[label=--, left=1.5em]
+	\item \textbf{Lighting Conditions:} Ensure adequate lighting for the camera feed, as poor lighting can affect detection.
+	\item \textbf{Adjust Model Settings:} Fine-tune model parameters or consider retraining the model with additional data for improved accuracy.
+\end{itemize}
+
+For issues beyond these troubleshooting steps, consult the Jetson Nano documentation or support forums for additional assistance.
+
+
+
+
