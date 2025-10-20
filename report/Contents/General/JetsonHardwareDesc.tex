@@ -140,6 +140,9 @@ These ports include power, display, communication, and peripheral interfaces ess
 	\label{fig:jetson_side}
 \end{figure}
 
+
+\noindent\textbf{\textcolor{red}{TODO: Convert to Tikz image.}} 
+
 \begin{table}[H]
 	\centering
 	\caption{Labeled external connectors on the Seeed Studio reComputer~J1010 front I/O panel}
@@ -3949,7 +3952,7 @@ Use the Jetson.GPIO Python library for user-space access; detailed electrical be
 \bigskip
 
 
-\newline\noindent\textbf{\textcolor{red}{TODO: Add the 40 pin description table.}}
+\noindent\textbf{\textcolor{red}{TODO: Add the 40 pin description table.}}
 \bigskip
 
 
@@ -5595,11 +5598,7 @@ Before we can move on to the installation steps, we need to make sure that our r
 	\end{figure}
 	
 	\textbf{Attention:} Before wiring, please pay attention to the power connector and data connector, please do not connect the data connector directly to DC power.
-	
-	\item Under the command line window of the host computer, enter the command:
-	\begin{verbatim}
-		lsusb
-	\end{verbatim}
+	\item Under the command line window of the host computer, enter the command:v\texttt{lsusb}
 	When the returned content has the ID \texttt{0955:7f21 NVidia Corp.} in it, it means that the reComputer is in the force recovery mode and we can proceed to the subsequent operations.
 \end{enumerate}
 
@@ -5617,17 +5616,42 @@ Before we can move on to the installation steps, we need to make sure that our r
 
 Next we will go through the tutorial about installing the system via NVIDIA SDK Manager. The NVIDIA SDK Manager is an all-in-one tool that bundles developer software and provides an end-to-end development environment setup solution for NVIDIA SDKs. Thus, it is recommended for beginners.
 
+
+\begin{figure}[H] % Use [H] if you want to force it exactly here (requires package float)
+	\centering
+	\includegraphics[width=\textwidth]{JetsonNano/hardware_prep4.png}
+	\caption{Flashing JetPack OS workflow using NVIDIA SDK Manager.}
+	\label{fig:flash_sdk_manager}
+\end{figure}
+
+
 \subsubsection{Step 1: Install NVIDIA SDK Manager on the Linux Host PC}
 \label{subsubsec:sdk_install}
 
 We need to open the browser on the Linux Host PC and download the NVIDIA SDK Manager from the NVIDIA official website.
 
+
+\begin{figure} % Requires \usepackage{float}
+	\centering
+	\includegraphics[width=0.7\textwidth]{JetsonNano/hardware_prep5.png}
+	\caption{Download page for NVIDIA SDK Manager showing the .deb package for Ubuntu.}
+	\label{fig:sdkmanager_download}
+\end{figure}
+
 \subsubsection{Step 2: Open NVIDIA SDK Manager and Login}
 \label{subsubsec:sdk_login}
 
 On the Linux host PC screen, we can right click the mouse and open a Terminal. Then we can type the command below to start the SDK Manager:
-
+\texttt{sdkmanager}
 The first time you use NVIDIA SDK Manager, a web page will pop up prompting you to log in with your previously registered NVIDIA account.
+
+\begin{figure} % Requires \usepackage{float}
+	\centering
+	\includegraphics[width=0.3\textwidth]{JetsonNano/hardware_prep6.png}
+	\caption{Command to start sdkmanager command in Terminal}
+	\label{fig:sdkmanager_terminal}
+\end{figure}
+
 
 \subsubsection{Step 3: Select the Target Device}
 \label{subsubsec:select_target}
@@ -5647,14 +5671,36 @@ There are more selections for you to choose in the first screen:
 
 Click \textbf{Continue} to proceed to the next step.
 
+\begin{figure}[H] % Requires \usepackage{float}
+	\centering
+	\includegraphics[width=0.95\textwidth]{JetsonNano/hardware_prep7.png}
+	\caption{Target Device}
+	\label{fig:target_device}
+\end{figure}
+
+
 \subsubsection{Step 4: Review Wanted Components}
 \label{subsubsec:review_components}
 
 From Details and License, you can expand the host components and target components panels to review the components that will be installed on your system.
 
+\begin{figure}[H] % Requires \usepackage{float}
+	\centering
+	\includegraphics[width=0.95\textwidth]{JetsonNano/hardware_prep8.png}
+	\caption{OS Components}
+	\label{fig:os_Components}
+\end{figure}
+
 If you only need to install the system, you can uncheck the SDK component.
 
-\textbf{Tip:} When choosing which components to install, you may want to keep an eye on the capacity used. The built-in eMMC size is only 16GB, please allocate and use this space wisely according to your actual needs.
+When choosing which components to install, you may want to keep an eye on the capacity used. The built-in eMMC size is only 16GB, please allocate and use this space wisely according to your actual needs.
+
+\begin{figure}[H] % Requires \usepackage{float}
+	\centering
+	\includegraphics[width=0.95\textwidth]{JetsonNano/hardware_prep9.png}
+	\caption{Allocating space}
+	\label{fig:space_allocation}
+\end{figure}
 
 After actual testing, there is only about 500MB of eMMC space left after installing the full set of SDK components.
 
