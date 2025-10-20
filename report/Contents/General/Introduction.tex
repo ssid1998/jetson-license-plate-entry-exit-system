@@ -44,38 +44,84 @@ These constraints necessitate a locally deployed, energy-efficient, and privacy-
 
 \vspace{0.2cm}
 
-\section{Challenges }
-Despite technological progress, several challenges persist in real-world ANPR deployment:
-
-\subsection*{1. Environmental and Lighting Variability}
-Rain, glare, and shadows often degrade OCR performance. Studies show that image preprocessing, adaptive exposure, and IR-assisted lighting can improve accuracy under adverse conditions \cite{sultan2023applied, tavarez2024comparison}.
-
-\subsection*{2. Computational Limitations on Edge Devices}
-Jetson Nano’s limited GPU capacity constrains real-time deep learning performance. Research emphasizes quantization, pruning, and TensorRT optimization to maintain 10–15 FPS without loss of accuracy \cite{laroca2018robust, nvidia_jetson_whitepaper2021}.
-
-\subsection*{3. False Positives and Non-Standard Plates}
-Objects resembling plates or partially visible characters can trigger incorrect detections. Multi-frame validation and spatial consistency checks with vehicle bounding boxes have proven effective against such errors \cite{mufti2021automatic, netinant2024evaluating}.
-
-\subsection*{4. Privacy and Legal Compliance}
-Since vehicle registration numbers are considered personal identifiers, storage must comply with GDPR principles of minimization and lawful processing \cite{gdpr2016eu, bdsga2021}. On-site anonymization and short retention periods are mandatory for lawful ANPR operation in Germany.
-
-\subsection*{5. Cost and Scalability}
-Commercial systems can cost €3,000–€8,000 per lane \cite{Jenoptik2023}. Open-source YOLO-based models on affordable edge devices enable democratized deployment across airports, campuses, and municipalities \cite{Ultralytics2023, JetsonNano2022}.
+\vspace{0.2cm}
 
 \vspace{0.2cm}
 
-\section{Proposed Solution}
-The proposed system introduces a lightweight, hybrid deep-learning architecture for real-time number plate recognition and billing at the edge.  
-It combines:
+\section{Challenges}
+Although Automated Number Plate Recognition (ANPR) systems have advanced rapidly, several persistent obstacles still hinder efficient deployment on low-power edge devices. These challenges are particularly evident in airport automation environments, where performance, compliance, and reliability must coexist under real-world constraints.
+
+\subsection*{1. Environmental and Lighting Variability}
+Outdoor environments cause fluctuations in illumination due to sunlight, reflections, fog, and rain, which significantly affect the reliability of detection and text recognition.  
+Studies such as \cite{sultan2023applied, tavarez2024comparison} have shown that varying brightness and weather conditions increase OCR error rates and reduce mean average precision (mAP) in detection models. For airports operating 24/7, low-visibility conditions further degrade confidence in plate extraction.
+
+\subsection*{2. Computational Limitations on Edge Devices}
+Edge devices like the NVIDIA Jetson Nano have limited GPU resources and memory compared to traditional servers.  
+As noted by \cite{laroca2018robust, nvidia_jetson_whitepaper2021}, high-performance deep-learning models such as YOLOv8 demand significant compute power, which can reduce frame rates to below real-time levels. Prolonged GPU utilization also raises issues of overheating and throttling under continuous workloads.
+
+\subsection*{3. False Positives and Non-Standard Plates}
+Incorrect detections occur when objects with plate-like textures (advertisements, reflections, or vehicle logos) are misidentified as license plates.  
+Research by \cite{mufti2021automatic, netinant2024evaluating} confirms that ANPR accuracy deteriorates when encountering partially visible, dirty, or non-standard plates with decorative fonts or region-specific layouts.  
+These false positives increase storage load and reduce system credibility in enforcement scenarios.
+
+\subsection*{4. Privacy and Legal Compliance}
+European regulations such as GDPR and the German BDSG require that personal identifiers, including license plate data, be processed under strict privacy principles.  
+Legal frameworks emphasize data minimization, lawful processing, and transparency \cite{gdpr2016eu, bdsga2021}.  
+Systems that store full-resolution images without anonymization may violate Article 5(1)(c) of GDPR, posing compliance risks for public infrastructure deployments.
+
+\subsection*{5. Cost and Scalability}
+Commercial ANPR systems—such as those from Jenoptik or PeterPark—are expensive, closed-source, and require recurring maintenance fees \cite{Jenoptik2023, peterparkALPR}.  
+Research comparing YOLO-based implementations on low-cost edge hardware \cite{Ultralytics2023, JetsonNano2022} highlights the feasibility of democratizing intelligent surveillance through modular, open, and affordable architectures.  
+However, scalability still demands efficient synchronization between multiple camera nodes and lightweight local databases.
+
+\vspace{0.4cm}
+
+\section{Proposed Solutions}
+To address the above challenges, the project integrates a combination of hardware optimization, lightweight AI design, and legal compliance mechanisms.  
+Each proposed method directly corresponds to one identified issue, ensuring both technical robustness and regulatory alignment.
+
+\subsection*{1. Addressing Environmental and Lighting Variability}
 \begin{itemize}
-	\item \textbf{YOLOv8-Nano:} Continuous, low-latency detection of plates in live video streams.
-	\item \textbf{YOLOv8-Large:} Selective re-validation of uncertain detections to boost accuracy under complex conditions \cite{jocher2023ultralytics, wang2023yolov8}.
-	\item \textbf{EasyOCR:} Text extraction from cropped plate images with character-level confidence tracking.
-	\item \textbf{SQLite Database:} Offline storage of entry/exit logs, timestamps, and dwell-time for automated billing.
+	\item Apply dynamic image preprocessing using OpenCV to normalize brightness, gamma, and contrast across frames.
+	\item Integrate IR-assisted illumination and adaptive exposure for stable night-time operation.
+	\item Use deraining and dehazing filters to reduce weather-induced distortions before YOLO inference.
+	\item Expand dataset diversity with day, night, and adverse-weather conditions to improve model generalization.
 \end{itemize}
 
-Each module is optimized for energy-efficient edge inference using TensorRT and FP16 precision. The system automatically exempts special vehicle types—such as police, military, and diplomatic plates—by classifying color or prefix, ensuring compliance and fairness. 
+\subsection*{2. Optimizing Computational Performance}
+\begin{itemize}
+	\item Quantize YOLOv8 weights to FP16 and optimize inference through TensorRT to achieve real-time speed.
+	\item Use a hybrid configuration—YOLOv8-Nano for continuous inference and YOLOv8-Large for periodic re-validation of uncertain detections.
+	\item Implement multi-threading and asynchronous pipelines to parallelize camera feed capture, inference, and OCR.
+	\item Monitor GPU utilization via Jetson-Stats for automatic frame-rate adjustments under thermal constraints.
+\end{itemize}
 
-To maintain privacy, all plate numbers are hashed before database storage, and images are automatically purged within a set retention period. The architecture supports scalability by connecting multiple Jetson Nano nodes for multi-lane deployment while maintaining local independence.
+\subsection*{3. Reducing False Positives and Handling Non-Standard Plates}
+\begin{itemize}
+	\item Introduce temporal validation across consecutive frames to confirm detection stability.
+	\item Apply bounding-box correlation between vehicle and plate regions to prevent spurious matches.
+	\item Enforce a 90\% minimum OCR confidence threshold; reprocess ambiguous characters using EasyOCR fallback.
+	\item Include a classification module for special plates (e.g., emergency, diplomatic) based on prefix and color cues.
+\end{itemize}
 
+\subsection*{4. Ensuring Privacy and Legal Compliance}
+\begin{itemize}
+	\item Hash recognized plate numbers using SHA-256 before database storage to ensure irreversible anonymization.
+	\item Retain images temporarily ($\leq$24 hours) with automated deletion through a background cleanup scheduler.
+	\item Encrypt all local SQLite databases and restrict external network communication.
+	\item Display privacy notices on-site and document data-handling practices to comply with GDPR transparency obligations.
+\end{itemize}
 
+\subsection*{5. Improving Cost Efficiency and Scalability}
+\begin{itemize}
+	\item Use open-source tools (YOLOv8, EasyOCR, SQLite) to eliminate proprietary license costs.
+	\item Develop a modular architecture separating hardware (camera), AI inference, and database layers for flexible scaling.
+	\item Implement RESTful API endpoints to synchronize logs between multiple Jetson Nano units in multi-lane environments.
+	\item Package the setup into an installable deployment kit for plug-and-play installation across various airport terminals.
+\end{itemize}
+
+\vspace{0.2cm}
+
+\noindent
+In summary, this solution framework transforms a conventional centralized ANPR system into a distributed, low-cost, and privacy-compliant edge network.  
+By systematically addressing environmental, computational, and regulatory constraints, the proposed approach ensures scalability, sustainability, and long-term adaptability to evolving smart mobility infrastructures.
