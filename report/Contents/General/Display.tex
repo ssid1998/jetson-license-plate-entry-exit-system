@@ -1,0 +1,287 @@
+%%%%%%%%%%%%
+%
+% $Autor: Wings $
+% $Datum: 2019-03-05 08:03:15Z $
+% $Pfad: TemplateSensor $
+% $Version: 4250 $
+% !TeX spellcheck = en_GB/de_DE
+% !TeX encoding = utf8
+% !TeX root = filename 
+% !TeX TXS-program:bibliography = txs:///biber
+%
+%%%%%%%%%%%%
+
+% Structure
+%\chapter{\textcolor{red}{Actor XY}}
+%
+%Introduction
+%\Mynote{cite books, applications, board}
+%
+%\section{General}
+%
+%General description
+%
+%cite books
+%
+%\section{Specific Sensor/Actor}
+%
+%cite board
+%
+%\section{Specification}
+%
+%\begin{itemize}
+%  \item Cite the data sheet
+%  \item Extract te information from the data sheet
+%  \item Circuit Diagram
+%\end{itemize}
+%
+%\section{Library}
+%
+%\subsection{Description}
+%
+%\subsection{Installation}
+%
+%\begin{itemize}
+%    \item data types
+%    \item data structure
+%    \item data quantity
+%    \item data quality
+%\end{itemize}
+%
+%\subsection{Functions}
+%
+%\section{Example}
+%
+%In this section, a simple example is described in detail, which demonstrates how the library supports the sensor/actor.
+%
+%
+%\subsection{Manual}
+%
+%\subsection{Inside the Example}
+%
+%\subsection{Code}
+%
+%\subsection{Files}
+%
+%
+%
+%\section{Calibration}
+%
+%cite method
+%
+%\section{Simple Code}
+%
+%
+%\section{Simple Application}
+%
+%
+%
+%\section{Tests}
+%
+%\subsection{Simple Function Test}
+%
+%\subsection{Test all Functions}
+%
+%
+%
+%\section{Further Readings}
+
+\chapter{Display as System Actor}
+\label{chap:display_actor}
+
+\section{Introduction}
+In embedded AI systems, \textbf{actors} are components that convert computational results into observable system responses.  
+In this project, the actor is implemented as a \textbf{visual display interface} connected to the NVIDIA Jetson Nano, presenting real-time recognition outcomes such as \textit{“Willkommen”} (Welcome) or \textit{“Ausfahrt registriert”} (Exit recorded) when a vehicle’s license plate is successfully detected.  
+This visual feedback replaces traditional actuators like buzzers or gates, offering clear, non-intrusive communication to the user \cite{edgeAIbook, opencv_doc_2024}.  
+
+The display used is attached to the Jetson Nano’s \textbf{HDMI 2.0 (J3)} port on the Seeed Studio J101 carrier board.  
+It functions both as a debugging interface during development and as the final system actor during runtime.
+
+\section{General}
+Displays serve as standard output actors in access-control and surveillance systems, allowing real-time visual verification of detections without additional hardware.  
+In this setup, the HDMI-connected monitor provides a direct visualization of processed video frames and overlayed license-plate information.  
+Rendering is performed via OpenCV’s GPU-accelerated pipeline on the Jetson Nano \cite{jetson_nano_doc}.
+
+\section{Specific Actor}
+\label{sec:display_specs}
+The actor device used is a standard HDMI display connected through the Jetson Nano’s HDMI 2.0 Type-A port.  
+It receives RGB frames rendered in real time and displays textual overlays produced by the inference module.
+
+\begin{table}[H]
+	\centering
+	\caption{Display module specifications and connection parameters \cite{seeedJ101Manual, jetson_nano_doc}}
+	\label{tab:display_specs}
+	\begin{tabular}{|p{5cm}|p{8cm}|}
+		\hline
+		\textbf{Parameter} & \textbf{Specification} \\ \hline
+		Display Interface & HDMI 2.0 Type-A (J3 port on carrier board) \\ \hline
+		Supported Resolution & Up to 3840 × 2160 @ 60 Hz (4K) \\ \hline
+		Color Depth & 24-bit RGB \\ \hline
+		Power Supply & External 5 V DC adapter (display dependent) \\ \hline
+		Connection Type & HDMI male-to-male cable \\ \hline
+		Display Technology & LCD/LED compatible \\ \hline
+		Usage in Project & Visual output of recognition results and system logs \\ \hline
+	\end{tabular}
+\end{table}
+
+\section{Specification}
+The display acts purely as an output peripheral and requires no electrical modification.  
+The only connection is the HDMI cable carrying both video and synchronization signals from the Jetson Nano.  
+Circuit representation is shown later in the overall system hardware diagram.
+
+The complete system-level data flow between the camera, Jetson Nano, and display actor is illustrated in Figure~\ref{fig:dataflow_display}.
+
+\begin{figure}[H]
+	\centering
+	\begin{tikzpicture}[
+		node distance=2.2cm,
+		>=latex,
+		thick,
+		align=center,
+		font=\sffamily
+		]
+		
+		% Nodes (top to bottom)
+		\node[draw, fill=blue!10, rounded corners,
+		minimum width=6cm, minimum height=1.2cm]
+		(camera) {\textbf{Microsoft LifeCam Show}\\(Sensor Input)};
+		
+		\node[draw, fill=green!10, rounded corners,
+		minimum width=6cm, minimum height=1.2cm,
+		below=of camera]
+		(jetson) {\textbf{NVIDIA Jetson Nano}\\\textbf{(Seeed Studio reComputer J1010)}\\(AI Processing Unit)};
+		
+		\node[draw, fill=orange!10, rounded corners,
+		minimum width=6cm, minimum height=1.2cm,
+		below=of jetson]
+		(display) {\textbf{HDMI Display}\\(System Actor Output)};
+		
+		% Arrows
+		\draw[->, thick] (camera) -- node[right, align=center]{\textit{Video Stream}\\(USB 2.0)} (jetson);
+		\draw[->, thick] (jetson) -- node[right, align=center]{\textit{Processed Output}\\(HDMI Signal)} (display);
+		
+		% Optional feedback arrow
+		\draw[<-, dashed, gray, thick]
+		(camera.west) .. controls +(-3,-1) and +(-3,1) ..
+		node[left, align=center, text=gray!70, font=\itshape]
+		{Control Signal\\/ Status Log} (jetson.west);
+		
+	\end{tikzpicture}
+	\caption{Vertical data flow of the system: image acquisition from the LifeCam, AI inference on Jetson Nano, and output display via HDMI.}
+	\label{fig:dataflow_display_portrait}
+\end{figure}
+
+\section{Library}
+\subsection{Description}
+The display actor is implemented in software through the OpenCV Python library, specifically its \texttt{highgui} module.  
+It renders processed frames in real time and overlays text and bounding boxes on the live video stream \cite{opencv_doc_2024}.
+
+\subsection{Installation}
+The required package is installed via:
+\begin{verbatim}
+	sudo apt install python3-opencv
+\end{verbatim}
+After installation, verify using:
+\begin{verbatim}
+	xrandr
+\end{verbatim}
+to ensure HDMI detection and resolution configuration.
+
+\subsection{Functions}
+Essential OpenCV functions used:
+\begin{itemize}
+	\item \texttt{cv2.imshow()} – displays processed video frames.
+	\item \texttt{cv2.putText()} – overlays recognition messages.
+	\item \texttt{cv2.rectangle()} – draws bounding boxes on detected regions.
+	\item \texttt{cv2.waitKey()} – defines frame-refresh delay.
+\end{itemize}
+
+\subsection{Data Characteristics}
+\paragraph{Data Types.}  
+RGB image frames represented as \texttt{uint8} arrays; UTF-8 text for overlay messages.
+
+\paragraph{Data Structure.}  
+Each frame is a NumPy array of shape (height, width, 3), over which graphical elements are rendered directly.
+
+\paragraph{Data Quantity.}  
+Approximately 25–30 frames per second are displayed, each frame about 2–3 MB (720p).  
+Latency from inference to display < 100 ms \cite{edgeAIbook}.
+
+\paragraph{Data Quality.}  
+GPU-accelerated rendering maintains clarity and smoothness.  
+Color-coded overlays (green = recognized, red = unregistered) enhance user perception.  
+HDMI 2.0 ensures stable 60 Hz output without frame tearing.
+
+\section{Example}
+In this section, a complete example illustrates how the display actor visualizes the system response.
+
+\subsection{Manual}
+To operate, connect the HDMI cable between the Jetson Nano and monitor, select the proper input source, and power both devices.
+
+\subsection{Inside the Example and Code}
+\begin{lstlisting}[language=Python, caption={Displaying a license plate recognition message on Jetson Nano display}]
+	import cv2
+	
+	frame = cv2.imread("car_emden.jpg")
+	cv2.putText(frame, "Willkommen Fahrzeug EMD AB 1234", (40, 50),
+	cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
+	cv2.imshow("License Plate Display", frame)
+	cv2.waitKey(0)
+	cv2.destroyAllWindows()
+\end{lstlisting}
+
+\noindent
+This demonstrates the entry event for a vehicle from Emden, Deutschland.  
+When the plate “\texttt{EMD AB 1234}” is recognized, the system displays the localized message  
+\textit{"Willkommen Fahrzeug EMD AB 1234"} (“Welcome Vehicle EMD AB 1234”).  
+For exits, it shows  
+\textit{"Ausfahrt registriert für EMD AB 1234"} (“Exit recorded for EMD AB 1234”).
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\linewidth]{Display/led_display.png}
+	\caption{Display output showing localized entry message for \texttt{EMD AB 1234} (Emden, Germany) \cite{opencv_doc_2024}.}
+	\label{fig:display_output}
+\end{figure}
+
+\section{Calibration}
+Calibration is limited to brightness, contrast, and resolution adjustments for optimal visibility.  
+Settings are managed using \texttt{xrandr} or the desktop display configuration under JetPack 5.x.
+
+\section{Simple Code}
+The OpenCV example above also serves as the minimal functional code verifying proper HDMI output and text overlay generation.
+
+\section{Simple Application}
+During live inference:
+\begin{itemize}
+	\item \textit{Entry Event:} “Willkommen Fahrzeug EMD AB 1234” displayed in green.
+	\item \textit{Exit Event:} “Ausfahrt registriert für EMD AB 1234” displayed in blue.
+\end{itemize}
+These localized messages provide clear user feedback at the system interface.
+
+\section{Tests}
+\subsection{Simple Function Test}
+Run:
+\begin{verbatim}
+	xrandr
+\end{verbatim}
+to confirm that the HDMI display is detected and configured.
+
+\subsection{Test all Functions}
+Execute the complete inference script; verify real-time text overlays, color changes, and frame-rate stability ( greater than equal to 25 FPS).
+
+\section{Constraints}
+\begin{itemize}
+	\item Requires HDMI-compatible display; analog VGA unsupported.  
+	\item Minimum 25 FPS for fluid real-time feedback.  
+	\item Text overlays must avoid covering detection regions.  
+	\item Manual brightness/contrast tuning recommended.  
+\end{itemize}
+
+\section{Further Readings}
+\begin{itemize}
+	\item NVIDIA Jetson Nano Developer Guide — \cite{jetson_nano_doc}
+	\item Seeed Studio reComputer J101 Manual — \cite{seeedJ101Manual}
+	\item OpenCV Video Display Documentation — \cite{opencv_doc_2024}
+	\item Embedded Edge AI Visualization Techniques — \cite{edgeAIbook}
+\end{itemize}
