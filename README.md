@@ -44,7 +44,7 @@ Key sources cover:
 
 ## 👥 Contributors
 - Gautam Ramesh (Matriculation Number: 7026787)  
-- Vedant Ramkrishna Purohit (Matriculation Number: 7027292 )
+- Shubhankar Dumka (Matriculation Number: 7027187)
 - Siddhanth Sharma (Matriculation Number: 7027189)  
 
 ---
