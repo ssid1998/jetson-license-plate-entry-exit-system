@@ -1,0 +1,78 @@
+%%%
+%
+% $Autor: Wings $
+% $Datum: 2021-05-14 $
+% $Pfad:  $
+% $Dateiname: SBOM
+% $Version: 4620 $
+%
+% !TeX spellcheck = de_DE/GB
+% !TeX program = pdflatex
+% !BIB program = biber/bibtex
+% !TeX encoding = utf8
+%
+%%%
+
+\chapter{\textcolor{red}{SBOM}}
+\setlength{\tabcolsep}{6pt} % horizontal padding
+\setlength{\extrarowheight}{2pt} % vertical padding
+
+\vspace{0.5cm} % top margin
+
+\begin{center}
+	\begin{longtable}{|p{2cm}|p{2.5cm}|p{2cm}|p{4.2cm}|p{2.3cm}|}
+		\hline
+		\textbf{Category} & \textbf{Software / Library} & \textbf{Version / Platform} & \textbf{Purpose / Usage} & \textbf{License / Type} \\
+		\hline
+		\endfirsthead
+		
+		\hline
+		\textbf{Category} & \textbf{Software / Library} & \textbf{Version / Platform} & \textbf{Purpose / Usage} & \textbf{License / Type} \\
+		\hline
+		\endhead
+		
+		\hline
+		\multicolumn{5}{r}{\textit{Continued on next page}} \\
+		\endfoot
+		
+		\hline
+		\endlastfoot
+		
+		Operating System & NVIDIA JetPack SDK 5.1.2 (Ubuntu 20.04 LTS) & Jetson Nano (ARM64) & Provides Ubuntu base OS with CUDA, cuDNN, TensorRT, and OpenCV preinstalled. & Mixed — Ubuntu is \textit{Open Source (GPL)}; NVIDIA JetPack components are \textit{Free (proprietary binaries)} \\
+		\hline
+		Programming Language & Python 3.11 & Installed via \texttt{sudo apt install python3} & Primary development language for the ML pipeline. & Open Source (PSF License) \\
+		\hline
+		Machine Learning Framework & PyTorch + TorchVision & Jetson-compatible build (PyTorch 2.x) & Runs YOLOv8 models for object detection. & Open Source (BSD-style) \\
+		\hline
+		Object Detection Model & YOLOv8-n / YOLOv8-s (Ultralytics) & Installed via \texttt{pip install ultralytics} & Real-time license plate detection. & Free tier, \textit{AGPLv3} (open-source use); commercial license available \\
+		\hline
+		OCR Engine & EasyOCR / PaddleOCR & EasyOCR 1.7.0+ & Recognizes alphanumeric text from detected license plates. & Open Source (Apache 2.0 / MIT) \\
+		\hline
+		Computer Vision Toolkit & OpenCV & 4.5+ & Image capture, preprocessing, and bounding box drawing. & Open Source (Apache 2.0) \\
+		\hline
+		Database & SQLite3 (Python library) & Built-in & Local storage for detected plate numbers and logs. & Public Domain (Open Source) \\
+		\hline
+		Data Analysis \& Visualization & Pandas, NumPy, Matplotlib & Latest & Data logging, performance evaluation, and visualization. & Open Source (BSD / MIT) \\
+		\hline
+		Deployment \& Automation & systemd / crontab (Linux) & Built-in & Automates script startup and scheduling. & Open Source (GPL / LGPL) \\
+		\hline
+		Package Management & PIP \& APT & Latest & Manages Python and system dependencies. & Open Source (MIT / GPL) \\
+		\hline
+		IDE / Code Editor & Visual Studio Code & Desktop / SSH & Code development and debugging. & Proprietary (Free Tier under Microsoft License) \\
+		\hline
+		Version Control & Git \& GitHub & Latest & Source control, versioning, and collaboration. & Git: \textit{Open Source (GPLv2)}; GitHub: \textit{Proprietary (Free Tier Available)} \\
+		\hline
+		Model Optimization & TensorRT (JetPack component) & Built-in & Optimizes YOLOv8 model for faster inference on Jetson. & Free, Proprietary (NVIDIA License) \\
+		\hline
+		Testing \& Debugging Tools & Jupyter Notebook & Python package & Interactive model testing and visualization. & Open Source (BSD License) \\
+		\hline
+		Dataset Annotation Tool & LabelImg / Roboflow & Latest & Labeling license plate bounding boxes for training. & LabelImg: \textit{Open Source (MIT)}; Roboflow: \textit{Proprietary (Free Tier Available)} \\
+		\hline
+		\caption{Software stack for license plate detection on Jetson Nano.} % caption at the bottom
+	\end{longtable}
+\end{center}
+
+\vspace{0.5cm} % bottom margin
+
+
+\FILE{requirements.txt}
