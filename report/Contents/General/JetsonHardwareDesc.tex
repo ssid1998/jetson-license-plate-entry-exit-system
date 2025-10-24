@@ -3977,7 +3977,7 @@ All user-accessible GPIO on J10 operate at \textbf{3.3~V logic} and are not 5~V 
 Use level shifters for 5~V peripherals and external drivers for loads (motors, relays). 
 Pin control is performed in user space via the \texttt{Jetson.GPIO} library; peripheral buses may require enabling via Jetson-IO (device-tree overlay utility) \cite{reComputer_Jetson_GPIO,seeedJ101Manual}.
 
-\noindent\textbf{\textcolor{red}{TODO: Add 40pin TikZ/illustration diagram.}} 
+%\noindent\textbf{\textcolor{red}{TODO: Add 40pin TikZ/illustration diagram.}} 
 
 
 \definecolor{c004350}{RGB}{0,67,80}
@@ -5097,40 +5097,54 @@ You can refer to the \textit{Flashing JetPack OS via Command Line} tutorial for 
 \bigskip
 \noindent Download the version of your choice from the \textbf{NVIDIA Developer website}, including the \textit{BSP} and the \textit{Sample Root Filesystem}.
 
-\noindent Place the BSP and the Sample Root Filesystem in the same directory, then follow the instructions below to extract them and run the \texttt{apply\_binaries.sh} script:
-
-\begin{small}
-	\begin{verbatim}
-		tar xf Jetson-210_Linux_R32.7.2_aarch64.tbz2
-		cd Linux_for_Tegra/rootfs/
-		sudo tar xpf ../../Tegra_Linux_Sample-Root-Filesystem_R32.7.2_aarch64.tbz2
-		cd ..
-		sudo ./apply_binaries.sh
-	\end{verbatim}
-\end{small}
+\noindent Place the BSP and the Sample Root Filesystem in the same directory, then follow the instructions below to extract them and run the \SHELL{apply\_binaries.sh} script:
 
 
-\noindent Create a new \texttt{.sh} file in the \texttt{Linux\_for\_Tegra} directory, and run the script. 
+%\begin{small}
+%	\begin{verbatim}
+%		tar xf Jetson-210_Linux_R32.7.2_aarch64.tbz2
+%		cd Linux_for_Tegra/rootfs/
+%		sudo tar xpf ../../Tegra_Linux_Sample-Root-Filesystem_R32.7.2_aarch64.tbz2
+%		cd ..
+%		sudo ./apply_binaries.sh
+%	\end{verbatim}
+%\end{small}
+
+\medskip
+\begin{quote}
+	\begin{small}
+	\SHELL{tar xf Jetson-210\_Linux\_R32.7.2\_aarch64.tbz2}\\
+	\SHELL{cd Linux\_for\_Tegra/rootfs/}\\
+	\SHELL{sudo tar xpf ../../Tegra\_Linux\_Sample-Root-Filesystem\_R32.7.2\_aarch64.tbz2}\\
+	\SHELL{cd ..}\\
+	\SHELL{sudo ./apply\_binaries.sh}\\
+	\end{small}
+\end{quote}
+
+
+\noindent Create a new \SHELL{.sh} file in the \SHELL{Linux\_for\_Tegra} directory, and run the script. 
 The script content is as follows:
 
+\medskip
 \begin{small}
-	\begin{verbatim}
-		modify_spi.sh
-		sudo bash modify_spi.sh
-	\end{verbatim}
+	\begin{quote}
+		\SHELL{modify\_spi.sh}\\
+		\SHELL{sudo bash modify\_spi.sh}\\
+	\end{quote}
 \end{small}
 
-\bigskip
-After running \texttt{modify\_spi.sh}, this script will update the SPI1 configuration in the device tree, recompile it, and overwrite the old one. 
-If you want to enable SPI2, simply replace the keyword \texttt{spi1} with \texttt{spi2} in the \texttt{modify\_spi.sh} script.
+\medskip
+After running \SHELL{modify\_spi.sh}, this script will update the SPI1 configuration in the device tree, recompile it, and overwrite the old one. 
+If you want to enable SPI2, simply replace the keyword \texttt{spi1} with \texttt{spi2} in the \SHELL{modify\_spi.sh} script.
 
 \bigskip
 After modifying the device tree, flash the image to the Jetson Nano using:
 
+\medskip
 \begin{small}
-	\begin{verbatim}
-		sudo ./flash.sh jetson-nano-emmc mmcblk0p1
-	\end{verbatim}
+	\begin{quote}
+		\SHELL{sudo ./flash.sh jetson-nano-emmc mmcblk0p1}
+	\end{quote}
 \end{small}
 
 
@@ -5231,25 +5245,31 @@ The physical connection diagram is shown below:
 
 \bigskip
 \noindent Load the SPI driver module, then download and compile the test program:
-\begin{verbatim}
-	sudo modprobe spidev
-	git clone https://github.com/rm-hull/spidev-test
-	cd spidev-test/
-	gcc spidev_test.c -o spidev_test
-\end{verbatim}
+\begin{small}
+	\begin{quote}
+		\SHELL{sudo modprobe spidev}\\
+		\SHELL{git clone https://github.com/rm-hull/spidev-test}\\
+		\SHELL{cd spidev-test/}\\
+		\SHELL{gcc spidev\_test.c -o spidev\_test}\\
+	\end{quote}
+\end{small}
 
-\bigskip
-\noindent Run the test program and specify \texttt{spidev0.0} (corresponding to SPI1):
-\begin{verbatim}
-	./spidev_test -v -D /dev/spidev0.0 -p "Test"
-\end{verbatim}
+\medskip
+\noindent Run the test program and specify \SHELL{spidev0.0} (corresponding to SPI1):
+\begin{small}
+	\begin{quote}
+		\SHELL{./spidev\_test -v -D /dev/spidev0.0 -p "Test"}
+	\end{quote}
+\end{small}
 
-\bigskip
+\medskip
 The test result is shown below, indicating that SPI1 has successfully completed the loopback transmission. 
 You can also run the command below to check the available SPI controllers:
-\begin{verbatim}
-	ls /dev/spidev*
-\end{verbatim}
+\begin{small}
+	\begin{quote}
+	\SHELL{ls /dev/spidev*}
+	\end{quote}
+\end{small}
 
 \noindent\textbf{\textcolor{red}{TODO: Add image of terminal confirming loopback transmission.}}
 
@@ -5733,9 +5753,11 @@ After a moment, you will be able to see a new window pop up in the NVIDIA SDK Ma
 In this case, we can pull out the jumper and restart the reComputer. Then we need to connect the reComputer to a monitor via HDMI, enter the password you entered in step 4, and log in to the main interface.
 
 At this point, you need to connect the reComputer to the same LAN as the Linux host PC and determine the IP address of the Jetson by using the command:
-\begin{verbatim}
-	ifconfig
-\end{verbatim}
+\begin{small}
+	\begin{quote}
+		\SHELL{ifconfig}
+	\end{quote}
+\end{small}
 
 Go back to the Linux host PC and enter the IP address you just obtained. NVIDIA SDK Manager will try to connect to the Jetson device and proceed to complete the installation of the next SDK components.
 
@@ -5751,12 +5773,14 @@ Thanks to the freedom to customize the BSP (NVIDIA Linux Driver Package), flashi
 \subsubsection{Step 1: Download the Proper NVIDIA Linux Driver Package}
 \label{subsubsec:cmd_download}
 
-On the Linux host PC, we need to open a browser and go to the Jetson Linux Archive. First we should check if the version of Jetson Linux supports our reComputer Jetson module.
+On the Linux host PC, we need to open a browser and go to the Jetson Linux Archive. First we should check if the version of Jetson Linux supports our reComputer Jetson module. Once you find the proper version, click to go to the download page. Find and click the \textbf{L4T Driver Package (BSP)} and \textbf{Sample Root Filesystem} to download the driver files. The names of the files are like:
 
-Once you find the proper version, click to go to the download page. Find and click the \textbf{L4T Driver Package (BSP)} and \textbf{Sample Root Filesystem} to download the driver files. The names of the files are like:
-
-\texttt{Tegra\_Linux\_Sample-Root-Filesystem\_Rxx.x.x\_aarch64.tbz2} \\
-\texttt{Jetson-210\_Linux\_Rxx.x.x\_aarch64.tbz2}
+\smallskip
+\begin{verbatim}
+	Tegra\_Linux\_Sample-Root-Filesystem\_Rxx.x.x\_aarch64.tbz2
+	Jetson-210\_Linux\_Rxx.x.x\_aarch64.tbz2
+\end{verbatim}
+\smallskip
 
 As an example, we choose the NVIDIA L4T 32.7.1 version since it is included as part of JetPack 4.6.1 and supports the Jetson Nano module. The names of the files:
 
@@ -5770,32 +5794,39 @@ As an example, we choose the NVIDIA L4T 32.7.1 version since it is included as p
 
 On the Linux host PC, we should find a folder and store the package files we downloaded before. Then open a command line window (Terminal) at the folder and use the commands below to unzip the files and assemble the rootfs:
 
-\begin{verbatim}
-	tar xf ${L4T_RELEASE_PACKAGE}
-	cd Linux_for_Tegra/rootfs/
-	sudo tar xpf ../../${SAMPLE_FS_PACKAGE}
-	cd ..
-	sudo ./apply_binaries.sh
-\end{verbatim}
+\begin{small}
+	\begin{quote}
+		\SHELL{tar xf \$\{L4T\_RELEASE\_PACKAGE\}}\\
+		\SHELL{cd Linux\_for\_Tegra/rootfs/}\\
+		\SHELL{sudo tar xpf ../../\$\\{SAMPLE\_FS\_PACKAGE\\}}\\
+		\SHELL{cd ..}\\
+		\SHELL{sudo ./apply\_binaries.sh}\\
+	\end{quote}
+\end{small}
+
 
 As an example of NVIDIA L4T 32.7.1, the downloaded files are stored in \texttt{/Desktop/L4T\_Drivers}, so under the \texttt{/Desktop/L4T\_Drivers} path we open the command line window (Terminal) and execute the following commands:
 
-\begin{verbatim}
-	tar xf Jetson-210_Linux_R32.7.1_aarch64.tbz2
-	cd Linux_for_Tegra/rootfs/
-	sudo tar xpf ../../Tegra_Linux_Sample-Root-Filesystem_R32.7.1_aarch64.tbz2
-	cd ..
-	sudo ./apply_binaries.sh
-\end{verbatim}
+\begin{small}
+	\begin{quote}
+		\SHELL{tar xf Jetson-210\_Linux\_R32.7.1\_aarch64.tbz2}\\
+		\SHELL{cd Linux\_for\_Tegra/rootfs/}\\
+		\SHELL{sudo tar xpf ../../Tegra\_Linux\_Sample-Root-Filesystem\_R32.7.1\_aarch64.tbz2}\\
+		\SHELL{cd ..}\\
+		\SHELL{sudo ./apply\_binaries.sh}\\
+	\end{quote}
+\end{small}
 
 \subsubsection{Step 3: Flash the System to reComputer}
 \label{subsubsec:cmd_flash}
 
 Since we already forced the reComputer J1010 into recovery mode and the module is Jetson Nano, we can directly flash the system into the reComputer by executing the following command:
 
-\begin{verbatim}
-	sudo ./flash.sh jetson-nano-devkit-emmc mmcblk0p1
-\end{verbatim}
+\begin{small}
+	\begin{quote}
+	\SHELL{sudo ./flash.sh jetson-nano-devkit-emmc mmcblk0p1}
+	\end{quote}
+\end{small}
 
 Flashing L4T takes about 10 minutes, or more under a slow host computer.
 

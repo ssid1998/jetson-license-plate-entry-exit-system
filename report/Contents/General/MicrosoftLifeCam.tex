@@ -185,23 +185,28 @@ This allows for frame acquisition, preprocessing, and storage directly through s
 
 \subsection{Installation}
 Required dependencies can be installed via:
-\begin{verbatim}
-	sudo apt install v4l-utils python3-opencv
-\end{verbatim}
+\begin{small}
+	\begin{quote}
+		\SHELL{sudo apt install v4l-utils python3-opencv}
+	\end{quote}
+\end{small}
+
 
 Once installed, the camera can be listed and verified using:
-\begin{verbatim}
-	lsusb | grep -i microsoft
-	v4l2-ctl --list-devices
-\end{verbatim}
+\begin{small}
+	\begin{quote}
+		\SHELL{lsusb | grep -i microsoft}
+	\SHELL{v4l2-ctl --list-devices}
+	\end{quote}
+\end{small}
 
 \subsection{Functions}
 Key OpenCV functions used include:
 \begin{itemize}
-	\item \texttt{cv2.VideoCapture(0)} — initializes the video stream.
-	\item \texttt{cap.read()} — reads the next frame.
-	\item \texttt{cv2.imshow()} — displays real-time frames.
-	\item \texttt{cv2.imwrite()} — captures still frames.
+	\item \PYTHON{cv2.VideoCapture(0)} — initializes the video stream.
+	\item \PYTHON{cap.read()} — reads the next frame.
+	\item \PYTHON{cv2.imshow()} — displays real-time frames.
+	\item \PYTHON{cv2.imwrite()} — captures still frames.
 \end{itemize}
 
 \newpage
@@ -285,20 +290,28 @@ Despite these constraints, the LifeCam Show provides consistent video quality fo
 \section{Example}
 In this section, a simple Python example demonstrates live video streaming and testing of the camera feed.
 
+%\subsection{Code}
+%\begin{lstlisting}[language=Python, caption={Live video capture using Microsoft LifeCam Show on Jetson Nano}]
+%	import cv2
+%	cap = cv2.VideoCapture(0)
+%	while True:
+%	ret, frame = cap.read()
+%	if not ret:
+%	break
+%	cv2.imshow("LifeCam Show Feed", frame)
+%	if cv2.waitKey(1) & 0xFF == ord('q'):
+%	break
+%	cap.release()
+%	cv2.destroyAllWindows()
+%\end{lstlisting}
+\typeout{>>> Compiling MicrosoftLifeCam.tex from the folder where this file lives.}
+
 \subsection{Code}
-\begin{lstlisting}[language=Python, caption={Live video capture using Microsoft LifeCam Show on Jetson Nano}]
-	import cv2
-	cap = cv2.VideoCapture(0)
-	while True:
-	ret, frame = cap.read()
-	if not ret:
-	break
-	cv2.imshow("LifeCam Show Feed", frame)
-	if cv2.waitKey(1) & 0xFF == ord('q'):
-	break
-	cap.release()
-	cv2.destroyAllWindows()
-\end{lstlisting}
+\begin{code}
+	\caption[Live video capture using Microsoft LifeCam Show]{Python program \FILE{LiveVideoCapture.py} demonstrating live video feed acquisition from Microsoft LifeCam Show on Jetson Nano.}
+	\label{Code:LifeCam:LiveVideo}
+	\pythonexternal{}{../../Code/LifeCam/LiveVideoCapture.py}
+\end{code}
 
 \subsection{Inside the Example}
 This example continuously captures and displays frames from the LifeCam Show using OpenCV. 
