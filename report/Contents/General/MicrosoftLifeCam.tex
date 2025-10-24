@@ -307,11 +307,21 @@ In this section, a simple Python example demonstrates live video streaming and t
 \typeout{>>> Compiling MicrosoftLifeCam.tex from the folder where this file lives.}
 
 \subsection{Code}
-\begin{code}
-	\caption[Live video capture using Microsoft LifeCam Show]{Python program \FILE{LiveVideoCapture.py} demonstrating live video feed acquisition from Microsoft LifeCam Show on Jetson Nano.}
-	\label{Code:LifeCam:LiveVideo}
-	\pythonexternal{}{../../Code/LifeCam/LiveVideoCapture.py}
-\end{code}
+\lstinputlisting[
+language=Python,
+caption={LifeCam.py -- Real-time video capture using Microsoft LifeCam on Jetson Nano},
+label={lst:lifecam},
+basicstyle=\ttfamily\small,
+keywordstyle=\color{blue},
+commentstyle=\color{gray},
+stringstyle=\color{green!40!black},
+breaklines=true,
+showstringspaces=false,
+numbers=left,
+numberstyle=\tiny\color{gray},
+frame=single,
+rulecolor=\color{black!30}
+]{../../Code/LifeCam/LiveVideoCapture.py}
 
 \subsection{Inside the Example}
 This example continuously captures and displays frames from the LifeCam Show using OpenCV. 
