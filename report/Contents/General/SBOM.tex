@@ -20,55 +20,56 @@
 \vspace{0.5cm} % top margin
 
 \begin{center}
-	\begin{longtable}{|p{2cm}|p{2.5cm}|p{2cm}|p{4.2cm}|p{2.3cm}|}
+	\small % Shrink font for wide table
+	\begin{longtable}{|>{\centering\arraybackslash}m{0.7cm}|>{\centering\arraybackslash}m{2.2cm}|>{\centering\arraybackslash}m{2.2cm}|>{\centering\arraybackslash}m{3.8cm}|>{\centering\arraybackslash}m{2.1cm}|>{\centering\arraybackslash}m{3cm}|}
+		\caption{Software Bill of Materials;License Descriptions} \\
+		
 		\hline
-		\textbf{Category} & \textbf{Software / Library} & \textbf{Version / Platform} & \textbf{Purpose / Usage} & \textbf{License / Type} \\
-		\hline
+		\textbf{S.No} & \textbf{Category} & \textbf{Software / Library} & \textbf{Version / Platform / Purpose} & \textbf{License / Type} & \textbf{Image} \\ \hline
 		\endfirsthead
 		
+		\multicolumn{6}{c}%
+		{{\bfseries \tablename\ \thetable{} -- continued from previous page}} \\
 		\hline
-		\textbf{Category} & \textbf{Software / Library} & \textbf{Version / Platform} & \textbf{Purpose / Usage} & \textbf{License / Type} \\
-		\hline
+		\textbf{S.No} & \textbf{Category} & \textbf{Software / Library} & \textbf{Version / Platform / Purpose} & \textbf{License / Type} & \textbf{Image} \\ \hline
 		\endhead
 		
-		\hline
-		\multicolumn{5}{r}{\textit{Continued on next page}} \\
+		\hline \multicolumn{6}{r}{\textit{Continued on next page}} \\ \hline
 		\endfoot
 		
 		\hline
 		\endlastfoot
 		
-		Operating System & NVIDIA JetPack SDK 5.1.2 (Ubuntu 20.04 LTS) & Jetson Nano (ARM64) & Provides Ubuntu base OS with CUDA, cuDNN, TensorRT, and OpenCV preinstalled. & Mixed — Ubuntu is \textit{Open Source (GPL)}; NVIDIA JetPack components are \textit{Free (proprietary binaries)} \\
-		\hline
-		Programming Language & Python 3.11 & Installed via \texttt{sudo apt install python3} & Primary development language for the ML pipeline. & Open Source (PSF License) \\
-		\hline
-		Machine Learning Framework & PyTorch + TorchVision & Jetson-compatible build (PyTorch 2.x) & Runs YOLOv8 models for object detection. & Open Source (BSD-style) \\
-		\hline
-		Object Detection Model & YOLOv8-n / YOLOv8-s (Ultralytics) & Installed via \texttt{pip install ultralytics} & Real-time license plate detection. & Free tier, \textit{AGPLv3} (open-source use); commercial license available \\
-		\hline
-		OCR Engine & EasyOCR / PaddleOCR & EasyOCR 1.7.0+ & Recognizes alphanumeric text from detected license plates. & Open Source (Apache 2.0 / MIT) \\
-		\hline
-		Computer Vision Toolkit & OpenCV & 4.5+ & Image capture, preprocessing, and bounding box drawing. & Open Source (Apache 2.0) \\
-		\hline
-		Database & SQLite3 (Python library) & Built-in & Local storage for detected plate numbers and logs. & Public Domain (Open Source) \\
-		\hline
-		Data Analysis \& Visualization & Pandas, NumPy, Matplotlib & Latest & Data logging, performance evaluation, and visualization. & Open Source (BSD / MIT) \\
-		\hline
-		Deployment \& Automation & systemd / crontab (Linux) & Built-in & Automates script startup and scheduling. & Open Source (GPL / LGPL) \\
-		\hline
-		Package Management & PIP \& APT & Latest & Manages Python and system dependencies. & Open Source (MIT / GPL) \\
-		\hline
-		IDE / Code Editor & Visual Studio Code & Desktop / SSH & Code development and debugging. & Proprietary (Free Tier under Microsoft License) \\
-		\hline
-		Version Control & Git \& GitHub & Latest & Source control, versioning, and collaboration. & Git: \textit{Open Source (GPLv2)}; GitHub: \textit{Proprietary (Free Tier Available)} \\
-		\hline
-		Model Optimization & TensorRT (JetPack component) & Built-in & Optimizes YOLOv8 model for faster inference on Jetson. & Free, Proprietary (NVIDIA License) \\
-		\hline
-		Testing \& Debugging Tools & Jupyter Notebook & Python package & Interactive model testing and visualization. & Open Source (BSD License) \\
-		\hline
-		Dataset Annotation Tool & LabelImg / Roboflow & Latest & Labeling license plate bounding boxes for training. & LabelImg: \textit{Open Source (MIT)}; Roboflow: \textit{Proprietary (Free Tier Available)} \\
-		\hline
-		\caption{Software stack for license plate detection on Jetson Nano.} % caption at the bottom
+		1 & Operating System & NVIDIA JetPack SDK 5.1.2 (Ubuntu 20.04 LTS) & Jetson Nano (ARM64) - Provides Ubuntu base OS with CUDA, cuDNN, TensorRT, and OpenCV preinstalled. & Mixed — Ubuntu is \textit{Open Source (GPL)}; NVIDIA JetPack components are \textit{Free (proprietary binaries)} & \raisebox{0.1cm}{\hspace{0.1cm}\includegraphics[height=1.0cm,keepaspectratio]{BOM/nvidia_jetpack.png}\hspace{0.1cm}} \\ \hline
+		
+		2 & Programming Language & Python 3.11 & Installed via \texttt{sudo apt install python3} - Primary development language for the ML pipeline. & Open Source (PSF License) & \raisebox{0.1cm}{\hspace{0.1cm}\includegraphics[height=1.0cm,keepaspectratio]{BOM/python.png}\hspace{0.1cm}} \\ \hline
+		
+		3 & Machine Learning Framework & PyTorch + TorchVision & Jetson-compatible build (PyTorch 2.x) - Runs YOLOv8 models for object detection. & Open Source (BSD-style) & \raisebox{0.1cm}{\hspace{0.1cm}\includegraphics[height=1.0cm,keepaspectratio]{BOM/pytorch.png}\hspace{0.1cm}} \\ \hline
+		
+		4 & Object Detection Model & YOLOv8-n / YOLOv8-s (Ultralytics) & Installed via \texttt{pip install ultralytics} - Real-time license plate detection. & Free tier, \textit{AGPLv3}; commercial license available & \raisebox{0.1cm}{\hspace{0.1cm}\includegraphics[height=1.0cm,keepaspectratio]{BOM/ultra.png}\hspace{0.1cm}} \\ \hline
+		
+		5 & OCR Engine & EasyOCR / PaddleOCR & EasyOCR 1.7.0+ - Recognizes alphanumeric text from detected license plates. & Open Source (Apache 2.0 / MIT) & \raisebox{0.1cm}{\hspace{0.1cm}\includegraphics[height=1.0cm,keepaspectratio]{BOM/paddle_ocr.png}\hspace{0.1cm}} \\ \hline
+		
+		6 & Computer Vision Toolkit & OpenCV & 4.5+ - Image capture, preprocessing, and bounding box drawing. & Open Source (Apache 2.0) & \raisebox{0.1cm}{\hspace{0.1cm}\includegraphics[height=1.0cm,keepaspectratio]{BOM/opencv.png}\hspace{0.1cm}} \\ \hline
+		
+		7 & Database & SQLite3 (Python library) & Built-in - Local storage for detected plate numbers and logs. & Public Domain (Open Source) & \raisebox{0.1cm}{\hspace{0.1cm}\includegraphics[height=1.0cm,keepaspectratio]{BOM/sqlite.png}\hspace{0.1cm}} \\ \hline
+		
+		8 & Data Analysis \& Visualization & Pandas, NumPy, Matplotlib & Latest - Data logging, performance evaluation, and visualization. & Open Source (BSD / MIT) & \raisebox{0.1cm}{\hspace{0.1cm}\includegraphics[height=1.0cm,keepaspectratio]{BOM/pandas.png}\hspace{0.1cm}} \\ \hline
+		
+		9 & Deployment \& Automation & systemd / crontab (Linux) & Built-in - Automates script startup and scheduling. & Open Source (GPL / LGPL) & \raisebox{0.1cm}{\hspace{0.1cm}\includegraphics[height=1.0cm,keepaspectratio]{BOM/linux.png}\hspace{0.1cm}} \\ \hline
+		
+		10 & Package Management & PIP \& APT & Latest - Manages Python and system dependencies. & Open Source (MIT / GPL) & \raisebox{0.1cm}{\hspace{0.1cm}\includegraphics[height=1.0cm,keepaspectratio]{BOM/pip.png}\hspace{0.1cm}} \\ \hline
+		
+		11 & IDE / Code Editor & Visual Studio Code & Desktop / SSH - Code development and debugging. & Proprietary (Free Tier under Microsoft License) & \raisebox{0.1cm}{\hspace{0.1cm}\includegraphics[height=1.0cm,keepaspectratio]{BOM/vscode.png}\hspace{0.1cm}} \\ \hline
+		
+		12 & Version Control & Git \& GitHub & Latest - Source control, versioning, and collaboration. & Git: \textit{Open Source (GPLv2)}; GitHub: \textit{Proprietary (Free Tier Available)} & \raisebox{0.1cm}{\hspace{0.1cm}\includegraphics[height=1.0cm,keepaspectratio]{BOM/github.png}\hspace{0.1cm}} \\ \hline
+		
+		13 & Model Optimization & TensorRT (JetPack component) & Built-in - Optimizes YOLOv8 model for faster inference on Jetson. & Free, Proprietary (NVIDIA License) & \raisebox{0.1cm}{\hspace{0.1cm}\includegraphics[height=1.0cm,keepaspectratio]{BOM/tensorrt.png}\hspace{0.1cm}} \\ \hline
+		
+		14 & Testing \& Debugging Tools & Jupyter Notebook & Python package - Interactive model testing and visualization. & Open Source (BSD License) & \raisebox{0.1cm}{\hspace{0.1cm}\includegraphics[height=1.0cm,keepaspectratio]{BOM/jupyter.png}\hspace{0.1cm}} \\ \hline
+		
+		15 & Dataset Annotation Tool & LabelImg / Roboflow & Latest - Labeling license plate bounding boxes for training. & LabelImg: \textit{Open Source (MIT)}; Roboflow: \textit{Proprietary (Free Tier Available)} & \raisebox{0.1cm}{\hspace{0.1cm}\includegraphics[height=1.0cm,keepaspectratio]{BOM/robo.png}\hspace{0.1cm}} \\ \hline
+		
 	\end{longtable}
 \end{center}
 
