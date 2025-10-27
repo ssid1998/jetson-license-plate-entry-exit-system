@@ -1,23 +1,104 @@
-%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%
 %
-% $Autor: Wings $
-% $Datum: 2019-03-05 08:03:15Z $
-% $Pfad: SafetyGuidelines.tex $
-% $Version: 4250 $
-% !TeX spellcheck = en_GB/de_DE
+% $Autor: Gautam Ramesh$
+% $Datum: 2025-10-14 21:52:19Z $
+% $Pfad: /Users/gautamramesh/githubNew/ML26-03-Car-Licence-Plate-Identification-with-a-Jetson-Nano/Assembly - edit/Chapters/en/SafetyGuidelines.tex $
+% $Version: 1 $
+%
 % !TeX encoding = utf8
-% !TeX root = manual 
-% !TeX TXS-program:bibliography = txs:///biber
+% !TeX root = Rename
 %
-%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%
+
+
 
 \chapter{Safety Guidelines}
 
-Troubleshooting
+This section outlines essential safety procedures to prevent hardware damage, data loss, or user injury during operation, maintenance, and transportation of the Jetson Nano–based License Plate Detection System.  
+Always follow these safety recommendations before connecting, testing, or relocating the unit.
 
-Specifications
+% -------------------------------------------------------
+\section{General Safety Instructions}
+
+\begin{itemize}
+	\item \textbf{Qualified Personnel Only:} Setup and maintenance should be performed by individuals familiar with embedded systems and electrical safety.
+	\item \textbf{Disconnect Power:} Always unplug the \SI{5}{\volt}/\SI{4}{\ampere} power supply before connecting or removing peripherals.
+	\item \textbf{Static Protection:} Use an anti-static wrist strap or work on an ESD-safe mat to prevent electrostatic discharge damage to sensitive components.
+	\item \textbf{Avoid Liquid Contact:} Do not expose the system to moisture or conductive liquids. Keep the workspace dry and well ventilated.
+	\item \textbf{Ventilation:} Operate the device on an open surface; ensure sufficient airflow around heatsinks and fans.
+	\item \textbf{Stable Power Source:} Use only the certified NVIDIA Jetson Nano adapter or equivalent with correct polarity and amperage.
+\end{itemize}
+
+\vspace{0.4cm}
+
+% -------------------------------------------------------
+\section{Electrical and Operational Safety}
+
+\begin{table}[H]
+	\centering
+	\caption{Electrical and Operational Safety Checklist}
+	\begin{tabular}{|L{3.8cm}|L{8.2cm}|L{2.2cm}|}
+		\hline
+		\textbf{Item} & \textbf{Precaution / Action} & \textbf{Frequency} \\ \hline
+		Power Adapter & Verify rated \SI{5}{\volt}, \SI{4}{\ampere}; check barrel connector for looseness or heat & Each setup \\ \hline
+		USB Ports & Avoid hot-plugging high-current devices (e.g., external HDDs) without a powered hub & Always \\ \hline
+		GPIO Header & Connect only 3.3V logic; avoid 5V direct inputs & Each wiring \\ \hline
+		HDMI Cable & Insert gently; avoid bending near connector & Each setup \\ \hline
+		Cooling System & Ensure fan rotation; do not block airflow during operation & Continuous \\ \hline
+		Camera Module & Secure cable connection; protect from static and dust & Before each run \\ \hline
+	\end{tabular}
+\end{table}
+
+These safety practices are designed to prevent hardware failure, port burnout, and accidental short circuits during extended operation.
+
+\vspace{0.4cm}
+
+% -------------------------------------------------------
+\section{Environmental and Handling Guidelines}
+
+\begin{itemize}
+	\item \textbf{Temperature:} Operate between \SI{10}{\celsius} and \SI{35}{\celsius}. Avoid direct sunlight or high ambient heat sources.
+	\item \textbf{Humidity:} Keep humidity below 70\%; condensation can cause corrosion or electrical shorts.
+	\item \textbf{Mechanical Stress:} Do not apply pressure on the board or connectors when inserting/removing cables.
+	\item \textbf{Transportation:} Transport in an anti-static bag inside a padded enclosure to protect against impact and ESD.
+	\item \textbf{Storage:} Store the unit in a clean, dry area at room temperature when not in use.
+\end{itemize}
+
+\vspace{0.4cm}
 
 
+% -------------------------------------------------------
+\section{Emergency Procedures}
 
+\begin{itemize}
+	\item \textbf{Overheating:} Immediately disconnect power if the system becomes unusually hot or emits odor; inspect fan and thermal paste.
+	\item \textbf{Electrical Short:} Unplug immediately, then verify continuity using a multimeter before reconnecting.
+	\item \textbf{Camera or Display Failure:} Shut down system; reinsert cables after cooling; avoid hot-swapping.
+	\item \textbf{Liquid Spill:} Disconnect all power; let the device dry completely (minimum 24 hours) before re-use.
+	\item \textbf{Fire Risk:} Use a \textbf{CO2} or \textbf{dry chemical} extinguisher only—never water.
+\end{itemize}
 
+\vspace{0.4cm}
 
+% -------------------------------------------------------
+\section{User Responsibility}
+
+\begin{itemize}
+	\item Operators must read this safety guide before system deployment.
+	\item Any modification or custom wiring outside specified limits is done at the user’s own risk.
+	\item Always comply with local laboratory and institutional safety regulations.
+	\item Users must ensure all firmware, drivers, and model updates are performed only through verified sources to avoid software corruption or malware.
+	\item Regular documentation of system use, maintenance, and incident reports is required to maintain operational transparency and traceability.
+	\item Ensure that all cables, ports, and components are handled gently during installation or inspection to prevent connector fatigue and mechanical wear.  
+	\item Report any abnormal behavior such as excessive heat, noise, or repeated reboot cycles to the supervising engineer before resuming operation.  
+\end{itemize}
+
+\vspace{0.6cm}
+\noindent
+\textbf{Summary:}  
+Adhering to these safety guidelines prevents hardware damage and personal hazards.  
+Proper handling and operational awareness ensure a reliable and long-lasting Jetson Nano detection system.
+
+% -------------------------------------------------------
+% References
+% -------------------------------------------------------

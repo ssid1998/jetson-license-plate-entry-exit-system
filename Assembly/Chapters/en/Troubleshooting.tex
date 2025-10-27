@@ -1,21 +1,110 @@
-%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%
 %
-% $Autor: Wings $
-% $Datum: 2019-03-05 08:03:15Z $
-% $Pfad: Troubleshooting.tex $
-% $Version: 4250 $
-% !TeX spellcheck = en_GB/de_DE
+% $Autor: Gautam Ramesh$
+% $Datum: 2025-10-14 22:01:30Z $
+% $Pfad: /Users/gautamramesh/githubNew/ML26-03-Car-Licence-Plate-Identification-with-a-Jetson-Nano/Assembly - edit/Chapters/en/Troubleshooting.tex $
+% $Version: 1 $
+%
 % !TeX encoding = utf8
-% !TeX root = manual 
-% !TeX TXS-program:bibliography = txs:///biber
+% !TeX root = Rename
 %
-%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%
+
+
 
 \chapter{Troubleshooting}
 
+This section provides diagnostic guidance for common hardware issues that may arise during setup or operation of the Jetson Nano–based License Plate Detection System.  
+It helps identify potential faults in power, display, camera, and peripheral connections to restore functionality quickly and safely.
 
+\section{Initial Inspection}
 
+Before powering on the system, ensure the following checks:
+\begin{itemize}
+	\item Verify that all cables are firmly seated in their respective ports (USB, HDMI, power barrel jack).
+	\item Inspect for bent GPIO pins or loose microSD insertion.
+	\item Confirm that the power adapter outputs a stable \SI{5}{\volt}/\SI{4}{\ampere}.
+	\item Use a clean, static-free workspace to prevent ESD-related failures.
+\end{itemize}
 
+% -------------------------------------------------------
+% Table: Common Issues and Solutions
+% -------------------------------------------------------
+\begin{table}[H]
+	\centering
+	\caption{Common Hardware Issues and Corrective Actions}
+	\begin{tabular}{|L{3.8cm}|L{7.5cm}|L{2.5cm}|}
+		\hline
+		\textbf{Symptom} & \textbf{Possible Cause / Solution} & \textbf{Priority} \\ \hline
+		No Power LED / Boot Failure & 
+		\begin{itemize}[leftmargin=*]
+			\item Check DC adapter output with multimeter.  
+			\item Reseat the power connector and verify correct polarity.  
+			\item Replace microSD card if image is corrupted.  
+		\end{itemize} & High \\ \hline
+		
+		No HDMI Display Output & 
+		\begin{itemize}[leftmargin=*]
+			\item Confirm monitor input source (HDMI 1/2).  
+			\item Use known-good cable and test at \texttt{1920x1080} resolution.  
+			\item Reflash JetPack image if system hangs during boot logo.  
+		\end{itemize} & High \\ \hline
+		
+		Camera Not Detected & 
+		\begin{itemize}[leftmargin=*]
+			\item Reconnect USB cable to another port.  
+			\item Check via terminal using \texttt{lsusb} or \texttt{v4l2-ctl --list-devices}.  
+			\item Replace cable or camera if not recognized.  
+		\end{itemize} & Medium \\ \hline
+		
+		System Overheating or Throttling & 
+		\begin{itemize}[leftmargin=*]
+			\item Verify that heatsink and fan are unobstructed.  
+			\item Maintain ambient temperature below \SI{35}{\celsius}.  
+			\item Use USB-powered cooling fan for long inference sessions.  
+		\end{itemize} & Medium \\ \hline
+		
+		USB Peripherals Unresponsive & 
+		\begin{itemize}[leftmargin=*]
+			\item Avoid using high-draw devices on unpowered hubs.  
+			\item Test each port individually with known working devices.  
+			\item Reboot and check kernel logs via \texttt{dmesg | grep usb}.  
+		\end{itemize} & Medium \\ \hline
+		
+	\end{tabular}
+\end{table}
 
+\section{Hardware Recovery Steps}
 
+If the system fails to boot or becomes unresponsive:
+\begin{enumerate}
+	\item Power off the Jetson Nano completely and disconnect all peripherals.
+	\item Remove and reinsert the microSD card to ensure proper contact.
+	\item Inspect the power adapter for overcurrent protection tripping.
+	\item Boot with only essential components: power, HDMI, and microSD.
+	\item If the board still fails, reflash the SD card using the official \texttt{JetPack~5.1.2} image.
+\end{enumerate}
 
+\section{Camera-Specific Checks}
+
+\begin{itemize}
+	\item Verify the Microsoft LifeCam Show appears under \texttt{/dev/video0}.  
+	\item Run \texttt{v4l2-ctl --all} to confirm driver compatibility.  
+	\item If the camera shows a black feed, check ambient lighting and lens focus.  
+	\item Test using \texttt{cheese} or \texttt{fswebcam} to confirm image capture.  
+\end{itemize}
+
+\section{Preventive Maintenance Notes}
+
+\begin{itemize}
+	\item Maintain adequate ventilation around the Jetson Nano to prevent thermal stress.
+	\item Avoid frequent insertion/removal of USB peripherals to reduce wear on ports.
+	\item Use antistatic wrist straps when touching the board or GPIO pins.
+	\item Keep firmware and models updated but only from verified NVIDIA or project repositories.
+\end{itemize}
+
+\subsection*{Summary}
+
+Proper troubleshooting ensures minimal downtime and maximizes hardware longevity.  
+Most operational faults can be resolved through systematic checks of power, connection integrity, and peripheral recognition.  
+In persistent failure scenarios, the system can be safely recovered by reflashing the OS and restoring configuration backups.
