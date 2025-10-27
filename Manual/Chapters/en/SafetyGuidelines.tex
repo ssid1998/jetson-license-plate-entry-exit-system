@@ -1,68 +1,72 @@
-%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%
 %
-% $Autor: Wings $
-% $Datum: 2019-03-05 08:03:15Z $
-% $Pfad: SafetyGuidelines.tex $
-% $Version: 4250 $
-% !TeX spellcheck = en_GB/de_DE
+% $Autor: Gautam Ramesh$
+% $Datum: 2025-10-27 23:08:09Z $
+% $Pfad: /Manual/Chapters/en/SafetyGuidelines.tex $
+% $Version: 2 (Cleaned & Finalised)$
+%
 % !TeX encoding = utf8
-% !TeX root = manual 
-% !TeX TXS-program:bibliography = txs:///biber
+% !TeX root = Rename
 %
-%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%
 
 \chapter{Safety Guidelines}
 
 \section{Safety Guidelines}
 
-The following safety guidelines are essential to ensure reliable, secure, and fault-free operation of the License Plate Detection System.  
-They cover electrical, thermal, mechanical, and software safety aspects, tailored to embedded AI hardware (Jetson Nano, camera, power supply).
+The following safety guidelines are essential to ensure the reliable, secure, and fault-free operation of the \textbf{License Plate Detection System}.  
+They cover electrical, thermal, mechanical, and operational aspects relevant to the embedded AI hardware setup based on the NVIDIA Jetson Nano.
 
+\vspace{0.4cm}
 \subsection{Electrical Safety}
 
 \begin{itemize}
-	\item Always use a certified **5 V / 4 A USB-C power supply** with proper overcurrent and short-circuit protection.  
-	\item Avoid powering the unit when connecting or removing peripherals (camera, HDMI, USB).  
-	\item Make sure all cables are insulated and rated for the current; check for worn or damaged wires before use.  
-	\item Use grounded power outlets or surge protectors to prevent voltage spikes or earth loops.  
-	\item Respect polarity: reverse connection may permanently damage the board or peripheral components.
+	\item Always use a certified \textbf{5V / 4A USB-C power supply} with built-in safety protection against overcurrent and short-circuits.  
+	\item Avoid connecting or disconnecting peripherals (camera, HDMI, USB) while the system is powered on.  
+	\item Check all cables for damage or wear before use, and make sure they are properly insulated.  
+	\item Use grounded power outlets or a surge protector to prevent voltage spikes or static discharge.  
+	\item Connecting cables incorrectly may cause permanent damage to the board or its peripherals.  
+	\item Avoid operating the system outdoors during rain, lightning, or unstable weather conditions.
 \end{itemize}
 
+\vspace{0.4cm}
 \subsection{Thermal and Mechanical Safety}
 
 \begin{itemize}
-	\item Maintain adequate ventilation. Do not cover or obstruct the aluminum case’s fins or openings, as the board uses passive cooling.  
-	\item Operate within safe ambient temperature (e.g. 0 °C to 40 °C). In hotter environments, consider adding an auxiliary fan.  
-	\item Ensure no heavy objects rest on the system. Avoid placing the unit near liquids or in high humidity environments.  
-	\item Secure the camera on its stand firmly to avoid fall damage or misalignment.  
-	\item Use anti-static precautions (e.g. wrist strap) when handling the Jetson Nano board to prevent ESD damage.
+	\item Ensure good ventilation around the aluminum case — do not block any openings, as the system relies on passive cooling.  
+	\item Keep the device within a safe temperature range (\textbf{0\,\textdegree C to 40\,\textdegree C}).  
+	In hotter environments, use a small fan to maintain airflow.  
+	\item Keep liquids, food, or heavy objects away from the unit. Avoid high humidity environments.  
+	\item Mount the camera securely and ensure it cannot fall or shift during operation.  
+	\item When handling the Jetson Nano board directly, use anti-static precautions (e.g., an ESD wrist strap).
 \end{itemize}
 
+\vspace{0.4cm}
 \subsection{Operational Safety}
 
 \begin{itemize}
-	\item Boot and shut down properly via software commands (e.g. \texttt{sudo shutdown}) before removing power.  
-	\item Monitor system logs and error messages to detect sensor faults, temperature warnings, or abnormal behavior.  
-	\item Do not overload the USB ports with high-power devices that exceed the board’s power budget.  
-	\item In case of smoke, smell, or abnormal heating, power off immediately and inspect hardware before reuse.
+	\item Always shut down the system properly using software commands (e.g., \texttt{sudo shutdown}) before unplugging power.  
+	\item Do not overload the USB ports with high-power accessories or unverified devices.  
+	\item Monitor for abnormal heating, flickering, or warning messages — if detected, power off immediately and inspect hardware.  
+	\item Avoid sudden reboots or forced shutdowns while detections or database operations are running.  
+	\item During cleaning or relocation, ensure the power supply is fully disconnected.
 \end{itemize}
 
-\subsection{Power \& Inference Safety}
+\vspace{0.4cm}
+\subsection{Power and Inference Safety}
 
-According to studies on AI inference energy use, the power consumption of embedded devices performing computer vision tasks is nontrivial. For example, a work estimating power usage of heterogeneous devices shows that using YOLO models on devices like Jetson Nano yields measurable power-per-frame metrics 
-Thus:
+Continuous AI processing generates both heat and power load.  
+To keep the system safe and stable:
 
 \begin{itemize}
-	\item Regularly monitor power draw using a multimeter or inline ammeter to ensure it remains within safe limits (e.g. under the adapter’s rated capacity).  
-	\item Avoid leaving the system running under heavy load continuously without periodic rest or thermal check.  
+	\item Periodically check the power draw using a USB power meter or multimeter — it should remain within the adapter’s rated limit.  
+	\item Avoid keeping the system under heavy load for long hours without monitoring temperature.  
+	\item Allow short cooling breaks after extended operation or testing sessions.  
 \end{itemize}
 
+\vspace{0.4cm}
 \subsection*{Summary}
 
-Adhering to these safety rules protects both the hardware and the environment it operates in.  
-Electrical and thermal control prevents damage, while mechanical and operational precautions ensure reliable use.  
-Combining these with measurements and monitoring helps maintain long-term stability and prevent accidents.
-
-
-
-
+Following these safety rules protects both the hardware and the environment where it operates.  
+Electrical and thermal safety prevent component damage, while operational care ensures stability and uptime.  
+With regular checks, stable power use, and proper handling, the License Plate Detection System can operate safely and efficiently for years in real-world airport conditions.

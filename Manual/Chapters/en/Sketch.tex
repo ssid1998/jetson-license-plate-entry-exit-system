@@ -1,27 +1,11 @@
-%%%%%%%%%%%%
-%
-% $Autor: Wings $
-% $Datum: 2019-03-05 08:03:15Z $
-% $Pfad: Sketch.tex $
-% $Version: 4250 $
-% !TeX spellcheck = en_GB/de_DE
-% !TeX encoding = utf8
-% !TeX root = manual 
-% !TeX TXS-program:bibliography = txs:///biber
-%
-%%%%%%%%%%%%
+\chapter{System Sketch}
 
-\chapter{Sketch}
+\section{System Overview}
 
-\section{System Sketch}
+The following sketch gives a simple view of how all parts of the \textbf{License Plate Detection System} are connected.  
+Each device works together automatically from the moment the power is switched on — to detect, read, and record vehicle license plates at the airport gate.
 
-The following sketch illustrates the overall hardware architecture and data flow of the \textbf{License Plate Detection System}.  
-It represents how each physical component connects to the Jetson Nano during operation — from image capture to output display and database logging.  
-This configuration shows the system as it would appear during actual deployment in a parking or roadside monitoring setup.
-
-% --------------------------------------------------
-% TikZ Hardware Layout Diagram
-% --------------------------------------------------
+\vspace{0.5cm}
 \begin{figure}[h!]
 	\centering
 	\resizebox{1.1\textwidth}{!}{% scales safely within margins
@@ -35,7 +19,7 @@ This configuration shows the system as it would appear during actual deployment 
 			\node[block] (camera) {\faCamera \\ \textbf{USB Camera}\\(Microsoft LifeCam Show)};
 			\node[block, right=2.9cm of camera] (nano) {\faMicrochip \\ \textbf{NVIDIA Jetson Nano}\\(reComputer J1010)};
 			\node[block, right=2.9cm of nano] (display) {\faDesktop \\ \textbf{HDMI Display}\\(Real-time Output)};
-			\node[db, below=1.7cm of nano] (db) {\textbf{SQLite Database}\\(plates.db)};
+			\node[db, below=1.7cm of nano] (db) {\textbf{Local Database}\\(plates.db)};
 			\node[block, below=1.7cm of camera] (power) {\faBolt \\ \textbf{Power Supply}\\(5 V / 4 A USB-C)};
 			
 			% Connections
@@ -50,106 +34,42 @@ This configuration shows the system as it would appear during actual deployment 
 	\label{fig:hardware_sketch}
 \end{figure}
 
-\vspace{0.3cm}
 
-\noindent
-The hardware layout above shows the system’s logical and physical connections.  
-The USB camera continuously streams live video to the Jetson Nano for inference.  
-The HDMI port drives a real-time display showing detection output, while the database logging occurs in the background.  
-The unit is powered by a 5V/4A supply through a USB-C input.  
-This modular structure allows easy assembly, transport, and maintenance in embedded AI environments.
+\section{Hardware Components}
 
-% --------------------------------------------------
-% New Image: Jetson Nano Aluminum Case with Ports
-% --------------------------------------------------
-\begin{figure}[h!]
-	\centering
-	\includegraphics[width=0.72\textwidth]{General/jetsonNanoPorts.png}
-	\caption{Aluminum-encased Jetson Nano (Seeed Studio reComputer J1010) showing external ports for HDMI, USB, Ethernet, and power.}
-	\label{fig:jetson_case_ports}
-\end{figure}
+Each part of the system plays a specific role in making automatic plate recognition work smoothly:
 
-\noindent
-The above image shows the actual Seeed Studio reComputer J1010 aluminum enclosure used in this project.  
-The front and side ports include:
 \begin{itemize}
-	\item Two \textbf{USB 3.0} ports for peripherals such as cameras or flash drives.
-	\item One \textbf{HDMI} output port for display connection.
-	\item One \textbf{Gigabit Ethernet} port for optional network connectivity.
-	\item One \textbf{USB-C} input for 5V/4A power supply.
+	\item \textbf{Camera:} Captures live video of vehicles entering or exiting the airport gate.
+	\item \textbf{Jetson Nano (reComputer J1010):} The main unit that reads the video, detects number plates, and calculates parking time.
+	\item \textbf{Display Screen:} Shows live detection results and timing information.
+	\item \textbf{Power Adapter:} Supplies stable 5V/4A power through the USB-C connector.
+	\item \textbf{Local Database:} Stores all plate numbers with date, time, and charge status.
 \end{itemize}
 
-\noindent
-The compact design and passive cooling of the aluminum casing allow the system to operate continuously under load while maintaining thermal stability.  
-This makes the setup suitable for continuous field operation, even in confined or semi-outdoor conditions.
-\vspace{0.3cm}
-\noindent
-\textbf{Practical Deployment Notes:}  
-The reComputer J1010 unit provides a highly integrated, plug-and-play platform for real-world AI applications.  
-Because of its small form factor (dimensions: \textbf{130mm × 120mm × 45mm}), it can be easily mounted beside surveillance cameras, on dashboards, or inside parking enclosures.  
-The fanless aluminum casing not only reduces noise but also enhances durability and heat dissipation, which is essential for continuous inference tasks such as YOLOv8-based object detection.
 
-\begin{table}[h!]
+
+
+
+\section{System Summary}
+
+\begin{table}[H]
 	\centering
-	\caption{Jetson Nano Hardware and Connectivity Summary}
-	\label{tab:jetson_summary}
-	\renewcommand{\arraystretch}{1.3} % increases row spacing
-	\begin{tabular}{|l|l|}
+	\renewcommand{\arraystretch}{1.3}
+	\begin{tabular}{|l|l|p{7cm}|}
 		\hline
-		\textbf{Feature} & \textbf{Description} \\
-		\hline
-		Processor & Quad-core ARM Cortex-A57 CPU \\
-		\hline
-		GPU & 128-core Maxwell architecture \\
-		\hline
-		Memory & 4 GB LPDDR4 \\
-		\hline
-		Operating System & JetPack 5.1.2 (Ubuntu 20.04) \\
-		\hline
-		Camera Interface & USB 2.0 (Microsoft LifeCam Show) \\
-		\hline
-		Display Interface & HDMI 2.0, 4K capable output \\
-		\hline
-		Networking & Gigabit Ethernet LAN port \\
-		\hline
-		Storage & 64 GB microSD card \\
-		\hline
-		Power Input & 5V / 4A via USB-C \\
-		\hline
-		Cooling System & Passive aluminum heat sink (fanless) \\
-		\hline
+		\textbf{Component} & \textbf{Purpose} & \textbf{Description} \\ \hline
+		Camera & Captures video & Microsoft LifeCam Show USB camera fixed near gate. \\ \hline
+		Jetson Nano & Processes video & Small AI computer that detects and reads plates. \\ \hline
+		Display & Shows results & HDMI monitor displaying detected plates in real time. \\ \hline
+		Database & Stores records & Saves each plate with time, date, and status (free or charged). \\ \hline
+		Power Supply & Runs the system & 5V / 4A USB-C adapter powering the Jetson Nano and camera. \\ \hline
 	\end{tabular}
+	\caption{System components and their basic roles.}
+	\label{tab:system_summary}
 \end{table}
 
-\vspace{0.3cm}
-\noindent
-The hardware configuration summarized in Table~\ref{tab:jetson_summary} ensures that the Jetson Nano can perform \textbf{real-time object detection and OCR processing} while maintaining a low thermal footprint.  
-Its low power consumption and compact design make it an ideal choice for embedded edge-AI applications such as traffic surveillance, parking automation, and smart tolling systems.
 
 \noindent
-In this project, all computations — including YOLOv8 inference, EasyOCR text recognition, and SQLite database logging — are executed locally on the Jetson Nano without any dependency on cloud services.  
-This ensures complete \textbf{data privacy, low latency, and offline operability}, which are key requirements for on-premise vehicle monitoring deployments.
-\vspace{0.4cm}
-\noindent
-\textbf{System Integration and Workflow:}  
-The hardware design of the License Plate Detection System is optimized for seamless integration with the accompanying software stack.  
-The Jetson Nano acts as both the computation and control hub, handling camera input, model inference, and result logging in a single environment.  
-This all-in-one configuration minimizes latency between hardware operations and ensures stable frame processing without the need for external servers.
-
-\noindent
-From a software perspective, the Jetson Nano runs a lightweight Ubuntu environment based on the \textbf{JetPack 5.1.2 SDK}, which provides direct support for CUDA, cuDNN, TensorRT, and OpenCV libraries.  
-These NVIDIA components enable accelerated deep-learning inference directly on the device GPU, providing high throughput for YOLOv8 detection even under edge constraints.
-
-\noindent
-The following points summarize the advantages of this embedded integration:
-\begin{itemize}
-	\item \textbf{Low Latency:} On-device computation eliminates round-trip delay associated with cloud processing.  
-	\item \textbf{Compact Footprint:} The hardware, camera, and power supply together occupy less than 0.5 L of volume, making it deployable in small enclosures.  
-	\item \textbf{Energy Efficiency:} Despite continuous GPU usage, the system remains under 10 W average power draw.  
-	\item \textbf{Reliability:} Solid aluminum casing and passive cooling ensure uninterrupted operation over extended periods.  
-	\item \textbf{Scalability:} Multiple Jetson units can operate in parallel for large-scale installations such as parking lots or toll plazas.  
-\end{itemize}
-
-\noindent
-Overall, this hardware architecture provides an ideal foundation for embedded computer-vision applications.  
-Its modular design allows direct adaptation for related use cases such as \textit{traffic violation detection}, \textit{vehicle counting}, or \textit{entry-exit automation}.  
+The system is compact, quiet, and easy to set up.  
+Once powered, it runs automatically and provides a clear, continuous view of all vehicle detections — ensuring accurate, fair, and paperless parking management.

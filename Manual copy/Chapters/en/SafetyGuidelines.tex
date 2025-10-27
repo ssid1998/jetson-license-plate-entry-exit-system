@@ -1,0 +1,68 @@
+%%%%%%%%%%%%
+%
+% $Autor: Wings $
+% $Datum: 2019-03-05 08:03:15Z $
+% $Pfad: SafetyGuidelines.tex $
+% $Version: 4250 $
+% !TeX spellcheck = en_GB/de_DE
+% !TeX encoding = utf8
+% !TeX root = manual 
+% !TeX TXS-program:bibliography = txs:///biber
+%
+%%%%%%%%%%%%
+
+\chapter{Safety Guidelines}
+
+\section{Safety Guidelines}
+
+The following safety guidelines are essential to ensure reliable, secure, and fault-free operation of the License Plate Detection System.  
+They cover electrical, thermal, mechanical, and software safety aspects, tailored to embedded AI hardware (Jetson Nano, camera, power supply).
+
+\subsection{Electrical Safety}
+
+\begin{itemize}
+	\item Always use a certified **5 V / 4 A USB-C power supply** with proper overcurrent and short-circuit protection.  
+	\item Avoid powering the unit when connecting or removing peripherals (camera, HDMI, USB).  
+	\item Make sure all cables are insulated and rated for the current; check for worn or damaged wires before use.  
+	\item Use grounded power outlets or surge protectors to prevent voltage spikes or earth loops.  
+	\item Respect polarity: reverse connection may permanently damage the board or peripheral components.
+\end{itemize}
+
+\subsection{Thermal and Mechanical Safety}
+
+\begin{itemize}
+	\item Maintain adequate ventilation. Do not cover or obstruct the aluminum case’s fins or openings, as the board uses passive cooling.  
+	\item Operate within safe ambient temperature (e.g. 0 °C to 40 °C). In hotter environments, consider adding an auxiliary fan.  
+	\item Ensure no heavy objects rest on the system. Avoid placing the unit near liquids or in high humidity environments.  
+	\item Secure the camera on its stand firmly to avoid fall damage or misalignment.  
+	\item Use anti-static precautions (e.g. wrist strap) when handling the Jetson Nano board to prevent ESD damage.
+\end{itemize}
+
+\subsection{Operational Safety}
+
+\begin{itemize}
+	\item Boot and shut down properly via software commands (e.g. \texttt{sudo shutdown}) before removing power.  
+	\item Monitor system logs and error messages to detect sensor faults, temperature warnings, or abnormal behavior.  
+	\item Do not overload the USB ports with high-power devices that exceed the board’s power budget.  
+	\item In case of smoke, smell, or abnormal heating, power off immediately and inspect hardware before reuse.
+\end{itemize}
+
+\subsection{Power \& Inference Safety}
+
+According to studies on AI inference energy use, the power consumption of embedded devices performing computer vision tasks is nontrivial. For example, a work estimating power usage of heterogeneous devices shows that using YOLO models on devices like Jetson Nano yields measurable power-per-frame metrics 
+Thus:
+
+\begin{itemize}
+	\item Regularly monitor power draw using a multimeter or inline ammeter to ensure it remains within safe limits (e.g. under the adapter’s rated capacity).  
+	\item Avoid leaving the system running under heavy load continuously without periodic rest or thermal check.  
+\end{itemize}
+
+\subsection*{Summary}
+
+Adhering to these safety rules protects both the hardware and the environment it operates in.  
+Electrical and thermal control prevents damage, while mechanical and operational precautions ensure reliable use.  
+Combining these with measurements and monitoring helps maintain long-term stability and prevent accidents.
+
+
+
+
