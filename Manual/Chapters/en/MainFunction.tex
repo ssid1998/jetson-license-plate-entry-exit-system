@@ -1,168 +1,212 @@
-%%%%%%%%%%%%
-%
-% $Autor: Wings $
-% $Datum: 2019-03-05 08:03:15Z $
-% $Pfad: MainFunction.tex $
-% $Version: 4250 $
-% !TeX spellcheck = en_GB/de_DE
-% !TeX encoding = utf8
-% !TeX root = manual 
-% !TeX TXS-program:bibliography = txs:///biber
-%
-%%%%%%%%%%%%
-
 \chapter{Main Function}
 \section{Main Function}
 
-The \textbf{main function} of this system is the operational core that integrates the Jetson Nano’s computing capability with machine learning-based detection and data storage.  
-It is responsible for managing the flow from hardware input to software output — converting raw visual data into recognized and logged license plate information automatically.  
+The \textbf{Airport License Plate Detection System} is a smart camera-based solution that automatically recognises and records the license plates of vehicles entering and leaving the airport area.  
+It is specially designed for \textbf{German license plates} and helps manage short-term parking at the airport gate efficiently and fairly.  
+The device uses the compact and reliable \textbf{NVIDIA Jetson Nano} computer, which performs all detection, timing, and billing functions locally — without requiring any internet or cloud connection \cite{nvidia2024jetson}.
 
-At startup, the system initializes hardware interfaces, activates the USB camera, loads trained deep learning models into GPU memory, and begins continuous frame acquisition.  
-Each captured frame is analyzed in real time using the YOLOv8 object detection model \cite{ultralytics2023yolo}, followed by optical character recognition through EasyOCR \cite{jaided2021easyocr}.  
-The extracted license plate numbers are immediately written into an SQLite database for persistent logging.  
-This design demonstrates how embedded systems such as the \textbf{NVIDIA Jetson Nano} can execute advanced AI workloads locally, without depending on cloud servers \cite{nvidia2024jetson}.  
+\vspace{0.5em}
+When a vehicle enters, the camera captures the license plate and stores it together with the date and time.  
+When the same vehicle exits, the system detects it again and automatically calculates how long it stayed inside the airport area.  
+If the duration is more than \textbf{15 minutes}, the system marks it for billing.  
+If the stay is \textbf{15 minutes or less}, the parking is free of charge \cite{pathak2023edgeai}.
 
-The combination of GPU-accelerated inference, lightweight OCR processing, and local storage provides an efficient and scalable solution for smart parking, toll automation, and vehicle monitoring applications \cite{pathak2023edgeai}.
+\vspace{0.5em}
+Certain vehicles such as \textbf{emergency services (ambulance, police, fire brigade)} and \textbf{official government vehicles} are automatically identified and exempted from all charges.  
+These special plates are pre-registered in the system’s database, ensuring that authorised vehicles always pass freely without manual intervention.
 
-% --------------------------------------------------
-% 1. System Architecture Overview
-% --------------------------------------------------
-\subsection{System Architecture Overview}
+\vspace{0.5em}
+All vehicle data, including plate number, entry time, exit time, duration, and payment status, are securely stored inside the device.  
+This ensures transparency, traceability, and smooth traffic flow at both the entry and exit points of the airport \cite{ultralytics2023yolo, jaided2021easyocr}.
 
-The License Plate Detection System follows a structured operational pipeline as shown below.  
-It begins with continuous video capture through the Microsoft LifeCam Show (USB 2.0), followed by object detection on the Jetson Nano and local database storage of results.  
-The edge computing design minimizes network latency and enhances reliability during outdoor deployment.
+\vspace{0.3em}
+\noindent\textbf{Key Highlights:}
+\begin{itemize}
+	\item Recognises and records German license plates automatically.
+	\item Calculates parking duration and applies the 15-minute free rule.
+	\item Automatically exempts emergency and government vehicles from charges.
+	\item Works fully offline — no internet or network setup required.
+	\item Stores all records locally for reporting, auditing, or payment.
+\end{itemize}
 
-\begin{center}
-	\begin{tikzpicture}[node distance=1.8cm, >=stealth, thick]
-		\tikzstyle{block}=[rectangle, draw=blue!50!black, fill=blue!10, 
-		rounded corners, align=center, text width=5cm, minimum height=1cm]
-		
-		\node[block] (camera) {\faCamera \\ \textbf{Camera Input} \\ Captures real-time video frames};
-		\node[block, below=of camera] (yolo) {\faBullseye \\ \textbf{YOLOv8 Detection} \\ Detects license plate region};
-		\node[block, below=of yolo] (ocr) {\faTextHeight \\ \textbf{EasyOCR Recognition} \\ Converts image to text};
-		\node[block, below=of ocr] (db) {\faDatabase \\ \textbf{SQLite Logging} \\ Saves recognized plate, timestamp, confidence};
-		\node[block, below=of db] (display) {\faDesktop \\ \textbf{Output Display} \\ Shows annotated results on monitor};
-		
-		\draw[->, thick] (camera) -- (yolo);
-		\draw[->, thick] (yolo) -- (ocr);
-		\draw[->, thick] (ocr) -- (db);
-		\draw[->, thick] (db) -- (display);
-	\end{tikzpicture}
-	\captionof{figure}{Vertical operational flow of the License Plate Detection System}
-	\label{fig:vertical_pipeline}
-\end{center}
-
-The flow represents a seamless transition from perception (camera) to interpretation (OCR) and storage (database).  
-Each block operates independently yet communicates through Python functions and buffer queues to ensure no frame loss during processing.  
 
 % --------------------------------------------------
-% 2. JetPack OS Installation
+% Section 1: How the System Works
 % --------------------------------------------------
-\subsection{JetPack OS Installation}
+\clearpage
+\section{How the System Works}
 
-The system operates on \textbf{NVIDIA JetPack 5.1.2 (Ubuntu 20.04)}, which provides CUDA, cuDNN, and TensorRT libraries necessary for deep learning inference \cite{nvidia2024jetson}.  
-JetPack acts as the primary OS and supports Python, OpenCV, and PyTorch environments optimized for edge computing.
-
-\textbf{Installation Summary:}
-\begin{enumerate}
-	\item Install \textbf{NVIDIA SDK Manager} on your host system.
-	\item Connect Jetson Nano via USB and select:
-	\begin{itemize}
-		\item Target: \textbf{Jetson Nano Developer Kit}
-		\item Version: \textbf{JetPack 5.1.2 (L4T 35.4.1)}
-	\end{itemize}
-	\item Flash the microSD card and insert it into the Jetson Nano slot.
-	\item Power on the device and complete the Ubuntu setup wizard.
-	\item Verify installation using:
-	\begin{verbatim}
-		$ cat /etc/nv_tegra_release
-		# R35 (release), REVISION: 4.1
-	\end{verbatim}
-\end{enumerate}
-
-\begin{figure}[h!]
+\noindent
+\begin{minipage}{\linewidth}
 	\centering
-	\includegraphics[width=0.7\textwidth]{General/jetsonHardware.png}
-	\caption{Seeed Studio reComputer J1010 (Jetson Nano 4GB) in aluminum case with passive cooling.}
-	\label{fig:jetson_hardware}
+	\vspace{-0.2cm}
+	\begin{tikzpicture}[
+		scale=0.9, transform shape,
+		font=\small\sffamily,
+		node distance=1.0cm and 1.8cm,
+		>=latex, thick,
+		startstop/.style={rectangle, rounded corners=6pt, draw=gray!80, fill=gray!10,
+			text centered, minimum width=3.3cm, minimum height=0.9cm},
+		process/.style={rectangle, rounded corners=6pt, draw=blue!70!black, fill=blue!10,
+			text centered, minimum width=3.8cm, minimum height=0.9cm},
+		decision/.style={diamond, draw=orange!80!black, fill=orange!10,
+			text width=3.1cm, align=center, aspect=1.7, inner sep=1pt},
+		terminator/.style={ellipse, draw=gray!70!black, fill=gray!15,
+			minimum width=3.3cm, text centered},
+		arrow/.style={->, thick, draw=black!70},
+		every node/.style={align=center}
+		]
+		
+		% ---- Nodes (Vertical layout) ----
+		\node[startstop] (start) {\textbf{System Start}};
+		\node[process, below=of start] (entry) {\faCar~Vehicle Entry\\Plate Captured};
+		\node[process, below=of entry] (store) {\faSave~Save Entry Time};
+		\node[decision, below=of store] (exempt) {Emergency or\\Government Vehicle?};
+		\node[process, right=5.2cm of exempt] (exfree) {\faCheckCircle~Free Exit\\(Exempt Vehicle)};
+		\node[process, below=of exempt] (exit) {\faCarSide~Vehicle Exit\\Plate Detected Again};
+		\node[process, below=of exit] (duration) {\faClock~Calculate Stay Duration};
+		\node[decision, below=of duration] (check15) {Stay $\leq$ 15 minutes?};
+		\node[process, right=3.4cm of check15] (free) {\faSmile~Free Exit\\(Short Stay)};
+		\node[process, below=of check15] (charge) {\faBalanceScale~Display the amount user needs to Pay};
+		\node[process, below=of charge] (log) {\faDatabase~Save Record\\(Billing / Audit)};
+		\node[terminator, below=of log] (end) {\textbf{End of Process}};
+		
+		% ---- Arrows ----
+		\draw[arrow] (start) -- (entry);
+		\draw[arrow] (entry) -- (store);
+		\draw[arrow] (store) -- (exempt);
+		\draw[arrow] (exempt) -- node[above]{Yes} (exfree);
+		\draw[arrow] (exempt) -- node[left]{No} (exit);
+		\draw[arrow] (exit) -- (duration);
+		\draw[arrow] (duration) -- (check15);
+		\draw[arrow] (check15) -- node[above]{Yes} (free);
+		\draw[arrow] (check15) -- node[left]{No} (charge);
+		\draw[arrow] (charge) -- (log);
+		\draw[arrow] (free) |- (log);
+		\draw[arrow] (exfree) |- (log);
+		\draw[arrow] (log) -- (end);
+		
+	\end{tikzpicture}
+	\vspace{-0.2cm}
+	\captionof{figure}{Final airport entry–exit workflow with exemptions, duration check, and billing logic.}
+	\label{fig:airport_flow_vertical}
+\end{minipage}
+
+
+\vspace{0.3cm}
+\noindent
+The system repeats this workflow continuously throughout the day.  
+By automatically checking for exempt vehicles and applying the 15-minute free rule, it guarantees fairness, speed, and efficiency for all users.
+
+% --------------------------------------------------
+% Section 2: Operating Environment
+% --------------------------------------------------
+
+\begin{figure}[H]
+	\centering
+	\fbox{
+		\begin{minipage}[c][5cm][c]{0.8\textwidth}
+			\centering
+			\textbf{[Future Image Placeholder]}\\[4pt]
+			Concept image of the airport setup will be added here.
+		\end{minipage}
+	}
+	\caption{Placeholder: Concept image showing system deployment.}
+	\label{fig:future_concept}
 \end{figure}
 
-This configuration ensures optimal GPU utilization for the YOLOv8 inference and smooth communication with USB peripherals.
+The system is built to work smoothly and automatically with no special setup.  
+Once the device is connected to power, it starts on its own and is ready for use within a few seconds.  
+The camera watches both the entry and exit lanes, while the screen shows every vehicle that passes — along with how long it stayed and whether any charge applies.
+
+\vspace{0.4em}
+All processing happens inside the compact Jetson Nano computer.  
+There is no need for an internet connection or external software.  
+The system is designed to be reliable even during continuous, all-day operation.
+
+\vspace{0.8em}
+\noindent
+\textbf{Camera Placement and Setup:}
+\begin{itemize}
+	\item Mount the camera about \textbf{2.0–2.5 metres above ground level}, facing the vehicle lane at a \textbf{30–40° angle}.
+	\item Keep a distance of about \textbf{3–5 metres} between the camera and the point where vehicles stop or slow down.
+	\item Avoid placing the camera directly opposite bright lights or reflective surfaces.
+	\item Ensure there is enough ambient light. During night hours, add a small \textbf{LED lamp or floodlight} near the gate for better clarity.
+	\item Keep the camera lens clean and free of dust, water spots, or scratches.
+	\item Do not position the camera behind glass or near strong sunlight to prevent reflections.
+\end{itemize}
+
+\vspace{0.8em}
+\noindent
+\textbf{Plausibility and Manual Verification:}
+\begin{itemize}
+	\item If the system cannot read a plate clearly (for example, due to dirt, glare, or motion blur), it will display a \textbf{“Detection Unclear”} message on the screen.
+	\item In such cases, the operator can manually enter the license plate number using a simple on-screen input field or log sheet.
+	\item The system checks for \textbf{duplicate or incomplete entries} to avoid double billing.
+	\item If an entry or exit is missing, the software automatically flags the record for review.
+	\item For fairness, vehicles with unreadable plates are temporarily marked as \textbf{“Pending Verification”} until corrected by staff.
+	\item Regular cleaning of the lens and maintaining good lighting reduces the chance of detection errors.
+\end{itemize}
+
+\vspace{0.8em}
+\noindent
+\textbf{In simple terms:}
+\begin{itemize}
+	\item Plug in the power — the system starts automatically.
+	\item The camera reads license plates at entry and exit points.
+	\item The display shows vehicle timing and free/charge status.
+	\item Emergency or government vehicles are recognised and never charged.
+	\item In rare cases of unclear detection, staff can correct the record manually.
+	\item Everything runs locally — no internet or cloud connection required.
+\end{itemize}
+
+---
 
 % --------------------------------------------------
-% 3. Execution Workflow
+% Section 3: User Interaction
 % --------------------------------------------------
-\subsection{Execution Workflow}
+\section{User Interaction}
 
-The main execution loop consists of five steps:
-\begin{enumerate}
-	\item Power on Jetson Nano and open a terminal window.
-	\item Navigate to the working directory:
-	\begin{verbatim}
-		$ cd ~/Code/Micropython
-	\end{verbatim}
-	\item Launch the program:
-	\begin{verbatim}
-		$ python3 main.py
-	\end{verbatim}
-	\item The live video feed appears with bounding boxes on detected plates.
-	\item Recognized text and confidence are recorded in \texttt{plates.db}.
-\end{enumerate}
+The system is designed for daily airport use with minimal user effort.  
+All detections, timings, and charge decisions appear automatically on the display — no keyboard or technical input is required.  
+The operator only monitors the live feed and confirms that vehicles are captured correctly.
 
-\begin{table}[h!]
-	\renewcommand{\arraystretch}{1.4}
-	\centering
-	\caption{System Performance Overview}
-	\label{tab:performance}
-	\rowcolors{2}{gray!10}{white}
-	\begin{tabular}{|l|c|c|}
-		\hline
-		\rowcolor{gray!20}
-		\textbf{Component} & \textbf{Description} & \textbf{Average Performance} \\
-		\hline
-		YOLOv8-Nano Model & Real-time plate detection (GPU) & 13--15 FPS \\
-		EasyOCR Engine & Text recognition accuracy & 92--95\% \\
-		SQLite Database & Local data logging & 120 entries/sec \\
-		GPU Utilization & 128-core Maxwell & 80\% average load \\
-		System Power Draw & With USB camera active & 9--10 W \\
-		\hline
-	\end{tabular}
-\end{table}
+\vspace{0.6em}
+\noindent
+\textbf{Interface Overview:}
+\begin{itemize}
+	\item The screen displays the \textbf{camera view} on the left and the \textbf{detection log} on the right.
+	\item Each entry shows the plate number, time, duration, and parking status — “Free” (green) or “Charge” (orange).
+	\item Exempt vehicles such as police or ambulance appear in blue with “No Charge.”
+\end{itemize}
 
-% --------------------------------------------------
-% 4. Data Flow and Storage
-% --------------------------------------------------
-\subsection{Data Flow and Storage}
+\vspace{0.6em}
+\noindent
+\textbf{User Feedback and Manual Input:}
+\begin{itemize}
+	\item A short sound confirms each successful detection.
+	\item If a plate is unclear, the alert \textit{“Detection Unclear – Please Verify”} appears.
+	\item The operator can type the correct number manually; it is saved instantly as a verified record.
+\end{itemize}
 
-Each detection cycle creates a structured record stored in the local SQLite database.  
-The database includes four attributes: Plate Number, Timestamp, Detection Confidence, and Image Path (optional snapshot).  
-This lightweight design ensures portability across multiple Jetson devices.
+\vspace{0.6em}
+\noindent
+\textbf{Managing Exempt Vehicles:}
+\begin{itemize}
+	\item Exempt vehicle numbers are stored in a simple text file (\texttt{exempt\_list.txt}).
+	\item Staff can edit this list before startup; changes take effect immediately.
+\end{itemize}
 
-\begin{center}
-	\begin{tikzpicture}[node distance=2cm, >=stealth, thick]
-		\tikzstyle{process}=[rectangle, draw=orange!70!black, fill=orange!10, 
-		rounded corners, align=center, text width=4cm, minimum height=1cm]
-		\tikzstyle{db}=[cylinder, shape border rotate=90, draw=orange!80!black, 
-		fill=orange!10, minimum height=1.3cm, minimum width=1cm, aspect=0.4]
-		
-		\node[process] (detect) {Detected Plate \\ "EMD ZK 295"};
-		\node[process, below=of detect] (ocr) {Text Extracted \\ via EasyOCR};
-		\node[db, below=of ocr] (sqlite) {plates.db};
-		\node[process, below=of sqlite] (log) {Record: Plate, Time, Confidence};
-		
-		\draw[->, thick] (detect) -- (ocr);
-		\draw[->, thick] (ocr) -- (sqlite);
-		\draw[->, thick] (sqlite) -- (log);
-	\end{tikzpicture}
-	\captionof{figure}{Data flow from detection to storage in SQLite}
-	\label{fig:data_flow}
-\end{center}
+\vspace{0.6em}
+\noindent
+\textbf{Daily Operation:}
+\begin{itemize}
+	\item Power on — the system starts automatically.
+	\item Observe the live feed and alerts.
+	\item Update exempt list when needed.
+	\item Turn off display and power after working hours; all data is saved automatically.
+\end{itemize}
 
-% --------------------------------------------------
-% 5. Summary
-% --------------------------------------------------
-\subsection{Summary}
-The main function manages complete system execution from hardware initialization to database storage.  
-By leveraging \textbf{JetPack OS}, \textbf{YOLOv8}, and \textbf{EasyOCR}, the system achieves robust real-time license plate detection and recognition on an embedded device.  
-This implementation validates the potential of the Jetson Nano as a powerful edge AI platform for smart infrastructure and automated surveillance applications.ciency and deployability in practical smart mobility environments.tems, toll management, and traffic monitoring applications.
+\vspace{0.4cm}
+\noindent
+This workflow ensures clear, automatic, and reliable operation for non-technical staff, focusing on smooth vehicle flow and accurate billing.

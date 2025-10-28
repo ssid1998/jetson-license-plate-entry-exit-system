@@ -1,0 +1,126 @@
+%%%%%%%%%%%%
+%
+% $Autor: Wings $
+% $Datum: 2019-03-05 08:03:15Z $
+% $Pfad: SetUp.tex $
+% $Version: 4250 $
+% !TeX spellcheck = en_GB/de_DE
+% !TeX encoding = utf8
+% !TeX root = manual 
+% !TeX TXS-program:bibliography = txs:///biber
+%
+%%%%%%%%%%%%
+
+\chapter{Set Up}
+
+\section{System Setup}
+
+This section describes the step-by-step setup procedure for assembling and preparing the \textbf{License Plate Detection System} for operation.  
+It covers the physical arrangement, connections, and software initialization on the NVIDIA Jetson Nano platform.
+
+\vspace{0.4cm}
+\noindent
+\textbf{Step 1: Hardware Placement and Assembly}
+\begin{itemize}
+	\item Place the \textbf{Jetson Nano (reComputer J1010)} unit on a flat, well-ventilated surface to ensure proper passive cooling.  
+	\item Mount the \textbf{Microsoft LifeCam Show} securely on the \textbf{vertical metallic stand} and position it to face the target area (e.g., parking lane or vehicle entry point).  
+	\item Connect the camera to one of the Jetson Nano’s USB 2.0 ports.  
+	\item Connect the HDMI display cable from the Nano to the external monitor.  
+	\item Attach the power adapter (5V/4A USB-C) but do not switch on the power yet.
+\end{itemize}
+
+\vspace{0.3cm}
+\noindent
+\textbf{Step 2: Storage and Operating System Preparation}
+\begin{itemize}
+	\item Insert the microSD card preloaded with \textbf{JetPack 5.1.2 (Ubuntu 20.04)} into the Jetson Nano’s microSD slot.  
+	\item Ensure that all connections (camera, HDMI, keyboard/mouse, and power) are properly seated.  
+	\item Power on the system to boot into the Ubuntu desktop environment.  
+	\item Log in to the user account and open the terminal.
+\end{itemize}
+
+\vspace{0.3cm}
+\noindent
+\textbf{Step 3: Software Initialization and Testing}
+\begin{itemize}
+	\item Open a terminal and navigate to the project directory:  
+	\texttt{cd ~/LicensePlateDetection/}
+	\item Run the detection script:  
+	\texttt{python3 main.py}
+	\item The system will start the \textbf{YOLOv8} model, initialize the camera feed, and display detection results on-screen.  
+	\item Confirm that the detection output and recognized text are being logged into the \texttt{plates.db} SQLite database.
+\end{itemize}
+
+\vspace{0.5cm}
+\noindent
+\textbf{Step 4: Verification and Adjustment}
+\begin{itemize}
+	\item Adjust the camera tilt and distance until the license plate region appears clearly within the detection frame.  
+	\item Verify focus and illumination to ensure consistent recognition accuracy.  
+	\item Check that power and HDMI connections remain stable during prolonged operation.
+\end{itemize}
+
+\vspace{0.6cm}
+\noindent
+\textbf{System Setup Diagram:}
+
+\begin{figure}[h!]
+	\centering
+	\resizebox{1.2\textwidth}{!}{%
+		\begin{tikzpicture}[
+			node distance=2.4cm, 
+			>=stealth,
+			font=\large,
+			every node/.style={align=center}
+			]
+			
+			% Define styles
+			\tikzstyle{block} = [rectangle, draw=blue!70!black, fill=blue!10, 
+			rounded corners, minimum height=1cm, minimum width=3.3cm, text centered, font=\small]
+			\tikzstyle{process} = [rectangle, draw=green!60!black, fill=green!10, 
+			rounded corners, minimum height=1cm, minimum width=3.6cm, text centered, font=\small]
+			\tikzstyle{db} = [cylinder, shape border rotate=90, draw=orange!90!black, fill=orange!10, 
+			minimum height=1.3cm, minimum width=1.1cm, aspect=0.4, font=\small]
+			\tikzstyle{arrow} = [->, thick]
+			
+			% --- LAYER 1: Hardware devices ---
+			\node[block] (camera) {\faCamera \\ \textbf{Microsoft LifeCam Show}};
+			\node[block, right=4.0cm of camera] (nano) {\faMicrochip \\ \textbf{NVIDIA Jetson Nano}\\(reComputer J1010)};
+			\node[block, right=4.0cm of nano] (display) {\faDesktop \\ \textbf{HDMI Display}};
+			\node[block, below=1.7cm of nano, fill=gray!10, draw=gray!60!black] (power) {\faBolt \\ 5V / 4A USB-C Power Supply};
+			
+			% --- LAYER 2: Software / Processing pipeline ---
+			\node[process, below=2cm of power, xshift=-3.9cm] (os) {\textbf{JetPack 5.1.2 (Ubuntu 20.04)}};
+			\node[process, right=4.0cm of os] (yolo) {\textbf{YOLOv8 Inference Engine}};
+			\node[process, right=4.0cm of yolo] (ocr) {\textbf{EasyOCR Recognition}};
+			\node[db, below=2cm of yolo, yshift=-0.2cm] (database) {\textbf{SQLite}\\plates.db};
+			
+			% --- ARROWS: Hardware layer ---
+			\draw[arrow] (camera) -- node[above, yshift=0.2cm, text width=3.5cm]{\scriptsize Video Stream \\ (USB 2.0)} (nano);
+			\draw[arrow] (nano) -- node[above, yshift=0.2cm, text width=3.5cm]{\scriptsize Annotated Output \\ (HDMI)} (display);
+			\draw[arrow] (power) -- node[right]{\scriptsize Power Input (USB-C)} (nano);
+			
+			% --- ARROWS: Software layer ---
+			\draw[arrow, dashed, blue!80!black] (os) -- node[above, yshift=0.15cm, text width=3cm, align=center]{\scriptsize Boot + Runtime Environment} (yolo);
+			\draw[arrow, dashed, blue!80!black] (yolo) -- node[above, yshift=0.15cm, text width=3cm, align=center]{\scriptsize Detected Plate Region} (ocr);
+			\draw[arrow, dashed, blue!80!black] (ocr) -- node[above, yshift=0.15cm, text width=3cm, align=center]{\scriptsize Extracted Text + Confidence} (database);
+			
+			% --- CONNECTIONS BETWEEN LAYERS ---
+			\draw[arrow, thick, gray!70!black, bend right=20] (nano.south) to node[left, xshift=-0.2cm]{\scriptsize Runs OS + Models} (os.north);
+			\draw[arrow, thick, orange!80!black, bend left=20] (database.north) to node[right, xshift=0.2cm]{\scriptsize Data Logging + Query} (display.south);
+			
+			% --- DECORATIVE BACKGROUND BOXES (grouping) ---
+			\node[draw=blue!40!black, thick, rounded corners, fit=(camera)(nano)(display)(power), label={[yshift=0.2cm]above:\textbf{Hardware Layer}}] {};
+			\node[draw=green!40!black, thick, rounded corners, fit=(os)(yolo)(ocr)(database), label={[yshift=-0.3cm]below:\textbf{Software and Data Flow Layer}}] {};
+			
+		\end{tikzpicture}%
+	}
+	\caption{Comprehensive System Setup Flow – Hardware and Software Integration}
+	\label{fig:setup_complex_tikz}
+\end{figure}
+
+\vspace{0.4cm}
+\noindent
+The setup diagram (Figure~\ref{fig:setup_complex_tikz}) visually represents the physical connection flow.  
+All communication occurs locally between hardware components, ensuring low latency and complete offline operation.  
+This modular arrangement allows easy relocation and quick system reassembly at different deployment sites.

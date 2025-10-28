@@ -1,14 +1,168 @@
-%%%%%%%%%%%%
-%
-% $Autor: Wings $
-% $Datum: 2019-03-05 08:03:15Z $
-% $Pfad: MainFunction.tex $
-% $Version: 4250 $
-% !TeX spellcheck = en_GB/de_DE
-% !TeX encoding = utf8
-% !TeX root = manual 
-% !TeX TXS-program:bibliography = txs:///biber
-%
-%%%%%%%%%%%%
+% -------------------------------------------------------
+% File: MainFunction.tex
+% Description: Main function of the assembled unit with
+%              block diagram, wiring visuals, and power schematic
+% -------------------------------------------------------
 
 \chapter{Main Function}
+
+The assembled unit implements real-time license plate acquisition on the NVIDIA Jetson Nano.  
+The USB camera captures frames, the Jetson performs detection and optical character recognition,  
+and results can be visualized on the HDMI display. This chapter describes the overall function,  
+physical interconnects, and power path.
+
+\section*{Overview}
+\begin{itemize}
+	\item \textbf{Compute Core:} Jetson Nano (4~GB) processes video frames locally.
+	\item \textbf{Image Acquisition:} Microsoft LifeCam Show (USB) delivers the input stream.
+	\item \textbf{User I/O:} HDMI monitor for display; USB keyboard and mouse for setup.
+	\item \textbf{Storage:} \SI{32}{\giga\byte} microSD with JetPack~5.1.2.
+	\item \textbf{Power:} \SI{5}{\volt} \SI{4}{\ampere} DC adapter.
+\end{itemize}
+
+% -------------------------------------------------------
+% Table: Interfaces / Pins used
+% -------------------------------------------------------
+\begin{table}[H]
+	\centering
+	\caption{Interfaces Used by the Assembly}
+	\begin{tabular}{|L{3.2cm}|L{4.2cm}|L{5.8cm}|}
+		\hline
+		\textbf{Subsystem} & \textbf{Jetson Port} & \textbf{Notes} \\ \hline
+		USB Camera & USB~2.0/3.0 Type-A & Connect directly to a USB port on Jetson Nano. \\ \hline
+		Display & HDMI & Use a short high-quality HDMI cable. \\ \hline
+		User Input & USB Type-A & Keyboard and mouse on separate ports or via USB hub. \\ \hline
+		Network (optional) & Ethernet (RJ45) & Recommended for first setup and package updates. \\ \hline
+		Power & DC Barrel Jack & Official \SI{5}{\volt} \SI{4}{\ampere} adapter (5~V DC). \\ \hline
+		Storage & microSD slot & \SI{32}{\giga\byte} microSD with JetPack~5.1.2. \\ \hline
+	\end{tabular}
+\end{table}
+
+% -------------------------------------------------------
+% TikZ 1: System Block Diagram
+% -------------------------------------------------------
+\begin{figure}[H]
+	\centering
+	\begin{tikzpicture}[
+		every node/.style={font=\footnotesize, align=center},
+		hw/.style={draw, rounded corners=3pt, fill=blue!10, minimum width=3.3cm, minimum height=1.2cm},
+		proc/.style={draw, rounded corners=3pt, fill=orange!10, minimum width=3.3cm, minimum height=1.1cm},
+		stor/.style={draw, rounded corners=3pt, fill=green!10, minimum width=3.3cm, minimum height=1.1cm},
+		arr/.style={-{Latex[length=2mm]}, thick},
+		>=Latex
+		]
+		
+		% --- Hardware layer (bottom row) ---
+		\node[hw] (camera) {USB Camera\\(Image Capture)};
+		\node[hw, right=3.5cm of camera] (nano) {Jetson Nano\\(AI Inference Unit)};
+		\node[hw, right=3.5cm of nano] (display) {HDMI Display\\(Visualization)};
+		
+		% --- Processing layer (above Nano) ---
+		\node[proc, above=1.8cm of nano] (detect) {YOLOv8 Detection};
+		\node[proc, above=1.8cm of detect] (ocr) {EasyOCR Recognition};
+		\node[stor, right=3.5cm of ocr] (db) {SQLite Database\\(Local Logging)};
+		
+		% --- Arrows (data flow) ---
+		\draw[arr] (camera) -- node[above]{Video Stream (USB)} (nano);
+		\draw[arr] (nano) -- node[above]{HDMI Output} (display);
+		
+		\draw[arr] (nano.north) -- ++(0,0.4) -| (detect.south);
+		\draw[arr] (detect) -- node[right]{Detected Region} (ocr);
+		\draw[arr] (ocr) -- node[above]{Recognized Text} (db);
+		
+		% --- Power section ---
+		\node[below=1.8cm of nano, font=\footnotesize] (pwr) {\SI{5}{\volt} \SI{4}{\ampere} DC Power Adapter};
+		\draw[arr] (pwr) -- (nano.south);
+		
+		% --- Labels ---
+		\node[below right=0.1cm and -1.1cm of detect, font=\scriptsize, align=left, text width=3.2cm]
+		{On-device inference with TensorRT acceleration};
+		
+		\node[below right=-0.10cm and -0.5cm of ocr, font=\scriptsize, align=left, text width=3.5cm]
+		{Character extraction and plate text decoding};
+		
+		\node[below right=0.1cm and -3.0cm of db, font=\scriptsize, align=left, text width=3.5cm]
+		{Timestamps, detected IDs, billing logs stored locally};
+		
+	\end{tikzpicture}
+	\caption{Overall license plate detection workflow implemented on Jetson Nano: from image capture to OCR and local database logging.}
+\end{figure}
+
+This diagram visually represents the complete end-to-end workflow of the system and the logical interaction between its key modules.  
+It begins with the \textbf{USB camera}, which continuously captures live video frames from the environment. These frames are transmitted through the USB interface to the \textbf{Jetson Nano}, which serves as the system's central AI processing unit. Inside the Nano, the incoming image stream is processed by a pre-trained \textbf{YOLOv8 model} optimized for edge inference using TensorRT acceleration.  
+Once a vehicle license plate is detected, the corresponding image region is forwarded to the \textbf{EasyOCR recognition layer}, which extracts alphanumeric text with high precision even under varying lighting conditions.  
+The recognized plate numbers, along with timestamps, detection confidence scores, and event details, are then stored in the local \textbf{SQLite database} for persistent on-device logging and later retrieval.  
+The output from the Jetson Nano is displayed on an \textbf{HDMI monitor} for live visualization of detection results, providing both verification and debugging feedback for the operator.  
+The entire pipeline is powered by a regulated \SI{5}{\volt}, \SI{4}{\ampere} DC adapter that ensures stable GPU performance, thermal efficiency, and uninterrupted operation during continuous video inference.  
+This workflow clearly outlines the system’s real-time nature—combining data acquisition, intelligent detection, optical recognition, and data management—all within a compact and power-efficient embedded platform.
+
+% -------------------------------------------------------
+% TikZ 2: Jetson Nano Top-View Connection Diagram (No Ethernet)
+% -------------------------------------------------------
+\begin{figure}[H]
+	\centering
+	\begin{tikzpicture}[
+		every node/.style={font=\scriptsize, align=center},
+		port/.style={draw, thick, rounded corners=2pt, fill=blue!10, minimum width=1.6cm, minimum height=0.7cm},
+		gpio/.style={draw, thick, fill=orange!10, rounded corners=1pt, minimum width=0.45cm, minimum height=0.22cm},
+		label/.style={font=\scriptsize},
+		arr/.style={-{Latex[length=2mm]}, thick},
+		node distance=0.6cm and 0.6cm
+		]
+		
+		% --- Board outline ---
+		\draw[thick, rounded corners=6pt, fill=gray!5] (0,0) rectangle (8.5,5);
+		
+		% --- Major Ports (spaced evenly) ---
+		\node[port, fill=green!10] (usb1) at (1.2,4.3) {USB 3.0};
+		\node[port, fill=green!10, right=0.6cm of usb1] (usb2) {USB 3.0};
+		\node[port, fill=purple!10] (hdmi) at (7.4,3.4) {HDMI};
+		\node[port, fill=yellow!30] (power) at (1.0,1.2) {DC Jack 5V};
+		\node[port, fill=red!10] (cam) at (6.4,4.3) {CSI Camera Port};
+		
+		% --- GPIO Header (40-pin) ---
+		\foreach \i in {0,...,19} {
+			\node[gpio] (g\i) at (2.7+0.27*\i,0.5) {};
+		}
+		\node[label, below=0.3cm of g10, font=\scriptsize] {40-Pin GPIO Header};
+		
+		% --- microSD Slot ---
+		\node[port, fill=yellow!15, rotate=90] (sd) at (0.6,2.8) {microSD Slot};
+		
+		% --- Arrows & Connection Labels ---
+		\draw[arr] (cam.north) -- ++(0,0.9) node[above]{Camera Ribbon Cable};
+		\draw[arr] (usb2.north) -- ++(0,1.0) node[above]{Keyboard / Mouse};
+		\draw[arr] (usb1.north) -- ++(-0.2,1.0) node[above]{USB Camera};
+		\draw[arr] (power.west) -- ++(-1.1,0) node[left]{5V 4A Power Adapter};
+		\draw[arr] (hdmi.east) -- ++(1.2,0.3) node[right]{HDMI Monitor};
+		\draw[arr, dashed] (g15.south) -- ++(0,-0.8) node[below]{Optional Sensor / Relay I/O};
+		
+		% --- Note ---
+		\node[font=\tiny, align=left, text width=4.2cm, anchor=west] at (0.1,-1.15)
+		{Note: GPIO header operates at 3.3V logic only.\\Avoid connecting 5V signals directly.};
+		
+	\end{tikzpicture}
+	\caption{Top-view Jetson Nano hardware layout showing only the active connections used in the license plate detection system — USB camera, HDMI display, keyboard/mouse, CSI camera, GPIO, microSD, and 5V DC power.}
+\end{figure}
+
+The above top-view layout illustrates the exact hardware configuration of the assembled system.  
+It shows how the USB camera, HDMI monitor, keyboard, and mouse are connected to the Jetson Nano through their respective ports, while power is supplied via a 5 V DC adapter.  
+The CSI camera interface and GPIO header are highlighted for potential future extensions, and the microSD card slot provides storage for the operating system and project files.  
+Arrows indicate the direction of power and data flow, ensuring that the physical connections match the functional workflow shown in the previous diagram.
+
+% -------------------------------------------------------
+% Table: Cable / Connector Checklist
+% -------------------------------------------------------
+\begin{table}[H]
+	\centering
+	\caption{Cable and Connector Checklist}
+	\begin{tabular}{|L{4.2cm}|L{8.8cm}|}
+		\hline
+		\textbf{Connection} & \textbf{Checkpoints} \\ \hline
+		USB Camera $\rightarrow$ Jetson & Firm seating, no strain; short cable preferred. \\ \hline
+		HDMI $\rightarrow$ Monitor & Cable fully inserted; monitor set to correct input source. \\ \hline
+		Keyboard / Mouse $\rightarrow$ Jetson & Separate ports or powered hub; verify LEDs (if present). \\ \hline
+		Ethernet $\rightarrow$ Router/Switch & Link LEDs active; stable connection for first boot. \\ \hline
+		DC Adapter $\rightarrow$ Jetson & Official \SI{5}{\volt} \SI{4}{\ampere}; avoid loose barrel jack. \\ \hline
+	\end{tabular}
+\end{table}
