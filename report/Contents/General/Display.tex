@@ -178,37 +178,46 @@ It renders processed frames in real time and overlays text and bounding boxes on
 
 \subsection{Installation}
 The required package is installed via:
-\begin{verbatim}
-	sudo apt install python3-opencv
-\end{verbatim}
+
+
+\begin{tcolorbox}[colback=white,colframe=black,coltext= ShellColor, sharp corners, boxrule=0.8pt]
+	\begin{small}
+		\begin{verbatim}
+			
+			sudo apt install python3-opencv	\end{verbatim}
+	\end{small}
+\end{tcolorbox}
+
 After installation, verify using:
-\begin{verbatim}
-	xrandr
-\end{verbatim}
+
+\begin{tcolorbox}[colback=white,colframe=black,coltext= ShellColor, sharp corners, boxrule=0.8pt]
+	\begin{small}
+		\begin{verbatim}
+			
+			xrandr	\end{verbatim}
+	\end{small}
+\end{tcolorbox}
 to ensure HDMI detection and resolution configuration.
 
 \subsection{Functions}
 Essential OpenCV functions used:
 \begin{itemize}
-	\item \texttt{cv2.imshow()} – displays processed video frames.
-	\item \texttt{cv2.putText()} – overlays recognition messages.
-	\item \texttt{cv2.rectangle()} – draws bounding boxes on detected regions.
-	\item \texttt{cv2.waitKey()} – defines frame-refresh delay.
+	\item \PYTHON{cv2.imshow()} – displays processed video frames.
+	\item \PYTHON{cv2.putText()} – overlays recognition messages.
+	\item \PYTHON{cv2.rectangle()} – draws bounding boxes on detected regions.
+	\item \PYTHON{cv2.waitKey()} – defines frame-refresh delay.
+	
 \end{itemize}
 
 \subsection{Data Characteristics}
-\paragraph{Data Types.}  
-RGB image frames represented as \texttt{uint8} arrays; UTF-8 text for overlay messages.
+\paragraph{Data Types:}  RGB image frames represented as \texttt{uint8} arrays; UTF-8 text for overlay messages.
 
-\paragraph{Data Structure.}  
-Each frame is a NumPy array of shape (height, width, 3), over which graphical elements are rendered directly.
+\paragraph{Data Structure:}  Each frame is a NumPy array of shape (height, width, 3), over which graphical elements are rendered directly.
 
-\paragraph{Data Quantity.}  
-Approximately 25–30 frames per second are displayed, each frame about 2–3 MB (720p).  
+\paragraph{Data Quantity:}  Approximately 25–30 frames per second are displayed, each frame about 2–3 MB (720p).  
 Latency from inference to display < 100 ms \cite{edgeAIbook}.
 
-\paragraph{Data Quality.}  
-GPU-accelerated rendering maintains clarity and smoothness.  
+\paragraph{Data Quality:}  GPU-accelerated rendering maintains clarity and smoothness.  
 Color-coded overlays (green = recognized, red = unregistered) enhance user perception.  
 HDMI 2.0 ensures stable 60 Hz output without frame tearing.
 

@@ -5107,26 +5107,6 @@ You can refer to the \textit{Flashing JetPack OS via Command Line} tutorial for 
 \noindent Place the BSP and the Sample Root Filesystem in the same directory, then follow the instructions below to extract them and run the \SHELL{apply\_binaries.sh} script:
 
 
-%\begin{small}
-%	\begin{verbatim}
-%		tar xf Jetson-210_Linux_R32.7.2_aarch64.tbz2
-%		cd Linux_for_Tegra/rootfs/
-%		sudo tar xpf ../../Tegra_Linux_Sample-Root-Filesystem_R32.7.2_aarch64.tbz2
-%		cd ..
-%		sudo ./apply_binaries.sh
-%	\end{verbatim}
-%\end{small}
-
-\medskip
-%\begin{quote}
-%	\begin{small}
-%	\SHELL{tar xf Jetson-210\_Linux\_R32.7.2\_aarch64.tbz2}\\
-%	\SHELL{cd Linux\_for\_Tegra/rootfs/}\\
-%	\SHELL{sudo tar xpf ../../Tegra\_Linux\_Sample-Root-Filesystem\_R32.7.2\_aarch64.tbz2}\\
-%	\SHELL{cd ..}\\
-%	\SHELL{sudo ./apply\_binaries.sh}\\
-%	\end{small}
-%\end{quote}
 
 \begin{tcolorbox}[colback=white,colframe=black,coltext= ShellColor, sharp corners, boxrule=0.8pt]
 		\begin{small}
@@ -5148,116 +5128,37 @@ You can refer to the \textit{Flashing JetPack OS via Command Line} tutorial for 
 \noindent Create a new \SHELL{.sh} file in the \SHELL{Linux\_for\_Tegra} directory, and run the script. 
 The script content is as follows:
 
-\begin{tikzpicture}[baseline]
-	\node[
-	draw=red,
-	dashed,
-	rounded corners,
-	inner sep=4pt,
-	text width=0.9\linewidth
-	] {\textbf{\textcolor{red}{TODO: Add the code for modify\_spi.sh}}};
-\end{tikzpicture}
+%\bigskip
+%\begin{tikzpicture}[baseline]
+%	\node[
+%	draw=red,
+%	dashed,
+%	rounded corners,
+%	inner sep=4pt,
+%	text width=0.9\linewidth
+%	] {\textbf{\textcolor{red}{TODO: Add the code for modify\_spi.sh}}};
+%\end{tikzpicture}
+%\bigskip
 
-%\medskip
-%\begin{tcolorbox}[colback=white,colframe=black,coltext= ShellColor, sharp corners, boxrule=0.8pt]
-%	\begin{small}
-%		\begin{verbatim}
-%		
-%			
-%		\end{verbatim}
-%	\end{small}
-%\end{tcolorbox}
+%				
 
-%\begin{tcolorbox}[
-%	colback=white,
-%	colframe=black,
-%	coltext=ShellColor,
-%	title=modify_spi.sh,
-%	sharp corners,
-%	boxrule=0.8pt,
-%	listing only,
-%	listing options={
-%		basicstyle=\ttfamily\scriptsize\color{ShellColor},
-%		breaklines=true,
-%		breakindent=0pt,
-%		columns=fullflexible,
-%	}
-%	]
-%	#!/bin/bash
-%	set -e
-%	
-%	cd "$(dirname "$0")"
-%	cd kernel/dtb
-%	
-%	DTS=tegra210-p3448-0002-p3449-0000-b00.dts
-%	DTB=tegra210-p3448-0002-p3449-0000-b00.dtb
-%	
-%	echo "[INFO] Decompiling $DTB to $DTS..."
-%	sudo dtc -I dtb -O dts -o "$DTS" "$DTB"
-%	
-%	fix_spi_node() {
-%		local node=$1
-%		if grep -A5 "$node {" "$DTS" | grep -q 'status'; then
-%			sudo sed -i "/$node {/,/spi-max-frequency/ s/status = \".*\";/status = \"okay\";/" "$DTS"
-%				else
-%				sudo sed -i "/$node {/,/spi-max-frequency/ s/compatible = \"tegra-spidev\";/&\n\t\tstatus = \"okay\";/" "$DTS"
-%					fi
-%				}
-%				
-%				echo "[ACTION] Enabling spi@0 and spi@1..."
-%				fix_spi_node "spi@0"
-%				fix_spi_node "spi@1"
-%				
-%				patch_pin() {
-%					local pin=$1
-%					sudo sed -i "/${pin} {/,/nvidia,enable-input/ {
-%							s/nvidia,function = \"rsvd1\"/nvidia,function = \"spi1\"/
-%							s/nvidia,tristate = <0x01>/nvidia,tristate = <0x00>/
-%							s/nvidia,enable-input = <0x00>/nvidia,enable-input = <0x01>/
-%						}" "$DTS"
-%					}
-%					
-%					echo "[ACTION] Patching pinmux blocks..."
-%					for pin in spi1_mosi_pc0 spi1_miso_pc1 spi1_sck_pc2 spi1_cs0_pc3 spi1_cs1_pc4; do
-%					patch_pin "$pin"
-%					done
-%					
-%					echo "[ACTION] Fixing tristate and input-enable for SPI1 pins..."
-%					
-%					fix_pinmux_field() {
-%						local pin=$1
-%						awk -v pin="$pin" '
-%						BEGIN { in_block = 0 }
-%						{
-%							if ($0 ~ pin " {") { in_block = 1 }
-%								if (in_block && /nvidia,tristate =/) { sub(/<0x1>/, "<0x0>") }
-%								if (in_block && /nvidia,enable-input =/) { sub(/<0x0>/, "<0x1>") }
-%								print
-%								if (in_block && /}/) { in_block = 0 }
-%						}' "$DTS" | sudo tee "$DTS.fixed" > /dev/null && sudo mv "$DTS.fixed" "$DTS"
-%					}
-%					
-%					fix_pinmux_field "spi1_mosi_pc0"
-%					fix_pinmux_field "spi1_miso_pc1"
-%					fix_pinmux_field "spi1_sck_pc2"
-%					fix_pinmux_field "spi1_cs0_pc3"
-%					fix_pinmux_field "spi1_cs1_pc4"
-%					
-%					echo "[INFO] Recompiling DTS to $DTB..."
-%					sudo dtc -I dts -O dtb -o "$DTB" "$DTS"
-%					
-%					echo "[OK] SPI DTS patch applied and DTB regenerated successfully."
-%				\end{tcolorbox}
-%
-%\medskip
-%\begin{tcolorbox}[colback=white,colframe=black,coltext= ShellColor, sharp corners, boxrule=0.8pt]
-%	\begin{small}
-%		\begin{verbatim}
-%			
-%		sudo bash modify_spi.sh
-%	\end{verbatim}
-%\end{small}
-%\end{tcolorbox}
+\begingroup
+\lstinputlisting[
+style=bashstyle,
+caption={modifyspi.sh — Enables SPI interfaces and patches Jetson Nano DTS for SPI1},
+label={lst:modifyspi},
+breaklines=true,
+breakatwhitespace=false,
+columns=fullflexible,
+keepspaces=true,
+showstringspaces=false,
+numbers=left,
+numberstyle=\tiny\color{gray},
+frame=single,
+rulecolor=\color{black!30}
+]{../../Code/JetsonNano/modify_spi.sh}
+\endgroup
+			
 
 
 \medskip
@@ -5268,12 +5169,20 @@ If you want to enable SPI2, simply replace the keyword \texttt{spi1} with \textt
 After modifying the device tree, flash the image to the Jetson Nano using:
 
 \medskip
-\begin{small}
-	\begin{quote}
-		\SHELL{sudo ./flash.sh jetson-nano-emmc mmcblk0p1}
-	\end{quote}
-\end{small}
+%\begin{small}
+%	\begin{quote}
+%		\SHELL{sudo ./flash.sh jetson-nano-emmc mmcblk0p1}
+%	\end{quote}
+%\end{small}
 
+\begin{tcolorbox}[colback=white,colframe=black,coltext= ShellColor, sharp corners, boxrule=0.8pt]
+	\begin{small}
+		\begin{verbatim}
+			
+			sudo ./flash.sh jetson-nano-emmc mmcblk0p1
+		\end{verbatim}
+	\end{small}
+\end{tcolorbox}
 
 \begin{figure}[H]
 	\centering
@@ -5336,39 +5245,67 @@ Short \textbf{pin~19} and \textbf{pin~21}, which correspond to \textbf{SPI0\_MOS
 \bigskip
 The physical connection diagram is shown below:
 
-\bigskip
-\noindent\textbf{\textcolor{red}{TODO: Add image of physical connection diagram after procuring the hardware.}}
+%\bigskip
+%\noindent\textbf{\textcolor{red}{TODO: Add image of physical connection diagram after procuring the hardware.}}
+%
+%\bigskip
 
-\bigskip
+
+\begin{tikzpicture}
+	\node[draw=red, dashed, rounded corners, inner sep=4pt, text width=0.9\linewidth]
+	{\textbf{\textcolor{red}{TODO: Add image of physical connection diagram after procuring the hardware.}}};
+\end{tikzpicture}
+
 \noindent Load the SPI driver module, then download and compile the test program:
-\begin{small}
-	\begin{quote}
-		\SHELL{sudo modprobe spidev}\\
-		\SHELL{git clone https://github.com/rm-hull/spidev-test}\\
-		\SHELL{cd spidev-test/}\\
-		\SHELL{gcc spidev\_test.c -o spidev\_test}\\
-	\end{quote}
-\end{small}
+\begin{tcolorbox}[colback=white,colframe=black,coltext= ShellColor, sharp corners, boxrule=0.8pt]
+	\begin{small}
+		\begin{verbatim}
+			
+		sudo modprobe spidev
+		git clone https://github.com/rm-hull/spidev-test
+		cd spidev-test/
+		gcc spidev\_test.c -o spidev\_test
+		\end{verbatim}
+	\end{small}
+\end{tcolorbox}
+
 
 \medskip
 \noindent Run the test program and specify \SHELL{spidev0.0} (corresponding to SPI1):
-\begin{small}
-	\begin{quote}
-		\SHELL{./spidev\_test -v -D /dev/spidev0.0 -p "Test"}
-	\end{quote}
-\end{small}
+
+
+\begin{tcolorbox}[colback=white,colframe=black,coltext= ShellColor, sharp corners, boxrule=0.8pt]
+	\begin{small}
+		\begin{verbatim}
+			
+			./spidev\_test -v -D /dev/spidev0.0 -p "Test"
+		\end{verbatim}
+	\end{small}
+\end{tcolorbox}
 
 \medskip
 The test result is shown below, indicating that SPI1 has successfully completed the loopback transmission. 
 You can also run the command below to check the available SPI controllers:
-\begin{small}
-	\begin{quote}
-	\SHELL{ls /dev/spidev*}
-	\end{quote}
-\end{small}
+%\begin{small}
+%	\begin{quote}
+%	\SHELL{ls /dev/spidev*}
+%	\end{quote}
+%\end{small}
 
-\noindent\textbf{\textcolor{red}{TODO: Add image of terminal confirming loopback transmission.}}
+\begin{tcolorbox}[colback=white,colframe=black,coltext= ShellColor, sharp corners, boxrule=0.8pt]
+	\begin{small}
+		\begin{verbatim}
+			
+		ls /dev/spidev* \end{verbatim}
+	\end{small}
+\end{tcolorbox}
 
+
+\bigskip
+\begin{tikzpicture}
+	\node[draw=red, dashed, rounded corners, inner sep=4pt, text width=0.9\linewidth]
+	{\textbf{\textcolor{red}{TODO: Add image of terminal confirming loopback transmission.}}};
+\end{tikzpicture}
 
 \subsection{Summary of Jetson Nano Interfaces}
 \begin{table}[H]
@@ -5849,11 +5786,16 @@ After a moment, you will be able to see a new window pop up in the NVIDIA SDK Ma
 In this case, we can pull out the jumper and restart the reComputer. Then we need to connect the reComputer to a monitor via HDMI, enter the password you entered in step 4, and log in to the main interface.
 
 At this point, you need to connect the reComputer to the same LAN as the Linux host PC and determine the IP address of the Jetson by using the command:
-\begin{small}
-	\begin{quote}
-		\SHELL{ifconfig}
-	\end{quote}
-\end{small}
+
+
+\begin{tcolorbox}[colback=white,colframe=black,coltext= ShellColor, sharp corners, boxrule=0.8pt]
+	\begin{small}
+		\begin{verbatim}
+			
+			ifconfig 	\end{verbatim}
+	\end{small}
+\end{tcolorbox}
+
 
 Go back to the Linux host PC and enter the IP address you just obtained. NVIDIA SDK Manager will try to connect to the Jetson device and proceed to complete the installation of the next SDK components.
 
@@ -5890,44 +5832,58 @@ As an example, we choose the NVIDIA L4T 32.7.1 version since it is included as p
 
 On the Linux host PC, we should find a folder and store the package files we downloaded before. Then open a command line window (Terminal) at the folder and use the commands below to unzip the files and assemble the rootfs:
 
-\begin{small}
-	\begin{quote}
-		\SHELL{tar xf \$\{L4T\_RELEASE\_PACKAGE\}}\\
-		\SHELL{cd Linux\_for\_Tegra/rootfs/}\\
-		\SHELL{sudo tar xpf ../../\$\\{SAMPLE\_FS\_PACKAGE\\}}\\
-		\SHELL{cd ..}\\
-		\SHELL{sudo ./apply\_binaries.sh}\\
-	\end{quote}
-\end{small}
+
+
+\begin{tcolorbox}[colback=white,colframe=black,coltext= ShellColor, sharp corners, boxrule=0.8pt]
+	\begin{small}
+		\begin{verbatim}
+			
+		tar xf ${L4T_RELEASE_PACKAGE}
+		cd Linux_for_Tegra/rootfs/
+		sudo tar xpf ../../${SAMPLE_FS_PACKAGE}
+		cd ..
+		sudo ./apply_binaries.sh
+		\end{verbatim}
+	\end{small}
+\end{tcolorbox}
 
 
 As an example of NVIDIA L4T 32.7.1, the downloaded files are stored in \texttt{/Desktop/L4T\_Drivers}, so under the \texttt{/Desktop/L4T\_Drivers} path we open the command line window (Terminal) and execute the following commands:
 
-\begin{small}
-	\begin{quote}
-		\SHELL{tar xf Jetson-210\_Linux\_R32.7.1\_aarch64.tbz2}\\
-		\SHELL{cd Linux\_for\_Tegra/rootfs/}\\
-		\SHELL{sudo tar xpf ../../Tegra\_Linux\_Sample-Root-Filesystem\_R32.7.1\_aarch64.tbz2}\\
-		\SHELL{cd ..}\\
-		\SHELL{sudo ./apply\_binaries.sh}\\
-	\end{quote}
-\end{small}
+
+\begin{tcolorbox}[colback=white,colframe=black,coltext= ShellColor, sharp corners, boxrule=0.8pt]
+	\begin{small}
+		\begin{verbatim}
+			
+			tar xf Jetson-210_Linux_R32.7.1_aarch64.tbz2
+			cd Linux_for_Tegra/rootfs/
+			sudo tar xpf ../../Tegra_Linux_Sample-Root-Filesystem_R32.7.1_aarch64.tbz2
+			cd ..
+			sudo ./apply_binaries.sh
+		\end{verbatim}
+	\end{small}
+\end{tcolorbox}
 
 \subsubsection{Step 3: Flash the System to reComputer}
 \label{subsubsec:cmd_flash}
 
 Since we already forced the reComputer J1010 into recovery mode and the module is Jetson Nano, we can directly flash the system into the reComputer by executing the following command:
 
-\begin{small}
-	\begin{quote}
-	\SHELL{sudo ./flash.sh jetson-nano-devkit-emmc mmcblk0p1}
-	\end{quote}
-\end{small}
+
+\begin{tcolorbox}[colback=white,colframe=black,coltext= ShellColor, sharp corners, boxrule=0.8pt]
+	\begin{small}
+		\begin{verbatim}
+			
+		sudo ./flash.sh jetson-nano-devkit-emmc mmcblk0p1
+		\end{verbatim}
+	\end{small}
+\end{tcolorbox}
 
 Flashing L4T takes about 10 minutes, or more under a slow host computer.
 
 At this moment, we can unplug the jumper and then power up the reComputer again to use it.
 
+\newpage
 \subsection{Troubleshooting}
 \label{subsec:troubleshooting}
 

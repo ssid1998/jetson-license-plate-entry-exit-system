@@ -183,22 +183,26 @@ The only connection is the USB cable from the camera to the Jetson Nano’s J4 p
 The LifeCam Show is controlled programmatically using the \textbf{OpenCV} Python library, which interfaces with the Linux Video4Linux2 (V4L2) subsystem.  
 This allows for frame acquisition, preprocessing, and storage directly through software \cite{opencv_doc_2024}.
 
-\subsection{Installation}
-Required dependencies can be installed via:
-\begin{small}
-	\begin{quote}
-		\SHELL{sudo apt install v4l-utils python3-opencv}
-	\end{quote}
-\end{small}
+\begin{tcolorbox}[colback=white,colframe=black,coltext= ShellColor, sharp corners, boxrule=0.8pt]
+	\begin{small}
+		\begin{verbatim}
+			
+			sudo apt install v4l-utils python3-opencv	\end{verbatim}
+	\end{small}
+\end{tcolorbox}
 
 
 Once installed, the camera can be listed and verified using:
-\begin{small}
-	\begin{quote}
-		\SHELL{lsusb | grep -i microsoft}
-	\SHELL{v4l2-ctl --list-devices}
-	\end{quote}
-\end{small}
+
+
+\begin{tcolorbox}[colback=white,colframe=black,coltext= ShellColor, sharp corners, boxrule=0.8pt]
+	\begin{small}
+		\begin{verbatim}
+			
+			lsusb | grep -i microsoft
+			v4l2-ctl --list-devices	\end{verbatim}
+	\end{small}
+\end{tcolorbox}
 
 \subsection{Functions}
 Key OpenCV functions used include:
@@ -340,9 +344,17 @@ This enables localized object detection without dependence on cloud connectivity
 \section{Tests}
 \subsection{Simple Function Test}
 To verify device functionality:
-\begin{verbatim}
-	v4l2-ctl --all
-\end{verbatim}
+
+
+\begin{tcolorbox}[colback=white,colframe=black,coltext= ShellColor, sharp corners, boxrule=0.8pt]
+	\begin{small}
+		\begin{verbatim}
+			
+			v4l2-ctl --all	\end{verbatim}
+	\end{small}
+\end{tcolorbox}
+
+
 Displays parameters such as brightness, contrast, and frame rate.
 
 \subsection{Test all Functions}
