@@ -5207,40 +5207,100 @@ Short \textbf{pin~19} and \textbf{pin~21}, which correspond to \textbf{SPI0\_MOS
 %	\label{fig:enable_spi2}
 %\end{figure}
 
-\begin{table}
+%\begin{table}
+%	
+%	\centering	
+%	\scalebox{0.85}{
+%	{\small%\scriptsize
+%		\begin{tabular}{|c|c|a|a|c|c|} \hline
+%			\rowcolor{white}	 Sysfs GPIO &   \begin{tabular}{c} \textcolor{white}{I}\\ \textcolor{white}{I}\end{tabular}    Name   \begin{tabular}{c} \textcolor{white}{I}\\ \textcolor{white}{I}\end{tabular}     & Pin & Pin & Name & Sysfs GPIO  \\ \hline
+%			gpio78 & \begin{tabular}{c}I2S\_4\_SDOUT \\ D21 \\ \end{tabular}  & 40 & 39 & \GND   &  \\ \hline
+%			gpio77 & \begin{tabular}{c}I2S\_4\_SDIN  \\ D20 \\ \end{tabular}  & 38 & 37 & \begin{tabular}{c}SPI\_2\_MOSI  \\ D26 \\ \end{tabular}  & gpio12  \\ \hline
+%			gpio51 & \begin{tabular}{c}UART\_2\_CTS  \\ D16 \\ \end{tabular}  & 36 & 35 & \begin{tabular}{c}I2S\_4\_LRCK  \\ D19 \\ \end{tabular}  & gpio76  \\ \hline
+%			& \GND                                                     & 34 & 33 & \begin{tabular}{c}GPIO\_PE6  \\ D13 \\ \end{tabular}     & gpio38  \\ \hline
+%			gpio168& \begin{tabular}{c}LCD\_BL\_PWM \\ D12 \\ \end{tabular}   & 32 & 31 & \begin{tabular}{c}GPIO\_PZ0  \\ D6 \\ \end{tabular}      & gpio200  \\ \hline
+%			& \GND                                                     & 30 & 29 & \begin{tabular}{c}CAM\_AF\_EN  \\ D5 \\ \end{tabular}    & gpio149  \\ \hline
+%			&\begin{tabular}{c}I2C\_1\_SCL\\D1/I2C Bus 0\\\end{tabular} & 28 & 27 & \begin{tabular}{c}I2C\_1\_SDA\\ D0/I2C Bus 0\\\end{tabular}  &         \\   \hline     
+%			gpio20 & \begin{tabular}{c}SPI\_1\_CS1\\ D7\\\end{tabular}    & 26 & 25 &\GND        &          \\ \hline
+%			gpio19 & \begin{tabular}{c}SPI\_1\_CS0\\ D8\\\end{tabular}    & 24 & 23 & \begin{tabular}{c}SPI\_1\_SCK\\ D11\\\end{tabular}            & gpio18  \\ \hline
+%			gpio13 & \begin{tabular}{c}SPI\_2\_MISO\\ D25\\\end{tabular}  & 22 & 21 & \begin{tabular}{c}SPI\_1\_MISO\\ D9\\\end{tabular}            & gpio17   \\  \hline
+%			&      \GND                                            & 20 & 19 & \begin{tabular}{c}SPI\_1\_MOSI\\ D10\\\end{tabular}           & gpio16  \\ \hline
+%			gpio15 & \begin{tabular}{c}SPI\_2\_CS0\\ D24\\\end{tabular}   & 18 & 17 & \Vd        &         \\  \hline 
+%			gpio232& \begin{tabular}{c}SPI\_2\_CS1\\ D23\\\end{tabular}   & 16 & 15 & \begin{tabular}{c}LCD\_TE\\ D22\\\end{tabular}       & gpio194 \\   \hline
+%			&      \GND                                            & 14 & 13 & \begin{tabular}{c}SPI\_2\_SCK\\ D27\\\end{tabular}   & gpio14  \\ \hline
+%			gpio79 & \begin{tabular}{c}I2S\_4\_SCLK\\ D18\\\end{tabular}  & 12 & 11 & \begin{tabular}{c}UART\_2\_RTS\\ D17\\\end{tabular}  & gpio50  \\ \hline
+%			& \begin{tabular}{c}UART\_2\_RX\\ /dev/ttyTHS1 - D15\\\end{tabular}  & 10 &  9 &\GND        &         \\ \hline
+%			& \begin{tabular}{c}UART\_2\_TX\\ /dev/ttyTHS1 - D14\\\end{tabular}  &  8 &  7 & \begin{tabular}{c}AUDIO\_MCLK\\ D4\\\end{tabular}        & gpio216 \\ \hline
+%			&\GND       &  6 &  5 & \begin{tabular}{c}I2C\_2\_SCL\\ I2C Bus 1 - D3\\\end{tabular}     &         \\ \hline
+%			& \Vf       &  4 &  3 & \begin{tabular}{c}I2C\_2\_SDA\\ I2C Bus 1 - D2\\\end{tabular}     &         \\ \hline
+%			& \Vf       &  2 &  1 & \Vd        &     \begin{tabular}{c} \textcolor{white}{I}\\ \textcolor{white}{I}\end{tabular}              \\ \hline
+%		\end{tabular}
+%	}
+%	}
+%
+%	\caption{Pinout of the GPIOs of the Jetson Nano \cite{seeedJ101Manual,jetson_carrier_designguide}} \label{Jetson:gpio}
+%\end{table}
+%											
+
+\begin{table}[H]
+	\centering
+	\small
+	\setlength{\tabcolsep}{4pt}
+	\renewcommand{\arraystretch}{1.2}
 	
-	\centering	
 	\scalebox{0.85}{
-	{\small%\scriptsize
-		\begin{tabular}{|c|c|a|a|c|c|} \hline
-			\rowcolor{white}	 Sysfs GPIO &   \begin{tabular}{c} \textcolor{white}{I}\\ \textcolor{white}{I}\end{tabular}    Name   \begin{tabular}{c} \textcolor{white}{I}\\ \textcolor{white}{I}\end{tabular}     & Pin & Pin & Name & Sysfs GPIO  \\ \hline
-			gpio78 & \begin{tabular}{c}I2S\_4\_SDOUT \\ D21 \\ \end{tabular}  & 40 & 39 & \GND   &  \\ \hline
-			gpio77 & \begin{tabular}{c}I2S\_4\_SDIN  \\ D20 \\ \end{tabular}  & 38 & 37 & \begin{tabular}{c}SPI\_2\_MOSI  \\ D26 \\ \end{tabular}  & gpio12  \\ \hline
-			gpio51 & \begin{tabular}{c}UART\_2\_CTS  \\ D16 \\ \end{tabular}  & 36 & 35 & \begin{tabular}{c}I2S\_4\_LRCK  \\ D19 \\ \end{tabular}  & gpio76  \\ \hline
-			& \GND                                                     & 34 & 33 & \begin{tabular}{c}GPIO\_PE6  \\ D13 \\ \end{tabular}     & gpio38  \\ \hline
-			gpio168& \begin{tabular}{c}LCD\_BL\_PWM \\ D12 \\ \end{tabular}   & 32 & 31 & \begin{tabular}{c}GPIO\_PZ0  \\ D6 \\ \end{tabular}      & gpio200  \\ \hline
-			& \GND                                                     & 30 & 29 & \begin{tabular}{c}CAM\_AF\_EN  \\ D5 \\ \end{tabular}    & gpio149  \\ \hline
-			&\begin{tabular}{c}I2C\_1\_SCL\\D1/I2C Bus 0\\\end{tabular} & 28 & 27 & \begin{tabular}{c}I2C\_1\_SDA\\ D0/I2C Bus 0\\\end{tabular}  &         \\   \hline     
-			gpio20 & \begin{tabular}{c}SPI\_1\_CS1\\ D7\\\end{tabular}    & 26 & 25 &\GND        &          \\ \hline
-			gpio19 & \begin{tabular}{c}SPI\_1\_CS0\\ D8\\\end{tabular}    & 24 & 23 & \begin{tabular}{c}SPI\_1\_SCK\\ D11\\\end{tabular}            & gpio18  \\ \hline
-			gpio13 & \begin{tabular}{c}SPI\_2\_MISO\\ D25\\\end{tabular}  & 22 & 21 & \begin{tabular}{c}SPI\_1\_MISO\\ D9\\\end{tabular}            & gpio17   \\  \hline
-			&      \GND                                            & 20 & 19 & \begin{tabular}{c}SPI\_1\_MOSI\\ D10\\\end{tabular}           & gpio16  \\ \hline
-			gpio15 & \begin{tabular}{c}SPI\_2\_CS0\\ D24\\\end{tabular}   & 18 & 17 & \Vd        &         \\  \hline 
-			gpio232& \begin{tabular}{c}SPI\_2\_CS1\\ D23\\\end{tabular}   & 16 & 15 & \begin{tabular}{c}LCD\_TE\\ D22\\\end{tabular}       & gpio194 \\   \hline
-			&      \GND                                            & 14 & 13 & \begin{tabular}{c}SPI\_2\_SCK\\ D27\\\end{tabular}   & gpio14  \\ \hline
-			gpio79 & \begin{tabular}{c}I2S\_4\_SCLK\\ D18\\\end{tabular}  & 12 & 11 & \begin{tabular}{c}UART\_2\_RTS\\ D17\\\end{tabular}  & gpio50  \\ \hline
-			& \begin{tabular}{c}UART\_2\_RX\\ /dev/ttyTHS1 - D15\\\end{tabular}  & 10 &  9 &\GND        &         \\ \hline
-			& \begin{tabular}{c}UART\_2\_TX\\ /dev/ttyTHS1 - D14\\\end{tabular}  &  8 &  7 & \begin{tabular}{c}AUDIO\_MCLK\\ D4\\\end{tabular}        & gpio216 \\ \hline
-			&\GND       &  6 &  5 & \begin{tabular}{c}I2C\_2\_SCL\\ I2C Bus 1 - D3\\\end{tabular}     &         \\ \hline
-			& \Vf       &  4 &  3 & \begin{tabular}{c}I2C\_2\_SDA\\ I2C Bus 1 - D2\\\end{tabular}     &         \\ \hline
-			& \Vf       &  2 &  1 & \Vd        &     \begin{tabular}{c} \textcolor{white}{I}\\ \textcolor{white}{I}\end{tabular}              \\ \hline
+		\begin{tabular}{|p{2.4cm}|p{3.2cm}|p{1.2cm}|p{1.2cm}|p{3.2cm}|p{2.4cm}|}
+			\hline
+			\rowcolor{gray!20}
+			\textbf{Sysfs GPIO} & \textbf{Name} & \textbf{Pin} & \textbf{Pin} & \textbf{Name} & \textbf{Sysfs GPIO} \\ \hline
+			
+			\rowcolor{white}
+			gpio78 & I2S\_4\_SDOUT / D21 & 40 & 39 & \GND & \\ \hline
+			\rowcolor{gray!5}
+			gpio77 & I2S\_4\_SDIN / D20 & 38 & 37 & SPI\_2\_MOSI / D26 & gpio12 \\ \hline
+			\rowcolor{white}
+			gpio51 & UART\_2\_CTS / D16 & 36 & 35 & I2S\_4\_LRCK / D19 & gpio76 \\ \hline
+			\rowcolor{gray!5}
+			-- & \GND & 34 & 33 & GPIO\_PE6 / D13 & gpio38 \\ \hline
+			\rowcolor{white}
+			gpio168 & LCD\_BL\_PWM / D12 & 32 & 31 & GPIO\_PZ0 / D6 & gpio200 \\ \hline
+			\rowcolor{gray!5}
+			-- & \GND & 30 & 29 & CAM\_AF\_EN / D5 & gpio149 \\ \hline
+			\rowcolor{white}
+			-- & I2C\_1\_SCL / D1 (Bus 0) & 28 & 27 & I2C\_1\_SDA / D0 (Bus 0) & -- \\ \hline
+			\rowcolor{gray!5}
+			gpio20 & SPI\_1\_CS1 / D7 & 26 & 25 & \GND & -- \\ \hline
+			\rowcolor{white}
+			gpio19 & SPI\_1\_CS0 / D8 & 24 & 23 & SPI\_1\_SCK / D11 & gpio18 \\ \hline
+			\rowcolor{gray!5}
+			gpio13 & SPI\_2\_MISO / D25 & 22 & 21 & SPI\_1\_MISO / D9 & gpio17 \\ \hline
+			\rowcolor{white}
+			-- & \GND & 20 & 19 & SPI\_1\_MOSI / D10 & gpio16 \\ \hline
+			\rowcolor{gray!5}
+			gpio15 & SPI\_2\_CS0 / D24 & 18 & 17 & \Vd & -- \\ \hline
+			\rowcolor{white}
+			gpio232 & SPI\_2\_CS1 / D23 & 16 & 15 & LCD\_TE / D22 & gpio194 \\ \hline
+			\rowcolor{gray!5}
+			-- & \GND & 14 & 13 & SPI\_2\_SCK / D27 & gpio14 \\ \hline
+			\rowcolor{white}
+			gpio79 & I2S\_4\_SCLK / D18 & 12 & 11 & UART\_2\_RTS / D17 & gpio50 \\ \hline
+			\rowcolor{gray!5}
+			-- & UART\_2\_RX (/dev/ttyTHS1 - D15) & 10 & 9 & \GND & -- \\ \hline
+			\rowcolor{white}
+			-- & UART\_2\_TX (/dev/ttyTHS1 - D14) & 8 & 7 & AUDIO\_MCLK / D4 & gpio216 \\ \hline
+			\rowcolor{gray!5}
+			-- & \GND & 6 & 5 & I2C\_2\_SCL (Bus 1 - D3) & -- \\ \hline
+			\rowcolor{white}
+			-- & \Vf & 4 & 3 & I2C\_2\_SDA (Bus 1 - D2) & -- \\ \hline
+			\rowcolor{gray!5}
+			-- & \Vf & 2 & 1 & \Vd & -- \\ \hline
+			
 		\end{tabular}
 	}
-	}
-
-	\caption{Pinout of the GPIOs of the Jetson Nano \cite{seeedJ101Manual,jetson_carrier_designguide}} \label{Jetson:gpio}
+	\caption{Pinout of the GPIOs of the Jetson Nano~\cite{seeedJ101Manual,jetson_carrier_designguide}.}
+	\label{tab:JetsonGPIO}
 \end{table}
-											
+
 
 \bigskip
 The physical connection diagram is shown below:
@@ -5248,6 +5308,9 @@ The physical connection diagram is shown below:
 %\bigskip
 %\noindent\textbf{\textcolor{red}{TODO: Add image of physical connection diagram after procuring the hardware.}}
 %
+
+
+
 %\bigskip
 
 
@@ -5483,10 +5546,11 @@ The Jetson Nano’s unified memory architecture and GPU-accelerated TensorRT eng
 Zero-copy access between CPU and GPU memory minimizes transfer overhead, while NVIDIA’s Deep Learning Accelerator (DLA) handles lightweight models for offloading parallel workloads \cite{edgeAIbook,jetson_nano_doc}.  
 This ensures deterministic data flow with sub-40~ms total pipeline latency, enabling true real-time object detection.
 
+
 \section{Specification of Jetson Nano}
 \begin{table}[H]
 	\centering
-	\caption{Technical Specifications of NVIDIA Jetson Nano (B01 Revision)}
+	\caption{Technical Specifications of NVIDIA Jetson Nano J1010 ~\cite{NVIDIAJetsonNanoDatasheet, NVIDIADevKitGuide}}
 	\begin{tabular}{|p{5cm}|p{8cm}|}
 		\hline
 		\textbf{Parameter} & \textbf{Specification} \\
@@ -5494,14 +5558,14 @@ This ensures deterministic data flow with sub-40~ms total pipeline latency, enab
 		GPU & 128-core NVIDIA Maxwell architecture \\
 		CPU & Quad-core ARM Cortex-A57 MPCore \\
 		Memory & 4~GB LPDDR4 @ 1600~MHz (25.6~GB/s) \\
-		Storage & 16~GB eMMC + microSD expansion \\
-		Camera Support & Dual CSI-2 (4-lane each) \\
+		Storage & 16~GB eMMC + microSD expansion slot \\
+		Camera Support & Dual MIPI CSI-2 (4-lane each) \\
 		Networking & Gigabit Ethernet (10/100/1000~Mbps) \\
-		Video Decode & Up to 4K~@~60~Hz (HEVC/H.264) \\
-		Video Encode & Up to 4K~@~30~Hz \\
-		Power Input & 5~V DC, up to 4~A (USB-C) \\
+		Video Decode & Up to 4K~@~60~Hz (HEVC, H.264) \\
+		Video Encode & Up to 4K~@~30~Hz (H.264) \\
+		Power Input & 5~V DC, up to 4~A (via USB-C or GPIO header) \\
 		Typical Power Use & 5--10~W \\
-		Operating System & NVIDIA JetPack 5.x (Ubuntu 20.04 LTS) \\
+		Operating System & NVIDIA JetPack SDK (Ubuntu 20.04 LTS) \\
 		\hline
 	\end{tabular}
 \end{table}
@@ -5519,15 +5583,34 @@ This ensures deterministic data flow with sub-40~ms total pipeline latency, enab
 \begin{itemize}
 	\item Module Size: 69.6~mm $\times$ 45~mm
 	\item Carrier Board Size: 100~mm $\times$ 80~mm
-	\item Enclosure Size: 130~mm $\times$ 120~mm $\times$ 50~mm
+	\item Passive Heat Sink Size:  58.7~mm $\times$  39.4~mm $\times$  17.3~mm
+	\item reComputer Case  Size: 130~mm $\times$ 120~mm $\times$ 50~mm
 	\item Total Weight: approximately 300~g (including case and heatsink)
 \end{itemize}
+
+\begin{figure}[H] 
+	\centering
+	\begin{subfigure}[b]{0.40\linewidth}
+		\centering
+		\includegraphics[width=\linewidth]{JetsonNano/recomputercase.png}
+%		\caption{reComputer J1010 case with grid reference (dimensions in cm and inches)~\cite{NVIDIAJetsonNanoDatasheet}.}
+		\label{fig:recomputer_case}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{0.40\linewidth}
+		\centering
+		\includegraphics[width=\linewidth]{JetsonNano/heatsink.png}
+%		\caption{Passive aluminum heatsink for Jetson Nano module~\cite{NVIDIAJetsonNanoDatasheet}.}
+		\label{fig:jetson_heatsink}
+	\end{subfigure}
+	\caption{Physical components of the Seeed Studio reComputer J1010: outer enclosure and passive heatsink for Jetson Nano thermal management~\cite{NVIDIAJetsonNanoDatasheet}.}
+	\label{fig:recomputer_case_heatsink}
+\end{figure}
 
 
 \section{JetPack OS Setup and System Initialization}
 \label{sec:jetpack}
 
-Working in Progress
 
 \noindent
 \textbf{Introduction:} \\
@@ -5537,7 +5620,7 @@ JetPack~OS provides a ready-to-use software environment for developing and deplo
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.95\linewidth]{JetsonNano/jetpackos_1.jpg}
+	\includegraphics[width=0.7\linewidth]{JetsonNano/jetpackos_1.jpg}
 	\caption{Ubuntu desktop environment displayed after successful installation of JetPack OS on the NVIDIA Jetson Nano. The JetPack environment provides integrated access to CUDA, TensorRT, and other NVIDIA SDK tools for AI and computer vision development \cite{reComputer_FlashGuide}.}
 	\label{fig:jetpackos_1}
 \end{figure}
@@ -5569,54 +5652,6 @@ However, the \textbf{reComputer J1010} follows the official flashing procedure u
 Before flashing, both methods require basic software and hardware preparation, including setting up the host computer and placing the Jetson~Nano into recovery mode.  
 The following subsections describe these preparation steps in detail.
 
-%\subsection{Software Preparation}
-%\label{subsec:software_prep}
-%
-%\subsection{Hardware Preparation}
-%\label{subsec:hardware_prep}
-%
-%\subsection{Flashing JetPack OS via NVIDIA SDK Manager}
-%\label{subsec:flash_sdk_manager}
-%
-%\subsubsection{Step 1: Install NVIDIA SDK Manager on the Linux Host PC}
-%\label{subsubsec:sdk_install}
-%
-%\subsubsection{Step 2: Open NVIDIA SDK Manager and Login}
-%\label{subsubsec:sdk_login}
-%
-%\subsubsection{Step 3: Select the Target Device}
-%\label{subsubsec:select_target}
-%
-%\subsubsection{Step 4: Review Wanted Components}
-%\label{subsubsec:review_components}
-%
-%\subsubsection{Step 5: Install the System}
-%\label{subsubsec:install_system}
-%
-%\subsubsection{(Optional) Step 6: Install the SDK Components}
-%\label{subsubsec:install_sdk}
-%
-%\subsection{Flashing JetPack OS via Command Line}
-%\label{subsec:flash_commandline}
-%
-%\subsubsection{Step 1: Download the Proper NVIDIA Linux Driver Package}
-%\label{subsubsec:cmd_download}
-%
-%\subsubsection{Step 2: Unzip Package Files and Assemble the Rootfs via Command Line}
-%\label{subsubsec:cmd_rootfs}
-%
-%\subsubsection{Step 3: Flash the System to reComputer}
-%\label{subsubsec:cmd_flash}
-%
-%\subsection{Troubleshooting}
-%\label{subsec:troubleshooting}
-%
-%\subsubsection{Troubleshooting Installation with NVIDIA SDK Manager}
-%\label{subsubsec:troubleshoot_sdk}
-%
-%\subsubsection{Troubleshooting Installation Using the Command Line}
-%\label{subsubsec:troubleshoot_cmd}
-
 
 \subsection{Software Preparation}
 \label{subsec:software_prep}
@@ -5635,7 +5670,7 @@ Before we can move on to the installation steps, we need to make sure that our r
 	
 	\begin{figure}[H]
 		\centering
-		\includegraphics[width=0.85\linewidth]{JetsonNano/hardware_prep.png}
+		\includegraphics[width=0.7\linewidth]{JetsonNano/hardware_prep.png}
 		\caption{Button header pinout on the Seeed Studio reComputer J1010 carrier board showing the \textbf{FC REC} and \textbf{GND} pins used to enter Force Recovery Mode. A jumper should connect these two pins before powering the device for JetPack OS flashing \cite{reComputer_FlashGuide}.}
 		\label{fig:hardware_prep}
 	\end{figure}
@@ -5644,7 +5679,7 @@ Before we can move on to the installation steps, we need to make sure that our r
 	
 	\begin{figure}[H]
 		\centering
-		\includegraphics[width=0.9\linewidth]{JetsonNano/hardware_prep2.png}
+		\includegraphics[width=0.7\linewidth]{JetsonNano/hardware_prep2.png}
 		\caption{Connection layout of the Seeed Studio reComputer J1010 showing the correct use of the USB Type-C ports. 
 			The left (Type-C DCIN) port is used to connect the power supply, while the right (Type-C Data Transmitter) port connects to the Linux Host PC for data transfer during JetPack OS flashing \cite{reComputer_FlashGuide}.}
 		\label{fig:hardware_prep2}
@@ -5657,7 +5692,7 @@ Before we can move on to the installation steps, we need to make sure that our r
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.85\linewidth]{JetsonNano/hardware_prep3.png}
+	\includegraphics[width=0.7\linewidth]{JetsonNano/hardware_prep3.png}
 	\caption{Verification of \textbf{Force Recovery Mode} using the \texttt{lsusb} command on the Linux Host PC. 
 		The output shows the device ID \texttt{0955:7f21 NVIDIA Corp.}, confirming that the reComputer J1010 is successfully detected and ready for flashing JetPack OS \cite{reComputer_FlashGuide}.}
 	\label{fig:hardware_prep3}
@@ -5672,7 +5707,7 @@ Next we will go through the tutorial about installing the system via NVIDIA SDK 
 
 \begin{figure}[H] % Use [H] if you want to force it exactly here (requires package float)
 	\centering
-	\includegraphics[width=\textwidth]{JetsonNano/hardware_prep4.png}
+	\includegraphics[width=0.7\linewidth]{JetsonNano/hardware_prep4.png}
 	\caption{Flashing JetPack OS workflow using NVIDIA SDK Manager.}
 	\label{fig:flash_sdk_manager}
 \end{figure}
@@ -5726,7 +5761,7 @@ Click \textbf{Continue} to proceed to the next step.
 
 \begin{figure}[H] % Requires \usepackage{float}
 	\centering
-	\includegraphics[width=0.95\textwidth]{JetsonNano/hardware_prep7.png}
+	\includegraphics[width=0.7\linewidth]{JetsonNano/hardware_prep7.png}
 	\caption{Target Device}
 	\label{fig:target_device}
 \end{figure}
@@ -5739,7 +5774,7 @@ From Details and License, you can expand the host components and target componen
 
 \begin{figure}[H] % Requires \usepackage{float}
 	\centering
-	\includegraphics[width=0.95\textwidth]{JetsonNano/hardware_prep8.png}
+	\includegraphics[width=0.7\linewidth]{JetsonNano/hardware_prep8.png}
 	\caption{OS Components}
 	\label{fig:os_Components}
 \end{figure}
@@ -5766,15 +5801,29 @@ Select \textbf{Continue} to proceed to the next step.
 \subsubsection{Step 5: Install the System}
 \label{subsubsec:install_system}
 
-Before the installation begins, SDK Manager prompts you to enter your \texttt{sudo} password.
+Before the installation begins, SDK Manager prompts you to enter your \SHELL{sudo} password.
 
-After a while, we will be asked to set up the new system for our reComputer. Since we manually forced into recovery mode, we select \textbf{Manual setup: set the target to Force Recovery Mode via manual operations} here. Meanwhile, we choose the default Pre-Config.
+After a while, we will be asked to set up the new system for our reComputer. Since we manually forced into recovery mode, we select \textbf{Manual setup: set the target to Force Recovery Mode via manual operations} here. Meanwhile, we choose the default \textbf{Pre-Config}.
+
+\begin{figure}[H] % requires \usepackage{float}
+	\centering
+	\includegraphics[width=0.7\linewidth]{JetsonNano/installingsystem.png}% adjust path if needed
+	\caption{SDK Manager: choose \textbf{Manual setup} (Force Recovery Mode via manual operations) and keep \textbf{Pre-Config}. Set the new \texttt{username} and \texttt{password} for the target.}
+	\label{fig:sdkmanager_manual_setup}
+\end{figure}
 
 After that, we need to enter the name and password of our new Jetson system to our reComputer, it is set by yourself.
 
 When ready, click \textbf{Flash} to continue.
 
 The display shows the progress of the download and installation of the software. Please wait patiently for the installation to complete.
+
+\begin{figure}[H] 
+	\centering
+	\includegraphics[width=0.7\linewidth]{JetsonNano/installationprogress.png}
+	\caption{SDK Manager installation progress showing flashing and setup of JetPack 4.6.1 components on Jetson Nano.}
+	\label{fig:sdkmanager_install_progress}
+\end{figure}
 
 \subsubsection{(Optional) Step 6: Install the SDK Components}
 \label{subsubsec:install_sdk}
@@ -5803,10 +5852,18 @@ When you see the following window appear, the installation has been done. You ca
 
 \textbf{Attention:} Be sure to unplug the jumper and exit force recovery mode before re-powering into the system.
 
+
 \subsection{Flashing JetPack OS via Command Line}
 \label{subsec:flash_commandline}
 
 Thanks to the freedom to customize the BSP (NVIDIA Linux Driver Package), flashing JetPack OS via command line can be very easy for Linux knowledge-based users.
+
+\begin{figure}[H] % Requires \usepackage{float}
+	\centering
+	\includegraphics[width=0.7\linewidth]{JetsonNano/JOSviaCMD.png}
+	\caption{Overview of the JetPack OS flashing process via command line — from downloading and preparing system files on the Ubuntu host to flashing and initializing the reComputer.}
+	\label{fig:jetpack_cmd_overview}
+\end{figure}
 
 \subsubsection{Step 1: Download the Proper NVIDIA Linux Driver Package}
 \label{subsubsec:cmd_download}
@@ -5820,12 +5877,20 @@ On the Linux host PC, we need to open a browser and go to the Jetson Linux Archi
 \end{verbatim}
 \smallskip
 
+\begin{figure}[H] % Requires \usepackage{float}
+	\centering
+	\includegraphics[width=0.7\linewidth]{JetsonNano/NVIDIAL4T.png}
+	\caption{Official NVIDIA Jetson L4T 32.7.1 download page showing links for \textbf{L4T Driver Package (BSP)} and \textbf{Sample Root Filesystem}. These are the essential files required for flashing JetPack OS manually.}
+	\label{fig:nvidia_l4t_download}
+\end{figure}
+
 As an example, we choose the NVIDIA L4T 32.7.1 version since it is included as part of JetPack 4.6.1 and supports the Jetson Nano module. The names of the files:
 
 \begin{verbatim}
 	Tegra_Linux_Sample-Root-Filesystem_R32.7.2_aarch64.tbz2
 	Jetson-210_Linux_R32.7.2_aarch64.tbz2
 \end{verbatim}
+
 
 \subsubsection{Step 2: Unzip Package Files and Assemble the Rootfs via Command Line}
 \label{subsubsec:cmd_rootfs}
@@ -5863,6 +5928,13 @@ As an example of NVIDIA L4T 32.7.1, the downloaded files are stored in \texttt{/
 		\end{verbatim}
 	\end{small}
 \end{tcolorbox}
+The output should be like:
+\begin{figure}[H] 
+	\centering
+	\includegraphics[width=0.95\linewidth]{JetsonNano/NVIDIAL4TOutput.png}
+	\caption{Terminal output during L4T 32.7.1 installation, showing unpacking and configuration of BSP and root filesystem components for Jetson Nano.}
+	\label{fig:nvidia_l4t_output}
+\end{figure}
 
 \subsubsection{Step 3: Flash the System to reComputer}
 \label{subsubsec:cmd_flash}
@@ -5878,10 +5950,21 @@ Since we already forced the reComputer J1010 into recovery mode and the module i
 		\end{verbatim}
 	\end{small}
 \end{tcolorbox}
-
+\begin{figure}[H] % Requires \usepackage{float}
+	\centering
+	\includegraphics[width=0.7\linewidth]{JetsonNano/flashingsystem.png}
+	\caption{Flashing process output after executing \texttt{sudo ./flash.sh jetson-nano-devkit-emmc mmcblk0p1}, showing partition writing and completion message indicating successful Jetson Nano system flash.}
+	\label{fig:flashingsystem_output}
+\end{figure}
 Flashing L4T takes about 10 minutes, or more under a slow host computer.
 
 At this moment, we can unplug the jumper and then power up the reComputer again to use it.
+
+\bigskip
+\noindent
+The JetPack OS installation process for the Seeed Studio reComputer J1010 follows the official Seeed tutorial~\cite{reComputer_FlashGuide}. 
+All steps, figures, and commands in this section are adapted and verified based on the Seeed Studio Wiki documentation for reComputer devices.
+
 
 \newpage
 \subsection{Troubleshooting}
@@ -5894,19 +5977,46 @@ There are many causes of various installation errors. Below is a checklist of co
 
 \begin{enumerate}
 	\item Review the summary table to identify which component failed.
-	\item Expand the group with the "Error" status.
-	\item When you find the failed component, click the details icon to the right of Install Error to be redirected to the Terminal tab, which will display the exact error.
+		\begin{enumerate}
+			\item Expand the group with the "Error" status.
+			\item When you find the failed component, click the details icon to the right of Install Error to be redirected to the Terminal tab, which will display the exact error.
+		\end{enumerate}
+		\begin{figure}[H] 
+			\centering
+			\includegraphics[width=0.9\linewidth]{JetsonNano/troubleshooting1.png}
+			\caption{Example of an installation error in NVIDIA SDK Manager. The error log can be accessed by clicking the red details icon next to the “Install error” message.}
+			\label{fig:troubleshooting_sdkmanager}
+		\end{figure}
+	
+		
+		\item If the error is related to an environment issue, such as a broken apt repository or missing prerequisite, try to fix it manually, then click the \textbf{Retry Failed Items} button.
+		
+		\begin{figure}[H] 
+			\centering
+			\includegraphics[width=0.9\linewidth]{JetsonNano/troubleshooting2.png}
+			\caption{SDK Manager installation failed prompt. The user can inspect details in the Terminal tab, resolve the issue, and then click \textbf{Retry Failed Items} to continue installation.}
+			\label{fig:troubleshooting_retry}
+		\end{figure}
+		
+		\item Retrying the installation is also available in two other ways:
+			\begin{enumerate}
+				\item From Flashing to eMMC with SDK Manager -- Step 3, use the Repair/Uninstall button to get to the Manage NVIDIA SDKs page. If needed, expand the SDK that has the "Broken" status, then click Repair for the relevant part (Host or Target).
+				
+				\begin{figure}[H] 
+					\centering
+					\includegraphics[width=0.9\linewidth]{JetsonNano/troubleshooting3.png}
+					\caption{Repair or Uninstall options in SDK Manager. Users can access the Manage NVIDIA SDKs page, expand the SDK marked as “Broken,” and click \textbf{Repair} to attempt reinstallation of failed components.}
+					\label{fig:troubleshooting_repair}
+				\end{figure}
+				
+			\end{enumerate}
+		
+		\item At Flashing to eMMC with SDK Manager -- Step 3, select the required SDK and run through the installation again.
+		\item Finally, try to uninstall and reinstall the relevant SDK.
+			
+			
 \end{enumerate}
 
-If the error is related to an environment issue, such as a broken apt repository or missing prerequisite, try to fix it manually, then click the \textbf{Retry Failed Items} button.
-
-Retrying the installation is also available in two other ways:
-\begin{enumerate}
-	\item From Flashing to eMMC with SDK Manager -- Step 3, use the Repair/Uninstall button to get to the Manage NVIDIA SDKs page. If needed, expand the SDK that has the "Broken" status, then click Repair for the relevant part (Host or Target).
-	\item At Flashing to eMMC with SDK Manager -- Step 3, select the required SDK and run through the installation again.
-\end{enumerate}
-
-Finally, try to uninstall and reinstall the relevant SDK.
 
 \subsubsection{Troubleshooting Installation Using the Command Line}
 \label{subsubsec:troubleshoot_cmd}
@@ -5914,6 +6024,13 @@ Finally, try to uninstall and reinstall the relevant SDK.
 The command line installation method is relatively simple, and is often prone to error in scenarios where force recovery mode is used.
 
 If you encounter the error shown below in Flashing to eMMC with command-line -- Step 2, you probably did not succeed in getting the Jetson-101 Carrier Board into force recovery mode. Please pay special attention, do not enter force recovery mode with the Jetson-101 Carrier Board powered on, as this is not valid.
+
+\begin{figure}[H] 
+	\centering
+	\includegraphics[width=0.9\linewidth]{JetsonNano/troubleshootingcmd1.png}
+	\caption{Typical error message during command-line flashing. This occurs when the Jetson device is not properly connected in Force Recovery Mode or the USB connection is unstable.}
+	\label{fig:troubleshooting_cmd_error}
+\end{figure}
 
 If you can't get into the system in Flashing to eMMC with command-line -- Step 3 and are stuck on the boot up display command line, you probably did not exit force recovery mode. Likewise, it is not valid for you to unplug the jumper to exit force recovery mode while the Jetson-101 Carrier Board is powered up, this all needs to be done while you are powered down.
 

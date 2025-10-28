@@ -228,16 +228,26 @@ In this section, a complete example illustrates how the display actor visualizes
 To operate, connect the HDMI cable between the Jetson Nano and monitor, select the proper input source, and power both devices.
 
 \subsection{Inside the Example and Code}
-\begin{lstlisting}[language=Python, caption={Displaying a license plate recognition message on Jetson Nano display}]
-	import cv2
-	
-	frame = cv2.imread("car_emden.jpg")
-	cv2.putText(frame, "Willkommen Fahrzeug EMD AB 1234", (40, 50),
-	cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
-	cv2.imshow("License Plate Display", frame)
-	cv2.waitKey(0)
-	cv2.destroyAllWindows()
-\end{lstlisting}
+
+
+\subsection{Code}
+\lstinputlisting[
+language=Python,
+caption={Displaying a license plate recognition message on Jetson Nano display},
+label={lst:license_plate_display},
+basicstyle=\ttfamily\small,
+keywordstyle=\color{blue},
+commentstyle=\color{gray},
+stringstyle=\color{green!40!black},
+breaklines=true,
+showstringspaces=false,
+numbers=left,
+numberstyle=\tiny\color{gray},
+frame=single,
+rulecolor=\color{black!30}
+]{../../Code/Display/licenceplateopencv.py}
+
+
 
 \noindent
 This demonstrates the entry event for a vehicle from Emden, Deutschland.  
@@ -271,9 +281,14 @@ These localized messages provide clear user feedback at the system interface.
 \section{Tests}
 \subsection{Simple Function Test}
 Run:
-\begin{verbatim}
-	xrandr
-\end{verbatim}
+
+\begin{tcolorbox}[colback=white,colframe=black,coltext= ShellColor, sharp corners, boxrule=0.8pt]
+	\begin{small}
+		\begin{verbatim}
+			
+			xrandr	\end{verbatim}
+	\end{small}
+\end{tcolorbox}
 to confirm that the HDMI display is detected and configured.
 
 \subsection{Test all Functions}
