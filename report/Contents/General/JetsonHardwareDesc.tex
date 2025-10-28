@@ -141,11 +141,11 @@ These ports include power, display, communication, and peripheral interfaces ess
 \end{figure}
 
 
-\noindent\textbf{\textcolor{red}{TODO: Convert to Tikz image.}} 
+%\noindent\textbf{\textcolor{red}{TODO: Convert to Tikz image.}} 
 
 \begin{table}[H]
 	\centering
-	\caption{Labeled external connectors on the Seeed Studio reComputer~J1010 front I/O panel}
+	\caption{Labeled external connectors on the Seeed Studio reComputer~J1010 front I/O panel\cite{seeedJ101Manual}}
 	\label{tab:j1010_interfaces}
 	\begin{tabular}{|c|l|l|}
 		\hline
@@ -165,12 +165,12 @@ The complete reComputer~J1010 assembly consists of the following major hardware 
 
 \begin{table}[H]
 	\centering
-	\caption{Core Components of the reComputer~J1010 System}
+	\caption{Core components of the Seeed Studio reComputer~J1010 system \cite{seeedJ101Manual,jetsonNanoDatasheet,jetson_carrier_designguide}.}
 	\label{tab:core_components}
 	\begin{tabular}{|p{4cm}|p{9cm}|}
 		\hline
 		\textbf{Component} & \textbf{Description} \\ \hline
-		Compute Module & NVIDIA Jetson Nano (B01 revision) with 4~GB LPDDR4 memory and integrated Tegra~X1 SoC (CPU + GPU) \\ \hline
+		Compute Module & NVIDIA Jetson Nano (B01 revision) with 4~GB LPDDR4 memory and integrated Tegra~X1 SoC (quad-core ARM Cortex-A57 CPU + 128-core Maxwell GPU) \\ \hline
 		Carrier Board & Seeed Studio J101 carrier board with USB, HDMI, CSI, M.2~Key~E, Ethernet, and 40-pin GPIO expansion header \\ \hline
 		Power Supply & 5~V~DC~$\pm$~0.25~V, up to~4~A via USB-C (J1); reverse-current protection integrated \\ \hline
 		Storage & microSD~card (64–128~GB, UHS-I recommended) used for JetPack OS image and dataset storage \\ \hline
@@ -3949,11 +3949,15 @@ Two 15-pin CSI-2 connectors supporting 4-lane cameras. Camera control is provide
 Raspberry~Pi-compatible 40-pin header exposing 3.3~V logic GPIO and multiplexed buses (I\textsuperscript{2}C, SPI, UART, I\textsuperscript{2}S, PWM). 
 Use the Jetson.GPIO Python library for user-space access; detailed electrical behavior is described in Section~\ref{subsec:pinconfig} \cite{reComputer_Jetson_GPIO}.
 
-\bigskip
-
-
-\noindent\textbf{\textcolor{red}{TODO: Add the 40 pin description table.}}
-\bigskip
+%\bigskip
+%
+%
+%\begin{tikzpicture}
+%	\node[draw=red, dashed, rounded corners, inner sep=4pt, text width=0.9\linewidth]
+%	{\textbf{\textcolor{red}{TODO: Add the 40-pin description table.}}};
+%\end{tikzpicture}
+%
+%\bigskip
 
 
 \subsubsection{J11: M.2 Key~E}
@@ -5022,7 +5026,9 @@ The J101 header follows the widely used Raspberry~Pi layout:
 	\item \textbf{PWM outputs} are available on selected pins (e.g., physical \textbf{32}, \textbf{33}) depending on pinmux; frequency and duty can be configured via the PWM sysfs or libraries.
 \end{itemize}
 
-\paragraph{Selected J10 pin map (BOARD numbers).}
+
+%\paragraph{Selected J10 pin map (BOARD numbers).}
+\newpage
 \begin{table}[H]
 	\centering
 	\caption{Selected J10 pins and typical default functions on reComputer~J1010 \cite{reComputer_Jetson_GPIO,seeedJ101Manual}.}
@@ -5040,6 +5046,7 @@ The J101 header follows the widely used Raspberry~Pi layout:
 		33 & PWM (pinmux dep.) & 34 & GND \\ \hline
 	\end{tabular}
 \end{table}
+\bigskip
 
 %\paragraph{Safe-use guidance.}
 %Avoid sourcing more than a few mA from a single GPIO; drive external loads through a transistor/MOSFET or a driver IC. 
@@ -5111,27 +5118,147 @@ You can refer to the \textit{Flashing JetPack OS via Command Line} tutorial for 
 %\end{small}
 
 \medskip
-\begin{quote}
-	\begin{small}
-	\SHELL{tar xf Jetson-210\_Linux\_R32.7.2\_aarch64.tbz2}\\
-	\SHELL{cd Linux\_for\_Tegra/rootfs/}\\
-	\SHELL{sudo tar xpf ../../Tegra\_Linux\_Sample-Root-Filesystem\_R32.7.2\_aarch64.tbz2}\\
-	\SHELL{cd ..}\\
-	\SHELL{sudo ./apply\_binaries.sh}\\
+%\begin{quote}
+%	\begin{small}
+%	\SHELL{tar xf Jetson-210\_Linux\_R32.7.2\_aarch64.tbz2}\\
+%	\SHELL{cd Linux\_for\_Tegra/rootfs/}\\
+%	\SHELL{sudo tar xpf ../../Tegra\_Linux\_Sample-Root-Filesystem\_R32.7.2\_aarch64.tbz2}\\
+%	\SHELL{cd ..}\\
+%	\SHELL{sudo ./apply\_binaries.sh}\\
+%	\end{small}
+%\end{quote}
+
+\begin{tcolorbox}[colback=white,colframe=black,coltext= ShellColor, sharp corners, boxrule=0.8pt]
+		\begin{small}
+	\begin{verbatim}
+		
+		tar xf Jetson-210_Linux_R32.7.2_aarch64.tbz2
+		cd Linux_for_Tegra/rootfs/
+		sudo tar xpf ../../Tegra_Linux_Sample-Root-Filesystem_R32.7.2_aarch64.tbz2
+		cd ..
+		sudo ./apply_binaries.sh
+		
+	\end{verbatim}
 	\end{small}
-\end{quote}
+\end{tcolorbox}
+
+
 
 
 \noindent Create a new \SHELL{.sh} file in the \SHELL{Linux\_for\_Tegra} directory, and run the script. 
 The script content is as follows:
 
-\medskip
-\begin{small}
-	\begin{quote}
-		\SHELL{modify\_spi.sh}\\
-		\SHELL{sudo bash modify\_spi.sh}\\
-	\end{quote}
-\end{small}
+\begin{tikzpicture}[baseline]
+	\node[
+	draw=red,
+	dashed,
+	rounded corners,
+	inner sep=4pt,
+	text width=0.9\linewidth
+	] {\textbf{\textcolor{red}{TODO: Add the code for modify\_spi.sh}}};
+\end{tikzpicture}
+
+%\medskip
+%\begin{tcolorbox}[colback=white,colframe=black,coltext= ShellColor, sharp corners, boxrule=0.8pt]
+%	\begin{small}
+%		\begin{verbatim}
+%		
+%			
+%		\end{verbatim}
+%	\end{small}
+%\end{tcolorbox}
+
+%\begin{tcolorbox}[
+%	colback=white,
+%	colframe=black,
+%	coltext=ShellColor,
+%	title=modify_spi.sh,
+%	sharp corners,
+%	boxrule=0.8pt,
+%	listing only,
+%	listing options={
+%		basicstyle=\ttfamily\scriptsize\color{ShellColor},
+%		breaklines=true,
+%		breakindent=0pt,
+%		columns=fullflexible,
+%	}
+%	]
+%	#!/bin/bash
+%	set -e
+%	
+%	cd "$(dirname "$0")"
+%	cd kernel/dtb
+%	
+%	DTS=tegra210-p3448-0002-p3449-0000-b00.dts
+%	DTB=tegra210-p3448-0002-p3449-0000-b00.dtb
+%	
+%	echo "[INFO] Decompiling $DTB to $DTS..."
+%	sudo dtc -I dtb -O dts -o "$DTS" "$DTB"
+%	
+%	fix_spi_node() {
+%		local node=$1
+%		if grep -A5 "$node {" "$DTS" | grep -q 'status'; then
+%			sudo sed -i "/$node {/,/spi-max-frequency/ s/status = \".*\";/status = \"okay\";/" "$DTS"
+%				else
+%				sudo sed -i "/$node {/,/spi-max-frequency/ s/compatible = \"tegra-spidev\";/&\n\t\tstatus = \"okay\";/" "$DTS"
+%					fi
+%				}
+%				
+%				echo "[ACTION] Enabling spi@0 and spi@1..."
+%				fix_spi_node "spi@0"
+%				fix_spi_node "spi@1"
+%				
+%				patch_pin() {
+%					local pin=$1
+%					sudo sed -i "/${pin} {/,/nvidia,enable-input/ {
+%							s/nvidia,function = \"rsvd1\"/nvidia,function = \"spi1\"/
+%							s/nvidia,tristate = <0x01>/nvidia,tristate = <0x00>/
+%							s/nvidia,enable-input = <0x00>/nvidia,enable-input = <0x01>/
+%						}" "$DTS"
+%					}
+%					
+%					echo "[ACTION] Patching pinmux blocks..."
+%					for pin in spi1_mosi_pc0 spi1_miso_pc1 spi1_sck_pc2 spi1_cs0_pc3 spi1_cs1_pc4; do
+%					patch_pin "$pin"
+%					done
+%					
+%					echo "[ACTION] Fixing tristate and input-enable for SPI1 pins..."
+%					
+%					fix_pinmux_field() {
+%						local pin=$1
+%						awk -v pin="$pin" '
+%						BEGIN { in_block = 0 }
+%						{
+%							if ($0 ~ pin " {") { in_block = 1 }
+%								if (in_block && /nvidia,tristate =/) { sub(/<0x1>/, "<0x0>") }
+%								if (in_block && /nvidia,enable-input =/) { sub(/<0x0>/, "<0x1>") }
+%								print
+%								if (in_block && /}/) { in_block = 0 }
+%						}' "$DTS" | sudo tee "$DTS.fixed" > /dev/null && sudo mv "$DTS.fixed" "$DTS"
+%					}
+%					
+%					fix_pinmux_field "spi1_mosi_pc0"
+%					fix_pinmux_field "spi1_miso_pc1"
+%					fix_pinmux_field "spi1_sck_pc2"
+%					fix_pinmux_field "spi1_cs0_pc3"
+%					fix_pinmux_field "spi1_cs1_pc4"
+%					
+%					echo "[INFO] Recompiling DTS to $DTB..."
+%					sudo dtc -I dts -O dtb -o "$DTB" "$DTS"
+%					
+%					echo "[OK] SPI DTS patch applied and DTB regenerated successfully."
+%				\end{tcolorbox}
+%
+%\medskip
+%\begin{tcolorbox}[colback=white,colframe=black,coltext= ShellColor, sharp corners, boxrule=0.8pt]
+%	\begin{small}
+%		\begin{verbatim}
+%			
+%		sudo bash modify_spi.sh
+%	\end{verbatim}
+%\end{small}
+%\end{tcolorbox}
+
 
 \medskip
 After running \SHELL{modify\_spi.sh}, this script will update the SPI1 configuration in the device tree, recompile it, and overwrite the old one. 
@@ -5171,71 +5298,40 @@ Short \textbf{pin~19} and \textbf{pin~21}, which correspond to \textbf{SPI0\_MOS
 %	\label{fig:enable_spi2}
 %\end{figure}
 
-%\begin{table}
-%	
-%	\centering	
-%	{\small%\scriptsize
-%		\begin{tabular}{|c|c|a|a|c|c|} \hline
-%			\rowcolor{white}	 Sysfs GPIO &   \begin{tabular}{c} \textcolor{white}{I}\\ \textcolor{white}{I}\end{tabular}    Name   \begin{tabular}{c} \textcolor{white}{I}\\ \textcolor{white}{I}\end{tabular}     & Pin & Pin & Name & Sysfs GPIO  \\ \hline
-%			gpio78 & \begin{tabular}{c}I2S\_4\_SDOUT \\ D21 \\ \end{tabular}  & 40 & 39 & \GND   &  \\ \hline
-%			gpio77 & \begin{tabular}{c}I2S\_4\_SDIN  \\ D20 \\ \end{tabular}  & 38 & 37 & \begin{tabular}{c}SPI\_2\_MOSI  \\ D26 \\ \end{tabular}  & gpio12  \\ \hline
-%			gpio51 & \begin{tabular}{c}UART\_2\_CTS  \\ D16 \\ \end{tabular}  & 36 & 35 & \begin{tabular}{c}I2S\_4\_LRCK  \\ D19 \\ \end{tabular}  & gpio76  \\ \hline
-%			& \GND                                                     & 34 & 33 & \begin{tabular}{c}GPIO\_PE6  \\ D13 \\ \end{tabular}     & gpio38  \\ \hline
-%			gpio168& \begin{tabular}{c}LCD\_BL\_PWM \\ D12 \\ \end{tabular}   & 32 & 31 & \begin{tabular}{c}GPIO\_PZ0  \\ D6 \\ \end{tabular}      & gpio200  \\ \hline
-%			& \GND                                                     & 30 & 29 & \begin{tabular}{c}CAM\_AF\_EN  \\ D5 \\ \end{tabular}    & gpio149  \\ \hline
-%			&\begin{tabular}{c}I2C\_1\_SCL\\D1/I2C Bus 0\\\end{tabular} & 28 & 27 & \begin{tabular}{c}I2C\_1\_SDA\\ D0/I2C Bus 0\\\end{tabular}  &         \\   \hline     
-%			gpio20 & \begin{tabular}{c}SPI\_1\_CS1\\ D7\\\end{tabular}    & 26 & 25 &\GND        &          \\ \hline
-%			gpio19 & \begin{tabular}{c}SPI\_1\_CS0\\ D8\\\end{tabular}    & 24 & 23 & \begin{tabular}{c}SPI\_1\_SCK\\ D11\\\end{tabular}            & gpio18  \\ \hline
-%			gpio13 & \begin{tabular}{c}SPI\_2\_MISO\\ D25\\\end{tabular}  & 22 & 21 & \begin{tabular}{c}SPI\_1\_MISO\\ D9\\\end{tabular}            & gpio17   \\  \hline
-%			&      \GND                                            & 20 & 19 & \begin{tabular}{c}SPI\_1\_MOSI\\ D10\\\end{tabular}           & gpio16  \\ \hline
-%			gpio15 & \begin{tabular}{c}SPI\_2\_CS0\\ D24\\\end{tabular}   & 18 & 17 & \Vd        &         \\  \hline 
-%			gpio232& \begin{tabular}{c}SPI\_2\_CS1\\ D23\\\end{tabular}   & 16 & 15 & \begin{tabular}{c}LCD\_TE\\ D22\\\end{tabular}       & gpio194 \\   \hline
-%			&      \GND                                            & 14 & 13 & \begin{tabular}{c}SPI\_2\_SCK\\ D27\\\end{tabular}   & gpio14  \\ \hline
-%			gpio79 & \begin{tabular}{c}I2S\_4\_SCLK\\ D18\\\end{tabular}  & 12 & 11 & \begin{tabular}{c}UART\_2\_RTS\\ D17\\\end{tabular}  & gpio50  \\ \hline
-%			& \begin{tabular}{c}UART\_2\_RX\\ /dev/ttyTHS1 - D15\\\end{tabular}  & 10 &  9 &\GND        &         \\ \hline
-%			& \begin{tabular}{c}UART\_2\_TX\\ /dev/ttyTHS1 - D14\\\end{tabular}  &  8 &  7 & \begin{tabular}{c}AUDIO\_MCLK\\ D4\\\end{tabular}        & gpio216 \\ \hline
-%			&\GND       &  6 &  5 & \begin{tabular}{c}I2C\_2\_SCL\\ I2C Bus 1 - D3\\\end{tabular}     &         \\ \hline
-%			& \Vf       &  4 &  3 & \begin{tabular}{c}I2C\_2\_SDA\\ I2C Bus 1 - D2\\\end{tabular}     &         \\ \hline
-%			& \Vf       &  2 &  1 & \Vd        &     \begin{tabular}{c} \textcolor{white}{I}\\ \textcolor{white}{I}\end{tabular}              \\ \hline
-%		\end{tabular}
-%	}
-%	
-%	\caption{Pinout of the GPIOs of the Jetson Nano} \label{Jetson:gpio}
-%\end{table}
-					
-						
-\begin{table}[H]
-	\centering
-	\resizebox{0.99\textwidth}{!}{%
-		{\small
-			\begin{tabular}{|c|c|c|c|c|c|}
-				\hline
-				\textbf{Sysfs GPIO} & \textbf{Name} & \textbf{Pin} & \textbf{Pin} & \textbf{Name} & \textbf{Sysfs GPIO} \\ \hline
-				gpio78 & I2S\_4\_SDOUT / D21 & 40 & 39 & GND &  \\ \hline
-				gpio77 & I2S\_4\_SDIN / D20 & 38 & 37 & SPI\_2\_MOSI / D26 & gpio12 \\ \hline
-				gpio51 & UART\_2\_CTS / D16 & 36 & 35 & I2S\_4\_LRCK / D19 & gpio76 \\ \hline
-				-- & GND & 34 & 33 & GPIO\_PE6 / D13 & gpio38 \\ \hline
-				gpio168 & LCD\_BL\_PWM / D12 & 32 & 31 & GPIO\_PZ0 / D6 & gpio200 \\ \hline
-				-- & GND & 30 & 29 & CAM\_AF\_EN / D5 & gpio149 \\ \hline
-				-- & I2C\_1\_SCL / D1 (I2C Bus 0) & 28 & 27 & I2C\_1\_SDA / D0 (I2C Bus 0) & -- \\ \hline
-				gpio20 & SPI\_1\_CS1 / D7 & 26 & 25 & GND & -- \\ \hline
-				gpio19 & SPI\_1\_CS0 / D8 & 24 & 23 & SPI\_1\_SCK / D11 & gpio18 \\ \hline
-				gpio13 & SPI\_2\_MISO / D25 & 22 & 21 & SPI\_1\_MISO / D9 & gpio17 \\ \hline
-				-- & GND & 20 & 19 & SPI\_1\_MOSI / D10 & gpio16 \\ \hline
-				gpio15 & SPI\_2\_CS0 / D24 & 18 & 17 & 3.3V & -- \\ \hline
-				gpio232 & SPI\_2\_CS1 / D23 & 16 & 15 & LCD\_TE / D22 & gpio194 \\ \hline
-				-- & GND & 14 & 13 & SPI\_2\_SCK / D27 & gpio14 \\ \hline
-				gpio79 & I2S\_4\_SCLK / D18 & 12 & 11 & UART\_2\_RTS / D17 & gpio50 \\ \hline
-				-- & UART\_2\_RX (/dev/ttyTHS1 - D15) & 10 & 9 & GND & -- \\ \hline
-				-- & UART\_2\_TX (/dev/ttyTHS1 - D14) & 8 & 7 & AUDIO\_MCLK / D4 & gpio216 \\ \hline
-				-- & GND & 6 & 5 & I2C\_2\_SCL / D3 (I2C Bus 1) & -- \\ \hline
-				-- & 5V & 4 & 3 & I2C\_2\_SDA / D2 (I2C Bus 1) & -- \\ \hline
-				-- & 5V & 2 & 1 & 3.3V & -- \\ \hline
-			\end{tabular}
-	}}
-	\caption{Pinout of the GPIOs on NVIDIA Jetson Nano (reComputer~J1010) based on the Seeed Studio reComputer~J101 Carrier Board Manual and NVIDIA Jetson Nano Developer Kit Carrier Board Design Guide \cite{seeedJ101Manual,jetson_carrier_designguide}.}
-	\label{Jetson:gpio}
+\begin{table}
+	
+	\centering	
+	\scalebox{0.85}{
+	{\small%\scriptsize
+		\begin{tabular}{|c|c|a|a|c|c|} \hline
+			\rowcolor{white}	 Sysfs GPIO &   \begin{tabular}{c} \textcolor{white}{I}\\ \textcolor{white}{I}\end{tabular}    Name   \begin{tabular}{c} \textcolor{white}{I}\\ \textcolor{white}{I}\end{tabular}     & Pin & Pin & Name & Sysfs GPIO  \\ \hline
+			gpio78 & \begin{tabular}{c}I2S\_4\_SDOUT \\ D21 \\ \end{tabular}  & 40 & 39 & \GND   &  \\ \hline
+			gpio77 & \begin{tabular}{c}I2S\_4\_SDIN  \\ D20 \\ \end{tabular}  & 38 & 37 & \begin{tabular}{c}SPI\_2\_MOSI  \\ D26 \\ \end{tabular}  & gpio12  \\ \hline
+			gpio51 & \begin{tabular}{c}UART\_2\_CTS  \\ D16 \\ \end{tabular}  & 36 & 35 & \begin{tabular}{c}I2S\_4\_LRCK  \\ D19 \\ \end{tabular}  & gpio76  \\ \hline
+			& \GND                                                     & 34 & 33 & \begin{tabular}{c}GPIO\_PE6  \\ D13 \\ \end{tabular}     & gpio38  \\ \hline
+			gpio168& \begin{tabular}{c}LCD\_BL\_PWM \\ D12 \\ \end{tabular}   & 32 & 31 & \begin{tabular}{c}GPIO\_PZ0  \\ D6 \\ \end{tabular}      & gpio200  \\ \hline
+			& \GND                                                     & 30 & 29 & \begin{tabular}{c}CAM\_AF\_EN  \\ D5 \\ \end{tabular}    & gpio149  \\ \hline
+			&\begin{tabular}{c}I2C\_1\_SCL\\D1/I2C Bus 0\\\end{tabular} & 28 & 27 & \begin{tabular}{c}I2C\_1\_SDA\\ D0/I2C Bus 0\\\end{tabular}  &         \\   \hline     
+			gpio20 & \begin{tabular}{c}SPI\_1\_CS1\\ D7\\\end{tabular}    & 26 & 25 &\GND        &          \\ \hline
+			gpio19 & \begin{tabular}{c}SPI\_1\_CS0\\ D8\\\end{tabular}    & 24 & 23 & \begin{tabular}{c}SPI\_1\_SCK\\ D11\\\end{tabular}            & gpio18  \\ \hline
+			gpio13 & \begin{tabular}{c}SPI\_2\_MISO\\ D25\\\end{tabular}  & 22 & 21 & \begin{tabular}{c}SPI\_1\_MISO\\ D9\\\end{tabular}            & gpio17   \\  \hline
+			&      \GND                                            & 20 & 19 & \begin{tabular}{c}SPI\_1\_MOSI\\ D10\\\end{tabular}           & gpio16  \\ \hline
+			gpio15 & \begin{tabular}{c}SPI\_2\_CS0\\ D24\\\end{tabular}   & 18 & 17 & \Vd        &         \\  \hline 
+			gpio232& \begin{tabular}{c}SPI\_2\_CS1\\ D23\\\end{tabular}   & 16 & 15 & \begin{tabular}{c}LCD\_TE\\ D22\\\end{tabular}       & gpio194 \\   \hline
+			&      \GND                                            & 14 & 13 & \begin{tabular}{c}SPI\_2\_SCK\\ D27\\\end{tabular}   & gpio14  \\ \hline
+			gpio79 & \begin{tabular}{c}I2S\_4\_SCLK\\ D18\\\end{tabular}  & 12 & 11 & \begin{tabular}{c}UART\_2\_RTS\\ D17\\\end{tabular}  & gpio50  \\ \hline
+			& \begin{tabular}{c}UART\_2\_RX\\ /dev/ttyTHS1 - D15\\\end{tabular}  & 10 &  9 &\GND        &         \\ \hline
+			& \begin{tabular}{c}UART\_2\_TX\\ /dev/ttyTHS1 - D14\\\end{tabular}  &  8 &  7 & \begin{tabular}{c}AUDIO\_MCLK\\ D4\\\end{tabular}        & gpio216 \\ \hline
+			&\GND       &  6 &  5 & \begin{tabular}{c}I2C\_2\_SCL\\ I2C Bus 1 - D3\\\end{tabular}     &         \\ \hline
+			& \Vf       &  4 &  3 & \begin{tabular}{c}I2C\_2\_SDA\\ I2C Bus 1 - D2\\\end{tabular}     &         \\ \hline
+			& \Vf       &  2 &  1 & \Vd        &     \begin{tabular}{c} \textcolor{white}{I}\\ \textcolor{white}{I}\end{tabular}              \\ \hline
+		\end{tabular}
+	}
+	}
+
+	\caption{Pinout of the GPIOs of the Jetson Nano \cite{seeedJ101Manual,jetson_carrier_designguide}} \label{Jetson:gpio}
 \end{table}
+											
 
 \bigskip
 The physical connection diagram is shown below:
