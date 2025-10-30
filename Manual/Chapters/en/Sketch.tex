@@ -16,11 +16,11 @@ Each device works together automatically from the moment the power is switched o
 			fill=orange!10, minimum height=1.3cm, minimum width=1cm, aspect=0.4, align=center]
 			
 			% Nodes
-			\node[block] (camera) {\faCamera \\ \textbf{USB Camera}\\(Microsoft LifeCam Show)};
-			\node[block, right=2.9cm of camera] (nano) {\faMicrochip \\ \textbf{NVIDIA Jetson Nano}\\(reComputer J1010)};
+			\node[block] (camera) {\faCamera \\ \textbf{Camera}\\};
+			\node[block, right=2.9cm of camera] (nano) {\faMicrochip \\ \textbf{System}\\};
 			\node[block, right=2.9cm of nano] (display) {\faDesktop \\ \textbf{HDMI Display}\\(Real-time Output)};
-			\node[db, below=1.7cm of nano] (db) {\textbf{Local Database}\\(plates.db)};
-			\node[block, below=1.7cm of camera] (power) {\faBolt \\ \textbf{Power Supply}\\(5 V / 4 A USB-C)};
+			\node[db, below=1.7cm of nano] (db) {\textbf{Local Database}};
+			\node[block, below=1.7cm of camera] (power) {\faBolt \\ \textbf{Power Supply}};
 			
 			% Connections
 			\draw[->, thick] (camera) -- node[above, align=center, font=\scriptsize]{Video Stream\\(USB 2.0)} (nano);
@@ -41,9 +41,9 @@ Each part of the system plays a specific role in making automatic plate recognit
 
 \begin{itemize}
 	\item \textbf{Camera:} Captures live video of vehicles entering or exiting the airport gate.
-	\item \textbf{Jetson Nano (reComputer J1010):} The main unit that reads the video, detects number plates, and calculates parking time.
+	\item \textbf{System:} The main unit that reads the video, detects number plates, and calculates parking time.
 	\item \textbf{Display Screen:} Shows live detection results and timing information.
-	\item \textbf{Power Adapter:} Supplies stable 5V/4A power through the USB-C connector.
+	\item \textbf{Power Adapter:} Supplies stable  power through the USB-C connector.
 	\item \textbf{Local Database:} Stores all plate numbers with date, time, and charge status.
 \end{itemize}
 
@@ -51,25 +51,25 @@ Each part of the system plays a specific role in making automatic plate recognit
 
 
 
-\section{System Summary}
-
-\begin{table}[H]
-	\centering
-	\renewcommand{\arraystretch}{1.3}
-	\begin{tabular}{|l|l|p{7cm}|}
-		\hline
-		\textbf{Component} & \textbf{Purpose} & \textbf{Description} \\ \hline
-		Camera & Captures video & Microsoft LifeCam Show USB camera fixed near gate. \\ \hline
-		Jetson Nano & Processes video & Small AI computer that detects and reads plates. \\ \hline
-		Display & Shows results & HDMI monitor displaying detected plates in real time. \\ \hline
-		Database & Stores records & Saves each plate with time, date, and status (free or charged). \\ \hline
-		Power Supply & Runs the system & 5V / 4A USB-C adapter powering the Jetson Nano and camera. \\ \hline
-	\end{tabular}
-	\caption{System components and their basic roles.}
-	\label{tab:system_summary}
-\end{table}
-
-
-\noindent
-The system is compact, quiet, and easy to set up.  
-Once powered, it runs automatically and provides a clear, continuous view of all vehicle detections — ensuring accurate, fair, and paperless parking management.
+%\section{System Summary}
+%
+%\begin{table}[H]
+%	\centering
+%	\renewcommand{\arraystretch}{1.3}
+%	\begin{tabular}{|l|l|p{7cm}|}
+%		\hline
+%		\textbf{Component} & \textbf{Purpose} & \textbf{Description} \\ \hline
+%		Camera & Captures video & Microsoft LifeCam Show USB camera fixed near gate. \\ \hline
+%		Jetson Nano & Processes video & Small AI computer that detects and reads plates. \\ \hline
+%		Display & Shows results & HDMI monitor displaying detected plates in real time. \\ \hline
+%		Database & Stores records & Saves each plate with time, date, and status (free or charged). \\ \hline
+%		Power Supply & Runs the system & 5V / 4A USB-C adapter powering the Jetson Nano and camera. \\ \hline
+%	\end{tabular}
+%	\caption{System components and their basic roles.}
+%	\label{tab:system_summary}
+%\end{table}
+%
+%
+%\noindent
+%The system is compact, quiet, and easy to set up.  
+%Once powered, it runs automatically and provides a clear, continuous view of all vehicle detections — ensuring accurate, fair, and paperless parking management.
