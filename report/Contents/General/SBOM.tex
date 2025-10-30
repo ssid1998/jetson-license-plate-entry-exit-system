@@ -13,7 +13,12 @@
 %
 %%%
 
-\chapter{\textcolor{red}{SBOM}}
+\chapter{\textcolor{black}{Software Bill of Materials}}
+
+\section{List of Core Software Modules, License Descriptions and Associated Costs}
+
+The following table describes the software components being used in the project along with associated license descriptions as well as an overview of the costs involved:
+
 \setlength{\tabcolsep}{6pt} % horizontal padding
 \setlength{\extrarowheight}{2pt} % vertical padding
 
@@ -21,60 +26,120 @@
 
 \begin{center}
 	\small % Shrink font for wide table
-	\begin{longtable}{|>{\centering\arraybackslash}m{0.7cm}|>{\centering\arraybackslash}m{2.2cm}|>{\centering\arraybackslash}m{2.2cm}|>{\centering\arraybackslash}m{3.8cm}|>{\centering\arraybackslash}m{2.1cm}|>{\centering\arraybackslash}m{3cm}|}
-		\caption{Software Bill of Materials;License Descriptions} \\
+	\begin{longtable}{|>{\centering\arraybackslash}m{0.6cm}|>{\centering\arraybackslash}m{1.9cm}|>{\centering\arraybackslash}m{1.9cm}|>{\centering\arraybackslash}m{3.3cm}|>{\centering\arraybackslash}m{1.9cm}|>{\centering\arraybackslash}m{1.7cm}|>{\centering\arraybackslash}m{2.6cm}|}
+		\caption{Software Bill of Materials and License Descriptions} \\
 		
 		\hline
-		\textbf{S.No} & \textbf{Category} & \textbf{Software / Library} & \textbf{Version / Platform / Purpose} & \textbf{License / Type} & \textbf{Image} \\ \hline
+		\textbf{S.No} & \textbf{Category} & \textbf{Software / Version} & \textbf{Platform / Purpose} & \textbf{License / Type} & \textbf{Price} & \textbf{Image} \\ \hline
 		\endfirsthead
 		
-		\multicolumn{6}{c}%
+		\multicolumn{7}{c}%
 		{{\bfseries \tablename\ \thetable{} -- continued from previous page}} \\
 		\hline
-		\textbf{S.No} & \textbf{Category} & \textbf{Software / Library} & \textbf{Version / Platform / Purpose} & \textbf{License / Type} & \textbf{Image} \\ \hline
+		\textbf{S.No} & \textbf{Category} & \textbf{Software / Library} & \textbf{Version / Platform / Purpose} & \textbf{License / Type} & \textbf{Price} & \textbf{Image} \\ \hline
 		\endhead
 		
-		\hline \multicolumn{6}{r}{\textit{Continued on next page}} \\ \hline
+		\hline \multicolumn{7}{r}{\textit{Continued on next page}} \\ \hline
 		\endfoot
 		
 		\hline
 		\endlastfoot
 		
-		1 & Operating System & NVIDIA JetPack SDK 5.1.2 (Ubuntu 20.04 LTS) & Jetson Nano (ARM64) - Provides Ubuntu base OS with CUDA, cuDNN, TensorRT, and OpenCV preinstalled. & Mixed — Ubuntu is \textit{Open Source (GPL)}; NVIDIA JetPack components are \textit{Free (proprietary binaries)} & \raisebox{0.1cm}{\hspace{0.1cm}\includegraphics[height=1.0cm,keepaspectratio]{BOM/nvidia_jetpack.png}\hspace{0.1cm}} \\ \hline
+		1 & Operating System & NVIDIA JetPack SDK / 5.1.2 (Ubuntu / 20.04 LTS) & Jetson Nano (ARM64) - Provides Ubuntu base OS with CUDA, cuDNN, TensorRT, and OpenCV preinstalled. & Mixed — Ubuntu is \textit{Open Source (GPL)}; NVIDIA JetPack components are \textit{Free (proprietary binaries)} & Free & \raisebox{0.1cm}{\hspace{0.1cm}\includegraphics[height=1.0cm,keepaspectratio]{BOM/nvidia_jetpack.png}\hspace{0.1cm}} \\ \hline
 		
-		2 & Programming Language & Python 3.11 & Installed via \texttt{sudo apt install python3} - Primary development language for the ML pipeline. & Open Source (PSF License) & \raisebox{0.1cm}{\hspace{0.1cm}\includegraphics[height=1.0cm,keepaspectratio]{BOM/python.png}\hspace{0.1cm}} \\ \hline
+		2 & Programming Language & Python / v3.11 & Installed via \texttt{sudo apt install python3} - Primary development language for the ML pipeline. & Open Source (PSF License) & Free & \raisebox{0.1cm}{\hspace{0.1cm}\includegraphics[height=1.0cm,keepaspectratio]{BOM/python.png}\hspace{0.1cm}} \\ \hline
 		
-		3 & Machine Learning Framework & PyTorch + TorchVision & Jetson-compatible build (PyTorch 2.x) - Runs YOLOv8 models for object detection. & Open Source (BSD-style) & \raisebox{0.1cm}{\hspace{0.1cm}\includegraphics[height=1.0cm,keepaspectratio]{BOM/pytorch.png}\hspace{0.1cm}} \\ \hline
+		3 & Database & SQLite3 / v3.50.2 & Built-in - Local storage for detected plate numbers and logs. & Public Domain (Open Source) & Free & \raisebox{0.1cm}{\hspace{0.1cm}\includegraphics[height=1.0cm,keepaspectratio]{BOM/sqlite.png}\hspace{0.1cm}} \\ \hline
 		
-		4 & Object Detection Model & YOLOv8-n / YOLOv8-s (Ultralytics) & Installed via \texttt{pip install ultralytics} - Real-time license plate detection. & Free tier, \textit{AGPLv3}; commercial license available & \raisebox{0.1cm}{\hspace{0.1cm}\includegraphics[height=1.0cm,keepaspectratio]{BOM/ultra.png}\hspace{0.1cm}} \\ \hline
+		4 & Dataset Annotation Tool & Roboflow / v1.2.11 & Labeling license plate bounding boxes for training. & LabelImg: \textit{Open Source (MIT)}; Roboflow: \textit{Proprietary (Free Tier Available)} & Free & \raisebox{0.1cm}{\hspace{0.1cm}\includegraphics[height=1.0cm,keepaspectratio]{BOM/robo.png}\hspace{0.1cm}} \\ \hline
 		
-		5 & OCR Engine & EasyOCR / PaddleOCR & EasyOCR 1.7.0+ - Recognizes alphanumeric text from detected license plates. & Open Source (Apache 2.0 / MIT) & \raisebox{0.1cm}{\hspace{0.1cm}\includegraphics[height=1.0cm,keepaspectratio]{BOM/paddle_ocr.png}\hspace{0.1cm}} \\ \hline
-		
-		6 & Computer Vision Toolkit & OpenCV & 4.5+ - Image capture, preprocessing, and bounding box drawing. & Open Source (Apache 2.0) & \raisebox{0.1cm}{\hspace{0.1cm}\includegraphics[height=1.0cm,keepaspectratio]{BOM/opencv.png}\hspace{0.1cm}} \\ \hline
-		
-		7 & Database & SQLite3 (Python library) & Built-in - Local storage for detected plate numbers and logs. & Public Domain (Open Source) & \raisebox{0.1cm}{\hspace{0.1cm}\includegraphics[height=1.0cm,keepaspectratio]{BOM/sqlite.png}\hspace{0.1cm}} \\ \hline
-		
-		8 & Data Analysis \& Visualization & Pandas, NumPy, Matplotlib & Latest - Data logging, performance evaluation, and visualization. & Open Source (BSD / MIT) & \raisebox{0.1cm}{\hspace{0.1cm}\includegraphics[height=1.0cm,keepaspectratio]{BOM/pandas.png}\hspace{0.1cm}} \\ \hline
-		
-		9 & Deployment \& Automation & systemd / crontab (Linux) & Built-in - Automates script startup and scheduling. & Open Source (GPL / LGPL) & \raisebox{0.1cm}{\hspace{0.1cm}\includegraphics[height=1.0cm,keepaspectratio]{BOM/linux.png}\hspace{0.1cm}} \\ \hline
-		
-		10 & Package Management & PIP \& APT & Latest - Manages Python and system dependencies. & Open Source (MIT / GPL) & \raisebox{0.1cm}{\hspace{0.1cm}\includegraphics[height=1.0cm,keepaspectratio]{BOM/pip.png}\hspace{0.1cm}} \\ \hline
-		
-		11 & IDE / Code Editor & Visual Studio Code & Desktop / SSH - Code development and debugging. & Proprietary (Free Tier under Microsoft License) & \raisebox{0.1cm}{\hspace{0.1cm}\includegraphics[height=1.0cm,keepaspectratio]{BOM/vscode.png}\hspace{0.1cm}} \\ \hline
-		
-		12 & Version Control & Git \& GitHub & Latest - Source control, versioning, and collaboration. & Git: \textit{Open Source (GPLv2)}; GitHub: \textit{Proprietary (Free Tier Available)} & \raisebox{0.1cm}{\hspace{0.1cm}\includegraphics[height=1.0cm,keepaspectratio]{BOM/github.png}\hspace{0.1cm}} \\ \hline
-		
-		13 & Model Optimization & TensorRT (JetPack component) & Built-in - Optimizes YOLOv8 model for faster inference on Jetson. & Free, Proprietary (NVIDIA License) & \raisebox{0.1cm}{\hspace{0.1cm}\includegraphics[height=1.0cm,keepaspectratio]{BOM/tensorrt.png}\hspace{0.1cm}} \\ \hline
-		
-		14 & Testing \& Debugging Tools & Jupyter Notebook & Python package - Interactive model testing and visualization. & Open Source (BSD License) & \raisebox{0.1cm}{\hspace{0.1cm}\includegraphics[height=1.0cm,keepaspectratio]{BOM/jupyter.png}\hspace{0.1cm}} \\ \hline
-		
-		15 & Dataset Annotation Tool & LabelImg / Roboflow & Latest - Labeling license plate bounding boxes for training. & LabelImg: \textit{Open Source (MIT)}; Roboflow: \textit{Proprietary (Free Tier Available)} & \raisebox{0.1cm}{\hspace{0.1cm}\includegraphics[height=1.0cm,keepaspectratio]{BOM/robo.png}\hspace{0.1cm}} \\ \hline
+		5 & IDE / Code Editor & Visual Studio Code  / v1.105 & Desktop / SSH - Code development and debugging. & LabelImg: \textit{Open Source (MIT)}; Roboflow: \textit{Proprietary (Free Tier under Microsoft License)} & Free & \raisebox{0.1cm}{\hspace{0.1cm}\includegraphics[height=1.0cm,keepaspectratio]{BOM/vscode.png}\hspace{0.1cm}} \\ \hline
 		
 	\end{longtable}
 \end{center}
 
+
 \vspace{0.5cm} % bottom margin
 
+\section{List of Associated Software Packages and the 'requirements.txt' File}
+The following table lists and describes core software packages being used:
 
+\begin{center}
+	\small % Shrink font for wide table
+	\hspace*{0.8cm} % Adds balanced left margin
+	\begin{longtable}{|>{\centering\arraybackslash}m{0.6cm}|>{\centering\arraybackslash}m{1.9cm}|>{\centering\arraybackslash}m{1.9cm}|>{\centering\arraybackslash}m{3.2cm}|>{\centering\arraybackslash}m{1.9cm}|>{\centering\arraybackslash}m{1.7cm}|>{\centering\arraybackslash}m{2.6cm}|}
+		\caption{Software Bill of Materials and License Descriptions} \\
+		
+		\hline
+		\textbf{S.No} & \textbf{Category} & \textbf{Package Name / Version} & \textbf{Platform / Purpose} & \textbf{License / Type} & \textbf{Price} & \textbf{Image} \\ \hline
+		\endfirsthead
+		
+		\multicolumn{7}{c}%
+		{{\bfseries \tablename\ \thetable{} -- continued from previous page}} \\
+		\hline
+		\textbf{S.No} & \textbf{Category} & \textbf{Software / Library} & \textbf{Version / Platform / Purpose} & \textbf{License / Type} & \textbf{Price} & \textbf{Image} \\ \hline
+		\endhead
+		
+		\hline \multicolumn{7}{r}{\textit{Continued on next page}} \\ \hline
+		\endfoot
+		
+		\hline
+		\endlastfoot
+		
+		1 & Machine Learning Framework & PyTorch / v2.9.0 , TorchVision / 0.16.1+nv22.12& Jetson-compatible build (PyTorch 2.x) - Runs YOLOv8 models for object detection. & Open Source (BSD-style) & Free & \raisebox{0.1cm}{\hspace{0.1cm}\includegraphics[height=1.0cm,keepaspectratio]{BOM/pytorch.png}\hspace{0.1cm}} \\ \hline
+		
+		2 & Object Detection Model & YOLO (Ultralytics) / v8.1.3  & Installed via \texttt{pip install ultralytics} - Real-time license plate detection. & Free tier, \textit{AGPLv3}; Free / commercial license available & Free & \raisebox{0.1cm}{\hspace{0.1cm}\includegraphics[height=1.0cm,keepaspectratio]{BOM/ultra.png}\hspace{0.1cm}} \\ \hline
+		
+		3 & Computer Vision Toolkit & OpenCV /v4.12.0 & Image capture, preprocessing, and bounding box drawing. & Open Source (Apache 2.0) & Free & \raisebox{0.1cm}{\hspace{0.1cm}\includegraphics[height=1.0cm,keepaspectratio]{BOM/opencv.png}\hspace{0.1cm}} \\ \hline
+		
+		4 & Data Analysis \& Visualization & Pandas / v2.3.3, NumPy / v2.3.4, Matplotlib / v3.10.7&Data logging, performance evaluation, and visualization. & Open Source (BSD / MIT) & Free & \raisebox{0.1cm}{\hspace{0.1cm}\includegraphics[height=1.0cm,keepaspectratio]{BOM/pandas.png}\hspace{0.1cm}} \\ \hline
+		
+		5 & Deployment \& Automation & systemd ; crontab (Linux) / v1.0.5 & Automates script startup and scheduling. & Open Source (GPL / LGPL) & Free & \raisebox{0.1cm}{\hspace{0.1cm}\includegraphics[height=1.0cm,keepaspectratio]{BOM/linux.png}\hspace{0.1cm}} \\ \hline
+		
+	\end{longtable}
+	\hspace*{0.8cm} % Adds balanced right margin
+\end{center}
 
-\FILE{requirements.txt}
+\subsection*{The 'requirements.txt' File}
+The following file lists all the packages being used and will automatically be invoked and packages imported with the main code of the Jetson Nano System:
+
+\lstset{
+	backgroundcolor=\color{gray!10},   % light gray background
+	basicstyle=\ttfamily\small,        % monospaced font
+	breaklines=true,                   % wrap long lines
+	frame=single,                      % box around the code
+	numbers=left,                      % line numbers
+	numberstyle=\tiny\color{gray},     % line number style
+	keywordstyle=\color{blue},         % keywords (not much in requirements.txt)
+	commentstyle=\color{green!50!black}, % comments
+	stringstyle=\color{red},           % strings
+	showstringspaces=false
+}
+
+\begin{lstlisting}[language=Python, caption={Requirements.txt for License Plate Detection on Jetson Nano}]
+	# Core ML frameworks
+	torch== v2.9.0   # Jetson Nano compatible PyTorch version with NVIDIA build
+	torchvision==0.16.1+nv22.12
+	
+	# YOLO / Object detection
+	ultralytics==8.1.3
+	
+	# Computer vision
+	opencv-python-headless== 4.12.0  # lightweight OpenCV for Jetson
+	
+	# OCR packages
+	easyocr==1.6.2
+	paddleocr==2.7.0.1
+	
+	# Data handling
+	numpy==1.25.0
+	pandas==2.1.0
+	
+	# Visualization
+	matplotlib==3.8.0
+	seaborn==0.12.2
+	
+	# Utilities
+	scipy==1.11.1
+	tqdm==4.68.0
+\end{lstlisting}
