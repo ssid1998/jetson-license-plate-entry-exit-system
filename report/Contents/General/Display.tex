@@ -90,21 +90,21 @@
 \label{chap:display_actor}
 
 \section{Introduction}
-In embedded AI systems, \textbf{actors} are components that convert computational results into observable system responses.  
+In embedded \ac{AI} systems, \textbf{actors} are components that convert computational results into observable system responses.  
 In this project, the actor is implemented as a \textbf{visual display interface} connected to the NVIDIA Jetson Nano, presenting real-time recognition outcomes such as \textit{“Willkommen”} (Welcome) or \textit{“Ausfahrt registriert”} (Exit recorded) when a vehicle’s license plate is successfully detected.  
 This visual feedback replaces traditional actuators like buzzers or gates, offering clear, non-intrusive communication to the user \cite{edgeAIbook, opencv_doc_2024}.  
 
-The display used is attached to the Jetson Nano’s \textbf{HDMI 2.0 (J3)} port on the Seeed Studio J101 carrier board.  
+The display used is attached to the Jetson Nano’s \textbf{\ac{HDMI} 2.0 (J3)} port on the Seeed Studio J101 carrier board.  
 It functions both as a debugging interface during development and as the final system actor during runtime.
 
 \section{General}
 Displays serve as standard output actors in access-control and surveillance systems, allowing real-time visual verification of detections without additional hardware.  
-In this setup, the HDMI-connected monitor provides a direct visualization of processed video frames and overlayed license-plate information.  
+In this setup, the \ac{HDMI}-connected monitor provides a direct visualization of processed video frames and overlayed license-plate information.  
 Rendering is performed via OpenCV’s GPU-accelerated pipeline on the Jetson Nano \cite{jetson_nano_doc}.
 
 \section{Specific Actor}
 \label{sec:display_specs}
-The actor device used is a standard HDMI display connected through the Jetson Nano’s HDMI 2.0 Type-A port.  
+The actor device used is a standard \ac{HDMI} display connected through the Jetson Nano’s \ac{HDMI} 2.0 Type-A port.  
 It receives RGB frames rendered in real time and displays textual overlays produced by the inference module.
 
 \begin{table}[H]
@@ -114,11 +114,11 @@ It receives RGB frames rendered in real time and displays textual overlays produ
 	\begin{tabular}{|p{5cm}|p{8cm}|}
 		\hline
 		\textbf{Parameter} & \textbf{Specification} \\ \hline
-		Display Interface & HDMI 2.0 Type-A (J3 port on carrier board) \\ \hline
+		Display Interface & \ac{HDMI} 2.0 Type-A (J3 port on carrier board) \\ \hline
 		Supported Resolution & Up to 3840 × 2160 @ 60 Hz (4K) \\ \hline
 		Color Depth & 24-bit RGB \\ \hline
 		Power Supply & External 5 V DC adapter (display dependent) \\ \hline
-		Connection Type & HDMI male-to-male cable \\ \hline
+		Connection Type & \ac{HDMI} male-to-male cable \\ \hline
 		Display Technology & LCD/LED compatible \\ \hline
 		Usage in Project & Visual output of recognition results and system logs \\ \hline
 	\end{tabular}
@@ -126,7 +126,7 @@ It receives RGB frames rendered in real time and displays textual overlays produ
 
 \section{Specification}
 The display acts purely as an output peripheral and requires no electrical modification.  
-The only connection is the HDMI cable carrying both video and synchronization signals from the Jetson Nano.  
+The only connection is the \ac{HDMI} cable carrying both video and synchronization signals from the Jetson Nano.  
 Circuit representation is shown later in the overall system hardware diagram.
 
 The complete system-level data flow between the camera, Jetson Nano, and display actor is illustrated in Figure~\ref{fig:dataflow_display}.
@@ -167,7 +167,7 @@ The complete system-level data flow between the camera, Jetson Nano, and display
 		{Control Signal\\/ Status Log} (jetson.west);
 		
 	\end{tikzpicture}
-	\caption{Vertical data flow of the system: image acquisition from the LifeCam, AI inference on Jetson Nano, and output display via HDMI.}
+	\caption{Vertical data flow of the system: image acquisition from the LifeCam,\ac{AI} inference on Jetson Nano, and output display via \ac{HDMI}.}
 	\label{fig:dataflow_display_portrait}
 \end{figure}
 
@@ -197,7 +197,7 @@ After installation, verify using:
 			xrandr	\end{verbatim}
 	\end{small}
 \end{tcolorbox}
-to ensure HDMI detection and resolution configuration.
+to ensure \ac{HDMI} detection and resolution configuration.
 
 \subsection{Functions}
 Essential OpenCV functions used:
@@ -219,13 +219,13 @@ Latency from inference to display < 100 ms \cite{edgeAIbook}.
 
 \paragraph{Data Quality:}  GPU-accelerated rendering maintains clarity and smoothness.  
 Color-coded overlays (green = recognized, red = unregistered) enhance user perception.  
-HDMI 2.0 ensures stable 60 Hz output without frame tearing.
+\ac{HDMI} 2.0 ensures stable 60 Hz output without frame tearing.
 
 \section{Example}
 In this section, a complete example illustrates how the display actor visualizes the system response.
 
 \subsection{Manual}
-To operate, connect the HDMI cable between the Jetson Nano and monitor, select the proper input source, and power both devices.
+To operate, connect the \ac{HDMI} cable between the Jetson Nano and monitor, select the proper input source, and power both devices.
 
 \subsection{Inside the Example and Code}
 
@@ -268,7 +268,7 @@ Calibration is limited to brightness, contrast, and resolution adjustments for o
 Settings are managed using \texttt{xrandr} or the desktop display configuration under JetPack 5.x.
 
 \section{Simple Code}
-The OpenCV example above also serves as the minimal functional code verifying proper HDMI output and text overlay generation.
+The OpenCV example above also serves as the minimal functional code verifying proper \ac{HDMI} output and text overlay generation.
 
 \section{Simple Application}
 During live inference:
@@ -289,14 +289,14 @@ Run:
 			xrandr	\end{verbatim}
 	\end{small}
 \end{tcolorbox}
-to confirm that the HDMI display is detected and configured.
+to confirm that the \ac{HDMI} display is detected and configured.
 
 \subsection{Test all Functions}
 Execute the complete inference script; verify real-time text overlays, color changes, and frame-rate stability ( greater than equal to 25 FPS).
 
 \section{Constraints}
 \begin{itemize}
-	\item Requires HDMI-compatible display; analog VGA unsupported.  
+	\item Requires \ac{HDMI}-compatible display; analog VGA unsupported.  
 	\item Minimum 25 FPS for fluid real-time feedback.  
 	\item Text overlays must avoid covering detection regions.  
 	\item Manual brightness/contrast tuning recommended.  
@@ -307,5 +307,5 @@ Execute the complete inference script; verify real-time text overlays, color cha
 	\item NVIDIA Jetson Nano Developer Guide — \cite{jetson_nano_doc}
 	\item Seeed Studio reComputer J101 Manual — \cite{seeedJ101Manual}
 	\item OpenCV Video Display Documentation — \cite{opencv_doc_2024}
-	\item Embedded Edge AI Visualization Techniques — \cite{edgeAIbook}
+	\item Embedded Edge \ac{AI} Visualization Techniques — \cite{edgeAIbook}
 \end{itemize}

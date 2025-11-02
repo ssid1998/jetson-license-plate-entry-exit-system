@@ -18,46 +18,46 @@
 \section{Description}
 \label{subsec:description}
 
-System-on-a-Chip (SoC) platforms provide a cost-effective and power-efficient solution for developing embedded machine learning systems. 
+\ac{SoC} platforms provide a cost-effective and power-efficient solution for developing embedded machine learning systems. 
 They are particularly suited for \textbf{inference tasks}, where pre-trained deep learning models are deployed to process real-world data in real time. 
-Among such SoC systems, the \textbf{NVIDIA Jetson Nano} stands out as one of the most compact and capable AI modules available for edge computing. 
-It belongs to NVIDIA’s Jetson family, which includes devices like Jetson Xavier NX and Jetson Orin Nano, but represents the most accessible entry point for developers building low-power AI vision systems \cite{jetsonNanoDatasheet, JetsonGettingStarted:2019}.
+Among such \ac{SoC} systems, the \textbf{NVIDIA Jetson Nano} stands out as one of the most compact and capable \ac{AI} modules available for edge computing. 
+It belongs to NVIDIA’s Jetson family, which includes devices like Jetson Xavier NX and Jetson Orin Nano, but represents the most accessible entry point for developers building low-power \ac{AI} vision systems \cite{jetsonNanoDatasheet, JetsonGettingStarted:2019}.
 
 \bigskip
 
-The Jetson Nano combines a \textbf{quad-core ARM Cortex-A57 CPU} with a \textbf{128-core Maxwell GPU}, offering approximately \textbf{0.5~TFLOPs (FP16)} of performance at a typical power draw of only 5–10~W. 
+The Jetson Nano combines a \textbf{quad-core ARM Cortex-A57 CPU} with a \textbf{128-core Maxwell \ac{GPU}}, offering approximately \textbf{0.5~TFLOPs (FP16)} of performance at a typical power draw of only 5–10~W. 
 This makes it highly efficient for computer vision, robotics, and real-time deep learning inference. 
-Its open development environment and support for the \textbf{JetPack SDK} (based on Ubuntu Linux) allow developers to integrate AI frameworks such as TensorFlow, PyTorch, OpenCV, and NVIDIA TensorRT easily.
+Its open development environment and support for the \textbf{JetPack SDK} (based on Ubuntu Linux) allow developers to integrate \ac{AI} frameworks such as TensorFlow, PyTorch, OpenCV, and NVIDIA TensorRT easily.
 
 \bigskip
 
-From an industry standpoint, the Jetson Nano competes with other low-cost AI-capable platforms such as:
+From an industry standpoint, the Jetson Nano competes with other low-cost \ac{AI}-capable platforms such as:
 \begin{itemize}
-	\item \textbf{Intel Neural Compute Stick~2:} a USB-based accelerator using the Movidius Myriad~X VPU, designed for embedded computer vision tasks and compatible with Raspberry~Pi and other Linux systems \cite{IntelStickDataSheet:2019}.
-	\item \textbf{Google Coral Edge~TPU:} an AI accelerator board powered by Google's Edge TPU chip, offering optimized TensorFlow Lite inference for low-latency vision applications \cite{GoogleCoral:2019, Vincent:2018}.
-	\item \textbf{Raspberry~Pi~5 + Hailo~AI Kit:} a more recent setup combining ARM CPUs with a small neural accelerator, but still limited in GPU throughput compared to the Jetson platform.
+	\item \textbf{Intel Neural Compute Stick~2:} a \ac{USB}-based accelerator using the Movidius Myriad~X VPU, designed for embedded computer vision tasks and compatible with Raspberry~Pi and other Linux systems \cite{IntelStickDataSheet:2019}.
+	\item \textbf{Google Coral Edge~\ac{TPU}:} an \ac{AI} accelerator board powered by Google's Edge \ac{TPU} chip, offering optimized TensorFlow Lite inference for low-latency vision applications \cite{GoogleCoral:2019, Vincent:2018}.
+	\item \textbf{Raspberry~Pi~5 + Hailo~AI Kit:} a more recent setup combining ARM CPUs with a small neural accelerator, but still limited in \ac{GPU} throughput compared to the Jetson platform.
 \end{itemize}
 
 \bigskip
 
-Other commercial SoCs, such as Apple’s A-series chips (A12~Bionic), Samsung’s Exynos~980 with integrated NPU, and Huawei’s Kirin~990, demonstrate similar edge AI capabilities but are proprietary and not intended for open embedded development \cite{SamsungExynos980:2020,HuaweiKirin990:2020}. 
+Other commercial \ac{SoC}s, such as Apple’s A-series chips (A12~Bionic), Samsung’s Exynos~980 with integrated NPU, and Huawei’s Kirin~990, demonstrate similar edge \ac{AI} capabilities but are proprietary and not intended for open embedded development \cite{SamsungExynos980:2020,HuaweiKirin990:2020}. 
 
 \bigskip
 The Jetson Nano, in contrast, remains \textbf{developer-oriented, open, and extensible}, offering a balance between computational performance, power efficiency, and cost (approximately 180–250~\texteuro{} in Germany). 
-It serves as the foundation for the current project on \textbf{real-time license plate detection}, enabling efficient on-device image inference without the need for cloud processing. Overall, the Jetson Nano’s combination of GPU parallelism, open-source software ecosystem, and compatibility with AI frameworks makes it one of the most accessible and powerful tools for academic and industrial AI deployment at the edge.
+It serves as the foundation for the current project on \textbf{real-time license plate detection}, enabling efficient on-device image inference without the need for cloud processing. Overall, the Jetson Nano’s combination of \ac{GPU} parallelism, open-source software ecosystem, and compatibility with \ac{AI} frameworks makes it one of the most accessible and powerful tools for academic and industrial \ac{AI} deployment at the edge.
 
 \newpage
 %----------------------------------------------------------
 \section{Applications of the Jetson Nano}
 \label{subsec:applications}
 
-The Jetson Nano can be utilized for a wide range of applications, ranging from basic computing tasks to complex edge-AI deployments. 
+The Jetson Nano can be utilized for a wide range of applications, ranging from basic computing tasks to complex edge-\ac{AI} deployments. 
 Its flexibility allows it to function both as a compact single-board computer and as a high-performance inference device for embedded vision systems \cite{Kurniawan:2021, JetsonProjects:2020}. 
 
 \bigskip
 Figure~\ref{fig:jetson_applications} provides a visual overview of some of the representative deep-learning and computer-vision tasks that can be executed efficiently on the Jetson Nano platform. 
 These include \textit{image classification, object detection, semantic segmentation, pose estimation, action recognition, background removal,} and \textit{monocular depth estimation}. 
-Such diverse capabilities demonstrate the Nano’s suitability for both research and industrial-level AI applications.
+Such diverse capabilities demonstrate the Nano’s suitability for both research and industrial-level \ac{AI} applications.
 
 \begin{figure}[H]
 	\centering
@@ -69,12 +69,12 @@ Such diverse capabilities demonstrate the Nano’s suitability for both research
 \bigskip
 \textbf{1. General Computing:}  
 The Jetson Nano can perform conventional tasks such as running web servers, accessing cloud environments, developing software, or even low-end gaming. 
-This versatility is due to its full Ubuntu~Linux environment and GPU support for graphical rendering.
+This versatility is due to its full Ubuntu~Linux environment and \ac{GPU} support for graphical rendering.
 
 \bigskip
 \textbf{2. AI and Computer Vision:}  
 The true potential of the Jetson Nano lies in its ability to deploy pre-trained neural networks for object detection, tracking, segmentation, and classification.  
-The integrated \textbf{TensorRT SDK} optimizes AI models for fast inference, enabling applications such as:
+The integrated \textbf{TensorRT SDK} optimizes \ac{AI} models for fast inference, enabling applications such as:
 \begin{itemize}
 	\item Vehicle and pedestrian detection in smart cities.
 	\item Facial recognition and identity verification.
@@ -84,11 +84,11 @@ The integrated \textbf{TensorRT SDK} optimizes AI models for fast inference, ena
 \bigskip
 \textbf{3. Robotics and Automation:}  
 Community-driven projects, as showcased on NVIDIA’s Jetson developer portal, demonstrate the Nano’s use in autonomous vehicles, drones, and robotic arms.  
-These projects leverage the Nano’s GPIO, I\textsuperscript{2}C, and CSI camera interfaces to build real-time perception and control loops \cite{JetsonProjects:2020}.
+These projects leverage the Nano’s \ac{GPIO}, I\textsuperscript{2}C, and \ac{CSI} camera interfaces to build real-time perception and control loops \cite{JetsonProjects:2020}.
 
 \bigskip
 \textbf{4. Assistive Technologies:}  
-In accessibility-focused research, the Jetson Nano has been used for projects that convert handwritten text to speech for visually impaired users or for real-time sign language recognition using CNN-based models trained in TensorFlow~2.0 on Google~Colab.
+In accessibility-focused research, the Jetson Nano has been used for projects that convert handwritten text to speech for visually impaired users or for real-time sign language recognition using \ac{CNN}-based models trained in TensorFlow~2.0 on Google~Colab.
 
 \bigskip
 \textbf{5. Traffic Monitoring and Smart Surveillance:}  
@@ -96,7 +96,7 @@ Jetson Nano’s ability to process video streams in real time makes it ideal for
 Its edge-processing capability ensures privacy compliance and low latency compared to cloud-based analytics.
 
 \bigskip
-In summary, the Jetson Nano bridges the gap between experimental AI research and real-world embedded deployment. 
+In summary, the Jetson Nano bridges the gap between experimental \ac{AI} research and real-world embedded deployment. 
 Its balance of performance, cost, and open-source accessibility enables both academic and industrial innovation in fields like automation, surveillance, and intelligent transportation systems.
 
 \newpage
@@ -104,8 +104,8 @@ Its balance of performance, cost, and open-source accessibility enables both aca
 \label{subsec:construction}
 
 The complete hardware configuration of this project is based on the \textbf{Seeed Studio reComputer J1010} system, which integrates the \textbf{NVIDIA Jetson Nano (4~GB, B01 revision)} module on the \textbf{J101 carrier board}. 
-The Jetson Nano module measures approximately $69.6\,\text{mm}\times45\,\text{mm}$ and is equipped with an aluminum heatsink that covers the NVIDIA Tegra~X1 system-on-chip (SoC). 
-This SoC integrates a quad-core ARM Cortex-A57 CPU and a 128-core Maxwell GPU, providing up to 0.5~TFLOPs (FP16) of compute performance at a typical power draw of 5–10~W \cite{jetsonNanoDatasheet}.  
+The Jetson Nano module measures approximately $69.6\,\text{mm}\times45\,\text{mm}$ and is equipped with an aluminum heatsink that covers the NVIDIA Tegra~X1 \ac{SoC}. 
+This \ac{SoC} integrates a quad-core ARM Cortex-A57 CPU and a 128-core Maxwell \ac{GPU}, providing up to 0.5~TFLOPs (FP16) of compute performance at a typical power draw of 5–10~W \cite{jetsonNanoDatasheet}.  
 The module connects to the J101 carrier board through a 260-pin SODIMM edge connector, which exposes high-speed I/O lines, camera interfaces, and peripheral buses to the carrier.
 
 \begin{figure}[H]
@@ -118,14 +118,14 @@ The module connects to the J101 carrier board through a 260-pin SODIMM edge conn
 \bigskip
 \textbf{Physical Layout:}  
 The J101 carrier board has dimensions of approximately $100\,\text{mm}\times80\,\text{mm}\times29\,\text{mm}$ and is mounted within an anodized aluminum enclosure supplied by Seeed Studio.  
-It provides direct access to peripheral connectors, including USB, HDMI, CSI, M.2~Key~E, and Ethernet, while maintaining compact form-factor integration suitable for embedded deployment.  
-The passive aluminum heatsink ensures thermal stability during continuous inference workloads, and an optional 5~V~PWM fan can be connected to header~J8 for active cooling.  
+It provides direct access to peripheral connectors, including  \ac{USB}, \ac{HDMI}, \ac{CSI}, M.2~Key~E, and Ethernet, while maintaining compact form-factor integration suitable for embedded deployment.  
+The passive aluminum heatsink ensures thermal stability during continuous inference workloads, and an optional 5~V~\ac{PWM} fan can be connected to header~J8 for active cooling.  
 Figure~\ref{fig:recomputerJ101v2} shows the top view of the reComputer~J1010 board with major connectors labeled (refer to Section~\ref{sec:Interfaces} for detailed pin-level descriptions).
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.9\linewidth]{JetsonNano/reComputerJ101v2.png}
-	\caption{Top view of the Seeed Studio reComputer~J1010 showcasing major connectors and components, including power input, USB ports, HDMI, CSI camera slots, and the 40-pin GPIO header \cite{seeedJ101Manual}.}
+	\caption{Top view of the Seeed Studio reComputer~J1010 showcasing major connectors and components, including power input, \ac{USB} ports, \ac{HDMI}, \ac{CSI} camera slots, and the 40-pin \ac{GPIO} header \cite{seeedJ101Manual}.}
 	\label{fig:recomputerJ101v2}
 \end{figure}
 
@@ -150,12 +150,12 @@ These ports include power, display, communication, and peripheral interfaces ess
 	\begin{tabular}{|c|l|l|}
 		\hline
 		\textbf{No.} & \textbf{Name} & \textbf{Function / Note} \\ \hline
-		1 & DCIN (USB Type-C interface) & Power supply input (5~V~DC,~4~A~max) \\ \hline
-		2 & HDMI & Display output (HDMI~2.0 up to 4K@60Hz) \\ \hline
-		3 & USB~3.0 Type-A port & High-speed data and peripheral connection \\ \hline
-		4 & Dual USB~2.0 Type-A ports & Peripheral interfaces (keyboard, mouse, etc.) \\ \hline
-		5 & Gigabit Ethernet (LAN) & Network connectivity (10/100/1000~Mbps) \\ \hline
-		6 & USB~Type-C port & Data interface only (no power delivery) \\ \hline
+		1 & DCIN (\ac{USB} Type-C interface) & Power supply input (5~V~DC,~4~A~max) \\ \hline
+		2 & \ac{HDMI} & Display output (\ac{HDMI}~2.0 up to 4K@60Hz) \\ \hline
+		3 & \ac{USB}~3.0 Type-A port & High-speed data and peripheral connection \\ \hline
+		4 & Dual \ac{USB}~2.0 Type-A ports & Peripheral interfaces (keyboard, mouse, etc.) \\ \hline
+		5 & Gigabit Ethernet \ac{LAN} & Network connectivity (10/100/1000~Mbps) \\ \hline
+		6 & \ac{USB}~Type-C port & Data interface only (no power delivery) \\ \hline
 	\end{tabular}
 \end{table}
 
@@ -170,13 +170,13 @@ The complete reComputer~J1010 assembly consists of the following major hardware 
 	\begin{tabular}{|p{4cm}|p{9cm}|}
 		\hline
 		\textbf{Component} & \textbf{Description} \\ \hline
-		Compute Module & NVIDIA Jetson Nano (B01 revision) with 4~GB LPDDR4 memory and integrated Tegra~X1 SoC (quad-core ARM Cortex-A57 CPU + 128-core Maxwell GPU) \\ \hline
-		Carrier Board & Seeed Studio J101 carrier board with USB, HDMI, CSI, M.2~Key~E, Ethernet, and 40-pin GPIO expansion header \\ \hline
-		Power Supply & 5~V~DC~$\pm$~0.25~V, up to~4~A via USB-C (J1); reverse-current protection integrated \\ \hline
+		Compute Module & NVIDIA Jetson Nano (B01 revision) with 4~GB LPDDR4 memory and integrated Tegra~X1 \ac{SoC} (quad-core ARM Cortex-A57 CPU + 128-core Maxwell \ac{GPU}) \\ \hline
+		Carrier Board & Seeed Studio J101 carrier board with \ac{USB}, \ac{HDMI}, \ac{CSI}, M.2~Key~E, Ethernet, and 40-pin \ac{GPIO} expansion header \\ \hline
+		Power Supply & 5~V~DC~$\pm$~0.25~V, up to~4~A via \ac{USB}-C (J1); reverse-current protection integrated \\ \hline
 		Storage & microSD~card (64–128~GB, UHS-I recommended) used for JetPack OS image and dataset storage \\ \hline
-		Networking & RJ-45 Gigabit Ethernet (10/100/1000~BASE-T) for LAN and SSH connectivity \\ \hline
-		Camera & MIPI CSI-2 interface (IMX219 sensor, 8~MP, 4-lane) connected via CSI ports (J9/J13) \\ \hline
-		Cooling & Passive aluminum heatsink; optional 5~V~PWM fan connected to header~J8 for active cooling \\ \hline
+		Networking & RJ-45 Gigabit Ethernet (10/100/1000~BASE-T) for \ac{LAN} and SSH connectivity \\ \hline
+		Camera & MIPI \ac{CSI}-2 interface (IMX219 sensor, 8~MP, 4-lane) connected via \ac{CSI} ports (J9/J13) \\ \hline
+		Cooling & Passive aluminum heatsink; optional 5~V~Pulse Width Modulation fan connected to header~J8 for active cooling \\ \hline
 	\end{tabular}
 \end{table}
 
@@ -184,24 +184,24 @@ The complete reComputer~J1010 assembly consists of the following major hardware 
 \textbf{Mechanical and Power Integration:}  
 The Jetson Nano module is mounted on the J101 carrier board using M2.5~screws and standoffs, providing both structural rigidity and airflow clearance beneath the PCB.  
 The complete assembly is enclosed within a metal housing that includes cut-outs for all major I/O ports.  
-Power is supplied through the USB-C~port~(J1) from a 5~V,~4~A~regulated adapter.  
-Onboard DC-DC converters distribute regulated voltages to the SoC, USB~hub, and Ethernet PHY with undervoltage monitoring for protection.  
+Power is supplied through the \ac{USB}-C~port~(J1) from a 5~V,~4~A~regulated adapter.  
+Onboard DC-DC converters distribute regulated voltages to the \ac{SoC}, \ac{USB}~hub, and Ethernet PHY with undervoltage monitoring for protection.  
 Typical consumption during YOLOv8 inference (1080p~@~30~FPS) is approximately~7.5~W, with peak loads of~9–10~W during initialization.
 
 \bigskip
 \textbf{System Assembly for the Project:}  
 In this project, the reComputer~J1010 unit is mounted on an acrylic base plate with vibration-isolated spacers.  
-The CSI camera is fixed to an adjustable stand at an angle of 20–25° relative to the vehicle direction and at a height of approximately~1.5~m to ensure optimal license-plate capture.  
+The \ac{CSI} camera is fixed to an adjustable stand at an angle of 20–25° relative to the vehicle direction and at a height of approximately~1.5~m to ensure optimal license-plate capture.  
 The system communicates with a host laptop via Ethernet for SSH access, dataset transfer, and remote model updates.
 
 \bigskip
-Overall, the modular construction of the Seeed Studio reComputer~J1010 provides mechanical robustness, efficient thermal design, and ease of expansion, making it a reliable platform for continuous real-time AI inference at the edge \cite{seeedJ101Manual, edgeAIbook}.
+Overall, the modular construction of the Seeed Studio reComputer~J1010 provides mechanical robustness, efficient thermal design, and ease of expansion, making it a reliable platform for continuous real-time \ac{AI} inference at the edge \cite{seeedJ101Manual, edgeAIbook}.
 
 \newpage
 \section{Interfaces}
 \label{sec:interfaces}
 The Seeed Studio J101 carrier board provides multiple connectors (J1--J19) for power input, display output, data communication, and peripheral expansion.  
-Figure~\ref{fig:interfaces_layout} illustrates the physical locations of these connectors on the board, including power (J1, J2), USB and HDMI ports (J3--J5), Ethernet (J6), camera interfaces (J9, J13), GPIO header (J10), and auxiliary modules such as the M.2~Key~E and RTC header.  
+Figure~\ref{fig:interfaces_layout} illustrates the physical locations of these connectors on the board, including power (J1, J2), \ac{USB} and \ac{HDMI} ports (J3--J5), Ethernet (J6), camera interfaces (J9, J13), \ac{GPIO} header (J10), and auxiliary modules such as the M.2~Key~E and RTC header.  
 This section describes the purpose and electrical characteristics of each connector based on the official Seeed Studio documentation \cite{seeedJ101Manual,reComputer_HardwareLayout}.
 
 %\begin{figure}[H]
@@ -3909,7 +3909,7 @@ This section describes the purpose and electrical characteristics of each connec
 
 	
 \end{tikzpicture}
-	\caption{Labeled layout of the Seeed Studio reComputer~J1010 carrier board showing connector positions (J1--J19), including power, USB, HDMI, CSI camera ports, GPIO header, and M.2~Key~E slot \cite{seeedJ101Manual,reComputer_HardwareLayout}.}
+	\caption{Labeled layout of the Seeed Studio reComputer~J1010 carrier board showing connector positions (J1--J19), including power, \ac{USB}, \ac{HDMI}, \ac{CSI} camera ports, \ac{GPIO} header, and M.2~Key~E slot \cite{seeedJ101Manual,reComputer_HardwareLayout}.}
 	\label{fig:interfaces_layout}
 \end{figure}
 \bigskip
@@ -3927,27 +3927,27 @@ This section describes the purpose and electrical characteristics of each connec
 
 \subsection{J1--J19 Connectors }
 
-\subsubsection{J1--J5: Power and USB}
+\subsubsection{J1--J5: Power and \ac{USB}}
 \begin{itemize}
-	\item \textbf{J1 (USB Type-C, DCIN):} 5~V~DC input (up to 4~A). Primary system power rail. 
-	\item \textbf{J2 (USB Type-C, Data/Recovery):} USB~2.0 device mode for data and recovery.
-	\item \textbf{J3 (HDMI Type-A):} HDMI~2.0 display output up to 3840$\times$2160 @ 60~Hz with audio, CEC, and DDC.
-	\item \textbf{J4 (USB~3.0 Type-A):} 5~Gbps host port for high-speed peripherals (e.g., cameras, SSD enclosures).
-	\item \textbf{J5 (Dual USB~2.0 Type-A):} 480~Mbps host ports for keyboard, mouse, and low-power devices.
+	\item \textbf{J1 (\ac{USB} Type-C, DCIN):} 5~V~DC input (up to 4~A). Primary system power rail. 
+	\item \textbf{J2 (\ac{USB} Type-C, Data/Recovery):} \ac{USB}~2.0 device mode for data and recovery.
+	\item \textbf{J3 (\ac{HDMI} Type-A):} \ac{HDMI}~2.0 display output up to 3840$\times$2160 @ 60~Hz with audio, CEC, and DDC.
+	\item \textbf{J4 (\ac{USB}~3.0 Type-A):} 5~Gbps host port for high-speed peripherals (e.g., cameras, SSD enclosures).
+	\item \textbf{J5 (Dual \ac{USB}~2.0 Type-A):} 480~Mbps host ports for keyboard, mouse, and low-power devices.
 \end{itemize}
 
 \subsubsection{J6: Gigabit Ethernet}
-Standard RJ-45 connector supporting 10/100/1000~BASE-T with link/activity LEDs. PoE is supported only with additional circuitry; not provided by default on J101 \cite{seeedJ101Manual}.
+Standard RJ-45 connector supporting 10/100/1000~BASE-T with link/activity \ac{LED}s. PoE is supported only with additional circuitry; not provided by default on J101 \cite{seeedJ101Manual}.
 
 \subsubsection{J8: Fan Header}
-4-pin PWM fan header (5~V, PWM, TACH, GND) for optional active cooling. PWM control and tach feedback are routed to GPIO pins via the carrier board pinmux \cite{seeedJ101Manual}.
+4-pin Pulse Width Modulation fan header (5~V, \ac{PWM}, TACH, GND) for optional active cooling. \ac{PWM} control and tach feedback are routed to \ac{GPIO} pins via the carrier board pinmux \cite{seeedJ101Manual}.
 
-\subsubsection{J9 and J13: MIPI-CSI Camera}
-Two 15-pin CSI-2 connectors supporting 4-lane cameras. Camera control is provided via I\textsuperscript{2}C; ribbon orientation and latch direction follow the datasheet mechanical drawing \cite{seeedJ101Manual,reComputer_HardwareLayout}.
+\subsubsection{J9 and J13: MIPI-\ac{CSI} Camera}
+Two 15-pin \ac{CSI}-2 connectors supporting 4-lane cameras. Camera control is provided via I\textsuperscript{2}C; ribbon orientation and latch direction follow the datasheet mechanical drawing \cite{seeedJ101Manual,reComputer_HardwareLayout}.
 
-\subsubsection{J10: 40-Pin Expansion Header (GPIO)}
-Raspberry~Pi-compatible 40-pin header exposing 3.3~V logic GPIO and multiplexed buses (I\textsuperscript{2}C, SPI, UART, I\textsuperscript{2}S, PWM). 
-Use the Jetson.GPIO Python library for user-space access; detailed electrical behavior is described in Section~\ref{subsec:pinconfig} \cite{reComputer_Jetson_GPIO}.
+\subsubsection{J10: 40-Pin Expansion Header (\ac{GPIO})}
+Raspberry~Pi-compatible 40-pin header exposing 3.3~V logic \ac{GPIO} and multiplexed buses (I\textsuperscript{2}C, \ac{SPI}, \ac{UART}, I\textsuperscript{2}S, \ac{PWM}). 
+Use the Jetson.\ac{GPIO} Python library for user-space access; detailed electrical behavior is described in Section~\ref{subsec:pinconfig} \cite{reComputer_Jetson_GPIO}.
 
 %\bigskip
 %
@@ -3961,7 +3961,7 @@ Use the Jetson.GPIO Python library for user-space access; detailed electrical be
 
 
 \subsubsection{J11: M.2 Key~E}
-Provides PCIe~x1, USB~2.0, UART, I\textsuperscript{2}S, and I\textsuperscript{2}C for Wi-Fi/Bluetooth modules (e.g., Intel/Qualcomm combo cards) \cite{seeedJ101Manual}.
+Provides PCIe~x1, \ac{USB}~2.0, UART, I\textsuperscript{2}S, and I\textsuperscript{2}C for Wi-Fi/Bluetooth modules (e.g., Intel/Qualcomm combo cards) \cite{seeedJ101Manual}.
 
 \subsubsection{J14: Serial and Button Header (Debug)}
 Exposes UART2~(TX/RX) for serial console, plus SYS\_RESET, PWR\_BTN, and FORCE\_RECOVERY signals for firmware and power control. 
@@ -3977,7 +3977,7 @@ Dedicated microSD/SDIO interface (1.8~V/3.3~V) used for bootable storage or SDIO
 
 \subsection{Pin Configuration (J10)}
 \label{subsec:pinconfig}
-All user-accessible GPIO on J10 operate at \textbf{3.3~V logic} and are not 5~V tolerant. 
+All user-accessible \ac{GPIO} on J10 operate at \textbf{3.3~V logic} and are not 5~V tolerant. 
 Use level shifters for 5~V peripherals and external drivers for loads (motors, relays). 
 Pin control is performed in user space via the \texttt{Jetson.GPIO} library; peripheral buses may require enabling via Jetson-IO (device-tree overlay utility) \cite{reComputer_Jetson_GPIO,seeedJ101Manual}.
 
@@ -5021,9 +5021,9 @@ Pins 1 (3.3~V), 2 and 4 (5~V) provide power; multiple GND pins are distributed a
 The J101 header follows the widely used Raspberry~Pi layout:
 \begin{itemize}
 	\item \textbf{I\textsuperscript{2}C bus} on pins \textbf{3 (SDA)} and \textbf{5 (SCL)} (bus \#1 by default).
-	\item \textbf{SPI bus} on pins \textbf{19 (MOSI)}, \textbf{21 (MISO)}, \textbf{23 (SCLK)}, and chip selects \textbf{24 (CE0)}, \textbf{26 (CE1)}.
-	\item \textbf{UART (3.3~V TTL)} on pins \textbf{8 (TXD)} and \textbf{10 (RXD)} mapped to the Jetson serial controller (console-capable) \cite{seeedJ101Manual}.
-	\item \textbf{PWM outputs} are available on selected pins (e.g., physical \textbf{32}, \textbf{33}) depending on pinmux; frequency and duty can be configured via the PWM sysfs or libraries.
+	\item \textbf{\ac{SPI} bus} on pins \textbf{19 (MOSI)}, \textbf{21 (MISO)}, \textbf{23 (SCLK)}, and chip selects \textbf{24 (CE0)}, \textbf{26 (CE1)}.
+	\item \textbf{\ac{UART} (3.3~V TTL)} on pins \textbf{8 (TXD)} and \textbf{10 (RXD)} mapped to the Jetson serial controller (console-capable) \cite{seeedJ101Manual}.
+	\item \textbf{\ac{PWM} outputs} are available on selected pins (e.g., physical \textbf{32}, \textbf{33}) depending on pinmux; frequency and duty can be configured via the \ac{PWM} sysfs or libraries.
 \end{itemize}
 
 
@@ -5039,11 +5039,11 @@ The J101 header follows the widely used Raspberry~Pi layout:
 		1 & 3.3~V Power      & 2  & 5~V Power \\ \hline
 		3 & I$^2$C SDA (Bus~1) & 4  & 5~V Power \\ \hline
 		5 & I$^2$C SCL (Bus~1) & 6  & GND \\ \hline
-		8 & UART TXD (3.3~V)  & 10 & UART RXD (3.3~V) \\ \hline
-		19 & SPI MOSI         & 21 & SPI MISO \\ \hline
-		23 & SPI SCLK         & 24 & SPI CE0 \\ \hline
-		26 & SPI CE1          & 32 & PWM (pinmux dependent) \\ \hline
-		33 & PWM (pinmux dep.) & 34 & GND \\ \hline
+		8 & \ac{UART} TXD (3.3~V)  & 10 & \ac{UART} RXD (3.3~V) \\ \hline
+		19 & \ac{SPI} MOSI         & 21 & \ac{SPI} MISO \\ \hline
+		23 & \ac{SPI} SCLK         & 24 & \ac{SPI} CE0 \\ \hline
+		26 & \ac{SPI} CE1          & 32 & \ac{PWM} (pinmux dependent) \\ \hline
+		33 & \ac{PWM} (pinmux dep.) & 34 & GND \\ \hline
 	\end{tabular}
 \end{table}
 \bigskip
@@ -5083,22 +5083,22 @@ The J101 header follows the widely used Raspberry~Pi layout:
 %\end{lstlisting}
 
 \newpage
-\subsection{Enable SPI Interface on Jetson-Nano}
+\subsection{Enable \ac{SPI} Interface on Jetson-Nano}
 \label{subsec:enable_spi}
 
 \subsubsection{Introduction}
 \label{subsubsec:spi_intro}
 
-The Jetson Nano features two SPI interfaces multiplexed with GPIOs, but SPI is not enabled by default. 
-This section uses the \textbf{SPI1} controller as an example and provides a method for enabling SPI functionality on the Jetson Nano. 
+The Jetson Nano features two \ac{SPI} interfaces multiplexed with \ac{GPIO}s, but \ac{SPI} is not enabled by default. 
+This section uses the \textbf{\ac{SPI}1} controller as an example and provides a method for enabling \ac{SPI} functionality on the Jetson Nano. 
 Note that this method must be applied \textbf{before flashing the image to the Jetson device} \cite{seeedJ101Manual,reComputer_FlashGuide}.
 
-\subsubsection{Modify SPI and Flashing}
+\subsubsection{Modify \ac{SPI} and Flashing}
 \label{subsubsec:spi_modify}
 
 First, you need to short the \textbf{REC} pin and \textbf{GND} pin on the Jetson Nano to enter recovery mode. 
 Then, on your host PC, prepare the image you intend to flash. 
-However, do not flash it to the Jetson Nano until you have completed the SPI modifications. 
+However, do not flash it to the Jetson Nano until you have completed the \ac{SPI} modifications. 
 You can refer to the \textit{Flashing JetPack OS via Command Line} tutorial for the J101, and make sure to use the \textbf{Command Line} method only.
 
 \bigskip
@@ -5145,7 +5145,7 @@ The script content is as follows:
 \begingroup
 \lstinputlisting[
 style=bashstyle,
-caption={modifyspi.sh — Enables SPI interfaces and patches Jetson Nano DTS for SPI1},
+caption={modifyspi.sh — Enables \ac{SPI} interfaces and patches Jetson Nano DTS for \ac{SPI}1},
 label={lst:modifyspi},
 breaklines=true,
 breakatwhitespace=false,
@@ -5162,8 +5162,8 @@ rulecolor=\color{black!30}
 
 
 \medskip
-After running \SHELL{modify\_spi.sh}, this script will update the SPI1 configuration in the device tree, recompile it, and overwrite the old one. 
-If you want to enable SPI2, simply replace the keyword \texttt{spi1} with \texttt{spi2} in the \SHELL{modify\_spi.sh} script.
+After running \SHELL{modify\_spi.sh}, this script will update the \ac{SPI}1 configuration in the device tree, recompile it, and overwrite the old one. 
+If you want to enable \ac{SPI}2, simply replace the keyword \texttt{spi1} with \texttt{spi2} in the \SHELL{modify\_spi.sh} script.
 
 \bigskip
 After modifying the device tree, flash the image to the Jetson Nano using:
@@ -5187,7 +5187,7 @@ After modifying the device tree, flash the image to the Jetson Nano using:
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.5\linewidth]{JetsonNano/enable_spi1.png}
-	\caption{Flashing process output confirming successful Jetson Nano SPI modification and OS installation \cite{reComputer_FlashGuide}.}
+	\caption{Flashing process output confirming successful Jetson Nano \ac{SPI} modification and OS installation \cite{reComputer_FlashGuide}.}
 	\label{fig:enable_spi1}
 \end{figure}
 
@@ -5195,10 +5195,10 @@ After modifying the device tree, flash the image to the Jetson Nano using:
 After rebooting, the \textbf{SPI0\_MOSI}, \textbf{SPI0\_MISO}, \textbf{SPI0\_CS0}, and \textbf{SPI0\_CS1} pins on the 40-pin header will be available for use.
 
 
-\subsubsection{Testing the SPI1 on Jetson-Nano}
+\subsubsection{Testing the \ac{SPI}1 on Jetson-Nano}
 \label{subsubsec:spi_test}
 
-Short \textbf{pin~19} and \textbf{pin~21}, which correspond to \textbf{SPI0\_MOSI} and \textbf{SPI0\_MISO} respectively, to perform a loopback test using the SPI1 controller.
+Short \textbf{pin~19} and \textbf{pin~21}, which correspond to \textbf{SPI0\_MOSI} and \textbf{SPI0\_MISO} respectively, to perform a loopback test using the \ac{SPI}1 controller.
 
 %\begin{figure}[H]
 %	\centering
@@ -5252,18 +5252,18 @@ Short \textbf{pin~19} and \textbf{pin~21}, which correspond to \textbf{SPI0\_MOS
 		\begin{tabular}{|p{2.4cm}|p{3.2cm}|p{1.2cm}|p{1.2cm}|p{3.2cm}|p{2.4cm}|}
 			\hline
 			\rowcolor{gray!20}
-			\textbf{Sysfs GPIO} & \textbf{Name} & \textbf{Pin} & \textbf{Pin} & \textbf{Name} & \textbf{Sysfs GPIO} \\ \hline
+			\textbf{Sysfs \ac{GPIO}} & \textbf{Name} & \textbf{Pin} & \textbf{Pin} & \textbf{Name} & \textbf{Sysfs \ac{GPIO}} \\ \hline
 			
 			\rowcolor{white}
 			gpio78 & I2S\_4\_SDOUT / D21 & 40 & 39 & \GND & \\ \hline
 			\rowcolor{gray!5}
 			gpio77 & I2S\_4\_SDIN / D20 & 38 & 37 & SPI\_2\_MOSI / D26 & gpio12 \\ \hline
 			\rowcolor{white}
-			gpio51 & UART\_2\_CTS / D16 & 36 & 35 & I2S\_4\_LRCK / D19 & gpio76 \\ \hline
+			gpio51 & \ac{UART}\_2\_CTS / D16 & 36 & 35 & I2S\_4\_LRCK / D19 & gpio76 \\ \hline
 			\rowcolor{gray!5}
 			-- & \GND & 34 & 33 & GPIO\_PE6 / D13 & gpio38 \\ \hline
 			\rowcolor{white}
-			gpio168 & LCD\_BL\_PWM / D12 & 32 & 31 & GPIO\_PZ0 / D6 & gpio200 \\ \hline
+			gpio168 & LCD\_BL\_\ac{PWM} / D12 & 32 & 31 & GPIO\_PZ0 / D6 & gpio200 \\ \hline
 			\rowcolor{gray!5}
 			-- & \GND & 30 & 29 & CAM\_AF\_EN / D5 & gpio149 \\ \hline
 			\rowcolor{white}
@@ -5283,11 +5283,11 @@ Short \textbf{pin~19} and \textbf{pin~21}, which correspond to \textbf{SPI0\_MOS
 			\rowcolor{gray!5}
 			-- & \GND & 14 & 13 & SPI\_2\_SCK / D27 & gpio14 \\ \hline
 			\rowcolor{white}
-			gpio79 & I2S\_4\_SCLK / D18 & 12 & 11 & UART\_2\_RTS / D17 & gpio50 \\ \hline
+			gpio79 & I2S\_4\_SCLK / D18 & 12 & 11 & \ac{UART}\_2\_RTS / D17 & gpio50 \\ \hline
 			\rowcolor{gray!5}
-			-- & UART\_2\_RX (/dev/ttyTHS1 - D15) & 10 & 9 & \GND & -- \\ \hline
+			-- & \ac{UART}\_2\_RX (/dev/ttyTHS1 - D15) & 10 & 9 & \GND & -- \\ \hline
 			\rowcolor{white}
-			-- & UART\_2\_TX (/dev/ttyTHS1 - D14) & 8 & 7 & AUDIO\_MCLK / D4 & gpio216 \\ \hline
+			-- & \ac{UART}\_2\_TX (/dev/ttyTHS1 - D14) & 8 & 7 & AUDIO\_MCLK / D4 & gpio216 \\ \hline
 			\rowcolor{gray!5}
 			-- & \GND & 6 & 5 & I2C\_2\_SCL (Bus 1 - D3) & -- \\ \hline
 			\rowcolor{white}
@@ -5319,7 +5319,7 @@ The physical connection diagram is shown below:
 	{\textbf{\textcolor{red}{TODO: Add image of physical connection diagram after procuring the hardware.}}};
 \end{tikzpicture}
 
-\noindent Load the SPI driver module, then download and compile the test program:
+\noindent Load the \ac{SPI} driver module, then download and compile the test program:
 \begin{tcolorbox}[colback=white,colframe=black,coltext= ShellColor, sharp corners, boxrule=0.8pt]
 	\begin{small}
 		\begin{verbatim}
@@ -5334,7 +5334,7 @@ The physical connection diagram is shown below:
 
 
 \medskip
-\noindent Run the test program and specify \SHELL{spidev0.0} (corresponding to SPI1):
+\noindent Run the test program and specify \SHELL{spidev0.0} (corresponding to \ac{SPI}1):
 
 
 \begin{tcolorbox}[colback=white,colframe=black,coltext= ShellColor, sharp corners, boxrule=0.8pt]
@@ -5347,8 +5347,8 @@ The physical connection diagram is shown below:
 \end{tcolorbox}
 
 \medskip
-The test result is shown below, indicating that SPI1 has successfully completed the loopback transmission. 
-You can also run the command below to check the available SPI controllers:
+The test result is shown below, indicating that \ac{SPI}1 has successfully completed the loopback transmission. 
+You can also run the command below to check the available \ac{SPI} controllers:
 %\begin{small}
 %	\begin{quote}
 %	\SHELL{ls /dev/spidev*}
@@ -5379,17 +5379,17 @@ You can also run the command below to check the available SPI controllers:
 		\hline
 		\textbf{Header} & \textbf{Connector} & \textbf{Key Functions} & \textbf{Voltage/Speed} & \textbf{Remarks} \\
 		\hline
-		J1 & USB-C & Power input & 5~V~$\pm$~0.25~V, 4~A & Main supply \\
-		J2 & USB-C & Data / Recovery & USB~2.0 & Device mode \\
-		J3 & HDMI Type-A & Display output & HDMI~2.0 (4K@60~Hz) & With audio \\
-		J4 & USB~3.0 Type-A & Host port & 5~Gbps & Camera/SSD \\
-		J5 & Dual USB~2.0 Type-A & Peripheral ports & 480~Mbps & KB/Mouse \\
+		J1 & \ac{USB}-C & Power input & 5~V~$\pm$~0.25~V, 4~A & Main supply \\
+		J2 & \ac{USB}-C & Data / Recovery & \ac{USB}~2.0 & Device mode \\
+		J3 & \ac{HDMI} Type-A & Display output & \ac{HDMI}~2.0 (4K@60~Hz) & With audio \\
+		J4 & \ac{USB}~3.0 Type-A & Host port & 5~Gbps & Camera/SSD \\
+		J5 & Dual \ac{USB}~2.0 Type-A & Peripheral ports & 480~Mbps & KB/Mouse \\
 		J6 & RJ-45 Ethernet & Networking & 1~Gbps & PoE optional \\
-		J8 & 4-pin Fan & Cooling control & 5~V PWM & Optional \\
-		J9/J13 & 15-pin CSI & Camera input & 4-lane MIPI & Dual camera \\
-		J10 & 40-pin Header & GPIO / I$^2$C / SPI / UART / I$^2$S & 3.3~V logic & Expansion \\
-		J11 & M.2 Key E & PCIe x1, USB2, I$^2$C & 3.3~V & Wireless card \\
-		J14 & Button/UART & Power \& debug & 3.3~V & Console \\
+		J8 & 4-pin Fan & Cooling control & 5~V \ac{PWM} & Optional \\
+		J9/J13 & 15-pin \ac{CSI} & Camera input & 4-lane MIPI & Dual camera \\
+		J10 & 40-pin Header & GPIO / I$^2$C / SPI / \ac{UART} / I$^2$S & 3.3~V logic & Expansion \\
+		J11 & M.2 Key E & PCIe x1, \ac{USB}2, I$^2$C & 3.3~V & Wireless card \\
+		J14 & Button/\ac{UART} & Power \& debug & 3.3~V & Console \\
 		J18 & Coin cell & RTC backup & 3~V & CR2032 \\
 		J19 & SDIO & Storage interface & 1.8/3.3~V & microSD \\
 		\hline
@@ -5413,11 +5413,11 @@ You can also run the command below to check the available SPI controllers:
 The NVIDIA Jetson Nano processes heterogeneous data types depending on the application layer.  
 In this project, the primary data sources are:
 \begin{itemize}
-	\item \textbf{Video Frames:} RGB images (8-bit per channel) streamed from the Microsoft LifeCam Show via USB~2.0, received as \texttt{uint8} arrays in OpenCV (BGR order).
+	\item \textbf{Video Frames:} RGB images (8-bit per channel) streamed from the Microsoft LifeCam Show via \ac{USB}~2.0, received as \texttt{uint8} arrays in OpenCV (BGR order).
 	\item \textbf{Inference Output:} Floating-point tensors generated by the YOLOv8 object detection model, typically in \texttt{float32} precision.
-	\item \textbf{System Telemetry:} CPU, GPU, and memory utilization logs stored as numerical metrics in CSV format, collected through \texttt{tegrastats}.
+	\item \textbf{System Telemetry:} CPU, \ac{GPU}, and memory utilization logs stored as numerical metrics in CSV format, collected through \texttt{tegrastats}.
 \end{itemize}
-Data exchange between CPU and GPU occurs via shared memory buffers, leveraging NVIDIA’s \textbf{Unified Memory} architecture and CUDA cores for parallelized tensor operations \cite{jetson_nano_doc,edgeAIbook}.  
+Data exchange between CPU and \ac{GPU} occurs via shared memory buffers, leveraging NVIDIA’s \textbf{Unified Memory} architecture and CUDA cores for parallelized tensor operations \cite{jetson_nano_doc,edgeAIbook}.  
 
 \subsection{Data Structure}
 Captured image frames are represented as three-dimensional matrices $(H, W, C)$, where $H$=600, $W$=800, and $C$=3 for color images.  
@@ -5426,8 +5426,8 @@ Each matrix is normalized and batched into tensors before being fed into the neu
 \text{Input Tensor Shape: } (N, 3, 640, 640)
 \]
 where $N$ represents batch size.  
-Intermediate feature maps within the YOLOv8 model follow convolutional tensor structures $(B, C, H', W')$, dynamically allocated in GPU memory using the CUDA runtime.  
-During inference, GPU memory bandwidth reaches up to 25.6~GB/s (LPDDR4 @ 1600~MHz) while maintaining real-time throughput \cite{jetsonNanoDatasheet}.  
+Intermediate feature maps within the YOLOv8 model follow convolutional tensor structures $(B, C, H', W')$, dynamically allocated in \ac{GPU} memory using the CUDA runtime.  
+During inference, \ac{GPU} memory bandwidth reaches up to 25.6~GB/s (LPDDR4 @ 1600~MHz) while maintaining real-time throughput \cite{jetsonNanoDatasheet}.  
 %Figure~\ref{fig:jetson_data_flow} conceptually illustrates the Jetson Nano data pipeline.
 
 %\begin{figure}[H]
@@ -5451,7 +5451,7 @@ Hence, the total uncompressed throughput is:
 \[
 1.37~\text{MB/frame} \times 30~\text{FPS} = 41.1~\text{MB/s}.
 \]
-When encoded using MJPEG compression (commonly employed in USB~2.0 webcams), the average data rate reduces to approximately 4–6~MB/s depending on scene complexity, lighting, and motion \cite{linux_uvc_driver}.  
+When encoded using MJPEG compression (commonly employed in \ac{USB}~2.0 webcams), the average data rate reduces to approximately 4–6~MB/s depending on scene complexity, lighting, and motion \cite{linux_uvc_driver}.  
 
 \bigskip
 \textbf{2. Preprocessing and Tensor Conversion:}  
@@ -5460,8 +5460,8 @@ The data size per tensor is:
 \[
 640 \times 640 \times 3 \times 4~\text{bytes} = 4.9~\text{MB}.
 \]
-At a steady 30~FPS, this yields $\approx$147~MB/s of processed tensor data flowing through GPU memory.  
-These tensors are stored in batches (usually $N=1$–$4$) for efficient GPU parallelization through the TensorRT engine.
+At a steady 30~FPS, this yields $\approx$147~MB/s of processed tensor data flowing through \ac{GPU} memory.  
+These tensors are stored in batches (usually $N=1$–$4$) for efficient \ac{GPU} parallelization through the TensorRT engine.
 
 \bigskip
 \textbf{3. Inference Output Data:}  
@@ -5482,7 +5482,7 @@ Across the full inference pipeline, the Jetson Nano handles approximately:
 \[
 \text{Total Data Flow} = 4{-}6~\text{MB/s (camera input)} + 147~\text{MB/s (tensors)} + <0.1~\text{MB/s (logs)}.
 \]
-This demonstrates that the main data throughput occurs within GPU memory during tensor operations, not in camera acquisition or inference output.  
+This demonstrates that the main data throughput occurs within \ac{GPU} memory during tensor operations, not in camera acquisition or inference output.  
 With LPDDR4 bandwidth of 25.6~GB/s, the Jetson Nano operates at less than 1\% of its theoretical maximum during steady-state inference, ensuring stable performance without bottlenecks \cite{jetsonNanoDatasheet,edgeAIbook}.  
 
 \bigskip
@@ -5497,13 +5497,13 @@ Each dimension was evaluated under controlled testing conditions to ensure infer
 \textbf{1. Signal Fidelity:}  
 Captured frames undergo color normalization and pixel-level conversion between YUYV and BGR formats.  
 Testing revealed negligible information loss ($<0.5\%$ average pixel intensity deviation) during format conversion.  
-The Maxwell GPU’s 128~CUDA cores perform all preprocessing in parallel, avoiding CPU bottlenecks and ensuring consistent frame integrity.
+The Maxwell \ac{GPU}’s 128~CUDA cores perform all preprocessing in parallel, avoiding CPU bottlenecks and ensuring consistent frame integrity.
 
 \bigskip
 \textbf{2. Numerical Precision:}  
 Model inference uses \textbf{FP16 mixed-precision arithmetic} in TensorRT, which maintains near-identical accuracy to FP32 while doubling computational efficiency.  
 Comparative testing on the same YOLOv8-Tiny model showed a mean average precision (mAP@0.5) deviation of less than 0.7\% between FP16 and FP32 on identical test sets.  
-This demonstrates that quantization-induced errors are minimal and within the tolerance of embedded AI applications \cite{edgeAIbook,jetson_nano_doc}.
+This demonstrates that quantization-induced errors are minimal and within the tolerance of embedded \ac{AI} applications \cite{edgeAIbook,jetson_nano_doc}.
 
 \bigskip
 \textbf{3. Temporal Consistency:}  
@@ -5513,9 +5513,9 @@ No dropped frames were recorded at steady ambient temperatures ($<$65~°C), conf
 
 \bigskip
 \textbf{4. Data Integrity under Load:}  
-The integrity of tensor data was verified using checksum validation between the preprocessed and GPU-resident arrays, showing zero corruption events across 10$^6$ frames.  
+The integrity of tensor data was verified using checksum validation between the preprocessed and \ac{GPU}-resident arrays, showing zero corruption events across 10$^6$ frames.  
 Thermal throttling, which can cause sporadic frame delays, was observed only above 75~°C during fan-off tests.  
-Enabling a PWM fan (J8 connector) stabilized thermal readings and maintained consistent inference timing.  
+Enabling a \ac{PWM} fan (J8 connector) stabilized thermal readings and maintained consistent inference timing.  
 
 \bigskip
 \textbf{5. Visual Output Consistency:}  
@@ -5524,7 +5524,7 @@ Visual variance across 1000 frames of static test scenes was below 1.2~\% in ave
 
 \bigskip
 In summary, the Jetson Nano demonstrates robust handling of real-time video data, maintaining consistent quality in spatial, numerical, and temporal domains.  
-When paired with TensorRT’s mixed-precision optimization and sufficient cooling, the platform delivers deterministic, low-latency AI inference suitable for continuous embedded vision applications.
+When paired with TensorRT’s mixed-precision optimization and sufficient cooling, the platform delivers deterministic, low-latency \ac{AI} inference suitable for continuous embedded vision applications.
 
 %\subsection{Data Formats Summary}
 %\begin{table}[H]
@@ -5542,8 +5542,8 @@ When paired with TensorRT’s mixed-precision optimization and sufficient coolin
 %\end{table}
 
 \subsection{Data Flow Efficiency}
-The Jetson Nano’s unified memory architecture and GPU-accelerated TensorRT engine reduce latency between data acquisition and inference.  
-Zero-copy access between CPU and GPU memory minimizes transfer overhead, while NVIDIA’s Deep Learning Accelerator (DLA) handles lightweight models for offloading parallel workloads \cite{edgeAIbook,jetson_nano_doc}.  
+The Jetson Nano’s unified memory architecture and \ac{GPU}-accelerated TensorRT engine reduce latency between data acquisition and inference.  
+Zero-copy access between CPU and \ac{GPU} memory minimizes transfer overhead, while NVIDIA’s Deep Learning Accelerator (DLA) handles lightweight models for offloading parallel workloads \cite{edgeAIbook,jetson_nano_doc}.  
 This ensures deterministic data flow with sub-40~ms total pipeline latency, enabling true real-time object detection.
 
 
@@ -5555,15 +5555,15 @@ This ensures deterministic data flow with sub-40~ms total pipeline latency, enab
 		\hline
 		\textbf{Parameter} & \textbf{Specification} \\
 		\hline
-		GPU & 128-core NVIDIA Maxwell architecture \\
+		\ac{GPU} & 128-core NVIDIA Maxwell architecture \\
 		CPU & Quad-core ARM Cortex-A57 MPCore \\
 		Memory & 4~GB LPDDR4 @ 1600~MHz (25.6~GB/s) \\
 		Storage & 16~GB eMMC + microSD expansion slot \\
-		Camera Support & Dual MIPI CSI-2 (4-lane each) \\
+		Camera Support & Dual MIPI \ac{CSI}-2 (4-lane each) \\
 		Networking & Gigabit Ethernet (10/100/1000~Mbps) \\
 		Video Decode & Up to 4K~@~60~Hz (HEVC, H.264) \\
 		Video Encode & Up to 4K~@~30~Hz (H.264) \\
-		Power Input & 5~V DC, up to 4~A (via USB-C or GPIO header) \\
+		Power Input & 5~V DC, up to 4~A (via \ac{USB}-C or GPIO header) \\
 		Typical Power Use & 5--10~W \\
 		Operating System & NVIDIA JetPack SDK (Ubuntu 20.04 LTS) \\
 		\hline
@@ -5572,10 +5572,10 @@ This ensures deterministic data flow with sub-40~ms total pipeline latency, enab
 
 \section{Constraints}
 \begin{itemize}
-	\item Limited 4~GB RAM restricts execution of multiple large AI models concurrently.
+	\item Limited 4~GB RAM restricts execution of multiple large \ac{AI} models concurrently.
 	\item All GPIO pins operate strictly at 3.3~V logic; higher voltages are not supported.
-	\item No native NVMe slot; high-speed storage achievable via USB~3.0 SSD.
-	\item Continuous GPU inference may require active cooling.
+	\item No native NVMe slot; high-speed storage achievable via \ac{USB}~3.0 SSD.
+	\item Continuous \ac{GPU} inference may require active cooling.
 	\item Stable 5~V~$\pm$~5\% power supply is required to prevent brown-out resets.
 \end{itemize}
 
@@ -5615,13 +5615,13 @@ This ensures deterministic data flow with sub-40~ms total pipeline latency, enab
 \noindent
 \textbf{Introduction:} \\
 \textbf{NVIDIA JetPack~OS} is the official operating system for all Jetson devices, including the Jetson~Nano module used in this project. 
-It is based on Ubuntu~20.04~LTS and comes pre-integrated with NVIDIA’s AI and computer-vision frameworks such as CUDA, cuDNN, TensorRT, and DeepStream. 
+It is based on Ubuntu~20.04~LTS and comes pre-integrated with NVIDIA’s \ac{AI} and computer-vision frameworks such as CUDA, cuDNN, TensorRT, and DeepStream. 
 JetPack~OS provides a ready-to-use software environment for developing and deploying deep-learning, multimedia, and robotics applications on the edge \cite{reComputer_FlashGuide}.
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.7\linewidth]{JetsonNano/jetpackos_1.jpg}
-	\caption{Ubuntu desktop environment displayed after successful installation of JetPack OS on the NVIDIA Jetson Nano. The JetPack environment provides integrated access to CUDA, TensorRT, and other NVIDIA SDK tools for AI and computer vision development \cite{reComputer_FlashGuide}.}
+	\caption{Ubuntu desktop environment displayed after successful installation of JetPack OS on the NVIDIA Jetson Nano. The JetPack environment provides integrated access to CUDA, TensorRT, and other NVIDIA SDK tools for \ac{AI} and computer vision development \cite{reComputer_FlashGuide}.}
 	\label{fig:jetpackos_1}
 \end{figure}
 
@@ -5680,7 +5680,7 @@ Before we can move on to the installation steps, we need to make sure that our r
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.7\linewidth]{JetsonNano/hardware_prep2.png}
-		\caption{Connection layout of the Seeed Studio reComputer J1010 showing the correct use of the USB Type-C ports. 
+		\caption{Connection layout of the Seeed Studio reComputer J1010 showing the correct use of the \ac{USB} Type-C ports. 
 			The left (Type-C DCIN) port is used to connect the power supply, while the right (Type-C Data Transmitter) port connects to the Linux Host PC for data transfer during JetPack OS flashing \cite{reComputer_FlashGuide}.}
 		\label{fig:hardware_prep2}
 	\end{figure}
@@ -5832,9 +5832,9 @@ If you checked the installation of the component in the previous step 4, you wil
 
 After a moment, you will be able to see a new window pop up in the NVIDIA SDK Manager, prompting you that you need to connect to your device via IP address. It means the system has been already installed and the components installation will be proceeded.
 
-In this case, we can pull out the jumper and restart the reComputer. Then we need to connect the reComputer to a monitor via HDMI, enter the password you entered in step 4, and log in to the main interface.
+In this case, we can pull out the jumper and restart the reComputer. Then we need to connect the reComputer to a monitor via \ac{HDMI}, enter the password you entered in step 4, and log in to the main interface.
 
-At this point, you need to connect the reComputer to the same LAN as the Linux host PC and determine the IP address of the Jetson by using the command:
+At this point, you need to connect the reComputer to the same \ac{LAN} as the Linux host PC and determine the IP address of the Jetson by using the command:
 
 
 \begin{tcolorbox}[colback=white,colframe=black,coltext= ShellColor, sharp corners, boxrule=0.8pt]
@@ -6028,7 +6028,7 @@ If you encounter the error shown below in Flashing to eMMC with command-line -- 
 \begin{figure}[H] 
 	\centering
 	\includegraphics[width=0.9\linewidth]{JetsonNano/troubleshootingcmd1.png}
-	\caption{Typical error message during command-line flashing. This occurs when the Jetson device is not properly connected in Force Recovery Mode or the USB connection is unstable.}
+	\caption{Typical error message during command-line flashing. This occurs when the Jetson device is not properly connected in Force Recovery Mode or the \ac{USB} connection is unstable.}
 	\label{fig:troubleshooting_cmd_error}
 \end{figure}
 

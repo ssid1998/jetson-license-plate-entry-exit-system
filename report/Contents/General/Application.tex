@@ -34,12 +34,12 @@ This allows real-time monitoring, instant detection, and local billing without a
 
 \vspace{0.5em}
 \noindent\textbf{Why edge?}  
-The airport environment demands continuous operation, minimal latency, and secure local data handling. Edge AI ensures:
+The airport environment demands continuous operation, minimal latency, and secure local data handling. Edge \ac{AI} ensures:
 \begin{itemize}
 	\item Operation even during network outages.
 	\item Low latency ($\approx$15–25 FPS) suitable for vehicle flow.
-	\item GDPR-compliant local storage.
-	\item Lower operating costs compared to cloud-connected ANPR systems.
+	\item \ac{GDPR}-compliant local storage.
+	\item Lower operating costs compared to cloud-connected \ac{ANPR} systems.
 \end{itemize}
 
 % ------------------- TikZ Diagram (Airport Scenario) -----------------------
@@ -103,7 +103,7 @@ The airport environment demands continuous operation, minimal latency, and secur
 		\node[draw,fill=purple!10,rounded corners=2pt,right=2mm of l3,font=\scriptsize,text width=2.3cm,align=center] (l4) {Billing / Action};
 		
 	\end{tikzpicture}
-	\caption{Airport ANPR system architecture: a single Jetson Nano camera detects vehicle entry and exit, logs timestamps locally, and triggers billing when dwell time exceeds 10 minutes.}
+	\caption{Airport \ac{ANPR} system architecture: a single Jetson Nano camera detects vehicle entry and exit, logs timestamps locally, and triggers billing when dwell time exceeds 10 minutes.}
 	\label{fig:airport-anpr-advanced}
 \end{figure}
 
@@ -120,7 +120,7 @@ This enables efficient, unattended management of short-term parking and drop-off
 
 \subsection{Data Acquisition}
 \textbf{Operational data:} Continuous video stream from a single fixed camera at the airport gate (1080p, 25 FPS).  
-\textbf{Data pipeline:} YOLOv8 detects license plate bounding boxes → EasyOCR extracts alphanumeric text → timestamps are stored in SQLite as either \emph{entry} or \emph{exit} events.  
+\textbf{Data pipeline:} \textbf{YOLOv8} detects license plate bounding boxes → \textbf{EasyOCR} extracts alphanumeric text → timestamps are stored in SQLite as either \emph{entry} or \emph{exit} events.  
 The same camera detects both, using logic to compare time differences.  
 \textbf{Training/validation data:} Public datasets (CCPD, OpenALPR) plus airport-captured samples to adapt to real lighting, glare, and plate types \cite{ccpd-2018, openalpr-benchmark, eu-anpr}.
 
@@ -132,12 +132,12 @@ The same camera detects both, using logic to compare time differences.
 		\textbf{Dataset} & \textbf{Region} & \textbf{Scale} & \textbf{Usage} \\
 		\midrule
 		CCPD (City Parking) & CN & 200k+ & Pretraining for detection robustness under variable light. \\
-		OpenALPR Benchmark & Mixed & 10k & Testing generalization and OCR performance. \\
+		OpenALPR Benchmark & Mixed & 10k & Testing generalization and \ac{OCR} performance. \\
 		EU License Plate Sets & EU & 5–20k & Adapting detection to EU/German plate patterns. \\
 		Custom Airport Dataset & DE & 3k+ & Captures of real entry/exit under terminal lighting. \\
 		\bottomrule
 	\end{tabular}
-	\caption{Datasets used for pretraining and fine-tuning of the airport ANPR system.}
+	\caption{Datasets used for pretraining and fine-tuning of the airport \ac{ANPR} system.}
 	\label{tab:datasets-airport}
 \end{table}
 
@@ -153,8 +153,8 @@ The same camera detects both, using logic to compare time differences.
 \subsection{Data Quality}
 Quality determines billing precision:
 \begin{itemize}
-	\item \textbf{Preprocessing:} CLAHE contrast enhancement and denoising before OCR.
-	\item \textbf{Confidence gating:} Accept YOLO detections only when confidence $>0.6$.
+	\item \textbf{Preprocessing:} \ac{CLAHE} contrast enhancement and denoising before \ac{OCR}.
+	\item \textbf{Confidence gating:} Accept \textbf{YOLO} detections only when confidence $>0.6$.
 	\item \textbf{Time consistency:} Duplicate detections within 5 seconds are suppressed.
 	\item \textbf{Regex validation:} Only valid EU/German plate formats are stored.
 	\item \textbf{Lighting calibration:} Camera auto-gain and exposure tuned for day/night operation.
@@ -183,9 +183,9 @@ Anomalies indicate irregular operational conditions:
 \begin{itemize}
 	\item \textbf{Double detections:} Same vehicle logged twice within seconds.
 	\item \textbf{Exit-before-entry:} Clock or logic errors (handled with checks).
-	\item \textbf{OCR mismatch:} Entry and exit plates differ by 1–2 characters (e.g., due to reflection).
+	\item \textbf{\ac{OCR} mismatch:} Entry and exit plates differ by 1–2 characters (e.g., due to reflection).
 \end{itemize}
-\textbf{Resolution:} Pattern matching and fuzzy string similarity (\texttt{difflib}) handle small OCR variations before billing logic is triggered.
+\textbf{Resolution:} Pattern matching and fuzzy string similarity (\texttt{difflib}) handle small \ac{OCR} variations before billing logic is triggered.
 
 \begin{table}[h!]
 	\centering
@@ -195,21 +195,21 @@ Anomalies indicate irregular operational conditions:
 		\textbf{Anomaly Type} & \textbf{Impact} & \textbf{Mitigation Strategy} \\
 		\midrule
 		Duplicate Entry Logs & Billing inconsistency & Temporal filtering, 10-sec cooldown. \\
-		OCR Character Swap & Wrong plate ID & Levenshtein/fuzzy match correction. \\
+		\ac{OCR} Character Swap & Wrong plate ID & Levenshtein/fuzzy match correction. \\
 		Missed Exit Event & Overcharge & Periodic event reconciliation from camera buffer. \\
 		\bottomrule
 	\end{tabular}
-	\caption{Common anomalies and mitigation strategies for the airport ANPR system.}
+	\caption{Common anomalies and mitigation strategies for the airport \ac{ANPR} system.}
 	\label{tab:anomalies-airport}
 \end{table}
 
 \subsection*{Summary}
-The application domain integrates \textbf{computer vision}, \textbf{edge AI}, and \textbf{local data management} to automate vehicle monitoring within airport terminals.  
+The application domain integrates \textbf{computer vision}, \textbf{edge \ac{AI}}, and \textbf{local data management} to automate vehicle monitoring within airport terminals.  
 A single Jetson Nano-based camera recognizes both \textbf{entry and exit} events, records timestamps, calculates \textbf{dwell time}, and automatically triggers billing for vehicles exceeding the permitted 10-minute duration.  
 This fully automated workflow eliminates the need for manual ticketing or human monitoring, improving \textbf{efficiency}, \textbf{accuracy}, and \textbf{24/7 operational reliability}.
 
 From a data perspective, the system maintains high \textbf{data quality} through real-time validation, confidence-based filtering, and local persistence of relevant information only.  
-It adheres to \textbf{GDPR-compliant practices} by processing and storing data directly on the Jetson Nano without cloud transmission.  
+It adheres to \textbf{\ac{GDPR}-compliant practices} by processing and storing data directly on the Jetson Nano without cloud transmission.  
 This edge-first approach minimizes latency, reduces maintenance costs, and ensures continued functionality even in network-restricted environments.
 
 Beyond airport use, the developed framework can be scaled for other domains such as:
@@ -222,4 +222,4 @@ Beyond airport use, the developed framework can be scaled for other domains such
 Furthermore, integration with \textbf{Vehicle-to-Infrastructure (V2I)} and \textbf{Vehicle-to-Vehicle (V2V)} communication systems can transform this into a connected mobility module.  
 Such extensions will enable dynamic traffic coordination, \textbf{real-time gate availability broadcasting}, and automated security alerts — key components of next-generation \textbf{Smart Airport Infrastructure}.  
 
-Overall, the proposed solution demonstrates how lightweight embedded AI can deliver high-impact automation with measurable social, operational, and economic benefits, supporting the transition toward \textbf{autonomous, intelligent, and sustainable transportation ecosystems} \cite{smart-parking, privacy-edge, nvidia-jetson}.
+Overall, the proposed solution demonstrates how lightweight embedded \ac{AI} can deliver high-impact automation with measurable social, operational, and economic benefits, supporting the transition toward \textbf{autonomous, intelligent, and sustainable transportation ecosystems} \cite{smart-parking, privacy-edge, nvidia-jetson}.

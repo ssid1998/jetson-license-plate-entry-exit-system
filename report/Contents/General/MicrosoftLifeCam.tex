@@ -93,10 +93,10 @@
 
 \section{Introduction}
 
-The Microsoft LifeCam Show is a compact USB-based web camera that serves as the image acquisition sensor in this project. 
+The Microsoft LifeCam Show is a compact \ac{USB}-based web camera that serves as the image acquisition sensor in this project. 
 It captures live video frames and transmits them to the NVIDIA Jetson Nano for real-time license plate detection. 
-The camera provides a maximum digital resolution of 800$\times$600 pixels, integrates a 2~MP CMOS sensor, and supports automatic focus adjustment and built-in microphone audio input \cite{microsoft_lifecam_datasheet}. 
-Its compact design and native USB~2.0 connectivity make it suitable for embedded vision tasks where plug-and-play functionality and stable frame rates are essential \cite{techradar_lifecam_review}.
+The camera provides a maximum digital resolution of 800$\times$600 pixels, integrates a 2~MP \ac{CMOS} sensor, and supports automatic focus adjustment and built-in microphone audio input \cite{microsoft_lifecam_datasheet}. 
+Its compact design and native \ac{USB}~2.0 connectivity make it suitable for embedded vision tasks where plug-and-play functionality and stable frame rates are essential \cite{techradar_lifecam_review}.
 
 \begin{figure}[H]
 	\centering
@@ -106,7 +106,7 @@ Its compact design and native USB~2.0 connectivity make it suitable for embedded
 \end{figure}
 
 \section{General}
-The LifeCam Show operates as a \textbf{USB Video Class (UVC)} device, meaning it complies with the open USB standard for webcams and does not require proprietary drivers on modern Linux distributions \cite{linux_uvc_driver}. 
+The LifeCam Show operates as a \textbf{\ac{USB} Video Class (UVC)} device, meaning it complies with the open \ac{USB} standard for webcams and does not require proprietary drivers on modern Linux distributions \cite{linux_uvc_driver}. 
 When connected to the Jetson Nano, it appears automatically as \texttt{/dev/video0}, accessible through libraries such as OpenCV or GStreamer.  
 This standardization ensures stable compatibility across Windows, Linux, and JetPack environments \cite{jetson_nano_doc}.
 
@@ -117,7 +117,7 @@ For this project, it is mounted on an adjustable stand facing vehicle license pl
 \label{sec:lifecam_specific}
 
 The specific camera model used in this project is the \textbf{Microsoft LifeCam Show (Model~1139)}, manufactured by Microsoft Corporation.  
-It connects to the Jetson Nano through a USB~2.0 Type-A interface, which supplies both \textbf{data transmission} and \textbf{5~V~DC power} (up to 500~mA).  
+It connects to the Jetson Nano through a \ac{USB}~2.0 Type-A interface, which supplies both \textbf{data transmission} and \textbf{5~V~DC power} (up to 500~mA).  
 During operation, the LifeCam functions as a plug-and-play UVC device, automatically recognized by Linux-based systems such as JetPack~5.x, appearing under \texttt{/dev/video0} \cite{linux_uvc_driver, jetson_nano_doc}.  
 
 \bigskip
@@ -159,12 +159,12 @@ Key parameters are summarized in Table~\ref{tab:lifecam_specs}.
 		\hline
 		\textbf{Parameter} & \textbf{Specification} \\ \hline
 		Manufacturer & Microsoft Corporation \\ \hline
-		Image Sensor & 2~MP CMOS \\ \hline
+		Image Sensor & 2~MP \ac{CMOS} \\ \hline
 		Max Video Resolution & 800$\times$600~px (VGA) \\ \hline
 		Digital Zoom & 5$\times$ \\ \hline
 		Focus Adjustment & Automatic (min.~focus~21~in) \\ \hline
-		Interface & USB~2.0, 4-pin Type-A \\ \hline
-		Power Supply & 5~V~@~500~mA (via USB) \\ \hline
+		Interface & \ac{USB}~2.0, 4-pin Type-A \\ \hline
+		Power Supply & 5~V~@~500~mA (via \ac{USB}) \\ \hline
 		Audio & Built-in mono microphone \\ \hline
 		Color & Black/Silver \\ \hline
 		Dimensions (W$\times$D$\times$H) & 1.3~$\times$~0.5~$\times$~2.4~in \\ \hline
@@ -176,7 +176,7 @@ Key parameters are summarized in Table~\ref{tab:lifecam_specs}.
 
 \noindent\textbf{Circuit Diagram:}  
 Since the LifeCam Show is a self-contained UVC peripheral, no additional circuitry is required. 
-The only connection is the USB cable from the camera to the Jetson Nano’s J4 port, providing both power and data.
+The only connection is the \ac{USB} cable from the camera to the Jetson Nano’s J4 port, providing both power and data.
 
 \section{Library}
 \subsection{Description}
@@ -221,7 +221,7 @@ Key OpenCV functions used include:
 The Microsoft LifeCam Show captures \textbf{RGB color video frames} at a maximum resolution of 800$\times$600~pixels (VGA), encoded as 8-bit unsigned integer values per color channel (24-bit color depth).  
 Each frame consists of three color planes — Blue, Green, and Red (BGR order) — compatible with OpenCV’s \texttt{cv::Mat} format \cite{opencv_doc_2024}.  
 In addition to video, the built-in mono microphone provides a \textbf{Pulse Code Modulated (PCM)} audio stream at 16-bit depth and 16~kHz sampling rate \cite{microsoft_lifecam_datasheet}.  
-Both data streams comply with the USB~Video~Class (UVC~1.1) standard \cite{linux_uvc_driver}.
+Both data streams comply with the \ac{USB}~Video~Class (UVC~1.1) standard \cite{linux_uvc_driver}.
 
 \subsection{Data Structure}
 Captured video frames are stored in sequential frame buffers in system memory using the \texttt{v4l2} (Video4Linux2) driver layer.  
@@ -236,11 +236,11 @@ At 30~frames~per~second and VGA resolution, the raw uncompressed video throughpu
 \]
 When encoded using MJPEG compression, the effective bandwidth reduces to 4–6~MB/s, depending on scene complexity.  
 An hour of recording requires roughly 1.5–2.0~GB of storage in MJPEG format.  
-This data rate is well within the USB~2.0 specification’s maximum of 480~Mbps, allowing for stable streaming without frame drops \cite{linux_uvc_driver}.  
+This data rate is well within the \ac{USB}~2.0 specification’s maximum of 480~Mbps, allowing for stable streaming without frame drops \cite{linux_uvc_driver}.  
 
 \subsection{Data Quality}
 The LifeCam Show delivers consistent image sharpness under standard indoor lighting (200–800~lux).  
-Its CMOS sensor provides moderate low-light sensitivity but exhibits visible noise at illumination levels below 100~lux.  
+Its \ac{CMOS} sensor provides moderate low-light sensitivity but exhibits visible noise at illumination levels below 100~lux.  
 Color reproduction fidelity is high (average $\Delta E$ <~6.0) under daylight-balanced LED lighting \cite{techradar_lifecam_review}.  
 The autofocus system maintains focus for object distances between 0.5–1.5~m, suitable for fixed-mount license plate imaging.  
 However, as a consumer-grade webcam, it lacks manual gain control, white balance locking, and lens calibration data, which can introduce variability under dynamic lighting \cite{microsoft_lifecam_datasheet}.
@@ -267,10 +267,10 @@ However, as a consumer-grade webcam, it lacks manual gain control, white balance
 Several operational and environmental limitations apply to the Microsoft LifeCam Show during embedded AI deployment:
 
 \begin{itemize}
-	\item \textbf{Power Supply:} Operates on 5~V~DC at 500~mA from a USB~2.0 port.  
+	\item \textbf{Power Supply:} Operates on 5~V~DC at 500~mA from a \ac{USB}~2.0 port.  
 	Exceeding a total cable length of 2~m may cause undervoltage and intermittent frame drops.
 	
-	\item \textbf{Bandwidth:} Limited by USB~2.0 interface (480~Mbps shared).  
+	\item \textbf{Bandwidth:} Limited by \ac{USB}~2.0 interface (480~Mbps shared).  
 	Concurrent use of high-speed devices (e.g., SSD or CSI camera) may reduce throughput.
 	
 	\item \textbf{Lighting Dependency:}  
@@ -286,7 +286,7 @@ Several operational and environmental limitations apply to the Microsoft LifeCam
 	Vibrations above 10~Hz can misalign focus, affecting license plate detection accuracy.
 	
 	\item \textbf{System Integration Constraints:}  
-	When connected via USB hub, ensure sufficient power delivery; prefer direct Jetson Nano port (J4).
+	When connected via \ac{USB} hub, ensure sufficient power delivery; prefer direct Jetson Nano port (J4).
 \end{itemize}
 
 Despite these constraints, the LifeCam Show provides consistent video quality for real-time embedded vision tasks, making it a reliable low-cost alternative to industrial cameras for AI inference \cite{edgeAIbook,techradar_lifecam_review}.
@@ -329,7 +329,7 @@ rulecolor=\color{black!30}
 
 \subsection{Inside the Example}
 This example continuously captures and displays frames from the LifeCam Show using OpenCV. 
-It serves as a functional verification of both the camera and Jetson Nano USB interface.
+It serves as a functional verification of both the camera and Jetson Nano \ac{USB} interface.
 
 \section{Calibration}
 Unlike analog cameras or industrial sensors, the LifeCam Show uses a factory-calibrated auto-focus system.  
