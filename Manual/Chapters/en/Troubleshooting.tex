@@ -56,44 +56,44 @@ These checks help maintain system stability, reduce downtime, and ensure uninter
 	\end{itemize}
 \end{itemize}
 
-\begin{figure}[h!]
-	\centering
-	\begin{tikzpicture}[>=stealth, thick, node distance=1.5cm]
-		\tikzstyle{block}=[rectangle, draw=gray!70!black, fill=gray!10, rounded corners, text width=4.4cm, align=center, minimum height=1cm]
-		\tikzstyle{arrow}=[->, thick]
-		
-		\node[block] (start) {Power or Camera Issue Detected};
-		\node[block, below=of start] (check1) {Check Power Adapter and Cable};
-		\node[block, below=of check1] (check2) {Verify USB Connections};
-		\node[block, below=of check2] (check3) {Run \texttt{ls /dev/video*}};
-		\node[block, below=of check3] (resolve) {Reboot or Replace Faulty Part};
-		
-		\draw[arrow] (start) -- (check1);
-		\draw[arrow] (check1) -- (check2);
-		\draw[arrow] (check2) -- (check3);
-		\draw[arrow] (check3) -- (resolve);
-	\end{tikzpicture}
-	\caption{Basic hardware troubleshooting flow.}
-	\label{fig:hardware_troubleshoot}
-\end{figure}
+%\begin{figure}[h!]
+%	\centering
+%	\begin{tikzpicture}[>=stealth, thick, node distance=1.5cm]
+%		\tikzstyle{block}=[rectangle, draw=gray!70!black, fill=gray!10, rounded corners, text width=4.4cm, align=center, minimum height=1cm]
+%		\tikzstyle{arrow}=[->, thick]
+%		
+%		\node[block] (start) {Power or Camera Issue Detected};
+%		\node[block, below=of start] (check1) {Check Power Adapter and Cable};
+%		\node[block, below=of check1] (check2) {Verify USB Connections};
+%		\node[block, below=of check2] (check3) {Run \texttt{ls /dev/video*}};
+%		\node[block, below=of check3] (resolve) {Reboot or Replace Faulty Part};
+%		
+%		\draw[arrow] (start) -- (check1);
+%		\draw[arrow] (check1) -- (check2);
+%		\draw[arrow] (check2) -- (check3);
+%		\draw[arrow] (check3) -- (resolve);
+%	\end{tikzpicture}
+%	\caption{Basic hardware troubleshooting flow.}
+%	\label{fig:hardware_troubleshoot}
+%\end{figure}
 
 % ==========================================================
 \subsection{Software and Model Issues}
-\begin{figure}[h!]
-	\centering
-	\fbox{\parbox[c][3.5cm][c]{10cm}{
-			\centering \textbf{TODO: Add image of Yolov8 load fail}.}}
-	\caption{(To be added) Add image of Yolov8 load fail.}
-	\label{fig:todo_troubleshoot_concept}
-\end{figure}
+%\begin{figure}[h!]
+%	\centering
+%	\fbox{\parbox[c][3.5cm][c]{10cm}{
+%			\centering \textbf{TODO: Add image of Yolov8 load fail}.}}
+%	\caption{(To be added) Add image of Yolov8 load fail.}
+%	\label{fig:todo_troubleshoot_concept}
+%\end{figure}
 \begin{itemize}
-	\item \textbf{YOLOv8 model fails to load:}
-	\begin{itemize}
-		\item Ensure the weight file (\texttt{best.pt}) is in the correct directory.  
-		\item Reinstall Ultralytics using \texttt{pip install ultralytics --upgrade}.  
-		\item Verify dependencies (\texttt{torch}, \texttt{onnxruntime}, \texttt{cv2}) are installed.
-	\end{itemize}
-	
+%	\item \textbf{YOLOv8 model fails to load:}
+%	\begin{itemize}
+%		\item Ensure the weight file (\texttt{best.pt}) is in the correct directory.  
+%		\item Reinstall Ultralytics using \texttt{pip install ultralytics --upgrade}.  
+%		\item Verify dependencies (\texttt{torch}, \texttt{onnxruntime}, \texttt{cv2}) are installed.
+%	\end{itemize}
+%	
 	\item \textbf{Low frame rate (FPS):}
 	\begin{itemize}
 		\item Use a lighter model (YOLOv8-Nano) or reduce camera resolution to 640×480.  
@@ -185,11 +185,11 @@ These checks help maintain system stability, reduce downtime, and ensure uninter
 
 
 % ==========================================================
-\subsection*{Summary}
-
-Most issues can be resolved by checking power, connections, software dependencies, and database integrity.  
-Using diagnostic commands such as \texttt{tegrastats}, \texttt{lsusb}, and \texttt{sqlite3} simplifies fault identification.  
-Following these troubleshooting steps ensures continuous, reliable, and safe operation of the License Plate Detection System in real-world conditions.
+%\subsection*{Summary}
+%
+%Most issues can be resolved by checking power, connections, software dependencies, and database integrity.  
+%Using diagnostic commands such as \texttt{tegrastats}, \texttt{lsusb}, and \texttt{sqlite3} simplifies fault identification.  
+%Following these troubleshooting steps ensures continuous, reliable, and safe operation of the License Plate Detection System in real-world conditions.
 
 \vspace{0.5cm}
 \begin{tcolorbox}[colback=blue!5!white,colframe=blue!60!black,

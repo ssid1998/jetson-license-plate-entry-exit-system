@@ -1,185 +1,136 @@
 %%%%%%%%%%%%%%%%%%%%%%%%
-%
-% $Autor: Gautam Ramesh$
-% $Datum: 2025-11-09 16:02:14Z $
-% $Pfad: /Users/gautamramesh/githubNew/ML26-03-Car-Licence-Plate-Identification-with-a-Jetson-Nano/AssumptionOfLiability/AssumptionOfLiability.tex $
-% $Version: 1 $
-%
-% !TeX encoding = utf8
-% !TeX root = Rename
-%
+% Assumption of Liability — With Hochschule Emden/Leer Logo
+% Author: Gautam Ramesh
 %%%%%%%%%%%%%%%%%%%%%%%%
-
-
-
-
 
 \documentclass[12pt,a4paper]{article}
 
+% ---------- Packages ----------
+\usepackage{graphicx}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{hyperref}
+\usepackage{geometry}
+\usepackage{tikz}
+\geometry{margin=1in}
+\hypersetup{colorlinks=true, urlcolor=blue}
 
-\input{General/packages}
+% ---------- Table Command ----------
+\newcommand{\ListOfMaterials}{%
+	\begin{table}[h]
+		\centering
+		\scriptsize
+		\setlength{\tabcolsep}{3pt}
+		\renewcommand{\arraystretch}{0.9}
+		
+		\resizebox{\textwidth}{!}{%
+			\begin{tabularx}{\textwidth}{|c|>{\centering\arraybackslash}m{1.4cm}|X|r|p{2.7cm}|}
+				\hline
+				\textbf{Qty} & \textbf{Image} & \textbf{Component} & \textbf{Price (€)} & \textbf{Source / Link} \\ \hline
+				
+				1 &
+				\includegraphics[width=0.55\linewidth]{BOM/jetson_nano.png} &
+				Seeed Studio reComputer J1010 (Jetson Nano Bundle) \newline
+				Computing device with case and heatsink &
+				219.00 &
+				\href{http://reichelt.de/de/de/shop/produkt/nvidia_jetson_nano_bundle_4x_1_4_ghz_4_gb_ram-335036}{NVidia Jetson Nano Bundle — Reichelt} \\ \hline
+				
+				1 &
+				\includegraphics[width=0.55\linewidth]{BOM/adapter.jpg} &
+				Power Adapter \newline
+				Jetson Nano power supply &
+				15.99 &
+				\href{https://www.seeedstudio.com/reComputer-J1010-p-5434.html}{Bundled with reComputer J1010} \\ \hline
+				
+				1 &
+				\includegraphics[width=0.55\linewidth]{BOM/sd_card.png} &
+				MicroSD Card \newline
+				Storage for JetPack OS and model &
+				8.95 &
+				\href{https://www.reichelt.de/de/de/shop/produkt/microsdhx-speicherkarte_64gb-358282}{Micro SD Card — Reichelt} \\ \hline
+				
+				1 &
+				\includegraphics[width=0.55\linewidth]{BOM/cam1.jpg} &
+				Microsoft Lifecam USB Camera \newline
+				Camera interface &
+				132.90 &
+				Offline purchase \\ \hline
+				
+				1 &
+				\includegraphics[width=0.55\linewidth]{BOM/cam3_rod.jpg} &
+				Camera Support Stand \newline
+				Stable stand for Lifecam &
+				6.95 &
+				Bundled with Lifecam \\ \hline
+				
+				1 &
+				\includegraphics[width=0.55\linewidth]{BOM/hdmi_cable.png} &
+				HDMI Cable \newline
+				Connect Jetson Nano to monitor &
+				9.50 &
+				\href{https://www.reichelt.com/de/en/shop/product/high-retention_hdmi_cable_2_0m-287016}{HDMI Cable — Reichelt} \\ \hline
+				
+				1 &
+				\includegraphics[width=0.55\linewidth]{BOM/cooling_fan.png} &
+				Cooling Fan (5V) \newline
+				Prevents overheating during inference &
+				2.90 &
+				\href{https://www.reichelt.com/de/en/shop/product/fan_40_x_40_x_10_mm_5_v_dc_0_47_w_5800_rpm-239812}{Cooling Fan — Reichelt} \\ \hline
+				
+				\multicolumn{3}{|r|}{\textbf{Total:}} &
+				\textbf{396.19} & \\ \hline
+				
+			\end{tabularx}
+		}
+		\caption{\textbf{Bill of Materials with Images}}
+	\end{table}
+}
 
 %%%%%%%%%%%%%%%%%%%%%%%%
-%
-% 
-
-%\newcommand{\SystemName}{XY}
-%\newcommand{\StudentName}{Max Mustermann}
-%\newcommand{\StudentNumber}{Matrikelnummer}
-%\newcommand{\Date}{27. February 2025}
-
-
-%\newcommand{\SystemName}{ML24-EX01-KeywordSpotting}
-%\newcommand{\StudentName}{Akshay Joseph}
-%\newcommand{\StudentNumber}{7025673}
-%\newcommand{\Date}{27. February 2025}
-%\newcommand{\ListOfMaterials}{%
-%\begin{itemize}
-%	\item 1	TinyML Kit
-%\end{itemize}
-%}
-
-%\newcommand{\SystemName}{ML24-EX02-Pico4ML}
-%\newcommand{\StudentName}{Sudhanshu	Pukale}
-%\newcommand{\StudentNumber}{7026307}
-%\newcommand{\Date}{27. February 2025}
-%\newcommand{\ListOfMaterials}{%
-%	\begin{itemize}
-%		\item 1	ArduCam Pico4ML
-%		\item USB Cable A-C with Switch
-%	\end{itemize}
-%}
-
-
-%\newcommand{\SystemName}{ML24-EX03-Pico4MLPro}
-%\newcommand{\StudentName}{Manoj Kumar Prabhakaran}
-%\newcommand{\StudentNumber}{7026006}
-%\newcommand{\Date}{27. February 2025}
-%\newcommand{\ListOfMaterials}{%
-%	\begin{itemize}
-%		\item 1	ArduCam Pico4ML-Pro
-%		\item 4 Camera Cables
-%	%	\item Camera ArduCam B045
-%	\end{itemize}
-%}
-
-%\newcommand{\SystemName}{ML24-EX04-PortentaH7}
-%\newcommand{\StudentName}{Hemanth Jadiswami Prabhakaran}
-%\newcommand{\StudentNumber}{7026000}
-%\newcommand{\Date}{27. February 2025}
-%\newcommand{\ListOfMaterials}{%
-%	\begin{itemize}
-%		\item 1 Arduino Portenta H7
-%		\item 1 Arduino Vision Shield
-%		\item 1 USB-A-C Cable
-%	\end{itemize}
-%}
-	
-
-%\newcommand{\SystemName}{ML24-EX05-Camera}
-%\newcommand{\StudentName}{Nanda Srikanth Saroj Kumar Nanda}
-%\newcommand{\StudentNumber}{7026002}
-%\newcommand{\Date}{27. February 2025}
-%\newcommand{\ListOfMaterials}{%
-%  \begin{itemize}
-%    \item 1	TinyML Kit
-%  \end{itemize}
-%}
-	
-
-
-
-
-\newcommand{\SystemName}{ML24-EX06-NiclaVision}
-\newcommand{\StudentName}{Ranjeetsing	Tawar}
-\newcommand{\StudentNumber}{7026116}
-\newcommand{\Date}{27. February 2025}
-\begin{center}
-	\begin{longtable}{|>{\centering\arraybackslash}m{0.7cm}|>{\centering\arraybackslash}m{2.7cm}|>{\centering\arraybackslash}m{4cm}|>{\centering\arraybackslash}m{1.4cm}|>{\centering\arraybackslash}m{3cm}|>{\centering\arraybackslash}m{2.2cm}|}
-		\caption{Hardware Components List} \\
-		
-		\hline
-		\textbf{S.No} & \textbf{Item} & \textbf{Description} & \textbf{Price (€)} & \textbf{Link} & \textbf{Image} \\ \hline
-		\endfirsthead
-		
-		\multicolumn{6}{c}%
-		{{\bfseries \tablename\ \thetable{} -- continued from previous page}} \\
-		\hline
-		\textbf{S.No} & \textbf{Item} & \textbf{Description} & \textbf{Price (€)} & \textbf{Link} & \textbf{Image} \\ \hline
-		\endhead
-		
-		\hline \multicolumn{6}{r}{{Continued on next page}} \\ \hline
-		\endfoot
-		
-		\hline
-		\endlastfoot
-		
-		1 & Seeed Studio reComputer J1010 (Nvidia Jetson Nano Bundle) & Computing device with case and heatsink & 219.00 & \href{http://reichelt.de/de/de/shop/produkt/nvidia_jetson_nano_bundle_4x_1_4_ghz_4_gb_ram-335036}{NVidia Jetson Nano Bundle} & 
-		\raisebox{0.1cm}{\hspace{0.1cm}\includegraphics[height=1.3cm,keepaspectratio]{BOM/jetson_nano.png}\hspace{0.1cm}} \\ \hline
-		
-		2 & Power Adapter & Jetson Nano power supply & ~15.99 & Not Applicable (Bundled with Seed Studio reComputer J1010) & 
-		\raisebox{0.1cm}{\hspace{0.1cm}\includegraphics[height=1.3cm,keepaspectratio]{BOM/adapter.jpg}\hspace{0.1cm}} \\ \hline
-		
-		3 & MicroSD Card & SD Card for JetPack OS model and dataset storage & 8.95 & \href{https://www.reichelt.de/de/de/shop/produkt/microsdhx-speicherkarte_64gb-358282}{Micro SD Card} & 
-		\raisebox{0.1cm}{\hspace{0.1cm}\includegraphics[height=1.3cm,keepaspectratio]{BOM/sd_card.png}\hspace{0.1cm}} \\ \hline
-		
-		4 & Microsoft Lifecam USB Camera & Camera interface & ~132.90 & Not Applicable (Available Offline)  & 
-		\raisebox{0.1cm}{\hspace{0.1cm}\includegraphics[height=1.3cm,keepaspectratio]{Lifecam/cam1.jpg}\hspace{0.1cm}} \\ \hline
-		
-		5 & Camera Support Stand & Stand enabling stable positioning & ~6.95 & Not Applicable (Bundled with Microsoft Lifecam USB Camera)  & 
-		\raisebox{0.1cm}{\hspace{0.1cm}\includegraphics[height=1.3cm,keepaspectratio]{Lifecam/cam3_rod.jpg}\hspace{0.1cm}} \\ \hline
-		
-		6 & HDMI Cable & Cable to connect Jetson Nano with a monitor & 9.50 & \href{https://www.reichelt.com/de/en/shop/product/high-retention_hdmi_cable_2_0m-287016}{HDMI Cable} & 
-		\raisebox{0.1cm}{\hspace{0.1cm}\includegraphics[height=1.3cm,keepaspectratio]{BOM/hdmi_cable.png}\hspace{0.1cm}} \\ \hline
-		
-		7 & Benq Monitor (1080p) & Monitor for graphical user interfacing and debugging & 89.95 & \href{https://www.reichelt.com/de/en/shop/product/monitor-369028}{Monitor} & 
-		\raisebox{0.1cm}{\hspace{0.1cm}\includegraphics[height=1.3cm,keepaspectratio]{BOM/monitor.png}\hspace{0.1cm}} \\ \hline
-		
-		8 & Generic USB Keyboard & Keyboard for interfacing with the Jetson Nano & 16.95 & \href{https://www.reichelt.com/de/en/shop/product/keyboard_-_usb_-_black_-_uk_layout-195318}{USB Keyboard} & 
-		\raisebox{0.1cm}{\hspace{0.1cm}\includegraphics[height=1.3cm,keepaspectratio]{BOM/keyboard.png}\hspace{0.1cm}} \\ \hline
-		
-		9 & Generic USB Mouse & Mouse for interfacing with the Jetson Nano & 4.79 & \href{https://www.reichelt.com/de/en/shop/product/mouse_mouse_cable_usb_white-195758}{USB Mouse} & 
-		\raisebox{0.1cm}{\hspace{0.1cm}\includegraphics[height=1.3cm,keepaspectratio]{BOM/mouse.png}\hspace{0.1cm}} \\ \hline
-		
-		10 & Ethernet Cable & CAT5e cable for network connectivity & 3.95 & \href{https://www.reichelt.com/de/en/shop/product/patch_cable_cat_5e_utp_yellow_2_m-348997}{CAT 5E Cable} & 
-		\raisebox{0.1cm}{\hspace{0.1cm}\includegraphics[height=1.3cm,keepaspectratio]{BOM/cat_cable.png}\hspace{0.1cm}} \\ \hline
-		
-		11 & Fan (5 Volts) & Fan preventing overheating during model inference & 2.90 & \href{https://www.reichelt.com/de/en/shop/product/fan_40_x_40_x_10_mm_5_v_dc_0_47_w_5800_rpm-239812}{Cooling Fan} & 
-		\raisebox{0.1cm}{\hspace{0.1cm}\includegraphics[height=1.3cm,keepaspectratio]{BOM/cooling_fan.png}\hspace{0.1cm}} \\ \hline
-		
-		&  & \textbf{Total} & \textbf{448.88} &  &  \\
-		
-	\end{longtable}
-\end{center}
-
-
-
-%\newcommand{\SystemName}{ML24-EX07-Edge-Impulse}
-%\newcommand{\StudentName}{Mansour	Ahmady Phoulady}
-%\newcommand{\StudentNumber}{7025671}
-%\newcommand{\Date}{27. February 2025}
-%\newcommand{\ListOfMaterials}{%
-%  \begin{itemize}
-%    \item 1	TinyML Kit
-%  \end{itemize}
-%}
-
-
-
-
-
-
-
-
-
+% Document Starts
+%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{document}
-
-
-\input{Contents/TextEnglish}
-%\input{Contents/TextDeutsch}
-
-
-
-
+	
+	% ---------- HOCHSCHULE LOGO + ADDRESS ----------
+	\begin{tikzpicture}
+		\node (Logo) at (0,0) {\includegraphics[width=7cm]{Images/Technik}};
+		
+		\node (Adress) at (10, -22mm) {\begin{tabular}{l} 
+				\textbf{\textsf{{\Huge\textcolor{gray}{Der Präsident}}}} \\ 
+				\textbf{\textsf{\Large Fachbereich Technik}}\\[4mm]
+				\textbf{\textsf{{\Large\textcolor{gray}{Auskunft erteilt}}}} \\ 
+				{\textsf{{Name: Elmar Wings}}}\\ 
+				{\textsf{{Email: Elmar.Wings@hs-emden-leer.de}}}\\ 
+				{\textsf{{Phone.: 04921 807 1430}}}\\ 
+				{\textsf{{Room: T231}}}\\
+		\end{tabular}};
+	\end{tikzpicture}
+	
+	\vspace{8mm}
+	
+	% ---------- TITLE ----------
+	\begin{center}
+		\textbf{\textsf{\Large Assumption of Liability}}
+	\end{center}
+	
+	% ---------- LIABILITY TEXT ----------
+	On \textbf{\today}, \textbf{Gautam Ramesh (7026787)},  
+	will take over the following components in perfect condition  
+	from the Emden/Leer University of Applied Sciences, MSR Laboratory.
+	
+	Gautam Ramesh is personally liable for the loss  and  
+	damage to the components handed over until they are returned.
+	
+	\vspace{6mm}
+	
+	% ---------- TABLE ----------
+	\ListOfMaterials
+	
+	% ---------- SIGNATURE ----------
+	\vspace{5mm}
+\vspace{5mm}
+\noindent\rule{6cm}{0.4pt}\\
+\textbf{Signature}
+	
 \end{document}
