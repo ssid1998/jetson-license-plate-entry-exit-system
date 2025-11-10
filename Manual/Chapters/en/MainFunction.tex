@@ -6,13 +6,13 @@ It is specially designed for \textbf{German license plates} and helps manage sho
 
 \vspace{0.5em}
 When a vehicle enters, the camera captures the license plate and stores it together with the date and time.  
-When the same vehicle exits, the system detects it again and automatically calculates how long it stayed inside the airport area.  
-If the duration is more than \textbf{15 minutes}, the system marks it for billing.  
+When the same vehicle exits, the main unit  detects it again and automatically calculates how long it stayed inside the airport area.  
+If the duration is more than \textbf{15 minutes}, the main unit marks it for billing.  
 If the stay is \textbf{15 minutes or less}, the parking is free of charge 
 
 \vspace{0.5em}
 Certain vehicles such as \textbf{emergency services (ambulance, police, fire brigade)} and \textbf{official government vehicles} are automatically identified and exempted from all charges.  
-These special plates are pre-registered in the system’s database, ensuring that authorised vehicles always pass freely without manual intervention.
+These special plates are pre-registered in the main unit’s database, ensuring that authorised vehicles always pass freely without manual intervention.
 
 \vspace{0.5em}
 All vehicle data, including plate number, entry time, exit time, duration, and payment status, are securely stored inside the device.  
@@ -28,7 +28,60 @@ This ensures transparency, traceability, and smooth traffic flow at both the ent
 	\item Stores all records locally for reporting, auditing, or payment.
 \end{itemize}
 
+\section{Billing Mechanism}
 
+The billing process automatically determines whether a vehicle should be charged based on its total parking duration. If the total duration is less than 15 inutes it is not charged and if it is greater than 15 minutes 2 Euros is charged .The workflow is divided into four main scenarios as described below.
+
+\subsection{Vehicle Entry}
+\begin{itemize}
+	\item When a car enters the premises, the main unit automatically detects and records the license plate number.
+	\item The entry time is stored in the database with a timestamp.
+	\item Then the Driver is shown with the Welcome message(Eg. Willkommen - EMD AB 1234 - Timestamp ) with the Number plate  with the Time stamp
+	\item No payment is initiated at this stage.
+%	\begin{center}
+%		\includegraphics[width=0.5\textwidth]{General/entry.png}
+%	\end{center}
+\end{itemize}
+
+\subsection{Vehicle Exit}
+\begin{itemize}
+	\item On exit, the main unit again detects the license plate and retrieves the corresponding entry record.
+	\item The current time is compared with the stored entry timestamp.
+	\item The total parking duration is computed in minutes.
+%	\begin{center}
+%		\includegraphics[width=0.8\textwidth]{General/end.png}
+%	\end{center}
+\end{itemize}
+
+\subsubsection{Scenario 1: Duration Less Than 15 Minutes}
+\begin{itemize}
+	\item If the total parking time is \textbf{less than 15 minutes}, the main unit classifies the session as \textbf{free of cost}.
+	\item The details of the parking session are Displayed
+	\item The display automatically displays to the \textbf{“Danke” (Thank You)} page (Eg. Danke - EMD AB 1234 - Total time ).
+	\item The barrier opens and the vehicle exits without any payment.
+%	\begin{center}
+%		\includegraphics[width=0.8\textwidth]{general/exit<15.png}
+%	\end{center}
+\end{itemize}
+
+\subsubsection{Scenario 2: Duration Greater Than 15 Minutes}
+\begin{itemize}
+	\item If the parking duration \textbf{exceeds 15 minutes}, the main unit calculates the billing amount is at  flat 2 Euros
+	\item The total payable amount is shown on the display screen.
+	\item Once the transaction is successful , Car is allowed to exit.
+%	\begin{center}
+%		\includegraphics[width=0.8\textwidth]{General/exit>15.png}
+%	\end{center}
+\end{itemize}
+
+\begin{center}
+	\begin{tabular}{|c|c|}
+		\hline
+		\textbf{Parking Duration} & \textbf{Billing Amount} \\ \hline
+		0 -- 15 minutes & Free of Cost \\ \hline
+		$>$ 15 minutes & €2.00 flat\\ \hline
+	\end{tabular}
+\end{center}
 % --------------------------------------------------
 % Section 1: How the System Works
 % --------------------------------------------------
@@ -139,12 +192,13 @@ This ensures transparency, traceability, and smooth traffic flow at both the ent
 \noindent
 \textbf{Plausibility and Manual Verification:}
 \begin{itemize}
-	\item If the system cannot read a plate clearly (for example, due to dirt, glare, or motion blur), it will display a \textbf{“Detection Unclear”} message on the screen.
+	\item If the main unit cannot read a plate clearly (for example, due to dirt, glare, or motion blur), it will display a \textbf{“Detection Unclear”} message on the screen.
 	\item In such cases, the operator can manually enter the license plate number using a simple on-screen input field or log sheet.
-	\item The system checks for \textbf{duplicate or incomplete entries} to avoid double billing.
+	\item The main unit checks for \textbf{duplicate or incomplete entries} to avoid double billing.
 	\item If an entry or exit is missing, the software automatically flags the record for review.
 	\item For fairness, vehicles with unreadable plates are temporarily marked as \textbf{“Pending Verification”} until corrected by staff.
 	\item Regular cleaning of the lens and maintaining good lighting reduces the chance of detection errors.
+	\item The main unit  is capable of detecting German license plates and validating them. In the event , where the non German plate is recognized the main unit displays an 'Invalid Licence plate ' .
 \end{itemize}
 
 \vspace{0.8em}
