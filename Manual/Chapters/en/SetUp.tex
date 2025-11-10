@@ -1,10 +1,9 @@
-\chapter{Set Up}
+\chapter{Setting Up The System}
 \label{ch:system_setup}
 
 \section{System Setup}
 
-This section explains, in simple steps, how to prepare and start the \textbf {License Plate Detection System}.  
-No technical knowledge is required — follow the setup steps below to get the system ready for use.
+This section explains, in simple steps, how to prepare and start the \textbf {License Plate Detection System}. Follow the setup steps below to get the system ready for usage:
 
 \vspace{0.4cm}
 \noindent
@@ -12,18 +11,17 @@ No technical knowledge is required — follow the setup steps below to get the s
 \begin{itemize}
 	\item Place the \textbf{System} on a stable, well-ventilated surface.
 	\item Mount the \textbf{camera} on its stand and point it toward the vehicle lane or entry gate.
-	\item Connect the camera to the Jetson Nano using the USB port.
-	\item Connect the \textbf{HDMI cable} from the Jetson Nano to the monitor.
-	\item Plug in the \textbf{power adapter } but do not turn it on yet.
+	\item Connect the camera to the System using the USB port.
+	\item Connect the \textbf{HDMI cable} from the system to the monitor.
+	\item Insert the \textbf{microSD card} into the system.
 \end{itemize}
 
 \vspace{0.3cm}
 \noindent
 \textbf{Step 2: Start the System}
 \begin{itemize}
-	\item Insert the \textbf{microSD card} (already loaded with JetPack 5.1.2).  
-	\item Turn on the power switch.  
-	\item Wait a few seconds for the system to start automatically.  
+	\item Plug in the \textbf{power adapter} and turn on the power switch. 
+	\item Wait a few seconds for the system to start.  
 	\item The display will show the live camera view once it is ready.
 \end{itemize}
 
@@ -31,14 +29,13 @@ No technical knowledge is required — follow the setup steps below to get the s
 \noindent
 \textbf{Step 3: Verify Operation}
 \begin{itemize}
-	\item Watch the screen — detected number plates will appear automatically.
-	\item Adjust the camera height or tilt if the plate is not clearly visible.
+	\item The system will now be able to detect number plates.Any detected car license plates are logged with timestamps and saved.
+	\item Adjust the camera height or tilt if the plates are not clearly visible.
 \item Ensure good lighting at the vehicle gate area.
 For accurate plate reading, maintain an illumination level between 
 \textbf{250 lux (minimum)} and \textbf{900 lux (maximum)} — with an 
 optimal range of \textbf{400–700 lux}. 
 Avoid shining lights directly into the camera to prevent glare or overexposure.
-	\item The system saves every detection with date and time automatically.
 \end{itemize}
 
 \vspace{0.3cm}
@@ -52,75 +49,17 @@ Avoid shining lights directly into the camera to prevent glare or overexposure.
 
 \vspace{0.5cm}
 \noindent
-\textbf{System Setup Diagram:}
 
-\begin{figure}[h!]
-	\centering
-	\resizebox{1.2\textwidth}{!}{%
-		\begin{tikzpicture}[
-			node distance=2.4cm, 
-			>=stealth,
-			font=\large,
-			every node/.style={align=center}
-			]
-			
-			% Define styles
-			\tikzstyle{block} = [rectangle, draw=blue!70!black, fill=blue!10, 
-			rounded corners, minimum height=1cm, minimum width=3.3cm, text centered, font=\small]
-			\tikzstyle{process} = [rectangle, draw=green!60!black, fill=green!10, 
-			rounded corners, minimum height=1cm, minimum width=3.6cm, text centered, font=\small]
-			\tikzstyle{db} = [cylinder, shape border rotate=90, draw=orange!90!black, fill=orange!10, 
-			minimum height=1.3cm, minimum width=1.1cm, aspect=0.4, font=\small]
-			\tikzstyle{arrow} = [->, thick]
-			
-			% --- LAYER 1: Hardware devices ---
-			\node[block] (camera) {\faCamera \\ \textbf{Microsoft LifeCam Show}};
-			\node[block, right=4.0cm of camera] (nano) {\faMicrochip \\ \textbf{NVIDIA Jetson Nano}\\(reComputer J1010)};
-			\node[block, right=4.0cm of nano] (display) {\faDesktop \\ \textbf{HDMI Display}};
-			\node[block, below=1.7cm of nano, fill=gray!10, draw=gray!60!black] (power) {\faBolt \\ 5V / 4A USB-C Power Supply};
-			
-			% --- LAYER 2: Software / Processing pipeline ---
-			\node[process, below=2cm of power, xshift=-3.9cm] (os) {\textbf{JetPack 5.1.2 (Ubuntu 20.04)}};
-			\node[process, right=4.0cm of os] (yolo) {\textbf{YOLOv8 Detection}};
-			\node[process, right=4.0cm of yolo] (ocr) {\textbf{EasyOCR Reading}};
-			\node[db, below=2cm of yolo, yshift=-0.2cm] (database) {\textbf{SQLite}\\plates.db};
-			
-			% --- ARROWS: Hardware layer ---
-			\draw[arrow] (camera) -- node[above, yshift=0.2cm]{\scriptsize Video Stream (USB)} (nano);
-			\draw[arrow] (nano) -- node[above, yshift=0.2cm]{\scriptsize Output (HDMI)} (display);
-			\draw[arrow] (power) -- node[right]{\scriptsize Power Input} (nano);
-			
-			% --- ARROWS: Software layer ---
-			\draw[arrow, dashed, blue!80!black] (os) -- (yolo);
-			\draw[arrow, dashed, blue!80!black] (yolo) -- (ocr);
-			\draw[arrow, dashed, blue!80!black] (ocr) -- (database);
-			
-			% --- CONNECTIONS BETWEEN LAYERS ---
-			\draw[arrow, thick, gray!70!black, bend right=20] (nano.south) to (os.north);
-			\draw[arrow, thick, orange!80!black, bend left=20] (database.north) to (display.south);
-			
-			% --- DECORATIVE BOXES ---
-			\node[draw=blue!40!black, thick, rounded corners, fit=(camera)(nano)(display)(power), label={[yshift=0.2cm]above:\textbf{Hardware Layer(Main setup)}}] {};
-			\node[draw=green!40!black, thick, rounded corners, fit=(os)(yolo)(ocr)(database), label={[yshift=-0.3cm]below:\textbf{Software and Data Flow Layer(Backend)}}] {};
-			
-		\end{tikzpicture}%
-	}
-	\caption{System setup overview – hardware and software working together.}
-	\label{fig:setup_complex_tikz}
-\end{figure}
-\begin{center}
-	\textbf{\textcolor{red}{TODO: This diagram will be removed in the future}}
-\end{center}
+\vspace{0.8em}
+\noindent
+\section{Camera Placement and Setup:}
+\begin{itemize}
+	\item Mount the camera about \textbf{2.0–2.5 metres above ground level}, facing the vehicle lane at a \textbf{30–40° angle}.
+	\item Keep a distance of about \textbf{3–5 metres} between the camera and the point where vehicles stop or slow down.
+	\item Avoid placing the camera directly opposite bright lights or reflective surfaces.
+	\item Ensure there is enough ambient light. During night hours, add a small \textbf{LED lamp or floodlight} near the gate for better clarity.
+	\item Keep the camera lens clean and free of dust, water spots, or scratches.
+	\item Do not position the camera behind glass or near strong sunlight to prevent reflections.
+\end{itemize}
 
-\vspace{0.4cm}
-\noindent
-\vspace{0.4cm}
-\noindent
-\vspace{0.3cm}
-\noindent
-\textbf{Note:}  
-The upper part of Figure~\ref{fig:setup_complex_tikz} shows the \textbf{outer hardware setup}
-
-The lower part represents the \textbf{internal processing layer}, which runs automatically inside the System.  
-It includes the system software, detection model, and database used for number plate recognition and data storage.  
-This section is mainly relevant for developers who want to understand or extend the system’s logic.
+\vspace{0.8em}
