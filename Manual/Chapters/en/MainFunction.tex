@@ -34,62 +34,62 @@ This ensures transparency, traceability, and smooth traffic flow at both the ent
 % --------------------------------------------------
 
 \clearpage
-\section{\textcolor{red}{How the System Works [TODO: Flowchart will be removed , just for development purpose}}
+\section{How the System Works}
 \noindent
-\begin{minipage}{\linewidth}
-	\centering
-	\vspace{-0.2cm}
-	\begin{tikzpicture}[
-		scale=0.9, transform shape,
-		font=\small\sffamily,
-		node distance=1.0cm and 1.8cm,
-		>=latex, thick,
-		startstop/.style={rectangle, rounded corners=6pt, draw=gray!80, fill=gray!10,
-			text centered, minimum width=3.3cm, minimum height=0.9cm},
-		process/.style={rectangle, rounded corners=6pt, draw=blue!70!black, fill=blue!10,
-			text centered, minimum width=3.8cm, minimum height=0.9cm},
-		decision/.style={diamond, draw=orange!80!black, fill=orange!10,
-			text width=3.1cm, align=center, aspect=1.7, inner sep=1pt},
-		terminator/.style={ellipse, draw=gray!70!black, fill=gray!15,
-			minimum width=3.3cm, text centered},
-		arrow/.style={->, thick, draw=black!70},
-		every node/.style={align=center}
-		]
-		
-		% ---- Nodes (Vertical layout) ----
-		\node[startstop] (start) {\textbf{System Start}};
-		\node[process, below=of start] (entry) {\faCar~Vehicle Entry\\Plate Captured};
-		\node[process, below=of entry] (store) {\faSave~Save Entry Time};
-		\node[decision, below=of store] (exempt) {Emergency or\\Government Vehicle?};
-		\node[process, right=5.2cm of exempt] (exfree) {\faCheckCircle~Free Exit\\(Exempt Vehicle)};
-		\node[process, below=of exempt] (exit) {\faCarSide~Vehicle Exit\\Plate Detected Again};
-		\node[process, below=of exit] (duration) {\faClock~Calculate Stay Duration};
-		\node[decision, below=of duration] (check15) {Stay $\leq$ 15 minutes?};
-		\node[process, right=3.4cm of check15] (free) {\faSmile~Free Exit\\(Short Stay)};
-		\node[process, below=of check15] (charge) {\faBalanceScale~Display the amount user needs to Pay};
-		\node[process, below=of charge] (log) {\faDatabase~Save Record\\(Billing / Audit)};
-		\node[terminator, below=of log] (end) {\textbf{End of Process}};
-		
-		% ---- Arrows ----
-		\draw[arrow] (start) -- (entry);
-		\draw[arrow] (entry) -- (store);
-		\draw[arrow] (store) -- (exempt);
-		\draw[arrow] (exempt) -- node[above]{Yes} (exfree);
-		\draw[arrow] (exempt) -- node[left]{No} (exit);
-		\draw[arrow] (exit) -- (duration);
-		\draw[arrow] (duration) -- (check15);
-		\draw[arrow] (check15) -- node[above]{Yes} (free);
-		\draw[arrow] (check15) -- node[left]{No} (charge);
-		\draw[arrow] (charge) -- (log);
-		\draw[arrow] (free) |- (log);
-		\draw[arrow] (exfree) |- (log);
-		\draw[arrow] (log) -- (end);
-		
-	\end{tikzpicture}
-	\vspace{-0.2cm}
-	\captionof{figure}{Final airport entry–exit workflow with exemptions, duration check, and billing logic.}
-	\label{fig:airport_flow_vertical}
-\end{minipage}
+%\begin{minipage}{\linewidth}
+%	\centering
+%	\vspace{-0.2cm}
+%	\begin{tikzpicture}[
+%		scale=0.9, transform shape,
+%		font=\small\sffamily,
+%		node distance=1.0cm and 1.8cm,
+%		>=latex, thick,
+%		startstop/.style={rectangle, rounded corners=6pt, draw=gray!80, fill=gray!10,
+%			text centered, minimum width=3.3cm, minimum height=0.9cm},
+%		process/.style={rectangle, rounded corners=6pt, draw=blue!70!black, fill=blue!10,
+%			text centered, minimum width=3.8cm, minimum height=0.9cm},
+%		decision/.style={diamond, draw=orange!80!black, fill=orange!10,
+%			text width=3.1cm, align=center, aspect=1.7, inner sep=1pt},
+%		terminator/.style={ellipse, draw=gray!70!black, fill=gray!15,
+%			minimum width=3.3cm, text centered},
+%		arrow/.style={->, thick, draw=black!70},
+%		every node/.style={align=center}
+%		]
+%		
+%		% ---- Nodes (Vertical layout) ----
+%		\node[startstop] (start) {\textbf{System Start}};
+%		\node[process, below=of start] (entry) {\faCar~Vehicle Entry\\Plate Captured};
+%		\node[process, below=of entry] (store) {\faSave~Save Entry Time};
+%		\node[decision, below=of store] (exempt) {Emergency or\\Government Vehicle?};
+%		\node[process, right=5.2cm of exempt] (exfree) {\faCheckCircle~Free Exit\\(Exempt Vehicle)};
+%		\node[process, below=of exempt] (exit) {\faCarSide~Vehicle Exit\\Plate Detected Again};
+%		\node[process, below=of exit] (duration) {\faClock~Calculate Stay Duration};
+%		\node[decision, below=of duration] (check15) {Stay $\leq$ 15 minutes?};
+%		\node[process, right=3.4cm of check15] (free) {\faSmile~Free Exit\\(Short Stay)};
+%		\node[process, below=of check15] (charge) {\faBalanceScale~Display the amount user needs to Pay};
+%		\node[process, below=of charge] (log) {\faDatabase~Save Record\\(Billing / Audit)};
+%		\node[terminator, below=of log] (end) {\textbf{End of Process}};
+%		
+%		% ---- Arrows ----
+%		\draw[arrow] (start) -- (entry);
+%		\draw[arrow] (entry) -- (store);
+%		\draw[arrow] (store) -- (exempt);
+%		\draw[arrow] (exempt) -- node[above]{Yes} (exfree);
+%		\draw[arrow] (exempt) -- node[left]{No} (exit);
+%		\draw[arrow] (exit) -- (duration);
+%		\draw[arrow] (duration) -- (check15);
+%		\draw[arrow] (check15) -- node[above]{Yes} (free);
+%		\draw[arrow] (check15) -- node[left]{No} (charge);
+%		\draw[arrow] (charge) -- (log);
+%		\draw[arrow] (free) |- (log);
+%		\draw[arrow] (exfree) |- (log);
+%		\draw[arrow] (log) -- (end);
+%		
+%	\end{tikzpicture}
+%	\vspace{-0.2cm}
+%	\captionof{figure}{Final airport entry–exit workflow with exemptions, duration check, and billing logic.}
+%	\label{fig:airport_flow_vertical}
+%\end{minipage}
 
 
 \vspace{0.3cm}
