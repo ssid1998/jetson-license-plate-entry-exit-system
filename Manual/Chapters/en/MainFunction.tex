@@ -27,8 +27,67 @@ This ensures transparency, traceability, and smooth traffic flow at both the ent
 	\item Works fully offline — no internet or network setup required.
 	\item Stores all records locally for reporting, auditing, or payment.
 \end{itemize}
-
 \section{Billing Mechanism}
+
+<<<<<<< Updated upstream
+\section{Billing Mechanism}
+=======
+\begin{figure}[h!]
+	\centering
+%	\includegraphics[width=0.8\textwidth]{images/billing_flow.png}
+	\caption{Automatic Billing Workflow for Parking Duration}
+	\label{fig:billing_flow}
+\end{figure}
+
+The billing process automatically determines whether a vehicle should be charged based on its total parking duration. The workflow is divided into four main scenarios as described below.
+
+\subsection{Scenario 1: Vehicle Entry}
+\begin{itemize}
+	\item When a car enters the premises, the system automatically detects and records the license plate number.
+	\item The entry time is stored in the database with a timestamp.
+	\item No payment is initiated at this stage.
+\end{itemize}
+
+\subsection{Scenario 2: Vehicle Exit}
+\begin{itemize}
+	\item On exit, the system again detects the license plate and retrieves the corresponding entry record.
+	\item The current time is compared with the stored entry timestamp.
+	\item The total parking duration is computed in minutes.
+\end{itemize}
+
+\subsection{Scenario 3: Duration Less Than 15 Minutes}
+\begin{itemize}
+	\item If the total parking time is \textbf{less than 15 minutes}, the system classifies the session as \textbf{free of cost}.
+	\item The display automatically redirects to the \textbf{“Danke” (Thank You)} page.
+	\item The barrier opens and the vehicle exits without any payment.
+\end{itemize}
+
+\subsection{Scenario 4: Duration Greater Than 15 Minutes}
+\begin{itemize}
+	\item If the parking duration \textbf{exceeds 15 minutes}, the system calculates the billing amount at the rate of \textbf{€2.00 per hour (pro-rated)}.
+	\item The total payable amount is shown on the display screen.
+	\item The user completes the payment through the integrated terminal.
+	\item Once the transaction is successful, the barrier opens and the system resets for the next vehicle.
+\end{itemize}
+
+\begin{center}
+	\begin{tabular}{|c|c|}
+		\hline
+		\textbf{Parking Duration} & \textbf{Billing Amount} \\ \hline
+		0 -- 15 minutes & Free of Cost \\ \hline
+		$>$ 15 minutes & €2.00 per hour (pro-rated) \\ \hline
+	\end{tabular}
+\end{center}
+
+\begin{flushleft}
+	\textit{Example:}  
+	If a car remains parked for 42 minutes, the payable amount is calculated as:
+	\[
+	\text{Amount} = \frac{42}{60} \times 2.00 = €1.40
+	\]
+	The user is then prompted to make the payment before exit authorization.
+\end{flushleft}
+>>>>>>> Stashed changes
 
 The billing process automatically determines whether a vehicle should be charged based on its total parking duration. If the total duration is less than 15 inutes it is not charged and if it is greater than 15 minutes 2 Euros is charged .The workflow is divided into four main scenarios as described below.
 
