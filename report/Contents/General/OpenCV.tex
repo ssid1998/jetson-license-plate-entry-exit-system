@@ -1,0 +1,229 @@
+%%%
+%
+% $Autor: Siddhanth Sharma (Matriculation No. 7027189) $
+% $Datum: 2021-05-14 $
+% $Dateiname: 
+% $Version: 4620 $
+%
+% !TeX spellcheck = GB
+% !TeX program = pdflatex
+% !TeX encoding = utf8
+%
+%%%
+
+\chapter{\textcolor{red}{OpenCV}}
+
+\index{OpenCV}
+
+% --------------------------------------------------------
+\section{Introduction}
+\index{OpenCV!Introduction}
+
+OpenCV (Open Source Computer Vision Library) is an open-source library for real-time computer vision and image processing, originally developed by Intel and now maintained by the non-profit organisation OpenCV.org \cite{Bradski:2000,opencv_wiki}. It provides a large collection of optimised algorithms for working with images and videos, including filtering, geometric transformations, feature extraction, object detection, and tracking.
+
+In this project, OpenCV is used as the core image-processing backbone for the licence plate detection pipeline on the Jetson Nano B01. It is responsible for:
+\begin{itemize}
+	\item capturing frames from the camera module via \PYTHON{cv2.VideoCapture},
+	\item pre-processing images (resizing, colour conversion, normalisation) before inference,
+	\item drawing bounding boxes, labels, and confidence scores on detected licence plates, and
+	\item optionally displaying or saving annotated frames for debugging and evaluation.
+\end{itemize}
+The Python bindings (OpenCV-Python) allow seamless integration of these operations into the YOLOv8-based detection workflow \cite{opencv_py_intro}.
+
+
+% --------------------------------------------------------
+\section{Description}
+\index{OpenCV!Description}
+
+OpenCV is structured into several modules. The most relevant modules for this project are:
+\begin{itemize}
+	\item \textbf{core}: basic data structures (e.g.\ matrices, random number generators) and common utility functions.
+	\item \textbf{imgproc}: image processing operations such as blurring, edge detection, morphological operations, thresholding, and geometric transformations.
+	\item \textbf{highgui}: simple GUI functions for displaying images and videos in windows.
+	\item \textbf{videoio}: interfaces for reading from and writing to video streams and cameras.
+	\item \textbf{dnn}: deep neural network inference, enabling loading and running pretrained models.
+\end{itemize}
+
+OpenCV-Python provides idiomatic Python bindings to these C++ modules and is designed specifically to solve computer vision problems in Python \cite{opencv_py_intro}. For the licence plate detection system, the typical processing chain is:
+\begin{enumerate}
+	\item Acquire frames from the Seeed Studio camera connected to the Jetson Nano using \PYTHON{cv2.VideoCapture}.
+	\item Convert frames from BGR (OpenCV default) to RGB or grayscale using \PYTHON{cv2.cvtColor}.
+	\item Resize frames to the input size required by the YOLOv8 model (e.g.\ $640 \times 640$ pixels).
+	\item Post-process model predictions and draw rectangles and text overlays on the detected licence plates using \PYTHON{cv2.rectangle} and \PYTHON{cv2.putText}.
+	\item Display or save the processed frames for monitoring and testing.
+\end{enumerate}
+
+The library is highly optimised and can take advantage of hardware acceleration (e.g.\ NEON, CUDA, and other backends) on embedded platforms. This makes it suitable for real-time processing on devices such as the Jetson Nano \cite{opencv_lfs,opencv_on_wheels}.
+
+
+% --------------------------------------------------------
+\section{Installation}
+\index{OpenCV!Installation}
+
+For this project, OpenCV is used via its Python bindings (\PYTHON{cv2}) in the JetPack~5.x environment on the Jetson Nano B01. There are two common installation strategies:
+
+\begin{itemize}
+	\item \textbf{Pre-built Python wheels} from PyPI, e.g.\ \texttt{opencv-python}, which provide CPU-only OpenCV binaries and are easy to install with \PYTHON{pip} \cite{opencv_pypi}.
+	\item \textbf{Distribution or JetPack packages}, e.g.\ \texttt{python3-opencv} installed via \texttt{apt}, which are often optimised for the underlying hardware.
+\end{itemize}
+
+In this project, OpenCV was installed into the Python environment using \PYTHON{pip} inside the Jetson Nano’s virtual environment:
+
+\begin{tcolorbox}[colback=white,colframe=black,coltext= ShellColor, sharp corners, boxrule=0.8pt]
+	\begin{small}
+		\begin{verbatim}
+			
+			pip install opencv-python	\end{verbatim}
+	\end{small}
+\end{tcolorbox}
+
+
+%\SHELL{pip install opencv-python}
+
+This command installs the \PYTHON{cv2} module, which is then imported in the Python scripts. For more advanced configurations (e.g.\ custom builds with CUDA support), the official OpenCV installation and configuration tutorials provide detailed CMake-based build instructions \cite{opencv_config_ref,opencv_py_tutorial_root}.
+
+
+% --------------------------------------------------------
+\section{Example -- Description}
+\index{OpenCV!Example Description}
+
+The example script \FILE{OpenCVExample.py} demonstrates a minimal but representative OpenCV workflow used in this project. Its purpose is to verify that:
+\begin{itemize}
+	\item the camera is correctly connected and accessible,
+	\item OpenCV can capture and display frames in real time, and
+	\item basic image-processing operations work as expected on the Jetson Nano.
+\end{itemize}
+
+Conceptually, the example performs the following steps:
+\begin{enumerate}
+	\item Open the default camera device using \PYTHON{cv2.VideoCapture(0)}.
+	\item Read frames in a loop and check that the returned frame is valid.
+	\item Convert each frame to grayscale using \PYTHON{cv2.cvtColor(frame, cv2.COLOR\_BGR2GRAY)} to simulate pre-processing before model inference.
+	\item Draw a static rectangular region of interest (ROI) where a number plate would typically appear, using \PYTHON{cv2.rectangle}.
+	\item Display the processed frame in a window using \PYTHON{cv2.imshow}.
+	\item Terminate the loop when the user presses a specific key (e.g.\ \texttt{q}) and release all resources.
+\end{enumerate}
+
+Although this example does not run the YOLOv8 model itself, it mirrors the essential I/O and pre-processing steps used in the full licence plate detection pipeline.
+
+
+% --------------------------------------------------------
+\section{Example -- Manual}
+\index{OpenCV!Example Manual}
+
+The following instructions describe how to run the OpenCV example on the Jetson Nano:
+
+\begin{itemize}
+	\item \textbf{Step 1:} Ensure that the Jetson Nano is powered on and that the Seeed Studio camera is connected to the correct CSI or USB port as configured for the project.
+	\item \textbf{Step 2:} Activate the Python virtual environment (if used) that contains the project dependencies, including OpenCV.
+	\item \textbf{Step 3:} Navigate to the project directory where \FILE{OpenCVExample.py} is stored, for example:
+
+	\begin{tcolorbox}[colback=white,colframe=black,coltext= ShellColor, sharp corners, boxrule=0.8pt]
+		\begin{small}
+			\begin{verbatim}
+				
+				cd ~/projects/license-plate-detection/opencv_tests	\end{verbatim}
+		\end{small}
+	\end{tcolorbox}
+
+%	\begin{verbatim}
+%		cd ~/projects/license-plate-detection/opencv_tests
+%	\end{verbatim}
+
+
+	\item \textbf{Step 4:} Run the example script:
+		\begin{tcolorbox}[colback=white,colframe=black,coltext= ShellColor, sharp corners, boxrule=0.8pt]
+		\begin{small}
+			\begin{verbatim}
+				
+				python OpenCVExample.py	\end{verbatim}
+		\end{small}
+	\end{tcolorbox}
+
+%	\begin{verbatim}
+%		python OpenCVExample.py
+%	\end{verbatim}
+
+
+	\item \textbf{Step 5:} A window should open showing the camera stream with a grayscale conversion and a drawn rectangle. Verify that the frame rate is smooth and that the ROI is correctly positioned.
+	\item \textbf{Step 6:} Press the configured exit key (e.g.\ \texttt{q}) to close the window, release the camera, and terminate the program.
+\end{itemize}
+
+This manual procedure is useful for quickly checking camera alignment and image quality before running the full YOLOv8-based detection script.
+
+
+% --------------------------------------------------------
+\section{Example -- Version}
+\index{OpenCV!Example Version}
+
+To ensure reproducibility and to document the exact OpenCV build used on the Jetson Nano, the following Python snippet can be executed. This script prints the version of the installed OpenCV package.
+
+\subsection{Code}
+\lstinputlisting[
+language=Python,
+caption={Checking the installed OpenCV version},
+label={lst:opencv_version_check},
+basicstyle=\ttfamily\small,
+keywordstyle=\color{blue},
+commentstyle=\color{gray},
+stringstyle=\color{green!40!black},
+breaklines=true,
+showstringspaces=false,
+numbers=left,
+numberstyle=\tiny\color{gray},
+frame=single,
+rulecolor=\color{black!30}
+]{../../Code/OpenCV/opencvversion.py}
+
+Recording the version number in the project documentation helps to avoid compatibility issues when upgrading JetPack or when reinstalling packages on another device. For example, the online documentation pages used in this project correspond to OpenCV version 4.12.0, which provides the \emph{OpenCV-Python Tutorials} and related examples for image and video processing \cite{opencv_py_tutorial_root}.
+
+
+% --------------------------------------------------------
+\section{Example -- Files}
+\index{OpenCV!Example Files}
+
+The central example file for this section is:
+
+\FILE{opencvexample.py}
+
+This script is kept intentionally short and focused on:
+\begin{itemize}
+	\item initialising the camera,
+	\item basic frame pre-processing, and
+	\item visual verification of the image stream.
+\end{itemize}
+In the final system, similar code fragments are integrated into the main application script that loads the YOLOv8 model, performs inference on each frame, and writes detection results to the SQLite database.
+
+\subsection{Code}
+\lstinputlisting[
+language=Python,
+caption={OpenCV Camera Test Example for Jetson Nano},
+label={lst:opencv_example},
+basicstyle=\ttfamily\small,
+keywordstyle=\color{blue},
+commentstyle=\color{gray},
+stringstyle=\color{green!40!black},
+breaklines=true,
+showstringspaces=false,
+numbers=left,
+numberstyle=\tiny\color{gray},
+frame=single,
+rulecolor=\color{black!30}
+]{../../Code/OpenCV/opencvexample.py}
+
+% --------------------------------------------------------
+\section{Further Reading}
+\index{OpenCV!Further Reading}
+
+The following references provide additional background and detailed documentation on OpenCV and its Python interface:
+
+\nocite{Bradski:2000}
+\nocite{opencv_wiki}
+\nocite{opencv_docs}
+\nocite{opencv_py_intro}
+\nocite{opencv_py_tutorial_root}
+\nocite{opencv_pypi}
+\nocite{learning_opencv}
+
+% Prints bibliography for this chapter
+\printbibliography[heading=subbibliography, segment=\therefsegment]
