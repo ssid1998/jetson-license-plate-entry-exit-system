@@ -1,0 +1,489 @@
+%%%
+%
+% $Autor: Siddhanth Sharma (Matriculation No. 7027189) $
+% $Datum: 2021-05-14 $
+% $Dateiname: 
+% $Version: 4620 $
+%
+% !TeX spellcheck = GB
+% !TeX program = pdflatex
+% !TeX encoding = utf8
+%
+%%%
+
+\chapter{\textcolor{red}{Core Algorithm - CNN}}
+
+\index{Core Algorithm - CNN}
+
+% --------------------------------------------------------
+\section{Introduction}
+\index{CNN!Introduction}
+
+\noindent
+Convolutional Neural Networks (CNNs) are a foundational class of deep learning models specifically designed to process data with a grid-like topology, such as images or sequential signals. At their core, CNNs utilize the mathematical operation of convolution to extract local spatial features by sliding learnable kernels across the input, enabling the model to detect elementary patterns such as edges, corners, and textures \cite{goodfellow2016deep}. These convolutional layers are often complemented by pooling operations, which downsample feature maps to reduce computational complexity while providing a degree of translational invariance \cite{insights2018cnn}. By integrating these hierarchical operations, CNNs form increasingly abstract representations of the input data, allowing the network to learn robust features directly from raw pixel intensities without the need for handcrafted descriptors \cite{purwono2020understanding}.
+
+As the network depth increases, CNNs build layered abstractions that transition from low-level feature detection to high-level semantic understanding, ultimately enabling tasks such as image classification, segmentation, and object detection \cite{lecun1998gradient}. This capability has made CNNs the dominant architecture in computer vision research and applications. Their effectiveness stems from both computational efficiency—through parameter sharing and local connectivity—and from their ability to generalize well across variations in visual input \cite{wu2025cnn}. Modern implementations, supported by extensive documentation and optimization libraries, allow CNNs to be deployed on embedded systems such as the NVIDIA Jetson Nano, making them suitable for real-time tasks like license plate detection and recognition.
+
+Convolutional Neural Networks (CNNs) typically consist of the following stages:
+
+\begin{itemize}
+	\item \textbf{Input Image:} The raw image data, usually represented as a matrix of pixel values, serves as the starting point for the CNN.
+	
+	\item \textbf{Convolution Layer:} Applies a set of learnable filters to the input image to extract meaningful features.
+	\begin{itemize}
+		\item \textit{Filters / Kernels:} Small matrices that slide over the image to detect edges, corners, textures, or patterns.
+		\item \textit{Feature Extraction:} Produces feature maps representing the presence of detected patterns at different spatial locations.
+	\end{itemize}
+	
+	\item \textbf{Pooling Layer:} Reduces the spatial dimensions of feature maps while retaining the most important information.
+	\begin{itemize}
+		\item \textit{Max Pooling:} Selects the maximum value in each patch of the feature map to highlight dominant features.
+		\item \textit{Average Pooling:} Computes the average value in each patch to provide a smoother representation.
+	\end{itemize}
+	
+	\item \textbf{Classifier:} Maps the high-level features to output labels or predictions.
+	\begin{itemize}
+		\item \textit{Flatten:} Converts 2D feature maps into a 1D vector to feed into fully connected layers.
+		\item \textit{Fully Connected Layers:} Learn non-linear combinations of features to perform the final classification.
+	\end{itemize}
+\end{itemize}
+
+\begin{figure}[H]
+	\centering
+	\begin{tikzpicture}[
+		>=latex,          % arrow tip style
+		line width=0.5pt, % thinner arrows
+		font=\small,
+		main/.style={
+			draw, rounded corners, minimum width=2.2cm, minimum height=1cm, % smaller nodes
+			align=center, fill=#1!25
+		}
+		]
+		
+		% -------------------
+		% Main blocks (Top row)
+		% -------------------
+		\node[main=blue] (input) {Input Image};
+		\node[main=green, right=1.2cm of input] (conv) {Convolution Layer};
+		\node[main=orange, right=1.2cm of conv] (pool) {Pooling Layer};
+		\node[main=red, right=1.2cm of pool] (class) {Classifier};
+		
+		% Arrows between main blocks (half size)
+		\draw[->] (input.east) -- (conv.west);
+		\draw[->] (conv.east) -- (pool.west);
+		\draw[->] (pool.east) -- (class.west);
+		
+	\end{tikzpicture}
+	\caption{Illustration of how a Convolutional Neural Network (CNN) processes an image: the input image is transformed through convolution and pooling layers, and finally classified by the network to produce an output prediction.}
+\end{figure}
+
+
+In this project, Convolutional Neural Networks (CNNs) serves as the foundation for deep learning architecture for license plate detection on the Jetson Nano B01. After images are captured and pre-processed using OpenCV, the CNN is employed to:
+
+\begin{itemize}
+	\item Transform the input image frames into multi-dimensional tensors suitable for convolutional operations \cite{goodfellow2016deep},
+	\item Extract hierarchical features through a sequence of convolution and pooling layers, enabling the network to learn spatial patterns relevant for license plate localization \cite{krizhevsky2012imagenet},
+	\item Flatten the resulting feature maps and feed them into fully connected layers for classification and bounding box regression, allowing the detection of license plate regions in real time \cite{simonyan2014very}.
+\end{itemize}
+
+
+
+By leveraging CNNs in conjunction with the Jetson Nano’s CUDA-enabled GPU, the system achieves efficient inference, enabling real-time detection and subsequent processing of license plate information \cite{jetsonpytorch, lecun1998gradient}.
+
+% --------------------------------------------------------
+\section{Description}
+\index{CNN!Description}
+
+Convolutional Neural Networks (CNNs) are a class of deep learning models specifically designed for processing data with a grid-like topology, such as images \cite{goodfellow2016deep}. Unlike traditional fully connected neural networks, CNNs leverage \textbf{local connectivity} and \textbf{weight sharing} to detect spatial patterns, enabling them to recognize visual features such as edges, corners, and textures efficiently. The core idea is that the network learns filters during training, which respond to specific patterns in the input image. This makes CNNs particularly suitable for image classification, object detection, and other computer vision tasks \cite{lecun1998gradient}.
+
+At the heart of a CNN are three fundamental modules \cite{krizhevsky2012imagenet}:
+\begin{itemize}
+	\item \textbf{Convolution Layers:} Apply a set of learnable filters to the input image, producing feature maps that highlight important patterns such as edges and curves.
+	\item \textbf{Pooling Layers:} Reduce the spatial resolution of feature maps while preserving essential information, which helps lower computational complexity and increases feature invariance.
+	\item \textbf{Fully Connected Layers:} Interpret the extracted features to perform classification or regression by combining information across all detected patterns.
+\end{itemize}
+
+
+To illustrate how a CNN processes an image, consider a grayscale image of the digit “2.” First, the image is converted into a multi-dimensional tensor, representing pixel intensity values in a format suitable for the network \cite{goodfellow2016deep}. This tensor is then fed into the first \textbf{convolution layer}, where a set of learnable filters (or kernels) slide over the image to detect simple features such as horizontal and vertical edges, curves, and corners. For the digit “2,” these filters might respond strongly to the top arc, the diagonal stroke, and the bottom curve. Each filter produces a feature map that highlights the presence and location of its corresponding pattern in the image.
+
+Next, the feature maps pass through a \textbf{pooling layer}, often implemented as max pooling. The pooling operation reduces the spatial dimensions of each feature map by selecting the most prominent values in each local region. This step helps the network focus on the most important features while reducing computational complexity and introducing some invariance to small translations or distortions. In the case of the digit “2,” the pooling layer preserves the overall shape and distinctive curves while discarding less relevant variations in the image.
+
+The pooled feature maps are then processed by additional convolution and pooling layers, creating a hierarchical representation of the image. Early layers capture basic shapes, while deeper layers combine these shapes into more complex structures that represent larger parts of the digit. By the time the data reaches the final layers of the network, the network has learned a rich, abstract representation of the digit “2” that is highly discriminative compared to other digits \cite{simonyan2014very}.
+
+Finally, the resulting feature maps are \textbf{flattened} into a one-dimensional vector and passed through one or more \textbf{fully connected layers}. These layers perform high-level reasoning by combining the abstract features to compute the probability of the image belonging to each possible digit class. The output layer, often using a softmax function, produces a probability distribution over all digits. In our example, the network would assign the highest probability to the digit “2,” effectively classifying the input image. This end-to-end process—from raw pixels to high-level prediction—demonstrates how CNNs transform visual information into meaningful classifications using learned hierarchical features \cite{lecun1998gradient, krizhevsky2012imagenet}.
+
+\begin{figure}[htbp]
+	\centering
+	\begin{tikzpicture}[>=latex, font=\small, every node/.style={align=center}]
+		
+		% Input Image
+		\node (input) at (0,0) {
+			\textbf{Input Image ("2")}\\[1mm]
+			\begin{tikzpicture}[every node/.style={draw, minimum size=0.4cm, inner sep=1pt, font=\scriptsize}]
+				\matrix (m1) [matrix of nodes, nodes in empty cells] {
+					0 & 0 & 1 & 0 & 0 \\
+					0 & 1 & 1 & 0 & 0 \\
+					0 & 0 & 1 & 0 & 0 \\
+					0 & 0 & 1 & 0 & 0 \\
+					0 & 1 & 1 & 1 & 0 \\
+				};
+		\end{tikzpicture}};
+		
+		% Convolution Layer
+		\node (conv) at (0,-3.5) {
+			\textbf{Convolution Layer (3x3 filter)}\\[1mm]
+			\begin{tikzpicture}[every node/.style={draw, minimum size=0.4cm, inner sep=1pt, font=\scriptsize}]
+				\matrix (m2) [matrix of nodes, nodes in empty cells] {
+					0 & 1 & 0 \\
+					1 & 1 & 1 \\
+					0 & 1 & 0 \\
+				};
+		\end{tikzpicture}};
+		
+		% Pooling Layer
+		\node (pool) at (0,-5.5) {
+			\textbf{Pooling Layer (2x2)}\\[1mm]
+			\begin{tikzpicture}[every node/.style={draw, minimum size=0.4cm, inner sep=1pt, font=\scriptsize}]
+				\matrix (m3) [matrix of nodes, nodes in empty cells] {
+					1 & 1 \\
+					1 & 1 \\
+				};
+		\end{tikzpicture}};
+		
+		% Fully Connected Layer (horizontal)
+		\node (fc) at (0,-7) {
+			\textbf{Fully Connected Layer (Flattened)}\\[1mm]
+			\begin{tikzpicture}[every node/.style={draw, minimum size=0.4cm, inner sep=1pt, font=\scriptsize}]
+				\matrix (m4) [matrix of nodes, nodes in empty cells, column sep=1mm] {
+					1 & 1 & 1 & 1 \\
+				};
+		\end{tikzpicture}};
+		
+		% Output Probabilities (horizontal) with colored labels below
+		\node (out) at (0,-8.5) {
+			\textbf{Output Probabilities}\\[1mm]
+			\begin{tikzpicture}[every node/.style={draw, minimum size=0.4cm, inner sep=1pt, font=\scriptsize}]
+				\matrix (m5) [matrix of nodes, nodes in empty cells, column sep=1mm, name=m5] {
+					0.01 & 0.02 & 0.85 & 0.03 & 0.01 & 0.02 & 0.01 & 0.03 & 0.01 & 0.01 \\
+				};
+				% Colored labels below
+				\foreach \i/\label in {1/0,2/1,3/2,4/3,5/4,6/5,7/6,8/7,9/8,10/9} {
+					\node[font=\scriptsize, blue] at (m5-1-\i.south) [below=2pt] {\label};
+				}
+		\end{tikzpicture}};
+		
+		% Arrows
+		\draw[->, thick] (input.south) -- (conv.north);
+		\draw[->, thick] (conv.south) -- (pool.north);
+		\draw[->, thick] (pool.south) -- (fc.north);
+		\draw[->, thick] (fc.south) -- (out.north);
+		
+	\end{tikzpicture}
+	\caption{CNN workflow illustration}
+\end{figure}
+
+To recognize the number \textbf{2}, a Convolutional Neural Network (CNN) processes the input image \(X \in \mathbb{R}^{H \times W}\) through a sequence of convolutional, activation, and pooling operations. In the first convolutional layer, a set of learnable filters \(K^{(1)}_i \in \mathbb{R}^{k \times k}\) slides over the input image to produce feature maps \(F^{(1)}_i\), mathematically described as:
+\[
+F^{(1)}_i = f\Big(X * K^{(1)}_i + b^{(1)}_i\Big), \quad i = 1, \dots, N_1
+\]
+where \(*\) denotes the 2D convolution operation, \(b^{(1)}_i\) is a bias term, \(N_1\) is the number of filters in the first layer, and \(f(\cdot)\) represents a non-linear activation function such as ReLU \cite{goodfellow2016deep, pytorchdocs}. Pooling layers then reduce the spatial dimensions of the feature maps, for example using max-pooling:
+\[
+P^{(1)}_i(m,n) = \max_{(p,q) \in \Omega} F^{(1)}_i(m+p, n+q)
+\]
+where \(\Omega\) is the pooling window. These operations extract hierarchical features, such as curves and line segments, that characterize the shape of the digit \textbf{2}.
+
+The processed feature maps are then flattened and passed through fully connected layers to perform classification. Let \(z = W x + b\) denote the linear transformation in a fully connected layer, where \(x\) is the flattened feature vector, \(W\) the weight matrix, and \(b\) the bias vector. The final output layer applies the softmax function to produce a probability distribution over all digit classes \(C = \{0,1,\dots,9\}\):
+\[
+\hat{y}_c = \frac{\exp(z_c)}{\sum_{j=0}^{9} \exp(z_j)}, \quad c \in C
+\]
+The predicted class \(\hat{c} = \arg\max_c \hat{y}_c\) corresponds to the digit \textbf{2} if the network has successfully learned the distinguishing features \cite{pinto2022springer, pytorchdocs}. During training, the network parameters \(K_i^{(l)}, W, b\) are optimized to minimize the cross-entropy loss:
+\[
+\mathcal{L} = - \sum_{c=0}^{9} y_c \log(\hat{y}_c)
+\]
+where \(y_c\) is the one-hot encoded ground truth label. By iteratively applying gradient descent and backpropagation, the CNN learns to recognize the unique combination of curves, intersections, and edges that define the number \textbf{2}.
+
+
+Beyond the fundamental convolutional and pooling operations, Convolutional Neural Networks (CNNs) rely on additional components that are essential for effective learning and performance optimization \cite{pinto2022springer}. These components include:
+
+\begin{itemize}
+	\item \textbf{Activation Functions:} Functions like the Rectified Linear Unit (ReLU) introduce non-linearity into the network, enabling it to learn complex patterns and relationships in the data \cite{goodfellow2016deep, pytorchdocs}. Without activation functions, the network would behave like a linear model regardless of depth.
+	
+	\item \textbf{Normalization Layers:} Layers such as Batch Normalization help stabilize and accelerate training by normalizing the activations of each layer, thereby reducing internal covariate shift and improving convergence \cite{ioffe2015batch, pytorchdocs}.
+	
+	\item \textbf{Loss Functions:} These functions, such as cross-entropy for classification tasks, quantify the difference between the predicted outputs and ground truth labels. They provide the signal for gradient-based optimization to update network weights effectively \cite{pinto2022springer, pytorchdocs}.
+\end{itemize}
+
+When implemented in frameworks like PyTorch, these components are seamlessly integrated into the model, allowing for end-to-end training and inference. On embedded platforms such as the Jetson Nano, this integration enables real-time execution of CNNs for applications like license plate detection without compromising performance \cite{pytorchdocs, jetsonpytorch}.
+
+ \section{Applications}
+ \index{CNN!Applications}
+ Convolutional Neural Networks (CNNs) have found widespread use across many domains due to their ability to automatically extract hierarchical features from raw data \cite{goodfellow2016deep, pinto2022springer}. Key applications include:
+ 
+ \subsection{Image Classification}
+ CNNs classify an image into a category by extracting hierarchical features from raw pixel data \cite{goodfellow2016deep, pinto2022springer}. Typical applications include:
+ 
+ \subsection{Image Classification}
+ CNNs classify an image into a category by extracting hierarchical features from raw pixel data \cite{goodfellow2016deep, pinto2022springer}. Typical applications include:
+ 
+ \begin{itemize}
+ 	\item License plate recognition at airports and toll booths.
+ 	\item Digit recognition for postal codes and handwritten forms.
+ 	\item Defect detection in manufacturing and quality control.
+ 	\item Species identification in wildlife monitoring and agriculture.
+ \end{itemize}
+ 
+ \begin{figure}[H]
+ 	\centering
+ 	\fbox{\parbox{0.7\linewidth}{\centering Placeholder: Image Classification Example}}
+ 	\caption{Example of CNN-based image classification. The network extracts features from the input image and predicts the correct class.}
+ \end{figure}
+ 
+ \subsection{Object Detection and Localization}
+ CNNs detect and locate multiple objects within images using bounding boxes over feature maps \cite{ren2015faster, redmon2016you}. Typical applications include:
+ 
+ \begin{itemize}
+ 	\item Vehicle and pedestrian detection for autonomous driving.
+ 	\item Real-time traffic sign recognition in smart city systems.
+ 	\item Surveillance for intruder detection in security applications.
+ 	\item Wildlife monitoring by detecting animals in natural habitats.
+ \end{itemize}
+ 
+ \begin{figure}[H]
+ 	\centering
+ 	\fbox{\parbox{0.7\linewidth}{\centering Placeholder: Object Detection Example}}
+ 	\caption{Example of CNN-based object detection. The network identifies and localizes objects within an image.}
+ \end{figure}
+ 
+ \subsection{Image Segmentation and Medical Imaging}
+ CNNs perform pixel-level classification, useful for semantic segmentation and medical imaging applications \cite{ronneberger2015u, chen2018deeplab}. Typical applications include:
+ 
+ \begin{itemize}
+ 	\item Tumor and organ segmentation in medical images.
+ 	\item Road and lane segmentation in autonomous driving.
+ 	\item Satellite image segmentation for urban planning.
+ 	\item Segmentation of defects in industrial inspection.
+ \end{itemize}
+ 
+ \begin{figure}[H]
+ 	\centering
+ 	\fbox{\parbox{0.7\linewidth}{\centering Placeholder: Image Segmentation Example}}
+ 	\caption{Example of CNN-based image segmentation. Each pixel is labeled according to its class, enabling detailed analysis.}
+ \end{figure}
+ 
+ \subsection{Video Analysis and Facial Recognition}
+ CNNs process spatial-temporal features to analyze video frames or recognize faces \cite{pytorchdocs}. Typical applications include:
+ 
+ \begin{itemize}
+ 	\item Facial recognition for secure authentication.
+ 	\item Action recognition in sports analytics.
+ 	\item Crowd monitoring and safety surveillance.
+ 	\item Video-based gesture recognition for human-computer interaction.
+ \end{itemize}
+ 
+ \begin{figure}[H]
+ 	\centering
+ 	\fbox{\parbox{0.7\linewidth}{\centering Placeholder: Video Analysis Example}}
+ 	\caption{Example of CNN-based video analysis and facial recognition. The network extracts features over frames for prediction.}
+ \end{figure}
+ 
+% --------------------------------------------------------
+\section{Relevance}
+\index{CNN!Relevance}
+\subsection{General Relevance of CNNs}
+
+Convolutional Neural Networks (CNNs) have revolutionized the field of computer vision and pattern recognition due to their ability to automatically learn hierarchical representations from raw data \cite{lecun1998gradient, goodfellow2016deep}. Unlike traditional machine learning approaches that rely on handcrafted features, CNNs can extract edges, textures, and shapes directly from images through convolutional layers. This automatic feature learning has enabled CNNs to achieve state-of-the-art performance in tasks such as image classification, object detection, and segmentation \cite{krizhevsky2012imagenet}.
+
+The relevance of CNNs extends across multiple real-world domains, including autonomous driving, medical imaging, and surveillance systems \cite{ren2015faster, ronneberger2015u}. In autonomous vehicles, CNNs detect pedestrians, vehicles, and traffic signs in real-time, providing critical input for navigation and safety systems. In healthcare, CNNs assist in tumor detection and organ segmentation, improving both diagnostic accuracy and processing speed compared to manual methods \cite{chen2018deeplab, litjens2017survey}. This versatility illustrates the broad impact of CNNs beyond research settings.
+
+CNNs also form the backbone of emerging AI applications such as robotics, augmented reality, and natural language processing, highlighting their continued relevance in modern technology \cite{pinto2022springer, pytorchdocs}. Their ability to generalize across datasets and modalities, coupled with highly optimized frameworks like PyTorch and TensorFlow, enables the development of scalable and high-performance solutions. As a result, CNNs have become a foundational technology in both academic research and practical industrial applications.
+
+\subsection{Relevance of CNNs to Jetson Nano License Plate Detection}
+
+In the context of the Jetson Nano-based license plate detection project, CNNs are essential due to their capability to extract robust and discriminative features from license plate images \cite{pinto2022springer, jetsonpytorch}. License plates appear under varying lighting, angles, and occlusions, making traditional feature-based methods less effective. CNNs can learn the specific shapes, alphanumeric patterns, and textures that distinguish license plates from the background, ensuring accurate detection even in challenging conditions.
+
+Moreover, integrating CNNs with the Jetson Nano allows real-time, low-latency processing on embedded hardware \cite{jetsonpytorch, pytorchdocs}. The Jetson Nano’s CUDA-enabled GPU accelerates convolutional and fully connected layer operations, enabling high-resolution frame processing without cloud dependency. PyTorch’s optimized tensor operations, activation functions, and normalization layers further streamline the training and inference pipeline, making the system practical for applications like traffic monitoring, security, and smart city deployments. This combination of CNN capability and embedded GPU acceleration exemplifies the relevance of CNNs in real-world, hardware-constrained environments.
+
+
+% --------------------------------------------------------
+\section{Hyperparameters}
+\index{CNN!Hyperparameters}
+
+\subsection{Hyperparameters in Convolutional Neural Networks}
+
+Convolutional Neural Networks (CNNs) rely on a variety of hyperparameters that control their learning behavior, feature extraction capability, and generalization performance \cite{goodfellow2016deep, pinto2022springer}. Choosing the right hyperparameters is critical to achieving high accuracy while avoiding overfitting or underfitting. Key hyperparameters include the number of convolutional filters, kernel size, stride, padding, learning rate, batch size, number of epochs, and regularization parameters.
+
+\paragraph{Number of Convolutional Filters:}  
+The number of filters \(N_l\) in layer \(l\) determines the number of feature maps generated by the convolution. Each filter \(K_i^{(l)} \in \mathbb{R}^{k \times k}\) detects a specific feature in the input. Mathematically, the convolution operation for filter \(i\) is given by:
+\[
+F_i^{(l)} = f\big(X^{(l-1)} * K_i^{(l)} + b_i^{(l)}\big)
+\]
+where \(X^{(l-1)}\) is the input to layer \(l\), \(b_i^{(l)}\) is the bias term, and \(f(\cdot)\) is the activation function. Increasing the number of filters allows the network to capture more complex patterns, but also increases computational cost \cite{pytorchdocs}.
+
+\begin{figure}[H]
+	\centering
+	\begin{tikzpicture}[block/.style={draw, rectangle, minimum width=2cm, minimum height=1cm, align=center, fill=blue!20}]
+		\node[block] (input) {Input Feature Map};
+		\node[block, right=1.5cm of input] (conv1) {Filter 1};
+		\node[block, above=0.5cm of conv1] (conv2) {Filter 2};
+		\node[block, below=0.5cm of conv1] (conv3) {Filter 3};
+		\draw[->, thick] (input.east) -- (conv1.west);
+		\draw[->, thick] (input.east) -- (conv2.west);
+		\draw[->, thick] (input.east) -- (conv3.west);
+	\end{tikzpicture}
+	\caption{Illustration of multiple convolutional filters generating feature maps from a single input.}
+\end{figure}
+
+\paragraph{Kernel Size, Stride, and Padding:}  
+The kernel size \(k \times k\) defines the spatial extent of each convolutional filter. Stride \(s\) determines how the kernel moves over the input:
+\[
+F^{(l)}_{i,j} = f\Big(\sum_{u=0}^{k-1} \sum_{v=0}^{k-1} X^{(l-1)}_{i\cdot s + u, j \cdot s + v} \cdot K^{(l)}_{u,v} + b^{(l)}\Big)
+\]
+Padding \(p\) adds extra pixels around the input, controlling the output dimensions:
+\[
+H_{\text{out}} = \frac{H_{\text{in}} - k + 2p}{s} + 1, \quad W_{\text{out}} = \frac{W_{\text{in}} - k + 2p}{s} + 1
+\]
+Choosing appropriate kernel size, stride, and padding affects feature resolution and the size of the output feature maps \cite{goodfellow2016deep}.
+
+\begin{figure}[H]
+	\centering
+	\begin{tikzpicture}[block/.style={draw, rectangle, minimum width=2cm, minimum height=1cm, align=center, fill=green!20}]
+		\node[block] (input) {Input Image};
+		\node[block, right=2cm of input] (kernel) {Kernel $k \times k$};
+		\node[block, right=2cm of kernel] (output) {Feature Map};
+		\draw[->, thick] (input.east) -- (kernel.west) node[midway, above] {Stride $s$};
+		\draw[->, thick] (kernel.east) -- (output.west) node[midway, above] {Padding $p$};
+	\end{tikzpicture}
+	\caption{Illustration of convolution operation with kernel, stride, and padding.}
+\end{figure}
+
+\paragraph{Learning Rate and Optimization:}  
+The learning rate \(\eta\) controls the size of the update step in gradient descent:
+\[
+\theta \leftarrow \theta - \eta \frac{\partial \mathcal{L}}{\partial \theta}
+\]
+where \(\theta\) represents the network parameters and \(\mathcal{L}\) the loss function. A high learning rate may cause divergence, while a very low learning rate slows training. Optimizers such as SGD, Adam, and RMSProp adjust parameter updates adaptively to improve convergence \cite{kingma2014adam, pytorchdocs}.
+
+\paragraph{Batch Size and Epochs:}  
+Batch size \(B\) determines the number of samples processed before updating network weights. The number of epochs \(E\) is the number of complete passes through the training dataset. Smaller batch sizes increase gradient variance but reduce memory usage, while larger batches provide smoother updates. The output update per batch is:
+\[
+\theta \leftarrow \theta - \eta \frac{1}{B} \sum_{i=1}^{B} \frac{\partial \mathcal{L}(x_i, y_i)}{\partial \theta}
+\]
+Proper selection of batch size and epochs is crucial to balance convergence speed and generalization \cite{pinto2022springer}.
+
+\paragraph{Regularization Parameters:}  
+Techniques like weight decay (L2 regularization) and dropout reduce overfitting. Weight decay adds a penalty term to the loss function:
+\[
+\mathcal{L}_{\text{total}} = \mathcal{L} + \lambda \sum_i \theta_i^2
+\]
+where \(\lambda\) is the regularization coefficient. Dropout randomly deactivates a fraction \(p\) of neurons during training, forcing the network to learn more robust features \cite{srivastava2014dropout}.
+
+% --------------------------------------------------------
+\section{CNN Requirements}
+\index{CNN!Requirements}
+
+\subsection{Requirements for a Convolutional Neural Network}
+
+Convolutional Neural Networks (CNNs) have specific requirements to function efficiently and accurately. One of the primary requirements is \textbf{high-quality labeled data} for supervised learning. The network relies on large datasets of input images paired with ground truth labels to learn meaningful feature representations \cite{goodfellow2016deep}. Insufficient or noisy data can lead to poor generalization and overfitting, making dataset quality and diversity crucial.
+
+Another requirement is \textbf{computational resources}, particularly GPUs, which are essential for accelerating the convolutional and matrix operations involved in training CNNs \cite{pinto2022springer, pytorchdocs}. While CPU-only training is possible, it is significantly slower and may not be practical for large datasets or deep networks. Memory capacity also plays an important role, as intermediate feature maps and batch processing consume significant amounts of RAM.
+
+CNNs also require \textbf{appropriate model architecture and hyperparameters}, such as the number of layers, filter sizes, strides, padding, learning rate, and regularization parameters. Choosing suitable hyperparameters ensures efficient learning, prevents overfitting, and helps the network converge faster during training \cite{krizhevsky2012imagenet, srivastava2014dropout}.
+
+\textbf{Preprocessing and data augmentation} are additional requirements for effective CNN training. Input images often need resizing, normalization, and augmentation techniques such as rotation, flipping, and cropping to improve model robustness \cite{pinto2022springer}. Proper preprocessing ensures the network can handle variations in real-world data, including different lighting conditions, orientations, and background clutter.
+
+Finally, \textbf{Python implementation and software dependencies} are critical for building and deploying CNNs. Frameworks such as PyTorch and TensorFlow provide modules for defining convolutional layers, loss functions, activation functions, and optimizers \cite{pytorchdocs}. Common Python dependencies include:
+\begin{itemize}
+	\item \texttt{torch} and \texttt{torchvision} for model building and image utilities.
+	\item \texttt{numpy} and \texttt{scipy} for numerical operations.
+	\item \texttt{matplotlib} or \texttt{seaborn} for visualization.
+	\item \texttt{opencv-python} for image capture and preprocessing.
+\end{itemize}
+
+For hardware deployment on embedded platforms such as the Jetson Nano, additional requirements include \textbf{CUDA-enabled GPU drivers} and optimized libraries to leverage GPU acceleration \cite{jetsonpytorch}. These software and hardware dependencies enable real-time inference and efficient model training on edge devices, making CNNs practical for applications such as license plate detection.
+
+% --------------------------------------------------------
+\section{CNN Inputs}
+\index{CNN!Inputs}
+
+\subsection{General Inputs}
+Convolutional Neural Networks (CNNs) typically operate on image data represented as multi-dimensional arrays or tensors \cite{goodfellow2016deep, pinto2022springer}. Grayscale images are encoded as 2D matrices, while RGB images are represented as 3D tensors with three channels corresponding to red, green, and blue components. Normalization of pixel values to ranges such as [0,1] or [-1,1] is a common practice to ensure stable and efficient training of the network.
+
+The spatial dimensions of the input images are crucial, as CNN architectures generally require fixed input sizes \cite{krizhevsky2012imagenet}. Standard dimensions, such as 224×224 or 256×256 pixels, are often used to balance computational cost and feature resolution. Larger inputs can capture more detail but increase memory and processing requirements, while smaller inputs reduce computational load but may miss fine-grained patterns.
+
+Additional preprocessing, such as resizing, cropping, and denoising, is frequently applied to ensure the inputs are compatible with the network architecture \cite{pinto2022springer}. Image augmentation, including rotations, flips, scaling, and brightness adjustments, is used to increase dataset diversity, helping CNNs generalize better to unseen data and avoid overfitting.
+
+\subsection{Inputs for Applications}
+In real-world applications, CNN inputs are adapted to the task at hand. For image classification tasks, the input consists of single images that are preprocessed and normalized to highlight distinguishing features \cite{goodfellow2016deep}. For object detection, inputs may include larger images with multiple objects, where bounding boxes or region proposals are used to guide the network to areas of interest \cite{ren2015faster}. Image segmentation tasks require inputs that preserve spatial resolution, as the network performs pixel-level predictions.
+
+Video analysis and temporal applications introduce another dimension to CNN inputs: sequences of frames \cite{pinto2022springer}. Each frame is processed individually or through 3D CNNs to capture spatiotemporal features. Inputs must be consistent in terms of frame size, color channels, and frame rate to ensure accurate analysis across the sequence. Preprocessing may include optical flow computation, frame normalization, and resizing to maintain performance efficiency.
+
+Medical imaging and industrial inspection applications often use specialized image modalities, such as X-rays, MRIs, or infrared images \cite{ronneberger2015u, chen2018deeplab}. Inputs in these domains may require specific normalization or scaling to highlight relevant structures. Multiple channels or slices may be combined into a single tensor to allow CNNs to exploit volumetric or multi-spectral information for accurate classification, segmentation, or anomaly detection.
+
+\subsection{Inputs in Jetson Nano License Plate Detection}
+
+For license plate detection on the Jetson Nano, the input images are typically captured using USB or CSI camera modules integrated with the embedded system \cite{jetsonpytorch}. Optimal images should have sufficient resolution to clearly capture the alphanumeric characters on the license plate, while also covering enough of the surrounding vehicle and background to provide contextual cues for detection. In practice, resolutions between 128×128 and 256×256 pixels are commonly used, as they balance detection accuracy with the limited memory and processing resources of the Jetson Nano. Higher resolutions improve character clarity but significantly increase computation and memory usage, which can reduce real-time performance.
+
+Input images should maintain a consistent \textbf(aspect ratio) to avoid geometric distortion of license plate characters. When resizing, padding can be applied to ensure the network receives images of uniform size without stretching or compressing important features. The color format is usually RGB, though some models may convert images to grayscale to reduce computational load while preserving the essential features. Lossless or minimally compressed image formats such as PNG are preferred to prevent artifacts that could obscure the plate’s text or edges.
+
+Preprocessing steps are critical for robust performance under varying real-world conditions. Images are normalized to a specific pixel value range (e.g., [0,1]) to ensure stable network convergence \cite{pytorchdocs}. Additional techniques such as histogram equalization or contrast adjustment can compensate for poor lighting, shadows, or glare on the license plate. Data augmentation—including rotations, slight perspective transformations, brightness variations, and flips—is employed during training to improve generalization and make the network invariant to variations in camera angle or plate positioning. In video-based scenarios, each frame is treated as an individual input tensor, and maintaining a consistent frame rate ensures smooth and reliable real-time detection on the Jetson Nano \cite{pinto2022springer, jetsonpytorch}.
+
+Finally, for optimal inference speed, images should be cropped to regions of interest whenever possible. This involves detecting the approximate vehicle location first and then focusing on the license plate area, reducing the input size for the CNN while maintaining high detection accuracy. By combining careful resolution selection, preprocessing, normalization, and augmentation, the Jetson Nano can reliably process input images in real-time, achieving accurate license plate detection under diverse environmental conditions.
+
+% --------------------------------------------------------
+\section{CNN Outputs}
+\index{CNN!Outputs}
+
+\subsection{General CNN Outputs}
+Convolutional Neural Networks produce outputs in the form of feature maps or tensors, which are progressively processed through convolutional, pooling, and fully connected layers \cite{goodfellow2016deep, pinto2022springer}. In classification tasks, the final output is typically a vector representing class scores, which is passed through a softmax function to obtain a probability distribution over possible categories:
+\[
+\hat{y}_i = \frac{e^{z_i}}{\sum_{j} e^{z_j}}
+\]
+where \(z_i\) is the raw score for class \(i\). This allows the network to assign confidence levels to each predicted class.
+
+For tasks like object detection and segmentation, CNN outputs include bounding boxes, pixel-wise class labels, or feature maps highlighting regions of interest \cite{ren2015faster, ronneberger2015u}. These outputs are structured tensors that encode both spatial and semantic information, which can then be post-processed to generate interpretable results, such as annotated images or masks for each detected object or segment.
+
+CNNs can also provide intermediate outputs at various layers, known as feature representations, which capture hierarchical patterns from low-level edges to high-level concepts \cite{krizhevsky2012imagenet}. These intermediate outputs are useful for transfer learning, visualizing network attention, or extracting embeddings for downstream tasks, enabling flexibility in deploying CNNs for multiple applications.
+
+\subsection{Outputs in Applications}
+In image classification, CNN outputs are discrete labels corresponding to the predicted category of the input image \cite{goodfellow2016deep}. Probabilities associated with each label provide a measure of confidence, which can be thresholded or used for ranking predictions. Visualizations of class activation maps (CAMs) can help interpret which regions of the image influenced the network’s decision.
+
+For object detection, CNN outputs include the coordinates of bounding boxes and associated class probabilities for each detected object \cite{ren2015faster}. Post-processing techniques, such as non-maximum suppression, are applied to remove overlapping detections and generate final predictions. In segmentation tasks, outputs are multi-dimensional masks where each pixel is assigned a class label, allowing detailed understanding of the input’s structure \cite{ronneberger2015u}.
+
+In video analysis or temporal CNN applications, outputs can include frame-level predictions or temporal embeddings capturing motion patterns \cite{pinto2022springer}. These outputs can be aggregated to summarize activity, detect anomalies, or track objects across sequences of frames, enabling dynamic and context-aware analysis in real-time or offline applications.
+
+\subsection{Outputs in Jetson Nano License Plate Detection}
+For license plate detection on the Jetson Nano, CNN outputs typically consist of bounding box coordinates around detected plates, class scores, and sometimes cropped plate images for downstream recognition \cite{jetsonpytorch, pytorchdocs}. The output tensor includes both spatial information (position of the license plate in the frame) and confidence scores, which are used to filter unreliable detections.
+
+Post-processing of outputs involves scaling bounding box coordinates to match the original frame size, applying non-maximum suppression to eliminate overlapping detections, and optionally passing the cropped license plate to an OCR module for character recognition \cite{pinto2022springer}. These steps ensure that the outputs are actionable for real-time monitoring, logging, or traffic enforcement systems.
+
+Additionally, real-time performance constraints on the Jetson Nano require that output tensors be efficiently computed and transferred for further processing. Optimized memory management, GPU acceleration, and batching strategies help maintain low latency while providing high-confidence predictions for each input frame, ensuring that license plates are accurately detected under varying environmental conditions.
+
+
+% --------------------------------------------------------
+\section{Code Example}
+\index{CNN!Code Example}
+
+\subsection{Example Application: Image Classification (Cats vs.\ Dogs)}
+
+Image classification is one of the most widely used applications of Convolutional Neural Networks, where the model assigns an input image to one of several predefined categories \cite{goodfellow2016deep}. A classic example is the cats–vs.–dogs classification task, in which a CNN learns to differentiate images of cats from dogs by extracting hierarchical visual features such as edges, textures, shapes, and high-level semantic attributes. Early convolutional layers detect simple patterns—whiskers, fur textures, or ear shapes—while deeper layers encode complex structures that allow the network to confidently distinguish between the two classes. Due to its simplicity and high educational value, this task is commonly used to benchmark CNN architectures and demonstrate the effectiveness of deep learning in real-world visual recognition tasks \cite{krizhevsky2012imagenet,pinto2022springer}.
+
+\subsection{Python Implementation Example}
+
+\lstinputlisting[
+language=Python,
+caption={Image Recognition using CNN},
+label={lst:cnn_example},
+basicstyle=\ttfamily\small,
+keywordstyle=\color{blue},
+commentstyle=\color{gray},
+stringstyle=\color{green!40!black},
+breaklines=true,
+showstringspaces=false,
+numbers=left,
+numberstyle=\tiny\color{gray},
+frame=single,
+rulecolor=\color{black!30}
+]{../../Code/CNN/cnnexample.py}
+
+The Python implementation follows a typical workflow used in CNN-based image classification tasks. The script begins by defining a preprocessing pipeline that resizes each input image, applies random horizontal flips for data augmentation, converts the image into a tensor, and normalizes its pixel values according to ImageNet statistics. The training and validation datasets are loaded using \texttt{ImageFolder}, which organizes images into class-labelled directories. A pre-trained ResNet-18 model is then imported, and its final fully connected layer is replaced to output two logits corresponding to the ``cat'' and ``dog'' classes. During training, the script iterates through mini-batches of images, computes class predictions using the forward pass, evaluates the loss using cross-entropy, and updates network weights via the Adam optimizer. After training, the model is switched to evaluation mode, and its performance is measured on the validation set by comparing predicted labels to ground truth annotations. This code demonstrates the essential components of an end-to-end CNN classification pipeline, including preprocessing, model adaptation, optimization, and performance evaluation, making it a practical example for understanding CNN application development in PyTorch.
+

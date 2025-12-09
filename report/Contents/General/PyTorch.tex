@@ -24,8 +24,6 @@ PyTorch is a modern, open-source deep learning framework designed to provide an 
 
 What distinguishes PyTorch from earlier deep learning frameworks is its dynamic computation graph design, which constructs the computational graph during execution and allows developers to utilize standard Python control flow for model definition \cite{goodfellow2016deep}. Beyond its fundamental tensor and gradient capabilities, PyTorch provides a comprehensive ecosystem of modules for neural network layers, loss functions, optimization algorithms, and efficient data pipelines. These components, along with strong community support and extensive official documentation, make PyTorch a versatile and scalable framework for both research-oriented experimentation and large-scale production systems \cite{pinto2022springer}.
 
-
-
 In this project, PyTorch serves as the primary deep learning framework responsible for executing the licence plate detection model on the Jetson Nano B01. After image frames are captured and pre-processed by OpenCV, PyTorch is used to:
 
 \begin{itemize}
@@ -35,8 +33,6 @@ In this project, PyTorch serves as the primary deep learning framework responsib
 \end{itemize}
 
 This tight coupling between PyTorch and the Jetson platform provides an efficient pipeline for identifying licence plates and logging detection results within the system \cite{jetsonpytorch}.
-
-
 
 % --------------------------------------------------------
 \section{Description}
@@ -142,7 +138,7 @@ This command installs the core \PYTHON{torch} library along with \PYTHON{torchvi
 
 % --------------------------------------------------------
 \section{Example -- Description}
-\index{OpenCV!Example Description}
+\index{PyTorch!Example Description}
 
 The example script \FILE{PyTorchLPExample.py} demonstrates a minimal but representative PyTorch workflow for licence plate detection on the Jetson Nano. Its purpose is to verify that:
 \begin{itemize}
@@ -168,7 +164,7 @@ This example mirrors the essential I/O, pre-processing, and inference steps used
 
 % --------------------------------------------------------
 \section{Example -- Manual}
-\index{OpenCV!Example Manual}
+\index{PyTorch!Example Manual}
 
 The following instructions describe how to run the PyTorch example on the Jetson Nano:
 
@@ -204,7 +200,7 @@ This procedure provides a quick check of camera connectivity, PyTorch model infe
 
 % --------------------------------------------------------
 \section{Example -- Version}
-\index{OpenCV!Example Version}
+\index{PyTorch!Example Version}
 
 To ensure reproducibility and to document the exact PyTorch build used on the Jetson Nano, the following Python snippet can be executed. This script prints the version of the installed OpenCV package.
 
@@ -231,7 +227,7 @@ Recording the PyTorch version number in the project documentation helps to avoid
 
 % --------------------------------------------------------
 \section{Example -- Files}
-\index{OpenCV!Example Files}
+\index{PyTorch!Example Files}
 
 The central example file for this section is:
 
@@ -263,20 +259,3 @@ numberstyle=\tiny\color{gray},
 frame=single,
 rulecolor=\color{black!30}
 ]{../../Code/PyTorch/pytorchexample.py}
-
-% --------------------------------------------------------
-\section{Further Reading}
-\index{OpenCV!Further Reading}
-
-The following references provide additional background and detailed documentation on OpenCV and its Python interface:
-
-\nocite{Bradski:2000}
-\nocite{opencv_wiki}
-\nocite{opencv_docs}
-\nocite{opencv_py_intro}
-\nocite{opencv_py_tutorial_root}
-\nocite{opencv_pypi}
-\nocite{learning_opencv}
-
-% Prints bibliography for this chapter
-\printbibliography[heading=subbibliography, segment=\therefsegment]
