@@ -20,8 +20,16 @@
 \section{Introduction}
 \index{Methodology!Introduction}
 
-\noindent
-Convolutional Neural Networks (CNNs) are a foundational class of deep learning models specifically designed to process data with a grid-like topology, such as images or sequential signals. At their core, CNNs utilize the mathematical operation of convolution to extract local spatial features by sliding learnable kernels across the input, enabling the model to detect elementary patterns such as edges, corners, and textures \cite{goodfellow2016deep}. These convolutional layers are often complemented by pooling operations, which downsample feature maps to reduce computational complexity while providing a degree of translational invariance \cite{insights2018cnn}. By integrating these hierarchical operations, CNNs form increasingly abstract representations of the input data, allowing the network to learn robust features directly from raw pixel intensities without the need for handcrafted descriptors \cite{purwono2020understanding}.
+\noindent Automatic License Plate Recognition (ALPR) systems have become essential components of modern intelligent transportation systems, parking management, and access control applications \cite{du2013automatic,silva2018license}. These systems require accurate detection and recognition of vehicle license plates under diverse environmental conditions, including variations in lighting, viewing angles, occlusion, and plate design. Deploying ALPR systems on edge devices such as the NVIDIA Jetson Nano introduces additional constraints related to computational resources, power consumption, and real-time performance \cite{shi2016edge,nvidia_jetson}.  
+
+\noindent The methodology adopted in this project integrates three complementary components: the \textit{Cross-Industry Standard Process for Data Mining (CRISP-DM)}, the \textit{Knowledge Discovery in Databases (KDD) process}, and a modular machine learning pipeline. CRISP-DM provides a structured, iterative framework for managing the project lifecycle, ensuring alignment between business objectives—such as reliable license plate detection, timestamp recording, and fee calculation—and technical implementation \cite{chapman2000crisp}. By guiding the project through phases of business understanding, data preparation, modeling, evaluation, and deployment, CRISP-DM ensures that each step is systematically planned and optimized, which is particularly critical when operating under the resource constraints of embedded hardware.  
+
+\noindent The KDD process complements CRISP-DM by emphasizing the systematic transformation of raw data into actionable knowledge \cite{fayyad1996knowledge}. In this project, KDD is applied to both the offline training phase and the real-time deployment phase. During training, labeled images are preprocessed, augmented, and transformed into structured input-output pairs suitable for supervised learning. During deployment, the process is applied to live camera frames, converting raw pixels into bounding boxes via YOLO and subsequently into alphanumeric characters using EasyOCR \cite{jaidedai2020easyocr}. This separation ensures computational efficiency and maintains consistency between training and operational data distributions, which is essential for reliable inference on the Jetson Nano \cite{shi2016edge}.  
+
+\noindent The machine learning pipeline operationalizes these methodologies by implementing the core computational workflow for license plate detection and recognition. YOLO was chosen as the object detection model due to its single-pass architecture, which balances high accuracy with low inference latency \cite{redmon2016you,bochkovskiy2020yolov4}. EasyOCR is used for character recognition, providing modularity and robustness to variations in plate fonts, orientation, and illumination \cite{jaidedai2020easyocr}. Preprocessing steps such as resizing, normalization, and data augmentation further enhance generalization and maintain consistency between the training dataset and live input frames \cite{shorten2019survey}. Detected plates and corresponding entry and exit timestamps are stored in a lightweight SQLite database, enabling subsequent computation of parking duration and fees without reliance on cloud infrastructure \cite{sqlite_doc}.  
+
+\noindent By integrating CRISP-DM, the KDD process, and a carefully designed ML pipeline, this methodology addresses the dual challenges of \textit{accuracy} and \textit{real-time performance} on a constrained edge device. It provides a structured framework for dataset management, model training, deployment, and knowledge extraction, while ensuring that operational outputs—license plate numbers and timestamps—are reliable, interpretable, and actionable. This integrated approach demonstrates how modern ALPR systems can be effectively implemented on embedded hardware, paving the way for efficient, low-latency, and autonomous edge computing applications.  
+
 
 
 % --------------------------------------------------------
@@ -157,7 +165,7 @@ The Knowledge Discovery in Databases (KDD) process provides a structured framewo
 			KDD--6: Knowledge Presentation and Storage};
 		
 	\end{tikzpicture}
-	\caption{Vertical representation of the Knowledge Discovery in Databases (KDD) process applied to both training and deployment stages of the license plate detection system. Arrows indicate downward progression through each KDD phase.}
+	\caption{Representation of the Knowledge Discovery in Databases (KDD) process applied to both training and deployment stages of the license plate detection system.}
 	\label{fig:kdd_vertical_refined}
 \end{figure}
  
@@ -208,6 +216,70 @@ By consolidating both the training and operational stages within the KDD framewo
 \index{Methodology!MLPipeline}
 
 \noindent The machine learning pipeline in this project is designed to enable real-time license plate detection and recognition on the NVIDIA Jetson Nano. This pipeline follows a structured sequence of stages inspired by conventional machine learning workflows \cite{kuhn2013applied,goodfellow2016deep} and is adapted to the constraints of embedded deployment. The pipeline integrates data acquisition, preprocessing, model training, evaluation, deployment, and continuous inference to ensure robust and efficient system operation.
+
+\begin{figure}[htbp]
+	\centering
+	\begin{tikzpicture}[
+		node distance=1.6cm,
+		every node/.style={
+			rectangle,
+			draw=black,
+			thick,
+			align=center,
+			minimum width=3.0cm,
+			minimum height=0.85cm,
+			font=\scriptsize,
+			fill=gray!10
+		},
+		header/.style={
+			font=\footnotesize\bfseries,
+			draw=none,
+			fill=none
+		},
+		arrow/.style={
+			->,
+			thick
+		}
+		]
+		% Column header
+		\node[header] (pipeline_h) {Machine Learning Pipeline};
+		
+		% Stage 1
+		\node (s1) [below=1.0cm of pipeline_h] {Stage 1:\\Data Acquisition\\1,243 Labeled Images};
+		
+		% Stage 2
+		\node (s2) [below of=s1] {Stage 2:\\Data Preprocessing\\Resize, Normalize, Augment};
+		
+		% Stage 3
+		\node (s3) [below of=s2] {Stage 3:\\Feature Extraction\\YOLO CNN for License Plate Detection};
+		
+		% Stage 4
+		\node (s4) [below of=s3] {Stage 4:\\Character Recognition\\EasyOCR on Detected ROIs};
+		
+		% Stage 5
+		\node (s5) [below of=s4] {Stage 5:\\Model Training\\Loss Minimization, Hyperparameter Tuning};
+		
+		% Stage 6
+		\node (s6) [below of=s5] {Stage 6:\\Model Evaluation\\Precision, Recall, mAP, OCR Accuracy, Latency};
+		
+		% Stage 7
+		\node (s7) [below of=s6] {Stage 7:\\Deployment and Inference\\Jetson Nano: Real-Time Detection and OCR};
+		
+		
+		% Arrows connecting stages
+		\draw[arrow] (s1.south) -- (s2.north);
+		\draw[arrow] (s2.south) -- (s3.north);
+		\draw[arrow] (s3.south) -- (s4.north);
+		\draw[arrow] (s4.south) -- (s5.north);
+		\draw[arrow] (s5.south) -- (s6.north);
+		\draw[arrow] (s6.south) -- (s7.north);
+		
+		
+	\end{tikzpicture}
+	\caption{Machine Learning Pipeline applied to Jetson Nano License Plate Detection.}
+	\label{fig:ml_pipeline_vertical}
+\end{figure}
+
 
 \subsection{Data Acquisition and Understanding}
 \noindent The first stage of the pipeline involves collecting and understanding the dataset. For training, 1,243 labeled images of German license plates were used, encompassing variations in illumination, plate orientation, occlusion, and background complexity \cite{du2013automatic,silva2018license}.
@@ -278,98 +350,46 @@ This deployment strategy ensures edge-based, low-latency operation without relia
 
 
 % --------------------------------------------------------
-\section{Others}
-\index{Methodology!Others}
-
-\subsection{Hyperparameters in Convolutional Neural Networks}
-
-Convolutional Neural Networks (CNNs) rely on a variety of hyperparameters that control their learning behavior, feature extraction capability, and generalization performance \cite{goodfellow2016deep, pinto2022springer}. Choosing the right hyperparameters is critical to achieving high accuracy while avoiding overfitting or underfitting. Key hyperparameters include the number of convolutional filters, kernel size, stride, padding, learning rate, batch size, number of epochs, and regularization parameters.
-
-\paragraph{Number of Convolutional Filters:}  
-The number of filters \(N_l\) in layer \(l\) determines the number of feature maps generated by the convolution. Each filter \(K_i^{(l)} \in \mathbb{R}^{k \times k}\) detects a specific feature in the input. Mathematically, the convolution operation for filter \(i\) is given by:
-\[
-F_i^{(l)} = f\big(X^{(l-1)} * K_i^{(l)} + b_i^{(l)}\big)
-\]
-where \(X^{(l-1)}\) is the input to layer \(l\), \(b_i^{(l)}\) is the bias term, and \(f(\cdot)\) is the activation function. Increasing the number of filters allows the network to capture more complex patterns, but also increases computational cost \cite{pytorchdocs}.
-
-\begin{figure}[H]
-	\centering
-	\begin{tikzpicture}[block/.style={draw, rectangle, minimum width=2cm, minimum height=1cm, align=center, fill=blue!20}]
-		\node[block] (input) {Input Feature Map};
-		\node[block, right=1.5cm of input] (conv1) {Filter 1};
-		\node[block, above=0.5cm of conv1] (conv2) {Filter 2};
-		\node[block, below=0.5cm of conv1] (conv3) {Filter 3};
-		\draw[->, thick] (input.east) -- (conv1.west);
-		\draw[->, thick] (input.east) -- (conv2.west);
-		\draw[->, thick] (input.east) -- (conv3.west);
-	\end{tikzpicture}
-	\caption{Illustration of multiple convolutional filters generating feature maps from a single input.}
-\end{figure}
-
-\paragraph{Kernel Size, Stride, and Padding:}  
-The kernel size \(k \times k\) defines the spatial extent of each convolutional filter. Stride \(s\) determines how the kernel moves over the input:
-\[
-F^{(l)}_{i,j} = f\Big(\sum_{u=0}^{k-1} \sum_{v=0}^{k-1} X^{(l-1)}_{i\cdot s + u, j \cdot s + v} \cdot K^{(l)}_{u,v} + b^{(l)}\Big)
-\]
-Padding \(p\) adds extra pixels around the input, controlling the output dimensions:
-\[
-H_{\text{out}} = \frac{H_{\text{in}} - k + 2p}{s} + 1, \quad W_{\text{out}} = \frac{W_{\text{in}} - k + 2p}{s} + 1
-\]
-Choosing appropriate kernel size, stride, and padding affects feature resolution and the size of the output feature maps \cite{goodfellow2016deep}.
-
-\begin{figure}[H]
-	\centering
-	\begin{tikzpicture}[block/.style={draw, rectangle, minimum width=2cm, minimum height=1cm, align=center, fill=green!20}]
-		\node[block] (input) {Input Image};
-		\node[block, right=2cm of input] (kernel) {Kernel $k \times k$};
-		\node[block, right=2cm of kernel] (output) {Feature Map};
-		\draw[->, thick] (input.east) -- (kernel.west) node[midway, above] {Stride $s$};
-		\draw[->, thick] (kernel.east) -- (output.west) node[midway, above] {Padding $p$};
-	\end{tikzpicture}
-	\caption{Illustration of convolution operation with kernel, stride, and padding.}
-\end{figure}
-
-\paragraph{Learning Rate and Optimization:}  
-The learning rate \(\eta\) controls the size of the update step in gradient descent:
-\[
-\theta \leftarrow \theta - \eta \frac{\partial \mathcal{L}}{\partial \theta}
-\]
-where \(\theta\) represents the network parameters and \(\mathcal{L}\) the loss function. A high learning rate may cause divergence, while a very low learning rate slows training. Optimizers such as SGD, Adam, and RMSProp adjust parameter updates adaptively to improve convergence \cite{kingma2014adam, pytorchdocs}.
-
-\paragraph{Batch Size and Epochs:}  
-Batch size \(B\) determines the number of samples processed before updating network weights. The number of epochs \(E\) is the number of complete passes through the training dataset. Smaller batch sizes increase gradient variance but reduce memory usage, while larger batches provide smoother updates. The output update per batch is:
-\[
-\theta \leftarrow \theta - \eta \frac{1}{B} \sum_{i=1}^{B} \frac{\partial \mathcal{L}(x_i, y_i)}{\partial \theta}
-\]
-Proper selection of batch size and epochs is crucial to balance convergence speed and generalization \cite{pinto2022springer}.
-
-\paragraph{Regularization Parameters:}  
-Techniques like weight decay (L2 regularization) and dropout reduce overfitting. Weight decay adds a penalty term to the loss function:
-\[
-\mathcal{L}_{\text{total}} = \mathcal{L} + \lambda \sum_i \theta_i^2
-\]
-where \(\lambda\) is the regularization coefficient. Dropout randomly deactivates a fraction \(p\) of neurons during training, forcing the network to learn more robust features \cite{srivastava2014dropout}.
-
-% --------------------------------------------------------
 \section{Methodology Justification}
 \index{Methodology!Justification}
 
-\subsection{Requirements for a Convolutional Neural Network}
+\noindent Each methodological choice has been critically selected to address the constraints of real-time edge deployment, limited dataset size, and variability in visual conditions.  
 
-Convolutional Neural Networks (CNNs) have specific requirements to function efficiently and accurately. One of the primary requirements is \textbf{high-quality labeled data} for supervised learning. The network relies on large datasets of input images paired with ground truth labels to learn meaningful feature representations \cite{goodfellow2016deep}. Insufficient or noisy data can lead to poor generalization and overfitting, making dataset quality and diversity crucial.
+\begin{itemize}  
+	\item Dataset selection:\\
+	A dataset of 1,243 labeled images was chosen to balance the need for sufficient variability with the practical constraints of data collection and labeling. This dataset provides coverage of diverse lighting, viewing angles, and occlusion scenarios, which is critical for robust license plate detection \cite{silva2018license}. While a larger dataset could improve model generalization, it would increase labeling effort, storage requirements, and training time, which are non-trivial considerations for this project.  
+	
+	\item Separation of training and deployment:\\
+	The KDD process was split into distinct training and deployment stages to optimize computational efficiency. Training occurs offline on a workstation with GPU acceleration, allowing iterative model optimization and hyperparameter tuning. Deployment operates online on the Jetson Nano, performing real-time inference. This separation prevents resource overload and ensures that real-time constraints are satisfied \cite{shi2016edge}.  
+	
+	\item Structured data transformation:\\
+	By converting raw images into bounding boxes and subsequently into textual license plate data via OCR, the KDD process ensures that live input frames are consistently processed in the same manner as the training data. This consistency is crucial to maintain accuracy and reliability when the system is deployed in real-world conditions \cite{du2013automatic,jaidedai2020easyocr}.  
+\end{itemize}  
 
-Another requirement is \textbf{computational resources}, particularly GPUs, which are essential for accelerating the convolutional and matrix operations involved in training CNNs \cite{pinto2022springer, pytorchdocs}. While CPU-only training is possible, it is significantly slower and may not be practical for large datasets or deep networks. Memory capacity also plays an important role, as intermediate feature maps and batch processing consume significant amounts of RAM.
+\subsection{Justification for the Machine Learning Pipeline}  
+\noindent The machine learning pipeline was designed with both accuracy and computational feasibility in mind:  
 
-CNNs also require \textbf{appropriate model architecture and hyperparameters}, such as the number of layers, filter sizes, strides, padding, learning rate, and regularization parameters. Choosing suitable hyperparameters ensures efficient learning, prevents overfitting, and helps the network converge faster during training \cite{krizhevsky2012imagenet, srivastava2014dropout}.
+\begin{itemize}  
+	\item YOLO for license plate detection:\\
+	YOLO was selected for its single-pass detection capability, which enables fast inference necessary for real-time operation \cite{redmon2016you,bochkovskiy2020yolov4}. Alternative CNN-based detection models such as Faster R-CNN or SSD were considered but rejected due to their higher computational and memory requirements, which would compromise performance on the Jetson Nano.  
+	
+	\item EasyOCR for character recognition:\\
+	Using EasyOCR as a separate recognition module allows for independent optimization of detection and recognition. This modularity is advantageous for edge deployment, as it reduces GPU load and increases system flexibility. EasyOCR also handles the variability in license plate fonts, orientations, and lighting conditions more effectively than a monolithic end-to-end CNN model \cite{jaidedai2020easyocr}.  
+	
+	\item Preprocessing and augmentation:\\
+	Images were resized, normalized, and augmented to simulate real-world variations. These steps mitigate overfitting due to the relatively small dataset and ensure that the model generalizes to different environmental conditions, which is particularly important for reliable edge inference \cite{shorten2019survey}.  
+	
+	\item Dataset size and augmentation trade-off:\\
+	The chosen dataset size, combined with augmentation, provides sufficient diversity for training without incurring the high computational costs of very large datasets. This balance allows the model to achieve high detection and recognition accuracy while remaining feasible for deployment on the Jetson Nano.  
+\end{itemize}  
 
-\textbf{Preprocessing and data augmentation} are additional requirements for effective CNN training. Input images often need resizing, normalization, and augmentation techniques such as rotation, flipping, and cropping to improve model robustness \cite{pinto2022springer}. Proper preprocessing ensures the network can handle variations in real-world data, including different lighting conditions, orientations, and background clutter.
+\subsection{Reflective Evaluation}  
+\noindent The combination of the KDD process and a modular machine learning pipeline provides a systematic and efficient approach to license plate detection on an embedded device. By structuring data selection, preprocessing, transformation, and model deployment, the methodology ensures:  
 
-Finally, \textbf{Python implementation and software dependencies} are critical for building and deploying CNNs. Frameworks such as PyTorch and TensorFlow provide modules for defining convolutional layers, loss functions, activation functions, and optimizers \cite{pytorchdocs}. Common Python dependencies include:
-\begin{itemize}
-	\item \texttt{torch} and \texttt{torchvision} for model building and image utilities.
-	\item \texttt{numpy} and \texttt{scipy} for numerical operations.
-	\item \texttt{matplotlib} or \texttt{seaborn} for visualization.
-	\item \texttt{opencv-python} for image capture and preprocessing.
-\end{itemize}
+\begin{itemize}  
+	\item Consistency and reliability in converting raw visual data into actionable knowledge (license plate numbers and timestamps).  
+	\item Real-time performance on the Jetson Nano without overloading hardware resources.  
+	\item Flexibility for future updates or retraining, as each component (detection, recognition, storage) can be modified independently.  
+\end{itemize}  
 
-For hardware deployment on embedded platforms such as the Jetson Nano, additional requirements include \textbf{CUDA-enabled GPU drivers} and optimized libraries to leverage GPU acceleration \cite{jetsonpytorch}. These software and hardware dependencies enable real-time inference and efficient model training on edge devices, making CNNs practical for applications such as license plate detection.
+\noindent Overall, this methodology balances accuracy, efficiency, and edge-device feasibility, making it well-suited for real-world license plate detection, timestamp recording, and subsequent fee calculation.  
