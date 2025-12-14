@@ -104,3 +104,146 @@ numberstyle=\tiny\color{gray},
 frame=single,
 rulecolor=\color{black!30}
 ]{../../Code/OpenCV/opencv_version_check.py}
+
+
+
+% -------------------------------------------------------------------------
+% SECTION 2: Development Environment -- Hardware / OS / System Tools
+% -------------------------------------------------------------------------
+% NOTE:
+% This section belongs under:
+% \part{Domain Knowledge -- Tools}
+% and comes after Section 1 (Python).
+% -------------------------------------------------------------------------
+
+\section{Development Environment -- Hardware / OS / System Tools}
+
+\subsection{Version}
+\noindent
+The license plate detection system was deployed on an NVIDIA Jetson Nano B01 (4~GB) as the target edge device.  
+The operating system and NVIDIA software stack were installed via the JetPack SDK (Linux for Tegra, L4T).  
+All relevant system versions were verified directly on the Jetson Nano to ensure reproducibility and compatibility with GPU-accelerated inference.
+
+\vspace{1mm}
+\noindent
+The following version information should be documented as part of the final system fingerprint:
+\begin{itemize}
+	\item \textbf{Hardware:} Jetson Nano B01 (4~GB).
+	\item \textbf{JetPack SDK:} JetPack version installed on the device (verified via \SHELL{dpkg} or JetPack release information).
+	\item \textbf{OS / L4T:} Ubuntu-based L4T release (verified using \SHELL{/etc/nv\_tegra\_release} and \SHELL{lsb\_release -a}).
+	\item \textbf{CUDA Toolkit:} CUDA version (verified using \SHELL{nvcc --version}).
+	\item \textbf{TensorRT:} TensorRT version provided by JetPack (verified using \SHELL{dpkg -l | grep tensorrt}).
+\end{itemize}
+
+\subsection{Description}
+\noindent
+This project uses the Jetson Nano as an embedded GPU-enabled edge platform to execute real-time computer vision workloads locally.  
+The system tools and operating environment support the following core requirements:
+\begin{itemize}
+	\item \textbf{Stable OS base:} Ubuntu (L4T) as provided through JetPack for hardware-specific drivers and CUDA support.
+	\item \textbf{Edge inference capability:} NVIDIA GPU acceleration through CUDA and TensorRT for efficient on-device inference.
+	\item \textbf{Developer workflow:} development and deployment via terminal and remote access (e.g., SSH), enabling iterative testing and reproducible execution.
+\end{itemize}
+
+\noindent
+In the project workflow, system-level tools are used primarily to (i) install and maintain the JetPack stack, (ii) validate hardware availability (CPU/GPU/memory), (iii) monitor runtime status, and (iv) execute verification and deployment scripts.
+
+
+\noindent
+Figure~\ref{fig:system_access_workflow} illustrates the typical access and verification workflow for the Jetson Nano system environment.
+
+\begin{figure}[h]
+	\centering
+	\begin{tikzpicture}[
+		node distance=10mm,
+		box/.style={draw, rounded corners, align=center, inner sep=6pt, text width=0.78\linewidth},
+		arrow/.style={-Latex, thick}
+		]
+		\node[box] (flash) {Flash JetPack/L4T Image to microSD Card};
+		\node[box, below=of flash] (boot) {First Boot Initialization\\(user setup, network, updates)};
+		\node[box, below=of boot] (access) {Device Access\\GUI (monitor/keyboard) \quad or \quad Headless (SSH)};
+		\node[box, below=of access] (verify) {System Verification\\OS/L4T, CUDA, TensorRT, \texttt{tegrastats}};
+		\node[box, below=of verify] (dev) {Run Project Pipeline\\(Python scripts for camera + inference + logging)};
+		
+		\draw[arrow] (flash) -- (boot);
+		\draw[arrow] (boot) -- (access);
+		\draw[arrow] (access) -- (verify);
+		\draw[arrow] (verify) -- (dev);
+	\end{tikzpicture}
+	\caption{System setup and access workflow for the Jetson Nano development environment.}
+	\label{fig:system_access_workflow}
+\end{figure}
+
+\subsection{Installation}
+\noindent
+The base system installation was performed by flashing a JetPack-compatible image onto a microSD card and booting the Jetson Nano from this card.  
+JetPack provides the operating system (L4T), device drivers, and the NVIDIA acceleration libraries required for embedded computer vision workloads.
+
+\vspace{1mm}
+\noindent
+A reproducible installation procedure typically includes:
+\begin{itemize}
+	\item \textbf{SD card flashing:} write the JetPack/L4T image to a microSD card using a flashing tool (e.g., balenaEtcher).
+	\item \textbf{First boot initialization:} initial user creation, locale/time settings, and network setup (Ethernet/Wi-Fi).
+	\item \textbf{System update:} update package lists and apply security updates via \SHELL{apt}.
+	\item \textbf{Toolchain verification:} confirm that CUDA/TensorRT components provided by JetPack are present and accessible.
+\end{itemize}
+
+\noindent
+This installation approach ensures that the Jetson Nano uses NVIDIA-supported drivers and libraries, which is essential for stable GPU-accelerated inference and camera interfacing.
+
+\subsection{Configuration}
+\noindent
+After installation, the system was configured to support reliable development and execution of the project pipeline.  
+Only configurations relevant to the operation of an embedded inference device were applied.
+
+\vspace{1mm}
+\noindent
+Typical configuration steps include:
+\begin{itemize}
+	\item \textbf{Remote access (recommended):} enable and verify SSH access for development from a separate workstation.
+	\item \textbf{System resources:} verify available storage and memory; configure swap only if required for model conversion or dependency compilation.
+	\item \textbf{Performance monitoring:} ensure system monitoring tools (e.g., \SHELL{tegrastats}) are available for runtime observation.
+	\item \textbf{Camera support:} verify that the selected camera interface (USB or CSI) is recognized by the OS before running the detection pipeline.
+\end{itemize}
+
+\noindent
+All configuration changes should be kept minimal and documented, since the Jetson Nano is a resource-constrained embedded platform and relies on a stable baseline JetPack installation.
+
+\subsection{First Steps (GUI / UI)}
+\noindent
+After installation and configuration, the first interaction with the device consists of validating the operating environment and confirming basic device functionality.  
+Depending on the chosen workflow, the Jetson Nano can be used either with a directly connected monitor/keyboard (GUI) or remotely (headless) via SSH.
+
+\vspace{1mm}
+\noindent
+Recommended first steps for verification are:
+\begin{itemize}
+	\item \textbf{Login and terminal access:} open a shell either locally (GUI terminal) or remotely (SSH).
+	\item \textbf{System identity check:} confirm OS and L4T release information.
+	\item \textbf{Acceleration stack check:} verify CUDA and TensorRT availability.
+	\item \textbf{Runtime monitoring:} start \SHELL{tegrastats} to confirm real-time reporting of CPU/GPU load, memory usage, and temperature.
+	\item \textbf{Camera presence (if applicable):} confirm that the camera device is detected by the OS before executing project scripts.
+\end{itemize}
+
+\subsection{Program ``Hello World'' / Bash Verification}
+\noindent
+To validate that the Jetson Nano system environment is operational, a minimal OS-level verification script was executed.  
+The script prints core system information and performs basic checks that are directly relevant for edge inference workloads (OS identity, CUDA availability, TensorRT presence, and system monitoring).
+
+
+ \lstinputlisting[
+ language=bash,
+ caption={OS-level ``Hello World'' verification script for Jetson Nano},
+ label={lst:jetson_hello_world_bash},
+ basicstyle=\ttfamily\small,
+ keywordstyle=\color{blue},
+ commentstyle=\color{gray},
+ stringstyle=\color{green!40!black},
+ breaklines=true,
+ showstringspaces=false,
+ numbers=left,
+ numberstyle=\tiny\color{gray},
+ frame=single,
+ rulecolor=\color{black!30}
+ ]{../../Code/SystemTools/jetson_hello_world.sh}
