@@ -1,0 +1,243 @@
+%%%
+%
+% $Autor: Gautam Ramesh $
+% $Datum: 2025-12-15 $
+% $Dateiname:
+% $Version: 4620 $
+%
+% !TeX spellcheck = GB
+% !TeX program = pdflatex
+% !TeX encoding = utf8
+%
+%%%
+
+\chapter{\textcolor{red}{Core Algorithm - YOLO}}
+\index{YOLO}
+\index{You Only Look Once}
+
+% --------------------------------------------------------
+\section{Introduction}
+\index{YOLO!Introduction}
+
+\noindent
+YOLO (You Only Look Once) is a family of real time object detection algorithms that treat detection as a single end to end regression problem. Instead of using multiple stages (region proposals and then classification), YOLO predicts bounding boxes and class probabilities directly from the full image in one forward pass \cite{redmon2016yolo,redmon2016yolo_arxiv}. This design is particularly suitable for embedded and edge deployments where low latency is critical, because the entire pipeline is optimized as one neural network and can be accelerated efficiently on GPUs.
+
+In this project, YOLO is used to detect licence plates from live camera frames on the Jetson Nano B01. After the frame is captured and lightly preprocessed, the YOLO detector returns:
+\begin{itemize}
+	\item bounding box coordinates for each detected licence plate,
+	\item confidence score for each detection, and
+	\item class label (for example, \texttt{license\_plate}).
+\end{itemize}
+These detections are then used to crop the plate region and forward it to the OCR stage, and finally the result is logged into the system database for later auditing and billing.
+
+% --------------------------------------------------------
+\section{Description}
+\index{YOLO!Description}
+
+YOLO detectors are built on the idea of extracting multi scale visual features and converting them into detection predictions. Modern YOLO variants typically follow a modular design:
+
+\begin{itemize}
+	\item \textbf{Backbone:} feature extraction network that converts the input image into rich feature maps.
+	\item \textbf{Neck:} feature fusion layers that combine features across scales (useful for small objects like licence plates).
+	\item \textbf{Head:} prediction layers that output bounding boxes and class probabilities.
+\end{itemize}
+
+The original YOLO formulation divides the image into a grid and predicts multiple bounding boxes per cell, making detection extremely fast \cite{redmon2016yolo}. Recent YOLO families refine the architecture and training strategies for accuracy and stability. Many modern implementations incorporate feature pyramids and path aggregation to strengthen small object detection, which is directly relevant for licence plates that occupy a small region in the overall frame \cite{yaseen2024whatisyolov8}.
+
+\begin{figure}[htbp]
+	\centering
+	\begin{tikzpicture}[
+		block/.style={
+			rectangle,
+			rounded corners,
+			draw=black,
+			thick,
+			minimum width=3.4cm,
+			minimum height=0.9cm,
+			align=center,
+			font=\small
+		},
+		arrow/.style={-{Latex[length=2.5mm]}, thick}
+		]
+		\node[block, fill=blue!20] (input) {Input Frame\\(Camera Image)};
+		\node[block, fill=green!20, below=1.3cm of input] (backbone) {Backbone\\Feature Extraction};
+		\node[block, fill=yellow!20, below=1.3cm of backbone] (neck) {Neck\\Multi Scale Fusion};
+		\node[block, fill=orange!20, below=1.3cm of neck] (head) {Detection Head\\Boxes + Scores + Class};
+		\node[block, fill=red!15, below=1.3cm of head] (post) {Post Processing\\NMS + Cropping + OCR};
+		
+		\draw[arrow] (input.south) -- (backbone.north);
+		\draw[arrow] (backbone.south) -- (neck.north);
+		\draw[arrow] (neck.south) -- (head.north);
+		\draw[arrow] (head.south) -- (post.north);
+	\end{tikzpicture}
+	\captionsetup{font=small}
+	\caption{Conceptual YOLO pipeline used in this project. The model produces bounding boxes and confidence scores, followed by post processing such as Non Maximum Suppression (NMS) and cropping for OCR.}
+	\label{fig:yolo_pipeline}
+\end{figure}
+
+\noindent
+For licence plate detection, YOLO is effective because it can localize plates under varying viewpoints, lighting changes, and partial occlusions, while maintaining real time speed \cite{yolov4lp_rg,anpr_yolov8_rg}. Research literature and applied surveys show YOLO based ALPR pipelines are widely used due to their speed accuracy tradeoff and end to end simplicity \cite{yolo_alpr_end2end_rg}.
+
+% --------------------------------------------------------
+\section{Installation}
+\index{YOLO!Installation}
+
+YOLO itself is an algorithm family, while practical deployment usually depends on an implementation. In this project, a common approach is to use the Ultralytics implementation (widely used for YOLOv8 style workflows). Note that Ultralytics has released YOLO versions as software implementations and documentation, and not always as a single formal paper \cite{ultralytics_issue_paper}.
+
+\subsection{Installation on Desktop or General Linux}
+\begin{tcolorbox}[colback=white, colframe=black, coltext=ShellColor, sharp corners, boxrule=0.8pt]
+	\begin{small}
+		\begin{verbatim}
+			pip install ultralytics
+		\end{verbatim}
+	\end{small}
+\end{tcolorbox}
+
+\subsection{Installation Notes for Jetson Nano}
+On Jetson Nano, installation must match:
+\begin{itemize}
+	\item the JetPack version (CUDA and cuDNN compatibility),
+	\item the ARM64 environment,
+	\item a compatible PyTorch build for Jetson.
+\end{itemize}
+After PyTorch is installed correctly, Ultralytics can be installed and used for inference on the CUDA enabled GPU, which is a typical edge deployment approach \cite{ultralytics_issue_paper}.
+
+% --------------------------------------------------------
+\section{Example -- Description}
+\index{YOLO!Example Description}
+
+The example file \FILE{YOLOLPExample.py} demonstrates a minimal YOLO based detection loop for licence plates. The purpose is to verify that:
+\begin{itemize}
+	\item the camera stream is readable,
+	\item the YOLO model loads without errors,
+	\item inference produces bounding boxes with confidence scores, and
+	\item the output frame can be annotated and displayed in real time.
+\end{itemize}
+
+Conceptually, the example performs:
+\begin{enumerate}
+	\item Capture frames from the camera device.
+	\item Run YOLO inference on each frame.
+	\item Apply Non Maximum Suppression (NMS) implicitly or explicitly to remove duplicate detections.
+	\item Draw bounding boxes and confidence scores on the frame.
+	\item Crop the detected plate region and optionally pass it to OCR.
+\end{enumerate}
+
+This mirrors the core detection component in the full Jetson Nano ANPR pipeline \cite{yolo_alpr_end2end_rg}.
+
+% --------------------------------------------------------
+\section{Example -- Manual}
+\index{YOLO!Example Manual}
+
+\begin{itemize}
+	\item \textbf{Step 1:} Ensure Jetson Nano is powered on and the camera is connected.
+	\item \textbf{Step 2:} Activate your Python environment containing PyTorch and Ultralytics.
+	\item \textbf{Step 3:} Navigate to the example folder:
+	\begin{tcolorbox}[colback=white, colframe=black, coltext=ShellColor, sharp corners, boxrule=0.8pt]
+		\begin{small}
+			\begin{verbatim}
+				cd ~/projects/license-plate-detection/yolo_tests
+			\end{verbatim}
+		\end{small}
+	\end{tcolorbox}
+	
+	\item \textbf{Step 4:} Run the script:
+	\begin{tcolorbox}[colback=white, colframe=black, coltext=ShellColor, sharp corners, boxrule=0.8pt]
+		\begin{small}
+			\begin{verbatim}
+				python YOLOLPExample.py
+			\end{verbatim}
+		\end{small}
+	\end{tcolorbox}
+	
+	\item \textbf{Step 5:} Verify bounding boxes appear on detected plates.
+	\item \textbf{Step 6:} Press \texttt{q} to exit and release the camera.
+\end{itemize}
+
+% --------------------------------------------------------
+\section{Example -- Version}
+\index{YOLO!Example Version}
+
+To document reproducibility, the following script prints the versions of the relevant stack (Ultralytics, PyTorch, and CUDA availability). This helps avoid mismatch issues when JetPack or Python packages change.
+
+\subsection{Code}
+\lstinputlisting[
+language=Python,
+caption={Checking the installed YOLO (Ultralytics) and PyTorch versions},
+label={lst:yolo_version_check},
+basicstyle=\ttfamily\small,
+keywordstyle=\color{blue},
+commentstyle=\color{gray},
+stringstyle=\color{green!40!black},
+breaklines=true,
+showstringspaces=false,
+numbers=left,
+numberstyle=\tiny\color{gray},
+frame=single,
+rulecolor=\color{black!30}
+]{../../Code/YOLO/yoloversion.py}
+
+% --------------------------------------------------------
+\section{Example -- Files}
+\index{YOLO!Example Files}
+
+The central example file for this section is:
+\FILE{YOLOLPExample.py}
+
+It is intentionally short and focuses on:
+\begin{itemize}
+	\item model loading,
+	\item live inference loop,
+	\item drawing bounding boxes,
+	\item cropping detected plates for OCR integration.
+\end{itemize}
+
+\subsection{Code}
+\lstinputlisting[
+language=Python,
+caption={YOLO Licence Plate Detection Example for Jetson Nano},
+label={lst:yolo_example},
+basicstyle=\ttfamily\small,
+keywordstyle=\color{blue},
+commentstyle=\color{gray},
+stringstyle=\color{green!40!black},
+breaklines=true,
+showstringspaces=false,
+numbers=left,
+numberstyle=\tiny\color{gray},
+frame=single,
+rulecolor=\color{black!30}
+]{../../Code/YOLO/yoloexample.py}
+
+% --------------------------------------------------------
+\section{Hyperparameters}
+\index{YOLO!Hyperparameters}
+
+YOLO training and inference behaviour is controlled by hyperparameters that influence detection accuracy, speed, and robustness \cite{redmon2016yolo,yaseen2024whatisyolov8}. The most relevant parameters in this project context are:
+
+\begin{itemize}
+	\item \textbf{Input size (imgsz):} Higher resolutions improve small object recall (licence plates) but increase compute time.
+	\item \textbf{Confidence threshold (conf):} Filters weak detections. Too high can miss plates, too low increases false positives.
+	\item \textbf{IoU threshold (iou):} Controls NMS aggressiveness. Higher values keep more overlapping boxes.
+	\item \textbf{Batch size:} Impacts GPU memory usage during training, and can affect convergence stability.
+	\item \textbf{Learning rate and optimizer:} Strongly influences training convergence; Adam and SGD are common \cite{kingma2014adam}.
+	\item \textbf{Augmentation strength:} Helps generalization to lighting, motion blur, and viewing angles.
+\end{itemize}
+
+For Jetson deployment, inference side thresholds (\texttt{conf}, \texttt{iou}, \texttt{imgsz}) are typically tuned to achieve stable real time operation while maintaining high recall of licence plates.
+
+% --------------------------------------------------------
+\section{Relevance}
+\index{YOLO!Relevance}
+
+YOLO is highly relevant for embedded ANPR systems because it offers a practical speed accuracy tradeoff in real world scenes. In licence plate detection, the model must handle small targets, motion blur, and variable illumination. YOLO based ALPR systems reported in applied research demonstrate that end to end detection is robust and efficient for traffic monitoring and parking scenarios \cite{yolov4lp_rg,anpr_yolov8_rg,yolo_alpr_end2end_rg}. Combined with GPU acceleration on Jetson, YOLO inference can run locally without cloud processing, supporting privacy friendly edge processing and low latency system response.
+
+% --------------------------------------------------------
+\section{Further Reading}
+\index{YOLO!Further Reading}
+
+\begin{itemize}
+	\item Original YOLO formulation and motivation \cite{redmon2016yolo}.
+	\item Technical overview style discussions of modern YOLOv8 components and training decisions \cite{yaseen2024whatisyolov8}.
+	\item Applied ALPR pipelines using YOLO variants for licence plates \cite{yolov4lp_rg,anpr_yolov8_rg,yolo_alpr_end2end_rg}.
+\end{itemize}
