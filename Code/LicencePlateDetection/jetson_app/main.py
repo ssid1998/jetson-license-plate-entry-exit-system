@@ -1,2 +1,5 @@
-# Jetson Nano main app
-# TODO: Add main app code
+from detector import main
+
+
+if __name__ == "__main__":
+    main()
