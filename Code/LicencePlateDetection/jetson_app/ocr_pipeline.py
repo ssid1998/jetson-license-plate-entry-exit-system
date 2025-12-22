@@ -23,7 +23,7 @@ class PlateOcrPipeline:
         self.debug = debug
         self.useGpu = useGpu
 
-        self.resizeWidth = 384
+        self.resizeWidth = 640
         self.strictValidation = True
         self.debugDir = os.path.join(os.path.dirname(__file__), "debug")
         self.temporalReads = deque(maxlen=5)
@@ -118,6 +118,7 @@ class PlateOcrPipeline:
                 allowlist=self.allowlist,
                 text_threshold=0.4,
                 low_text=0.3,
+                mag_ratio=1.5,
             )
         except Exception:
             return "", 0.0
@@ -151,9 +152,15 @@ class PlateOcrPipeline:
                 chars[i] = "S"
             elif chars[i] == "8":
                 chars[i] = "B"
+            elif chars[i] == "4":
+                chars[i] = "A"
 
         for i in range(firstDigit, len(chars)):
             if chars[i] == "O":
+                chars[i] = "0"
+            elif chars[i] == "Q":
+                chars[i] = "0"
+            elif chars[i] == "D":
                 chars[i] = "0"
             elif chars[i] == "I":
                 chars[i] = "1"
@@ -165,6 +172,8 @@ class PlateOcrPipeline:
                 chars[i] = "2"
             elif chars[i] == "G":
                 chars[i] = "6"
+            elif chars[i] == "A":
+                chars[i] = "4"
 
         return "".join(chars)
 
