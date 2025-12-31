@@ -41,142 +41,132 @@
 	\end{figure}
 }
 
-\Mysection{Challenges}
+\Mysection{Challenges and Solutions}
 
-\STANDARD{The Apriori Principle in Market Basket Analysis}
+% ==============================================================================
+% SLIDE 1: MEMORY CHALLENGE
+% ==============================================================================
+\STANDARD{Challenge 1: System Memory Exhaustion}
 {
+	\renewcommand{\arraystretch}{1.5} 
+	\small 
 	
-	\begin{center}
-		\small Apriori Principle in Itemsets
-	\end{center}
-	%\vspace{0.4em}
-	\vspace{-1.8em}
-	\begin{figure}[h!]
-		\centering
-
-	\begin{tikzpicture}[
-		scale=0.55, transform shape,  
-		node distance=1cm,
-		every node/.style={draw, rectangle, fill=blue!90, text=white, rounded corners=2pt, 
-			minimum width=1cm, minimum height=0.6cm, font=\small},
-		line/.style={thin, ->, >=stealth, draw=teal!80}
-		]
-		
-		% --- Level 0 ---
-		\node (null) at (0,0) {null};
-		
-		% --- Level 1 ---
-		\node (A) at (-6,-1.5) {A};
-		\node (B) at (-3,-1.5) {B};
-		\node (C) at (0,-1.5) {C};
-		\node (D) at (3,-1.5) {D};
-		\node (E) at (6,-1.5) {E};
-		
-		% --- Level 2 ---
-		\node (AB) [fill=red!90] at (-7,-3) {AB};
-		\node (AC) at (-5,-3) {AC};
-		\node (AD) at (-3,-3) {AD};
-		\node (AE) at (-1,-3) {AE};
-		\node (BC) at (1,-3) {BC};
-		\node (BD) at (3,-3) {BD};
-		\node (BE) at (5,-3) {BE};
-		\node (CD) at (7,-3) {CD};
-		\node (CE) at (9,-3) {CE};
-		\node (DE) at (11,-3) {DE};
-		
-		% --- Level 3 ---
-		\node (ABC) [fill=red!50] at (-6,-4.5) {ABC};
-		\node (ABD) [fill=red!50] at (-4,-4.5) {ABD};
-		\node (ABE) [fill=red!50] at (-2,-4.5) {ABE};
-		\node (ACD) at (0,-4.5) {ACD};
-		\node (ACE) at (2,-4.5) {ACE};
-		\node (ADE) at (4,-4.5) {ADE};
-		\node (BCD) at (6,-4.5) {BCD};
-		\node (BCE) at (8,-4.5) {BCE};
-		\node (BDE) at (10,-4.5) {BDE};
-		\node (CDE) at (12,-4.5) {CDE};
-		
-		% --- Level 4 ---
-		\node (ABCD) [fill=red!50] at (-4,-6) {ABCD};
-		\node (ABCE) [fill=red!50] at (-2,-6) {ABCE};
-		\node (ABDE) [fill=red!50] at (0,-6) {ABDE};
-		\node (ACDE) at (2,-6) {ACDE};
-		\node (BCDE) at (4,-6) {BCDE};
-		
-		% --- Level 5 ---
-		\node [fill=red!50] (ABCDE) at (0,-7.5) {ABCDE};
-		
-		% --- Connections ---
-		% Level 0 -> Level 1
-		\foreach \x in {A,B,C,D,E}
-		\draw[line] (null) -- (\x);
-		
-		% Level 1 -> Level 2
-		\foreach \x/\y in {A/AB, A/AC, A/AD, A/AE, B/AB, B/BC, B/BD, B/BE, C/AC, C/BC, C/CD, C/CE, D/AD, D/BD, D/CD, D/DE, E/AE, E/BE, E/CE, E/DE}
-		\draw[line] (\x) -- (\y);
-		
-		% Level 2 -> Level 3
-		\foreach \x/\y in {AB/ABC, AB/ABD, AB/ABE, AC/ABC, AC/ACD, AC/ACE, AD/ABD, AD/ACD, AD/ADE, AE/ABE, AE/ACE, AE/ADE, BC/ABC, BC/BCD, BC/BCE, BD/ABD, BD/BCD, BD/BDE, BE/ABE, BE/BCE, BE/BDE, CD/ACD, CD/BCD, CD/CDE, CE/ACE, CE/BCE, CE/CDE, DE/ADE, DE/ABDE, DE/BDE, DE/CDE}
-		\draw[line] (\x) -- (\y);
-		
-		% Level 3 -> Level 4
-		\foreach \x/\y in {ABC/ABCD, ABC/ABCE, ABD/ABCD, ABD/ABDE, ACD/ABCD, ACD/ACDE, ACE/ABCE, ACE/ACDE, ADE/ABDE, ADE/ACDE, BCD/ABCD, BCD/BCDE, BCE/ABCE, BCE/BCDE, BDE/ABDE, BDE/BCDE, CDE/ACDE, CDE/BCDE}
-		\draw[line] (\x) -- (\y);
-		
-		% Level 4 -> Level 5
-		\foreach \x in {ABCD, ABCE, ABDE, ACDE, BCDE}
-		\draw[line] (\x) -- (ABCDE);
-		
-	\end{tikzpicture}
-    \caption{Infrequent itemsets based on the Apriori Principle. The nodes dependant on \texttt{AB} are highlighted in red}
-\label{fig:apriori-lattice}
-\end{figure}	
-	
+	\noindent
+	\begin{tabular}{|p{0.48\linewidth}|p{0.48\linewidth}|}
+		\hline
+		\cellcolor{red!40!black}\textbf{\color{white} The Problem} & 
+		\cellcolor{blue!40!black}\textbf{\color{white} The Engineered Solution} \\ 
+		\hline
+		\cellcolor{gray!10}
+		\textbf{Conflict: Unified Memory Bottleneck} \newline
+		The Jetson Nano shares a single 4GB RAM pool between the CPU and GPU.
+		\newline \newline
+		$\bullet$ \textbf{OS Overhead:} Ubuntu 18.04 consumes $\approx$ 1.2 GB. \newline
+		$\bullet$ \textbf{AI Load:} YOLOv5 + EasyOCR required $\approx$ 3.3 GB during initialization.
+		\newline \newline
+		\textit{Impact:} Demand (4.5 GB) exceeded physical limits. The Linux kernel invoked the "OOM Killer" and terminated the process instantly.
+		& 
+		\cellcolor{gray!10}
+		\textbf{Solution: Hybrid Memory Architecture} \newline
+		We engineered a split-resource strategy:
+		\newline \newline
+		$\bullet$ \textbf{Virtual Expansion:} Configured a \textbf{6GB Swap Partition} on an external SSD to offload inactive OS pages, keeping physical RAM free for inference. \newline
+		$\bullet$ \textbf{Compute Isolation:} Forced OCR to run on the \textbf{CPU} (\texttt{gpu=False}). This reserves the limited GPU VRAM entirely for YOLO detection. \\
+		\hline
+	\end{tabular}
 }
 
-\Mysection{Solutions}
-
-\STANDARD{Apriori Algorithm Use Case: Recommending Items for a Farmer's Market}
+% ==============================================================================
+% SLIDE 2: SOFTWARE CHALLENGE
+% ==============================================================================
+\STANDARD{Challenge 2: Legacy Software Ecosystem}
 {
-	\vspace{-3.0em}
-	\begin{center}
-		\small Case Description
-	\end{center}
-	\vspace{0.4em}
-	\setbeamertemplate{itemize subitem}{\scriptsize$\circ$} % sub-bullet (○)
+	\renewcommand{\arraystretch}{1.5}
+	\small
 	
-	\begin{itemize}
-		\item Farmer's Market:
-				It is a place where farmers come directly to sell their products, enabling them to earn greater profits on their produce by selling to consumers directly. 
-				
-		\item Objective: To find possible products to sell in the farmer's market, based on data collected from previously establised markets.
-		 
-	\end{itemize}
-	
-	
+	\noindent
+	\begin{tabular}{|p{0.48\linewidth}|p{0.48\linewidth}|}
+		\hline
+		\cellcolor{red!40!black}\textbf{\color{white} The Problem} & 
+		\cellcolor{blue!40!black}\textbf{\color{white} The Engineered Solution} \\ 
+		\hline
+		\cellcolor{gray!10}
+		\textbf{Conflict: Dependency Hell} \newline
+		The Jetson Nano relies on JetPack 4.6 (Ubuntu 18.04), which locks the environment to \textbf{Python 3.6}.
+		\newline \newline
+		$\bullet$ \textbf{Incompatibility:} State-of-the-art libraries (Ultralytics YOLOv8, Pandas 2.0) require Python 3.8+ and modern C++ compilers, causing installation failures. \newline
+		$\bullet$ \textbf{Deprecated APIs:} The \texttt{Pillow} image library recently removed attributes (like \texttt{ANTIALIAS}) used by older Jetson inference tools, causing runtime crashes.
+		& 
+		\cellcolor{gray!10}
+		\textbf{Solution: Cross-Compilation Workflow} \newline
+		We bypassed the OS limitations using an external pipeline:
+		\newline \newline
+		$\bullet$ \textbf{TensorRT Export:} Instead of running PyTorch natively, we trained the model on a PC, exported it to \textbf{ONNX}, and cross-compiled it into a \textbf{.engine} binary specifically optimized for the Nano's Maxwell GPU. \newline
+		$\bullet$ \textbf{Monkey Patching:} We developed a custom initialization script that injects code at runtime to manually map old API calls to their new locations, preventing crashes in legacy libraries. \\
+		\hline
+	\end{tabular}
 }
 
-\begin{frame}[fragile]{Apriori Algorithm Use Case: Recommending Items for a Farmer's Market l}
-	The following code highlights the data loading and pre-processing activities in Python. Here we load the data and remove columns regarding social media information, updatetime and location. 
-		\begin{adjustwidth}{-6em}{0pt}
-		\begin{python}
-			
-			import pandas as pd
-			import os
-			print(os.getcwd())
-			df=pd.read_csv("study_notes/datasets/farmers_market.csv")
-			print(df)
-			
-			print(df.columns.tolist())
-			
-			cols_to_keep = ['Market_ID', 'Market_Name', 'Is_Organic', 'Is_Baked_Goods', 'Is_Cheese', 'Is_Crafts', 'Is_Flowers', 'Is_Eggs', 'Is_Seafood',
-			'Is_Herbs', 'Is_Vegetables', 'Is_Honey', 'Is_Jams', 'Is_Maple', 'Is_Meat', 'Is_Nursery', 'Is_Nuts',
-			'Is_Plants', 'Is_Poultry', 'Is_Prepared', 'Is_Soap', 'Is_Trees', 'Is_Wine', 'Is_Coffee', 'Is_Beans',
-			'Is_Fruits', 'Is_Grains', 'Is_Juices', 'Is_Mushrooms', 'Is_Pet_Food', 'Is_Tofu', 'Is_Wild_Harvested']
-			df = df[cols_to_keep]
-		\end{python}
-		 \end{adjustwidth}
-\end{frame}
+% ==============================================================================
+% SLIDE 3: REMOTE DEV CHALLENGE
+% ==============================================================================
+\STANDARD{Challenge 3: Remote Development Breakdown}
+{
+	\renewcommand{\arraystretch}{1.5}
+	\small
+	
+	\noindent
+	\begin{tabular}{|p{0.48\linewidth}|p{0.48\linewidth}|}
+		\hline
+		\cellcolor{red!40!black}\textbf{\color{white} The Problem} & 
+		\cellcolor{blue!40!black}\textbf{\color{white} The Engineered Solution} \\ 
+		\hline
+		\cellcolor{gray!10}
+		\textbf{Conflict: glibc Version Lock} \newline
+		In 2024, Microsoft updated the VS Code Remote Server to require \textbf{glibc 2.28} or higher.
+		\newline \newline
+		$\bullet$ \textbf{The Lockout:} The Jetson Nano's OS is pinned to \textbf{glibc 2.27}. \newline
+		$\bullet$ \textbf{Impact:} Standard SSH connections failed with "OS Not Supported" errors, blocking all direct code editing and file transfer capabilities on the device.
+		& 
+		\cellcolor{gray!10}
+		\textbf{Solution: SSH-FS Protocol Switch} \newline
+		We architected a workaround that avoids running binary agents on the Jetson:
+		\newline \newline
+		$\bullet$ \textbf{SFTP Mounting:} We switched to the \textbf{SSH FS} extension, which mounts the Jetson's external SSD (`/media/myssd`) as a local network drive on the development laptop. \newline
+		$\bullet$ \textbf{Benefit:} This protocol relies purely on standard SFTP, which does not check the glibc version, allowing full real-time coding access despite the OS obsolescence. \\
+		\hline
+	\end{tabular}
+}
+
+% ==============================================================================
+% SLIDE 4: LOGIC CHALLENGE
+% ==============================================================================
+\STANDARD{Challenge 4: Latency \& Logic}
+{
+	\renewcommand{\arraystretch}{1.5}
+	\small
+	
+	\noindent
+	\begin{tabular}{|p{0.48\linewidth}|p{0.48\linewidth}|}
+		\hline
+		\cellcolor{red!40!black}\textbf{\color{white} The Problem} & 
+		\cellcolor{blue!40!black}\textbf{\color{white} The Engineered Solution} \\ 
+		\hline
+		\cellcolor{gray!10}
+		\textbf{Conflict: Hardware Constraints} \newline
+		$\bullet$ \textbf{Latency:} Running the heavy Optical Character Recognition (OCR) model on every video frame dropped performance to an unusable \textbf{1 FPS} due to CPU bottlenecks. \newline
+		$\bullet$ \textbf{Single-Camera Limit:} A standard parking system uses two cameras (Entry/Exit). With only one camera, the system lacks a physical sensor trigger to determine when a car has left the frame.
+		& 
+		\cellcolor{gray!10}
+		\textbf{Solution: State Machine Heuristics} \newline
+		We developed a specialized algorithm to compensate:
+		\newline \newline
+		$\bullet$ \textbf{Cooldown Timer:} We implemented a logic gate that pauses the OCR engine for \textbf{3 seconds} after a successful read. This keeps the video smooth by running only the lightweight Detector during the cooldown. \newline
+		$\bullet$ \textbf{"Last-Seen" Algorithm:} The system updates a timestamp for every frame the car is visible. The billing logic defines "Exit Time" as the exact moment the timestamp ceases to update. \\
+		\hline
+	\end{tabular}
+}
+
 
 \Mysection{Results}		
 
