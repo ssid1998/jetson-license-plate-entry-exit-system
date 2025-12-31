@@ -1,0 +1,190 @@
+% !TeX encoding = utf8
+% !TeX root = Rename
+%
+%%%%%%
+
+\Mysection{Introduction}
+
+\STANDARD{Introduction I}
+{
+	\begin{itemize}
+		\item The project focuses on designing a cost-effective, 
+		single-camera car license plate recognition system.
+		\item Traditional automatic number plate recognition systems rely on expensive hardware and centralized processing \cite{NC24}. 
+		\item  The system enables license plate detection using compact deep-learning models deployed on embedded devices. \cite{Tan+22} \cite{jocher2023ultralytics,Cor21}.		
+		\item Application: High vehicle throughput such as airport departures and arrivals, where manual verification is inefficient and error-prone. Focused on automated entry/exit recognition and dwell-time-based billing.
+		
+		 
+	\end{itemize}
+	
+}
+
+\Mysection{Description of Application}
+	
+\STANDARD{Description of Application I}
+{
+	\begin{itemize}
+		\item Market Basket Analysis  (\cite{majumdar_apriori_2015}) is a technique used by retailers to understand the purchase behavior of customers. At its core, it uses the Apriori Algorithm. 
+		\item It helps retailers to identify the relationship between the items that customers buy together.
+		\item Retailers can use this information to optimize their store layout, product placement, and marketing strategies.
+		\item Boost sales.
+		\item Uncover interesting patterns. People who buy diapers are likely to buy beer.	
+	\end{itemize}
+}
+
+\STANDARD{Description of Application II}
+{
+	\begin{figure}
+		\centering
+		\includegraphics[width=1.0\textwidth]{img/lp_setup.png}
+		\caption{ License Plate Detection System.}
+	\end{figure}
+}
+
+\Mysection{Challenges}
+
+\STANDARD{The Apriori Principle in Market Basket Analysis}
+{
+	
+	\begin{center}
+		\small Apriori Principle in Itemsets
+	\end{center}
+	%\vspace{0.4em}
+	\vspace{-1.8em}
+	\begin{figure}[h!]
+		\centering
+
+	\begin{tikzpicture}[
+		scale=0.55, transform shape,  
+		node distance=1cm,
+		every node/.style={draw, rectangle, fill=blue!90, text=white, rounded corners=2pt, 
+			minimum width=1cm, minimum height=0.6cm, font=\small},
+		line/.style={thin, ->, >=stealth, draw=teal!80}
+		]
+		
+		% --- Level 0 ---
+		\node (null) at (0,0) {null};
+		
+		% --- Level 1 ---
+		\node (A) at (-6,-1.5) {A};
+		\node (B) at (-3,-1.5) {B};
+		\node (C) at (0,-1.5) {C};
+		\node (D) at (3,-1.5) {D};
+		\node (E) at (6,-1.5) {E};
+		
+		% --- Level 2 ---
+		\node (AB) [fill=red!90] at (-7,-3) {AB};
+		\node (AC) at (-5,-3) {AC};
+		\node (AD) at (-3,-3) {AD};
+		\node (AE) at (-1,-3) {AE};
+		\node (BC) at (1,-3) {BC};
+		\node (BD) at (3,-3) {BD};
+		\node (BE) at (5,-3) {BE};
+		\node (CD) at (7,-3) {CD};
+		\node (CE) at (9,-3) {CE};
+		\node (DE) at (11,-3) {DE};
+		
+		% --- Level 3 ---
+		\node (ABC) [fill=red!50] at (-6,-4.5) {ABC};
+		\node (ABD) [fill=red!50] at (-4,-4.5) {ABD};
+		\node (ABE) [fill=red!50] at (-2,-4.5) {ABE};
+		\node (ACD) at (0,-4.5) {ACD};
+		\node (ACE) at (2,-4.5) {ACE};
+		\node (ADE) at (4,-4.5) {ADE};
+		\node (BCD) at (6,-4.5) {BCD};
+		\node (BCE) at (8,-4.5) {BCE};
+		\node (BDE) at (10,-4.5) {BDE};
+		\node (CDE) at (12,-4.5) {CDE};
+		
+		% --- Level 4 ---
+		\node (ABCD) [fill=red!50] at (-4,-6) {ABCD};
+		\node (ABCE) [fill=red!50] at (-2,-6) {ABCE};
+		\node (ABDE) [fill=red!50] at (0,-6) {ABDE};
+		\node (ACDE) at (2,-6) {ACDE};
+		\node (BCDE) at (4,-6) {BCDE};
+		
+		% --- Level 5 ---
+		\node [fill=red!50] (ABCDE) at (0,-7.5) {ABCDE};
+		
+		% --- Connections ---
+		% Level 0 -> Level 1
+		\foreach \x in {A,B,C,D,E}
+		\draw[line] (null) -- (\x);
+		
+		% Level 1 -> Level 2
+		\foreach \x/\y in {A/AB, A/AC, A/AD, A/AE, B/AB, B/BC, B/BD, B/BE, C/AC, C/BC, C/CD, C/CE, D/AD, D/BD, D/CD, D/DE, E/AE, E/BE, E/CE, E/DE}
+		\draw[line] (\x) -- (\y);
+		
+		% Level 2 -> Level 3
+		\foreach \x/\y in {AB/ABC, AB/ABD, AB/ABE, AC/ABC, AC/ACD, AC/ACE, AD/ABD, AD/ACD, AD/ADE, AE/ABE, AE/ACE, AE/ADE, BC/ABC, BC/BCD, BC/BCE, BD/ABD, BD/BCD, BD/BDE, BE/ABE, BE/BCE, BE/BDE, CD/ACD, CD/BCD, CD/CDE, CE/ACE, CE/BCE, CE/CDE, DE/ADE, DE/ABDE, DE/BDE, DE/CDE}
+		\draw[line] (\x) -- (\y);
+		
+		% Level 3 -> Level 4
+		\foreach \x/\y in {ABC/ABCD, ABC/ABCE, ABD/ABCD, ABD/ABDE, ACD/ABCD, ACD/ACDE, ACE/ABCE, ACE/ACDE, ADE/ABDE, ADE/ACDE, BCD/ABCD, BCD/BCDE, BCE/ABCE, BCE/BCDE, BDE/ABDE, BDE/BCDE, CDE/ACDE, CDE/BCDE}
+		\draw[line] (\x) -- (\y);
+		
+		% Level 4 -> Level 5
+		\foreach \x in {ABCD, ABCE, ABDE, ACDE, BCDE}
+		\draw[line] (\x) -- (ABCDE);
+		
+	\end{tikzpicture}
+    \caption{Infrequent itemsets based on the Apriori Principle. The nodes dependant on \texttt{AB} are highlighted in red}
+\label{fig:apriori-lattice}
+\end{figure}	
+	
+}
+
+\Mysection{Solutions}
+
+\STANDARD{Apriori Algorithm Use Case: Recommending Items for a Farmer's Market}
+{
+	\vspace{-3.0em}
+	\begin{center}
+		\small Case Description
+	\end{center}
+	\vspace{0.4em}
+	\setbeamertemplate{itemize subitem}{\scriptsize$\circ$} % sub-bullet (○)
+	
+	\begin{itemize}
+		\item Farmer's Market:
+				It is a place where farmers come directly to sell their products, enabling them to earn greater profits on their produce by selling to consumers directly. 
+				
+		\item Objective: To find possible products to sell in the farmer's market, based on data collected from previously establised markets.
+		 
+	\end{itemize}
+	
+	
+}
+
+\begin{frame}[fragile]{Apriori Algorithm Use Case: Recommending Items for a Farmer's Market l}
+	The following code highlights the data loading and pre-processing activities in Python. Here we load the data and remove columns regarding social media information, updatetime and location. 
+		\begin{adjustwidth}{-6em}{0pt}
+		\begin{python}
+			
+			import pandas as pd
+			import os
+			print(os.getcwd())
+			df=pd.read_csv("study_notes/datasets/farmers_market.csv")
+			print(df)
+			
+			print(df.columns.tolist())
+			
+			cols_to_keep = ['Market_ID', 'Market_Name', 'Is_Organic', 'Is_Baked_Goods', 'Is_Cheese', 'Is_Crafts', 'Is_Flowers', 'Is_Eggs', 'Is_Seafood',
+			'Is_Herbs', 'Is_Vegetables', 'Is_Honey', 'Is_Jams', 'Is_Maple', 'Is_Meat', 'Is_Nursery', 'Is_Nuts',
+			'Is_Plants', 'Is_Poultry', 'Is_Prepared', 'Is_Soap', 'Is_Trees', 'Is_Wine', 'Is_Coffee', 'Is_Beans',
+			'Is_Fruits', 'Is_Grains', 'Is_Juices', 'Is_Mushrooms', 'Is_Pet_Food', 'Is_Tofu', 'Is_Wild_Harvested']
+			df = df[cols_to_keep]
+		\end{python}
+		 \end{adjustwidth}
+\end{frame}
+
+\Mysection{Results}		
+
+\STANDARD{Results}
+{
+	\begin{itemize}
+		\item The Apriori Algorithm enables mining datasets for frequent items.
+		\item Although it has a few limitations, it is widely used across multiple industries to gather analysis on customer behavior and enable decision making processes. Thus, allowing it to be an  indispensable tool at an analyst's disposal.
+		
+	\end{itemize}
+}       

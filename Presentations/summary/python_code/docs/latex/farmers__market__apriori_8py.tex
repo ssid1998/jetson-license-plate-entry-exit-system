@@ -1,0 +1,60 @@
+\doxysection{farmers\+\_\+market\+\_\+apriori.\+py File Reference}
+\hypertarget{farmers__market__apriori_8py}{}\label{farmers__market__apriori_8py}\index{farmers\_market\_apriori.py@{farmers\_market\_apriori.py}}
+
+
+Load farmers market dataset, clean it, run Apriori algorithm, generate rules, and plot top associations.  
+
+
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespacefarmers__market__apriori}{farmers\+\_\+market\+\_\+apriori}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{namespacefarmers__market__apriori_a1b306d5ac74da7128cf4e385e9c9487f}{farmers\+\_\+market\+\_\+apriori.\+df}} = pd.\+read\+\_\+csv("{}../datasets/farmers\+\_\+market.\+csv"{})
+\begin{DoxyCompactList}\small\item\em Load the raw farmers market dataset. \end{DoxyCompactList}\item 
+list \mbox{\hyperlink{namespacefarmers__market__apriori_a1aa504ec564bfc452d636b8ddf600719}{farmers\+\_\+market\+\_\+apriori.\+cols\+\_\+to\+\_\+keep}}
+\begin{DoxyCompactList}\small\item\em Columns to keep for analysis. \end{DoxyCompactList}\item 
+list \mbox{\hyperlink{namespacefarmers__market__apriori_a0fa4ff6554f710c420ab78cd26e7edfa}{farmers\+\_\+market\+\_\+apriori.\+product\+\_\+columns}} = \mbox{\hyperlink{namespacefarmers__market__apriori_a1aa504ec564bfc452d636b8ddf600719}{cols\+\_\+to\+\_\+keep}}\mbox{[}2\+:\mbox{]}
+\begin{DoxyCompactList}\small\item\em Columns representing products. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{namespacefarmers__market__apriori_a4e3bc3830a15c5daa6f12f7217be893a}{farmers\+\_\+market\+\_\+apriori.\+index}}
+\begin{DoxyCompactList}\small\item\em Save cleaned dataset. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{namespacefarmers__market__apriori_ac6cf8b1729695fbca4195c2450b8825e}{farmers\+\_\+market\+\_\+apriori.\+df\+Products}} = \mbox{\hyperlink{namespacefarmers__market__apriori_a1b306d5ac74da7128cf4e385e9c9487f}{df}}\mbox{[}\mbox{\hyperlink{namespacefarmers__market__apriori_a0fa4ff6554f710c420ab78cd26e7edfa}{product\+\_\+columns}}\mbox{]}
+\begin{DoxyCompactList}\small\item\em Prepare product-\/only Data\+Frame for Apriori. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{namespacefarmers__market__apriori_ab63dade098c5cf7c8c832e60446e7b36}{farmers\+\_\+market\+\_\+apriori.\+frequent\+Itemsets}} = apriori(\mbox{\hyperlink{namespacefarmers__market__apriori_ac6cf8b1729695fbca4195c2450b8825e}{df\+Products}}, min\+\_\+support=0.\+5, use\+\_\+colnames=True)
+\begin{DoxyCompactList}\small\item\em Run Apriori algorithm. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{namespacefarmers__market__apriori_a37014ac8fc79dcaa238c5316850fc7ab}{farmers\+\_\+market\+\_\+apriori.\+frequent\+Itemsets\+\_\+loaded}} = pickle.\+load(fh)
+\begin{DoxyCompactList}\small\item\em Save frequent itemsets to a file. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{namespacefarmers__market__apriori_a8b8793226511700d034f25bafc04b1ad}{farmers\+\_\+market\+\_\+apriori.\+rules}} = association\+\_\+rules(\mbox{\hyperlink{namespacefarmers__market__apriori_ab63dade098c5cf7c8c832e60446e7b36}{frequent\+Itemsets}}, metric=\textquotesingle{}confidence\textquotesingle{}, min\+\_\+threshold=0.\+5, num\+\_\+itemsets=df\+Products.\+shape\mbox{[}0\mbox{]})
+\begin{DoxyCompactList}\small\item\em Generate association rules. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{namespacefarmers__market__apriori_ad78a43979296b37fe190a173aaf21f3b}{farmers\+\_\+market\+\_\+apriori.\+sorted\+\_\+rules}} = rules.\+sort\+\_\+values(by=\textquotesingle{}confidence\textquotesingle{}, ascending=False)
+\begin{DoxyCompactList}\small\item\em Save rules to a file. \end{DoxyCompactList}\item 
+list \mbox{\hyperlink{namespacefarmers__market__apriori_ac23d00e36d4ed6a5136181675c06461c}{farmers\+\_\+market\+\_\+apriori.\+p\+Product\+List}} = \mbox{[}\textquotesingle{}Is\+\_\+\+Baked\+\_\+\+Goods\textquotesingle{}\mbox{]}
+\begin{DoxyCompactList}\small\item\em Product to analyze for top co-\/occurring items. \end{DoxyCompactList}\item 
+str \mbox{\hyperlink{namespacefarmers__market__apriori_a40c811ebb29390b76b13f8c112c0142d}{farmers\+\_\+market\+\_\+apriori.\+input\+Product}} = \textquotesingle{}Is\+\_\+\+Baked\+\_\+\+Goods\textquotesingle{}
+\item 
+\mbox{\hyperlink{namespacefarmers__market__apriori_a0b214fbb37d1c8545d4d00b83ffdb3cb}{farmers\+\_\+market\+\_\+apriori.\+filtered\+\_\+rules}} = \mbox{\hyperlink{namespacefarmers__market__apriori_a8b8793226511700d034f25bafc04b1ad}{rules}}\mbox{[}\mbox{\hyperlink{namespacefarmers__market__apriori_a8b8793226511700d034f25bafc04b1ad}{rules}}\mbox{[}"{}antecedents"{}\mbox{]}.apply(lambda x\+: \mbox{\hyperlink{namespacefarmers__market__apriori_a40c811ebb29390b76b13f8c112c0142d}{input\+Product}} in x)\mbox{]}
+\begin{DoxyCompactList}\small\item\em Filter rules where the product is in the antecedent. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{namespacefarmers__market__apriori_ade893439aae9051eee2ff4d1de1565c7}{farmers\+\_\+market\+\_\+apriori.\+grouped}} = filtered\+\_\+rules.\+groupby(\mbox{[}\textquotesingle{}antecedents\textquotesingle{}, \textquotesingle{}consequents\textquotesingle{}\mbox{]})\mbox{[}\mbox{[}\textquotesingle{}confidence\textquotesingle{}\mbox{]}\mbox{]}.max()
+\begin{DoxyCompactList}\small\item\em Group by antecedents and consequents, take max confidence. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{namespacefarmers__market__apriori_a6cb49294599926afe9b8d1cec89e730b}{farmers\+\_\+market\+\_\+apriori.\+top\+\_\+rules}} = grouped.\+sort\+\_\+values(by=\textquotesingle{}confidence\textquotesingle{}, ascending=False).head(10).copy()
+\begin{DoxyCompactList}\small\item\em Sort by confidence descending and take top 10. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{namespacefarmers__market__apriori_aa82ade21b29c7ee12acfcfff6becbcb4}{farmers\+\_\+market\+\_\+apriori.\+ax}} = top\+\_\+rules.\+plot(kind=\textquotesingle{}bar\textquotesingle{}, legend=False, figsize=(10,6))
+\begin{DoxyCompactList}\small\item\em Plot top association rules. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{namespacefarmers__market__apriori_a767537922a8dd4bd25b0241fde23ec6e}{farmers\+\_\+market\+\_\+apriori.\+rotation}}
+\item 
+\mbox{\hyperlink{namespacefarmers__market__apriori_a6114a1f425726de480669b47f54cffaa}{farmers\+\_\+market\+\_\+apriori.\+ha}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Load farmers market dataset, clean it, run Apriori algorithm, generate rules, and plot top associations. 
+
+\begin{DoxyAuthor}{Author}
+Shubhankar Dumka 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2025-\/11-\/06 
+\end{DoxyDate}
