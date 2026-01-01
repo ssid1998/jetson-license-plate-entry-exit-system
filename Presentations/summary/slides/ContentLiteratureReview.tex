@@ -23,16 +23,30 @@
 	
 \STANDARD{Description of Application I}
 {
+
 	\begin{itemize}
-		\item Market Basket Analysis  (\cite{majumdar_apriori_2015}) is a technique used by retailers to understand the purchase behavior of customers. At its core, it uses the Apriori Algorithm. 
-		\item It helps retailers to identify the relationship between the items that customers buy together.
-		\item Retailers can use this information to optimize their store layout, product placement, and marketing strategies.
-		\item Boost sales.
-		\item Uncover interesting patterns. People who buy diapers are likely to buy beer.	
+		\item \textbf{Motivation (Airport use case):} Departure terminals face congestion when drop-off vehicles overstay, causing queues and delays for travelers.
+		\item \textbf{Current workflow:} Entry booth issues a paper slip with timestamp; exit booth manually checks if stay exceeded \textbf{10 minutes} and collects a fee if needed.
+		\item \textbf{Goal:} Replace manual checks with an \textbf{Automatic Number Plate Recognition (ANPR)} system that logs \textit{entry/exit time} per vehicle and automates barrier + fee decision.
+		\item \textbf{Why Jetson Nano:} Enable on-site, low-latency inference on embedded hardware (no heavy centralized processing) using compact deep-learning detectors \cite{Tan+22,jocher2023ultralytics,Cor21}.
+		\item \textbf{Core tasks:} plate detection (YOLO) $\rightarrow$ crop/enhance (OpenCV) $\rightarrow$ OCR $\rightarrow$ validation $\rightarrow$ database + decision display \cite{NC24}.
 	\end{itemize}
 }
 
 \STANDARD{Description of Application II}
+{
+	\begin{itemize}
+		\item \textbf{Deployment:} Two checkpoints at an airport terminal: \textbf{Entry Gate} and \textbf{Exit Gate}, each with a camera + display + barrier.
+		\item \textbf{Entry Gate:} Detect license plate $\rightarrow$ store \texttt{(plate\_id, entry\_timestamp)} in a central database $\rightarrow$ open barrier.
+		\item \textbf{Exit Gate:} Detect license plate $\rightarrow$ fetch \texttt{entry\_timestamp} $\rightarrow$ compute dwell time.
+		\item \textbf{Decision rule:} if dwell time $\leq$ \textbf{10 minutes} $\rightarrow$ show “OK / free exit”; else $\rightarrow$ show fee + request payment $\rightarrow$ open barrier after payment.
+		\item \textbf{Audit trail:} Write \texttt{exit\_timestamp} (and optionally fee/payment status) for traffic analysis and enforcement reporting.
+	\end{itemize}
+	\vspace{0.2cm}
+	\textit{Next slide shows the full system diagram and data flow.}
+}
+
+\STANDARD{Description of Application III}
 {
 	\begin{figure}
 		\centering
