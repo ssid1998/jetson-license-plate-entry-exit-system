@@ -51,10 +51,33 @@
 
 \Mysection{Challenges and Solutions}
 
+\STANDARD{Challenge 1: Storage Constraints}
+{
+	\renewcommand{\arraystretch}{1.5}
+	\small
+	
+	\noindent
+	\begin{tabular}{|p{0.48\linewidth}|p{0.48\linewidth}|}
+		\hline
+		\cellcolor{red!40!black}\textbf{\color{white} The Problem} & 
+		\cellcolor{blue!40!black}\textbf{\color{white} The Solution} \\ 
+		\hline
+		\cellcolor{gray!10}
+		\textbf{Hardware Limitation (Production Module)} \newline
+		$\bullet$ \textbf{No SD Slot:} Our unit is the \textit{Jetson Nano Production Module} (P3448), which lacks an SD card slot by design. \newline
+		$\bullet$ \textbf{Space Lock:} The fixed 16GB internal storage (eMMC) is too small for our AI environment (CUDA + OS).
+		& 
+		\cellcolor{gray!10}
+		\textbf{External Boot Architecture} \newline
+		$\bullet$ \textbf{SSD Integration:} We engineered the system to bypass the internal memory and boot directly from an external 500GB SSD via USB 3.0. \newline
+		$\bullet$ \textbf{Result:} Solved the space issue and increased data read speeds by 5x (400 MB/s). \\
+		\hline
+	\end{tabular}
+}
 % ==============================================================================
 % SLIDE 1: MEMORY CHALLENGE
 % ==============================================================================
-\STANDARD{Challenge 1: System Memory Exhaustion}
+\STANDARD{Challenge 2: System Memory Exhaustion}
 {
 	\renewcommand{\arraystretch}{1.5} 
 	\small 
@@ -87,7 +110,7 @@
 % ==============================================================================
 % SLIDE 2: SOFTWARE CHALLENGE
 % ==============================================================================
-\STANDARD{Challenge 2: Legacy Software Ecosystem}
+\STANDARD{Challenge 3: Legacy Software Ecosystem}
 {
 	\renewcommand{\arraystretch}{1.5}
 	\small
@@ -118,7 +141,7 @@
 % ==============================================================================
 % SLIDE 3: REMOTE DEV CHALLENGE
 % ==============================================================================
-\STANDARD{Challenge 3: Remote Development Breakdown}
+\STANDARD{Challenge 4: Remote Development Breakdown}
 {
 	\renewcommand{\arraystretch}{1.5}
 	\small
@@ -134,7 +157,7 @@
 		In 2024, Microsoft updated the VS Code Remote Server to require \textbf{glibc 2.28} or higher.
 		\newline \newline
 		$\bullet$ \textbf{The Lockout:} The Jetson Nano's OS is pinned to \textbf{glibc 2.27}. \newline
-		$\bullet$ \textbf{Impact:} Standard SSH connections failed with "OS Not Supported" errors, blocking all direct code editing and file transfer capabilities on the device.
+		$\bullet$ \textbf{Impact:} Standard SSH connections failed with OS Not Supported errors, blocking all direct code editing and file transfer capabilities on the device.
 		& 
 		\cellcolor{gray!10}
 		\textbf{Solution: SSH-FS Protocol Switch} \newline
@@ -149,38 +172,50 @@
 % ==============================================================================
 % SLIDE 4: LOGIC CHALLENGE
 % ==============================================================================
-\STANDARD{Challenge 4: Latency \& Logic}
+
+\Mysection{System Setup}		
+\STANDARD{Setup with SSH connection}
 {
-	\renewcommand{\arraystretch}{1.5}
-	\small
+	\begin{itemize}
+		\item \textbf{Unit:} NVIDIA Jetson Nano.
+		\item \textbf{Camera:} Microsoft LifeCam for video input.
+		\item \textbf{Control:} Laptop via SSH for debugging.
+		\item \textbf{UI:} External monitor showing Flask Dashboard.
+	\end{itemize}
 	
-	\noindent
-	\begin{tabular}{|p{0.48\linewidth}|p{0.48\linewidth}|}
-		\hline
-		\cellcolor{red!40!black}\textbf{\color{white} The Problem} & 
-		\cellcolor{blue!40!black}\textbf{\color{white} The Engineered Solution} \\ 
-		\hline
-		\cellcolor{gray!10}
-		\textbf{Conflict: Hardware Constraints} \newline
-		$\bullet$ \textbf{Latency:} Running the heavy Optical Character Recognition (OCR) model on every video frame dropped performance to an unusable \textbf{1 FPS} due to CPU bottlenecks. \newline
-		$\bullet$ \textbf{Single-Camera Limit:} A standard parking system uses two cameras (Entry/Exit). With only one camera, the system lacks a physical sensor trigger to determine when a car has left the frame.
-		& 
-		\cellcolor{gray!10}
-		\textbf{Solution: State Machine Heuristics} \newline
-		We developed a specialized algorithm to compensate:
-		\newline \newline
-		$\bullet$ \textbf{Cooldown Timer:} We implemented a logic gate that pauses the OCR engine for \textbf{3 seconds} after a successful read. This keeps the video smooth by running only the lightweight Detector during the cooldown. \newline
-		$\bullet$ \textbf{Last-Seen Algorithm:} The system updates a timestamp for every frame the car is visible. The billing logic defines Exit Time as the exact moment the timestamp ceases to update. \\
-		\hline
-	\end{tabular}
+	\begin{center}
+		% Reduced width from 0.75 to 0.6 to fit on slide
+		\includegraphics[width=0.6\textwidth]{img/setup.jpg}
+	\end{center}
+	
+	\centering
+	\textit{\small The hardware setup}
 }
-
-\Mysection{Results}		
-
+\Mysection{Results}
 \STANDARD{System Demonstration Video}
 {
-
+	\centering
+	% This command simply opens the file "demo.mp4" in your default video player
+	\href{run:./liveDemo.mp4}{\includegraphics[width=0.8\textwidth]{img/setup.jpg}}
 	
-	\vspace{0.2cm}
-	\textit{Embedded video demonstrating real-time license plate detection and decision logic.}
+	\vspace{0.3cm}
+	\textit{\small Click image to launch video player.}
+}
+\Mysection{Results}
+
+\STANDARD{Model Performance}
+{
+	\begin{itemize}
+		\item \textbf{YOLO Detection:} 100\% accurate. The model "locks on" to the license plate perfectly in every frame, even with movement.
+		\item \textbf{OCR Limitations:} Text recognition is inconsistent. While detection is perfect, the OCR sometimes misinterprets characters (e.g., swapping order due to angle).
+		\item \textbf{Latency:} The video feed pauses briefly during recognition, confirming that the heavy OCR processing is happening locally on the Jetson Nano.
+	\end{itemize}
+}
+
+\STANDARD{System Logic Verification}
+{
+	\begin{itemize}
+		\item \textbf{Handling Misreads:} When the OCR reads a wrong number (e.g., \texttt{66ZLA}), the database logic correctly treats it as a New Vehicle entry.
+		\item \textbf{Successful Billing:} Despite the OCR challenge, when the text \textit{is} read correctly, the billing math and timestamp updates work perfectly (\textbf{\euro 99.20}).
+	\end{itemize}
 }
