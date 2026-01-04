@@ -8,12 +8,9 @@
 \STANDARD{Introduction I}
 {
 	\begin{itemize}
-		\item The project focuses on designing a cost-effective, 
-		single-camera car license plate recognition system.
-		\item Traditional automatic number plate recognition systems rely on expensive hardware and centralized processing \cite{NC24}. 
-		\item  The system enables license plate detection using compact deep-learning models deployed on embedded devices. \cite{Tan+22} \cite{jocher2023ultralytics,Cor21}.		
-		\item Application: High vehicle throughput such as airport departures and arrivals, where manual verification is inefficient and error-prone. Focused on automated entry/exit recognition and dwell-time-based billing.
-		
+		\item The project focuses on designing an automatic car license plate detection system using the Nvidia Jetson Nano.
+		\item  License plates are detected using ML models (CNN) deployed on embedded devices. \cite{Tan+22} \cite{jocher2023ultralytics,Cor21}.		
+		\item Application: Places with high vehicle throughput such as airport departures, where manual verification is inefficient and error-prone. 
 		 
 	\end{itemize}
 	
@@ -23,27 +20,24 @@
 	
 \STANDARD{Description of Application I}
 {
-
 	\begin{itemize}
-		\item \textbf{Motivation (Airport use case):} Departure terminals face congestion when drop-off vehicles overstay, causing queues and delays for travelers.
-		\item \textbf{Current workflow:} Entry booth issues a paper slip with timestamp; exit booth manually checks if stay exceeded \textbf{10 minutes} and collects a fee if needed.
-		\item \textbf{Goal:} Replace manual checks with an \textbf{Automatic Number Plate Recognition (ANPR)} system that logs \textit{entry/exit time} per vehicle and automates barrier + fee decision.
-		\item \textbf{Why Jetson Nano:} Enable on-site, low-latency inference on embedded hardware (no heavy centralized processing) using compact deep-learning detectors \cite{Tan+22,jocher2023ultralytics,Cor21}.
-		\item \textbf{Core tasks:} plate detection (YOLO) $\rightarrow$ crop/enhance (OpenCV) $\rightarrow$ OCR $\rightarrow$ validation $\rightarrow$ database + decision display \cite{NC24}.
+		\item \textbf{Target deployments:} Airport curbside (drop-off time control) and parking facilities (paid stay management).
+		\item \textbf{Core idea:} detect the license plate at \textbf{entry} and \textbf{exit} using a camera + Jetson Nano, and use timestamps to compute dwell time.
+		\item \textbf{Edge-first operation:} Recognition and decision making run locally enabling low latency. Reduced dependence on centralized servers.
+		\item \textbf{Operator-specific configuration (before delivery):} the airport/parking authority provides billing requirements (tariff, grace period, rounding rules); we configure the system accordingly and deploy it.
+		\item \textbf{System output:} validated plate ID, entry/exit events, and a fee/permission decision shown on a display.
 	\end{itemize}
 }
 
 \STANDARD{Description of Application II}
 {
 	\begin{itemize}
-		\item \textbf{Deployment:} Two checkpoints at an airport terminal: \textbf{Entry Gate} and \textbf{Exit Gate}, each with a camera + display + barrier.
-		\item \textbf{Entry Gate:} Detect license plate $\rightarrow$ store \texttt{(plate\_id, entry\_timestamp)} in a central database $\rightarrow$ open barrier.
-		\item \textbf{Exit Gate:} Detect license plate $\rightarrow$ fetch \texttt{entry\_timestamp} $\rightarrow$ compute dwell time.
-		\item \textbf{Decision rule:} if dwell time $\leq$ \textbf{10 minutes} $\rightarrow$ show “OK / free exit”; else $\rightarrow$ show fee + request payment $\rightarrow$ open barrier after payment.
-		\item \textbf{Audit trail:} Write \texttt{exit\_timestamp} (and optionally fee/payment status) for traffic analysis and enforcement reporting.
+		\item \textbf{Entry flow:} camera captures vehicle $\rightarrow$ YOLO detects license plate $\rightarrow$ OCR reads text $\rightarrow$ store \texttt{(plate\_id, entry\_timestamp)} in database.
+		\item \textbf{Exit flow:} detect plate again $\rightarrow$ retrieve \texttt{entry\_timestamp} $\rightarrow$ compute dwell time \texttt{(exit - entry)}.
+		\item \textbf{Billing logic (configured per operator):} apply provided parameters (grace minutes, \euro{}/hour tariff, rounding) $\rightarrow$ compute amount due.
+		\item \textbf{Decision \& display:} show “free exit” or “payment required” with the calculated amount due.
+		\item \textbf{Logging:} write \texttt{exit\_timestamp} and fee outcome for auditing and analytics.
 	\end{itemize}
-	\vspace{0.2cm}
-	\textit{Next slide shows the full system diagram and data flow.}
 }
 
 \STANDARD{Description of Application III}
@@ -78,13 +72,13 @@
 		$\bullet$ \textbf{OS Overhead:} Ubuntu 18.04 consumes $\approx$ 1.2 GB. \newline
 		$\bullet$ \textbf{AI Load:} YOLOv5 + EasyOCR required $\approx$ 3.3 GB during initialization.
 		\newline \newline
-		\textit{Impact:} Demand (4.5 GB) exceeded physical limits. The Linux kernel invoked the "OOM Killer" and terminated the process instantly.
+		\textit{Impact:} Demand (4.5 GB) exceeded physical limits. The Linux kernel invoked the OOM Killer and terminated the process instantly.
 		& 
 		\cellcolor{gray!10}
-		\textbf{Solution: Hybrid Memory Architecture} \newline
-		We engineered a split-resource strategy:
+		\textbf{Solution: Hybrid Memory Architecture}:
 		\newline \newline
 		$\bullet$ \textbf{Virtual Expansion:} Configured a \textbf{6GB Swap Partition} on an external SSD to offload inactive OS pages, keeping physical RAM free for inference. \newline
+		\newline			
 		$\bullet$ \textbf{Compute Isolation:} Forced OCR to run on the \textbf{CPU} (\texttt{gpu=False}). This reserves the limited GPU VRAM entirely for YOLO detection. \\
 		\hline
 	\end{tabular}
@@ -105,7 +99,7 @@
 		\cellcolor{blue!40!black}\textbf{\color{white} The Engineered Solution} \\ 
 		\hline
 		\cellcolor{gray!10}
-		\textbf{Conflict: Dependency Hell} \newline
+		\textbf{Conflict: Dependency Conflicts} \newline
 		The Jetson Nano relies on JetPack 4.6 (Ubuntu 18.04), which locks the environment to \textbf{Python 3.6}.
 		\newline \newline
 		$\bullet$ \textbf{Incompatibility:} State-of-the-art libraries (Ultralytics YOLOv8, Pandas 2.0) require Python 3.8+ and modern C++ compilers, causing installation failures. \newline
@@ -146,7 +140,7 @@
 		\textbf{Solution: SSH-FS Protocol Switch} \newline
 		We architected a workaround that avoids running binary agents on the Jetson:
 		\newline \newline
-		$\bullet$ \textbf{SFTP Mounting:} We switched to the \textbf{SSH FS} extension, which mounts the Jetson's external SSD (`/media/myssd`) as a local network drive on the development laptop. \newline
+		$\bullet$ \textbf{SFTP Mounting:} We switched to the \textbf{SSH FS} extension, which mounts the Jetson's external SSD (/media/myssd) as a local network drive on the development laptop. \newline
 		$\bullet$ \textbf{Benefit:} This protocol relies purely on standard SFTP, which does not check the glibc version, allowing full real-time coding access despite the OS obsolescence. \\
 		\hline
 	\end{tabular}
@@ -176,19 +170,17 @@
 		We developed a specialized algorithm to compensate:
 		\newline \newline
 		$\bullet$ \textbf{Cooldown Timer:} We implemented a logic gate that pauses the OCR engine for \textbf{3 seconds} after a successful read. This keeps the video smooth by running only the lightweight Detector during the cooldown. \newline
-		$\bullet$ \textbf{"Last-Seen" Algorithm:} The system updates a timestamp for every frame the car is visible. The billing logic defines "Exit Time" as the exact moment the timestamp ceases to update. \\
+		$\bullet$ \textbf{Last-Seen Algorithm:} The system updates a timestamp for every frame the car is visible. The billing logic defines Exit Time as the exact moment the timestamp ceases to update. \\
 		\hline
 	\end{tabular}
 }
 
-
 \Mysection{Results}		
 
-\STANDARD{Results}
+\STANDARD{System Demonstration Video}
 {
-	\begin{itemize}
-		\item The Apriori Algorithm enables mining datasets for frequent items.
-		\item Although it has a few limitations, it is widely used across multiple industries to gather analysis on customer behavior and enable decision making processes. Thus, allowing it to be an  indispensable tool at an analyst's disposal.
-		
-	\end{itemize}
-}       
+
+	
+	\vspace{0.2cm}
+	\textit{Embedded video demonstrating real-time license plate detection and decision logic.}
+}
