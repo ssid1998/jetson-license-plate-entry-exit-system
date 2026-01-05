@@ -25,7 +25,7 @@
 		\item \textbf{Core idea:} detect the license plate at \textbf{entry} and \textbf{exit} using a camera + Jetson Nano, and use timestamps to compute dwell time.
 		\item \textbf{Edge-first operation:} Recognition and decision making run locally enabling low latency. Reduced dependence on centralized servers.
 		\item \textbf{Operator-specific configuration (before delivery):} the airport/parking authority provides billing requirements (tariff, grace period, rounding rules); we configure the system accordingly and deploy it.
-		\item \textbf{System output:} validated plate ID, entry/exit events, and a fee/permission decision shown on a display.
+		\item \textbf{Output:} detects licence plate, entry/exit events, and a fee/permission decision shown on a display.
 	\end{itemize}
 }
 
@@ -64,13 +64,13 @@
 		\hline
 		\cellcolor{gray!10}
 		\textbf{Hardware Limitation (Production Module)} \newline
-		$\bullet$ \textbf{No SD Slot:} Our unit is the \textit{Jetson Nano Production Module} (P3448), which disables the SD card slot by design. \newline
+		$\bullet$ \textbf{Disabled SD card Slot:} Our unit is the \textit{Jetson Nano Production Module} (P3448), which disables the SD card slot by design. \newline
 		$\bullet$ \textbf{Space Lock:} The fixed 16GB internal storage (eMMC) is too small for our AI environment (CUDA + OS).
 		& 
 		\cellcolor{gray!10}
 		\textbf{External Boot Architecture} \newline
 		$\bullet$ \textbf{SSD Integration:} We engineered the system to bypass the internal memory and boot directly from an external 500GB SSD via USB 3.0. \newline
-		$\bullet$ \textbf{Result:} Solved the space issue and increased data read speeds by 5x (400 MB/s). \\
+		$\bullet$ \textbf{Result:} Solved the space issue and increased data read speeds. \\
 		\hline
 	\end{tabular}
 }
