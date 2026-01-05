@@ -31,13 +31,76 @@
 
 \STANDARD{Description of Application II}
 {
-	\begin{itemize}
-		\item \textbf{Entry flow:} camera captures vehicle $\rightarrow$ YOLO detects license plate $\rightarrow$ OCR reads text $\rightarrow$ store \texttt{(plate\_id, entry\_timestamp)} in database.
-		\item \textbf{Exit flow:} detect plate again $\rightarrow$ retrieve \texttt{entry\_timestamp} $\rightarrow$ compute dwell time \texttt{(exit - entry)}.
-		\item \textbf{Billing logic (configured per operator):} apply provided parameters (grace minutes, \euro{}/hour tariff, rounding) $\rightarrow$ compute amount due.
-		\item \textbf{Decision \& display:} show “free exit” or “payment required” with the calculated amount due.
-		\item \textbf{Logging:} write \texttt{exit\_timestamp} and fee outcome for auditing and analytics.
-	\end{itemize}
+%	\begin{itemize}
+%		\item \textbf{Entry flow:} camera captures vehicle $\rightarrow$ YOLO detects license plate $\rightarrow$ OCR reads text $\rightarrow$ store \texttt{(plate\_id, entry\_timestamp)} in database.
+%		\item \textbf{Exit flow:} detect plate again $\rightarrow$ retrieve \texttt{entry\_timestamp} $\rightarrow$ compute dwell time \texttt{(exit - entry)}.
+%		\item \textbf{Billing logic (configured per operator):} apply provided parameters (grace minutes, \euro{}/hour tariff, rounding) $\rightarrow$ compute amount due.
+%		\item \textbf{Decision \& display:} show “free exit” or “payment required” with the calculated amount due.
+%		\item \textbf{Logging:} write \texttt{exit\_timestamp} and fee outcome for auditing and analytics.
+%	\end{itemize}
+
+% ------------------------------------------------------------
+% TikZ figure for "Description of Application II" (Workflow)
+% Place this inside your \STANDARD{Description of Application II}{ ... }
+% (e.g., below the itemize, or replace the itemize if you prefer)
+% ------------------------------------------------------------
+
+\begin{figure}[h]
+	\centering
+	\begin{tikzpicture}[
+		scale=0.43,
+		transform shape,
+		node distance=10mm and 12mm,
+		font=\small,
+		box/.style={draw, rounded corners, align=center, inner sep=5pt, minimum width=3.2cm, minimum height=0.95cm},
+		bigbox/.style={draw, rounded corners, align=center, inner sep=6pt, minimum width=3.6cm, minimum height=1.1cm},
+		arrow/.style={->, line width=0.6pt}
+		]
+		
+		% --- ENTRY LANE FLOW (top row)
+		\node[box] (cam_in) {Camera\\(Entry)};
+		\node[box, right=of cam_in] (yolo_in) {YOLOv8\\Plate Detection};
+		\node[box, right=of yolo_in] (ocr_in) {OCR\\Text Extraction };
+		\node[bigbox, right=of ocr_in] (db_write) {Local Database\\\texttt{(number\_plate, entry\_timestamp)}};
+		
+		\draw[arrow] (cam_in) -- (yolo_in);
+		\draw[arrow] (yolo_in) -- (ocr_in);
+		\draw[arrow] (ocr_in) -- (db_write);
+		
+		% --- EXIT LANE FLOW (bottom row)
+		\node[box, below=18mm of cam_in] (cam_out) {Camera\\(Exit)};
+		\node[box, right=of cam_out] (yolo_out) {YOLOv8\\Plate Detection\\ + \\OCR Text Extraction };
+		\node[box, right=of yolo_out] (db_read) {Retrieve\\\texttt{entry\_timestamp}};
+		
+		\draw[arrow] (cam_out) -- (yolo_out);
+		\draw[arrow] (yolo_out) -- (db_read);
+		
+		% Link to DB
+		\draw[arrow] (db_read.north) -- ++(0,6mm) -| (db_write.south);
+		
+		% --- DWELL + BILLING + DECISION (center/right)
+		\node[box, right=of db_read] (dwell) {Compute\\Dwell Time\\\texttt{(exit-entry)}};
+		\node[bigbox, right=of dwell] (billing) {Billing Logic\\(grace, \euro{}/hour, rounding)};
+		\node[box, right=of billing] (display) {Decision \& Display\\Free exit / Pay};
+		
+		\draw[arrow] (db_read) -- (dwell);
+		\draw[arrow] (dwell) -- (billing);
+		\draw[arrow] (billing) -- (display);
+		
+		% --- LOGGING (bottom right)
+		\node[box, below=18mm of display] (log) {Logging\\\texttt{exit\_timestamp, fee       .}};
+		\draw[arrow] (display.south) -- (log.north);
+%		\draw[arrow] (billing.south) -- (log.north);
+		
+		% --- Optional labels for clarity
+		\node[font=\small\bfseries, above=2mm of cam_in] {Entry Flow};
+		\node[font=\small\bfseries, above=2mm of cam_out] {Exit Flow};
+		
+	\end{tikzpicture}
+	\caption{End-to-end workflow for entry/exit recognition, dwell-time computation, billing, and logging.}
+	\label{fig:app2_workflow}
+\end{figure}
+
 }
 
 \STANDARD{Description of Application III}
