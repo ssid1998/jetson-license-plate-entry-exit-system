@@ -66,32 +66,32 @@ These false positives increase storage load and reduce system credibility in enf
 \subsection*{4. Privacy and Legal Compliance}
 European regulations such as \ac{GDPR} and the German \ac{BDSG} require that personal identifiers, including license plate data, be processed under strict privacy principles.  
 Such compliance stresses on the need for using minimal data, responsible usage under a legal purview, and transparent operation \cite{gdpr2016eu, bdsga2021}.  
-Systems that store full-resolution images without anonymization may violate Article 5(1)(c) of \ac{GDPR}, posing compliance risks for public infrastructure deployments.
+Systems processing images without anonymity tend to  violate Article 5(1)(c) of \ac{GDPR}, creating risks that are non-compliant for public infrastructure deployments.
 
 \subsection*{5. Cost and Scalability}
 Commercial \ac{ANPR} systems—such as those from Jenoptik or PeterPark—are expensive, closed-source, and require recurring maintenance fees \cite{Jenoptik2023, peterparkALPR}.  
-Research comparing \textbf{YOLO}-based implementations on low-cost edge hardware \cite{Ultralytics2023, JetsonNano2022} highlights the feasibility of democratizing intelligent surveillance through modular, open, and affordable architectures.  
+Additional studies that analyze \textbf{YOLO}-based deployments on edge hardware \cite{Ultralytics2023, JetsonNano2022} stress on the feasibility of enhancing intelligent surveillance via the use of architecture that is both modular and affordable.  
 However, scalability still demands efficient synchronization between multiple camera nodes and lightweight local databases.
 
 \vspace{0.4cm}
 
-\section{Proposed Solutions}
-To address the above challenges, the project integrates a combination of hardware optimization, lightweight \ac{AI} design, and legal compliance mechanisms.  
-Each proposed method directly corresponds to one identified issue, ensuring both technical robustness and regulatory alignment.
+\section{Solution Description}
+To simplify the challenges mentioned, the project incorporates combined usage of hardware optimization, easy and efficient \ac{AI} design, and enables compliance within legal frameworks.  
+The methods defined directly map to challenges identified, while promoting technical robustness and ensuring alignment within regulatory frameworks.
 
 \subsection*{1. Addressing Environmental and Lighting Variability}
 \begin{itemize}
 	\item Apply dynamic image preprocessing using \textbf{OpenCV} to normalize brightness, gamma, and contrast across frames.
 	\item Integrate IR-assisted illumination and adaptive exposure for stable night-time operation.
 	\item Use deraining and dehazing filters to reduce weather-induced distortions before \textbf{YOLO} inference.
-	\item Expand dataset diversity with day, night, and adverse-weather conditions to improve model generalization.
+	\item Incorporate datasets with a great variety in  daytime, nightime, and fluctuating weather conditions, aiding in improving accuracy.
 \end{itemize}
 
 \subsection*{2. Optimizing Computational Performance}
 \begin{itemize}
 	\item Quantize \textbf{YOLOv8} weights to \textbf{FP16} and optimize inference through TensorRT to achieve real-time speed.
 	\item Use a hybrid configuration—\textbf{YOLOv8-Nano} for continuous inference and \textbf{YOLOv8-Large} for periodic re-validation of uncertain detections.
-	\item Implement multi-threading and asynchronous pipelines to parallelize camera feed capture, inference, and \ac{OCR}.
+	\item Usage of multi-threaded and asynchronous system architecture pipelines to enable the parallelization of camera feed capture and \ac{OCR}.
 	\item Monitor \ac{GPU} utilization via \textbf{Jetson-Stats} for automatic frame-rate adjustments under thermal constraints.
 \end{itemize}
 
@@ -122,5 +122,4 @@ Each proposed method directly corresponds to one identified issue, ensuring both
 \vspace{0.2cm}
 
 \noindent
-In summary, this solution framework transforms a conventional centralized \ac{ANPR} system into a distributed, low-cost, and privacy-compliant edge network.  
-By systematically addressing environmental, computational, and regulatory constraints, the proposed approach ensures scalability, sustainability, and long-term adaptability to evolving smart mobility infrastructures.
+Summary wise, the proposed system enables the transformation of a traditional, centralized \ac{ANPR} system, effectively morphing it into a cost effective, robust and compliant edge network device. Since the solution addresses variability in environmental conditions, computational constraints, and compliance with regulation, the approach promotes scalability and adaptability in terms of enhancing smart mobility infrastructures.
