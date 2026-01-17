@@ -18,16 +18,16 @@
 \section{Description}
 \label{subsec:description}
 
-\ac{SoC} platforms provide a cost-effective and power-efficient solution for developing embedded machine learning systems. 
-They are particularly suited for \textbf{inference tasks}, where pre-trained deep learning models are deployed to process real-world data in real time. 
-Among such \ac{SoC} systems, the \textbf{NVIDIA Jetson Nano} stands out as one of the most compact and capable \ac{AI} modules available for edge computing. 
-It belongs to NVIDIA’s Jetson family, which includes devices like Jetson Xavier NX and Jetson Orin Nano, but represents the most accessible entry point for developers building low-power \ac{AI} vision systems \cite{jetsonNanoDatasheet, JetsonGettingStarted:2019}.
+\ac{SoC} platforms enable cost effectiveness and efficient power usage towards machine learning models deployed on embedded systems. 
+These platforms are suitable for \textbf{inference tasks}, in which a deployment of previously trained deep learning models enable processing data in near real time.   
+An example of an \ac{SoC} systems is the \textbf{NVIDIA Jetson Nano}. It is compact and provides compatible \ac{AI} modules efficient in edge computing tasks. 
+NVIDIA’s Jetson family also comprises of devices such as the Jetson Xavier NX and Jetson Orin Nano. The Jetson Nano provides a simple hardware interface that enables developers to build capable, low-power \ac{AI} vision solutions. \cite{jetsonNanoDatasheet, JetsonGettingStarted:2019}.
 
 \bigskip
 
 The Jetson Nano combines a \textbf{quad-core ARM Cortex-A57 CPU} with a \textbf{128-core Maxwell \ac{GPU}}, offering approximately \textbf{0.5~TFLOPs (FP16)} of performance at a typical power draw of only 5–10~W. 
 This makes it highly efficient for computer vision, robotics, and real-time deep learning inference. 
-Its open development environment and support for the \textbf{JetPack SDK} (based on Ubuntu Linux) allow developers to integrate \ac{AI} frameworks such as TensorFlow, PyTorch, OpenCV, and NVIDIA TensorRT easily.
+The development environment provides support for the \textbf{JetPack SDK} (based on Ubuntu Linux) allowing the integration  of \ac{AI} frameworks like TensorFlow, PyTorch, OpenCV, and NVIDIA TensorRT.
 
 \bigskip
 
@@ -44,19 +44,19 @@ Other commercial \ac{SoC}s, such as Apple’s A-series chips (A12~Bionic), Samsu
 
 \bigskip
 The Jetson Nano, in contrast, remains \textbf{developer-oriented, open, and extensible}, offering a balance between computational performance, power efficiency, and cost (approximately 180–250~\texteuro{} in Germany). 
-It serves as the foundation for the current project on \textbf{real-time license plate detection}, enabling efficient on-device image inference without the need for cloud processing. Overall, the Jetson Nano’s combination of \ac{GPU} parallelism, open-source software ecosystem, and compatibility with \ac{AI} frameworks makes it one of the most accessible and powerful tools for academic and industrial \ac{AI} deployment at the edge.
+It serves as the foundation for the current project on \textbf{real-time license plate detection}, enabling efficient on-device image inference without the need for cloud processing. In addition, the Jetson Nano’s efficient use of \ac{GPU} parallelism, open-source software ecosystem, and compatibility with \ac{AI} tools and frameworks places it as one of the most accessible and powerful devices for\ac{AI} deployment at the edge.
 
 \newpage
 %----------------------------------------------------------
-\section{Applications of the Jetson Nano}
+\section{Jetson Nano Applications}
 \label{subsec:applications}
 
-The Jetson Nano can be utilized for a wide range of applications, ranging from basic computing tasks to complex edge-\ac{AI} deployments. 
-Its flexibility allows it to function both as a compact single-board computer and as a high-performance inference device for embedded vision systems \cite{Kurniawan:2021, JetsonProjects:2020}. 
+The Jetson Nano is applicable towards a large set of tasks. It is able to handle basic computing tasks along with complex edge-\ac{AI} deployments efficiently. 
+Functionally, it promotes flexibility in terms of its usage as a compact single-board computer and a high-performance embedded device for computer vision tasks \cite{Kurniawan:2021, JetsonProjects:2020}. 
 
 \bigskip
 Figure~\ref{fig:jetson_applications} provides a visual overview of some of the representative deep-learning and computer-vision tasks that can be executed efficiently on the Jetson Nano platform. 
-These include \textit{image classification, object detection, semantic segmentation, pose estimation, action recognition, background removal,} and \textit{monocular depth estimation}. 
+Included are \textit{image classification, object detection, semantic segmentation, pose estimation, action recognition, background removal,} and \textit{monocular depth estimation}. 
 Such diverse capabilities demonstrate the Nano’s suitability for both research and industrial-level \ac{AI} applications.
 
 \begin{figure}[H]
@@ -96,8 +96,8 @@ Jetson Nano’s ability to process video streams in real time makes it ideal for
 Its edge-processing capability ensures privacy compliance and low latency compared to cloud-based analytics.
 
 \bigskip
-In summary, the Jetson Nano bridges the gap between experimental \ac{AI} research and real-world embedded deployment. 
-Its balance of performance, cost, and open-source accessibility enables both academic and industrial innovation in fields like automation, surveillance, and intelligent transportation systems.
+As an overview, the Jetson Nano is able to close the gap between scientific \ac{AI} research based on experiments and embedded deployment involving real-world use cases. 
+Balancing performance and cost constraints, it provides open-source accessibility that promotes innovation at an academic and industrial scale, specifically in fields such as automation, monitoring, and smart transport system development.
 
 \newpage
 \section{Construction}
@@ -106,7 +106,7 @@ Its balance of performance, cost, and open-source accessibility enables both aca
 The complete hardware configuration of this project is based on the \textbf{Seeed Studio reComputer J1010} system, which integrates the \textbf{NVIDIA Jetson Nano (4~GB, B01 revision)} module on the \textbf{J101 carrier board}. 
 The Jetson Nano module measures approximately $69.6\,\text{mm}\times45\,\text{mm}$ and is equipped with an aluminum heatsink that covers the NVIDIA Tegra~X1 \ac{SoC}. 
 This \ac{SoC} integrates a quad-core ARM Cortex-A57 CPU and a 128-core Maxwell \ac{GPU}, providing up to 0.5~TFLOPs (FP16) of compute performance at a typical power draw of 5–10~W \cite{jetsonNanoDatasheet}.  
-The module connects to the J101 carrier board through a 260-pin SODIMM edge connector, which exposes high-speed I/O lines, camera interfaces, and peripheral buses to the carrier.
+The module links the J101 carrier board via a 260-pin SODIMM edge connector, that exposes high-speed I/O lines, camera interfaces, and peripheral buses to the carrier system.
 
 \begin{figure}[H]
 	\centering
@@ -118,7 +118,7 @@ The module connects to the J101 carrier board through a 260-pin SODIMM edge conn
 \bigskip
 \textbf{Physical Layout:}  
 The J101 carrier board has dimensions of approximately $100\,\text{mm}\times80\,\text{mm}\times29\,\text{mm}$ and is mounted within an anodized aluminum enclosure supplied by Seeed Studio.  
-It provides direct access to peripheral connectors, including  \ac{USB}, \ac{HDMI}, \ac{CSI}, M.2~Key~E, and Ethernet, while maintaining compact form-factor integration suitable for embedded deployment.  
+The function is to allow direct access to peripheral connectors, such as \ac{USB}, \ac{HDMI}, \ac{CSI}, M.2~Key~E, and Ethernet, while maintaining compact form-factor integration suited towards embedded deployment.  
 The passive aluminum heatsink ensures thermal stability during continuous inference workloads, and an optional 5~V~\ac{PWM} fan can be connected to header~J8 for active cooling.  
 Figure~\ref{fig:recomputerJ101v2} shows the top view of the reComputer~J1010 board with major connectors labeled (refer to Section~\ref{sec:Interfaces} for detailed pin-level descriptions).
 
@@ -131,12 +131,12 @@ Figure~\ref{fig:recomputerJ101v2} shows the top view of the reComputer~J1010 boa
 
 \bigskip
 The front panel of the reComputer~J1010 enclosure provides access to six primary external connectors, as illustrated in Figure~\ref{fig:jetson_side} and summarized in Table~\ref{tab:j1010_interfaces}.  
-These ports include power, display, communication, and peripheral interfaces essential for system integration and debugging.
+These ports provide connections for power, display, communication, and peripheral interfaces. Necessary for system integration and debugging.
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.9\linewidth]{JetsonNano/jetson-side.png}
-	\caption{Front I/O panel of the Seeed Studio reComputer~J1010 showing labeled external connectors (1--6). These correspond to the physical ports accessible from the device enclosure \cite{seeedJ101Manual}.}
+	\caption{Front I/O panel of the Seeed Studio reComputer~J1010 showing labeled external connectors (1--6) corresponding to physical ports accessible via the device enclosure \cite{seeedJ101Manual}.}
 	\label{fig:jetson_side}
 \end{figure}
 
@@ -730,8 +730,8 @@ You can also run the command below to check the available \ac{SPI} controllers:
 \section{Data Characteristics}
 \label{sec:jetson_data}
 
-\subsection{Data Types}
-The NVIDIA Jetson Nano processes heterogeneous data types depending on the application layer.  
+\subsection{Types of Data}
+NVIDIA Jetson Nano is able to process heterogeneous data types dependent on the context of the application layer.  
 In this project, the primary data sources are:
 \begin{itemize}
 	\item \textbf{Video Frames:} RGB images (8-bit per channel) streamed from the Microsoft LifeCam Show via \ac{USB}~2.0, received as \texttt{uint8} arrays in OpenCV (BGR order).
@@ -740,15 +740,15 @@ In this project, the primary data sources are:
 \end{itemize}
 Data exchange between CPU and \ac{GPU} occurs via shared memory buffers, leveraging NVIDIA’s \textbf{Unified Memory} architecture and CUDA cores for parallelized tensor operations \cite{jetson_nano_doc,edgeAIbook}.  
 
-\subsection{Data Structure}
-Captured image frames are represented as three-dimensional matrices $(H, W, C)$, where $H$=600, $W$=800, and $C$=3 for color images.  
-Each matrix is normalized and batched into tensors before being fed into the neural network:
+\subsection{Structure of Data}
+Frames captured from images are translated as three-dimensional matrices $(H, W, C)$, where $H$=600, $W$=800, and $C$=3, in the context of colored images.  
+Matrices are normalized and batched in the form of tensors, as a prerequisite to neural network input:
 \[
 \text{Input Tensor Shape: } (N, 3, 640, 640)
 \]
-where $N$ represents batch size.  
+$N$ is a representation of batch size.  
 Intermediate feature maps within the YOLOv8 model follow convolutional tensor structures $(B, C, H', W')$, dynamically allocated in \ac{GPU} memory using the CUDA runtime.  
-During inference, \ac{GPU} memory bandwidth reaches up to 25.6~GB/s (LPDDR4 @ 1600~MHz) while maintaining real-time throughput \cite{jetsonNanoDatasheet}.  
+Through the inference process, \ac{GPU} memory bandwidth goes up to to 25.6~GB/s (LPDDR4 @ 1600~MHz) while establishing real-time processing.\cite{jetsonNanoDatasheet}.  
 %Figure~\ref{fig:jetson_data_flow} conceptually illustrates the Jetson Nano data pipeline.
 
 %\begin{figure}[H]
