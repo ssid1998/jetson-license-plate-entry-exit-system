@@ -27,19 +27,18 @@
 
 \subsection{Domain Knowledge — Application Domain}
 The proposed system lies in the domain of \textbf{Smart Mobility} and \textbf{Airport Traffic Automation}, specifically focusing on \textbf{Edge-Based License Plate Detection and Parking Management}.  
-It uses a single fixed camera at the airport gate to automatically detect the entry and exit of vehicles, record timestamps, and calculate \textbf{dwell time}. If the stay exceeds a predefined threshold (10 minutes), the system automatically computes and logs a \textbf{parking charge}.
+Taking the example of an airport deployment, at the entry and exit gates, the system's camera interface is able to detects license plates and record timestamps. The time between these time-stamps is subsequently computed. If the duration exceeds a predefined threshold (10 minutes), the system further calculates a parking charge based on the time of stay.
 
-Deployed on an \textbf{NVIDIA Jetson Nano}, the system operates completely offline, combining \textbf{YOLOv8} for plate detection, \textbf{EasyOCR} for recognition, and a lightweight \textbf{SQLite} database for event tracking.  
-This allows real-time monitoring, instant detection, and local billing without any need for cloud infrastructure \cite{anpr-survey-2020, easyocr-2020, nvidia-jetson}.
+The system uses the \textbf{NVIDIA Jetson Nano} and is able to operate offline keeping an internet connection optional. It uses \textbf{YOLOv8} in order to detect license plates, \textbf{EasyOCR} is used to recognize characters within the plate, and an \textbf{SQLite} database is used for storing tracked timestamps. This enables real-time monitoring and local billing without the use of a cloud based infrastructure \cite{anpr-survey-2020, easyocr-2020, nvidia-jetson}.
 
 \vspace{0.5em}
-\noindent\textbf{Why edge?}  
-The airport environment demands continuous operation, minimal latency, and secure local data handling. Edge \ac{AI} ensures:
+\noindent\textbf{Need for Edge Based Systems}  
+Environments such as airports and parking lots operate continuously. Here, minimizing latency and securely processing local data are ensured using Edge \ac{AI}:
 \begin{itemize}
 	\item Operation even during network outages.
 	\item Low latency ($\approx$15–25 FPS) suitable for vehicle flow.
 	\item \ac{GDPR}-compliant local storage.
-	\item Lower operating costs compared to cloud-connected \ac{ANPR} systems.
+	\item Lesser costs compared to cloud-based \ac{ANPR} implementations.
 \end{itemize}
 
 % ------------------- TikZ Diagram (Airport Scenario) -----------------------
@@ -107,16 +106,15 @@ The airport environment demands continuous operation, minimal latency, and secur
 	\label{fig:airport-anpr-advanced}
 \end{figure}
 
-\subsection{Application Problem}
-At airports, vehicles frequently stop near terminals to pick up or drop passengers.  
+\subsection{Domain Application Specific Problem}
+In the context of airports, there is high vehicular density near departure and arrival stations where passengers enter and exit.  
 Security rules usually allow short stays (e.g., under 10 minutes). Manual enforcement using human officers or ticket machines is inefficient and inconsistent.  
-Our system eliminates manual logging by:
+The system solves the problem of manual logging by:
 \begin{itemize}
-	\item Automatically detecting and recognizing plates at both entry and exit using a \textbf{single camera}.
-	\item Computing the \textbf{time difference} between entry and exit for each vehicle.
-	\item Automatically triggering a \textbf{charge} when the stay exceeds 10 minutes.
+	\item Being able to detect and recognize license plates automatically. 
+	\item Generating entry and exit timestamps, enabling  the computation of \textbf{time difference}. 
+	\item Triggering a \textbf{fee} event when stay duration exceeds a predefined time limit.
 \end{itemize}
-This enables efficient, unattended management of short-term parking and drop-off areas.
 
 \subsection{Data Acquisition}
 \textbf{Operational data:} Continuous video stream from a single fixed camera at the airport gate (1080p, 25 FPS).  
@@ -143,9 +141,9 @@ The same camera detects both, using logic to compare time differences.
 
 \subsection{Data Quantity}
 \begin{itemize}
-	\item Training dataset size: $\sim$20k images combining open datasets and airport footage.
+	\item Training dataset size: $\sim$2000 images combining open datasets and airport footage.
 	\item Runtime: real-time detection at 20–25 FPS.
-	\item Each vehicle generates 2 records — \emph{entry} and \emph{exit} — stored in SQLite.
+	\item License plates are identified and corresponsing timestamps recorded — \emph{entry} and \emph{exit} — further logged in internal SQLite database.
 	\item SQLite handles up to $\sim$10$^6$ records with date, time, and license ID.
 	\item Historical data exported periodically for audit and analytics.
 \end{itemize}
@@ -161,9 +159,9 @@ Quality determines billing precision:
 \end{itemize}
 
 \subsection{Data Relevance}
-All collected data directly supports the parking time computation task:
+All collected data directly supports the time difference computation task:
 \begin{enumerate}
-	\item Only valid plate events (entry/exit) are recorded; irrelevant frames are discarded.
+	\item Valid license plates are recorded, events (entry/exit) are logged. Invalid frames are not logged.
 	\item Events are timestamped precisely (milliseconds) for accurate dwell-time calculation.
 	\item Region-specific plate formats ensure relevance to local regulations.
 	\item Logs are stored locally for privacy and regulatory compliance.
@@ -204,22 +202,22 @@ Anomalies indicate irregular operational conditions:
 \end{table}
 
 \subsection*{Summary}
-The application domain integrates \textbf{computer vision}, \textbf{edge \ac{AI}}, and \textbf{local data management} to automate vehicle monitoring within airport terminals.  
+Application domain wise, the solution integrates \textbf{computer vision}, \textbf{edge \ac{AI}}, and \textbf{local data management} aiding in the automation of vehicle monitoring within high density environments such as airports. 
 A single Jetson Nano-based camera recognizes both \textbf{entry and exit} events, records timestamps, calculates \textbf{dwell time}, and automatically triggers billing for vehicles exceeding the permitted 10-minute duration.  
-This fully automated workflow eliminates the need for manual ticketing or human monitoring, improving \textbf{efficiency}, \textbf{accuracy}, and \textbf{24/7 operational reliability}.
+The automated workflow enables automatic logging and ticketing with minimal human monitoring, leading to an improvement in \textbf{operational efficiency} and \textbf{reliability}.
 
-From a data perspective, the system maintains high \textbf{data quality} through real-time validation, confidence-based filtering, and local persistence of relevant information only.  
+In terms of data, high \textbf{data quality} is ensured through real-time validation, confidence-based filtering, and local storage.  
 It adheres to \textbf{\ac{GDPR}-compliant practices} by processing and storing data directly on the Jetson Nano without cloud transmission.  
-This edge-first approach minimizes latency, reduces maintenance costs, and ensures continued functionality even in network-restricted environments.
+An edge-first system reduces latency, promotes low maintenance costs, and ensures that the system is functional in environments that are restricted in terms of network or internet availability.
 
 Beyond airport use, the developed framework can be scaled for other domains such as:
 \begin{itemize}
 	\item \textbf{Smart parking lots} for retail, hospitals, or universities.  
 	\item \textbf{Logistics hubs} for tracking delivery vehicle dwell times.  
-	\item \textbf{High-security facilities} (embassies, military zones) where controlled access logging is critical.  
+	\item \textbf{Security Facilities} (especially government embassy areas, military facilities) where access control and logging is important.  
 \end{itemize}
 
-Furthermore, integration with \textbf{Vehicle-to-Infrastructure (V2I)} and \textbf{Vehicle-to-Vehicle (V2V)} communication systems can transform this into a connected mobility module.  
-Such extensions will enable dynamic traffic coordination, \textbf{real-time gate availability broadcasting}, and automated security alerts — key components of next-generation \textbf{Smart Airport Infrastructure}.  
+In addition, integration such as \textbf{Vehicle-to-Infrastructure (V2I)} and \textbf{Vehicle-to-Vehicle (V2V)} communication systems can translate into mobile and connected modules.  
+Extensions in this form promote dynamic traffic coordination, \textbf{availability broadcasting at entry and exit gates in real time}, and security alerts automated — defining components that could prove vital to future infrastructures such as smart airports.  
 
-Overall, the proposed solution demonstrates how lightweight embedded \ac{AI} can deliver high-impact automation with measurable social, operational, and economic benefits, supporting the transition toward \textbf{autonomous, intelligent, and sustainable transportation ecosystems} \cite{smart-parking, privacy-edge, nvidia-jetson}.
+In summary, the solution describes lightweight embedded \ac{AI} that is able to deliver automation that is promotes social, operational, and economic benefits, aiding in the evolution of  \textbf{autonomous, intelligent, and sustainable transportation ecosystems} \cite{smart-parking, privacy-edge, nvidia-jetson}.
