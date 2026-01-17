@@ -1,0 +1,256 @@
+% ===========================================================================
+% SECTION: APPLICATION DOMAIN KNOWLEDGE - SOFTWARE
+% ===========================================================================
+
+\section{Application Domain Knowledge: Software}
+\label{sec:software_domain}
+
+While the hardware provides the physical substrate for computation, the Software Domain serves as the cognitive logic of the License Plate Recognition (LPR) system. In the context of embedded edge AI, the software architecture is defined not only by the application code but also by the rigid constraints of the underlying Operating System (OS) and the resource management strategies required to prevent system failure.
+
+This section deconstructs the software ecosystem, analyzing the Operating System limitations, the engineered deployment pipelines, the memory management architecture, and the specific application logic used to orchestrate the YOLO object detector and OCR models.
+
+% ---------------------------------------------------------------------------
+% SUBSECTION: DESCRIPTION & OS
+% ---------------------------------------------------------------------------
+\subsection{System Description: The Legacy Ecosystem}
+
+The primary software constraint for this project is the specific version of the NVIDIA JetPack SDK supported by the Jetson Nano. Unlike modern desktop environments, the Jetson Nano is locked to **JetPack 4.6**, which is built upon **Ubuntu 18.04 LTS**. This imposes a "Legacy Software Ecosystem" challenge that dictates every subsequent architectural decision.
+
+\vspace{0.5cm}
+
+% --- VISUAL 1: SOFTWARE STACK PYRAMID ---
+\begin{figure}[htbp]
+	\centering
+	\begin{tikzpicture}[
+		node distance=0cm,
+		layer/.style={
+			rectangle, 
+			draw=black!80, 
+			minimum width=10cm, 
+			minimum height=1.2cm, 
+			align=center, 
+			very thick,
+			rounded corners=2pt,
+			drop shadow
+		},
+		arrow/.style={->, >=latex, very thick, gray}
+		]
+		
+		% Stack from Bottom to Top
+		\node[layer, fill=gray!30] (hw) {\textbf{Hardware Layer}\\(NVIDIA Maxwell GPU / ARM Cortex-A57 CPU)};
+		
+		\node[layer, fill=blue!10, above=0.3cm of hw] (kernel) {\textbf{Operating System (L4T)}\\Ubuntu 18.04 LTS (Kernel 4.9) + GLIBC 2.27};
+		
+		\node[layer, fill=blue!20, above=0.1cm of kernel] (drivers) {\textbf{Middleware \& Drivers}\\CUDA 10.2 | cuDNN 8.2 | TensorRT 8.2};
+		
+		\node[layer, fill=green!10, above=0.1cm of drivers] (deps) {\textbf{Dependency Layer (The Bottleneck)}\\Python 3.6 (Legacy) | OpenCV 4.1.1 | PyTorch 1.10};
+		
+		\node[layer, fill=orange!20, above=0.3cm of deps] (app) {\textbf{Application Layer}\\YOLOv8 Inference Wrapper | EasyOCR Engine | Flask Dashboard};
+		
+		% Annotations
+		\node[right=0.5cm of deps, text width=4cm, font=\small\itshape, align=left] 
+		{\textbf{Constraint:} Modern libraries (Pandas 2.0, Ultralytics) require Python 3.8+, forcing workaround scripts.};
+		
+	\end{tikzpicture}
+	\caption{The Software Stack showing the dependency hierarchy and version locks.}
+	\label{fig:software_stack}
+\end{figure}
+
+As visualized in Figure \ref{fig:software_stack}, the dependency layer creates a critical bottleneck. Modern AI libraries, such as \texttt{Ultralytics YOLOv8} and \texttt{Pandas 2.0}, natively require Python 3.8 or newer. The Jetson's default Python 3.6 environment is incompatible with these standard pip packages. Consequently, the "System Description" includes not just the standard libraries, but a set of custom "Monkey Patching" scripts engineered to map deprecated API calls to legacy endpoints, ensuring runtime stability.
+
+% ---------------------------------------------------------------------------
+% SUBSECTION: DESIGN & INSTALLATION (DEPLOYMENT PIPELINE)
+% ---------------------------------------------------------------------------
+\subsection{Software Design and Installation Pipeline}
+
+To overcome the computational and software limitations of the edge device, we adopted a \textbf{Split-Architecture Design}. Training a Convolutional Neural Network (CNN) directly on the Jetson Nano is unfeasible due to memory exhaustion. Therefore, the "Installation" phase is not a single step but a pipeline spanning two distinct computing environments: the Training Host (High-Performance PC) and the Inference Host (Jetson Nano).
+
+\vspace{0.5cm}
+
+% --- VISUAL 2: DEPLOYMENT PIPELINE FLOWCHART ---
+\begin{figure}[htbp]
+	\centering
+	\begin{tikzpicture}[
+		node distance=1.5cm and 2cm,
+		process/.style={
+			rectangle, 
+			draw=blue!60, 
+			fill=blue!5, 
+			very thick, 
+			minimum size=1cm, 
+			minimum width=3cm, 
+			align=center, 
+			rounded corners
+		},
+		storage/.style={
+			cylinder, 
+			shape border rotate=90, 
+			draw=black, 
+			fill=gray!10, 
+			aspect=0.25, 
+			minimum height=1.5cm, 
+			minimum width=1.5cm, 
+			align=center
+		},
+		arrow/.style={-latex, thick, blue!80}
+		]
+		
+		% High Performance PC Side
+		\node[process, fill=red!10, label=above:\textbf{High-Perf PC}] (train) {1. Model Training\\(PyTorch/CUDA)};
+		\node[process, right=of train] (export) {2. Export\\(.pt $\to$ .onnx)};
+		
+		% The Transfer Gap
+		\draw[dashed, very thick] ($(export.east)+(0.5,-2)$) -- ($(export.east)+(0.5,2)$) node[above] {Network Transfer};
+		
+		% Jetson Nano Side
+		\node[process, right=1cm of export, fill=green!10, label=above:\textbf{Jetson Nano}] (compile) {3. Cross-Compile\\(ONNX $\to$ TensorRT)};
+		\node[process, right=of compile] (infer) {4. Optimized\\Inference};
+		
+		% Connections
+		\draw[arrow] (train) -- (export);
+		\draw[arrow] (export) -- node[above, font=\scriptsize] {} (compile);
+		\draw[arrow] (compile) -- (infer);
+		
+		% Details underneath
+		\node[below=0.5cm of train, font=\scriptsize, align=center] {Requires:\\16GB+ VRAM};
+		\node[below=0.5cm of compile, font=\scriptsize, align=center] {Generates:\\.engine binary};
+		
+	\end{tikzpicture}
+	\caption{The Split-Architecture Deployment Pipeline used to bypass hardware limitations.}
+	\label{fig:deployment_pipeline}
+\end{figure}
+
+The workflow illustrated in Figure \ref{fig:deployment_pipeline} addresses the "Cross-Compilation" challenge. The YOLOv8 model is trained on a powerful workstation. The resulting weights (\texttt{.pt} file) are exported to the \textbf{ONNX} (Open Neural Network Exchange) format. This intermediate representation is transferred to the Jetson Nano, where it is compiled into a \textbf{TensorRT} engine file. This binary format is specifically optimized for the Nano's Maxwell GPU architecture, providing a 40-50\% improvement in inference speed (FPS) compared to running raw PyTorch code.
+
+% ---------------------------------------------------------------------------
+% SUBSECTION: MEMORY MANAGEMENT (DATA & QUANTITY)
+% ---------------------------------------------------------------------------
+\subsection{Data Structure and Memory Architecture}
+
+A defining characteristic of the "Software Domain" on embedded devices is the scarcity of Random Access Memory (RAM). The Jetson Nano possesses a unified memory architecture where the CPU and GPU share a single 4GB pool. This creates a "Zero-Sum Game": every megabyte used by the Ubuntu OS is a megabyte denied to the AI model.
+
+During initial testing, the simultaneous loading of the OS ($\approx 1.2$ GB), the YOLOv8 model ($\approx 1.5$ GB), and the EasyOCR engine ($\approx 1.8$ GB) resulted in a total demand of $\approx 4.5$ GB. This exceeded physical capacity, causing the Linux kernel to invoke the \textbf{OOM (Out of Memory) Killer}, terminating the application immediately.
+
+To resolve this, we engineered a virtual memory expansion using a \textbf{6GB Swap Partition} on the external SSD.
+
+\vspace{0.5cm}
+
+% --- VISUAL 3: MEMORY MAP DIAGRAM ---
+\begin{figure}[htbp]
+	\centering
+	\begin{tikzpicture}[scale=0.8]
+		% Axes - Extended to cover the extra width (up to x=14)
+		\draw[thick, ->] (0,0) -- (0,10.5) node[above] {Memory Address Space};
+		\draw[thick, ->] (0,0) -- (14,0) node[right] {Usage};
+		
+		% --- LEFT COLUMN: PHYSICAL RAM (Width = 5 units) ---
+		% Range: x=1 to x=6 (Center x=3.5)
+		
+		% The Container Bar
+		\draw[fill=green!20] (1,0) rectangle (6,4);
+		% Label rotated to fit vertically along the side
+		\node[rotate=90] at (5.7, 2) {\scriptsize Physical RAM (4GB)};
+		
+		% Stack Items (Centered at x=3.5)
+		\draw[fill=blue!30] (1,0) rectangle (6,1.5);   \node at (3.5,0.75) {OS};
+		\draw[fill=orange!30] (1,1.5) rectangle (6,3.5); \node at (3.5,2.5) {YOLOv8};
+		\draw[fill=red!50] (1,3.5) rectangle (6,5.5);    \node at (3.5,4.5) {OCR (Crash)};
+		
+		% OOM Threshold Line (Extended)
+		\draw[red, very thick, dashed] (0,4) -- (13.5,4) node[right, red, font=\bfseries] {Limit};
+		
+		% --- RIGHT COLUMN: VIRTUAL MEMORY (Width = 5 units) ---
+		% Range: x=8 to x=13 (Center x=10.5)
+		
+		% The Container Bar
+		\draw[fill=gray!20] (8,0) rectangle (13,10);
+		\node[rotate=90] at (12.7, 8) {\scriptsize Virtual Memory (10GB)};
+		
+		% Stack Items (Centered at x=10.5)
+		\draw[fill=blue!30] (8,0) rectangle (13,1.5);   \node at (10.5,0.75) {OS (Active)};
+		\draw[fill=orange!30] (8,1.5) rectangle (13,3.5); \node at (10.5,2.5) {YOLOv8 (GPU)};
+		\draw[fill=yellow!30] (8,3.5) rectangle (13,5.5); \node at (10.5,4.5) {OCR (CPU)};
+		\draw[fill=gray!40] (8,5.5) rectangle (13,7.5);   \node at (10.5,6.5) {Cached Pages};
+		
+		% Arrow connecting the two columns
+		\draw[->, thick, blue, shorten >= 5pt, shorten <= 5pt] (6, 2) -- (8, 2) node[midway, above, font=\scriptsize] {Swap};
+		
+	\end{tikzpicture}
+	\caption{Memory Allocation Strategy: Expanding physical limits with SSD Swap.}
+	\label{fig:memory_architecture}
+\end{figure}
+
+As shown in Figure \ref{fig:memory_architecture}, the Swap partition allows the OS to offload inactive memory pages (like the GUI desktop manager) to the SSD, freeing up the fast physical RAM for the active CUDA tensors required by YOLOv8. While SSD access is slower than RAM, this trade-off is acceptable for background processes and enables the system to run without crashing.
+
+\subsubsection{Data Types and Database Structure}
+The "Data" handled by the software consists of structured entry/exit events. To ensure persistence across power cycles, we implemented a local \textbf{SQLite} database. The schema is normalized to handle the core logic of the parking application:
+
+\begin{itemize}
+	\item \textbf{Table:} \texttt{vehicle\_logs}
+	\item \textbf{Columns:} 
+	\begin{itemize}
+		\item \texttt{id} (INTEGER PRIMARY KEY)
+		\item \texttt{license\_plate} (TEXT, Indexed for O(1) retrieval)
+		\item \texttt{entry\_timestamp} (DATETIME, ISO 8601 format)
+		\item \texttt{exit\_timestamp} (DATETIME, Nullable)
+		\item \texttt{fee\_calculated} (FLOAT)
+	\end{itemize}
+\end{itemize}
+
+This structure allows the billing logic to perform a simple SQL query: \texttt{SELECT entry\_timestamp FROM vehicle\_logs WHERE license\_plate = ? AND exit\_timestamp IS NULL}. If a record is found, the car is exiting; if not, it is entering.
+
+% ---------------------------------------------------------------------------
+% SUBSECTION: REMOTE DEVELOPMENT (PROTOCOLS)
+% ---------------------------------------------------------------------------
+\subsection{Protocols and Remote Development Strategy}
+
+A significant challenge in the "Configuration" domain was the inability to use standard modern development tools. The VS Code Remote Server recently updated its requirements to demand \texttt{glibc 2.28}, whereas the Jetson's OS is locked to \texttt{glibc 2.27}. This incompatibility rendered standard remote debugging impossible.
+
+To circumvent this, we architected a protocol switch from the standard VS Code Server agent to a lightweight \textbf{SSH-FS (Secure Shell File System)} implementation.
+
+\vspace{0.5cm}
+
+% --- VISUAL 4: REMOTE PROTOCOL DIAGRAM ---
+\begin{figure}[htbp]
+	\centering
+	\begin{tikzpicture}[
+		node distance=3cm,
+		device/.style={
+			rectangle, 
+			draw=black, 
+			very thick, 
+			minimum width=2.5cm, 
+			minimum height=1.5cm, 
+			align=center, 
+			rounded corners
+		},
+		connection/.style={
+			<->, 
+			>=latex, 
+			very thick, 
+			blue
+		}
+		]
+		
+		\node[device, fill=gray!10] (laptop) {\textbf{Dev Laptop}\\(VS Code)};
+		\node[device, fill=green!10, right=4cm of laptop] (jetson) {\textbf{Jetson Nano}\\(SSD Storage)};
+		
+		% Failed Connection
+		\draw[->, thick, red, dashed] ($(laptop.east)+(0,0.5)$) -- node[midway, above, font=\scriptsize, red] {SSH connection (GLIBC Error)} ($(jetson.west)+(0,0.5)$);
+		\node[red] at ($(laptop.east)!0.5!(jetson.west)+(0,0.5)$) {$\times$};
+		
+		% Success Connection
+		\draw[connection] ($(laptop.east)+(0,-0.5)$) -- node[midway, below, font=\scriptsize, blue] {SFTP Mount (SSH-FS)} ($(jetson.west)+(0,-0.5)$);
+		
+		% Label
+		\node[below=0.2cm of jetson, font=\scriptsize] {/media/myssd/project};
+		
+	\end{tikzpicture}
+	\caption{Remote Development Protocol: Switching from Binary Agents to File System Mounting.}
+	\label{fig:remote_protocol}
+\end{figure}
+
+As depicted in Figure \ref{fig:remote_protocol}, instead of running a binary agent on the Jetson (which fails due to library versioning), we mount the Jetson's filesystem locally on the development laptop. This allows us to edit code using the laptop's powerful CPU and modern libraries, while the files are physically saved to the Jetson's SSD in real-time. Execution is then triggered via a standard SSH terminal, which requires very few dependencies.
+
+\subsubsection{Conclusion of Software Analysis}
+The Software Domain of this project is characterized by adaptation. The application logic (YOLO detection, Billing) is robust, but it sits atop a fragile legacy foundation. The successful operation of the system serves as a proof-of-concept that modern AI workloads can be back-ported to older edge hardware through rigorous memory management (Swap), strategic pipeline design (TensorRT), and protocol flexibility (SSH-FS).
