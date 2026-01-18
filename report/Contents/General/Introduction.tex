@@ -23,14 +23,14 @@
 \vspace{0.4cm}
 
 \section{Introduction}
-Efficient and automated vehicle identification has become essential in smart transportation, particularly for airport parking and security control systems. Traditional \ac{ANPR} solutions depend on high-cost proprietary cameras and centralized servers, limiting scalability and flexibility \cite{tang2022automatic}. The recent advancement of edge AI has enabled deployment of compact deep-learning models such as \textbf{YOLOv8} directly on embedded hardware, enabling local, real-time decision-making without reliance on cloud processing \cite{jocher2023ultralytics, nvidia_jetson_whitepaper2021}.
+Efficient and automated vehicle identification has become essential in smart transportation, particularly for airport parking and security control systems. \ac{ANPR} solutions traditionally involved costly systems consisting of cameras with centralised server setups, offering limited flexibility and scalabilty.  \cite{tang2022automatic}. The recent advancement of edge AI has enabled deployment of compact deep-learning models such as \textbf{YOLOv8} directly on embedded hardware, enabling local, real-time decision-making without reliance on cloud processing \cite{jocher2023ultralytics, nvidia_jetson_whitepaper2021}.
 
-This project focuses on designing a cost-effective, \ac{GDPR}-compliant, single-camera \ac{LPR} optimized for the \textbf{NVIDIA Jetson Nano}. By integrating \textbf{YOLOv8} for detection, \textbf{EasyOCR} for text extraction, and SQLite for data logging, the system enables entry/exit recognition and dwell-time-based billing. Its design demonstrates the convergence of \ac{AI}, embedded computing, and privacy-aware data management within modern transportation infrastructure \cite{mufti2021automatic, plavac2024performance}.
+This project focuses on designing a cost-effective, \ac{GDPR}-compliant, single-camera \ac{LPR} optimized for the \textbf{NVI	DIA Jetson Nano}. By integrating \textbf{YOLOv8} for detection, \textbf{EasyOCR} for text extraction, and SQLite for data logging, the system enables entry/exit recognition and dwell-time-based billing. Its design demonstrates the convergence of \ac{AI}, embedded computing, and privacy-aware data management within modern transportation infrastructure \cite{mufti2021automatic, plavac2024performance}.
 
 \vspace{0.2cm}
 
 \section{Problem Description}
-Airports face continuous operational challenges in managing thousands of vehicles daily. Manual verification is error-prone, time-consuming, and inconsistent, while commercial \ac{ANPR} cameras are expensive and inflexible \cite{netinant2024evaluating}. German airports—such as Frankfurt, Munich, and Berlin—require rapid, accurate, and legally compliant vehicle identification systems that can operate under varying light, weather, and plate types \cite{fraportALPR, munichALPR}.
+There are multiple challenges while managing operations in places where vehicular traffic is high, such as airports, bus-stops and logistics parks. Manual verification thus becomes prone to errors, expends time, and has coherency issues, along with commercial \ac{ANPR} cameras being expensive and having high maintenance.  \cite{netinant2024evaluating}. Airports across cities such as London, Berlin, and Dubai require systems that are fast, less error prone while being compliant under the purview of legality and warrant the need for vehicle identification systems operable in differing conditions such as light intensity, weather variations, and types of license plates \cite{fraportALPR, munichALPR}.
 
 Key issues include:
 \begin{itemize}
@@ -49,15 +49,14 @@ These constraints necessitate a locally deployed, energy-efficient, and privacy-
 \vspace{0.2cm}
 
 \section{Challenges}
-Although \ac{ANPR} systems have advanced rapidly, several persistent obstacles still hinder efficient deployment on low-power edge devices. These challenges are particularly evident in airport automation environments, where performance, compliance, and reliability must coexist under real-world constraints.
+Although \ac{ANPR} systems have advanced rapidly, several persistent obstacles still hinder efficient deployment on low-power edge devices. Constraints such as the ones mentioned pose challenges that are mostly applicable to an environment similar to an airport, where it is important for performance, legal compliance, and reliability to be balanced while accounting for real-world variability and constraints.
 
 \subsection*{1. Environmental and Lighting Variability}
-Outdoor environments cause fluctuations in illumination due to sunlight, reflections, fog, and rain, which significantly affect the reliability of detection and text recognition.  
-Studies such as \cite{sultan2023applied, tavarez2024comparison} have shown that varying brightness and weather conditions increase \ac{OCR} error rates and reduce \ac{MAP} in detection models. For airports operating 24/7, low-visibility conditions further degrade confidence in plate extraction.
+Real world environments with variable outdoor conditions may lead to illumination differences.Sunlight, surface reflections, mist, and precipitation may lead to a significant effect on the accuracy of license plate recognition and the text characters therein.  
+Studies such as \cite{sultan2023applied, tavarez2024comparison} have shown that varying brightness and weather conditions increase \ac{OCR} error rates and reduce \ac{MAP} in detection models. Airports that operate throughout the day sometimes have low-visibility and this can lead to inaccuracies in text extraction from license plates.
 
-\subsection*{2. Computational Limitations on Edge Devices}
-Edge devices like the \textbf{NVIDIA Jetson Nano} have limited \ac{GPU} resources and memory compared to traditional servers.  
-As noted by \cite{laroca2018robust, nvidia_jetson_whitepaper2021}, high-performance deep-learning models such as \textbf{YOLOv8} demand significant compute power, which can reduce frame rates to below real-time levels. Prolonged \ac{GPU} utilization also raises issues of overheating and throttling under continuous workloads.
+\subsection*{2. Edge Device Compute Limitations}
+Edge devices similar to \textbf{NVIDIA Jetson Nano} may be constrained in the amount of \ac{GPU} computation power and memory availability. As stated by \cite{laroca2018robust, nvidia_jetson_whitepaper2021}, high-performance deep-learning models such as \textbf{YOLOv8} demand significant compute power, which can reduce frame rates to below real-time levels. Prolonged \ac{GPU} utilization also raises issues of overheating and throttling under continuous workloads.
 
 \subsection*{3. False Positives and Non-Standard Plates}
 Incorrect detections occur when objects with plate-like textures (advertisements, reflections, or vehicle logos) are misidentified as license plates.  
@@ -66,33 +65,33 @@ These false positives increase storage load and reduce system credibility in enf
 
 \subsection*{4. Privacy and Legal Compliance}
 European regulations such as \ac{GDPR} and the German \ac{BDSG} require that personal identifiers, including license plate data, be processed under strict privacy principles.  
-Legal frameworks emphasize data minimization, lawful processing, and transparency \cite{gdpr2016eu, bdsga2021}.  
-Systems that store full-resolution images without anonymization may violate Article 5(1)(c) of \ac{GDPR}, posing compliance risks for public infrastructure deployments.
+Such compliance stresses on the need for using minimal data, responsible usage under a legal purview, and transparent operation \cite{gdpr2016eu, bdsga2021}.  
+Systems processing images without anonymity tend to  violate Article 5(1)(c) of \ac{GDPR}, creating risks that are non-compliant for public infrastructure deployments.
 
 \subsection*{5. Cost and Scalability}
 Commercial \ac{ANPR} systems—such as those from Jenoptik or PeterPark—are expensive, closed-source, and require recurring maintenance fees \cite{Jenoptik2023, peterparkALPR}.  
-Research comparing \textbf{YOLO}-based implementations on low-cost edge hardware \cite{Ultralytics2023, JetsonNano2022} highlights the feasibility of democratizing intelligent surveillance through modular, open, and affordable architectures.  
+Additional studies that analyze \textbf{YOLO}-based deployments on edge hardware \cite{Ultralytics2023, JetsonNano2022} stress on the feasibility of enhancing intelligent surveillance via the use of architecture that is both modular and affordable.  
 However, scalability still demands efficient synchronization between multiple camera nodes and lightweight local databases.
 
 \vspace{0.4cm}
 
-\section{Proposed Solutions}
-To address the above challenges, the project integrates a combination of hardware optimization, lightweight \ac{AI} design, and legal compliance mechanisms.  
-Each proposed method directly corresponds to one identified issue, ensuring both technical robustness and regulatory alignment.
+\section{Solution Description}
+To simplify the challenges mentioned, the project incorporates combined usage of hardware optimization, easy and efficient \ac{AI} design, and enables compliance within legal frameworks.  
+The methods defined directly map to challenges identified, while promoting technical robustness and ensuring alignment within regulatory frameworks.
 
 \subsection*{1. Addressing Environmental and Lighting Variability}
 \begin{itemize}
 	\item Apply dynamic image preprocessing using \textbf{OpenCV} to normalize brightness, gamma, and contrast across frames.
 	\item Integrate IR-assisted illumination and adaptive exposure for stable night-time operation.
 	\item Use deraining and dehazing filters to reduce weather-induced distortions before \textbf{YOLO} inference.
-	\item Expand dataset diversity with day, night, and adverse-weather conditions to improve model generalization.
+	\item Incorporate datasets with a great variety in  daytime, nightime, and fluctuating weather conditions, aiding in improving accuracy.
 \end{itemize}
 
 \subsection*{2. Optimizing Computational Performance}
 \begin{itemize}
 	\item Quantize \textbf{YOLOv8} weights to \textbf{FP16} and optimize inference through TensorRT to achieve real-time speed.
 	\item Use a hybrid configuration—\textbf{YOLOv8-Nano} for continuous inference and \textbf{YOLOv8-Large} for periodic re-validation of uncertain detections.
-	\item Implement multi-threading and asynchronous pipelines to parallelize camera feed capture, inference, and \ac{OCR}.
+	\item Usage of multi-threaded and asynchronous system architecture pipelines to enable the parallelization of camera feed capture and \ac{OCR}.
 	\item Monitor \ac{GPU} utilization via \textbf{Jetson-Stats} for automatic frame-rate adjustments under thermal constraints.
 \end{itemize}
 
@@ -123,5 +122,4 @@ Each proposed method directly corresponds to one identified issue, ensuring both
 \vspace{0.2cm}
 
 \noindent
-In summary, this solution framework transforms a conventional centralized \ac{ANPR} system into a distributed, low-cost, and privacy-compliant edge network.  
-By systematically addressing environmental, computational, and regulatory constraints, the proposed approach ensures scalability, sustainability, and long-term adaptability to evolving smart mobility infrastructures.
+Summary wise, the proposed system enables the transformation of a traditional, centralized \ac{ANPR} system, effectively morphing it into a cost effective, robust and compliant edge network device. Since the solution addresses variability in environmental conditions, computational constraints, and compliance with regulation, the approach promotes scalability and adaptability in terms of enhancing smart mobility infrastructures.

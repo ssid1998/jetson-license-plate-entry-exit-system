@@ -18,16 +18,16 @@
 \section{Description}
 \label{subsec:description}
 
-\ac{SoC} platforms provide a cost-effective and power-efficient solution for developing embedded machine learning systems. 
-They are particularly suited for \textbf{inference tasks}, where pre-trained deep learning models are deployed to process real-world data in real time. 
-Among such \ac{SoC} systems, the \textbf{NVIDIA Jetson Nano} stands out as one of the most compact and capable \ac{AI} modules available for edge computing. 
-It belongs to NVIDIA’s Jetson family, which includes devices like Jetson Xavier NX and Jetson Orin Nano, but represents the most accessible entry point for developers building low-power \ac{AI} vision systems \cite{jetsonNanoDatasheet, JetsonGettingStarted:2019}.
+\ac{SoC} platforms enable cost effectiveness and efficient power usage towards machine learning models deployed on embedded systems. 
+These platforms are suitable for \textbf{inference tasks}, in which a deployment of previously trained deep learning models enable processing data in near real time.   
+An example of an \ac{SoC} systems is the \textbf{NVIDIA Jetson Nano}. It is compact and provides compatible \ac{AI} modules efficient in edge computing tasks. 
+NVIDIA’s Jetson family also comprises of devices such as the Jetson Xavier NX and Jetson Orin Nano. The Jetson Nano provides a simple hardware interface that enables developers to build capable, low-power \ac{AI} vision solutions. \cite{jetsonNanoDatasheet, JetsonGettingStarted:2019}.
 
 \bigskip
 
 The Jetson Nano combines a \textbf{quad-core ARM Cortex-A57 CPU} with a \textbf{128-core Maxwell \ac{GPU}}, offering approximately \textbf{0.5~TFLOPs (FP16)} of performance at a typical power draw of only 5–10~W. 
 This makes it highly efficient for computer vision, robotics, and real-time deep learning inference. 
-Its open development environment and support for the \textbf{JetPack SDK} (based on Ubuntu Linux) allow developers to integrate \ac{AI} frameworks such as TensorFlow, PyTorch, OpenCV, and NVIDIA TensorRT easily.
+The development environment provides support for the \textbf{JetPack SDK} (based on Ubuntu Linux) allowing the integration  of \ac{AI} frameworks like TensorFlow, PyTorch, OpenCV, and NVIDIA TensorRT.
 
 \bigskip
 
@@ -44,19 +44,19 @@ Other commercial \ac{SoC}s, such as Apple’s A-series chips (A12~Bionic), Samsu
 
 \bigskip
 The Jetson Nano, in contrast, remains \textbf{developer-oriented, open, and extensible}, offering a balance between computational performance, power efficiency, and cost (approximately 180–250~\texteuro{} in Germany). 
-It serves as the foundation for the current project on \textbf{real-time license plate detection}, enabling efficient on-device image inference without the need for cloud processing. Overall, the Jetson Nano’s combination of \ac{GPU} parallelism, open-source software ecosystem, and compatibility with \ac{AI} frameworks makes it one of the most accessible and powerful tools for academic and industrial \ac{AI} deployment at the edge.
+It serves as the foundation for the current project on \textbf{real-time license plate detection}, enabling efficient on-device image inference without the need for cloud processing. In addition, the Jetson Nano’s efficient use of \ac{GPU} parallelism, open-source software ecosystem, and compatibility with \ac{AI} tools and frameworks places it as one of the most accessible and powerful devices for\ac{AI} deployment at the edge.
 
 \newpage
 %----------------------------------------------------------
-\section{Applications of the Jetson Nano}
+\section{Jetson Nano Applications}
 \label{subsec:applications}
 
-The Jetson Nano can be utilized for a wide range of applications, ranging from basic computing tasks to complex edge-\ac{AI} deployments. 
-Its flexibility allows it to function both as a compact single-board computer and as a high-performance inference device for embedded vision systems \cite{Kurniawan:2021, JetsonProjects:2020}. 
+The Jetson Nano is applicable towards a large set of tasks. It is able to handle basic computing tasks along with complex edge-\ac{AI} deployments efficiently. 
+Functionally, it promotes flexibility in terms of its usage as a compact single-board computer and a high-performance embedded device for computer vision tasks \cite{Kurniawan:2021, JetsonProjects:2020}. 
 
 \bigskip
 Figure~\ref{fig:jetson_applications} provides a visual overview of some of the representative deep-learning and computer-vision tasks that can be executed efficiently on the Jetson Nano platform. 
-These include \textit{image classification, object detection, semantic segmentation, pose estimation, action recognition, background removal,} and \textit{monocular depth estimation}. 
+Included are \textit{image classification, object detection, semantic segmentation, pose estimation, action recognition, background removal,} and \textit{monocular depth estimation}. 
 Such diverse capabilities demonstrate the Nano’s suitability for both research and industrial-level \ac{AI} applications.
 
 \begin{figure}[H]
@@ -96,8 +96,8 @@ Jetson Nano’s ability to process video streams in real time makes it ideal for
 Its edge-processing capability ensures privacy compliance and low latency compared to cloud-based analytics.
 
 \bigskip
-In summary, the Jetson Nano bridges the gap between experimental \ac{AI} research and real-world embedded deployment. 
-Its balance of performance, cost, and open-source accessibility enables both academic and industrial innovation in fields like automation, surveillance, and intelligent transportation systems.
+As an overview, the Jetson Nano is able to close the gap between scientific \ac{AI} research based on experiments and embedded deployment involving real-world use cases. 
+Balancing performance and cost constraints, it provides open-source accessibility that promotes innovation at an academic and industrial scale, specifically in fields such as automation, monitoring, and smart transport system development.
 
 \newpage
 \section{Construction}
@@ -106,7 +106,7 @@ Its balance of performance, cost, and open-source accessibility enables both aca
 The complete hardware configuration of this project is based on the \textbf{Seeed Studio reComputer J1010} system, which integrates the \textbf{NVIDIA Jetson Nano (4~GB, B01 revision)} module on the \textbf{J101 carrier board}. 
 The Jetson Nano module measures approximately $69.6\,\text{mm}\times45\,\text{mm}$ and is equipped with an aluminum heatsink that covers the NVIDIA Tegra~X1 \ac{SoC}. 
 This \ac{SoC} integrates a quad-core ARM Cortex-A57 CPU and a 128-core Maxwell \ac{GPU}, providing up to 0.5~TFLOPs (FP16) of compute performance at a typical power draw of 5–10~W \cite{jetsonNanoDatasheet}.  
-The module connects to the J101 carrier board through a 260-pin SODIMM edge connector, which exposes high-speed I/O lines, camera interfaces, and peripheral buses to the carrier.
+The module links the J101 carrier board via a 260-pin SODIMM edge connector, that exposes high-speed I/O lines, camera interfaces, and peripheral buses to the carrier system.
 
 \begin{figure}[H]
 	\centering
@@ -118,7 +118,7 @@ The module connects to the J101 carrier board through a 260-pin SODIMM edge conn
 \bigskip
 \textbf{Physical Layout:}  
 The J101 carrier board has dimensions of approximately $100\,\text{mm}\times80\,\text{mm}\times29\,\text{mm}$ and is mounted within an anodized aluminum enclosure supplied by Seeed Studio.  
-It provides direct access to peripheral connectors, including  \ac{USB}, \ac{HDMI}, \ac{CSI}, M.2~Key~E, and Ethernet, while maintaining compact form-factor integration suitable for embedded deployment.  
+The function is to allow direct access to peripheral connectors, such as \ac{USB}, \ac{HDMI}, \ac{CSI}, M.2~Key~E, and Ethernet, while maintaining compact form-factor integration suited towards embedded deployment.  
 The passive aluminum heatsink ensures thermal stability during continuous inference workloads, and an optional 5~V~\ac{PWM} fan can be connected to header~J8 for active cooling.  
 Figure~\ref{fig:recomputerJ101v2} shows the top view of the reComputer~J1010 board with major connectors labeled (refer to Section~\ref{sec:Interfaces} for detailed pin-level descriptions).
 
@@ -131,12 +131,12 @@ Figure~\ref{fig:recomputerJ101v2} shows the top view of the reComputer~J1010 boa
 
 \bigskip
 The front panel of the reComputer~J1010 enclosure provides access to six primary external connectors, as illustrated in Figure~\ref{fig:jetson_side} and summarized in Table~\ref{tab:j1010_interfaces}.  
-These ports include power, display, communication, and peripheral interfaces essential for system integration and debugging.
+These ports provide connections for power, display, communication, and peripheral interfaces. Necessary for system integration and debugging.
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.9\linewidth]{JetsonNano/jetson-side.png}
-	\caption{Front I/O panel of the Seeed Studio reComputer~J1010 showing labeled external connectors (1--6). These correspond to the physical ports accessible from the device enclosure \cite{seeedJ101Manual}.}
+	\caption{Front I/O panel of the Seeed Studio reComputer~J1010 showing labeled external connectors (1--6) corresponding to physical ports accessible via the device enclosure \cite{seeedJ101Manual}.}
 	\label{fig:jetson_side}
 \end{figure}
 
@@ -730,8 +730,8 @@ You can also run the command below to check the available \ac{SPI} controllers:
 \section{Data Characteristics}
 \label{sec:jetson_data}
 
-\subsection{Data Types}
-The NVIDIA Jetson Nano processes heterogeneous data types depending on the application layer.  
+\subsection{Types of Data}
+NVIDIA Jetson Nano is capable of processing heterogeneous data types which is dependant on the context of the application layer.  
 In this project, the primary data sources are:
 \begin{itemize}
 	\item \textbf{Video Frames:} RGB images (8-bit per channel) streamed from the Microsoft LifeCam Show via \ac{USB}~2.0, received as \texttt{uint8} arrays in OpenCV (BGR order).
@@ -740,15 +740,15 @@ In this project, the primary data sources are:
 \end{itemize}
 Data exchange between CPU and \ac{GPU} occurs via shared memory buffers, leveraging NVIDIA’s \textbf{Unified Memory} architecture and CUDA cores for parallelized tensor operations \cite{jetson_nano_doc,edgeAIbook}.  
 
-\subsection{Data Structure}
-Captured image frames are represented as three-dimensional matrices $(H, W, C)$, where $H$=600, $W$=800, and $C$=3 for color images.  
-Each matrix is normalized and batched into tensors before being fed into the neural network:
+\subsection{Structure of Data}
+Frames captured from images are translated into three-dimensional matrices $(H, W, C)$, where $H$=600, $W$=800, and $C$=3, in the context of colored images.  
+Matrices normalized are batched into tensors, as a prerequisite to neural network input:
 \[
 \text{Input Tensor Shape: } (N, 3, 640, 640)
 \]
-where $N$ represents batch size.  
+$N$ is a representation of batch size.  
 Intermediate feature maps within the YOLOv8 model follow convolutional tensor structures $(B, C, H', W')$, dynamically allocated in \ac{GPU} memory using the CUDA runtime.  
-During inference, \ac{GPU} memory bandwidth reaches up to 25.6~GB/s (LPDDR4 @ 1600~MHz) while maintaining real-time throughput \cite{jetsonNanoDatasheet}.  
+Through the inference process, \ac{GPU} memory bandwidth goes up to to 25.6~GB/s (LPDDR4 @ 1600~MHz) while establishing real-time processing.\cite{jetsonNanoDatasheet}.  
 %Figure~\ref{fig:jetson_data_flow} conceptually illustrates the Jetson Nano data pipeline.
 
 %\begin{figure}[H]
@@ -772,12 +772,12 @@ Hence, the total uncompressed throughput is:
 \[
 1.37~\text{MB/frame} \times 30~\text{FPS} = 41.1~\text{MB/s}.
 \]
-When encoded using MJPEG compression (commonly employed in \ac{USB}~2.0 webcams), the average data rate reduces to approximately 4–6~MB/s depending on scene complexity, lighting, and motion \cite{linux_uvc_driver}.  
+If the encoding uses MJPEG compression (common to \ac{USB}~2.0 webcams), the mean rate of data is reduced to approximately 4–6~MB/s. This depends on factors such as the complexity of the scene being captured, lighting conditions, and motion \cite{linux_uvc_driver}.  
 
 \bigskip
 \textbf{2. Preprocessing and Tensor Conversion:}  
 Each incoming frame is resized to 640$\times$640~pixels, normalized, and converted to a 32-bit floating-point tensor.  
-The data size per tensor is:
+Each tensor has a data size of:
 \[
 640 \times 640 \times 3 \times 4~\text{bytes} = 4.9~\text{MB}.
 \]
@@ -810,8 +810,8 @@ With LPDDR4 bandwidth of 25.6~GB/s, the Jetson Nano operates at less than 1\% of
 \noindent The system’s effective throughput margin allows for scaling to higher-resolution inputs (e.g., 1280$\times$720~pixels) or multiple concurrent camera streams when needed, provided adequate power and cooling are maintained.
 
 
-\subsection{Data Quality}
-The data quality on the Jetson Nano depends on three key dimensions — \textit{signal fidelity}, \textit{numerical precision}, and \textit{temporal consistency}.  
+\subsection{Quality of Data}
+There are three factors that affect the quality of data on the Jetson Nano — \textit{signal fidelity}, \textit{numerical precision}, and \textit{temporal consistency}.  
 Each dimension was evaluated under controlled testing conditions to ensure inference reliability.
 
 \bigskip
@@ -823,7 +823,7 @@ The Maxwell \ac{GPU}’s 128~CUDA cores perform all preprocessing in parallel, a
 \bigskip
 \textbf{2. Numerical Precision:}  
 Model inference uses \textbf{FP16 mixed-precision arithmetic} in TensorRT, which maintains near-identical accuracy to FP32 while doubling computational efficiency.  
-Comparative testing on the same YOLOv8-Tiny model showed a mean average precision (mAP@0.5) deviation of less than 0.7\% between FP16 and FP32 on identical test sets.  
+Comparing tests on similar YOLOv8-Tiny models realized a mean average precision (mAP@0.5) deviation of less than 0.7\% between FP16 and FP32 on identical test sets.  
 This demonstrates that quantization-induced errors are minimal and within the tolerance of embedded \ac{AI} applications \cite{edgeAIbook,jetson_nano_doc}.
 
 \bigskip
@@ -835,12 +835,12 @@ No dropped frames were recorded at steady ambient temperatures ($<$65~°C), conf
 \bigskip
 \textbf{4. Data Integrity under Load:}  
 The integrity of tensor data was verified using checksum validation between the preprocessed and \ac{GPU}-resident arrays, showing zero corruption events across 10$^6$ frames.  
-Thermal throttling, which can cause sporadic frame delays, was observed only above 75~°C during fan-off tests.  
+Thermal throttling, often the cause of sporadic frame delaying, is observable above 75~°C when fan-off tests were conducted.  
 Enabling a \ac{PWM} fan (J8 connector) stabilized thermal readings and maintained consistent inference timing.  
 
 \bigskip
-\textbf{5. Visual Output Consistency:}  
-Qualitative analysis showed minimal color banding or compression artifacts, owing to the uncompressed RGB stream.  
+\textbf{5. Consistency of Visual Output:}  
+Qualitative analysis demonstrated minimal color banding or compression artifacts, because of uncompressed RGB streams.  
 Visual variance across 1000 frames of static test scenes was below 1.2~\% in average pixel intensity, confirming high repeatability and sensor–processor synchronization between the LifeCam and Jetson Nano.  
 
 \bigskip
@@ -983,10 +983,10 @@ Linux Host Computer with Ubuntu 18.04 OS (or above)
 \subsection{Hardware Preparation (Force Recovery Mode)}
 \label{subsec:hardware_prep}
 
-Before we can move on to the installation steps, we need to make sure that our reComputer is in the force recovery mode.
+Before proceeding to the installation steps, it is essential that the reComputer is in the force recovery mode.
 
 \begin{enumerate}
-	\item Before you start, you need to disconnect power of the reComputer.
+	\item Before starting,the power of the reComputer needs to be disconnected.
 	\item Use a jumper to connect the \textbf{FC REC} pin and the \textbf{GND} pin.
 	
 	\begin{figure}[H]
@@ -1006,7 +1006,7 @@ Before we can move on to the installation steps, we need to make sure that our r
 		\label{fig:hardware_prep2}
 	\end{figure}
 	
-	\textbf{Attention:} Before wiring, please pay attention to the power connector and data connector, please do not connect the data connector directly to DC power.
+	\textbf{Attention:} Before wiring, special attention is paid to the power connector and data connector, where connections to the data connector directly to DC power could lead to faults.
 	\item Under the command line window of the host computer, enter the command:v\texttt{lsusb}
 	When the returned content has the ID \texttt{0955:7f21 NVidia Corp.} in it, it means that the reComputer is in the force recovery mode and we can proceed to the subsequent operations.
 \end{enumerate}
@@ -1023,7 +1023,7 @@ Before we can move on to the installation steps, we need to make sure that our r
 \subsection{Flashing JetPack OS via NVIDIA SDK Manager}
 \label{subsec:flash_sdk_manager}
 
-Next we will go through the tutorial about installing the system via NVIDIA SDK Manager. The NVIDIA SDK Manager is an all-in-one tool that bundles developer software and provides an end-to-end development environment setup solution for NVIDIA SDKs. Thus, it is recommended for beginners.
+Next, there is a breif overview on the tutorial about installing the system via NVIDIA SDK Manager. The NVIDIA SDK Manager is an all-in-one tool that bundles developer software and provides an end-to-end development environment setup solution for NVIDIA SDKs.
 
 
 \begin{figure}[H] % Use [H] if you want to force it exactly here (requires package float)
@@ -1037,7 +1037,7 @@ Next we will go through the tutorial about installing the system via NVIDIA SDK 
 \subsubsection{Step 1: Install NVIDIA SDK Manager on the Linux Host PC}
 \label{subsubsec:sdk_install}
 
-We need to open the browser on the Linux Host PC and download the NVIDIA SDK Manager from the NVIDIA official website.
+A browser on the Linux Host PC needs to be opened to download the NVIDIA SDK Manager from the NVIDIA official website.
 
 
 \begin{figure} % Requires \usepackage{float}
@@ -1050,7 +1050,7 @@ We need to open the browser on the Linux Host PC and download the NVIDIA SDK Man
 \subsubsection{Step 2: Open NVIDIA SDK Manager and Login}
 \label{subsubsec:sdk_login}
 
-On the Linux host PC screen, we can right click the mouse and open a Terminal. Then we can type the command below to start the SDK Manager:
+On the Linux host PC screen, the mouse can be right clicked to open a Terminal. The following command is typed to start the SDK Manager:
 \texttt{sdkmanager}
 The first time you use NVIDIA SDK Manager, a web page will pop up prompting you to log in with your previously registered NVIDIA account.
 
@@ -1065,7 +1065,7 @@ The first time you use NVIDIA SDK Manager, a web page will pop up prompting you 
 \subsubsection{Step 3: Select the Target Device}
 \label{subsubsec:select_target}
 
-After logging in, you will be taken to the first screen where the first step of installing begins. Since we have already connected the reComputer J1010, there will be a window pop up to let you select the hardware device.
+After logging in, the first screen displays where the first step of installing begins. Since the reComputer J1010 is already connected, there will be a window pop up to let you select the hardware device.
 
 The reComputer J1010 has equipped with NVIDIA Jetson Nano 4GB module, so we can choose the first one.
 
@@ -1113,9 +1113,9 @@ When choosing which components to install, you may want to keep an eye on the ca
 
 After actual testing, there is only about 500MB of eMMC space left after installing the full set of SDK components.
 
-If you want to check how to solve the problem of insufficient capacity, please refer to Troubleshooting.
+For details on the problem of insufficient capacity, please refer to Troubleshooting.
 
-If you want SDK Manager to download all the files to a location other than the default path, go to the Download \& Install Options located at the bottom of the screen, then select the path you wish to use.
+If the SDK Manager is required to download all the files to a location other than the default path, go to the Download \& Install Options located at the bottom of the screen, then select the path to be used.
 
 Select \textbf{Continue} to proceed to the next step.
 
@@ -1133,7 +1133,7 @@ After a while, we will be asked to set up the new system for our reComputer. Sin
 	\label{fig:sdkmanager_manual_setup}
 \end{figure}
 
-After that, we need to enter the name and password of our new Jetson system to our reComputer, it is set by yourself.
+After that, the name and password of our new Jetson system is entered to our reComputer, set by user.
 
 When ready, click \textbf{Flash} to continue.
 
@@ -1149,13 +1149,13 @@ The display shows the progress of the download and installation of the software.
 \subsubsection{(Optional) Step 6: Install the SDK Components}
 \label{subsubsec:install_sdk}
 
-If you checked the installation of the component in the previous step 4, you will need to go through this step.
+If the installation of the component is checked in the previous step 4, the following step needs to be performed.
 
-After a moment, you will be able to see a new window pop up in the NVIDIA SDK Manager, prompting you that you need to connect to your device via IP address. It means the system has been already installed and the components installation will be proceeded.
+After a moment, a new window pops up in the NVIDIA SDK Manager, prompting that the device needs to be connected via IP address. It means the system has been already installed and the components installation will be proceeded.
 
-In this case, we can pull out the jumper and restart the reComputer. Then we need to connect the reComputer to a monitor via \ac{HDMI}, enter the password you entered in step 4, and log in to the main interface.
+In this case, the jumper can be pulled out and the reComputer restarted. Then the reComputer can be connected to a monitor via \ac{HDMI}, enter the password you entered in step 4, and log in to the main interface.
 
-At this point, you need to connect the reComputer to the same \ac{LAN} as the Linux host PC and determine the IP address of the Jetson by using the command:
+At this point, the reComputer needs to be connected to the same \ac{LAN} as the Linux host PC to determine the IP address of the Jetson by using the command:
 
 
 \begin{tcolorbox}[colback=white,colframe=black,coltext= ShellColor, sharp corners, boxrule=0.8pt]
@@ -1169,7 +1169,7 @@ At this point, you need to connect the reComputer to the same \ac{LAN} as the Li
 
 Go back to the Linux host PC and enter the IP address you just obtained. NVIDIA SDK Manager will try to connect to the Jetson device and proceed to complete the installation of the next SDK components.
 
-When you see the following window appear, the installation has been done. You can start using Jetson or continue to follow the steps below to complete some basic configuration of your new system.
+When the following window appears, the installation has been done. The Jetson can be started or the following steps can be performed to complete basic configuration.
 
 \textbf{Attention:} Be sure to unplug the jumper and exit force recovery mode before re-powering into the system.
 
@@ -1177,7 +1177,7 @@ When you see the following window appear, the installation has been done. You ca
 \subsection{Flashing JetPack OS via Command Line}
 \label{subsec:flash_commandline}
 
-Thanks to the freedom to customize the BSP (NVIDIA Linux Driver Package), flashing JetPack OS via command line can be very easy for Linux knowledge-based users.
+To customize the BSP (NVIDIA Linux Driver Package), flashing JetPack OS via command line is relatively simple for Linux knowledge-based users.
 
 \begin{figure}[H] % Requires \usepackage{float}
 	\centering
@@ -1189,7 +1189,7 @@ Thanks to the freedom to customize the BSP (NVIDIA Linux Driver Package), flashi
 \subsubsection{Step 1: Download the Proper NVIDIA Linux Driver Package}
 \label{subsubsec:cmd_download}
 
-On the Linux host PC, we need to open a browser and go to the Jetson Linux Archive. First we should check if the version of Jetson Linux supports our reComputer Jetson module. Once you find the proper version, click to go to the download page. Find and click the \textbf{L4T Driver Package (BSP)} and \textbf{Sample Root Filesystem} to download the driver files. The names of the files are like:
+On the Linux host PC, open a browser and navigate to the Jetson Linux Archive. First, the version of Jetson Linux that supports reComputer Jetson module is checked. Once the proper version is found, it allows navigation to the download page. Find and click the \textbf{L4T Driver Package (BSP)} and \textbf{Sample Root Filesystem} to download the driver files. The names of the files are like:
 
 \smallskip
 \begin{verbatim}
@@ -1205,7 +1205,7 @@ On the Linux host PC, we need to open a browser and go to the Jetson Linux Archi
 	\label{fig:nvidia_l4t_download}
 \end{figure}
 
-As an example, we choose the NVIDIA L4T 32.7.1 version since it is included as part of JetPack 4.6.1 and supports the Jetson Nano module. The names of the files:
+As an example, the NVIDIA L4T 32.7.1 version is chosen since it is included as part of JetPack 4.6.1 and supports the Jetson Nano module. The names of the files:
 
 \begin{verbatim}
 	Tegra_Linux_Sample-Root-Filesystem_R32.7.2_aarch64.tbz2
@@ -1216,7 +1216,7 @@ As an example, we choose the NVIDIA L4T 32.7.1 version since it is included as p
 \subsubsection{Step 2: Unzip Package Files and Assemble the Rootfs via Command Line}
 \label{subsubsec:cmd_rootfs}
 
-On the Linux host PC, we should find a folder and store the package files we downloaded before. Then open a command line window (Terminal) at the folder and use the commands below to unzip the files and assemble the rootfs:
+On the Linux host PC,a folder should be searched which is able to store the package files downloaded earlier. A command line window (Terminal) at the folder is opened and the following commands are used to assemble the rootfs:
 
 
 
@@ -1260,7 +1260,7 @@ The output should be like:
 \subsubsection{Step 3: Flash the System to reComputer}
 \label{subsubsec:cmd_flash}
 
-Since we already forced the reComputer J1010 into recovery mode and the module is Jetson Nano, we can directly flash the system into the reComputer by executing the following command:
+Since the reComputer J1010 is forced into recovery mode and the module is Jetson Nano, the system can be directly flashed into the reComputer by executing the following command:
 
 
 \begin{tcolorbox}[colback=white,colframe=black,coltext= ShellColor, sharp corners, boxrule=0.8pt]
@@ -1279,7 +1279,7 @@ Since we already forced the reComputer J1010 into recovery mode and the module i
 \end{figure}
 Flashing L4T takes about 10 minutes, or more under a slow host computer.
 
-At this moment, we can unplug the jumper and then power up the reComputer again to use it.
+At this moment, the jumper can be unplugged and powered up to the reComputer again.
 
 \bigskip
 \noindent
@@ -1294,28 +1294,28 @@ All steps, figures, and commands in this section are adapted and verified based 
 \subsubsection{Troubleshooting Installation with NVIDIA SDK Manager}
 \label{subsubsec:troubleshoot_sdk}
 
-There are many causes of various installation errors. Below is a checklist of common installation issues, which may help you recover from a broken installation.
+Various reasons cause installation errors. The following is a checklist of installation issues commonly observed:
 
 \begin{enumerate}
 	\item Review the summary table to identify which component failed.
 		\begin{enumerate}
 			\item Expand the group with the "Error" status.
-			\item When you find the failed component, click the details icon to the right of Install Error to be redirected to the Terminal tab, which will display the exact error.
+			\item When the failed component is found, click the details icon to the right of Install Error to be redirected to the Terminal tab, which will display the exact error.
 		\end{enumerate}
 		\begin{figure}[H] 
 			\centering
 			\includegraphics[width=0.9\linewidth]{JetsonNano/troubleshooting1.png}
-			\caption{Example of an installation error in NVIDIA SDK Manager. The error log can be accessed by clicking the red details icon next to the “Install error” message.}
+			\caption{Example of an installation error in NVIDIA SDK Manager. The error log is accessible by clicking the red details icon next to the “Install error” message.}
 			\label{fig:troubleshooting_sdkmanager}
 		\end{figure}
 	
 		
-		\item If the error is related to an environment issue, such as a broken apt repository or missing prerequisite, try to fix it manually, then click the \textbf{Retry Failed Items} button.
+		\item When errors are related to environment issues, like non functional apt repositories or missing prerequisites, the problem requires manual fixes and then the \textbf{Retry Failed Items} button needs to be clicked.
 		
 		\begin{figure}[H] 
 			\centering
 			\includegraphics[width=0.9\linewidth]{JetsonNano/troubleshooting2.png}
-			\caption{SDK Manager installation failed prompt. The user can inspect details in the Terminal tab, resolve the issue, and then click \textbf{Retry Failed Items} to continue installation.}
+			\caption{Failed prompt in the SDK Installation Manager. Users are able to inspect details in the Terminal tab, resolve issues, and then click \textbf{Retry Failed Items} to continue installation.}
 			\label{fig:troubleshooting_retry}
 		\end{figure}
 		
