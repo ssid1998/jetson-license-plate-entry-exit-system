@@ -37,16 +37,18 @@
 }
 
 \section{Introduction}
-Ensuring the reliability of the physical layer is a critical precursor to deploying complex Deep Learning models such as YOLOv8 and Optical Character Recognition (OCR) algorithms. In this project, the hardware architecture consists of an edge computing unit and an optical acquisition unit. Before the software pipeline can be deployed, a systematic verification of these components—specifically the Seeed Studio reComputer J1010 and the Microsoft LifeCam—must be conducted. 
 
-This chapter documents the hardware parts utilized, defines their specific functions within the License Plate Recognition (LPR) architecture, and details the rigorous testing protocols applied to verify their operational status.
+An important prerequisite to deploying Deep Learning Models such as YOLOv8 and Optical Character Recognition (OCR) is making sure the physical layer is reliable. 
+In the context of this project, the hardware architecture comprises of an edge computing unit along with an optical acquisition unit. Before software pipeline deployment, these components should be verified systematically - especially the Seeed Studio reComputer J1010 and the Microsoft LifeCam Camera interface. 
+ 
+This chapter is a documentation of utilized hardware components, defining their specific functions within the License Plate Recognition (LPR) architecture, while providing an understanding around the rigorous testing protocols applied for operational status verification.
 
-\section{Hardware Parts and Specifications}
+\section{Hardware Components and Specification}
 
-The system is built upon two primary hardware pillars: the processing unit (Jetson Nano) and the image acquisition unit (Microsoft LifeCam).
+The system builds upon two hardware pillars: the processing unit (Jetson Nano) and the image acquisition unit (Microsoft LifeCam).
 
 \subsection{Processing Unit: reComputer J1010}
-The core processing unit selected for this project is the \textbf{Seeed Studio reComputer J1010}. This device is an embedded edge AI box built around the NVIDIA Jetson Nano module (4GB B01). It was chosen specifically for its ability to execute parallel CUDA computations required for real-time YOLO inference while maintaining a low power profile.
+The core processing unit used is the \textbf{Seeed Studio reComputer J1010}. The device is an embedded edge AI box consisting the NVIDIA Jetson Nano module (4GB B01). It is selected primarily due to its ability to perform CUDA computations in parallel, which is an important prerequisite for real time YOLO inference. This enables the system to follow a low power profile.  
 
 \begin{table}[h]
 	\centering
@@ -81,9 +83,9 @@ For image acquisition, the \textbf{Microsoft LifeCam} (specifically the LifeCam 
 Each component plays a distinct, interconnected role in the LPR pipeline. The data flow between these hardware parts is critical for system latency and accuracy.
 
 \begin{enumerate}
-	\item \textbf{Image Acquisition (Camera):} The LifeCam captures the raw video feed of the approaching vehicle. Its primary hardware function is to buffer video frames and transmit them via the USB bus to the Jetson Nano's memory controller.
-	\item \textbf{Preprocessing (CPU):} The ARM Cortex-A57 CPU on the Jetson Nano handles the initial resizing and normalization of the image frame (e.g., resizing $1920 \times 1080$ to $640 \times 640$) to match the input tensor size required by the YOLO network.
-	\item \textbf{Inference (GPU):} The 128-core Maxwell GPU executes the forward pass of the YOLO convolutional neural network. This is the most computationally intensive function, requiring CUDA cores to perform matrix multiplications in parallel to detect the license plate bounding box.
+	\item \textbf{Image Acquisition (Camera):} The Microsoft LifeCam is able to captures raw video frames of vehicles as they approach. Primarily, the hardware function is to generate and buffer video frames. Subsequently these frames are transmitted through the USB bus and delivered to the Jetson Nano's memory controller.
+	\item \textbf{Preprocessing (CPU):} The CPU - ARM Cortex A57, built on the Jetson Nano is responsible for initial resizing and subsequently normalizes the image frame (e.g., resizing $1920 \times 1080$ to $640 \times 640$) so that it matches the input tensor size mandated by the YOLO network.
+	\item \textbf{Inference (GPU):} The 128-core Maxwell GPU is able to process and execute the forward pass of the YOLO convolutional neural network. This constitutes one of the most computationally intensive functions as it requires CUDA cores to perform computationally expensive matrix multiplications in parallel to be able to identify license plate bounding boxes.
 \end{enumerate}
 
 \begin{figure}[h]
@@ -98,13 +100,13 @@ Each component plays a distinct, interconnected role in the LPR pipeline. The da
 To ensure the hardware supports the software requirements described in previous chapters, we devised specific test cases. The objective was to validate the operational integrity of the GPU and the Camera interface using Python scripts.
 
 \subsection{Test 1: GPU and Environment Verification}
-Since the YOLOv8 model relies heavily on GPU acceleration to achieve real-time frame rates (FPS), verifying the GPU availability is the first step. We utilized a Python script leveraging the PyTorch library to query the hardware status. This test confirms that the JetPack OS is correctly installed and that the CUDA libraries are accessible to the Python environment.
+Since the YOLOv8 model relies heavily on GPU acceleration to achieve real-time frame rates (FPS), verifying the GPU availability is the first step. A Python script leveraging the PyTorch library to query the hardware status is utilized. The test validates and provides confirmation to the JetPack OS as to whether it is correctly installed and that the CUDA libraries are accessible within the Python environment.
 
 \textbf{Test Procedure:}
 \begin{enumerate}
-	\item Boot the reComputer J1010.
-	\item Open a terminal and navigate to the testing directory.
-	\item Execute the Python verification script.
+	\item Power and boot the reComputer J1010.
+	\item Navigate to the testing directory by opening a terminal window.
+	\item Perform successful verification by executing the Python Verification script.
 \end{enumerate}
 
 The following code, \texttt{test\_gpu.py}, was executed on the system:
@@ -157,11 +159,12 @@ The following code, \texttt{test\_gpu.py}, was executed on the system:
 	verify_system()
 \end{lstlisting}
 
-\textbf{Test Results:} \\
-The output confirmed that the reComputer J1010 was correctly configured. The system identified the "NVIDIA Tegra X1" device and allocated the test tensors successfully. The memory check reported approximately 3.9 GB of accessible memory (shared with the CPU), confirming the hardware is ready for the YOLO training and inference phase.
+\textbf{Results of Test:} \\
+The output confirms correctness in terms of configuration of the reComputer J1010. The system was able to identify the "NVIDIA Tegra X1" device and performed successful test tensor allocation. Memory checks reported roughly 3.9 GB of accessible memory (shared with the CPU), confirming hardware readiness for YOLO training and inference phases.
 
 \subsection{Test 2: Camera Interface and Real-Time Capture}
-The Microsoft LifeCam was tested using the standard Video4Linux2 (V4L2) backend through OpenCV. The objective was to ensure the camera could initialize, capture a frame, and release the resource without error. This test uses the code logic described in the Hardware Description (Chapter 4 of the report).
+
+The camera interface was tested by employing the standard Video4Linux2 (V4L2) backend via OpenCV. The primary goal was to ascertain whether camera was able to initialize correctly, capture frames, and release the resource without generating errors. This test uses code logic described in the Hardware Description (Chapter 4 of the report).
 
 \textbf{Test Logic Flow:}
 Figure \ref{fig:cam_test_flow} illustrates the logic used to verify the camera hardware.
@@ -234,7 +237,8 @@ The test code, adapted from the \texttt{LifeCam.py} example provided in the syst
 \end{lstlisting}
 
 \textbf{Test Results:} \\
-Upon execution, the script successfully initialized the Microsoft LifeCam. The "warm-up" period allowed the camera's auto-focus mechanism to stabilize. The video feed was displayed in an OpenCV window, verifying that the USB bandwidth on the reComputer J1010 is sufficient to handle the video stream without dropping frames. The image clarity was inspected visually to ensure it meets the requirements for the subsequent OCR processing steps.
+During execution runs, the script initializes the Microsoft LifeCam with success. There exists a period known as the "warm-up" that allows the camera's auto-focus mechanism to stabilize. The video feed, displayed in an OpenCV window, verified that the USB bandwidth on the reComputer J1010 was sufficient to display a video stream without frame loss. Subsequently, image clarity was checked visually to ensure it met requirements for OCR processing steps that follow.
 
-\section{Conclusion of Hardware Tests}
-The hardware verification phase confirmed that the reComputer J1010 and Microsoft LifeCam are fully operational and compatible. The GPU is accessible for deep learning tasks via PyTorch, and the camera provides a stable video stream via OpenCV. These tests validate the hardware foundation required for the subsequent chapters on YOLO detection and character recognition.
+\section{Hardware Tests Conclusion}
+
+Hardware verification phase confirmed that the reComputer J1010 and Microsoft LifeCam are interoperable and compatible. The GPU is accessible for deep learning tasks and the camera is able to  provide consistent and visually stable video streams with the use of OpenCV. Such tests validate hardware foundations and serve as an important requirement for the following chapters on YOLO detection and optical character recognition.

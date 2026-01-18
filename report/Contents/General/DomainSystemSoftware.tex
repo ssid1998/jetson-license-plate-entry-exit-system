@@ -5,16 +5,16 @@
 \section{Application Domain Knowledge: Software}
 \label{sec:software_domain}
 
-While the hardware provides the physical substrate for computation, the Software Domain serves as the cognitive logic of the License Plate Recognition (LPR) system. In the context of embedded edge AI, the software architecture is defined not only by the application code but also by the rigid constraints of the underlying Operating System (OS) and the resource management strategies required to prevent system failure.
+While hardware provides the physical substrate for computation tasks, software domains serve as the cognitive logic of the License Plate Recognition (LPR) system. In embedded edge AI, software architectures are not only defined by application code but also by rigid constraints of underlying Operating System (OS).
 
-This section deconstructs the software ecosystem, analyzing the Operating System limitations, the engineered deployment pipelines, the memory management architecture, and the specific application logic used to orchestrate the YOLO object detector and OCR models.
+This section explains the software ecosystem while establishing the Operating System limitations along with defining the engineered deployment pipelines, the memory management architecture, and the specific application logic used by the YOLO object detector and OCR models.
 
 % ---------------------------------------------------------------------------
 % SUBSECTION: DESCRIPTION & OS
 % ---------------------------------------------------------------------------
 \subsection{System Description: The Legacy Ecosystem}
 
-The primary software constraint for this project is the specific version of the NVIDIA JetPack SDK supported by the Jetson Nano. Unlike modern desktop environments, the Jetson Nano is locked to **JetPack 4.6**, which is built upon **Ubuntu 18.04 LTS**. This imposes a "Legacy Software Ecosystem" challenge that dictates every subsequent architectural decision.
+Primarily, a software constraint in the context of this project is the NVIDIA JetPack SDK version supported by the Jetson Nano. As opposed to modern desktop environments, the Jetson Nano is locked to **JetPack 4.6**, which is built upon **Ubuntu 18.04 LTS**. This imposes a "Legacy Software Ecosystem" challenge that dictates every subsequent architectural decision.
 
 \vspace{0.5cm}
 
@@ -120,7 +120,7 @@ To overcome the computational and software limitations of the edge device, we ad
 	\label{fig:deployment_pipeline}
 \end{figure}
 
-The workflow illustrated in Figure \ref{fig:deployment_pipeline} addresses the "Cross-Compilation" challenge. The YOLOv8 model is trained on a powerful workstation. The resulting weights (\texttt{.pt} file) are exported to the \textbf{ONNX} (Open Neural Network Exchange) format. This intermediate representation is transferred to the Jetson Nano, where it is compiled into a \textbf{TensorRT} engine file. This binary format is specifically optimized for the Nano's Maxwell GPU architecture, providing a 40-50\% improvement in inference speed (FPS) compared to running raw PyTorch code.
+The workflow illustrated in Figure \ref{fig:deployment_pipeline} addresses the "Cross-Compilation" challenge. The YOLOv8 model is trained on a powerful workstation. The resulting weights (\texttt{.pt} file) are exported to the \textbf{ONNX} (Open Neural Network Exchange) format. This representation is transferred to the Jetson Nano, compiled into a \textbf{TensorRT} engine file. This binary format is optimized for the Nano's Maxwell GPU architecture, providing a 40-50\% improvement in inference speed (FPS) as oppposed to running raw PyTorch code.
 
 % ---------------------------------------------------------------------------
 % SUBSECTION: MEMORY MANAGEMENT (DATA & QUANTITY)
@@ -183,7 +183,7 @@ To resolve this, we engineered a virtual memory expansion using a \textbf{6GB Sw
 As shown in Figure \ref{fig:memory_architecture}, the Swap partition allows the OS to offload inactive memory pages (like the GUI desktop manager) to the SSD, freeing up the fast physical RAM for the active CUDA tensors required by YOLOv8. While SSD access is slower than RAM, this trade-off is acceptable for background processes and enables the system to run without crashing.
 
 \subsubsection{Data Types and Database Structure}
-The "Data" handled by the software consists of structured entry/exit events. To ensure persistence across power cycles, we implemented a local \textbf{SQLite} database. The schema is normalized to handle the core logic of the parking application:
+Data handled within the software comprises of structured entry/exit events.In order to promote persistence through power cycles, a local \textbf{SQLite} database is implemented. Schema  normalization is performed aiding in database table simplification optimized for CRUD applications while license plated timestamps are being recorded and processed in the parking application:
 
 \begin{itemize}
 	\item \textbf{Table:} \texttt{vehicle\_logs}
@@ -204,7 +204,7 @@ This structure allows the billing logic to perform a simple SQL query: \texttt{S
 % ---------------------------------------------------------------------------
 \subsection{Protocols and Remote Development Strategy}
 
-A significant challenge in the "Configuration" domain was the inability to use standard modern development tools. The VS Code Remote Server recently updated its requirements to demand \texttt{glibc 2.28}, whereas the Jetson's OS is locked to \texttt{glibc 2.27}. This incompatibility rendered standard remote debugging impossible.
+An important milestone was solving challenges with respect to using standard modern development tools, unusable in the "Configuration" domain. The VS Code Remote Server recently updated its requirements to demand \texttt{glibc 2.28}, whereas the Jetson's OS is locked to \texttt{glibc 2.27}. This incompatibility rendered standard remote debugging impossible.
 
 To circumvent this, we architected a protocol switch from the standard VS Code Server agent to a lightweight \textbf{SSH-FS (Secure Shell File System)} implementation.
 

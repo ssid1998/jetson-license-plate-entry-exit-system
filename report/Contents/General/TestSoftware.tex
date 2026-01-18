@@ -29,14 +29,14 @@
 }
 
 \section{Introduction}
-Following the validation of the hardware components, the next critical phase involves verifying the software ecosystem. The project relies on a specific stack of software tools, including the NVIDIA JetPack OS, Python development environment, and key machine learning libraries such as OpenCV, PyTorch, and YOLOv8. This chapter details the procedures used to verify the correct installation and functionality of each software module on the Jetson Nano.
+As a subsequent step to hardware component verification, software ecosystem validation and verification is critical. This project depends on a specific set of software tools and frameworks, along with the NVIDIA JetPack OS, Python development environment, and vital machine learning packages and libraries such as OpenCV, PyTorch, and YOLOv8. The chapter describes verification procedures for correct installation and functionality checks on relevant software modules in the Jetson Nano.
 
 \section{Software Stack Overview}
-The software architecture is built upon the NVIDIA JetPack SDK, which provides the Linux operating system (L4T) and essential acceleration libraries (CUDA, cuDNN, TensorRT). The application layer is developed in Python, leveraging specific libraries for computer vision and data management.
+The software architecture is centered around the NVIDIA JetPack SDK, which provides access to several important libraries (CUDA, cuDNN, TensorRT) and the Linux operating system (L4T). The application layer, developed using Python, is responsible for employing specific libraries that are tailored for computer vision and data management tasks.
 
 \begin{table}[h]
 	\centering
-	\caption{Software Bill of Materials and Verification Targets \cite{Stu24, Ope24, PyT25}}
+	\caption{Verification and Targets - Software Bill of Material\cite{Stu24, Ope24, PyT25}}
 	\label{tab:sw_bom}
 	\begin{tabular}{@{}llp{6cm}@{}}
 		\toprule
@@ -284,4 +284,5 @@ The system uses SQLite to log vehicle entries. This test verifies that the \text
 \end{lstlisting}
 
 \section{Conclusion of Software Tests}
-The software verification process confirmed the stability and interoperability of the development stack. The JetPack OS correctly exposes the GPU to the Python environment, allowing PyTorch and YOLOv8 to perform accelerated inference. OpenCV successfully handles image operations, and SQLite ensures reliable data logging. These tests validate the software readiness for the main application deployment.
+
+The tests validate software readiness for model and application deployment. Here, software verification processes confirm stability and interoperability of the development stack. The JetPack OS successfully enables the GPU  to work in conjunction with the Python environment, allowing PyTorch and YOLOv8 to perform inference that is accelarated. OpenCV simplifies image operation tasks. Reliability of timestamp data and successful logging is ensured by SQLite testing. 

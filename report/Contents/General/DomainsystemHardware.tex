@@ -5,9 +5,9 @@
 \section{Application Domain Knowledge: Hardware}
 \label{sec:hardware_domain}
 
-The realization of a robust License Plate Recognition (LPR) system requires a strict alignment between the application domain knowledge and the hardware implementation. This section details the complete hardware system, analyzing the specific requirements derived from the physical domain (the road environment) and mapping them to the technical specifications of the chosen embedded platform. The selection of hardware is not merely a purchasing decision but an architectural one; the computational limits of the edge device dictate the complexity of the neural networks that can be deployed, while the optical characteristics of the sensor determine the upper bound of recognition accuracy.
+Development of a robust License Plate Recognition (LPR) system mandates a precise alignment between the application domain knowledge and the hardware implementation. This section describes hardware systems, analyzing essential requirements derived from the physical domain (the road environment) and technical specification alignment of requirements with the chosen embedded platform. Hardware choice stresses on optimal architecture; edge device hardware constraints dictate complexity of the neural networks that can be deployed, in addition to the optical characteristics of the sensors that determine recognition accuracy.
 
-The hardware architecture is not merely a collection of components but a hierarchical system designed to satisfy the constraints of real-time image processing. The following subsections dissect the system into its description, physical design, interface connectivity, data properties, and operational constraints.
+Hardware architecture and specification focuses on a hierarchical system designed to meet real-time image processing constraints. Further subsections explore system description, physical design choices, interface connectivity and operability, data properties, and operational limitations.
 
 % ---------------------------------------------------------------------------
 % SUBSECTION: DESCRIPTION & TAXONOMY
@@ -70,9 +70,9 @@ To understand the scope of the hardware implementation, we first classify the sy
 	\label{fig:hardware_taxonomy}
 \end{figure}
 
-As illustrated in Figure \ref{fig:hardware_taxonomy}, the Hardware Domain is centered around the \textbf{NVIDIA Jetson Nano}, specifically the reComputer J1010 module. This choice is dictated by the requirement for parallel computing capabilities to execute Deep Learning models (specifically YOLOv8) at the edge. A standard microcontroller (like an Arduino) lacks the matrix multiplication units (CUDA cores) required for this task, while a full desktop GPU is too power-hungry for roadside deployment.
+Figure \ref{fig:hardware_taxonomy} illustrates that the Hardware Domain is based on the \textbf{NVIDIA Jetson Nano}, specifically the reComputer J1010 module. This decision is governed by  parallel computing capabilities required to execute Deep Learning models (specifically YOLOv8) at the edge. Typical micro-controllers (such as Arduino) lack matrix multiplication units (CUDA cores) essential for such tasks. A complete desktop GPU is impractical due to power consumption for license based recognition tasks, especially on road-side deployments.
 
-The acquisition subsystem (Microsoft LifeCam) acts as the sensory interface, converting photons from the physical environment into digital matrices. The quality of this conversion is the single most critical factor in the system. If the "Acquisition" node fails to capture a clear image due to motion blur or poor focus, no amount of downstream computing power can recover the lost information. Thus, the hardware taxonomy emphasizes the dependency of the software on the physical fidelity of the hardware sensors.
+The acquisition subsystem (Microsoft LifeCam), serving as the sensory interface, generates image frames that functions as the foundational basis for dissecting pixels and transforming pixel information into digital matrices. Conversion quality largely depends on the quality of photo frames and pixel information."Acquisition" node failures in capturing a clear image due to motion blur or poor focus handicaps downstream computing results. Thus, the hardware taxonomy emphasizes the dependency of the software on the physical fidelity of the hardware sensors.
 
 \newpage
 
@@ -81,9 +81,9 @@ The acquisition subsystem (Microsoft LifeCam) acts as the sensory interface, con
 % ---------------------------------------------------------------------------
 \subsection{Hardware Design and Physical Dimensions}
 
-The physical design of the system focuses on the form factor and the integration of the computing module into the deployment environment. We utilize the \textbf{Seeed Studio reComputer J1010} carrier board, which offers a significantly more compact footprint compared to the standard NVIDIA Developer Kit. This reduction in size is crucial for embedding the system into compact enclosures or mounting it directly onto traffic infrastructure.
+Physical system design focuses on the form factor and the integration of the entire system into the deployment environment so that it is functional. The \textbf{Seeed Studio reComputer J1010} carrier board is utilized, offering flexibility compared to the standard NVIDIA Developer Kit. This reduction in size is crucial for embedding the system into compact enclosures or mounting it directly onto traffic infrastructure.
 
-Understanding the spatial layout is essential for thermal management and port accessibility. Figure \ref{fig:j1010_schematic} details the specific layout of the J1010 board. Unlike the standard developer kit, this board aligns all major I/O ports on a single edge, simplifying the enclosure design.
+Thermal management and port accessibility are important considerations for form factor choices. Figure \ref{fig:j1010_schematic} details the specific layout of the J1010 board. In comparison with the standard developer kit, this board aligns all major I/O ports on a single edge, thus aiding in enclosure design.
 
 % --- VISUAL 2: J1010 LAYOUT SCHEMATIC ---
 \begin{figure}[h!]
@@ -133,15 +133,15 @@ Understanding the spatial layout is essential for thermal management and port ac
 		\draw[<->, thick, red] (10.5, 0) -- (10.5, 7) node[midway, fill=white, rotate=90] {Width ($\approx$ 80 mm)};
 		
 	\end{tikzpicture}
-	\caption{Schematic Layout of the reComputer J1010 showing all I/O ports aligned on the front edge.}
+	\caption{Schematic Layout of the reComputer J1010. All I/O ports aligned on the front edge are illustrated.}
 	\label{fig:j1010_schematic}
 \end{figure}
 
-The schematic highlights several key architectural decisions:
+The following schematic explains key architectural choices:
 \begin{itemize}
-	\item \textbf{USB 3.0 Alignment:} All four USB 3.0 ports are positioned centrally. This allows for high-bandwidth peripherals (such as the LifeCam or additional storage) to be connected without cable interference.
-	\item \textbf{Thermal Design:} The placement of the heatsink in the center (coordinates 3,2.5 to 9,5.5 in the schematic relative unit) requires unobstructed vertical airflow. In the context of "Hardware Design," we must ensure that no cabling crosses this thermal zone to prevent overheating.
-	\item \textbf{Power Delivery:} Unlike older models that used barrel jacks, the J1010 uses a USB-C PD input (Far Left). This standardizes the power supply requirement but imposes a strict requirement for a high-quality 5V/3A power brick to prevent brownouts during GPU surges.
+	\item \textbf{USB 3.0 Alignment:} All USB 3.0 ports are positioned centrally. This facilitates for high-bandwidth between peripherals (like the LifeCam or additional storage).
+	\item \textbf{Thermal Design:} The heatsink is placed centrally (coordinates 3,2.5 to 9,5.5 in the schematic relative unit) where unobstructed vertical airflow is an essential requirement. In order to avoid overheating, cables must not cross this thermal zone. 
+	\item \textbf{Power Delivery:} The J1010 uses a USB-C PD input (Far Left) unlike older models with barrel jacks. This allows for the standardization of power supply, although it imposes necessary requirements for high-quality 5V/3A power brick to prevent brownouts during GPU surges.
 \end{itemize}
 
 \newpage
@@ -151,7 +151,7 @@ The schematic highlights several key architectural decisions:
 % ---------------------------------------------------------------------------
 \subsection{Interfaces and System Connectivity}
 
-The third domain of the hardware analysis is "Interfaces." A license plate recognition system is fundamentally a pipeline: photons enter via the camera, data flows to the Jetson, processing occurs, and results output to the display. The integrity of this pipeline depends on the bandwidth and stability of the physical interfaces connecting the components.
+ "Interfaces" forms the third domain of hardware analysis. A license plate recognition system is fundamentally a pipeline: photons enter via the camera, data flows to the Jetson, processing occurs, and results output to the display. The integrity of this pipeline depends on the bandwidth and stability of the physical interfaces connecting the components.
 
 We map the connectivity into two primary flows: the \textbf{Data Flow} (USB/CSI) and the \textbf{Power Flow} (USB-C).
 
@@ -163,9 +163,9 @@ We map the connectivity into two primary flows: the \textbf{Data Flow} (USB/CSI)
 	\label{fig:lifecam_front}
 \end{figure}
 
-The visual sensor, the \textbf{Microsoft LifeCam} (shown in Figure \ref{fig:lifecam_front}), acts as the primary data acquisition node. It connects via the USB 2.0 interface. While the J1010 carrier board supports USB 3.0 speeds (up to 5 Gbps), the camera's output (720p at 30fps) is well within the bandwidth limits of USB 2.0 (480 Mbps). The USB protocol handles the handshake between the host (Jetson) and the device (Camera), negotiating the video format (MJPEG vs YUYV) upon connection.
+The visual sensor, the \textbf{Microsoft LifeCam} (shown in Figure \ref{fig:lifecam_front}), acts as the primary data acquisition node. It connects via the USB 2.0 interface. While the J1010 carrier board supports USB 3.0 speeds (up to 5 Gbps), the camera's output (720p at 30fps) is well within the bandwidth limits of USB 2.0 (480 Mbps). A handshake mechanism between host (Jetson Nano) and the camera interface is facilitated by the USB protocol. The negotiation between video formats MJPEG and YUVV is established here. 
 
-The selection of a USB camera over a MIPI-CSI camera was a deliberate design choice. While CSI cameras offer lower latency by connecting directly to the ISP (Image Signal Processor), USB cameras offer significantly higher flexibility. The 1.5-meter cable length allows the camera to be mounted externally on a vehicle or pole, while the computing unit remains safely enclosed. Furthermore, the Microsoft LifeCam includes a built-in noise-canceling microphone (unused in this visual application) and a glass lens element, which provides superior optical clarity and scratch resistance compared to standard plastic lenses found on cheaper modules.
+USB camera selection as opposed to a MIPI-CSI camera selection was deliberate. CSI cameras promise lower latency through direct connections with the ISP (Image Signal Processor). However,  USB cameras are better in terms of flexibility. A cable length of  1.5-meters allows the camera to mount successfully on an external pole or stand, while the computing unit remains enclosed safely. Furthermore, the Microsoft LifeCam includes a built-in noise-canceling microphone (unused in this visual application) and a glass lens element, which provides superior optical clarity and scratch resistance compared to standard plastic lenses found on cheaper modules.
 
 \subsubsection{Interface Bandwidth Analysis}
 To ensure the system does not bottleneck, we calculate the required data throughput.
@@ -213,7 +213,7 @@ The "Data" keyword in our domain analysis refers to the raw material processed b
 \end{table}
 
 \subsubsection{Analysis of Data Quantity}
-The quantity of data dictates the computational load. The system is configured to capture at High Definition (HD) 720p. This resolution provides a balance: it is high enough to resolve the characters on a license plate from a distance of 3-5 meters, but low enough to allow the YOLOv8-Nano model to perform inference at real-time speeds (>20 FPS). Higher resolutions, such as 1080p, would increase the pixel count by 2.25x, likely causing the frame rate to drop below the threshold required for capturing moving vehicles.
+The quantity of data dictates the computational load. The system is configured to capture at High Definition (HD) 720p. Such a  resolution offers balance: enough to resolve characters on a license plate from a distance of 3-5 meters, although lower in for the YOLOv8-Nano model to perform inference at real-time speeds (>20 FPS). Higher resolutions, such as 1080p, tend to increase pixel counts by 2.25x, which would lead to frame rates dropping below the threshold needed for successfully capturing moving vehicles.
 
 \subsubsection{Analysis of Data Quality}
 Quality refers to the fidelity of the pixels. A critical hardware property identified in Table \ref{tab:hardware_properties} is the **Rolling Shutter**. Unlike a Global Shutter, which exposes all pixels simultaneously, a rolling shutter exposes the image line by line. For fast-moving vehicles (the "Complete System" context), this can induce a skewing artifact known as the "Jello Effect," where the license plate appears slanted or parallelogram-shaped. 
@@ -267,7 +267,7 @@ The final aspect of the Application Domain Knowledge is understanding the limits
 The NVIDIA Jetson Nano possesses 4GB of unified memory. This memory is shared between the CPU and the GPU. This is a "hard constraint." The operating system (Ubuntu with GUI), the graphical interface, and the Python runtime consume approximately 1.5GB to 2GB at idle. This leaves only ~2GB for the YOLOv8 model weights and the input video buffers. If this limit is exceeded, the system forces data into "swap memory" (using the slow SD card as RAM), which destroys real-time performance. Therefore, the hardware directly dictates that we must use optimized model variants (e.g., YOLOv8-Nano or Small) rather than the Large variants.
 
 \subsubsection{Environmental and Physical Constraints}
-As shown in the red branch of Figure \ref{fig:hardware_constraints}, lighting is the most volatile variable. The hardware sensor has a limited dynamic range. In direct sunlight, a white license plate may reflect too much light, causing "whiteout" or overexposure. At night, the sensor may gain-up, introducing ISO noise that confuses the OCR algorithm. The "Calibration" solution involves setting fixed exposure values or utilizing software-based histogram equalization, acknowledging that the hardware alone cannot solve every lighting scenario.
+As shown in the red branch of Figure \ref{fig:hardware_constraints}, lighting is the most volatile variable. The hardware sensor offers limited dynamic range visibility. A white license plate might cause light to reflect in high sunlight levels, leading to "whiteout" or even overexposure. Conversely, the sensor may gain-up during nighttime, introducing ISO noise misleading the OCR algorithm. The solution regarding the problem of "Calibration" then involves setting fixed exposure values or using software-based histogram equalization, in lieu of hardware inabilities to account for such constraints.
 
 \subsubsection{Conclusion}
-In conclusion, the Application Domain Knowledge regarding hardware establishes that while the NVIDIA Jetson Nano and Microsoft LifeCam provide a capable foundation for License Plate Recognition, their successful deployment depends on strict adherence to the interfaces (Power/USB), careful management of data throughput (Resolution/Compression), and an awareness of the physical constraints (Heat/Memory). This hardware analysis serves as the blueprint for the subsequent software development phases.
+In light of the above, the hardware application domain knowledge  establishes that although the NVIDIA Jetson Nano and Microsoft LifeCam offer a capable foundation for License Plate Recognition, a successful deployment is dependent on strongly adhering to hardware interface specifications (Power/USB), efficient management of data throughput (Resolution/Compression), and a thorough understanding of physical constraints (Heat/Memory). This hardware analysis sets the foundation for subsequent software development phases.
