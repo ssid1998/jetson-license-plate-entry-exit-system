@@ -93,10 +93,10 @@
 
 \section{Introduction}
 
-The Microsoft LifeCam Show is a compact \ac{USB}-based web camera that serves as the image acquisition sensor in this project. 
-It captures live video frames and transmits them to the NVIDIA Jetson Nano for real-time license plate detection. 
+The Microsoft LifeCam Show serves as a compact \ac{USB}-based web camera that functions as the primary sensor for image acquisition in this project. 
+It is able to captures video frames and subsequently transfer them to the NVIDIA Jetson Nano enabling license plate detection on a real time basis. 
 The camera provides a maximum digital resolution of 800$\times$600 pixels, integrates a 2~MP \ac{CMOS} sensor, and supports automatic focus adjustment and built-in microphone audio input \cite{microsoft_lifecam_datasheet}. 
-Its compact design and native \ac{USB}~2.0 connectivity make it suitable for embedded vision tasks where plug-and-play functionality and stable frame rates are essential \cite{techradar_lifecam_review}.
+Owing to its compact design and native \ac{USB}~2.0 connectivity, it is suited to embedded vision tasks where plug-and-play functionality and frame rate stability is important \cite{techradar_lifecam_review}.
 
 \begin{figure}[H]
 	\centering
@@ -106,35 +106,34 @@ Its compact design and native \ac{USB}~2.0 connectivity make it suitable for emb
 \end{figure}
 
 \section{General}
-The LifeCam Show operates as a \textbf{\ac{USB} Video Class (UVC)} device, meaning it complies with the open \ac{USB} standard for webcams and does not require proprietary drivers on modern Linux distributions \cite{linux_uvc_driver}. 
-When connected to the Jetson Nano, it appears automatically as \texttt{/dev/video0}, accessible through libraries such as OpenCV or GStreamer.  
-This standardization ensures stable compatibility across Windows, Linux, and JetPack environments \cite{jetson_nano_doc}.
+The LifeCam Show functions as a \textbf{\ac{USB} Video Class (UVC)} device compliant with the open \ac{USB} standard for web cameras and requires no proprietary drivers on modern Linux distributions \cite{linux_uvc_driver}. 
+On connecting with the Jetson Nano interface, it functions automatically as \texttt{/dev/video0}, made accessible via libraries like OpenCV or GStreamer.  
+Stable compatibility is ensured across Windows, Linux, and JetPack environments \cite{jetson_nano_doc}.
 
-The camera employs a fixed-lens optical system with automatic focus control and supports real-time digital zooming up to 5×. 
-For this project, it is mounted on an adjustable stand facing vehicle license plates at a height of approximately 1.5~m, providing clear images within a 0.5–1.5~m range.
+The camera uses a fixed-lens optical system with automatic focus control and is capable of real-time digital zooming up to 5×. 
+In the context of this project, the camera is mounted on a stand that is adjustable, and is positioned such that the height between the camera and vehicle license plates is approximately 1.5~m, thus aiding in clear image resolution within a range of  0.5–1.5~m.
 
-\section{Camera Hardware Configuration}
+\section{Hardware Configuration}
 \label{sec:lifecam_specific}
 
-The specific camera model used in this project is the \textbf{Microsoft LifeCam Show (Model~1139)}, manufactured by Microsoft Corporation.  
-It connects to the Jetson Nano through a \ac{USB}~2.0 Type-A interface, which supplies both \textbf{data transmission} and \textbf{5~V~DC power} (up to 500~mA).  
-During operation, the LifeCam functions as a plug-and-play UVC device, automatically recognized by Linux-based systems such as JetPack~5.x, appearing under \texttt{/dev/video0} \cite{linux_uvc_driver, jetson_nano_doc}.  
+The model specific to this project is the \textbf{Microsoft LifeCam Show (Model~1139)}and connects with the Jetson Nano via a \ac{USB}~2.0 Type-A interface, capable of supplying both \textbf{data transmission} and \textbf{5~V~DC power} (up to 500~mA).  
+While operational, the LifeCam functions as a plug-and-play UVC device, which Linux-based systems such as JetPack~5.x are able to automatically recognize, appearing under \texttt{/dev/video0} \cite{linux_uvc_driver, jetson_nano_doc}.  
 
 \bigskip
-\textbf{Physical Design and Mounting Accessories:}  
-The LifeCam Show features a minimalistic vertical body encased in silver and black housing, optimized for both portable and fixed installations.  
-As shown in Figure~\ref{fig:lifecam_assembly}, the camera is supplied with a versatile set of accessories that allow flexible deployment in different setups.  
-These include the \textbf{attachment disc}, \textbf{laptop clip}, \textbf{desktop stand}, and a \textbf{carrying case}, each serving a specific mounting purpose:
+\textbf{Design Specifics and Mounting Accessory Description:}  
+The LifeCam Show comprises of a vertical body encased in silver and black housing, optimized towards portable and fixed installations.  
+As demonstrated by Figure~\ref{fig:lifecam_assembly}, the camera is equipped with accessories that allow for flexible deployments in varying setups. 
+Included are the \textbf{attachment disc}, \textbf{laptop clip}, \textbf{desktop stand}, and a \textbf{carrying case}. These accessories serve an individual mounting purpose, described as follows:
 
 \begin{itemize}
-	\item \textbf{Attachment Disc:} A magnetic metallic disc that enables the camera to securely attach to flat metallic surfaces, such as monitor frames or tripod mounts.
-	\item \textbf{Laptop Clip:} A detachable clip mechanism that allows the camera to be mounted on the top edge of a laptop or display, providing a stable position for image capture.
-	\item \textbf{Desktop Stand:} A height-adjustable stand designed for tabletop or field deployment, used in this project to position the camera at approximately 1.5~m from ground level and tilted at an angle of around 25° toward approaching vehicles.
-	\item \textbf{Carrying Case:} A protective enclosure for safe transport and storage, preventing dust accumulation or physical damage to the lens.
+	\item \textbf{Attachment Disc:} A metal based magnetic disc that allows the camera to attach with flat metallic surfaces, similar to monitor frames or tripod mounting stands.
+	\item \textbf{Laptop Clip:} A detachable clip mechanism allowing the camera to be mounted, providing stable positioning for image captures.
+	\item \textbf{Desktop Stand:} A height-adjustable stand designed for tabletop or field deployment, to position the camera at a height of approximately 1.5~m and allow it to be tilted at an angle of 25° in order to read license plates.
+	\item \textbf{Carrying Case:} Provides an enclosure for safe transport and storage preventing dust accumulation or lens damage.
 \end{itemize}
 
-The modular design of these attachments makes the LifeCam Show suitable for both laboratory and field applications.  
-In this project, the \textbf{desktop stand} configuration was selected to maintain a fixed, vibration-free viewing position while ensuring consistent alignment of license plates under various lighting conditions.
+The modularity of design makes the LifeCam Show suited for laboratory and field application tasks.  
+In the context of this project, the \textbf{desktop stand} configuration was selected to maintain a fixed, vibration-free viewing position while ensuring consistent alignment of license plates under various lighting conditions.
 
 \begin{figure}[H]
 	\centering
@@ -144,12 +143,12 @@ In this project, the \textbf{desktop stand} configuration was selected to mainta
 \end{figure}
 
 \bigskip
-Figure~\ref{fig:lifecam_label} shows the back label of the camera, confirming model information and the 5~V~500~mA power requirement.  
-Together, these figures provide an overview of both the \textbf{hardware configuration} and the \textbf{mounting system} used for this project’s image acquisition setup.
+Figure~\ref{fig:lifecam_label} illustrates the camera's back label, providing model information details and the 5~V~500~mA power requirement detail.  
+In combination, the figures give a summary of both the \textbf{hardware configuration} and the \textbf{mounting system} describing the project’s image acquisition setup.
 
-\section{Specification}
-The camera specifications are derived from the official Microsoft datasheet and verified through empirical testing on Ubuntu~20.04 under JetPack~5.x.  
-Key parameters are summarized in Table~\ref{tab:lifecam_specs}.
+\section{Camera Specification}
+Camera specifications are derived from Microsoft's official datasheet and are verified using empirical testing on Ubuntu~20.04 under JetPack~5.x.  
+Key parameters are described in Table~\ref{tab:lifecam_specs}.
 
 \begin{table}[H]
 	\centering
@@ -176,7 +175,7 @@ Key parameters are summarized in Table~\ref{tab:lifecam_specs}.
 
 \noindent\textbf{Circuit Diagram:}  
 Since the LifeCam Show is a self-contained UVC peripheral, no additional circuitry is required. 
-The only connection is the \ac{USB} cable from the camera to the Jetson Nano’s J4 port, providing both power and data.
+There is only one connection via a \ac{USB} cable from the camera to the Jetson Nano’s J4 port, facilitating power and data transfer.
 
 \section{Library}
 \subsection{Description}
@@ -225,9 +224,10 @@ Both data streams comply with the \ac{USB}~Video~Class (UVC~1.1) standard \cite{
 
 \subsection{Data Structure}
 Captured video frames are stored in sequential frame buffers in system memory using the \texttt{v4l2} (Video4Linux2) driver layer.  
-Each frame is a 3D matrix of dimensions $(H, W, C)$ = (600, 800, 3) and datatype \texttt{uint8}.  
-Timestamps are attached to each frame for synchronization with inference pipelines, ensuring chronological integrity.  
-Within the Jetson Nano pipeline, these buffers are passed directly to the GPU memory for preprocessing via \textbf{Zero-Copy DMA} transfer, minimizing CPU overhead \cite{jetson_nano_doc}.  
+Each frame corresponds to a three dimensional matrix of dimensions $(H, W, C)$ = (600, 800, 3) and corresponding datatype \texttt{uint8}.  
+
+In order to synchronize with inference pipelines, timestamps are attached. This ensures chronological integrity. 
+As a part of Jetson Nano pipeline, such buffers are passed directly to GPU memory in order to be preprocessed via \textbf{Zero-Copy DMA} transfer, leading to a minimization of CPU overhead \cite{jetson_nano_doc}.  
 
 \subsection{Data Quantity}
 At 30~frames~per~second and VGA resolution, the raw uncompressed video throughput is approximately:
@@ -239,16 +239,16 @@ An hour of recording requires roughly 1.5–2.0~GB of storage in MJPEG format.
 This data rate is well within the \ac{USB}~2.0 specification’s maximum of 480~Mbps, allowing for stable streaming without frame drops \cite{linux_uvc_driver}.  
 
 \subsection{Data Quality}
-The LifeCam Show delivers consistent image sharpness under standard indoor lighting (200–800~lux).  
-Its \ac{CMOS} sensor provides moderate low-light sensitivity but exhibits visible noise at illumination levels below 100~lux.  
-Color reproduction fidelity is high (average $\Delta E$ <~6.0) under daylight-balanced LED lighting \cite{techradar_lifecam_review}.  
-The autofocus system maintains focus for object distances between 0.5–1.5~m, suitable for fixed-mount license plate imaging.  
-However, as a consumer-grade webcam, it lacks manual gain control, white balance locking, and lens calibration data, which can introduce variability under dynamic lighting \cite{microsoft_lifecam_datasheet}.
+The LifeCam Show is able to consistently deliver sharp images under standard indoor lighting conditions (200–800~lux).  
+Its \ac{CMOS} sensor is capable of delivering medium low-light sensitivity, although exhibiting visible noise under 100~lux illumination levels.  
+Color reproduction fidelity is high (average $\Delta E$ <~6.0) under balanced daylight LED lighting \cite{techradar_lifecam_rev	iew}.  
+The auto-focus system stabilizes focus for object distances between 0.5–1.5~m, optimal for fixed-mount license plate imaging.
+The camera is limited in terms of manual gain control, white balance locking, and lens calibration data, causing slight variability under dynamic lighting \cite{microsoft_lifecam_datasheet}.
 
 \subsection{Data Types and Formats Summary}
 \begin{table}[H]
 	\centering
-	\caption{Summary of video and audio data types generated by Microsoft LifeCam Show \cite{microsoft_lifecam_datasheet,opencv_doc_2024}}
+	\caption{Summary - Video and Audio Data Type Generation \cite{microsoft_lifecam_datasheet,opencv_doc_2024}}
 	\label{tab:lifecam_data_types}
 	\begin{tabular}{|p{3.5cm}|p{4.5cm}|p{5cm}|}
 		\hline
@@ -264,35 +264,39 @@ However, as a consumer-grade webcam, it lacks manual gain control, white balance
 \section{Constraints}
 \label{sec:lifecam_constraints}
 
-Several operational and environmental limitations apply to the Microsoft LifeCam Show during embedded AI deployment:
+There are multiple operational and environmental limitations with respect to embedded AI deployment using the Microsoft LifeCam described as under:
 
 \begin{itemize}
-	\item \textbf{Power Supply:} Operates on 5~V~DC at 500~mA from a \ac{USB}~2.0 port.  
-	Exceeding a total cable length of 2~m may cause undervoltage and intermittent frame drops.
+	\item \textbf{Power Supply:} 5~V~DC at 500~mA from a \ac{USB}~2.0 port.  
 	
-	\item \textbf{Bandwidth:} Limited by \ac{USB}~2.0 interface (480~Mbps shared).  
-	Concurrent use of high-speed devices (e.g., SSD or CSI camera) may reduce throughput.
+	A longer cable than 2m might lead to under-voltage and unstable frame captures. 
 	
-	\item \textbf{Lighting Dependency:}  
-	Performance degrades under low-light conditions (<100~lux) and overexposure (>2000~lux).  
-	For optimal license plate clarity, consistent artificial lighting (4000–5000~K) is recommended.
+	\item \textbf{Bandwidth:} A \ac{USB}~2.0 interface (480~Mbps shared) limitations.  
+	High-speed devices (e.g., SSD or CSI camera) concurrently used may result in reduced throughput.
+	
+	\item \textbf{Dependency on Lighting Conditions:}  
+	Detection performance tends to degrade within low-lighting environments (<100~lux), also influenced by overexposure (>2000~lux).  
+	
+	As a recommendation, the use of additional lighting is suggested. This promotes optimal license plate recognition given consistent lighting conditions.
 	
 	\item \textbf{Temperature Range:}  
-	Stable operation between 0–40~°C ambient.  
-	Excessive temperature (>45~°C) can introduce electronic noise and focus drift.
+	Ambient temperatures ranging from 0–40~°C promote stability in operation.  
+	Temperatures exceeding 45~°C may result in the introduction of electronic noise and focus drift.
 	
 	\item \textbf{Mounting Stability:}  
-	The camera must be securely fixed to prevent motion blur during frame capture.  
-	Vibrations above 10~Hz can misalign focus, affecting license plate detection accuracy.
 	
-	\item \textbf{System Integration Constraints:}  
-	When connected via \ac{USB} hub, ensure sufficient power delivery; prefer direct Jetson Nano port (J4).
+	In order to prevent blurred image frames during capture, the camera is to be fixed securely and firmly. 
+	
+	Vibrations exceeding 10~Hz may lead to misaligned focus leading to license plate detection inaccuracies.
+	
+	\item \textbf{Constraints with System Integration:}  
+	Connections via \ac{USB} hub should ensure ample power delivery. It is preferable to directy use the Jetson Nano port (J4).
 \end{itemize}
 
-Despite these constraints, the LifeCam Show provides consistent video quality for real-time embedded vision tasks, making it a reliable low-cost alternative to industrial cameras for AI inference \cite{edgeAIbook,techradar_lifecam_review}.
+Although constraints exist, the LifeCam Show is able to produce a consistent video quality feed for real-time embedded vision tasks, positioning it as a good alternative to complex and expensive industrial cameras for AI inference \cite{edgeAIbook,techradar_lifecam_review}.
 
 \section{Example}
-In this section, a simple Python example demonstrates live video streaming and testing of the camera feed.
+The following section describes a Python example demonstrating live video streaming and camera feed tests.
 
 %\subsection{Code}
 %\begin{lstlisting}[language=Python, caption={Live video capture using Microsoft LifeCam Show on Jetson Nano}]
