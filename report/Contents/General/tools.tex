@@ -2,7 +2,7 @@
 %
 % $Autor: Siddhanth Sharma $
 % $Datum: 2021-05-14 $
-% $Dateiname: 
+% $Dateiname:
 % $Version: 4620 $
 %
 % !TeX spellcheck = GB
@@ -12,55 +12,83 @@
 %%%
 
 \chapter{\textcolor{red}{Domain Knowledge -- Tools}}
-
 \index{Domain Knowledge -- Tools}
+
+\providecommand{\TBD}[1]{\textcolor{red}{#1}}
+
+\noindent
+This chapter documents the \textbf{project-relevant} tools and the system environment used to build and run the license plate detection system.
+The emphasis is on \textbf{usage, configuration, and validation} required for reproducible execution (not on tutorials).
 
 
 \section{Development Environment -- Python}
 
 \subsection{Version}
 \noindent
-The project was developed using the Python programming language as the primary software tool on the NVIDIA Jetson Nano B01 (4~GB).  
-Python is included by default in the JetPack SDK provided by NVIDIA and was therefore used as the system Python interpreter. The exact Python version was verified directly on the Jetson Nano during the initial setup phase using the command \texttt{python3 --version}. This ensured compatibility with the JetPack software stack and the installed computer vision and machine learning libraries.
+Python is the primary runtime used to execute the end-to-end pipeline (camera capture, image preprocessing, model inference, OCR, and logging).
+The interpreter version was verified directly on the target device using \SHELL{python3 --version}.
+
+\vspace{1mm}
+\noindent
+\textbf{Recorded value:} Python 3.6.9 (\FILE{/usr/bin/python3}).
 
 \subsection{Description}
 \noindent
-Python forms the core development environment for the license plate detection system. It is used throughout the entire processing pipeline, including camera interfacing, image acquisition, preprocessing, model inference, and result handling. The choice of Python was motivated by its extensive ecosystem for computer vision and machine learning, as well as its seamless integration with the NVIDIA Jetson platform.
+Python is used for the complete processing chain:
+\begin{itemize}
+	\item \textbf{Camera access and image acquisition} (USB camera frames via OpenCV).
+	\item \textbf{Image preprocessing} (cropping, resizing, binarization/contrast adjustments for OCR).
+	\item \textbf{Detection inference} (license plate detection model on the Jetson).
+	\item \textbf{OCR integration} (text extraction from the cropped plate region).
+	\item \textbf{Local logging} (timestamps and detection results persisted locally).
+\end{itemize}
 
 \vspace{1mm}
 \noindent
-The following Python libraries are central to the implementation:
+The following Python modules are relevant for this project:
 \begin{itemize}
-	\item \textbf{OpenCV (cv2)} for camera access, image preprocessing, and visualization tasks.
-	\item \textbf{Ultralytics YOLOv8} for real-time license plate detection using a deep learning--based object detection model.
-	\item \textbf{NumPy} for efficient numerical computations and array operations.
-	\item \textbf{SQLite (sqlite3)} for lightweight, file-based data storage and logging of detection results.
+	\item \textbf{OpenCV (cv2):} camera access, preprocessing, visualization.
+	\item \textbf{NumPy:} array operations and numerical processing.
+	\item \textbf{SQLite (sqlite3):} lightweight, file-based storage for entries/exits and timestamps.
+	\item \textbf{Detection runtime:} \TBD{confirm final runtime used on Jetson (YOLOv5 PyTorch / Ultralytics YOLOv8 / TensorRT engine).}
+	\item \textbf{OCR runtime:} EasyOCR (\texttt{easyocr==1.7.1}) \TBD{confirm whether OCR is forced to CPU.}
 \end{itemize}
-
-\noindent
-Together, these libraries provide a compact and efficient Python-based development environment suitable for real-time inference on an embedded edge device.
 
 \subsection{Installation}
 \noindent
-Python was available on the Jetson Nano as part of the JetPack SDK installation and did not require a separate manual installation.  
-All required Python packages were installed using the \texttt{pip} package manager associated with the system Python interpreter.
+Python is provided by the Jetson OS image (JetPack/L4T) and does not require separate installation.
+Project dependencies were installed via \SHELL{pip}/\SHELL{pip3}, ideally from a pinned requirements file.
 
 \vspace{1mm}
 \noindent
-The installation process was performed directly on the Jetson Nano to ensure binary compatibility with the ARM64 architecture. Required dependencies for computer vision, numerical processing, and model inference were installed sequentially using \texttt{pip}. This approach ensures a reproducible and lightweight software environment tailored to the target hardware.
+\textbf{Reproducibility items to document:}
+\begin{itemize}
+	\item \textbf{Requirements file:} \TBD{final requirements file used on Jetson (path + name).}
+	\item \textbf{Installation command:} \TBD{e.g., \SHELL{pip3 install -r requirements.txt}.}
+	\item \textbf{Virtual environment:} \TBD{confirm if a venv is used; if yes, provide its location and activation command.}
+\end{itemize}
 
 \subsection{Configuration}
 \noindent
-No additional Python-specific configuration was required beyond the default JetPack setup.  
-The CUDA, cuDNN, and TensorRT components provided by JetPack were automatically detected by the installed Python libraries where applicable. All Python scripts were executed using the system environment without modifying default library paths or environment variables.
+Only project-relevant configuration is required:
+\begin{itemize}
+	\item \textbf{Interpreter selection:} system Python vs.\ virtual environment activation (\TBD{document the exact activation command}).
+	\item \textbf{Hardware acceleration visibility:} CUDA is available from Python (\PYTHON{torch.cuda.is\_available()} $\rightarrow$ \texttt{True}).
+	\item \textbf{Memory-aware runtime setup:} due to the Jetson Nano's 4\,GB unified memory, OCR may be configured to run on CPU (\TBD{confirm \PYTHON{gpu=False}}) to keep GPU memory available for detection.
+\end{itemize}
 
 \subsection{First Steps}
 \noindent
-After completing the installation, the Python environment was validated through a series of initial verification steps. These steps included importing core libraries such as OpenCV and NumPy and executing short test scripts to confirm correct installation and runtime behavior. Successful execution without import or runtime errors indicated that the Python environment was correctly configured and ready for further development.
-
+Before running the full pipeline, the environment was validated with a short checklist:
+\begin{itemize}
+	\item \textbf{Interpreter check:} Python starts and reports the expected version.
+	\item \textbf{Imports:} \PYTHON{cv2} and \PYTHON{numpy} import without errors; \TBD{detection/OCR imports} also succeed.
+	\item \textbf{Camera access:} a camera device can be opened from Python and returns a frame.
+	\item \textbf{Model availability:} the final model/engine file exists at the expected path and can be loaded.
+\end{itemize}
 
 \noindent
-Figure~\ref{fig:python_verification_flow} summarizes the verification workflow used to confirm that the Python environment and the required core libraries are operational on the Jetson Nano before executing the main project pipeline.
+Figure~\ref{fig:python_verification_flow} summarizes the Python verification workflow used before executing the main pipeline.
 
 \begin{figure}[h]
 	\centering
@@ -69,30 +97,31 @@ Figure~\ref{fig:python_verification_flow} summarizes the verification workflow u
 		box/.style={draw, rounded corners, align=center, inner sep=6pt, text width=0.78\linewidth},
 		arrow/.style={-Latex, thick}
 		]
-		\node[box] (jetson) {Jetson Nano (JetPack installed)};
-		\node[box, below=of jetson] (python) {System Python Interpreter (\texttt{python3})};
-		\node[box, below=of python] (deps) {Installed Dependencies via \texttt{pip}\\(e.g., OpenCV, NumPy, Ultralytics YOLOv8, SQLite)};
-		\node[box, below=of deps] (hello) {Python Verification Script\\(\texttt{opencv\_version\_check.py})};
-		\node[box, below=of hello] (ok) {Successful Execution\\(library import without errors, version printed)};
-		
+		\node[box] (jetson) {Jetson Nano system (JetPack/L4T installed)};
+		\node[box, below=of jetson] (python) {Python Interpreter (\texttt{python3})};
+		\node[box, below=of python] (deps) {Dependencies installed (\texttt{pip}/\texttt{pip3})\\(OpenCV, NumPy, detection/OCR runtime, SQLite)};
+		\node[box, below=of deps] (hello) {Verification script\\(\texttt{python\_project\_sanity\_check.py})};
+		\node[box, below=of hello] (ok) {Success\\(imports OK, camera frame read OK)};
+
 		\draw[arrow] (jetson) -- (python);
 		\draw[arrow] (python) -- (deps);
 		\draw[arrow] (deps) -- (hello);
 		\draw[arrow] (hello) -- (ok);
 	\end{tikzpicture}
-	\caption{Python environment verification flow on the Jetson Nano.}
+	\caption{Python environment verification flow on the Jetson device.}
 	\label{fig:python_verification_flow}
 \end{figure}
 
 \subsection{Program ``Hello World''}
 \noindent
-As an initial functionality test of the Python development environment, a minimal verification program was executed.  
-The program imports the OpenCV library and prints the installed OpenCV version to the console. Successful execution confirms that Python and the core computer vision library required for the project are correctly installed and operational on the Jetson Nano.
+This is not a generic \PYTHON{print("Hello World")} example.
+Instead, a minimal project-relevant script validates that the Python environment can (i) import the required libraries and (ii) access the camera to read a frame.
+Optionally, it can be extended to load the final detection runtime (model/engine) once the final deployment choice is fixed.
 
 \lstinputlisting[
 language=Python,
-caption={Python ``Hello World'' program for verifying OpenCV installation},
-label={lst:python_hello_world_opencv},
+caption={Project-relevant Python ``Hello World'' (imports + camera frame read)},
+label={lst:python_hello_world_project},
 basicstyle=\ttfamily\small,
 keywordstyle=\color{blue},
 commentstyle=\color{gray},
@@ -103,147 +132,93 @@ numbers=left,
 numberstyle=\tiny\color{gray},
 frame=single,
 rulecolor=\color{black!30}
-]{../../Code/OpenCV/opencv_version_check.py}
+]{../../Code/SystemTools/python_project_sanity_check.py}
 
-
-
-% -------------------------------------------------------------------------
-% SECTION 2: Development Environment -- Hardware / OS / System Tools
-% -------------------------------------------------------------------------
-% NOTE:
-% This section belongs under:
-% \part{Domain Knowledge -- Tools}
-% and comes after Section 1 (Python).
-% -------------------------------------------------------------------------
 
 \section{Development Environment -- Hardware / OS / System Tools}
 
 \subsection{Version}
 \noindent
-The license plate detection system was deployed on an NVIDIA Jetson Nano B01 (4~GB) as the target edge device.  
-The operating system and NVIDIA software stack were installed via the JetPack SDK (Linux for Tegra, L4T).  
-All relevant system versions were verified directly on the Jetson Nano to ensure reproducibility and compatibility with GPU-accelerated inference.
+The project is deployed on the \textbf{Seeed Studio reComputer J1010} platform, integrating an \textbf{NVIDIA Jetson Nano (4~GB, B01 revision)} module on the \textbf{J101 carrier board}.
+The OS and NVIDIA acceleration stack are provided via JetPack/L4T.
 
 \vspace{1mm}
 \noindent
-The following version information should be documented as part of the final system fingerprint:
+\textbf{System fingerprint (recorded on-device):}
 \begin{itemize}
-	\item \textbf{Hardware:} Jetson Nano B01 (4~GB).
-	\item \textbf{JetPack SDK:} JetPack version installed on the device (verified via \SHELL{dpkg} or JetPack release information).
-	\item \textbf{OS / L4T:} Ubuntu-based L4T release (verified using \SHELL{/etc/nv\_tegra\_release} and \SHELL{lsb\_release -a}).
-	\item \textbf{CUDA Toolkit:} CUDA version (verified using \SHELL{nvcc --version}).
-	\item \textbf{TensorRT:} TensorRT version provided by JetPack (verified using \SHELL{dpkg -l | grep tensorrt}).
+	\item \textbf{JetPack/L4T:} \texttt{R32.7.1} (JetPack meta package: \texttt{nvidia-jetpack 4.6.2-b5}).
+	\item \textbf{Ubuntu:} Ubuntu 18.04.6 LTS (bionic).
+	\item \textbf{Kernel:} \texttt{Linux 4.9.253-tegra} (aarch64).
+	\item \textbf{CUDA:} \texttt{CUDA 10.2} (\texttt{nvcc} release 10.2, V10.2.300).
+	\item \textbf{TensorRT:} \texttt{TensorRT 8.2.1.8} (\texttt{tensorrt==8.2.1.8}).
 \end{itemize}
 
 \subsection{Description}
 \noindent
-This project uses the Jetson Nano as an embedded GPU-enabled edge platform to execute real-time computer vision workloads locally.  
-The system tools and operating environment support the following core requirements:
+The Jetson system is used as an \textbf{edge AI device} to run the full pipeline locally: camera capture, license plate detection, OCR, and decision/logging.
+Operating locally reduces latency and avoids dependence on external servers for the core recognition/billing decision.
+
+\vspace{1mm}
+\noindent
+Project-relevant system aspects include:
 \begin{itemize}
-	\item \textbf{Stable OS base:} Ubuntu (L4T) as provided through JetPack for hardware-specific drivers and CUDA support.
-	\item \textbf{Edge inference capability:} NVIDIA GPU acceleration through CUDA and TensorRT for efficient on-device inference.
-	\item \textbf{Developer workflow:} development and deployment via terminal and remote access (e.g., SSH), enabling iterative testing and reproducible execution.
+	\item \textbf{Access mode:} local GUI (monitor/keyboard) or headless operation via SSH.
+	\item \textbf{Remote development:} \TBD{confirm whether VS Code Remote is blocked due to \texttt{glibc}; if yes, document SSHFS/SFTP mounting as workaround.}
+	\item \textbf{Resource constraints:} Jetson Nano has 4\,GB unified memory, requiring memory-aware configuration for stable inference.
 \end{itemize}
-
-\noindent
-In the project workflow, system-level tools are used primarily to (i) install and maintain the JetPack stack, (ii) validate hardware availability (CPU/GPU/memory), (iii) monitor runtime status, and (iv) execute verification and deployment scripts.
-
-
-\noindent
-Figure~\ref{fig:system_access_workflow} illustrates the typical access and verification workflow for the Jetson Nano system environment.
-
-\begin{figure}[h]
-	\centering
-	\begin{tikzpicture}[
-		node distance=10mm,
-		box/.style={draw, rounded corners, align=center, inner sep=6pt, text width=0.78\linewidth},
-		arrow/.style={-Latex, thick}
-		]
-		\node[box] (flash) {Flash JetPack/L4T Image to microSD Card};
-		\node[box, below=of flash] (boot) {First Boot Initialization\\(user setup, network, updates)};
-		\node[box, below=of boot] (access) {Device Access\\GUI (monitor/keyboard) \quad or \quad Headless (SSH)};
-		\node[box, below=of access] (verify) {System Verification\\OS/L4T, CUDA, TensorRT, \texttt{tegrastats}};
-		\node[box, below=of verify] (dev) {Run Project Pipeline\\(Python scripts for camera + inference + logging)};
-		
-		\draw[arrow] (flash) -- (boot);
-		\draw[arrow] (boot) -- (access);
-		\draw[arrow] (access) -- (verify);
-		\draw[arrow] (verify) -- (dev);
-	\end{tikzpicture}
-	\caption{System setup and access workflow for the Jetson Nano development environment.}
-	\label{fig:system_access_workflow}
-\end{figure}
 
 \subsection{Installation}
 \noindent
-The base system installation was performed by flashing a JetPack-compatible image onto a microSD card and booting the Jetson Nano from this card.  
-JetPack provides the operating system (L4T), device drivers, and the NVIDIA acceleration libraries required for embedded computer vision workloads.
+The base system installation consists of installing a JetPack/L4T image to the boot medium and completing first-boot initialization.
+For this project, the root filesystem is on internal flash storage (\texttt{/dev/mmcblk0p1}, 14\,GB partition), and an external SSD is mounted at \FILE{/media/myssd} for project storage.
 
 \vspace{1mm}
 \noindent
-A reproducible installation procedure typically includes:
+A concise installation procedure is:
 \begin{itemize}
-	\item \textbf{SD card flashing:} write the JetPack/L4T image to a microSD card using a flashing tool (e.g., balenaEtcher).
-	\item \textbf{First boot initialization:} initial user creation, locale/time settings, and network setup (Ethernet/Wi-Fi).
-	\item \textbf{System update:} update package lists and apply security updates via \SHELL{apt}.
-	\item \textbf{Toolchain verification:} confirm that CUDA/TensorRT components provided by JetPack are present and accessible.
+	\item Flash JetPack/L4T image to the boot medium.
+	\item First boot (user creation, locale/time, network).
+	\item Update system packages and verify baseline readiness (camera, CUDA/TensorRT where applicable).
 \end{itemize}
-
-\noindent
-This installation approach ensures that the Jetson Nano uses NVIDIA-supported drivers and libraries, which is essential for stable GPU-accelerated inference and camera interfacing.
 
 \subsection{Configuration}
 \noindent
-After installation, the system was configured to support reliable development and execution of the project pipeline.  
-Only configurations relevant to the operation of an embedded inference device were applied.
-
-\vspace{1mm}
-\noindent
-Typical configuration steps include:
+System configuration steps relevant to this project:
 \begin{itemize}
-	\item \textbf{Remote access (recommended):} enable and verify SSH access for development from a separate workstation.
-	\item \textbf{System resources:} verify available storage and memory; configure swap only if required for model conversion or dependency compilation.
-	\item \textbf{Performance monitoring:} ensure system monitoring tools (e.g., \SHELL{tegrastats}) are available for runtime observation.
-	\item \textbf{Camera support:} verify that the selected camera interface (USB or CSI) is recognized by the OS before running the detection pipeline.
+	\item \textbf{SSH enablement:} verify headless access for deployment/debugging.
+	\item \textbf{Performance monitoring:} confirm \SHELL{tegrastats} availability for runtime observation.
+	\item \textbf{Power/performance mode:} \TBD{confirm whether \SHELL{jetson\_clocks} is used for stable inference timing.}
+	\item \textbf{Storage:} external SSD mounted at \FILE{/media/myssd} (\texttt{/dev/sda2}, 1.8\,TB).
+	\item \textbf{Swap:} swapfile at \FILE{/media/myssd/swapfile} (8\,GB) and zram swap devices (\texttt{/dev/zram0..3}).
+	\item \textbf{Camera:} verify camera detection and stable capture settings (resolution/FPS used in the demo).
 \end{itemize}
-
-\noindent
-All configuration changes should be kept minimal and documented, since the Jetson Nano is a resource-constrained embedded platform and relies on a stable baseline JetPack installation.
 
 \subsection{First Steps (GUI / UI)}
 \noindent
-After installation and configuration, the first interaction with the device consists of validating the operating environment and confirming basic device functionality.  
-Depending on the chosen workflow, the Jetson Nano can be used either with a directly connected monitor/keyboard (GUI) or remotely (headless) via SSH.
-
-\vspace{1mm}
-\noindent
-Recommended first steps for verification are:
+Initial system validation is performed either via GUI terminal or SSH:
 \begin{itemize}
-	\item \textbf{Login and terminal access:} open a shell either locally (GUI terminal) or remotely (SSH).
-	\item \textbf{System identity check:} confirm OS and L4T release information.
-	\item \textbf{Acceleration stack check:} verify CUDA and TensorRT availability.
-	\item \textbf{Runtime monitoring:} start \SHELL{tegrastats} to confirm real-time reporting of CPU/GPU load, memory usage, and temperature.
-	\item \textbf{Camera presence (if applicable):} confirm that the camera device is detected by the OS before executing project scripts.
+	\item Verify OS/L4T identity and network connectivity.
+	\item Verify camera detection (presence of \FILE{/dev/video*} and successful test capture).
+	\item Verify monitoring tools (\SHELL{tegrastats}) and basic resource availability (RAM/swap/disk).
 \end{itemize}
 
 \subsection{Program ``Hello World'' / Bash Verification}
 \noindent
-To validate that the Jetson Nano system environment is operational, a minimal OS-level verification script was executed.  
-The script prints core system information and performs basic checks that are directly relevant for edge inference workloads (OS identity, CUDA availability, TensorRT presence, and system monitoring).
+As a minimal OS-level verification, a short Bash script checks whether the platform exposes the required system capabilities
+(OS identity, CUDA/TensorRT presence, monitoring tools, and basic resources).
 
-
- \lstinputlisting[
- language=bash,
- caption={OS-level ``Hello World'' verification script for Jetson Nano},
- label={lst:jetson_hello_world_bash},
- basicstyle=\ttfamily\small,
- keywordstyle=\color{blue},
- commentstyle=\color{gray},
- stringstyle=\color{green!40!black},
- breaklines=true,
- showstringspaces=false,
- numbers=left,
- numberstyle=\tiny\color{gray},
- frame=single,
- rulecolor=\color{black!30}
- ]{../../Code/SystemTools/jetson_hello_world.sh}
+\lstinputlisting[
+language=bash,
+caption={OS-level ``Hello World'' verification script for the Jetson platform},
+label={lst:jetson_hello_world_bash},
+basicstyle=\ttfamily\small,
+keywordstyle=\color{blue},
+commentstyle=\color{gray},
+stringstyle=\color{green!40!black},
+breaklines=true,
+showstringspaces=false,
+numbers=left,
+numberstyle=\tiny\color{gray},
+frame=single,
+rulecolor=\color{black!30}
+]{../../Code/SystemTools/jetson_hello_world.sh}
