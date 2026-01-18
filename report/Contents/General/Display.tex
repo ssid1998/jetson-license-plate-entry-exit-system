@@ -90,9 +90,10 @@
 \label{chap:display_actor}
 
 \section{Introduction}
-In embedded \ac{AI} systems, \textbf{actors} are components that convert computational results into observable system responses.  
-In this project, the actor is implemented as a \textbf{visual display interface} connected to the NVIDIA Jetson Nano, presenting real-time recognition outcomes such as \textit{“Willkommen”} (Welcome) or \textit{“Ausfahrt registriert”} (Exit recorded) when a vehicle’s license plate is successfully detected.  
-This visual feedback replaces traditional actuators like buzzers or gates, offering clear, non-intrusive communication to the user \cite{edgeAIbook, opencv_doc_2024}.  
+As a part of embedded \ac{AI} systems, \textbf{actors} refers to those components that transform computational results into observable system responses.  
+In the context of this project, actors are implemented as a \textbf{visual display interface} connected with NVIDIA Jetson Nano, presented with real-time image and character recognition outcomes. Examples are \textit{“Willkommen”} (Welcome) or \textit{“Ausfahrt registriert”} (Exit recorded) on successful license plate recognition.  
+
+Traditional actuators such as buzzers or gates are replaced with visually available feedback. This offers clarity and non-intrusiveness in communication from the point of view of a user \cite{edgeAIbook, opencv_doc_2024}.  
 
 The display used is attached to the Jetson Nano’s \textbf{\ac{HDMI} 2.0 (J3)} port on the Seeed Studio J101 carrier board.  
 It functions both as a debugging interface during development and as the final system actor during runtime.
@@ -104,8 +105,8 @@ Rendering is performed via OpenCV’s GPU-accelerated pipeline on the Jetson Nan
 
 \section{Specific Actor}
 \label{sec:display_specs}
-The actor device used is a standard \ac{HDMI} display connected through the Jetson Nano’s \ac{HDMI} 2.0 Type-A port.  
-It receives RGB frames rendered in real time and displays textual overlays produced by the inference module.
+In this context, a standard \ac{HDMI} display connected through the Jetson Nano’s \ac{HDMI} 2.0 Type-A port acts as an actor.   
+It is able to receive RGB frames, that are further rendered in real time. Textual overlays are then displayed as a result of processing by the inference module.
 
 \begin{table}[H]
 	\centering
