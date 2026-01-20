@@ -1,0 +1,58 @@
+\begin{tikzpicture}[
+		node distance=10mm and 10mm,
+		font=\small,
+		every node/.style={align=center},
+		car/.style={rectangle,rounded corners=2pt,draw=black,fill=gray!10,minimum width=1.2cm,minimum height=0.6cm,font=\scriptsize},
+		block/.style={draw,rounded corners=4pt,fill=orange!10,minimum width=2.8cm,minimum height=1.1cm,text width=2.8cm,align=center},
+		db/.style={draw,cylinder,shape border rotate=90,aspect=0.25,fill=green!10,minimum height=1.3cm,minimum width=1.3cm,align=center},
+		arrow/.style={-Stealth,thick},
+		cam/.style={circle,draw,fill=blue!10,minimum size=0.9cm,align=center,font=\scriptsize},
+		output/.style={draw,rounded corners=4pt,fill=purple!10,minimum width=3cm,minimum height=1cm,align=center,font=\scriptsize}
+		]
+		
+		% ---- Airport Layout ----
+		\node[draw,fill=gray!20,minimum width=12cm,minimum height=3cm,rounded corners=5pt,label={[font=\bfseries]above:Airport Drop-off Zone}] (zone) {};
+		
+		% ---- Entry/Exit path ----
+		\draw[thick,gray!60,dashed] (-5.2,-0.2) -- (5.2,-0.2);
+		\draw[->,thick,gray!70] (-5.1,-0.2) -- (-1.2,-0.2) node[midway,below,yshift=-2mm]{\textbf{Entry}};
+		\draw[->,thick,gray!70] (1.2,-0.2) -- (5.1,-0.2) node[midway,below,yshift=-2mm]{\textbf{Exit}};
+		
+		% ---- Camera node ----
+		\node[cam] (camera) at (0,0.6) {\textbf{Camera}};
+		\draw[thick,gray!70] (0,0.6) -- (0,-0.2);
+		\node at (0,1.4) {\includegraphics[width=0.7cm]{example-image-a}}; % (optional: replace with camera icon image)
+		
+		% ---- Cars ----
+		\node[car,fill=yellow!20,draw=black] (carin) at (-3.5,-0.2) {\textbf{Car A}};
+		\node[car,fill=orange!20,draw=black] (carout) at (3.5,-0.2) {\textbf{Car A (Exit)}};
+		
+		% ---- Processing chain below ----
+		\node[block,below=2.0cm of camera,yshift=-1mm] (detect) {\textbf{YOLOv8 Detection}\\Plate Localization};
+		\node[block,below=of detect] (ocr) {\textbf{EasyOCR}\\Character Recognition};
+		\node[block,below=of ocr] (logic) {\textbf{Event Logic}\\Timestamp + Duration};
+		\node[db,below=of logic] (sqlite) {\textbf{SQLite}\\Vehicle Log};
+		\node[output,below=of sqlite] (alert) {\textbf{Billing \& Alert}\\Triggered if $>$10 min stay};
+		
+		% ---- Arrows ----
+		\draw[arrow] (camera) -- (detect);
+		\draw[arrow] (detect) -- (ocr);
+		\draw[arrow] (ocr) -- (logic);
+		\draw[arrow] (logic) -- (sqlite);
+		\draw[arrow] (sqlite) -- (alert);
+		
+		% ---- Text labels ----
+		\node[font=\scriptsize,align=center,fill=white,draw,rounded corners=3pt] at (-3.5,0.9)
+		{Entry detected\\Timestamp $T_1$};
+		\node[font=\scriptsize,align=center,fill=white,draw,rounded corners=3pt] at (3.5,0.9)
+		{Exit detected\\Timestamp $T_2$};
+		\node[font=\scriptsize,align=center,fill=white,draw,rounded corners=3pt] at (2.9,-4.7)
+		{If $(T_2 - T_1) > 10\,\text{min}$\\$\Rightarrow$ Charge Applied};
+		
+		% ---- Decorative legend ----
+		\node[draw,fill=blue!10,rounded corners=2pt,below right=0.5cm and -0.2cm of alert,font=\scriptsize,text width=2.3cm,align=center] (l1) {On-site Data Capture};
+		\node[draw,fill=orange!10,rounded corners=2pt,right=2mm of l1,font=\scriptsize,text width=2.3cm,align=center] (l2) {Edge AI Inference};
+		\node[draw,fill=green!10,rounded corners=2pt,right=2mm of l2,font=\scriptsize,text width=2.3cm,align=center] (l3) {Local Database};
+		\node[draw,fill=purple!10,rounded corners=2pt,right=2mm of l3,font=\scriptsize,text width=2.3cm,align=center] (l4) {Billing / Action};
+		
+	\end{tikzpicture}

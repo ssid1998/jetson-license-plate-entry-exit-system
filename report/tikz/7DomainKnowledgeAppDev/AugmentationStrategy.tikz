@@ -1,0 +1,15 @@
+	\begin{tikzpicture}[
+		img/.style={rectangle, draw=black, minimum size=1.5cm, align=center},
+		op/.style={circle, draw=red!60, fill=red!5, thick, minimum size=1.2cm, align=center, font=\scriptsize},
+		arrow/.style={-latex, thick}
+		]
+		\node[img] (orig) {Original\\Frame};
+		\node[op, right=1.5cm of orig] (aug) {Augment\\Pipeline};
+		\node[img, right=1.5cm of aug] (new) {Training\\Batch};
+		
+		\draw[arrow] (orig) -- node[above]{\scriptsize Input} (aug);
+		\draw[arrow] (aug) -- node[above]{\scriptsize Mosaic} (new);
+		\draw[arrow] (aug) to[bend left=45] node[above]{\scriptsize HSV Shift} (new);
+		\draw[arrow] (aug) to[bend right=45] node[below]{\scriptsize Scale/Blur} (new);
+		
+	\end{tikzpicture}

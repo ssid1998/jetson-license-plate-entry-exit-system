@@ -51,24 +51,24 @@ These constraints necessitate a locally deployed, energy-efficient, and privacy-
 \section{Challenges}
 Although \ac{ANPR} systems have advanced rapidly, several persistent obstacles still hinder efficient deployment on low-power edge devices. Constraints such as the ones mentioned pose challenges that are mostly applicable to an environment similar to an airport, where it is important for performance, legal compliance, and reliability to be balanced while accounting for real-world variability and constraints.
 
-\subsection*{1. Environmental and Lighting Variability}
+\subsection{Environmental and Lighting Variability}
 Real world environments with variable outdoor conditions may lead to illumination differences.Sunlight, surface reflections, mist, and precipitation may lead to a significant effect on the accuracy of license plate recognition and the text characters therein.  
 Studies such as \cite{sultan2023applied, tavarez2024comparison} have shown that varying brightness and weather conditions increase \ac{OCR} error rates and reduce \ac{MAP} in detection models. Airports that operate throughout the day sometimes have low-visibility and this can lead to inaccuracies in text extraction from license plates.
 
-\subsection*{2. Edge Device Compute Limitations}
+\subsection{Edge Device Compute Limitations}
 Edge devices similar to \textbf{NVIDIA Jetson Nano} may be constrained in the amount of \ac{GPU} computation power and memory availability. As stated by \cite{laroca2018robust, nvidia_jetson_whitepaper2021}, high-performance deep-learning models such as \textbf{YOLOv8} demand significant compute power, which can reduce frame rates to below real-time levels. Prolonged \ac{GPU} utilization also raises issues of overheating and throttling under continuous workloads.
 
-\subsection*{3. False Positives and Non-Standard Plates}
+\subsection{False Positives and Non-Standard Plates}
 Incorrect detections occur when objects with plate-like textures (advertisements, reflections, or vehicle logos) are misidentified as license plates.  
 Research by \cite{mufti2021automatic, netinant2024evaluating} confirms that \ac{ANPR} accuracy deteriorates when encountering partially visible, dirty, or non-standard plates with decorative fonts or region-specific layouts.  
 These false positives increase storage load and reduce system credibility in enforcement scenarios.
 
-\subsection*{4. Privacy and Legal Compliance}
+\subsection{Privacy and Legal Compliance}
 European regulations such as \ac{GDPR} and the German \ac{BDSG} require that personal identifiers, including license plate data, be processed under strict privacy principles.  
 Such compliance stresses on the need for using minimal data, responsible usage under a legal purview, and transparent operation \cite{gdpr2016eu, bdsga2021}.  
 Systems processing images without anonymity tend to  violate Article 5(1)(c) of \ac{GDPR}, creating risks that are non-compliant for public infrastructure deployments.
 
-\subsection*{5. Cost and Scalability}
+\subsection{Cost and Scalability}
 Commercial \ac{ANPR} systems—such as those from Jenoptik or PeterPark—are expensive, closed-source, and require recurring maintenance fees \cite{Jenoptik2023, peterparkALPR}.  
 Additional studies that analyze \textbf{YOLO}-based deployments on edge hardware \cite{Ultralytics2023, JetsonNano2022} stress on the feasibility of enhancing intelligent surveillance via the use of architecture that is both modular and affordable.  
 However, scalability still demands efficient synchronization between multiple camera nodes and lightweight local databases.
@@ -79,7 +79,7 @@ However, scalability still demands efficient synchronization between multiple ca
 To simplify the challenges mentioned, the project incorporates combined usage of hardware optimization, easy and efficient \ac{AI} design, and enables compliance within legal frameworks.  
 The methods defined directly map to challenges identified, while promoting technical robustness and ensuring alignment within regulatory frameworks.
 
-\subsection*{1. Addressing Environmental and Lighting Variability}
+\subsection{Addressing Environmental and Lighting Variability}
 \begin{itemize}
 	\item Apply dynamic image preprocessing using \textbf{OpenCV} to normalize brightness, gamma, and contrast across frames.
 	\item Integrate IR-assisted illumination and adaptive exposure for stable night-time operation.
@@ -87,7 +87,7 @@ The methods defined directly map to challenges identified, while promoting techn
 	\item Incorporate datasets with a great variety in  daytime, nightime, and fluctuating weather conditions, aiding in improving accuracy.
 \end{itemize}
 
-\subsection*{2. Optimizing Computational Performance}
+\subsection{Optimizing Computational Performance}
 \begin{itemize}
 	\item Quantize \textbf{YOLOv8} weights to \textbf{FP16} and optimize inference through TensorRT to achieve real-time speed.
 	\item Use a hybrid configuration—\textbf{YOLOv8-Nano} for continuous inference and \textbf{YOLOv8-Large} for periodic re-validation of uncertain detections.
@@ -95,7 +95,7 @@ The methods defined directly map to challenges identified, while promoting techn
 	\item Monitor \ac{GPU} utilization via \textbf{Jetson-Stats} for automatic frame-rate adjustments under thermal constraints.
 \end{itemize}
 
-\subsection*{3. Reducing False Positives and Handling Non-Standard Plates}
+\subsection{Reducing False Positives and Handling Non-Standard Plates}
 \begin{itemize}
 	\item Introduce temporal validation across consecutive frames to confirm detection stability.
 	\item Apply bounding-box correlation between vehicle and plate regions to prevent spurious matches.
@@ -103,7 +103,7 @@ The methods defined directly map to challenges identified, while promoting techn
 	\item Include a classification module for special plates (e.g., emergency, diplomatic) based on prefix and color cues.
 \end{itemize}
 
-\subsection*{4. Ensuring Privacy and Legal Compliance}
+\subsection{Ensuring Privacy and Legal Compliance}
 \begin{itemize}
 	\item Hash recognized plate numbers using \textbf{SHA-256} before database storage to ensure irreversible anonymization.
 	\item Retain images temporarily ($\leq$24 hours) with automated deletion through a background cleanup scheduler.
@@ -111,7 +111,7 @@ The methods defined directly map to challenges identified, while promoting techn
 	\item Display privacy notices on-site and document data-handling practices to comply with \ac{GDPR} transparency obligations.
 \end{itemize}
 
-\subsection*{5. Improving Cost Efficiency and Scalability}
+\subsection{Improving Cost Efficiency and Scalability}
 \begin{itemize}
 	\item Use open-source tools (\textbf{YOLOv8}, \textbf{EasyOCR}, \textbf{SQLite}) to eliminate proprietary license costs.
 	\item Develop a modular architecture separating hardware (camera), \ac{AI} inference, and database layers for flexible scaling.

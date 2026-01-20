@@ -1,0 +1,77 @@
+	\begin{tikzpicture}[
+		node distance=1.6cm, % increased vertical spacing
+		every node/.style={
+			rectangle,
+			draw=black,
+			thick,
+			align=center,
+			minimum width=3.0cm,
+			minimum height=0.85cm,
+			font=\scriptsize,
+			fill=gray!10
+		},
+		header/.style={
+			font=\footnotesize\bfseries,
+			draw=none,
+			fill=none
+		},
+		arrow/.style={
+			->,
+			thick
+		}
+		]
+		
+		% Column headers
+		\node[header] (train_h) {Training Phase};
+		\node[header, right=3.8cm of train_h] (deploy_h) {Deployment Phase};
+		
+		% KDD-1
+		\node (s1) [below=1.0cm of train_h] {KDD--1\\Data Selection\\Labeled Images};
+		\node (s2) [below=1.0cm of deploy_h] {KDD--1\\Data Selection\\Live Camera Frames};
+		
+		% KDD-2
+		\node (p1) [below of=s1] {KDD--2\\Preprocessing\\Resize, Normalize, Augment};
+		\node (p2) [below of=s2] {KDD--2\\Preprocessing\\Frame Conditioning};
+		
+		% KDD-3
+		\node (t1) [below of=p1] {KDD--3\\Transformation\\Image--Label Pairs};
+		\node (t2) [below of=p2] {KDD--3\\Transformation\\Bounding Boxes, OCR};
+		
+		% KDD-4
+		\node (m1) [below of=t1] {KDD--4\\Data Mining\\YOLO Model Training};
+		\node (m2) [below of=t2] {KDD--4\\Data Mining\\Real-Time Inference};
+		
+		% KDD-5
+		\node (e1) [below of=m1] {KDD--5\\Evaluation\\Accuracy, Loss Metrics};
+		\node (e2) [below of=m2] {KDD--5\\Evaluation\\Latency, OCR Quality};
+		
+		% KDD-6
+		\node (k1) [below of=e1] {KDD--6\\Knowledge Storage\\Trained Model};
+		\node (k2) [below of=e2] {KDD--6\\Knowledge Storage\\SQLite Records};
+		
+		% Training arrows (downward)
+		\draw[arrow] (s1.south) -- (p1.north);
+		\draw[arrow] (p1.south) -- (t1.north);
+		\draw[arrow] (t1.south) -- (m1.north);
+		\draw[arrow] (m1.south) -- (e1.north);
+		\draw[arrow] (e1.south) -- (k1.north);
+		
+		% Deployment arrows (downward)
+		\draw[arrow] (s2.south) -- (p2.north);
+		\draw[arrow] (p2.south) -- (t2.north);
+		\draw[arrow] (t2.south) -- (m2.north);
+		\draw[arrow] (m2.south) -- (e2.north);
+		\draw[arrow] (e2.south) -- (k2.north);
+		
+		% Legend
+		\node[draw, thick, align=left, font=\scriptsize, fill=white,
+		below=1.8cm of k1, minimum width=7.2cm] (legend)
+		{\textbf{Legend:}\\
+			KDD--1: Data Selection \\
+			KDD--2: Preprocessing and Cleaning \\
+			KDD--3: Data Transformation \\
+			KDD--4: Data Mining \\
+			KDD--5: Interpretation and Evaluation \\
+			KDD--6: Knowledge Presentation and Storage};
+		
+	\end{tikzpicture}

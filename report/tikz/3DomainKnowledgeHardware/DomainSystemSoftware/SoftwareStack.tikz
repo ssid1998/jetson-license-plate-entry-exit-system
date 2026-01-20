@@ -1,0 +1,31 @@
+	\begin{tikzpicture}[
+		node distance=0cm,
+		layer/.style={
+			rectangle, 
+			draw=black!80, 
+			minimum width=10cm, 
+			minimum height=1.2cm, 
+			align=center, 
+			very thick,
+			rounded corners=2pt,
+			drop shadow
+		},
+		arrow/.style={->, >=latex, very thick, gray}
+		]
+		
+		% Stack from Bottom to Top
+		\node[layer, fill=gray!30] (hw) {\textbf{Hardware Layer}\\(NVIDIA Maxwell GPU / ARM Cortex-A57 CPU)};
+		
+		\node[layer, fill=blue!10, above=0.3cm of hw] (kernel) {\textbf{Operating System (L4T)}\\Ubuntu 18.04 LTS (Kernel 4.9) + GLIBC 2.27};
+		
+		\node[layer, fill=blue!20, above=0.1cm of kernel] (drivers) {\textbf{Middleware \& Drivers}\\CUDA 10.2 | cuDNN 8.2 | TensorRT 8.2};
+		
+		\node[layer, fill=green!10, above=0.1cm of drivers] (deps) {\textbf{Dependency Layer (The Bottleneck)}\\Python 3.6 (Legacy) | OpenCV 4.1.1 | PyTorch 1.10};
+		
+		\node[layer, fill=orange!20, above=0.3cm of deps] (app) {\textbf{Application Layer}\\YOLOv8 Inference Wrapper | EasyOCR Engine | Flask Dashboard};
+		
+		% Annotations
+		\node[right=0.5cm of deps, text width=4cm, font=\small\itshape, align=left] 
+		{\textbf{Constraint:} Modern libraries (Pandas 2.0, Ultralytics) require Python 3.8+, forcing workaround scripts.};
+		
+	\end{tikzpicture}

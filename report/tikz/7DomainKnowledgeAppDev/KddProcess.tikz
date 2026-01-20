@@ -1,0 +1,24 @@
+	\begin{tikzpicture}[node distance=1.8cm, auto,
+		block/.style={
+			rectangle,
+			draw=blue!60,
+			fill=blue!5,
+			very thick,
+			minimum size=1cm,	
+			minimum width=4cm,
+			rounded corners,
+			align=center
+		},
+		arrow/.style={-latex, thick, blue!60}]
+		
+		\node [block] (select) {1. Data Selection\\(LifeCam/Datasets)};
+		\node [block, below of=select] (process) {2. Preprocessing\\(Cleaning/Filtering)};
+		\node [block, below of=process] (transform) {3. Transformation\\(Resizing/Normalization)};
+		\node [block, below of=transform] (mining) {4. Data Mining\\(YOLOv8 Training)};
+		\node [block, below of=mining] (eval) {5. Evaluation\\(mAP / Precision)};
+		
+		\draw [arrow] (select) -- (process);
+		\draw [arrow] (process) -- (transform);
+		\draw [arrow] (transform) -- (mining);
+		\draw [arrow] (mining) -- (eval);
+	\end{tikzpicture}

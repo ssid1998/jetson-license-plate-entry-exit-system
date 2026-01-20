@@ -1,0 +1,24 @@
+	\begin{tikzpicture}[
+		>=latex,          % arrow tip style
+		line width=0.5pt, % thinner arrows
+		font=\small,
+		main/.style={
+			draw, rounded corners, minimum width=2.2cm, minimum height=1cm, % smaller nodes
+			align=center, fill=#1!25
+		}
+		]
+		
+		% -------------------
+		% Main blocks (Top row)
+		% -------------------
+		\node[main=blue] (input) {Input Image};
+		\node[main=green, right=1.2cm of input] (conv) {Convolution Layer};
+		\node[main=orange, right=1.2cm of conv] (pool) {Pooling Layer};
+		\node[main=red, right=1.2cm of pool] (class) {Classifier};
+		
+		% Arrows between main blocks (half size)
+		\draw[->] (input.east) -- (conv.west);
+		\draw[->] (conv.east) -- (pool.west);
+		\draw[->] (pool.east) -- (class.west);
+		
+	\end{tikzpicture}

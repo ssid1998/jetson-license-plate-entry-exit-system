@@ -1,7 +1,7 @@
 % ===========================================================================
 % SECTION: APPLICATION DOMAIN KNOWLEDGE - SOFTWARE
 % ===========================================================================
-
+\chapter{Domain System - Software} \label{ch:domain_system_software}
 \section{Application Domain Knowledge: Software}
 \label{sec:software_domain}
 
@@ -21,37 +21,7 @@ Primarily, a software constraint in the context of this project is the NVIDIA Je
 % --- VISUAL 1: SOFTWARE STACK PYRAMID ---
 \begin{figure}[htbp]
 	\centering
-	\begin{tikzpicture}[
-		node distance=0cm,
-		layer/.style={
-			rectangle, 
-			draw=black!80, 
-			minimum width=10cm, 
-			minimum height=1.2cm, 
-			align=center, 
-			very thick,
-			rounded corners=2pt,
-			drop shadow
-		},
-		arrow/.style={->, >=latex, very thick, gray}
-		]
-		
-		% Stack from Bottom to Top
-		\node[layer, fill=gray!30] (hw) {\textbf{Hardware Layer}\\(NVIDIA Maxwell GPU / ARM Cortex-A57 CPU)};
-		
-		\node[layer, fill=blue!10, above=0.3cm of hw] (kernel) {\textbf{Operating System (L4T)}\\Ubuntu 18.04 LTS (Kernel 4.9) + GLIBC 2.27};
-		
-		\node[layer, fill=blue!20, above=0.1cm of kernel] (drivers) {\textbf{Middleware \& Drivers}\\CUDA 10.2 | cuDNN 8.2 | TensorRT 8.2};
-		
-		\node[layer, fill=green!10, above=0.1cm of drivers] (deps) {\textbf{Dependency Layer (The Bottleneck)}\\Python 3.6 (Legacy) | OpenCV 4.1.1 | PyTorch 1.10};
-		
-		\node[layer, fill=orange!20, above=0.3cm of deps] (app) {\textbf{Application Layer}\\YOLOv8 Inference Wrapper | EasyOCR Engine | Flask Dashboard};
-		
-		% Annotations
-		\node[right=0.5cm of deps, text width=4cm, font=\small\itshape, align=left] 
-		{\textbf{Constraint:} Modern libraries (Pandas 2.0, Ultralytics) require Python 3.8+, forcing workaround scripts.};
-		
-	\end{tikzpicture}
+	\input{../../tikz/3DomainKnowledgeHardware/DomainSystemSoftware/SoftwareStack.tikz}
 	\caption{The Software Stack showing the dependency hierarchy and version locks.}
 	\label{fig:software_stack}
 \end{figure}
@@ -70,52 +40,7 @@ To overcome the computational and software limitations of the edge device, we ad
 % --- VISUAL 2: DEPLOYMENT PIPELINE FLOWCHART ---
 \begin{figure}[htbp]
 	\centering
-	\begin{tikzpicture}[
-		node distance=1.5cm and 2cm,
-		process/.style={
-			rectangle, 
-			draw=blue!60, 
-			fill=blue!5, 
-			very thick, 
-			minimum size=1cm, 
-			minimum width=3cm, 
-			align=center, 
-			rounded corners
-		},
-		storage/.style={
-			cylinder, 
-			shape border rotate=90, 
-			draw=black, 
-			fill=gray!10, 
-			aspect=0.25, 
-			minimum height=1.5cm, 
-			minimum width=1.5cm, 
-			align=center
-		},
-		arrow/.style={-latex, thick, blue!80}
-		]
-		
-		% High Performance PC Side
-		\node[process, fill=red!10, label=above:\textbf{High-Perf PC}] (train) {1. Model Training\\(PyTorch/CUDA)};
-		\node[process, right=of train] (export) {2. Export\\(.pt $\to$ .onnx)};
-		
-		% The Transfer Gap
-		\draw[dashed, very thick] ($(export.east)+(0.5,-2)$) -- ($(export.east)+(0.5,2)$) node[above] {Network Transfer};
-		
-		% Jetson Nano Side
-		\node[process, right=1cm of export, fill=green!10, label=above:\textbf{Jetson Nano}] (compile) {3. Cross-Compile\\(ONNX $\to$ TensorRT)};
-		\node[process, right=of compile] (infer) {4. Optimized\\Inference};
-		
-		% Connections
-		\draw[arrow] (train) -- (export);
-		\draw[arrow] (export) -- node[above, font=\scriptsize] {} (compile);
-		\draw[arrow] (compile) -- (infer);
-		
-		% Details underneath
-		\node[below=0.5cm of train, font=\scriptsize, align=center] {Requires:\\16GB+ VRAM};
-		\node[below=0.5cm of compile, font=\scriptsize, align=center] {Generates:\\.engine binary};
-		
-	\end{tikzpicture}
+	\input{../../tikz/3DomainKnowledgeHardware/DomainSystemSoftware/SoftwareStack.tikz}
 	\caption{The Split-Architecture Deployment Pipeline used to bypass hardware limitations.}
 	\label{fig:deployment_pipeline}
 \end{figure}
@@ -138,44 +63,7 @@ To resolve this, we engineered a virtual memory expansion using a \textbf{6GB Sw
 % --- VISUAL 3: MEMORY MAP DIAGRAM ---
 \begin{figure}[htbp]
 	\centering
-	\begin{tikzpicture}[scale=0.8]
-		% Axes - Extended to cover the extra width (up to x=14)
-		\draw[thick, ->] (0,0) -- (0,10.5) node[above] {Memory Address Space};
-		\draw[thick, ->] (0,0) -- (14,0) node[right] {Usage};
-		
-		% --- LEFT COLUMN: PHYSICAL RAM (Width = 5 units) ---
-		% Range: x=1 to x=6 (Center x=3.5)
-		
-		% The Container Bar
-		\draw[fill=green!20] (1,0) rectangle (6,4);
-		% Label rotated to fit vertically along the side
-		\node[rotate=90] at (5.7, 2) {\scriptsize Physical RAM (4GB)};
-		
-		% Stack Items (Centered at x=3.5)
-		\draw[fill=blue!30] (1,0) rectangle (6,1.5);   \node at (3.5,0.75) {OS};
-		\draw[fill=orange!30] (1,1.5) rectangle (6,3.5); \node at (3.5,2.5) {YOLOv8};
-		\draw[fill=red!50] (1,3.5) rectangle (6,5.5);    \node at (3.5,4.5) {OCR (Crash)};
-		
-		% OOM Threshold Line (Extended)
-		\draw[red, very thick, dashed] (0,4) -- (13.5,4) node[right, red, font=\bfseries] {Limit};
-		
-		% --- RIGHT COLUMN: VIRTUAL MEMORY (Width = 5 units) ---
-		% Range: x=8 to x=13 (Center x=10.5)
-		
-		% The Container Bar
-		\draw[fill=gray!20] (8,0) rectangle (13,10);
-		\node[rotate=90] at (12.7, 8) {\scriptsize Virtual Memory (10GB)};
-		
-		% Stack Items (Centered at x=10.5)
-		\draw[fill=blue!30] (8,0) rectangle (13,1.5);   \node at (10.5,0.75) {OS (Active)};
-		\draw[fill=orange!30] (8,1.5) rectangle (13,3.5); \node at (10.5,2.5) {YOLOv8 (GPU)};
-		\draw[fill=yellow!30] (8,3.5) rectangle (13,5.5); \node at (10.5,4.5) {OCR (CPU)};
-		\draw[fill=gray!40] (8,5.5) rectangle (13,7.5);   \node at (10.5,6.5) {Cached Pages};
-		
-		% Arrow connecting the two columns
-		\draw[->, thick, blue, shorten >= 5pt, shorten <= 5pt] (6, 2) -- (8, 2) node[midway, above, font=\scriptsize] {Swap};
-		
-	\end{tikzpicture}
+	\input{../../tikz/3DomainKnowledgeHardware/DomainSystemSoftware/MemoryArchitecture.tikz}
 	\caption{Memory Allocation Strategy: Expanding physical limits with SSD Swap.}
 	\label{fig:memory_architecture}
 \end{figure}
@@ -213,39 +101,7 @@ To circumvent this, we architected a protocol switch from the standard VS Code S
 % --- VISUAL 4: REMOTE PROTOCOL DIAGRAM ---
 \begin{figure}[htbp]
 	\centering
-	\begin{tikzpicture}[
-		node distance=3cm,
-		device/.style={
-			rectangle, 
-			draw=black, 
-			very thick, 
-			minimum width=2.5cm, 
-			minimum height=1.5cm, 
-			align=center, 
-			rounded corners
-		},
-		connection/.style={
-			<->, 
-			>=latex, 
-			very thick, 
-			blue
-		}
-		]
-		
-		\node[device, fill=gray!10] (laptop) {\textbf{Dev Laptop}\\(VS Code)};
-		\node[device, fill=green!10, right=4cm of laptop] (jetson) {\textbf{Jetson Nano}\\(SSD Storage)};
-		
-		% Failed Connection
-		\draw[->, thick, red, dashed] ($(laptop.east)+(0,0.5)$) -- node[midway, above, font=\scriptsize, red] {SSH connection (GLIBC Error)} ($(jetson.west)+(0,0.5)$);
-		\node[red] at ($(laptop.east)!0.5!(jetson.west)+(0,0.5)$) {$\times$};
-		
-		% Success Connection
-		\draw[connection] ($(laptop.east)+(0,-0.5)$) -- node[midway, below, font=\scriptsize, blue] {SFTP Mount (SSH-FS)} ($(jetson.west)+(0,-0.5)$);
-		
-		% Label
-		\node[below=0.2cm of jetson, font=\scriptsize] {/media/myssd/project};
-		
-	\end{tikzpicture}
+	\input{../../tikz/3DomainKnowledgeHardware/DomainSystemSoftware/RemoteProtocol.tikz}
 	\caption{Remote Development Protocol: Switching from Binary Agents to File System Mounting.}
 	\label{fig:remote_protocol}
 \end{figure}

@@ -1,0 +1,38 @@
+	\begin{tikzpicture}[scale=0.8]
+		% Axes - Extended to cover the extra width (up to x=14)
+		\draw[thick, ->] (0,0) -- (0,10.5) node[above] {Memory Address Space};
+		\draw[thick, ->] (0,0) -- (14,0) node[right] {Usage};
+		
+		% --- LEFT COLUMN: PHYSICAL RAM (Width = 5 units) ---
+		% Range: x=1 to x=6 (Center x=3.5)
+		
+		% The Container Bar
+		\draw[fill=green!20] (1,0) rectangle (6,4);
+		% Label rotated to fit vertically along the side
+		\node[rotate=90] at (5.7, 2) {\scriptsize Physical RAM (4GB)};
+		
+		% Stack Items (Centered at x=3.5)
+		\draw[fill=blue!30] (1,0) rectangle (6,1.5);   \node at (3.5,0.75) {OS};
+		\draw[fill=orange!30] (1,1.5) rectangle (6,3.5); \node at (3.5,2.5) {YOLOv8};
+		\draw[fill=red!50] (1,3.5) rectangle (6,5.5);    \node at (3.5,4.5) {OCR (Crash)};
+		
+		% OOM Threshold Line (Extended)
+		\draw[red, very thick, dashed] (0,4) -- (13.5,4) node[right, red, font=\bfseries] {Limit};
+		
+		% --- RIGHT COLUMN: VIRTUAL MEMORY (Width = 5 units) ---
+		% Range: x=8 to x=13 (Center x=10.5)
+		
+		% The Container Bar
+		\draw[fill=gray!20] (8,0) rectangle (13,10);
+		\node[rotate=90] at (12.7, 8) {\scriptsize Virtual Memory (10GB)};
+		
+		% Stack Items (Centered at x=10.5)
+		\draw[fill=blue!30] (8,0) rectangle (13,1.5);   \node at (10.5,0.75) {OS (Active)};
+		\draw[fill=orange!30] (8,1.5) rectangle (13,3.5); \node at (10.5,2.5) {YOLOv8 (GPU)};
+		\draw[fill=yellow!30] (8,3.5) rectangle (13,5.5); \node at (10.5,4.5) {OCR (CPU)};
+		\draw[fill=gray!40] (8,5.5) rectangle (13,7.5);   \node at (10.5,6.5) {Cached Pages};
+		
+		% Arrow connecting the two columns
+		\draw[->, thick, blue, shorten >= 5pt, shorten <= 5pt] (6, 2) -- (8, 2) node[midway, above, font=\scriptsize] {Swap};
+		
+	\end{tikzpicture}

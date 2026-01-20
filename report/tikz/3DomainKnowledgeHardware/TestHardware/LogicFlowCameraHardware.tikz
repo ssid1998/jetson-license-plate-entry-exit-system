@@ -1,0 +1,22 @@
+	\begin{tikzpicture}[node distance=1.5cm, auto,
+		startstop/.style={rectangle, rounded corners, minimum width=3cm, minimum height=1cm,text centered, draw=black, fill=red!30},
+		process/.style={rectangle, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=orange!30},
+		decision/.style={diamond, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=green!30},
+		arrow/.style={thick,->,>=stealth}]
+		
+		\node (start) [startstop] {Start Test};
+		\node (init) [process, below of=start] {Init VideoCapture(0)};
+		\node (check) [decision, below of=init, yshift=-0.5cm] {Is Opened?};
+		\node (fail) [process, right of=check, xshift=3cm] {Print Error};
+		\node (read) [process, below of=check, yshift=-1cm] {Read Frame};
+		\node (display) [process, below of=read] {Display Window};
+		\node (stop) [startstop, below of=display] {Release \& Exit};
+		
+		\draw [arrow] (start) -- (init);
+		\draw [arrow] (init) -- (check);
+		\draw [arrow] (check) -- node[anchor=south] {No} (fail);
+		\draw [arrow] (check) -- node[anchor=east] {Yes} (read);
+		\draw [arrow] (read) -- (display);
+		\draw [arrow] (display) -- (stop);
+		\draw [arrow] (fail) |- (stop);
+	\end{tikzpicture}

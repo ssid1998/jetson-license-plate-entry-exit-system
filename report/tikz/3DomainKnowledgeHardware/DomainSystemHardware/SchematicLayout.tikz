@@ -1,0 +1,45 @@
+	\begin{tikzpicture}[scale=0.9, transform shape]
+		% --- MAIN BOARD PCB ---
+		\draw[fill=blue!20, very thick, rounded corners=3pt] (0,0) rectangle (10, 7);
+		\node[font=\large\bfseries, color=blue!40!black, align=center] at (5, 5.5) {Seeed Studio\\reComputer J1010 Carrier Board};
+		
+		% --- CENTRAL SoM & HEATSINK ---
+		\draw[fill=black!85, draw=black, thick] (2.5, 1.5) rectangle (7.5, 4.5);
+		\node[color=white, font=\bfseries, align=center] at (5, 3.0) {Jetson Nano SoM\\\& Heatsink};
+		
+		% --- FRONT PORTS (Bottom Edge - ALL ON SAME LINE) ---
+		% 1. USB-C Power (Far Left)
+		\draw[fill=gray!30, draw=black!80, thick] (0.5, -0.6) rectangle (1.5, 0);
+		\draw[fill=black!80, rounded corners=1pt] (0.7, -0.4) rectangle (1.3, -0.2);
+		\node[below, font=\bfseries\scriptsize, align=center] at (1.0, -0.6) {USB-C\\Power};
+		
+		% 2. HDMI (Middle Left)
+		\draw[fill=gray!40, draw=black!80, thick] (2.0, -0.6) rectangle (3.5, 0);
+		\draw[fill=black!80] (2.2, -0.4) rectangle (3.3, -0.2);
+		\node[below, font=\bfseries\scriptsize] at (2.75, -0.6) {HDMI};
+		
+		% 3. USB 3.0 x4 (Middle Right - Blue Ports)
+		\draw[fill=cyan!40!white, draw=black!80, thick] (4.0, -0.6) rectangle (7.0, 0);
+		\foreach \x in {4.2, 4.9, 5.6, 6.3} {
+			\draw[fill=black!30] (\x, -0.4) rectangle (\x+0.5, -0.15);
+		}
+		\node[below, font=\bfseries\scriptsize] at (5.5, -0.6) {4x USB 3.0};
+		
+		% 4. Gigabit Ethernet (Far Right)
+		\draw[fill=gray!40, draw=black!80, thick] (7.5, -0.6) rectangle (9.0, 0);
+		\draw[fill=black!20] (7.7, -0.4) rectangle (8.8, -0.1);
+		\node[below, font=\bfseries\scriptsize] at (8.25, -0.6) {Gigabit ETH};
+		
+		% --- TOP EDGE COMPONENTS ---
+		\draw[fill=black!90] (1, 6.2) rectangle (9, 6.8);
+		\foreach \x in {1.2, 1.4, ..., 8.8} {
+			\draw[fill=yellow] (\x, 6.4) circle (0.06);
+			\draw[fill=yellow] (\x, 6.6) circle (0.06);
+		}
+		\node[above, font=\small\bfseries] at (5, 6.8) {40-Pin GPIO Header};
+		
+		% --- DIMENSIONS ---
+		\draw[<->, thick, red] (0, -1.8) -- (10, -1.8) node[midway, fill=white] {Length ($\approx$ 100 mm)};
+		\draw[<->, thick, red] (10.5, 0) -- (10.5, 7) node[midway, fill=white, rotate=90] {Width ($\approx$ 80 mm)};
+		
+	\end{tikzpicture}

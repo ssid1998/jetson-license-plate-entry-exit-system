@@ -1,0 +1,24 @@
+	\begin{tikzpicture}[
+		block/.style={
+			rectangle,
+			rounded corners,
+			draw=black,
+			thick,
+			minimum width=3.4cm,
+			minimum height=0.9cm,
+			align=center,
+			font=\small
+		},
+		arrow/.style={-{Latex[length=2.5mm]}, thick}
+		]
+		\node[block, fill=blue!20] (input) {Input Frame\\(Camera Image)};
+		\node[block, fill=green!20, below=1.3cm of input] (backbone) {Backbone\\Feature Extraction};
+		\node[block, fill=yellow!20, below=1.3cm of backbone] (neck) {Neck\\Multi Scale Fusion};
+		\node[block, fill=orange!20, below=1.3cm of neck] (head) {Detection Head\\Boxes + Scores + Class};
+		\node[block, fill=red!15, below=1.3cm of head] (post) {Post Processing\\NMS + Cropping + OCR};
+		
+		\draw[arrow] (input.south) -- (backbone.north);
+		\draw[arrow] (backbone.south) -- (neck.north);
+		\draw[arrow] (neck.south) -- (head.north);
+		\draw[arrow] (head.south) -- (post.north);
+	\end{tikzpicture}

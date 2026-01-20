@@ -134,40 +134,7 @@ The complete system-level data flow between the camera, Jetson Nano, and display
 
 \begin{figure}[H]
 	\centering
-	\begin{tikzpicture}[
-		node distance=2.2cm,
-		>=latex,
-		thick,
-		align=center,
-		font=\sffamily
-		]
-		
-		% Nodes (top to bottom)
-		\node[draw, fill=blue!10, rounded corners,
-		minimum width=6cm, minimum height=1.2cm]
-		(camera) {\textbf{Microsoft LifeCam Show}\\(Sensor Input)};
-		
-		\node[draw, fill=green!10, rounded corners,
-		minimum width=6cm, minimum height=1.2cm,
-		below=of camera]
-		(jetson) {\textbf{NVIDIA Jetson Nano}\\\textbf{(Seeed Studio reComputer J1010)}\\(AI Processing Unit)};
-		
-		\node[draw, fill=orange!10, rounded corners,
-		minimum width=6cm, minimum height=1.2cm,
-		below=of jetson]
-		(display) {\textbf{HDMI Display}\\(System Actor Output)};
-		
-		% Arrows
-		\draw[->, thick] (camera) -- node[right, align=center]{\textit{Video Stream}\\(USB 2.0)} (jetson);
-		\draw[->, thick] (jetson) -- node[right, align=center]{\textit{Processed Output}\\(HDMI Signal)} (display);
-		
-		% Optional feedback arrow
-		\draw[<-, dashed, gray, thick]
-		(camera.west) .. controls +(-3,-1) and +(-3,1) ..
-		node[left, align=center, text=gray!70, font=\itshape]
-		{Control Signal\\/ Status Log} (jetson.west);
-		
-	\end{tikzpicture}
+	\input{../../tikz/3DomainKnowledgeHardware/Display/DataFlowDisplay.tikz}
 	\caption{Vertical data flow of the system: image acquisition from the LifeCam,\ac{AI} inference on Jetson Nano, and output display via \ac{HDMI}.}
 	\label{fig:dataflow_display_portrait}
 \end{figure}

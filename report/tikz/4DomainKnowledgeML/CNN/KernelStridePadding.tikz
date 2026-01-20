@@ -1,0 +1,7 @@
+	\begin{tikzpicture}[block/.style={draw, rectangle, minimum width=2cm, minimum height=1cm, align=center, fill=green!20}]
+		\node[block] (input) {Input Image};
+		\node[block, right=2cm of input] (kernel) {Kernel $k \times k$};
+		\node[block, right=2cm of kernel] (output) {Feature Map};
+		\draw[->, thick] (input.east) -- (kernel.west) node[midway, above] {Stride $s$};
+		\draw[->, thick] (kernel.east) -- (output.west) node[midway, above] {Padding $p$};
+	\end{tikzpicture}

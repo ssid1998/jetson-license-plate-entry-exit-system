@@ -1,0 +1,33 @@
+	\begin{tikzpicture}[
+		node distance=3cm,
+		device/.style={
+			rectangle, 
+			draw=black, 
+			very thick, 
+			minimum width=2.5cm, 
+			minimum height=1.5cm, 
+			align=center, 
+			rounded corners
+		},
+		connection/.style={
+			<->, 
+			>=latex, 
+			very thick, 
+			blue
+		}
+		]
+		
+		\node[device, fill=gray!10] (laptop) {\textbf{Dev Laptop}\\(VS Code)};
+		\node[device, fill=green!10, right=4cm of laptop] (jetson) {\textbf{Jetson Nano}\\(SSD Storage)};
+		
+		% Failed Connection
+		\draw[->, thick, red, dashed] ($(laptop.east)+(0,0.5)$) -- node[midway, above, font=\scriptsize, red] {SSH connection (GLIBC Error)} ($(jetson.west)+(0,0.5)$);
+		\node[red] at ($(laptop.east)!0.5!(jetson.west)+(0,0.5)$) {$\times$};
+		
+		% Success Connection
+		\draw[connection] ($(laptop.east)+(0,-0.5)$) -- node[midway, below, font=\scriptsize, blue] {SFTP Mount (SSH-FS)} ($(jetson.west)+(0,-0.5)$);
+		
+		% Label
+		\node[below=0.2cm of jetson, font=\scriptsize] {/media/myssd/project};
+		
+	\end{tikzpicture}

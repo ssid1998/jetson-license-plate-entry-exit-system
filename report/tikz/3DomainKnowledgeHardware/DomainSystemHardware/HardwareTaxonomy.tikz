@@ -1,0 +1,45 @@
+	\begin{tikzpicture}[
+		edge from parent/.style={draw, very thick, -latex},
+		level 1/.style={sibling distance=6cm, level distance=2.5cm},
+		level 2/.style={sibling distance=3cm, level distance=2.5cm},
+		box/.style={
+			rectangle, 
+			draw=black!80, 
+			fill=blue!5, 
+			rounded corners, 
+			minimum width=3cm, 
+			minimum height=1.2cm, 
+			align=center,       
+			very thick, 
+			drop shadow, 
+			text width=2.5cm
+		},
+		root/.style={
+			rectangle, 
+			draw=black!80, 
+			fill=blue!20, 
+			rounded corners, 
+			minimum width=4cm, 
+			minimum height=1.5cm, 
+			align=center,       
+			very thick, 
+			drop shadow, 
+			font=\large\bfseries
+		}
+		]
+		
+		\node[root] {Complete System\\(LPR Context)}
+		child { node[box] (hw) {\textbf{Hardware}\\ \textbf{Domain}}
+			child { node[box] {Computing Unit\\(Jetson Nano)} }
+			child { node[box] {Acquisition\\(LifeCam)} }
+		}
+		child { node[box] {Environment\\Domain}
+			child { node[box] {Lighting\\Conditions} }
+			child { node[box] {Physical\\Mounting} }
+		};
+		
+		% Side Note
+		\node[right=1cm of hw, text width=4cm, align=left, font=\small\itshape, draw=gray, dashed, inner sep=5pt] 
+		{The Hardware Domain acts as the bridge between raw environmental data and software logic.};
+		
+	\end{tikzpicture}

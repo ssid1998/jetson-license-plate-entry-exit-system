@@ -1,0 +1,27 @@
+	\begin{tikzpicture}[
+		mindmap, concept color=blue!50,
+		every node/.style={concept, scale=0.9, execute at begin node=\hskip0pt},
+		grow cyclic,
+		level 1/.style={level distance=5cm, sibling angle=90},
+		level 2/.style={level distance=3cm, sibling angle=45, font=\scriptsize}
+		]
+		
+		\node [root concept] {\textbf{Hardware}\\ \textbf{Constraints}}
+		child [concept color=red!40] { node {Environmental}
+			child { node {Lighting\\Variation} }
+			child { node {Weather\\proofing} }
+		}
+		child [concept color=orange!40] { node {Computational}
+			child { node {Thermal\\Throttling} }
+			child { node {Memory\\(4GB RAM)} }
+		}
+		child [concept color=green!40] { node {Physical}
+			child { node {Mounting\\Angle} }
+			child { node {Vibration\\Stability} }
+		}
+		child [concept color=purple!40] { node {Calibration}
+			child { node {Focus\\Adjustment} }
+			child { node {Lens\\Distortion} }
+		};
+		
+	\end{tikzpicture}

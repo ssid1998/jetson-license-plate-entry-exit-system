@@ -1,0 +1,46 @@
+	\begin{tikzpicture}[
+		node distance=1.5cm and 2cm,
+		process/.style={
+			rectangle, 
+			draw=blue!60, 
+			fill=blue!5, 
+			very thick, 
+			minimum size=1cm, 
+			minimum width=3cm, 
+			align=center, 
+			rounded corners
+		},
+		storage/.style={
+			cylinder, 
+			shape border rotate=90, 
+			draw=black, 
+			fill=gray!10, 
+			aspect=0.25, 
+			minimum height=1.5cm, 
+			minimum width=1.5cm, 
+			align=center
+		},
+		arrow/.style={-latex, thick, blue!80}
+		]
+		
+		% High Performance PC Side
+		\node[process, fill=red!10, label=above:\textbf{High-Perf PC}] (train) {1. Model Training\\(PyTorch/CUDA)};
+		\node[process, right=of train] (export) {2. Export\\(.pt $\to$ .onnx)};
+		
+		% The Transfer Gap
+		\draw[dashed, very thick] ($(export.east)+(0.5,-2)$) -- ($(export.east)+(0.5,2)$) node[above] {Network Transfer};
+		
+		% Jetson Nano Side
+		\node[process, right=1cm of export, fill=green!10, label=above:\textbf{Jetson Nano}] (compile) {3. Cross-Compile\\(ONNX $\to$ TensorRT)};
+		\node[process, right=of compile] (infer) {4. Optimized\\Inference};
+		
+		% Connections
+		\draw[arrow] (train) -- (export);
+		\draw[arrow] (export) -- node[above, font=\scriptsize] {} (compile);
+		\draw[arrow] (compile) -- (infer);
+		
+		% Details underneath
+		\node[below=0.5cm of train, font=\scriptsize, align=center] {Requires:\\16GB+ VRAM};
+		\node[below=0.5cm of compile, font=\scriptsize, align=center] {Generates:\\.engine binary};
+		
+	\end{tikzpicture}

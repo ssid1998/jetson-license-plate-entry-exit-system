@@ -1,0 +1,57 @@
+	\begin{tikzpicture}[
+		node distance=1.6cm,
+		every node/.style={
+			rectangle,
+			draw=black,
+			thick,
+			align=center,
+			minimum width=3.0cm,
+			minimum height=0.85cm,
+			font=\scriptsize,
+			fill=gray!10
+		},
+		header/.style={
+			font=\footnotesize\bfseries,
+			draw=none,
+			fill=none
+		},
+		arrow/.style={
+			->,
+			thick
+		}
+		]
+		% Column header
+		\node[header] (pipeline_h) {Machine Learning Pipeline};
+		
+		% Stage 1
+		\node (s1) [below=1.0cm of pipeline_h] {Stage 1:\\Data Acquisition\\1,243 Labeled Images};
+		
+		% Stage 2
+		\node (s2) [below of=s1] {Stage 2:\\Data Preprocessing\\Resize, Normalize, Augment};
+		
+		% Stage 3
+		\node (s3) [below of=s2] {Stage 3:\\Feature Extraction\\YOLO CNN for License Plate Detection};
+		
+		% Stage 4
+		\node (s4) [below of=s3] {Stage 4:\\Character Recognition\\EasyOCR on Detected ROIs};
+		
+		% Stage 5
+		\node (s5) [below of=s4] {Stage 5:\\Model Training\\Loss Minimization, Hyperparameter Tuning};
+		
+		% Stage 6
+		\node (s6) [below of=s5] {Stage 6:\\Model Evaluation\\Precision, Recall, mAP, OCR Accuracy, Latency};
+		
+		% Stage 7
+		\node (s7) [below of=s6] {Stage 7:\\Deployment and Inference\\Jetson Nano: Real-Time Detection and OCR};
+		
+		
+		% Arrows connecting stages
+		\draw[arrow] (s1.south) -- (s2.north);
+		\draw[arrow] (s2.south) -- (s3.north);
+		\draw[arrow] (s3.south) -- (s4.north);
+		\draw[arrow] (s4.south) -- (s5.north);
+		\draw[arrow] (s5.south) -- (s6.north);
+		\draw[arrow] (s6.south) -- (s7.north);
+		
+		
+	\end{tikzpicture}

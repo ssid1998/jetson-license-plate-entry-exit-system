@@ -1,0 +1,45 @@
+	\begin{tikzpicture}[
+		module/.style={
+			rectangle,
+			rounded corners,
+			draw=black,
+			thick,
+			minimum width=3cm,
+			minimum height=0.6cm,
+			align=center,
+			font=\small
+		},
+		core/.style={module, fill=blue!20},
+		nn/.style={module, fill=green!20},
+		optim/.style={module, fill=orange!20},
+		util/.style={module, fill=yellow!20},
+		arrow/.style={
+			-{Latex[length=2.5mm]},
+			thick
+		}
+		]
+		
+		% Main PyTorch box
+		\node[core] (pytorch) {PyTorch Framework};
+		
+		% First level modules
+		\node[core, below=1.5cm of pytorch, xshift=-5cm] (torch) {\texttt{torch}\\Core Tensor Library};
+		\node[nn, below=1.5cm of pytorch] (nn) {\texttt{torch.nn}\\Neural Network Modules};
+		\node[optim, below=1.5cm of pytorch, xshift=5cm] (optim) {\texttt{torch.optim}\\Optimisation Algorithms};
+		
+		% Second level modules under torch.nn, spread horizontally
+		\node[util, below=2.0cm of nn, xshift=-5cm] (vision) {\texttt{torchvision}\\Image Tools \& Models};
+		\node[util, below=2.0cm of nn] (data) {\texttt{torch.utils.data}\\Data Loading Utilities};
+		\node[util, below=2.0cm of nn, xshift=5cm] (autograd) {\texttt{autograd}\\Automatic Differentiation};
+		
+		% Arrows from PyTorch to first level
+		\draw[arrow] (pytorch.south west) -- (torch.north);
+		\draw[arrow] (pytorch.south) -- (nn.north);
+		\draw[arrow] (pytorch.south east) -- (optim.north);
+		
+		% Arrows from nn to second level
+		\draw[arrow] (nn.south west) -- (vision.north);
+		\draw[arrow] (nn.south) -- (data.north);
+		\draw[arrow] (nn.south east) -- (autograd.north);
+		
+	\end{tikzpicture}

@@ -24,30 +24,7 @@ The Knowledge Discovery in Databases (KDD) process is the backbone of the applic
 
 \begin{figure}[htbp]
 	\centering
-	\begin{tikzpicture}[node distance=1.8cm, auto,
-		block/.style={
-			rectangle,
-			draw=blue!60,
-			fill=blue!5,
-			very thick,
-			minimum size=1cm,
-			minimum width=4cm,
-			rounded corners,
-			align=center
-		},
-		arrow/.style={-latex, thick, blue!60}]
-		
-		\node [block] (select) {1. Data Selection\\(LifeCam/Datasets)};
-		\node [block, below of=select] (process) {2. Preprocessing\\(Cleaning/Filtering)};
-		\node [block, below of=process] (transform) {3. Transformation\\(Resizing/Normalization)};
-		\node [block, below of=transform] (mining) {4. Data Mining\\(YOLOv8 Training)};
-		\node [block, below of=mining] (eval) {5. Evaluation\\(mAP / Precision)};
-		
-		\draw [arrow] (select) -- (process);
-		\draw [arrow] (process) -- (transform);
-		\draw [arrow] (transform) -- (mining);
-		\draw [arrow] (mining) -- (eval);
-	\end{tikzpicture}
+	\input{../../tikz/7DomainKnowledgeAppDev/KddProcess.tikz}
 	\caption{The KDD Process tailored for the License Plate Recognition System.}
 	\label{fig:kdd_process}
 \end{figure}
@@ -175,21 +152,7 @@ To artificially expand the training set and improve robustness against the envir
 
 \begin{figure}[htbp]
 	\centering
-	\begin{tikzpicture}[
-		img/.style={rectangle, draw=black, minimum size=1.5cm, align=center},
-		op/.style={circle, draw=red!60, fill=red!5, thick, minimum size=1.2cm, align=center, font=\scriptsize},
-		arrow/.style={-latex, thick}
-		]
-		\node[img] (orig) {Original\\Frame};
-		\node[op, right=1.5cm of orig] (aug) {Augment\\Pipeline};
-		\node[img, right=1.5cm of aug] (new) {Training\\Batch};
-		
-		\draw[arrow] (orig) -- node[above]{\scriptsize Input} (aug);
-		\draw[arrow] (aug) -- node[above]{\scriptsize Mosaic} (new);
-		\draw[arrow] (aug) to[bend left=45] node[above]{\scriptsize HSV Shift} (new);
-		\draw[arrow] (aug) to[bend right=45] node[below]{\scriptsize Scale/Blur} (new);
-		
-	\end{tikzpicture}
+	\input{../../tikz/7DomainKnowledgeAppDev/AugmentationStrategy.tikz}
 	\caption{Data Augmentation Strategy to increase dataset variability.}
 	\label{fig:augmentation_strategy}
 \end{figure}
@@ -231,33 +194,7 @@ Transitioning the model from a development workstation to the Jetson Nano requir
 
 \begin{figure}[htbp]
 	\centering
-	\begin{tikzpicture}[
-		node distance=0.5cm,
-		box/.style={rectangle, draw=black!70, very thick, minimum width=3cm, minimum height=0.8cm, align=center, rounded corners},
-		group/.style={rectangle, draw=gray!40, dashed, inner sep=0.3cm, label={[anchor=north west, inner sep=1pt]north west:\tiny \textbf{#1}}}
-		]
-		% Hardware Layer
-		\node[box, fill=gray!20] (jetson) {NVIDIA Jetson Nano};
-		\node[box, fill=gray!20, right=0.5cm of jetson] (cam) {Microsoft LifeCam};
-		
-		% OS Layer
-		\node[box, fill=blue!10, above=0.8cm of jetson] (os) {Ubuntu 18.04 (L4T)};
-		
-		% Library Layer
-		\node[box, fill=green!10, above=0.8cm of os] (libs) {PyTorch + TensorRT};
-		
-		% Application Layer
-		\node[box, fill=orange!20, above=0.8cm of libs] (app) {YOLOv8 + EasyOCR};
-		
-		% Connect them
-		\draw[->, thick] (jetson) -- (os);
-		\draw[->, thick] (os) -- (libs);
-		\draw[->, thick] (libs) -- (app);
-		\draw[<->, dashed] (cam) -- (jetson);
-		
-		% Grouping
-		\node[group={Hardware}, fit=(jetson) (cam)] {};
-	\end{tikzpicture}
+	\input{../../tikz/7DomainKnowledgeAppDev/TechStack.tikz}
 	\caption{The Hardware-Software Stack for the Edge Device.}
 	\label{fig:tech_stack}
 \end{figure}

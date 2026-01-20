@@ -1,0 +1,9 @@
+	\begin{tikzpicture}[block/.style={draw, rectangle, minimum width=2cm, minimum height=1cm, align=center, fill=blue!20}]
+		\node[block] (input) {Input Feature Map};
+		\node[block, right=1.5cm of input] (conv1) {Filter 1};
+		\node[block, above=0.5cm of conv1] (conv2) {Filter 2};
+		\node[block, below=0.5cm of conv1] (conv3) {Filter 3};
+		\draw[->, thick] (input.east) -- (conv1.west);
+		\draw[->, thick] (input.east) -- (conv2.west);
+		\draw[->, thick] (input.east) -- (conv3.west);
+	\end{tikzpicture}

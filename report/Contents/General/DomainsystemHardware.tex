@@ -1,6 +1,7 @@
 % ===========================================================================
 % SECTION: APPLICATION DOMAIN KNOWLEDGE - HARDWARE
 % ===========================================================================
+\chapter{Domain System - Hardware} \label{ch:domain_system_hardware}
 
 \section{Application Domain Knowledge: Hardware}
 \label{sec:hardware_domain}
@@ -21,51 +22,8 @@ To understand the scope of the hardware implementation, we first classify the sy
 % --- VISUAL 1: HARDWARE TAXONOMY TREE ---
 \begin{figure}[h!]
 	\centering
-	\begin{tikzpicture}[
-		edge from parent/.style={draw, very thick, -latex},
-		level 1/.style={sibling distance=6cm, level distance=2.5cm},
-		level 2/.style={sibling distance=3cm, level distance=2.5cm},
-		box/.style={
-			rectangle, 
-			draw=black!80, 
-			fill=blue!5, 
-			rounded corners, 
-			minimum width=3cm, 
-			minimum height=1.2cm, 
-			align=center,       
-			very thick, 
-			drop shadow, 
-			text width=2.5cm
-		},
-		root/.style={
-			rectangle, 
-			draw=black!80, 
-			fill=blue!20, 
-			rounded corners, 
-			minimum width=4cm, 
-			minimum height=1.5cm, 
-			align=center,       
-			very thick, 
-			drop shadow, 
-			font=\large\bfseries
-		}
-		]
-		
-		\node[root] {Complete System\\(LPR Context)}
-		child { node[box] (hw) {\textbf{Hardware}\\ \textbf{Domain}}
-			child { node[box] {Computing Unit\\(Jetson Nano)} }
-			child { node[box] {Acquisition\\(LifeCam)} }
-		}
-		child { node[box] {Environment\\Domain}
-			child { node[box] {Lighting\\Conditions} }
-			child { node[box] {Physical\\Mounting} }
-		};
-		
-		% Side Note
-		\node[right=1cm of hw, text width=4cm, align=left, font=\small\itshape, draw=gray, dashed, inner sep=5pt] 
-		{The Hardware Domain acts as the bridge between raw environmental data and software logic.};
-		
-	\end{tikzpicture}
+	/Users/sid/Documents/GitHub/ML26-03-Car-Licence-Plate-Identification-with-a-Jetson-Nano/report/tikz/3DomainKnowledgeHardware/DomainSystemHardware
+	\input{../../tikz/3DomainKnowledgeHardware/DomainSystemHardware/HardwareTaxonomy.tikz}
 	\caption{Taxonomy of the Complete System showing the dependency between Hardware and Environment.}
 	\label{fig:hardware_taxonomy}
 \end{figure}
@@ -88,51 +46,7 @@ Thermal management and port accessibility are important considerations for form 
 % --- VISUAL 2: J1010 LAYOUT SCHEMATIC ---
 \begin{figure}[h!]
 	\centering
-	\begin{tikzpicture}[scale=0.9, transform shape]
-		% --- MAIN BOARD PCB ---
-		\draw[fill=blue!20, very thick, rounded corners=3pt] (0,0) rectangle (10, 7);
-		\node[font=\large\bfseries, color=blue!40!black, align=center] at (5, 5.5) {Seeed Studio\\reComputer J1010 Carrier Board};
-		
-		% --- CENTRAL SoM & HEATSINK ---
-		\draw[fill=black!85, draw=black, thick] (2.5, 1.5) rectangle (7.5, 4.5);
-		\node[color=white, font=\bfseries, align=center] at (5, 3.0) {Jetson Nano SoM\\\& Heatsink};
-		
-		% --- FRONT PORTS (Bottom Edge - ALL ON SAME LINE) ---
-		% 1. USB-C Power (Far Left)
-		\draw[fill=gray!30, draw=black!80, thick] (0.5, -0.6) rectangle (1.5, 0);
-		\draw[fill=black!80, rounded corners=1pt] (0.7, -0.4) rectangle (1.3, -0.2);
-		\node[below, font=\bfseries\scriptsize, align=center] at (1.0, -0.6) {USB-C\\Power};
-		
-		% 2. HDMI (Middle Left)
-		\draw[fill=gray!40, draw=black!80, thick] (2.0, -0.6) rectangle (3.5, 0);
-		\draw[fill=black!80] (2.2, -0.4) rectangle (3.3, -0.2);
-		\node[below, font=\bfseries\scriptsize] at (2.75, -0.6) {HDMI};
-		
-		% 3. USB 3.0 x4 (Middle Right - Blue Ports)
-		\draw[fill=cyan!40!white, draw=black!80, thick] (4.0, -0.6) rectangle (7.0, 0);
-		\foreach \x in {4.2, 4.9, 5.6, 6.3} {
-			\draw[fill=black!30] (\x, -0.4) rectangle (\x+0.5, -0.15);
-		}
-		\node[below, font=\bfseries\scriptsize] at (5.5, -0.6) {4x USB 3.0};
-		
-		% 4. Gigabit Ethernet (Far Right)
-		\draw[fill=gray!40, draw=black!80, thick] (7.5, -0.6) rectangle (9.0, 0);
-		\draw[fill=black!20] (7.7, -0.4) rectangle (8.8, -0.1);
-		\node[below, font=\bfseries\scriptsize] at (8.25, -0.6) {Gigabit ETH};
-		
-		% --- TOP EDGE COMPONENTS ---
-		\draw[fill=black!90] (1, 6.2) rectangle (9, 6.8);
-		\foreach \x in {1.2, 1.4, ..., 8.8} {
-			\draw[fill=yellow] (\x, 6.4) circle (0.06);
-			\draw[fill=yellow] (\x, 6.6) circle (0.06);
-		}
-		\node[above, font=\small\bfseries] at (5, 6.8) {40-Pin GPIO Header};
-		
-		% --- DIMENSIONS ---
-		\draw[<->, thick, red] (0, -1.8) -- (10, -1.8) node[midway, fill=white] {Length ($\approx$ 100 mm)};
-		\draw[<->, thick, red] (10.5, 0) -- (10.5, 7) node[midway, fill=white, rotate=90] {Width ($\approx$ 80 mm)};
-		
-	\end{tikzpicture}
+	\input{../../tikz/3DomainKnowledgeHardware/DomainSystemHardware/SchematicLayout.tikz}
 	\caption{Schematic Layout of the reComputer J1010. All I/O ports aligned on the front edge are illustrated.}
 	\label{fig:j1010_schematic}
 \end{figure}
@@ -193,8 +107,7 @@ The "Data" keyword in our domain analysis refers to the raw material processed b
 	\renewcommand{\arraystretch}{1.6}
 	\setlength{\tabcolsep}{10pt}
 	\begin{tabular}{|p{0.2\linewidth}|p{0.3\linewidth}|p{0.4\linewidth}|}
-		\hline
-		\rowcolor{blue!20} 
+		\hline 
 		\textbf{Category} & \textbf{Property} & \textbf{System Specification / Value} \\ \hline
 		\textbf{Hardware} & Sensor Technology & CMOS Active Pixel Sensor \\ \cline{2-3}
 		& Optical Format & Microsoft LifeCam Module \\ \hline
@@ -232,33 +145,7 @@ The final aspect of the Application Domain Knowledge is understanding the limits
 % --- VISUAL 4: CONSTRAINTS MINDMAP ---
 \begin{figure}[h!]
 	\centering
-	\begin{tikzpicture}[
-		mindmap, concept color=blue!50,
-		every node/.style={concept, scale=0.9, execute at begin node=\hskip0pt},
-		grow cyclic,
-		level 1/.style={level distance=5cm, sibling angle=90},
-		level 2/.style={level distance=3cm, sibling angle=45, font=\scriptsize}
-		]
-		
-		\node [root concept] {\textbf{Hardware}\\ \textbf{Constraints}}
-		child [concept color=red!40] { node {Environmental}
-			child { node {Lighting\\Variation} }
-			child { node {Weather\\proofing} }
-		}
-		child [concept color=orange!40] { node {Computational}
-			child { node {Thermal\\Throttling} }
-			child { node {Memory\\(4GB RAM)} }
-		}
-		child [concept color=green!40] { node {Physical}
-			child { node {Mounting\\Angle} }
-			child { node {Vibration\\Stability} }
-		}
-		child [concept color=purple!40] { node {Calibration}
-			child { node {Focus\\Adjustment} }
-			child { node {Lens\\Distortion} }
-		};
-		
-	\end{tikzpicture}
+	\input{../../tikz/3DomainKnowledgeHardware/DomainSystemHardware/HardwareConstraints.tikz}
 	\caption{Cyclic dependency of Constraints and Calibration factors influencing the Hardware Domain.}
 	\label{fig:hardware_constraints}
 \end{figure}
