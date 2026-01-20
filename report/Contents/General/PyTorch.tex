@@ -20,65 +20,66 @@
 \index{PyTorch!Introduction}
 
 \noindent
-PyTorch is a modern, open-source deep learning framework designed to provide an intuitive, Pythonic interface while maintaining high computational performance. As described by its core contributors, PyTorch implements an imperative (define-by-run) execution model that enables flexible neural network construction and debugging during runtime \cite{paszke2019pytorch}. At its core, PyTorch offers a powerful tensor library comparable to NumPy but augmented with GPU acceleration and automatic differentiation through its \texttt{autograd} engine, which efficiently computes gradients for optimization in deep learning workloads \cite{pytorchdocs}.
+PyTorch is an open-source deep learning framework. It implements an imperative (define-by-run) execution model that ensures flexibility in neural network construction and debugging during runtime \cite{paszke2019pytorch}. PyTorch provides a powerful tensor library augmented with GPU acceleration via the \texttt{autograd} engine, that is able to provide a computational framework for gradients in  optimization tasks for deep learning workloads \cite{pytorchdocs}.
 
-What distinguishes PyTorch from earlier deep learning frameworks is its dynamic computation graph design, which constructs the computational graph during execution and allows developers to utilize standard Python control flow for model definition \cite{goodfellow2016deep}. Beyond its fundamental tensor and gradient capabilities, PyTorch provides a comprehensive ecosystem of modules for neural network layers, loss functions, optimization algorithms, and efficient data pipelines. These components, along with strong community support and extensive official documentation, make PyTorch a versatile and scalable framework for both research-oriented experimentation and large-scale production systems \cite{pinto2022springer}.
+PyTorch distinguishes itself from previous deep learning frameworks in its dynamic computation graph design, That is able to construct a computational graph during execution and utilizes standard Python control flow for defining models \cite{goodfellow2016deep}. Apart from its fundamental tensor and gradient capabilities, PyTorch provides a variety of modules  pertaining to neural network layers, loss functions, optimization algorithms, and efficient data pipelines. Such  component support makes PyTorch a versatile and scalable framework for deep learning tasks and embedded system deployment \cite{pinto2022springer}.
 
-In this project, PyTorch serves as the primary deep learning framework responsible for executing the licence plate detection model on the Jetson Nano B01. After image frames are captured and pre-processed by OpenCV, PyTorch is used to:
+In the context of this project, PyTorch is at the core deep learning framework responsible for the execution of license plate detection model on the Jetson Nano. Following OpenCV image capture and processing, PyTorch is responsible for:
 
 \begin{itemize}
-	\item Convert incoming frames into tensors suitable for neural network inference,
-	\item Run the optimised deep learning model on the Jetson Nano’s CUDA-enabled GPU to achieve real-time licence plate detection, and
-	\item Interface with \texttt{torchvision} utilities for model loading, tensor transformations, and streamlined inference workflows.
+	\item Transforming input frames into tensors suited towards neural network inference,
+	\item Running the optimized deep learning model on the Jetson Nano’s CUDA-enabled GPU, and
+	\item Interfacing with \texttt{torchvision} utilities for model loading, tensor transformations, and streamlined inference workflows.
 \end{itemize}
 
-This tight coupling between PyTorch and the Jetson platform provides an efficient pipeline for identifying licence plates and logging detection results within the system \cite{jetsonpytorch}.
+This tight coupling between PyTorch and the Jetson platform is instrumental in building an efficient pipeline for identifying license plates and logging detection results within the system \cite{jetsonpytorch}.
 
 % --------------------------------------------------------
 \section{Description}
 \index{PyTorch!Description}
 
-PyTorch is organised into a set of modular components that work together to support deep learning model development, training, and deployment. Each module provides specialised functionality, allowing developers to build complex pipelines with minimal overhead. The most relevant components include:
+PyTorch comprises of modular components that support deep learning model development, training, and deployment. Each module is responsible for a specific function. The most relevant components are described as follows:
 
 \begin{itemize}
-	\item \texttt{torch}: the core package providing tensor operations, mathematical functions, and GPU acceleration.
-	\item \texttt{torch.nn}: a high-level module containing neural network layers, activation functions, and loss functions.
-	\item \texttt{torch.optim}: implements optimisation algorithms such as SGD and Adam for training neural networks.
-	\item \texttt{torchvision}: offers tools for image-based tasks, including datasets, transforms, and pre-trained models.
-	\item \texttt{torch.utils.data}: provides efficient data-loading utilities, including dataset abstractions and data loaders.
-	\item \texttt{autograd}: PyTorch’s automatic differentiation engine that computes gradients for backpropagation.
+	\item \texttt{torch}: The core package responsible for providing tensor operations and mathematical functions.
+	\item \texttt{torch.nn}: Module consisting of neural network layers, activation functions, and loss functions.
+	\item \texttt{torch.optim}: Responsible for the implementation of optimization algorithms, like SGD and Adam, for neural network training.
+	\item \texttt{torchvision}: Provides tools pertaining to image-based tasks, including datasets and pre-trained models.
+	\item \texttt{torch.utils.data}: Contains data-loading utilities for dataset abstraction and data loading.
+	\item \texttt{autograd}: Enables gradient computation for backpropagation.
 \end{itemize}
 
 \begin{figure}[htbp]
 	\centering
 	\input{../../tikz/4DomainKnowledgeML/PyTorch/PyTorchStructure.tikz}
 	\captionsetup{font=small}
-	\caption{Hierarchical structure of the PyTorch framework with color-coded modules: core tensor operations (\texttt{torch}) in blue, neural network layers (\texttt{torch.nn}) in green, optimization algorithms (\texttt{torch.optim}) in orange, and supporting utilities (\texttt{torchvision}, \texttt{torch.utils.data}, \texttt{autograd}) in yellow.}
+	\caption{Hierarchical structure of the PyTorch framework : Core tensor operations (\texttt{torch}) in blue, neural network layers (\texttt{torch.nn}) in green, optimization algorithms (\texttt{torch.optim}) and supporting utilities (\texttt{torchvision}, \texttt{torch.utils.data}, \texttt{autograd}) in yellow.}
 	\label{fig:pytorch_structure}
 \end{figure}
 
 
-PyTorch provides a highly flexible and efficient framework for computer vision applications. Its dynamic computation graph allows for rapid experimentation with custom neural network architectures, which is particularly valuable in vision tasks that often require complex, non-standard layers and pipelines \cite{paszke2019pytorch}. The seamless integration with Python and popular scientific libraries such as NumPy and SciPy further simplifies data manipulation, augmentation, and preprocessing, all of which are critical steps in building robust vision models \cite{goodfellow2016deep}.
+PyTorch and its dynamic computation graph enables rapid experimentation with custom neural network architectures, often vital in computer vision tasks \cite{paszke2019pytorch}. The integration with Python and popular scientific libraries such as NumPy and SciPy augments data manipulation and pre-processing \cite{goodfellow2016deep}.
 
-PyTorch also offers a rich ecosystem of vision-specific utilities through its \texttt{torchvision} library. This module provides pre-built datasets, common image transforms, and pre-trained models such as ResNet, VGG, and YOLO, which can be easily fine-tuned for custom tasks \cite{torchvision_docs}. Additionally, PyTorch supports mixed-precision training, distributed computing, and optimized CUDA kernels, enabling efficient training and inference even on resource-constrained devices like edge GPUs and mobile platforms \cite{nvidia_jetson}. These capabilities allow developers to build state-of-the-art computer vision pipelines for tasks including object detection, image classification, and semantic segmentation with both speed and flexibility.
+In addition, PyTorch offers a diverse ecosystem of vision-specific utilities through \texttt{torchvision} library. It provides pre-built datasets, common image transforms, and pre-trained models such as ResNet, VGG, and YOLO that can be customized \cite{torchvision_docs}. PyTorch also supports mixed-precision training, distributed computing, and optimized CUDA kernels, enabling efficient training and inference \cite{nvidia_jetson}. 
 
 % --------------------------------------------------------
 \section{Installation}
 \index{PyTorch!Installation}
 
-Installing PyTorch typically begins with preparing a standard Python environment. Users can install PyTorch using popular package managers such as \texttt{pip} or \texttt{conda}, which handle the library itself along with its Python bindings and essential dependencies. Core dependencies include NumPy, SciPy, and Python development headers, while GPU acceleration requires CUDA and cuDNN libraries on compatible hardware \cite{paszke2019pytorch, kulkarni2022cvprojects}. In a typical workflow, a user may first create a virtual environment using \texttt{venv} or \texttt{conda}, activate it, and then install PyTorch and optional packages like \texttt{torchvision}, \texttt{torchaudio}, or \texttt{torchtext} to build a complete deep learning stack. This approach ensures that PyTorch integrates seamlessly with other scientific computing libraries and that dependencies are isolated for project-specific workflows.
+PyTorch installation starts with the preparation of a standard Python environment. It is typically installed using package managers like as \texttt{pip} or \texttt{conda}. Core dependencies include NumPy, SciPy, and Python development headers. For GPU acceleration, CUDA and cuDNN libraries are essential \cite{paszke2019pytorch, kulkarni2022cvprojects}. In common workflows, virtual environments may be created using \texttt{venv} or \texttt{conda}. Once activated, PyTorch is then installed along with optional packages such as \texttt{torchvision}, \texttt{torchaudio}, or \texttt{torchtext} completing the deep learning stack. 
 
-Installing PyTorch on an NVIDIA Jetson platform requires a series of concrete steps to ensure compatibility with the ARM architecture and the CUDA-enabled GPU. The typical installation procedure for Jetson Nano, TX2, or Xavier devices includes:
+An installation procedure for Jetson Nano includes:
 
 \begin{itemize}
-	\item \textbf{Install NVIDIA JetPack SDK:} Download and install the JetPack SDK, which provides the necessary CUDA, cuDNN, and TensorRT libraries for GPU acceleration.
-	\item \textbf{Set up Python environment:} Install Python 3 and \texttt{pip}, and optionally create a virtual environment using \texttt{virtualenv} or \texttt{conda} to isolate dependencies.
+	\item \textbf{Install NVIDIA JetPack SDK:} Download and install the JetPack SDK.
+	\item \textbf{Set up Python environment:} Install Python 3 and \texttt{pip}. A virtual environment using \texttt{virtualenv} or \texttt{conda} can further be created to isolate dependencies.
 	\item \textbf{Install PyTorch wheel:} Download the pre-built PyTorch wheel specifically optimized for Jetson devices and install it using \texttt{pip}.
-	\item \textbf{Install supporting libraries:} Install \texttt{torchvision} and other relevant packages ensuring CUDA support is enabled for GPU-accelerated operations.
-	\item \textbf{Verify installation:} Run a simple tensor operation and confirm GPU availability to ensure PyTorch is fully operational.
+	\item \textbf{Install supporting libraries:} Install \texttt{torchvision} ensuring CUDA support is enabled for GPU-accelerated operations.
+	\item \textbf{Verify installation:} Execute a simple tensor operation and ensure GPU availability to confirm successful PyTorch operation.
 \end{itemize}
 
-Following these steps ensures that PyTorch is correctly installed and optimized for Jetson hardware, enabling efficient training and inference of deep learning models for computer vision, robotics, and other edge applications \cite{nvidia_jetson, kulkarni2022cvprojects}.
+The following command installs the core \PYTHON{torch} library along with \PYTHON{torchvision} and \PYTHON{torchaudio} modules. The official PyTorch documentation provides detailed installation instructions and platform-specific wheels \cite{paszke2019pytorch, pytorchdocs}.
+
 
 \begin{tcolorbox}[colback=white,colframe=black,coltext= ShellColor, sharp corners, boxrule=0.8pt]
 	\begin{small}
@@ -88,7 +89,6 @@ Following these steps ensures that PyTorch is correctly installed and optimized 
 	\end{small}
 \end{tcolorbox}
 
-This command installs the core \PYTHON{torch} library along with \PYTHON{torchvision} and \PYTHON{torchaudio} modules, which provide utilities for computer vision and audio processing tasks. After installation, these modules can be imported directly in Python scripts for model building, training, and inference. For advanced configurations, such as enabling CUDA support on desktop GPUs or Jetson devices, the official PyTorch documentation provides detailed installation instructions and platform-specific wheels \cite{paszke2019pytorch, pytorchdocs}.
 
 
 
@@ -104,20 +104,16 @@ The example script \FILE{PyTorchLPExample.py} demonstrates a minimal but represe
 	\item basic model inference and frame annotation operations work as expected on the Jetson Nano.
 \end{itemize}
 
-Conceptually, the example performs the following steps:
+In essence, the example performs the following steps:
 \begin{enumerate}
-	\item Open the default camera device using \PYTHON{cv2.VideoCapture(0)}.
-	\item Read frames in a loop and check that the returned frame is valid.
-	\item Convert each frame to a PyTorch tensor using \PYTHON{torchvision.transforms.ToTensor()}, and optionally move it to GPU with \PYTHON{tensor.cuda()}.
-	\item Run a PyTorch model (dummy or pre-trained) on the tensor to simulate licence plate detection.
-	\item Annotate the original frame with predicted bounding boxes and confidence scores using \PYTHON{cv2.rectangle} and \PYTHON{cv2.putText}.
-	\item Display the annotated frame in a window using \PYTHON{cv2.imshow}.
-	\item Terminate the loop when the user presses a specific key (e.g., \texttt{q}) and release all resources.
+	\item Starts the default camera device using \PYTHON{cv2.VideoCapture(0)}.
+	\item Reads and processes frames in a loop, while checking the validity of returned frames.
+	\item Transforms frames into PyTorch tensors using \PYTHON{torchvision.transforms.ToTensor()}.
+	\item Executes a PyTorch model (dummy or pre-trained) on the tensor to enable licence plate detection.
+	\item Annotates the original frame with predicted bounding boxes and confidence scores using \PYTHON{cv2.rectangle} and \PYTHON{cv2.putText}.
+	\item Displays annotated frames in a window using \PYTHON{cv2.imshow}.
+	\item Terminates loops when specific keys are pressed (e.g., \texttt{q}), thereby releasing resources.
 \end{enumerate}
-
-This example mirrors the essential I/O, pre-processing, and inference steps used in the full Jetson Nano licence plate detection pipeline and provides a template for integrating PyTorch models with real-time camera input.
-
-
 % --------------------------------------------------------
 \section{Example -- Manual}
 \index{PyTorch!Example Manual}
