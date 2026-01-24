@@ -1,4 +1,3 @@
-@ -0,0 +1,317 @@
 %%%
 %
 % $Autor: Shubhankar Dumka, Gautam Ramesh, Siddhanth Sharma  $
@@ -20,68 +19,14 @@
 \section{Introduction}
 \index{Methodology!Introduction}
 
-\noindent Automatic License Plate Recognition (ALPR) systems have become essential components of modern intelligent transportation systems, parking management, and access control applications \cite{du2013automatic,silva2018license}. These systems require accurate detection and recognition of vehicle license plates under diverse environmental conditions, including variations in lighting, viewing angles, occlusion, and plate design. Deploying ALPR systems on edge devices such as the NVIDIA Jetson Nano introduces additional constraints related to computational resources, power consumption, and real-time performance \cite{shi2016edge,nvidia_jetson}.  
+Traditionally, ANPR pipelines consisted of separate modules for localization, segmentation, and recognition, often relying on handcrafted features and heuristic rules \cite{turn0search28}. With the advent of deep learning, unified approaches that leverage Convolutional Neural Networks (CNNs) and end-to-end object detectors such as YOLO have demonstrated significantly improved robustness and accuracy in complex environmental conditions \cite{turn0search5,turn0search0}.\newline 
 
-\noindent The methodology adopted in this project integrates three complementary components: the \textit{Cross-Industry Standard Process for Data Mining (CRISP-DM)}, the \textit{Knowledge Discovery in Databases (KDD) process}, and a modular machine learning pipeline. CRISP-DM provides a structured, iterative framework for managing the project lifecycle, ensuring alignment between business objectives—such as reliable license plate detection, timestamp recording, and fee calculation—and technical implementation \cite{chapman2000crisp}. By guiding the project through phases of business understanding, data preparation, modeling, evaluation, and deployment, CRISP-DM ensures that each step is systematically planned and optimized, which is particularly critical when operating under the resource constraints of embedded hardware.  
+Building and evaluating a license plate detection system requires a holistic methodological framework to connect low-level image data with actionable outcomes such as recognized license text, timestamped events, and billing information. While many deep learning applications focus narrowly on model training or post-deployment analytics, the Knowledge Discovery in Databases (KDD) process offers a broader, structured paradigm for transforming raw data into high-level knowledge through iterative stages of selection, preprocessing, transformation, mining, interpretation, and presentation \cite{fayyad1996knowledge}. Although KDD is a classic framework rooted in data mining and database research, its stages closely align with modern data science workflows and can be applied to both the training and operational phases of embedded computer vision systems.\newline
 
-\noindent The KDD process complements CRISP-DM by emphasizing the systematic transformation of raw data into actionable knowledge \cite{fayyad1996knowledge}. In this project, KDD is applied to both the offline training phase and the real-time deployment phase. During training, labeled images are preprocessed, augmented, and transformed into structured input-output pairs suitable for supervised learning. During deployment, the process is applied to live camera frames, converting raw pixels into bounding boxes via YOLO and subsequently into alphanumeric characters using EasyOCR \cite{jaidedai2020easyocr}. This separation ensures computational efficiency and maintains consistency between training and operational data distributions, which is essential for reliable inference on the Jetson Nano \cite{shi2016edge}.  
-
-\noindent The machine learning pipeline operationalizes these methodologies by implementing the core computational workflow for license plate detection and recognition. YOLO was chosen as the object detection model due to its single-pass architecture, which balances high accuracy with low inference latency \cite{redmon2016you,bochkovskiy2020yolov4}. EasyOCR is used for character recognition, providing modularity and robustness to variations in plate fonts, orientation, and illumination \cite{jaidedai2020easyocr}. Preprocessing steps such as resizing, normalization, and data augmentation further enhance generalization and maintain consistency between the training dataset and live input frames \cite{shorten2019survey}. Detected plates and corresponding entry and exit timestamps are stored in a lightweight SQLite database, enabling subsequent computation of parking duration and fees without reliance on cloud infrastructure \cite{sqlite_doc}.  
-
-\noindent By integrating CRISP-DM, the KDD process, and a carefully designed ML pipeline, this methodology addresses the dual challenges of \textit{accuracy} and \textit{real-time performance} on a constrained edge device. It provides a structured framework for dataset management, model training, deployment, and knowledge extraction, while ensuring that operational outputs—license plate numbers and timestamps—are reliable, interpretable, and actionable. This integrated approach demonstrates how modern ALPR systems can be effectively implemented on embedded hardware, paving the way for efficient, low-latency, and autonomous edge computing applications.  
-
-
-
-% --------------------------------------------------------
-\section{CRISP-DM}
-\index{Methodology!CRISP-DM}
-
-\section{Methodology: CRISP-DM for License Plate Detection on Jetson Nano}
-
-\noindent
-This project follows the \textbf{CRISP-DM (Cross-Industry Standard Process for Data Mining)} methodology, a widely adopted and structured framework for data-driven system development \cite{chapman2000crisp}. CRISP-DM provides a systematic approach consisting of six iterative phases: business understanding, data understanding, data preparation, modeling, evaluation, and deployment. Its flexibility and domain-independence make it particularly suitable for embedded computer vision applications, where machine learning models must be trained, evaluated, and deployed under hardware constraints \cite{shearer2000crispdm}. The following subsections describe how each CRISP-DM phase was applied in the context of license plate detection and timestamp-based fee calculation using the NVIDIA Jetson Nano.
-
-\subsection{Business Understanding}
-
-The primary objective of this project is to design and implement a real-time license plate detection system capable of operating on embedded hardware. The system must detect vehicle license plates, extract alphanumeric characters, record corresponding entry and exit timestamps, and store this information in a SQLite database for subsequent fee calculation based on parking duration. Such systems are commonly used in intelligent transportation systems, automated parking management, and access control applications \cite{anagnostopoulos2008license,du2013automatic}. 
-
-From a business perspective, the key requirements include reliable detection accuracy, real-time performance, low operational cost, and independence from cloud-based processing. The NVIDIA Jetson Nano was selected as the target platform due to its CUDA-enabled GPU, low power consumption, and suitability for edge AI applications \cite{nvidia_jetson}. These constraints guided the selection of lightweight detection models, efficient image-processing pipelines, and embedded-friendly database solutions.
-
-\subsection{Data Understanding}
-
-The dataset used in this project consists of 1,243 labeled images containing German vehicle license plates captured under varying lighting conditions, viewing angles, and background complexity. Understanding the characteristics of the dataset was critical to selecting appropriate preprocessing steps and model architectures. Variations in plate size, font style, illumination, and occlusion are well-known challenges in automatic license plate recognition (ALPR) systems \cite{silva2018license}. 
-
-Initial exploratory analysis focused on image resolution, aspect ratios, and class distribution to ensure suitability for training an object detection model. Sample images were visually inspected using OpenCV to identify noise, blur, and contrast issues that could negatively affect detection and recognition performance \cite{bradski2000opencv}.
-
-\subsection{Data Preparation}
-
-During the data preparation phase, images were loaded and processed using the OpenCV (\texttt{cv2}) library. Images were resized to match the input requirements of the YOLO-based detection model \cite{opencv_wiki}. 
-
-Data augmentation techniques such as scaling, translation, and brightness adjustment were applied to improve model robustness and generalization, particularly given the relatively limited dataset size \cite{shorten2019survey}. These steps are essential in computer vision tasks to mitigate overfitting and improve performance under real-world conditions, especially in embedded deployment scenarios.
-
-\subsection{Modeling}
-
-For the modeling phase, a YOLO-based object detection architecture was selected due to its balance between detection accuracy and real-time inference speed \cite{redmon2016you,bochkovskiy2020yolov4}. YOLO models perform object localization and classification in a single forward pass, making them well suited for edge devices such as the Jetson Nano. The model was trained to detect license plate bounding boxes using the prepared dataset.
-
-Following license plate localization, character recognition was performed using EasyOCR, an open-source optical character recognition library designed to work effectively with natural scene text \cite{jaidedai2020easyocr}. The integration of YOLO for detection and EasyOCR for character extraction enabled a modular pipeline where detection and recognition could be optimized independently. Training was conducted on a workstation with GPU acceleration, after which the trained model weights were transferred to the Jetson Nano for inference.
-
-\subsection{Evaluation}
-
-Model evaluation focused on both detection accuracy and system-level performance. Detection quality was assessed using standard object detection metrics such as precision and recall, while OCR output was evaluated by comparing detected characters against ground truth labels \cite{everingham2010pascal}. In addition to accuracy, inference latency and frame rate were measured on the Jetson Nano to ensure that real-time constraints were satisfied.
-
-End-to-end testing was performed by capturing live video streams from an external camera connected to the Jetson Nano, detecting license plates, extracting text, and recording timestamps. This holistic evaluation approach ensured that the integrated system met both functional and performance requirements under realistic operating conditions.
-
-\subsection{Deployment}
-
-In the deployment phase, the trained YOLO model and OCR pipeline were integrated into a real-time application running on the Jetson Nano. OpenCV was used for camera interfacing and frame preprocessing, while PyTorch handled model inference on the CUDA-enabled GPU \cite{paszke2019pytorch}. Detected license plate numbers, along with entry and exit timestamps, were stored in a lightweight SQLite database, chosen for its simplicity, reliability, and suitability for embedded systems \cite{sqlite_doc}.
-
-The deployed system continuously monitors incoming frames, updates database records, and enables subsequent computation of parking duration and fee calculation. This deployment strategy demonstrates the feasibility of performing end-to-end license plate detection, recognition, and data management entirely on edge hardware, reducing latency and eliminating dependence on cloud infrastructure \cite{shi2016edge}.
-
-
-\section{KDD Process}
-\index{Methodology!KDD}
+By adopting the KDD process, this work presents a systematic description of an license plate detection system that spans from data acquisition and model learning to deployment and real-time knowledge extraction on Jetson Nano. This end-to-end perspective highlights how data is progressively refined and interpreted, culminating in reliable license plate recognition and parking fee computation without reliance on external infrastructure. The following section elaborates on the methodology by detailing how each KDD stage is concretely realized within the proposed system.\newline
 
 \section{Methodology: Knowledge Discovery in Databases (KDD)}
+\index{Methodology!KDD}
 
 \noindent
 The Knowledge Discovery in Databases (KDD) process provides a structured framework for transforming raw data into meaningful and actionable knowledge through a sequence of well-defined stages \cite{fayyad1996knowledge}. In this project, KDD is applied holistically across both the \textit{model training phase} and the \textit{operational deployment phase}. Unlike methodologies that focus solely on post-deployment analytics, this consolidated KDD approach captures how knowledge is progressively extracted from raw visual data, beginning with dataset construction and model learning, and culminating in real-time license plate analysis and fee computation on embedded hardware.
@@ -134,130 +79,26 @@ Higher-level knowledge is subsequently derived by computing temporal differences
 \noindent
 By consolidating both the training and operational stages within the KDD framework, this methodology demonstrates how knowledge discovery extends beyond post-deployment analytics and encompasses the entire lifecycle of a data-driven computer vision system.
 
+% --------------------------------------------------------
 
 % --------------------------------------------------------
-\section{Machine Learning Pipeline}
-\index{Methodology!MLPipeline}
-
-\noindent The machine learning pipeline in this project is designed to enable real-time license plate detection and recognition on the NVIDIA Jetson Nano. This pipeline follows a structured sequence of stages inspired by conventional machine learning workflows \cite{kuhn2013applied,goodfellow2016deep} and is adapted to the constraints of embedded deployment. The pipeline integrates data acquisition, preprocessing, model training, evaluation, deployment, and continuous inference to ensure robust and efficient system operation.
-
-\begin{figure}[htbp]
-	\centering
-	\input{../../tikz/6DomainKnowledgeMethodology/MLPipeline.tikz}
-	\caption{Machine Learning Pipeline applied to Jetson Nano License Plate Detection.}
-	\label{fig:ml_pipeline_vertical}
-\end{figure}
-
-
-\subsection{Data Acquisition and Understanding}
-\noindent The first stage of the pipeline involves collecting and understanding the dataset. For training, 1,243 labeled images of German license plates were used, encompassing variations in illumination, plate orientation, occlusion, and background complexity \cite{du2013automatic,silva2018license}.
-
-Exploratory data analysis (EDA) was performed to:
-
-\begin{itemize}
-	\item Inspect image resolution and aspect ratios to ensure compatibility with the YOLO input dimensions \cite{redmon2016you}.
-	\item Examine class balance and diversity of license plate appearances to mitigate biases during model training.
-	\item Identify noise, blur, or low-contrast images using OpenCV visualization tools \cite{bradski2000opencv}.
-\end{itemize}
-
-This stage ensured a comprehensive understanding of the dataset and informed subsequent preprocessing and augmentation decisions.
-
-\subsection{Data Preprocessing}
-\noindent Preprocessing was performed to standardize input data and improve model performance \cite{shorten2019survey}. Key steps included:
-
-\begin{itemize}
-	\item Image resizing and normalization to match the YOLO model input requirements.
-	\item Data augmentation using techniques such as scaling, translation, rotation, and brightness adjustment to enhance robustness against real-world variability.
-	\item Color space conversion (RGB to grayscale where appropriate) to optimize OCR performance with EasyOCR \cite{jaidedai2020easyocr}.
-\end{itemize}
-
-During deployment, incoming frames from the external camera were preprocessed in real time to match the data distribution observed during training, ensuring consistent inference performance on the Jetson Nano.
-
-\subsection{Feature Extraction and Representation}
-\noindent Unlike traditional machine learning pipelines relying on handcrafted features, this pipeline leverages Convolutional Neural Networks (CNNs) within the YOLO architecture to automatically learn hierarchical visual features from raw image pixels \cite{goodfellow2016deep,purwono2020understanding}.
-
-The YOLO model encodes spatial and semantic information via convolutional layers, producing bounding box predictions for license plates in a single forward pass. Subsequently, extracted regions of interest (ROIs) are passed to EasyOCR, which converts visual patterns into alphanumeric characters, effectively transforming raw pixel data into structured symbolic representations \cite{jaidedai2020easyocr}.
-
-\subsection{Model Training and Optimization}
-\noindent The YOLO model was trained on the preprocessed dataset using GPU-accelerated workstations before deployment on the Jetson Nano. Training involved:
-
-\begin{itemize}
-	\item Loss minimization over bounding box coordinates and object confidence scores, following standard YOLO objectives \cite{bochkovskiy2020yolov4}.
-	\item Hyperparameter tuning for learning rate, batch size, and data augmentation parameters to maximize detection accuracy while preserving computational efficiency \cite{bergstra2012random}.
-	\item Regularization techniques such as dropout and early stopping to mitigate overfitting given the limited dataset size.
-\end{itemize}
-
-This stage ensured that the trained model could generalize effectively to unseen license plates under diverse environmental conditions.
-
-\subsection{Model Evaluation}
-\noindent Model performance was assessed through multiple metrics:
-
-\begin{itemize}
-	\item Detection metrics: Precision, recall, and mean Average Precision (mAP) for bounding box localization \cite{everingham2010pascal}.
-	\item Recognition metrics: Character-level accuracy for OCR outputs.
-	\item System-level performance: Inference latency, frame rate, and memory usage on the Jetson Nano to ensure real-time processing capabilities.
-\end{itemize}
-
-Evaluation was performed iteratively, with errors analyzed to guide further data augmentation, hyperparameter adjustment, and model refinement.
-
-\subsection{Deployment and Inference}
-\noindent The trained YOLO and EasyOCR models were deployed on the Jetson Nano, integrating real-time video capture via OpenCV and inference through PyTorch \cite{paszke2019pytorch,bradski2000opencv}. The deployment pipeline consists of:
-
-\begin{enumerate}
-	\item Capturing frames from the external camera.
-	\item Performing YOLO-based license plate detection.
-	\item Applying EasyOCR to detected ROIs for character recognition.
-	\item Recording license plate numbers along with entry and exit timestamps in a SQLite database \cite{sqlite_doc}.
-	\item Computing parking duration and fees using timestamp differences for subsequent management and billing operations.
-\end{enumerate}
-
-This deployment strategy ensures edge-based, low-latency operation without reliance on cloud infrastructure, making the system suitable for embedded parking management applications \cite{shi2016edge}.
-
-\subsection{Continuous Monitoring and Maintenance}
-\noindent To maintain accuracy over time, the system supports periodic model evaluation and retraining. New images captured in real-world conditions can be added to the dataset, and the YOLO model can be fine-tuned to account for environmental changes or new license plate styles, following best practices in machine learning lifecycle management \cite{sculley2015hidden}.
-
-
-% --------------------------------------------------------
-\section{Methodology Justification}
+\section{Methodology Justification: Knowledge Discovery in Databases (KDD)}
 \index{Methodology!Justification}
 
-\noindent Each methodological choice has been critically selected to address the constraints of real-time edge deployment, limited dataset size, and variability in visual conditions.  
+\noindent
+The Knowledge Discovery in Databases (KDD) process was selected as the methodological foundation of this project due to its ability to provide a structured, end-to-end framework for transforming raw data into actionable knowledge. Unlike narrowly scoped machine learning workflows that emphasize only model training or inference, KDD explicitly captures the full lifecycle of data-driven systems, encompassing data selection, preprocessing, transformation, mining, interpretation, and knowledge presentation \cite{fayyad1996knowledge,han2011data}. This makes KDD particularly well suited for complex computer vision applications that operate across both offline and real-time stages.\newline
 
-\begin{itemize}  
-	\item Dataset selection:\\
-	A dataset of 1,243 labeled images was chosen to balance the need for sufficient variability with the practical constraints of data collection and labeling. This dataset provides coverage of diverse lighting, viewing angles, and occlusion scenarios, which is critical for robust license plate detection \cite{silva2018license}. While a larger dataset could improve model generalization, it would increase labeling effort, storage requirements, and training time, which are non-trivial considerations for this project.  
-	
-	\item Separation of training and deployment:\\
-	The KDD process was split into distinct training and deployment stages to optimize computational efficiency. Training occurs offline on a workstation with GPU acceleration, allowing iterative model optimization and hyperparameter tuning. Deployment operates online on the Jetson Nano, performing real-time inference. This separation prevents resource overload and ensures that real-time constraints are satisfied \cite{shi2016edge}.  
-	
-	\item Structured data transformation:\\
-	By converting raw images into bounding boxes and subsequently into textual license plate data via OCR, the KDD process ensures that live input frames are consistently processed in the same manner as the training data. This consistency is crucial to maintain accuracy and reliability when the system is deployed in real-world conditions \cite{du2013automatic,jaidedai2020easyocr}.  
-\end{itemize}  
+\noindent
+A key justification for adopting KDD lies in its alignment with the dual-phase nature of the license plate detection system. The project involves both an offline training phase, where knowledge is learned from historical visual data, and an online deployment phase, where new knowledge is continuously extracted from live camera streams on embedded hardware. KDD naturally accommodates this separation while maintaining conceptual continuity, allowing learned patterns to be systematically transferred from training to operational inference \cite{shearer2000crisp}. By treating deployment as a continuation of the knowledge discovery process rather than a terminal step, KDD enables consistent reasoning about data quality, transformations, and outcomes throughout the system lifecycle.\newline
 
-\subsection{Justification for the Machine Learning Pipeline}  
-\noindent The machine learning pipeline was designed with both accuracy and computational feasibility in mind:  
+\noindent
+Furthermore, KDD emphasizes the importance of data quality and representation before model learning occurs. In computer vision systems, raw image data is inherently noisy and highly variable due to changes in illumination, viewpoint, background clutter, and sensor limitations. The explicit preprocessing and transformation stages of KDD provide a principled justification for image normalization, augmentation, and feature representation, which are essential for reliable pattern discovery in visual domains \cite{du2013automatic,lecun2015deep}. This focus reduces the risk of treating model performance as an isolated artifact and instead frames it as the result of cumulative data refinement decisions.\newline
 
-\begin{itemize}  
-	\item YOLO for license plate detection:\\
-	YOLO was selected for its single-pass detection capability, which enables fast inference necessary for real-time operation \cite{redmon2016you,bochkovskiy2020yolov4}. Alternative CNN-based detection models such as Faster R-CNN or SSD were considered but rejected due to their higher computational and memory requirements, which would compromise performance on the Jetson Nano.  
-	
-	\item EasyOCR for character recognition:\\
-	Using EasyOCR as a separate recognition module allows for independent optimization of detection and recognition. This modularity is advantageous for edge deployment, as it reduces GPU load and increases system flexibility. EasyOCR also handles the variability in license plate fonts, orientations, and lighting conditions more effectively than a monolithic end-to-end CNN model \cite{jaidedai2020easyocr}.  
-	
-	\item Preprocessing and augmentation:\\
-	Images were resized, normalized, and augmented to simulate real-world variations. These steps mitigate overfitting due to the relatively small dataset and ensure that the model generalizes to different environmental conditions, which is particularly important for reliable edge inference \cite{shorten2019survey}.  
-	
-	\item Dataset size and augmentation trade-off:\\
-	The chosen dataset size, combined with augmentation, provides sufficient diversity for training without incurring the high computational costs of very large datasets. This balance allows the model to achieve high detection and recognition accuracy while remaining feasible for deployment on the Jetson Nano.  
-\end{itemize}  
+\noindent
+Another important justification for using KDD is its emphasis on interpretation and evaluation as integral components of the discovery process. In the context of license plate recognition, extracted knowledge must be not only accurate but also meaningful and reliable when applied to downstream tasks such as timestamp logging and fee computation. KDD explicitly requires that discovered patterns be evaluated, interpreted, and validated against domain expectations, which supports systematic error analysis, filtering of incorrect detections, and validation of system behavior under real-world conditions \cite{everingham2010pascal}. This is particularly critical for embedded systems, where incorrect outputs can propagate directly into automated decision-making.\newline
 
-\subsection{Reflective Evaluation}  
-\noindent The combination of the KDD process and a modular machine learning pipeline provides a systematic and efficient approach to license plate detection on an embedded device. By structuring data selection, preprocessing, transformation, and model deployment, the methodology ensures:  
+\noindent
+Finally, KDD is justified by its strong focus on knowledge presentation and storage. The ultimate goal of the proposed system is not merely detection accuracy, but the generation of structured, persistent knowledge in the form of recognized license plates, temporal records, and computed fees. KDD provides a clear rationale for transforming low-level visual observations into higher-level symbolic and transactional data suitable for database storage and subsequent querying \cite{fayyad1996knowledge,han2011data}. This ensures that the system output is actionable, auditable, and extensible, rather than remaining confined to transient model predictions.\newline
 
-\begin{itemize}  
-	\item Consistency and reliability in converting raw visual data into actionable knowledge (license plate numbers and timestamps).  
-	\item Real-time performance on the Jetson Nano without overloading hardware resources.  
-	\item Flexibility for future updates or retraining, as each component (detection, recognition, storage) can be modified independently.  
-\end{itemize}  
-
-\noindent Overall, this methodology balances accuracy, efficiency, and edge-device feasibility, making it well-suited for real-world license plate detection, timestamp recording, and subsequent fee calculation.  
+\noindent
+Overall, the adoption of the KDD methodology provides a rigorous and holistic justification for the design of the proposed license plate detection system. By framing both training and deployment within a unified knowledge discovery paradigm, KDD ensures methodological consistency, interpretability, and practical relevance, making it well suited for license plate detection using Jetson Nano.\newline
