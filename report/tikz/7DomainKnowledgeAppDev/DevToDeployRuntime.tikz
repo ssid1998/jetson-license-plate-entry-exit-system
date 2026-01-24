@@ -1,0 +1,49 @@
+\begin{tikzpicture}[
+	node distance=10mm and 12mm,
+	box/.style={
+		rectangle,
+		draw=blue!60,
+		fill=blue!5,
+		very thick,
+		rounded corners,
+		align=center,
+		text width=0.26\linewidth,
+		minimum height=10mm
+	},
+	mem/.style={
+		rectangle,
+		draw=orange!70!black,
+		fill=orange!10,
+		thick,
+		rounded corners,
+		align=center,
+		text width=0.26\linewidth,
+		minimum height=12mm
+	},
+	arrow/.style={-Latex, thick, blue!60},
+	dasharrow/.style={-Latex, thick, dashed, gray!70}
+]
+
+	% --- Startup / runtime pipeline (Jetson) ---
+	\node[box] (cfg) {Runtime settings\\(Python constants)\\\tiny \texttt{ENGINE\_PATH}, \texttt{CONFIDENCE\_THRESHOLD}, billing rate};
+	\node[box, right=of cfg] (load) {Load artefacts\\TensorRT \texttt{best.engine}\\EasyOCR Reader init};
+	\node[box, right=of load] (loop) {Run loop (thread)\\Camera frames\\TensorRT inference $\rightarrow$ OCR};
+
+	\node[box, below=of loop] (event) {Event update\\plate\_text\\entry/last\_seen timestamps};
+	\node[mem, left=of event] (parking) {In-memory state\\\texttt{parking\_lot} dict\\(billing session)};
+	\node[mem, left=of parking] (frame) {In-memory frame\\\texttt{output\_frame}\\JPEG bytes (MJPEG)};
+
+	% --- Restart boundary ---
+	\node[box, below=of parking] (restart) {Restart behaviour\\session state resets\\(no persistence yet)};
+	\node[box, below=of frame] (flask) {Flask endpoints\\\texttt{/video\_feed} (MJPEG)\\\texttt{/api/billing} (JSON)};
+
+	\draw[arrow] (cfg) -- (load);
+	\draw[arrow] (load) -- (loop);
+	\draw[arrow] (loop) -- (event);
+	\draw[arrow] (event) -- (parking);
+	\draw[arrow] (loop) -- (frame);
+	\draw[arrow] (parking) -- (flask);
+	\draw[arrow] (frame) -- (flask);
+	\draw[dasharrow] (parking) -- (restart);
+
+\end{tikzpicture}

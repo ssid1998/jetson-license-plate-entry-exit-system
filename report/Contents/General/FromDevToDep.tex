@@ -1,0 +1,180 @@
+\chapter{\textcolor{red}{From Development to Deployment}}
+\label{sec:from_dev_to_dep}
+\index{Deployment}
+
+\noindent
+This section documents the pragmatic step from a trained license plate pipeline to a runnable application on the NVIDIA Jetson Nano.
+The focus is not DevOps theory, but the concrete runtime structure: \textbf{how inference results are represented}, which \textbf{tools} are required on-device, and how the system \textbf{saves and loads state} so that it can be restarted reliably.
+
+\begin{figure}[htbp]
+	\centering
+	\input{../../tikz/7DomainKnowledgeAppDev/DevToDeployRuntime.tikz}
+	\caption{Runtime deployment flow of the Jetson Nano Flask dashboard (\FILE{Code/LicencePlateDetection/jetson-inference/python/www/flask/dashboard2.py}).}
+	\label{fig:dev_to_deploy_runtime}
+\end{figure}
+
+% --------------------------------------------------------
+\section{Data Structure}
+\label{sec:devtodep_data_structure}
+\index{Deployment!Data Structure}
+
+\noindent
+After inference, the application does not operate on raw tensors; it operates on small Python objects that are easy to display, validate, and persist.
+The deployed Jetson dashboard (\FILE{Code/LicencePlateDetection/jetson-inference/python/www/flask/dashboard2.py}) uses plain Python types (\PYTHON{dict}, \PYTHON{list}, \PYTHON{tuple}) and two key global runtime variables: an in-memory ``parking lot'' state and the most recent encoded video frame.
+
+\subsection{Runtime objects and their roles}
+\index{Deployment!Data Structure!Runtime objects}
+
+\noindent
+At runtime, the Jetson application is organized into the following objects/modules:
+\begin{itemize}
+	\item \textbf{Camera source:} frames are captured via \PYTHON{jetson.utils.videoSource("/dev/video0")} into a CUDA image and converted to NumPy (\PYTHON{jetson.utils.cudaToNumpy}) for downstream processing.
+	\item \textbf{TensorRT inference:} the detector is deployed as a TensorRT engine (\PYTHON{best.engine}) and executed through TensorRT + PyCUDA (manual binding buffers in \FILE{Code/LicencePlateDetection/jetson-inference/python/www/flask/dashboard2.py}).
+	\item \textbf{OCR reader:} \PYTHON{easyocr.Reader} runs in CPU mode and outputs candidate text strings; the final plate string is produced using an allowlist and sanity checks (length and digit presence).
+	\item \textbf{Session state (\PYTHON{parking\_lot}):} a global \PYTHON{dict} that maps plate strings to timestamps for billing (\PYTHON{entry} and \PYTHON{last\_seen}).
+	\item \textbf{Stream buffer (\PYTHON{output\_frame}):} the latest camera frame with overlays encoded as JPEG bytes for MJPEG streaming over HTTP.
+	\item \textbf{Web API layer:} Flask serves the dashboard HTML and exposes JSON billing data (\PYTHON{/api/billing}) plus a video stream endpoint (\PYTHON{/video\_feed}).
+\end{itemize}
+
+\subsection{Billing event representation (post-inference)}
+\index{Deployment!Data Structure!Billing event}
+
+\noindent
+The core unit that flows through the deployed system is a \textbf{billing session record} for a recognized plate string.
+It is represented by one entry in the \PYTHON{parking\_lot} dictionary:
+
+\begin{table}[htbp]
+	\centering
+	\caption{In-memory data structure used by the deployed dashboard for billing state}
+	\label{tab:devtodep_parking_lot}
+	\begin{tabular}{@{}lll@{}}
+		\toprule
+		\textbf{Key / field} & \textbf{Python type (runtime)} & \textbf{Meaning / origin} \\ \midrule
+		\PYTHON{plate\_text} (dict key) & \PYTHON{str} & OCR output after allowlist + sanity checks \\
+		\PYTHON{entry} & \PYTHON{float} & first timestamp (seconds since epoch) when plate is seen \\
+		\PYTHON{last\_seen} & \PYTHON{float} & most recent timestamp when plate is seen \\
+		\PYTHON{fee} (computed) & \PYTHON{float} & \((\texttt{last\_seen}-\texttt{entry}) \times \texttt{RATE\_PER\_SECOND}\) \\
+		\bottomrule
+	\end{tabular}
+\end{table}
+
+\noindent
+This structure is suitable for the deployed demo because it is small, fast to update per frame, and directly usable by the dashboard API without additional database queries.
+
+% --------------------------------------------------------
+\section{Tools}
+\label{sec:devtodep_tools}
+\index{Deployment!Tools}
+
+\noindent
+The deployed application depends on a small number of tools that must be available on the Jetson Nano for a reproducible run:
+\begin{itemize}
+	\item \textbf{Python runtime + pip:} runs the application and installs dependencies (deployment dependencies for the Flask dashboard are listed in \FILE{Code/LicencePlateDetection/jetson-inference/python/www/flask/requirements.txt}).
+	\item \textbf{JetPack / L4T + CUDA stack:} provides the GPU runtime required by Jetson inference libraries.
+	\item \textbf{TensorRT:} runs the optimized detector as a serialized engine file (\PYTHON{best.engine}; loaded in \FILE{Code/LicencePlateDetection/jetson-inference/python/www/flask/dashboard2.py}).
+	\item \textbf{PyCUDA:} allocates buffers and executes the TensorRT context from Python (see \PYTHON{pycuda.driver} usage in \FILE{Code/LicencePlateDetection/jetson-inference/python/www/flask/dashboard2.py}).
+	\item \textbf{Jetson Inference (Python bindings):} camera capture and CUDA-to-NumPy conversion via \PYTHON{jetson.utils} (\FILE{Code/LicencePlateDetection/jetson-inference/python/www/flask/dashboard2.py}).
+	\item \textbf{OpenCV:} image preprocessing (resize, color conversion), overlay rendering, and JPEG encoding for the web stream.
+	\item \textbf{EasyOCR (CPU mode):} reads text from plate crops using an allowlist to reduce false characters.
+	\item \textbf{Flask:} serves the local web UI and provides API endpoints for billing state (\FILE{Code/LicencePlateDetection/jetson-inference/python/www/flask/dashboard2.py}).
+	\item \textbf{Git:} used to synchronize the application code and model artefacts between development and the Jetson Nano.
+\end{itemize}
+
+\begin{table}[htbp]
+	\centering
+	\caption{Deployment-relevant artefacts and their locations in the project}
+	\label{tab:devtodep_paths}
+	\begin{tabular}{@{}p{0.35\textwidth} >{\raggedright\arraybackslash}p{0.6\textwidth}@{}}
+		\toprule
+		\textbf{Artefact} & \textbf{Path (repository)} \\ \midrule
+		Deployed entrypoint (Jetson) &
+		\FILE{Code/LicencePlateDetection/jetson-inference/python/www/flask/dashboard2.py} \\
+		
+		Detector engine (Jetson path) &
+		\PATH{/media/myssd/jetson-inference/data/networks/best.engine}
+		(\PYTHON{ENGINE\_PATH}) \\
+		
+		Web interface &
+		\PATH{http://<jetson-ip>:8051/}
+		(\PYTHON{app.run(port=8051)}) \\
+		\bottomrule
+	\end{tabular}
+\end{table}
+
+% --------------------------------------------------------
+\section{Saving (Persistence)}
+\label{sec:devtodep_saving}
+\index{Deployment!Saving}
+
+\noindent
+For a deployed edge system, persistence means: \textbf{results survive application restarts}.
+In the currently deployed Jetson dashboard (\FILE{Code/LicencePlateDetection/jetson-inference/python/www/flask/dashboard2.py}), persistence is \textbf{not implemented yet}.
+The application is optimized for a live demo, so billing state is kept in memory.
+
+\subsection{Persisted artefacts (files)}
+\index{Deployment!Saving!Persisted artefacts}
+
+\noindent
+The following artefacts exist as files and survive restarts:
+\begin{itemize}
+	\item \textbf{TensorRT engine file:} stored on SSD at \PATH{/media/myssd/jetson-inference/data/networks/best.engine} and loaded at startup (\PYTHON{ENGINE\_PATH}).
+	\item \textbf{Application code:} stored in the Git repository and executed directly on the Jetson Nano.
+\end{itemize}
+
+\subsection{Non-persistent state (current implementation)}
+\index{Deployment!Saving!Non-persistent state}
+
+\noindent
+The following runtime state is volatile and will be lost after stopping/restarting the process:
+\begin{itemize}
+	\item \textbf{Billing state:} \PYTHON{parking\_lot} dictionary (all entry/last\_seen timestamps).
+	\item \textbf{Latest stream buffer:} \PYTHON{output\_frame} (MJPEG output).
+\end{itemize}
+
+\noindent
+This means that after a restart, the billing session starts from a clean state (all cars are ``new'' again).
+
+% --------------------------------------------------------
+\section{Loading (Startup and Restart)}
+\label{sec:devtodep_loading}
+\index{Deployment!Loading}
+
+\noindent
+At startup (or after a crash), the deployed system reconstructs the minimum required state in a deterministic order:
+
+\subsection{Model and OCR loading}
+\index{Deployment!Loading!Models}
+
+\noindent
+At startup, the TensorRT engine is loaded from \PYTHON{ENGINE\_PATH} and a TensorRT execution context is created.
+In parallel, the EasyOCR reader is initialized once (CPU mode) and reused for all subsequent plate crops (\PYTHON{reader = easyocr.Reader(..., gpu=False)} in \FILE{Code/LicencePlateDetection/jetson-inference/python/www/flask/dashboard2.py}).
+
+\subsection{Configuration loading}
+\index{Deployment!Loading!Configuration}
+
+\noindent
+In the current student-project implementation, runtime parameters are kept as explicit Python variables at the top of the scripts.
+Examples include \PYTHON{CONFIDENCE\_THRESHOLD}, \PYTHON{OCR\_COOLDOWN}, and \PYTHON{RATE\_PER\_SECOND} in \FILE{Code/LicencePlateDetection/jetson-inference/python/www/flask/dashboard2.py}.
+This keeps the deployed system transparent: a restart reproduces the same behaviour as long as the code version is unchanged.
+
+\subsection{Loading historical information (current state)}
+\index{Deployment!Loading!History}
+
+\noindent
+No historical information is loaded in the current deployment: the billing dictionary is empty on startup.
+Implementing persistence (e.g., SQLite/CSV logging of \PYTHON{plate\_text} with timestamps) is still in development and therefore not part of the deployed behaviour described here.
+
+\subsection{Operational restart procedure (Jetson Nano)}
+\index{Deployment!Loading!Restart procedure}
+
+\noindent
+For the project demo setup, restarting is performed by stopping the application and launching it again:
+\begin{itemize}
+	\item \textbf{Flask dashboard:} start the entrypoint shown below; stop with \SHELL{Ctrl+C} in the terminal.
+	
+	\noindent\PATH{Code/LicencePlateDetection/jetson-inference/python/www/flask/dashboard2.py}
+\end{itemize}
+
+
+\noindent
+An auto start/stop mechanism (e.g., a \texttt{systemd} service) is not configured yet and remains future work for the project.

@@ -1,0 +1,33 @@
+\begin{tikzpicture}[
+	node distance=10mm and 10mm,
+	box/.style={
+		rectangle,
+		draw=blue!60,
+		fill=blue!5,
+		very thick,
+		rounded corners,
+		align=center,
+		text width=0.28\linewidth,
+		minimum height=10mm
+	},
+	arrow/.style={-Latex, thick, blue!60}
+]
+
+	\node[box] (frame) {Camera Frame\\(LifeCam, OpenCV)};
+	\node[box, right=of frame] (transform) {KDD: Data Transformation\\Resize/Normalize\\BGR$\rightarrow$RGB, HWC$\rightarrow$CHW};
+	\node[box, right=of transform] (mining) {KDD: Data Mining\\YOLO Detector\\(bounding boxes + scores)};
+
+	\node[box, below=of mining] (interpret) {KDD: Interpretation\\Confidence filter\\+ NMS\\+ final box selection};
+	\node[box, left=of interpret] (crop) {Plate Crop\\(ROI extraction)};
+	\node[box, left=of crop] (ocr) {OCR\\(EasyOCR\\+ plate validation)};
+
+	\node[box, below=of crop] (output) {KDD: Output\\Plate text + confidence\\+ timestamp + metadata\\(DB / logs / UI)};
+
+	\draw[arrow] (frame) -- (transform);
+	\draw[arrow] (transform) -- (mining);
+	\draw[arrow] (mining) -- (interpret);
+	\draw[arrow] (interpret) -- (crop);
+	\draw[arrow] (crop) -- (ocr);
+	\draw[arrow] (ocr) -- (output);
+
+\end{tikzpicture}
