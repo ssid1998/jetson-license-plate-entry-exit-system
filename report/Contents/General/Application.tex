@@ -14,7 +14,7 @@
 
 
 % Application.tex
-\chapter{Application Domain Knowledge}
+\chapter{Application Domain Problem}
 
 %=== Domain Knowledge: Application  ======================
 % =========================================================
@@ -49,7 +49,7 @@ Environments such as airports and parking lots operate continuously. Here, minim
 	\label{fig:airport-anpr-advanced}
 \end{figure}
 
-\subsection{Domain Application Specific Problem}
+\section{Domain Specific Problem}
 In the context of airports, there is high vehicular density near departure and arrival stations where passengers enter and exit.  
 Security rules usually allow short stays (e.g., under 10 minutes). Manual enforcement using human officers or ticket machines is inefficient and inconsistent.  
 The system solves the problem of manual logging by:
@@ -59,7 +59,7 @@ The system solves the problem of manual logging by:
 	\item Triggering a \textbf{fee} event when stay duration exceeds a predefined time limit.
 \end{itemize}
 
-\subsection{Data Acquisition}
+\section{Data Acquisition}
 \textbf{Operational data:} Continuous video stream from a single fixed camera at the airport gate (1080p, 25 FPS).  
 \textbf{Data pipeline:} \textbf{YOLOv8} detects license plate bounding boxes → \textbf{EasyOCR} extracts alphanumeric text → timestamps are stored in SQLite as either \emph{entry} or \emph{exit} events.  
 The same camera detects both, using logic to compare time differences.  
@@ -91,7 +91,7 @@ The same camera detects both, using logic to compare time differences.
 	\item Historical data exported periodically for audit and analytics.
 \end{itemize}
 
-\subsection{Data Quality}
+\section{Data Quality}
 Quality determines billing precision:
 \begin{itemize}
 	\item \textbf{Preprocessing:} \ac{CLAHE} contrast enhancement and denoising before \ac{OCR}.
@@ -101,7 +101,7 @@ Quality determines billing precision:
 	\item \textbf{Lighting calibration:} Camera auto-gain and exposure tuned for day/night operation.
 \end{itemize}
 
-\subsection{Data Relevance}
+\section{Data Relevance}
 All collected data directly supports the time difference computation task:
 \begin{enumerate}
 	\item Valid license plates are recorded, events (entry/exit) are logged. Invalid frames are not logged.
@@ -110,7 +110,7 @@ All collected data directly supports the time difference computation task:
 	\item Logs are stored locally for privacy and regulatory compliance.
 \end{enumerate}
 
-\subsection{Outliers}
+\section{Outliers}
 Outliers refer to detections that do not follow the normal entry-exit pattern:
 \begin{itemize}
 	\item Vehicles detected multiple times without leaving (false multiple exits).
@@ -119,7 +119,7 @@ Outliers refer to detections that do not follow the normal entry-exit pattern:
 \end{itemize}
 \textbf{Mitigation:} System uses timestamp grouping and last-seen confidence to identify invalid sequences and exclude them from billing.
 
-\subsection{Anomalies}
+\section{Anomalies}
 Anomalies indicate irregular operational conditions:
 \begin{itemize}
 	\item \textbf{Double detections:} Same vehicle logged twice within seconds.
@@ -144,7 +144,7 @@ Anomalies indicate irregular operational conditions:
 	\label{tab:anomalies-airport}
 \end{table}
 
-\subsection*{Summary}
+\section*{Summary}
 Application domain wise, the solution integrates \textbf{computer vision}, \textbf{edge \ac{AI}}, and \textbf{local data management} aiding in the automation of vehicle monitoring within high density environments such as airports. 
 A single Jetson Nano-based camera recognizes both \textbf{entry and exit} events, records timestamps, calculates \textbf{dwell time}, and automatically triggers billing for vehicles exceeding the permitted 10-minute duration.  
 The automated workflow enables automatic logging and ticketing with minimal human monitoring, leading to an improvement in \textbf{operational efficiency} and \textbf{reliability}.

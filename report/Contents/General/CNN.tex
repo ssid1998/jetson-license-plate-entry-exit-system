@@ -197,13 +197,7 @@ When implemented in frameworks like PyTorch, these components are seamlessly int
 \subsection{Relevance}
 \index{CNN!Relevance}
 
-Convolutional Neural Networks (CNNs) have revolutionized the field of computer vision and pattern recognition due to their ability to automatically learn hierarchical representations from raw data \cite{lecun1998gradient, goodfellow2016deep}. Unlike traditional machine learning approaches that rely on handcrafted features, CNNs can extract edges, textures, and shapes directly from images through convolutional layers. This automatic feature learning has enabled CNNs to achieve state-of-the-art performance in tasks such as image classification, object detection, and segmentation \cite{krizhevsky2012imagenet}.
-
 The relevance of CNNs extends across multiple real-world domains, including autonomous driving, medical imaging, and surveillance systems \cite{ren2015faster, ronneberger2015u}. In autonomous vehicles, CNNs detect pedestrians, vehicles, and traffic signs in real-time, providing critical input for navigation and safety systems. In healthcare, CNNs assist in tumor detection and organ segmentation, improving both diagnostic accuracy and processing speed compared to manual methods \cite{chen2018deeplab, litjens2017survey}. This versatility illustrates the broad impact of CNNs beyond research settings.
-
-CNNs also form the backbone of emerging AI applications such as robotics, augmented reality, and natural language processing, highlighting their continued relevance in modern technology \cite{pinto2022springer, pytorchdocs}. Their ability to generalize across datasets and modalities, coupled with highly optimized frameworks like PyTorch and TensorFlow, enables the development of scalable and high-performance solutions. As a result, CNNs have become a foundational technology in both academic research and practical industrial applications.
-
-\subsection{Relevance of CNNs to Jetson Nano License Plate Detection}
 
 In the context of the Jetson Nano-based license plate detection project, CNNs are essential due to their capability to extract robust and discriminative features from license plate images \cite{pinto2022springer, jetsonpytorch}. License plates appear under varying lighting, angles, and occlusions, making traditional feature-based methods less effective. CNNs can learn the specific shapes, alphanumeric patterns, and textures that distinguish license plates from the background, ensuring accurate detection even in challenging conditions.
 
@@ -211,10 +205,8 @@ Moreover, integrating CNNs with the Jetson Nano allows real-time, low-latency pr
 
 
 % --------------------------------------------------------
-\section{Hyperparameters}
+\subsection{Hyperparameters}
 \index{CNN!Hyperparameters}
-
-\subsection{Hyperparameters in Convolutional Neural Networks}
 
 Convolutional Neural Networks (CNNs) rely on a variety of hyperparameters that control their learning behavior, feature extraction capability, and generalization performance \cite{goodfellow2016deep, pinto2022springer}. Choosing the right hyperparameters is critical to achieving high accuracy while avoiding overfitting or underfitting. Key hyperparameters include the number of convolutional filters, kernel size, stride, padding, learning rate, batch size, number of epochs, and regularization parameters.
 
@@ -270,10 +262,8 @@ Techniques like weight decay (L2 regularization) and dropout reduce overfitting.
 where \(\lambda\) is the regularization coefficient. Dropout randomly deactivates a fraction \(p\) of neurons during training, forcing the network to learn more robust features \cite{srivastava2014dropout}.
 
 % --------------------------------------------------------
-\section{CNN Requirements}
+\subsection{Requirements}
 \index{CNN!Requirements}
-
-\subsection{Requirements for a Convolutional Neural Network}
 
 Convolutional Neural Networks (CNNs) have specific requirements to function efficiently and accurately. One of the primary requirements is \textbf{high-quality labeled data} for supervised learning. The network relies on large datasets of input images paired with ground truth labels to learn meaningful feature representations \cite{goodfellow2016deep}. Insufficient or noisy data can lead to poor generalization and overfitting, making dataset quality and diversity crucial.
 
@@ -294,24 +284,23 @@ Finally, \textbf{Python implementation and software dependencies} are critical f
 For hardware deployment on embedded platforms such as the Jetson Nano, additional requirements include \textbf{CUDA-enabled GPU drivers} and optimized libraries to leverage GPU acceleration \cite{jetsonpytorch}. These software and hardware dependencies enable real-time inference and efficient model training on edge devices, making CNNs practical for applications such as license plate detection.
 
 % --------------------------------------------------------
-\section{CNN Inputs}
+\subsection{Inputs}
 \index{CNN!Inputs}
 
-\subsection{General Inputs}
 Convolutional Neural Networks (CNNs) typically operate on image data represented as multi-dimensional arrays or tensors \cite{goodfellow2016deep, pinto2022springer}. Grayscale images are encoded as 2D matrices, while RGB images are represented as 3D tensors with three channels corresponding to red, green, and blue components. Normalization of pixel values to ranges such as [0,1] or [-1,1] is a common practice to ensure stable and efficient training of the network.
 
 The spatial dimensions of the input images are crucial, as CNN architectures generally require fixed input sizes \cite{krizhevsky2012imagenet}. Standard dimensions, such as 224×224 or 256×256 pixels, are often used to balance computational cost and feature resolution. Larger inputs can capture more detail but increase memory and processing requirements, while smaller inputs reduce computational load but may miss fine-grained patterns.
 
 Additional preprocessing, such as resizing, cropping, and denoising, is frequently applied to ensure the inputs are compatible with the network architecture \cite{pinto2022springer}. Image augmentation, including rotations, flips, scaling, and brightness adjustments, is used to increase dataset diversity, helping CNNs generalize better to unseen data and avoid overfitting.
 
-\subsection{Inputs for Applications}
+\paragraph{Inputs for Applications}
 In real-world applications, CNN inputs are adapted to the task at hand. For image classification tasks, the input consists of single images that are preprocessed and normalized to highlight distinguishing features \cite{goodfellow2016deep}. For object detection, inputs may include larger images with multiple objects, where bounding boxes or region proposals are used to guide the network to areas of interest \cite{ren2015faster}. Image segmentation tasks require inputs that preserve spatial resolution, as the network performs pixel-level predictions.
 
 Video analysis and temporal applications introduce another dimension to CNN inputs: sequences of frames \cite{pinto2022springer}. Each frame is processed individually or through 3D CNNs to capture spatiotemporal features. Inputs must be consistent in terms of frame size, color channels, and frame rate to ensure accurate analysis across the sequence. Preprocessing may include optical flow computation, frame normalization, and resizing to maintain performance efficiency.
 
 Medical imaging and industrial inspection applications often use specialized image modalities, such as X-rays, MRIs, or infrared images \cite{ronneberger2015u, chen2018deeplab}. Inputs in these domains may require specific normalization or scaling to highlight relevant structures. Multiple channels or slices may be combined into a single tensor to allow CNNs to exploit volumetric or multi-spectral information for accurate classification, segmentation, or anomaly detection.
 
-\subsection{Inputs in Jetson Nano License Plate Detection}
+\paragraph{Inputs in Jetson Nano License Plate Detection}
 
 For license plate detection on the Jetson Nano, the input images are typically captured using USB or CSI camera modules integrated with the embedded system \cite{jetsonpytorch}. Optimal images should have sufficient resolution to clearly capture the alphanumeric characters on the license plate, while also covering enough of the surrounding vehicle and background to provide contextual cues for detection. In practice, resolutions between 128×128 and 256×256 pixels are commonly used, as they balance detection accuracy with the limited memory and processing resources of the Jetson Nano. Higher resolutions improve character clarity but significantly increase computation and memory usage, which can reduce real-time performance.
 
@@ -322,10 +311,9 @@ Preprocessing steps are critical for robust performance under varying real-world
 Finally, for optimal inference speed, images should be cropped to regions of interest whenever possible. This involves detecting the approximate vehicle location first and then focusing on the license plate area, reducing the input size for the CNN while maintaining high detection accuracy. By combining careful resolution selection, preprocessing, normalization, and augmentation, the Jetson Nano can reliably process input images in real-time, achieving accurate license plate detection under diverse environmental conditions.
 
 % --------------------------------------------------------
-\section{CNN Outputs}
+\subsection{Outputs}
 \index{CNN!Outputs}
 
-\subsection{General CNN Outputs}
 Convolutional Neural Networks produce outputs in the form of feature maps or tensors, which are progressively processed through convolutional, pooling, and fully connected layers \cite{goodfellow2016deep, pinto2022springer}. In classification tasks, the final output is typically a vector representing class scores, which is passed through a softmax function to obtain a probability distribution over possible categories:
 \[
 \hat{y}_i = \frac{e^{z_i}}{\sum_{j} e^{z_j}}
@@ -336,14 +324,14 @@ For tasks like object detection and segmentation, CNN outputs include bounding b
 
 CNNs can also provide intermediate outputs at various layers, known as feature representations, which capture hierarchical patterns from low-level edges to high-level concepts \cite{krizhevsky2012imagenet}. These intermediate outputs are useful for transfer learning, visualizing network attention, or extracting embeddings for downstream tasks, enabling flexibility in deploying CNNs for multiple applications.
 
-\subsection{Outputs in Applications}
+\paragraph{Outputs in Applications}
 In image classification, CNN outputs are discrete labels corresponding to the predicted category of the input image \cite{goodfellow2016deep}. Probabilities associated with each label provide a measure of confidence, which can be thresholded or used for ranking predictions. Visualizations of class activation maps (CAMs) can help interpret which regions of the image influenced the network’s decision.
 
 For object detection, CNN outputs include the coordinates of bounding boxes and associated class probabilities for each detected object \cite{ren2015faster}. Post-processing techniques, such as non-maximum suppression, are applied to remove overlapping detections and generate final predictions. In segmentation tasks, outputs are multi-dimensional masks where each pixel is assigned a class label, allowing detailed understanding of the input’s structure \cite{ronneberger2015u}.
 
 In video analysis or temporal CNN applications, outputs can include frame-level predictions or temporal embeddings capturing motion patterns \cite{pinto2022springer}. These outputs can be aggregated to summarize activity, detect anomalies, or track objects across sequences of frames, enabling dynamic and context-aware analysis in real-time or offline applications.
 
-\subsection{Outputs in Jetson Nano License Plate Detection}
+\paragraph{Outputs in Jetson Nano License Plate Detection}
 For license plate detection on the Jetson Nano, CNN outputs typically consist of bounding box coordinates around detected plates, class scores, and sometimes cropped plate images for downstream recognition \cite{jetsonpytorch, pytorchdocs}. The output tensor includes both spatial information (position of the license plate in the frame) and confidence scores, which are used to filter unreliable detections.
 
 Post-processing of outputs involves scaling bounding box coordinates to match the original frame size, applying non-maximum suppression to eliminate overlapping detections, and optionally passing the cropped license plate to an OCR module for character recognition \cite{pinto2022springer}. These steps ensure that the outputs are actionable for real-time monitoring, logging, or traffic enforcement systems.
@@ -352,14 +340,10 @@ Additionally, real-time performance constraints on the Jetson Nano require that 
 
 
 % --------------------------------------------------------
-\section{Code Example}
+\subsection{Code Example}
 \index{CNN!Code Example}
 
-\subsection{Example Application: Image Classification (Cats vs.\ Dogs)}
-
 Image classification is one of the most widely used applications of Convolutional Neural Networks, where the model assigns an input image to one of several predefined categories \cite{goodfellow2016deep}. A classic example is the cats–vs.–dogs classification task, in which a CNN learns to differentiate images of cats from dogs by extracting hierarchical visual features such as edges, textures, shapes, and high-level semantic attributes. Early convolutional layers detect simple patterns—whiskers, fur textures, or ear shapes—while deeper layers encode complex structures that allow the network to confidently distinguish between the two classes. Due to its simplicity and high educational value, this task is commonly used to benchmark CNN architectures and demonstrate the effectiveness of deep learning in real-world visual recognition tasks \cite{krizhevsky2012imagenet,pinto2022springer}.
-
-\subsection{Python Implementation Example}
 
 \lstinputlisting[
 language=Python,
@@ -378,4 +362,3 @@ rulecolor=\color{black!30}
 ]{../../Code/CNN/cnnexample.py}
 
 The Python implementation follows a typical workflow used in CNN-based image classification tasks. The script begins by defining a preprocessing pipeline that resizes each input image, applies random horizontal flips for data augmentation, converts the image into a tensor, and normalizes its pixel values according to ImageNet statistics. The training and validation datasets are loaded using \texttt{ImageFolder}, which organizes images into class-labelled directories. A pre-trained ResNet-18 model is then imported, and its final fully connected layer is replaced to output two logits corresponding to the ``cat'' and ``dog'' classes. During training, the script iterates through mini-batches of images, computes class predictions using the forward pass, evaluates the loss using cross-entropy, and updates network weights via the Adam optimizer. After training, the model is switched to evaluation mode, and its performance is measured on the validation set by comparing predicted labels to ground truth annotations. This code demonstrates the essential components of an end-to-end CNN classification pipeline, including preprocessing, model adaptation, optimization, and performance evaluation, making it a practical example for understanding CNN application development in PyTorch.
-

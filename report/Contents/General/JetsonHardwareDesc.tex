@@ -10,7 +10,7 @@
 %%%
 
 
-\chapter{Jetson Nano}
+\chapter{Domain Hardware - Jetson Nano}
 
 %\section{Jetson Nano}
 %\label{sec:jetsonnano}
@@ -48,7 +48,7 @@ It serves as the foundation for the current project on \textbf{real-time license
 
 \newpage
 %----------------------------------------------------------
-\section{Jetson Nano Applications}
+\subsubsection{Jetson Nano Applications}
 \label{subsec:applications}
 
 The Jetson Nano is applicable towards a large set of tasks. It is able to handle basic computing tasks along with complex edge-\ac{AI} deployments efficiently. 
@@ -100,7 +100,7 @@ As an overview, the Jetson Nano is able to close the gap between scientific \ac{
 Balancing performance and cost constraints, it provides open-source accessibility that promotes innovation at an academic and industrial scale, specifically in fields such as automation, monitoring, and smart transport system development.
 
 \newpage
-\section{Construction}
+\subsubsection{Construction}
 \label{subsec:construction}
 
 The complete hardware configuration of this project is based on the \textbf{Seeed Studio reComputer J1010} system, which integrates the \textbf{NVIDIA Jetson Nano (4~GB, B01 revision)} module on the \textbf{J101 carrier board}. 
@@ -198,7 +198,7 @@ The system communicates with a host laptop via Ethernet for SSH access, dataset 
 Overall, the modular construction of the Seeed Studio reComputer~J1010 provides mechanical robustness, efficient thermal design, and ease of expansion, making it a reliable platform for continuous real-time \ac{AI} inference at the edge \cite{seeedJ101Manual, edgeAIbook}.
 
 \newpage
-\section{Interfaces}
+\subsection{Interfaces}
 \label{sec:interfaces}
 The Seeed Studio J101 carrier board provides multiple connectors (J1--J19) for power input, display output, data communication, and peripheral expansion.  
 Figure~\ref{fig:interfaces_layout} illustrates the physical locations of these connectors on the board, including power (J1, J2), \ac{USB} and \ac{HDMI} ports (J3--J5), Ethernet (J6), camera interfaces (J9, J13), \ac{GPIO} header (J10), and auxiliary modules such as the M.2~Key~E and RTC header.  
@@ -269,7 +269,7 @@ This section describes the purpose and electrical characteristics of each connec
 %\bigskip
 
 
-\subsection{J1--J19 Connectors }
+\subsubsection{J1--J19 Connectors }
 
 \subsubsection{J1--J5: Power and \ac{USB}}
 \begin{itemize}
@@ -319,7 +319,7 @@ Dedicated microSD/SDIO interface (1.8~V/3.3~V) used for bootable storage or SDIO
 
 
 
-\subsection{Pin Configuration (J10)}
+\subsubsection{Pin Configuration (J10)}
 \label{subsec:pinconfig}
 All user-accessible \ac{GPIO} on J10 operate at \textbf{3.3~V logic} and are not 5~V tolerant. 
 Use level shifters for 5~V peripherals and external drivers for loads (motors, relays). 
@@ -405,7 +405,7 @@ The J101 header follows the widely used Raspberry~Pi layout:
 %\end{lstlisting}
 
 \newpage
-\subsection{Enable \ac{SPI} Interface on Jetson-Nano}
+\subsubsection{Enable \ac{SPI} Interface on Jetson-Nano}
 \label{subsec:enable_spi}
 
 \subsubsection{Introduction}
@@ -692,7 +692,7 @@ You can also run the command below to check the available \ac{SPI} controllers:
 	{\textbf{\textcolor{red}{TODO: Add image of terminal confirming loopback transmission.}}};
 \end{tikzpicture}
 
-\subsection{Summary of Jetson Nano Interfaces}
+\subsubsection{Summary of Jetson Nano Interfaces}
 \begin{table}[H]
 	\centering
 	\caption{Summary of interfaces on reComputer~J1010 (compiled from the official datasheet) \cite{seeedJ101Manual}.}
@@ -731,7 +731,7 @@ You can also run the command below to check the available \ac{SPI} controllers:
 \section{Data Characteristics}
 \label{sec:jetson_data}
 
-\subsection{Types of Data}
+\section{Types of Data}
 NVIDIA Jetson Nano is capable of processing heterogeneous data types which is dependant on the context of the application layer.  
 In this project, the primary data sources are:
 \begin{itemize}
@@ -741,7 +741,7 @@ In this project, the primary data sources are:
 \end{itemize}
 Data exchange between CPU and \ac{GPU} occurs via shared memory buffers, leveraging NVIDIA’s \textbf{Unified Memory} architecture and CUDA cores for parallelized tensor operations \cite{jetson_nano_doc,edgeAIbook}.  
 
-\subsection{Structure of Data}
+\paragraph{Structure of Data}
 Frames captured from images are translated into three-dimensional matrices $(H, W, C)$, where $H$=600, $W$=800, and $C$=3, in the context of colored images.  
 Matrices normalized are batched into tensors, as a prerequisite to neural network input:
 \[
@@ -811,7 +811,7 @@ With LPDDR4 bandwidth of 25.6~GB/s, the Jetson Nano operates at less than 1\% of
 \noindent The system’s effective throughput margin allows for scaling to higher-resolution inputs (e.g., 1280$\times$720~pixels) or multiple concurrent camera streams when needed, provided adequate power and cooling are maintained.
 
 
-\subsection{Quality of Data}
+\subsection{Data Quality}
 There are three factors that affect the quality of data on the Jetson Nano — \textit{signal fidelity}, \textit{numerical precision}, and \textit{temporal consistency}.  
 Each dimension was evaluated under controlled testing conditions to ensure inference reliability.
 
@@ -863,34 +863,10 @@ When paired with TensorRT’s mixed-precision optimization and sufficient coolin
 %	\end{tabular}
 %\end{table}
 
-\subsection{Data Flow Efficiency}
+\subsubsection{Data Flow Efficiency}
 The Jetson Nano’s unified memory architecture and \ac{GPU}-accelerated TensorRT engine reduce latency between data acquisition and inference.  
 Zero-copy access between CPU and \ac{GPU} memory minimizes transfer overhead, while NVIDIA’s Deep Learning Accelerator (DLA) handles lightweight models for offloading parallel workloads \cite{edgeAIbook,jetson_nano_doc}.  
 This ensures deterministic data flow with sub-40~ms total pipeline latency, enabling true real-time object detection.
-
-
-\section{Specification of Jetson Nano}
-\begin{table}[H]
-	\centering
-	\caption{Technical Specifications of NVIDIA Jetson Nano J1010 ~\cite{NVIDIAJetsonNanoDatasheet, NVIDIADevKitGuide}}
-	\begin{tabular}{|p{5cm}|p{8cm}|}
-		\hline
-		\textbf{Parameter} & \textbf{Specification} \\
-		\hline
-		\ac{GPU} & 128-core NVIDIA Maxwell architecture \\
-		CPU & Quad-core ARM Cortex-A57 MPCore \\
-		Memory & 4~GB LPDDR4 @ 1600~MHz (25.6~GB/s) \\
-		Storage & 16~GB eMMC + microSD expansion slot \\
-		Camera Support & Dual MIPI \ac{CSI}-2 (4-lane each) \\
-		Networking & Gigabit Ethernet (10/100/1000~Mbps) \\
-		Video Decode & Up to 4K~@~60~Hz (HEVC, H.264) \\
-		Video Encode & Up to 4K~@~30~Hz (H.264) \\
-		Power Input & 5~V DC, up to 4~A (via \ac{USB}-C or GPIO header) \\
-		Typical Power Use & 5--10~W \\
-		Operating System & NVIDIA JetPack SDK (Ubuntu 20.04 LTS) \\
-		\hline
-	\end{tabular}
-\end{table}
 
 \section{Constraints}
 \begin{itemize}
@@ -929,6 +905,28 @@ This ensures deterministic data flow with sub-40~ms total pipeline latency, enab
 	\label{fig:recomputer_case_heatsink}
 \end{figure}
 
+\subsection{Specification of Jetson Nano}
+\begin{table}[H]
+	\centering
+	\caption{Technical Specifications of NVIDIA Jetson Nano J1010 ~\cite{NVIDIAJetsonNanoDatasheet, NVIDIADevKitGuide}}
+	\begin{tabular}{|p{5cm}|p{8cm}|}
+		\hline
+		\textbf{Parameter} & \textbf{Specification} \\
+		\hline
+		\ac{GPU} & 128-core NVIDIA Maxwell architecture \\
+		CPU & Quad-core ARM Cortex-A57 MPCore \\
+		Memory & 4~GB LPDDR4 @ 1600~MHz (25.6~GB/s) \\
+		Storage & 16~GB eMMC + microSD expansion slot \\
+		Camera Support & Dual MIPI \ac{CSI}-2 (4-lane each) \\
+		Networking & Gigabit Ethernet (10/100/1000~Mbps) \\
+		Video Decode & Up to 4K~@~60~Hz (HEVC, H.264) \\
+		Video Encode & Up to 4K~@~30~Hz (H.264) \\
+		Power Input & 5~V DC, up to 4~A (via \ac{USB}-C or GPIO header) \\
+		Typical Power Use & 5--10~W \\
+		Operating System & NVIDIA JetPack SDK (Ubuntu 20.04 LTS) \\
+		\hline
+	\end{tabular}
+\end{table}
 
 \section{JetPack OS Setup and System Initialization}
 \label{sec:jetpack}
