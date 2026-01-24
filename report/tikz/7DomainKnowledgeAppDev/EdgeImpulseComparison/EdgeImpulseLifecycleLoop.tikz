@@ -1,0 +1,67 @@
+% \usetikzlibrary{positioning,calc}
+
+\begin{tikzpicture}[
+	font=\small,
+	stage/.style={
+		draw, rounded corners, align=center,
+		fill=blue!10, text width=42mm,
+		inner sep=4pt
+	},
+	stage2/.style={
+		draw, rounded corners, align=center,
+		fill=green!12, text width=42mm,
+		inner sep=4pt
+	},
+	arrow/.style={-latex, thick}
+	]
+	
+	% -------- Titles (anchored to first nodes)
+	\node[font=\bfseries] (tl) at (-5.1, 2.2) {Our iteration loop};
+	\node[font=\bfseries] (tr) at ( 5.1, 2.2) {Edge Impulse iteration loop};
+	
+	% -------- Left loop (code-first) - relative placement
+	\node[stage, below=6mm of tl] (l1) {Collect data\\(camera captures)};
+	\node[stage, below=5mm of l1] (l2) {Label \& curate\\(offline tooling)};
+	\node[stage, below=5mm of l2] (l3) {Train model\\(\mbox{Ultralytics})};
+	\node[stage, below=5mm of l3] (l4) {Export / optimize\\(ONNX / TensorRT)};
+	\node[stage, below=5mm of l4] (l5) {Integrate \& deploy\\(Python app)};
+	\node[stage, below=5mm of l5] (l6) {Monitor \& debug\\(logs, DB, samples)};
+	
+	\draw[arrow] (l1) -- (l2);
+	\draw[arrow] (l2) -- (l3);
+	\draw[arrow] (l3) -- (l4);
+	\draw[arrow] (l4) -- (l5);
+	\draw[arrow] (l5) -- (l6);
+	
+	% Clean loop-back on left (symmetric + not too wide)
+	\draw[arrow]
+	(l6.west) .. controls +(-18mm, 0mm) and +(-18mm, 0mm) .. (l1.west);
+	
+	% -------- Right loop (platform-first) aligned to left column
+	\node[stage2, right=34mm of l1] (r1) {Acquire data\\(Studio / CLI)};
+	\node[stage2, below=5mm of r1] (r2) {Label\\(queue + suggestions)};
+	\node[stage2, below=5mm of r2] (r3) {Impulse \& training\\(blocks / custom)};
+	\node[stage2, below=5mm of r3] (r4) {On-device profiling\\(latency, RAM/ROM)};
+	\node[stage2, below=5mm of r4] (r5) {Deployment artifact\\(EIM / SDK)};
+	\node[stage2, below=5mm of r5] (r6) {Live validation\\(live classification)};
+	
+	\draw[arrow] (r1) -- (r2);
+	\draw[arrow] (r2) -- (r3);
+	\draw[arrow] (r3) -- (r4);
+	\draw[arrow] (r4) -- (r5);
+	\draw[arrow] (r5) -- (r6);
+	
+	% Clean loop-back on right (mirror of left)
+	\draw[arrow]
+	(r6.east) .. controls +(18mm, 0mm) and +(18mm, 0mm) .. (r1.east);
+	
+	% -------- Shared message: placed relative to bottom of both columns
+	\node[
+	draw, rounded corners, fill=gray!10, align=left,
+	text width=120mm, inner sep=5pt
+	] (msg) at ($(l6.south)!0.5!(r6.south) + (0,-16mm)$) {%
+		Both loops iterate, but the \textbf{dominant bottleneck} shifts:
+		code-first projects spend time on tooling and reproducibility; platform-first
+		projects spend time adapting the application around a standardized deployment artefact.};
+	
+\end{tikzpicture}

@@ -1,0 +1,61 @@
+% in preamble (already mostly there)
+% \usetikzlibrary{matrix,positioning}
+
+\begin{tikzpicture}[
+	font=\small,
+	box/.style={draw, rounded corners, align=center, fill=blue!8,
+		text width=42mm, inner sep=4pt},
+	box2/.style={draw, rounded corners, align=center, fill=green!10,
+		text width=42mm, inner sep=4pt},
+	note/.style={draw, rounded corners, align=left, fill=gray!10,
+		text width=110mm, inner sep=5pt},
+	arrow/.style={-latex, thick},
+	coltitle/.style={font=\bfseries, align=center}
+	]
+	
+	% --- Column titles (anchored to columns)
+	\node[coltitle] (t1) at (-4.6, 2.2) {Our Jetson LPR implementation\\(code-first)};
+	\node[coltitle] (t2) at ( 4.6, 2.2) {Edge Impulse approach\\(platform-first)};
+	
+	% --- Left column (relative positioning, consistent spacing)
+	\node[box, below=6mm of t1] (cam)  {Camera frames\\(\FILE{/dev/video0})};
+	\node[box, below=5mm of cam] (det) {Plate detection\\YOLO (\mbox{Ultralytics} / TensorRT)};
+	\node[box, below=5mm of det] (crop) {Crop \& preprocess\\(OpenCV, CLAHE, thresholding)};
+	\node[box, below=5mm of crop] (ocr) {OCR\\EasyOCR (CPU/GPU)};
+	\node[box, below=5mm of ocr] (logic) {Validation \& business logic\\(DE format, cooldown, billing)};
+	\node[box, below=5mm of logic] (ui) {Storage \& UI\\SQLite + Dashboard\\(Flet / Flask)};
+	
+	\draw[arrow] (cam) -- (det);
+	\draw[arrow] (det) -- (crop);
+	\draw[arrow] (crop) -- (ocr);
+	\draw[arrow] (ocr) -- (logic);
+	\draw[arrow] (logic) -- (ui);
+	
+	% --- Right column aligned to left column (same y positions)
+	\node[box2, right=26mm of cam] (da)
+	{Data acquisition\\(Studio / CLI / API)};
+	\node[box2, below=5mm of da] (lab)
+	{Labeling\\(bounding boxes, AI-assisted)};
+	\node[box2, below=5mm of lab] (imp)
+	{Impulse design\\Input + Processing\\+ Learning blocks};
+	\node[box2, below=5mm of imp] (train)
+	{Train \& evaluate\\(built-in blocks or\\custom / BYOM)};
+	\node[box2, below=5mm of train] (deploy)
+	{Deploy artefact\\(Linux runner / EIM / SDK)};
+	\node[box2, below=5mm of deploy] (app)
+	{Application glue\\OCR + billing + UI\\remain custom};
+	
+	\draw[arrow] (da) -- (lab);
+	\draw[arrow] (lab) -- (imp);
+	\draw[arrow] (imp) -- (train);
+	\draw[arrow] (train) -- (deploy);
+	\draw[arrow] (deploy) -- (app);
+	
+	% --- Note: placed relative to the lowest nodes (no overlap)
+	\node[note, below=10mm of $(ui.south)!0.5!(app.south)$] (note1) {%
+		\textbf{Key comparison idea:}
+		Edge Impulse standardizes the \emph{model lifecycle} (data, labeling, training, deployment packaging),
+		while our project standardizes the \emph{application runtime} (OCR heuristics, validation rules,
+		billing state, UI integration).};
+	
+\end{tikzpicture}

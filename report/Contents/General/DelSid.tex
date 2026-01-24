@@ -1,0 +1,369 @@
+\chapter{\textcolor{red}{Comparative Analysis: Edge Impulse vs.\ Our Implementation}}
+\label{sec:edge_impulse_compare}
+\index{Edge Impulse}
+\index{Deployment!Comparison}
+
+\noindent
+This chapter compares a \textbf{code-first} license plate recognition (LPR) implementation on an NVIDIA Jetson Nano with a \textbf{platform-first} workflow using \textit{Edge Impulse}.
+The comparison is conducted at the level of the \textbf{end-to-end workflow}, not only model accuracy:
+data acquisition and labeling, training and evaluation, deployment packaging, on-device profiling, and the cost of iteration.
+
+\noindent
+Edge Impulse is a web-based platform (Studio) for building, training, and deploying edge ML models, complemented by CLI tools and SDKs \cite{EdgeImpulseStudioOverview}.
+It provides a structured ``Impulse'' concept that captures the ML pipeline as input + processing + learning blocks and packages this pipeline into deployment artefacts \cite{EdgeImpulseImpulseDesign}.
+For our use case, the most important insight is that \textbf{Edge Impulse primarily standardizes the model lifecycle}, while our project primarily standardizes the \textbf{runtime application} (OCR heuristics, validation logic, billing state, dashboard integration).
+
+\begin{figure}[htbp]
+	\centering
+	\input{../../tikz/7DomainKnowledgeAppDev/EdgeImpulseComparison/EdgeImpulseVsCustomPipeline.tikz}
+	\caption{Conceptual pipeline comparison: our Jetson LPR implementation vs.\ an Edge Impulse based workflow.}
+	\label{fig:edge_impulse_pipeline_compare}
+\end{figure}
+
+% --------------------------------------------------------
+\section{Scope and assumptions}
+\label{sec:edge_impulse_scope}
+\index{Scope}
+
+\noindent
+To keep the comparison concrete, we scope the study to:
+\begin{itemize}
+	\item \textbf{Task:} detect German license plates in camera frames and output a normalized plate string (plus application-side events such as billing entries).
+	\item \textbf{Device class:} Linux microprocessor edge device (Jetson Nano), not a microcontroller.
+	\item \textbf{Pipeline decomposition:} the LPR system is explicitly a \textbf{multi-stage pipeline}:
+	(1) plate detection (object detection), (2) plate crop preprocessing, (3) OCR, (4) validation and business logic.
+\end{itemize}
+
+\noindent
+This decomposition matters because Edge Impulse's built-in workflows naturally cover (1) and parts of preprocessing, but \textbf{OCR and domain validation remain application logic} in most practical deployments.
+Therefore, a fair comparison focuses on \textbf{what changes} if the detection model lifecycle is moved to Edge Impulse, while OCR and downstream logic remain in our own code.
+
+% --------------------------------------------------------
+\section{Baseline: our implementation (what exists in this repository)}
+\label{sec:edge_impulse_baseline}
+\index{Baseline}
+
+\noindent
+Our project is implemented as a Python-first system optimized for Jetson Nano constraints:
+\begin{itemize}
+	\item \textbf{Detection model training:} YOLO-based detector trained on a Roboflow German license plate dataset.\\
+	\noindent See project overview: \PATH{Code/LicencePlateDetection/about.md}.
+	
+	\item \textbf{Jetson runtime variant A (Ultralytics):} Live detection with Ultralytics YOLO.\\
+	\noindent Implementation: \PATH{Code/LicencePlateDetection/jetson\_app/detector.py}.
+	
+	\item \textbf{Jetson runtime variant B (TensorRT):} TensorRT engine inference and Flask UI (see also Section~\ref{sec:from_dev_to_dep}).\\
+	\noindent Entrypoint: \PATH{Code/LicencePlateDetection/jetson-inference/python/www/flask/dashboard2.py}.
+	
+	\item \textbf{OCR pipeline:} EasyOCR with preprocessing, normalization, and strict validation.\\
+	\noindent Implementation: \PATH{Code/LicencePlateDetection/jetson\_app/ocr\_pipeline.py}.
+	
+	\item \textbf{Downstream system logic:} Country/format checks, cooldown logic, data logging, and billing logic.\\
+	\noindent Module folder: \PATH{Code/LicencePlateDetection/jetson\_app/}.
+\end{itemize}
+
+\noindent
+In other words, the repository contains both the \textbf{ML model artefacts} and the \textbf{application} that turns detections into an operational demo.
+This is important for the delighter comparison: Edge Impulse can replace or simplify parts of the ML workflow, but it does not automatically replace the app.
+
+% --------------------------------------------------------
+\section{Edge Impulse overview (what it provides)}
+\label{sec:edge_impulse_overview}
+\index{Edge Impulse!Studio}
+\index{Edge Impulse!CLI}
+
+\noindent
+Edge Impulse Studio is designed around projects, datasets, and impulses \cite{EdgeImpulseStudioOverview}.
+An \textbf{Impulse} is a packaged pipeline consisting of:
+\begin{enumerate}
+	\item an \textbf{input block} (e.g., images),
+	\item a \textbf{processing block} (feature extraction / preprocessing),
+	\item a \textbf{learning block} (training configuration and model family).
+\end{enumerate}
+\noindent
+The Impulse design view is therefore the platform's abstraction for ``the thing that gets deployed'' \cite{EdgeImpulseImpulseDesign}.
+
+\subsection{Data acquisition and labeling}
+\index{Edge Impulse!Data acquisition}
+\index{Edge Impulse!Labeling}
+
+\noindent
+For vision use cases, Edge Impulse supports multiple ingestion routes, such as file upload, API, or CLI tooling \cite{EdgeImpulseDataAcquisition}.
+For object detection, it supports bounding box annotations and can import existing labeled datasets in multiple formats \cite{EdgeImpulseUploader,EdgeImpulseObjectDetectionLabelFormats}.
+The platform also provides a labeling queue with AI-assisted modes to speed up manual labeling, particularly for bounding boxes \cite{EdgeImpulseLabelingQueue}.
+
+\subsection{Learning blocks and customization options}
+\index{Edge Impulse!Learning blocks}
+\index{Edge Impulse!BYOM}
+
+\noindent
+Edge Impulse provides a set of predefined learning blocks (including object detection blocks), and it also supports advanced customization:
+\begin{itemize}
+	\item \textbf{Built-in learning blocks:} include object detection (e.g., MobileNet SSD variants, FOMO) and others \cite{EdgeImpulseLearningBlocks}.
+	\item \textbf{Custom learning blocks:} can be created (e.g., with PyTorch/Keras) when the predefined options are insufficient \cite{EdgeImpulseLearningBlocks}.
+	\item \textbf{Bring Your Own Model (BYOM):} allows importing an externally trained model (e.g., ONNX, SavedModel, LiteRT/TFLite) for profiling, optimization, and deployment \cite{EdgeImpulseBYOM}.
+\end{itemize}
+
+\subsection{Deployment artefacts and Linux runners}
+\index{Edge Impulse!Deployment}
+\index{Edge Impulse!EIM}
+
+\noindent
+For Linux devices, Edge Impulse provides a Linux CLI tool suite (including \texttt{edge-impulse-linux-runner}) to run inference on target devices \cite{EdgeImpulseLinuxCLI}.
+A central idea is the \textbf{EIM artefact} (Edge Impulse Model), which is compiled for the target architecture and contains the full impulse (processing + learning code) \cite{EdgeImpulseLinuxEIM}.
+This changes the integration model: instead of importing a Python model and hand-wiring preprocessing, the developer interacts with an artefact that already contains a standardized pipeline.
+
+\begin{figure}[htbp]
+	\centering
+	\input{../../tikz/7DomainKnowledgeAppDev/EdgeImpulseComparison/EdgeImpulseLifecycleLoop.tikz}
+	\caption{Iteration loop comparison: code-first workflow vs.\ platform-first workflow.}
+	\label{fig:edge_impulse_lifecycle_loop}
+\end{figure}
+
+% --------------------------------------------------------
+\section{Mapping: Edge Impulse concepts vs.\ our components}
+\label{sec:edge_impulse_mapping}
+\index{Mapping}
+
+\noindent
+Table~\ref{tab:edge_impulse_mapping_table} provides a one-to-one mapping between Edge Impulse workflow concepts and our repository implementation.
+This mapping is the basis for a fair comparison: we compare \textbf{equivalent stages}, not unrelated features.
+
+\begin{table}[htbp]
+	\centering
+	\caption{Mapping between Edge Impulse concepts and our repository components}
+	\label{tab:edge_impulse_mapping_table}
+	\begin{tabular}{@{}p{0.23\textwidth}p{0.38\textwidth}p{0.33\textwidth}@{}}
+		\toprule
+		\textbf{System aspect} & \textbf{Our implementation} & \textbf{Edge Impulse equivalent} \\ \midrule
+		Data acquisition &
+		Manual capture from camera, dataset folder in \FILE{Code/LicencePlateDetection/data/} &
+		Data acquisition tab (upload/API/CLI) \cite{EdgeImpulseDataAcquisition,EdgeImpulseUploader} \\ \addlinespace
+		Labeling &
+		External dataset labels (YOLO format) and offline tools &
+		Bounding boxes labeling method + labeling queue \cite{EdgeImpulseLabelingQueue} \\ \addlinespace
+		Pipeline definition &
+		Scripts + implicit preprocessing choices &
+		Impulse (input + processing + learning blocks) \cite{EdgeImpulseImpulseDesign} \\ \addlinespace
+		Training &
+		Ultralytics training pipeline (YOLO) &
+		Learning blocks (built-in, custom blocks, or BYOM) \cite{EdgeImpulseLearningBlocks,EdgeImpulseBYOM} \\ \addlinespace
+		Deployment artefact &
+		\PYTHON{best.pt} or \PYTHON{best.engine} + custom Python app &
+		EIM / SDK artefact built for the target architecture \cite{EdgeImpulseLinuxEIM} \\ \addlinespace
+		Application logic &
+		OCR, validation, billing, UI (\FILE{Code/LicencePlateDetection/jetson\_app/}) &
+		Remains custom (Edge Impulse focuses on the impulse, not the full app) \\ \bottomrule
+	\end{tabular}
+\end{table}
+
+% --------------------------------------------------------
+\section{Comparison dimensions (where Edge Impulse helps, and where it does not)}
+\label{sec:edge_impulse_comparison_dimensions}
+\index{Comparison}
+
+\subsection{Speed of iteration and reproducibility}
+\index{Iteration}
+
+\noindent
+In a student project, iteration speed is often determined by hidden overhead:
+where datasets live, how labels are managed, how experiments are tracked, and how deployment artefacts are reproduced.
+Edge Impulse addresses these problems by providing a centralized Studio workflow for data, labeling, and impulses \cite{EdgeImpulseStudioOverview,EdgeImpulseImpulseDesign}.
+In our code-first approach, we achieve transparency and full control, but we also inherit more responsibility:
+dataset splits, augmentation decisions, and experiment tracking are enforced by conventions rather than a platform.
+
+\subsection{Model flexibility vs.\ platform constraints}
+\index{Flexibility}
+
+\noindent
+For object detection, Edge Impulse offers predefined learning blocks and extension paths (custom blocks and BYOM) \cite{EdgeImpulseLearningBlocks,EdgeImpulseBYOM}.
+This is powerful, but it also introduces constraints:
+for example, imported models have supported formats and defined input/output restrictions that must match the platform's conversion tooling \cite{EdgeImpulseBYOM}.
+In our repository, there is no platform-level restriction:
+any PyTorch, ONNX, or TensorRT workflow is valid as long as it runs on the Jetson device.
+
+\subsection{Deployment packaging and integration boundary}
+\index{Deployment}
+
+\noindent
+Edge Impulse changes the integration boundary by delivering a deployment artefact (e.g., EIM) that contains the complete impulse and can be run using standard tools on Linux \cite{EdgeImpulseLinuxCLI,EdgeImpulseLinuxEIM}.
+This can reduce the chance of ``it worked on my laptop'' issues because the artefact is compiled for a specific architecture.
+However, for our LPR system, the most error-prone part is often not the detector itself, but the \textbf{application glue}:
+plate crop selection, OCR preprocessing, post-correction, German format validation, cooldown, persistence, and UI presentation.
+These parts remain our responsibility in both workflows.
+
+\begin{figure}[htbp]
+	\centering
+	\input{../../tikz/7DomainKnowledgeAppDev/EdgeImpulseComparison/JetsonDeploymentStackComparison.tikz}
+	\caption{Deployment stack comparison on Jetson Nano: both workflows share the OS/CUDA base, but differ in how the ML pipeline is packaged and consumed by the application.}
+	\label{fig:edge_impulse_deploy_stack}
+\end{figure}
+
+\subsection{Collaboration and traceability (team scale)}
+\index{Collaboration}
+
+\noindent
+Edge Impulse includes collaboration-oriented structures such as projects (and, for larger setups, organizations) to centralize datasets and experiments \cite{EdgeImpulseStudioOverview}.
+For a group report, this is a delighter because it reduces ``knowledge silo'' risk:
+one member does not need to carry the full environment setup to reproduce training results.
+In our repository, collaboration is possible via Git and documented scripts, but more discipline is required (tool versions, dataset versioning, and consistent deployment procedures).
+
+% --------------------------------------------------------
+\section{Comparison tables (engineering trade-offs)}
+\label{sec:edge_impulse_tables}
+\index{Tables}
+
+\begin{table}[htbp]
+	\centering
+	\caption{Qualitative comparison matrix (what we gain and what we trade off)}
+	\label{tab:edge_impulse_matrix}
+	\begin{tabular}{@{}p{0.30\textwidth}p{0.31\textwidth}p{0.31\textwidth}@{}}
+		\toprule
+		\textbf{Criterion} & \textbf{Our implementation (code-first)} & \textbf{Edge Impulse (platform-first)} \\ \midrule
+		Time-to-first-model &
+		Medium (setup + scripts + training) &
+		High speed (guided workflow + defaults) \cite{EdgeImpulseStudioOverview} \\ \addlinespace
+		Labeling workflow &
+		External tooling / dataset-dependent &
+		Labeling queue + assisted labeling for bounding boxes \cite{EdgeImpulseLabelingQueue} \\ \addlinespace
+		Experiment tracking &
+		Script outputs + Git discipline &
+		Impulse as a first-class experiment + UI traceability \cite{EdgeImpulseImpulseDesign} \\ \addlinespace
+		Deployment packaging &
+		Manual exports (\PYTHON{.pt}/\PYTHON{.engine}) + integration &
+		EIM/SDK artefacts compiled for target + runner tooling \cite{EdgeImpulseLinuxEIM,EdgeImpulseLinuxCLI} \\ \addlinespace
+		OCR \& downstream logic &
+		Strong customization (our strength) &
+		Still custom (Edge Impulse doesn't replace OCR/business logic) \\ \addlinespace
+		Maximum flexibility &
+		Very high (any framework/tool) &
+		High, but within supported blocks, custom blocks, or BYOM constraints \cite{EdgeImpulseLearningBlocks,EdgeImpulseBYOM} \\ \bottomrule
+	\end{tabular}
+\end{table}
+
+\subsection{What Edge Impulse does \emph{not} solve for LPR (OCR remains external)}
+\label{sec:edge_impulse_ocr_boundary}
+\index{OCR}
+
+\noindent
+An LPR product is not only a detector; it must output a reliable \textbf{plate string}.
+In our system, this reliability is achieved through a chain of OCR-focused decisions:
+EU-band masking, multiple thresholding variants, post-correction of common OCR confusions, strict regex validation, and temporal smoothing across frames (\FILE{Code/LicencePlateDetection/jetson\_app/ocr\_pipeline.py}).
+
+\noindent
+In an Edge Impulse-first workflow, the object detection part fits naturally into the platform (dataset $\rightarrow$ labels $\rightarrow$ impulse $\rightarrow$ deployment artefact).
+However, \textbf{OCR is not inherently solved by object detection}.
+For our use case this means:
+\begin{itemize}
+	\item Edge Impulse can produce a detector that outputs bounding boxes around license plates.
+	\item We still need to crop the box, preprocess, run OCR, and validate the result in our application (exactly as we do now).
+\end{itemize}
+
+\noindent
+This is the key delighter insight: even with a platform that simplifies ML deployment, the \textbf{highest product value} in LPR can sit in the post-processing and domain logic.
+
+\subsection{Practical walkthrough: how we would rebuild the detector with Edge Impulse}
+\label{sec:edge_impulse_walkthrough}
+\index{Edge Impulse!Walkthrough}
+
+\noindent
+To make the comparison actionable, this subsection describes a realistic sequence to migrate only the \textbf{detector lifecycle} to Edge Impulse while keeping OCR and business logic unchanged.
+The intent is not to replace our pipeline, but to illustrate \textbf{where effort shifts}.
+
+\begin{enumerate}
+	\item \textbf{Export or upload the dataset:} use the Edge Impulse uploader and import bounding boxes in supported formats \cite{EdgeImpulseUploader,EdgeImpulseObjectDetectionLabelFormats}.
+	\item \textbf{Validate labeling quality:} correct ambiguous boxes (partial plates, far-distance plates) in the labeling queue \cite{EdgeImpulseLabelingQueue}.
+	\item \textbf{Define an impulse:} pick image size and preprocessing blocks suitable for plates (small, high-frequency text) \cite{EdgeImpulseImpulseDesign}.
+	\item \textbf{Select a learning block:} start with a predefined object detection block; if accuracy is insufficient, switch to custom blocks or BYOM \cite{EdgeImpulseLearningBlocks,EdgeImpulseBYOM}.
+	\item \textbf{Train and evaluate:} compare precision/recall trade-offs (false positives are expensive because OCR will run on every candidate crop).
+	\item \textbf{Profile on-device:} use on-device performance reporting to estimate latency and memory on the Jetson class device \cite{EdgeImpulseOnDevicePerformance}.
+	\item \textbf{Build deployment artefacts:} export as Linux EIM and test locally on the Jetson Nano using the Linux toolchain \cite{EdgeImpulseLinuxCLI,EdgeImpulseLinuxEIM}.
+	\item \textbf{Integrate with our OCR pipeline:} consume bounding boxes from the runner output, then call \PYTHON{PlateOcrPipeline.readPlate()} and downstream logic (\FILE{Code/LicencePlateDetection/jetson\_app/}).
+\end{enumerate}
+
+\noindent
+The net effect is that Edge Impulse reduces friction in the ML lifecycle (steps 1--7), while our application remains the product layer (step 8).
+
+\subsection{Integration sketch: runner output to our OCR + billing logic}
+\label{sec:edge_impulse_integration_sketch}
+\index{Edge Impulse!Integration}
+
+\noindent
+The integration boundary in a hybrid approach is the detector output.
+We already have a well-defined application-side interface: a plate crop (NumPy/OpenCV image) goes into the OCR pipeline and results in a normalized plate string plus confidence.
+Therefore, a hybrid integration can be described as: \textbf{replace detector inference call} $\rightarrow$ keep everything downstream.
+
+\begin{lstlisting}[language=Python, caption={Conceptual hybrid integration: Edge Impulse detection output + our OCR pipeline}, label={lst:edge_impulse_hybrid_integration}]
+# Pseudo-code sketch (not copy-paste ready)
+frame = read_camera_frame()
+
+# 1) Run Edge Impulse runner/EIM to get bounding boxes
+bboxes = edge_impulse_detect(frame)  # [(x1, y1, x2, y2, conf), ...]
+
+# 2) For each bbox: crop + OCR + validation (existing code)
+for (x1, y1, x2, y2, det_conf) in bboxes:
+    plate_crop = frame[y1:y2, x1:x2]
+    plate_text, ocr_conf, _ = ocr_pipeline.readPlate(plate_crop)
+    plate_text = normalize_and_validate(plate_text)
+    if plate_text:
+        update_db_and_billing(plate_text, det_conf, ocr_conf)
+\end{lstlisting}
+
+\noindent
+This sketch highlights why the comparison is meaningful: the \textbf{complexity we already solved} (robust OCR and business logic) remains reusable regardless of the detector tooling.
+
+\subsection{Key takeaways (independent of the chosen implementation path)}
+\label{sec:edge_impulse_takeaways}
+\index{Takeaways}
+
+\noindent
+Even if the final solution remains code-first, Edge Impulse provides reusable ideas:
+\begin{itemize}
+	\item \textbf{Explicit pipeline definition:} impulse design makes preprocessing and model choices explicit and reviewable \cite{EdgeImpulseImpulseDesign}.
+	\item \textbf{Dataset traceability:} centralized labeling workflows reduce annotation drift and ``lost labels'' \cite{EdgeImpulseLabelingQueue}.
+	\item \textbf{Early device profiling:} performance reporting encourages designing for latency and memory from day one \cite{EdgeImpulseOnDevicePerformance}.
+	\item \textbf{Clear integration boundary:} packaging the impulse into a deployment artefact enforces a stable interface \cite{EdgeImpulseLinuxEIM}.
+\end{itemize}
+
+\begin{table}[htbp]
+	\centering
+	\caption{Proposed evaluation protocol for a fair comparison on Jetson Nano}
+	\label{tab:edge_impulse_eval_protocol}
+	\begin{tabular}{@{}p{0.26\textwidth}p{0.33\textwidth}p{0.33\textwidth}@{}}
+		\toprule
+		\textbf{Metric} & \textbf{How to measure (our system)} & \textbf{How to measure (Edge Impulse)} \\ \midrule
+		Detection throughput (FPS) &
+		Instrument \FILE{Code/LicencePlateDetection/jetson\_app/detector.py} loop with timing and frame counters &
+		Run the EIM/runner pipeline and measure inference loop timing \cite{EdgeImpulseLinuxEIM} \\ \addlinespace
+		End-to-end latency &
+		Time from frame capture $\rightarrow$ OCR result $\rightarrow$ DB event &
+		Time from runner input $\rightarrow$ detection output + app-side OCR time \\ \addlinespace
+		Memory usage &
+		Monitor process RSS + GPU memory (Jetson tools) &
+		Use on-device profiling / performance reporting where available \cite{EdgeImpulseBYOM} \\ \addlinespace
+		Detection quality &
+		mAP/precision/recall on test split (Ultralytics metrics) &
+		EI Studio model testing and validation, plus test set analysis \cite{EdgeImpulseStudioOverview} \\ \addlinespace
+		OCR quality &
+		Character accuracy / plate-string exact match on a labeled OCR test subset &
+		Same (OCR remains in the application, independent of EI) \\ \bottomrule
+	\end{tabular}
+\end{table}
+
+% --------------------------------------------------------
+\section{Conclusion}
+\label{sec:edge_impulse_conclusion}
+\index{Conclusion}
+
+\noindent
+From an engineering perspective, Edge Impulse is best seen as a \textbf{workflow accelerator} for the detector lifecycle:
+it standardizes ingestion, labeling, impulse design, and deployment artefacts \cite{EdgeImpulseImpulseDesign,EdgeImpulseLinuxEIM}.
+For our Jetson Nano LPR system, the delighter insight is that \textbf{the detector is only half of the product}:
+the perceived quality comes from robust OCR and application logic under real-world constraints (motion blur, partial occlusion, glare, and repeated reads across frames).
+
+\noindent
+Therefore, the best ``hybrid'' strategy for our system is:
+\begin{itemize}
+	\item Use Edge Impulse to make the detector lifecycle reproducible and faster to iterate (especially for labeling and deployment artefact generation).
+	\item Keep OCR, domain validation, billing, persistence, and UI in our codebase where we already have strong customization.
+\end{itemize}

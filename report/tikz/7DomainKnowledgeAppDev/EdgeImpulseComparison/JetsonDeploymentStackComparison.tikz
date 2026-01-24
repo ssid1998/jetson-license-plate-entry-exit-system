@@ -1,0 +1,43 @@
+% \usetikzlibrary{positioning,calc}
+
+\begin{tikzpicture}[
+	font=\small,
+	layer/.style={
+		draw, rounded corners, fill=blue!8, align=center,
+		text width=50mm, inner sep=4pt
+	},
+	layer2/.style={
+		draw, rounded corners, fill=green!10, align=center,
+		text width=50mm, inner sep=4pt
+	},
+	title/.style={font=\bfseries, align=center},
+	sep/.style={draw, dashed, gray}
+	]
+	
+	% --- Titles (no absolute coords, anchored)
+	\node[title] (tL) {Our deployment stack};
+	\node[title, right=60mm of tL] (tR) {Edge Impulse deployment stack};
+	
+	% --- Common base (aligned automatically)
+	\node[layer,  below=6mm of tL] (os1) {Jetson Nano\\JetPack / L4T + CUDA};
+	\node[layer2, below=6mm of tR] (os2) {Jetson Nano\\JetPack / L4T + CUDA};
+	
+	% --- Stack layers (left)
+	\node[layer,  below=5mm of os1] (acc1) {Acceleration\\\mbox{TensorRT} engine + \mbox{PyCUDA}};
+	\node[layer,  below=5mm of acc1] (ml1)  {Model inference\\\mbox{Ultralytics} or \mbox{TensorRT} bindings};
+	\node[layer,  below=5mm of ml1]  (pp1)  {Post-processing\\Crop + OCR + validation};
+	\node[layer,  below=5mm of pp1]  (ui1)  {Product surface\\Dashboard + SQLite};
+	
+	% --- Stack layers (right)
+	\node[layer2, below=5mm of os2] (acc2) {Runtime artefact\\EIM / SDK + runner};
+	\node[layer2, below=5mm of acc2] (ml2)  {Impulse inference\\(processing + model packaged)};
+	\node[layer2, below=5mm of ml2]  (app2) {App integration\\Camera + OCR + business logic};
+	\node[layer2, below=5mm of app2] (ui2)  {Product surface\\Your UI + storage};
+	
+	% --- Separator: exactly spans the stacks (no magic y)
+	\draw[sep]
+	($(os1.north)!0.5!(os2.north) + (0,3mm)$)
+	--
+	($(ui1.south)!0.5!(ui2.south) + (0,-3mm)$);
+	
+\end{tikzpicture}
