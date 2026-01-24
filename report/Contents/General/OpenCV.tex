@@ -11,12 +11,12 @@
 %
 %%%
 
-\chapter{\textcolor{red}{OpenCV}}
+\section{\textcolor{red}{OpenCV}}
 
 \index{OpenCV}
 
 % --------------------------------------------------------
-\section{Introduction}
+\subsection{Introduction}
 \index{OpenCV!Introduction}
 
 OpenCV (Open Source Computer Vision Library) is an open-source library for real-time computer vision and image processing, originally developed by Intel and now maintained by the non-profit organisation OpenCV.org \cite{Bradski:2000,opencv_wiki}. It provides a large collection of optimised algorithms for working with images and videos, including filtering, geometric transformations, feature extraction, object detection, and tracking.
@@ -32,7 +32,7 @@ The Python bindings (OpenCV-Python) allow seamless integration of these operatio
 
 
 % --------------------------------------------------------
-\section{Description}
+\subsection{Description}
 \index{OpenCV!Description}
 
 OpenCV is structured into several modules. Relevant modules include:
@@ -57,7 +57,7 @@ OpenCV is highly optimised and takes advantage of hardware acceleration (e.g.\ N
 
 
 % --------------------------------------------------------
-\section{Installation}
+\subsection{Installation}
 \index{OpenCV!Installation}
 
 For this project, OpenCV is used via its Python bindings (\PYTHON{cv2}) in the JetPack~5.x environment on the Jetson Nano B01. There are two common installation strategies:
@@ -84,7 +84,7 @@ The command is responsible for installation of the \PYTHON{cv2} module, imported
 
 
 % --------------------------------------------------------
-\section{Example -- Description}
+\subsection{Example -- Description}
 \index{OpenCV!Example Description}
 
 The example script \FILE{OpenCVExample.py} describes a minimal OpenCV workflow. The following points are verified:
@@ -108,7 +108,7 @@ Although this example does not run the YOLOv8 model itself, it mirrors the essen
 
 
 % --------------------------------------------------------
-\section{Manual Example}
+\subsection{Manual Example}
 \index{OpenCV!Example Manual}
 
 The following set of instructions lay out running the OpenCV example on the Jetson Nano:
@@ -153,12 +153,11 @@ This procedure is vital for checking camera alignment and image quality prior to
 
 
 % --------------------------------------------------------
-\section{Example -- Version}
+\subsection{Example -- Version}
 \index{OpenCV!Example Version}
 
 In order to enact reproducibility and enable documentation of the exact OpenCV build implemented on the Jetson Nano, the following Python snippet may be used. The script is responsible for relaying the installed OpenCV package version.
 
-\subsection{Code}
 \lstinputlisting[
 language=Python,
 caption={Checking the installed OpenCV version},
@@ -179,7 +178,7 @@ Recording the version number in the project documentation helps to avoid compati
 
 
 % --------------------------------------------------------
-\section{Example -- Files}
+\subsection{Example -- Files}
 \index{OpenCV!Example Files}
 
 The central example file for this section is:
@@ -194,7 +193,6 @@ This script is kept intentionally short and focused on:
 \end{itemize}
 In the final system, similar code fragments are integrated into the main application script that loads the YOLOv8 model, performs inference on each frame, and writes detection results to the SQLite database.
 
-\subsection{Code}
 \lstinputlisting[
 language=Python,
 caption={OpenCV Camera Test Example for Jetson Nano},

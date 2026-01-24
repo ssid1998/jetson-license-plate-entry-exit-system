@@ -1,6 +1,6 @@
 %%%
 %
-% $Autor: Shubhankar Dumka, Gautam Ramesh, Siddhanth Sharma $
+% $Autor: Siddhanth Sharma $
 % $Date: 2025-12-31 $
 % $File: ApplicationDevelopment.tex $
 % $Version: 1.3 $
@@ -14,11 +14,13 @@
 % --- FIX: Load necessary TikZ libraries locally ---
 \usetikzlibrary{shapes, arrows, positioning, fit}
 
-\chapter{Application Development}
+\chapter{Knowledge Discovery in Databases (KDD)}
 \label{ch:application_development}
+\index{Knowledge Discovery in Databases (KDD)}
 
-\section{Knowledge Discovery in Databases (KDD)}
+\section{Introduction}
 \label{sec:kdd}
+\index{Knowledge Discovery in Databases (KDD) - Introduction}
 
 The Knowledge Discovery in Databases (KDD) process is the backbone of the application development lifecycle, transforming raw sensor data into actionable insights. For this license plate recognition (LPR) system on the Jetson Nano, the KDD process is divided into rigorous data selection, processing, and mining stages to ensure the YOLOv8 and EasyOCR models perform reliably in the airport deployment environment.
 
@@ -29,12 +31,12 @@ The Knowledge Discovery in Databases (KDD) process is the backbone of the applic
 	\label{fig:kdd_process}
 \end{figure}
 
-\subsection{Data Selection}
+\section{Data Selection}
 \label{subsec:data_selection}
 
 The selection of appropriate training and testing data is critical for the model's ability to generalize to the specific conditions of an airport drop-off zone.
 
-\paragraph{Origin: Source of Data}
+\subsection{Origin - Source of Data}
 The dataset comprises a hybrid collection of images to balance general robustness with domain-specific accuracy.
 \begin{itemize}
 	\item \textbf{Primary Source:} A curated set of 1,243 labeled images focusing on German license plates. This dataset was selected to capture the specific font (FE-Schrift) and layout (EU strip, state stickers) of German plates.
@@ -43,7 +45,7 @@ The dataset comprises a hybrid collection of images to balance general robustnes
 \end{itemize}
 This mix ensures the model learns generic plate features while adapting to the specific local constraints.
 
-\paragraph{Features: Key Image/Plate Properties}
+\subsection{Features - Key Image/Plate Properties}
 The model must learn to be invariant to several visual features intrinsic to the application domain:
 \begin{itemize}
 	\item \textbf{Geometric Variations:} License plates appear at various angles due to the fixed camera position relative to moving vehicles. The model handles rotation and perspective distortion up to approx. 30\textdegree.
@@ -52,7 +54,7 @@ The model must learn to be invariant to several visual features intrinsic to the
 	\item \textbf{Contrast:} High contrast between the black characters and white background is standard, but the model must robustly handle dirty or mud-splattered plates that reduce this contrast.
 \end{itemize}
 
-\paragraph{Data Types: File Formats}
+\subsection{Data Types - File Formats}
 The data pipeline utilizes standard formats to ensure compatibility between the collection, labeling, and training tools:
 \begin{itemize}
 	\item \textbf{Images (JPEG/PNG):} Raw camera frames are stored as JPEG for storage efficiency during collection (LifeCam stream) and PNG for lossless quality during the annotation phase.
@@ -60,7 +62,7 @@ The data pipeline utilizes standard formats to ensure compatibility between the 
 	\item \textbf{Metadata (SQLite/CSV):} Operational metadata (timestamps, confidence scores, detected text) is stored in a local SQLite database for the application logic and exported to CSV for performance analysis.
 \end{itemize}
 
-\paragraph{Quality: Data Vetting Process}
+\subsection{Quality - Data Vetting Process}
 To ensure high model performance, the dataset underwent a rigorous cleaning process:
 \begin{itemize}
 	\item \textbf{Filtering:} Images with severe motion blur or where the license plate was entirely unreadable to the human eye were removed.
@@ -68,7 +70,7 @@ To ensure high model performance, the dataset underwent a rigorous cleaning proc
 	\item \textbf{Label Consistency:} A unified labeling schema was enforced, ensuring that only valid German license plates were labeled as class `0`, while foreign or non-standard plates were excluded or categorized separately to avoid confusion.
 \end{itemize}
 
-\paragraph{Quantity: Dataset Size}
+\subsection{Quantity: Dataset Size}
 The total effective dataset for the specific German license plate task consists of approximately 1,243 high-quality samples. The distribution of this data across training, validation, and testing sets is detailed in Table \ref{tab:dataset_split}.
 
 \begin{table}[htbp]
@@ -87,7 +89,7 @@ The total effective dataset for the specific German license plate task consists 
 
 While compact, this dataset is highly targeted, allowing the YOLOv8-Nano model to converge quickly without the overhead of millions of irrelevant samples.
 
-\paragraph{Fairness/Bias: Bias Analysis}
+\subsection{Fairness/Bias: Bias Analysis}
 An analysis of the dataset reveals potential biases:
 \begin{itemize}
 	\item \textbf{Geographic Bias:} The data heavily favors German formats (DIN 74069). Performance on non-EU plates (e.g., US imports) may be lower.
@@ -95,12 +97,12 @@ An analysis of the dataset reveals potential biases:
 	\item \textbf{Vehicle Type Bias:} Passenger cars dominate the dataset. Trucks or motorcycles with different mounting positions might have lower detection rates. Mitigation involves future data collection specifically targeting these vehicle classes.
 \end{itemize}
 
-\subsection{Data Processing}
+\section{Data Processing}
 \label{subsec:data_processing}
 
 Once selected, the data undergoes a transformation pipeline to prepare it for the neural network.
 
-\paragraph{\textcolor{red}{One Database: Data Structure}}
+\subsection{\textcolor{red}{One Database: Data Structure}}
 \TBD{Check if this is the correct understanding of One database}
 The data is organized in a standard YOLO directory structure on the Jetson Nano and development workstations:
 \begin{verbatim}
@@ -117,7 +119,7 @@ The data is organized in a standard YOLO directory structure on the Jetson Nano 
 \end{verbatim}
 This structure allows the training scripts to automatically map image files to their corresponding text annotations. The operational database (SQLite) is separate, storing only the inference results (Event Logs) rather than the raw training data.
 
-\paragraph{Properties: Data Transformation}
+\subsection{Properties: Data Transformation}
 Before entering the model, data is transformed to match the network's input layer requirements:
 \begin{itemize}
 	\item \textbf{Resizing:} All input images are resized to $640 \times 640$ pixels (letterbox resize) to maintain aspect ratio while matching the YOLOv8 input tensor.
@@ -126,7 +128,7 @@ Before entering the model, data is transformed to match the network's input laye
 	\item \textbf{OCR Preprocessing:} For the recognition stage, cropped plate regions undergo grayscaling and binary thresholding to enhance character edges for EasyOCR.
 \end{itemize}
 
-\paragraph{Outliers: Handling Outliers}
+\subsection{Outliers: Handling Outliers}
 Outliers that could destabilize training are managed as follows:
 \begin{itemize}
 	\item \textbf{Extreme Aspects:} Plates seen from extreme acute angles ($>45^\circ$) are excluded from the training set as they are unlikely to yield readable text and may confuse the bounding box regression loss.
@@ -134,7 +136,7 @@ Outliers that could destabilize training are managed as follows:
 	\item \textbf{False Positives:} Negative mining is performed by including images of the background environment (road, signage) without license plates to teach the model what \textit{not} to detect.
 \end{itemize}
 
-\paragraph{Anomalies: Anomaly Detection}
+\subsection{Anomalies: Anomaly Detection}
 Automated scripts check for data integrity before training begins:
 \begin{itemize}
 	\item \textbf{Coordinate Checks:} A script validates that all normalized bounding box coordinates $(x, y, w, h)$ are strictly within the $[0, 1]$ interval.
@@ -142,7 +144,7 @@ Automated scripts check for data integrity before training begins:
 	\item \textbf{Class Index:} Verification that all class indices in the label files map correctly to the defined classes (i.e., only index `0` for license plate).
 \end{itemize}
 
-\paragraph{Augmentation: Data Augmentation Techniques}
+\subsection{Augmentation: Data Augmentation Techniques}
 To artificially expand the training set and improve robustness against the environmental variables identified in the Features section, the following augmentations are applied during the training pipeline:
 \begin{itemize}
 	\item \textbf{Mosaic Augmentation:} Combines 4 training images into one, forcing the model to learn context and detect smaller objects.

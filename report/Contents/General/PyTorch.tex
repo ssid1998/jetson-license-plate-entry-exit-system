@@ -11,12 +11,12 @@
 %
 %%%
 
-\chapter{\textcolor{red}{PyTorch}}
+\section{\textcolor{red}{PyTorch}}
 
 \index{PyTorch}
 
 % --------------------------------------------------------
-\section{Introduction}
+\subsection{Introduction}
 \index{PyTorch!Introduction}
 
 \noindent
@@ -35,7 +35,7 @@ In the context of this project, PyTorch is at the core deep learning framework r
 This tight coupling between PyTorch and the Jetson platform is instrumental in building an efficient pipeline for identifying license plates and logging detection results within the system \cite{jetsonpytorch}.
 
 % --------------------------------------------------------
-\section{Description}
+\subsection{Description}
 \index{PyTorch!Description}
 
 PyTorch comprises of modular components that support deep learning model development, training, and deployment. Each module is responsible for a specific function. The most relevant components are described as follows:
@@ -63,7 +63,7 @@ PyTorch and its dynamic computation graph enables rapid experimentation with cus
 In addition, PyTorch offers a diverse ecosystem of vision-specific utilities through \texttt{torchvision} library. It provides pre-built datasets, common image transforms, and pre-trained models such as ResNet, VGG, and YOLO that can be customized \cite{torchvision_docs}. PyTorch also supports mixed-precision training, distributed computing, and optimized CUDA kernels, enabling efficient training and inference \cite{nvidia_jetson}. 
 
 % --------------------------------------------------------
-\section{Installation}
+\subsection{Installation}
 \index{PyTorch!Installation}
 
 PyTorch installation starts with the preparation of a standard Python environment. It is typically installed using package managers like as \texttt{pip} or \texttt{conda}. Core dependencies include NumPy, SciPy, and Python development headers. For GPU acceleration, CUDA and cuDNN libraries are essential \cite{paszke2019pytorch, kulkarni2022cvprojects}. In common workflows, virtual environments may be created using \texttt{venv} or \texttt{conda}. Once activated, PyTorch is then installed along with optional packages such as \texttt{torchvision}, \texttt{torchaudio}, or \texttt{torchtext} completing the deep learning stack. 
@@ -93,7 +93,7 @@ The following command installs the core \PYTHON{torch} library along with \PYTHO
 
 
 % --------------------------------------------------------
-\section{Example -- Description}
+\subsection{Example -- Description}
 \index{PyTorch!Example Description}
 
 The example script \FILE{PyTorchLPExample.py} demonstrates a minimal but representative PyTorch workflow for licence plate detection on the Jetson Nano. Its purpose is to verify that:
@@ -115,7 +115,7 @@ In essence, the example performs the following steps:
 	\item Terminates loops when specific keys are pressed (e.g., \texttt{q}), thereby releasing resources.
 \end{enumerate}
 % --------------------------------------------------------
-\section{Example -- Manual}
+\subsection{Example -- Manual}
 \index{PyTorch!Example Manual}
 
 The following instructions describe how to run the PyTorch example on the Jetson Nano:
@@ -151,12 +151,11 @@ This procedure provides a quick check of camera connectivity, PyTorch model infe
 
 
 % --------------------------------------------------------
-\section{Example -- Version}
+\subsection{Example -- Version}
 \index{PyTorch!Example Version}
 
 To ensure reproducibility and to document the exact PyTorch build used on the Jetson Nano, the following Python snippet can be executed. This script prints the version of the installed OpenCV package.
 
-\subsection{Code}
 \lstinputlisting[
 language=Python,
 caption={Checking the installed OpenCV version},
@@ -178,7 +177,7 @@ Recording the PyTorch version number in the project documentation helps to avoid
 
 
 % --------------------------------------------------------
-\section{Example -- Files}
+\subsection{Example -- Files}
 \index{PyTorch!Example Files}
 
 The central example file for this section is:
@@ -194,8 +193,6 @@ This script is kept intentionally short and focused on:
 
 In the final system, similar code fragments are integrated into the main application script that loads the YOLOv8 or custom PyTorch model, performs inference on each frame, and writes detection results to the SQLite database.
 
-
-\subsection{Code}
 \lstinputlisting[
 language=Python,
 caption={PyTorch Image Recognition Example for Jetson Nano},

@@ -11,12 +11,12 @@
 %
 %%%
 
-\chapter{\textcolor{red}{Core Algorithm - YOLO}}
+\section{\textcolor{red}{Package - YOLO}}
 \index{YOLO}
 \index{You Only Look Once}
 
 % --------------------------------------------------------
-\section{Introduction}
+\subsection{Introduction}
 \index{YOLO!Introduction}
 
 \noindent
@@ -31,7 +31,7 @@ In this project, YOLO is used to detect licence plates from live camera frames o
 These detections are then used to crop the plate region and forward it to the OCR stage, and finally the result is logged into the system database for later auditing and billing.
 
 % --------------------------------------------------------
-\section{Description}
+\subsection{Description}
 \index{YOLO!Description}
 
 YOLO detectors are built on the idea of extracting multi scale visual features and converting them into detection predictions. Modern YOLO variants typically follow a modular design:
@@ -56,12 +56,14 @@ The original YOLO formulation divides the image into a grid and predicts multipl
 For licence plate detection, YOLO is effective because it can localize plates under varying viewpoints, lighting changes, and partial occlusions, while maintaining real time speed \cite{yolov4lp_rg,anpr_yolov8_rg}. Research literature and applied surveys show YOLO based ALPR pipelines are widely used due to their speed accuracy tradeoff and end to end simplicity \cite{yolo_alpr_end2end_rg}.
 
 % --------------------------------------------------------
-\section{Installation}
+\subsection{Installation}
 \index{YOLO!Installation}
 
-YOLO itself is an algorithm family, while practical deployment usually depends on an implementation. In this project, a common approach is to use the Ultralytics implementation (widely used for YOLOv8 style workflows). Note that Ultralytics has released YOLO versions as software implementations and documentation, and not always as a single formal paper \cite{ultralytics_issue_paper}.
+YOLO itself is an algorithm family, while practical deployment usually depends on an implementation. In this project, a common approach is to use the Ultralytics implementation (widely used for YOLOv8 style workflows). Note that Ultralytics has released YOLO versions as software implementations and documentation, and not always as a single formal paper \cite{ultralytics_issue_paper}.\newline
 
-\subsection{Installation on Desktop or General Linux}
+\textbf{Installation on Desktop or General Linux}
+
+On a Linux based system, the following command is used: 
 \begin{tcolorbox}[colback=white, colframe=black, coltext=ShellColor, sharp corners, boxrule=0.8pt]
 	\begin{small}
 		\begin{verbatim}
@@ -70,7 +72,7 @@ YOLO itself is an algorithm family, while practical deployment usually depends o
 	\end{small}
 \end{tcolorbox}
 
-\subsection{Installation Notes for Jetson Nano}
+\paragraph{Installation Notes for Jetson Nano}
 On Jetson Nano, installation must match:
 \begin{itemize}
 	\item the JetPack version (CUDA and cuDNN compatibility),
@@ -80,7 +82,7 @@ On Jetson Nano, installation must match:
 After PyTorch is installed correctly, Ultralytics can be installed and used for inference on the CUDA enabled GPU, which is a typical edge deployment approach \cite{ultralytics_issue_paper}.
 
 % --------------------------------------------------------
-\section{Example -- Description}
+\subsection{Example -- Description}
 \index{YOLO!Example Description}
 
 The example file \FILE{YOLOLPExample.py} demonstrates a minimal YOLO based detection loop for licence plates. The purpose is to verify that:
@@ -103,7 +105,7 @@ Conceptually, the example performs:
 This mirrors the core detection component in the full Jetson Nano ANPR pipeline \cite{yolo_alpr_end2end_rg}.
 
 % --------------------------------------------------------
-\section{Example -- Manual}
+\subsection{Example -- Manual}
 \index{YOLO!Example Manual}
 
 \begin{itemize}
@@ -132,12 +134,11 @@ This mirrors the core detection component in the full Jetson Nano ANPR pipeline 
 \end{itemize}
 
 % --------------------------------------------------------
-\section{Example -- Version}
+\subsection{Example -- Version}
 \index{YOLO!Example Version}
 
 To document reproducibility, the following script prints the versions of the relevant stack (Ultralytics, PyTorch, and CUDA availability). This helps avoid mismatch issues when JetPack or Python packages change.
 
-\subsection{Code}
 \lstinputlisting[
 language=Python,
 caption={Checking the installed YOLO (Ultralytics) and PyTorch versions},
@@ -155,7 +156,7 @@ rulecolor=\color{black!30}
 ]{../../Code/YOLO/yoloversion.py}
 
 % --------------------------------------------------------
-\section{Example -- Files}
+\subsection{Example -- Files}
 \index{YOLO!Example Files}
 
 The central example file for this section is:
@@ -169,7 +170,6 @@ It is intentionally short and focuses on:
 	\item cropping detected plates for OCR integration.
 \end{itemize}
 
-\subsection{Code}
 \lstinputlisting[
 language=Python,
 caption={YOLO Licence Plate Detection Example for Jetson Nano},
@@ -187,7 +187,7 @@ rulecolor=\color{black!30}
 ]{../../Code/YOLO/yoloexample.py}
 
 % --------------------------------------------------------
-\section{Hyperparameters}
+\subsection{Hyperparameters}
 \index{YOLO!Hyperparameters}
 
 YOLO training and inference behaviour is controlled by hyperparameters that influence detection accuracy, speed, and robustness \cite{redmon2016yolo,yaseen2024whatisyolov8}. The most relevant parameters in this project context are:
@@ -204,13 +204,13 @@ YOLO training and inference behaviour is controlled by hyperparameters that infl
 For Jetson deployment, inference side thresholds (\texttt{conf}, \texttt{iou}, \texttt{imgsz}) are typically tuned to achieve stable real time operation while maintaining high recall of licence plates.
 
 % --------------------------------------------------------
-\section{Relevance}
+\subsection{Relevance}
 \index{YOLO!Relevance}
 
 YOLO is highly relevant for embedded ANPR systems because it offers a practical speed accuracy tradeoff in real world scenes. In licence plate detection, the model must handle small targets, motion blur, and variable illumination. YOLO based ALPR systems reported in applied research demonstrate that end to end detection is robust and efficient for traffic monitoring and parking scenarios \cite{yolov4lp_rg,anpr_yolov8_rg,yolo_alpr_end2end_rg}. Combined with GPU acceleration on Jetson, YOLO inference can run locally without cloud processing, supporting privacy friendly edge processing and low latency system response.
 
 % --------------------------------------------------------
-\section{Further Reading}
+\subsection{Further Reading}
 \index{YOLO!Further Reading}
 
 \begin{itemize}

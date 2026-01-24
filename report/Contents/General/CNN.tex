@@ -11,12 +11,12 @@
 %
 %%%
 
-\chapter{\textcolor{red}{Core Algorithm - CNN}}
+\chapter{\textcolor{red}{Domain Tools}}
 
 \index{Core Algorithm - CNN}
 
 % --------------------------------------------------------
-\section{Introduction}
+\section{Convolutional Neural Network Algorithm}
 \index{CNN!Introduction}
 
 \noindent
@@ -68,7 +68,7 @@ In this project, Convolutional Neural Networks (CNNs) serves as the foundation f
 By leveraging CNNs in conjunction with the Jetson Nano’s CUDA-enabled GPU, the system achieves efficient inference, enabling real-time detection and subsequent processing of license plate information \cite{jetsonpytorch, lecun1998gradient}.
 
 % --------------------------------------------------------
-\section{Description}
+\subsection{Description}
 \index{CNN!Description}
 
 Convolutional Neural Networks (CNNs) are a class of deep learning models specifically designed for processing data with a grid-like topology, such as images \cite{goodfellow2016deep}. Unlike traditional fully connected neural networks, CNNs leverage \textbf{local connectivity} and \textbf{weight sharing} to detect spatial patterns, enabling them to recognize visual features such as edges, corners, and textures efficiently. The core idea is that the network learns filters during training, which respond to specific patterns in the input image. This makes CNNs particularly suitable for image classification, object detection, and other computer vision tasks \cite{lecun1998gradient}.
@@ -128,15 +128,9 @@ Beyond the fundamental convolutional and pooling operations, Convolutional Neura
 
 When implemented in frameworks like PyTorch, these components are seamlessly integrated into the model, allowing for end-to-end training and inference. On embedded platforms such as the Jetson Nano, this integration enables real-time execution of CNNs for applications like license plate detection without compromising performance \cite{pytorchdocs, jetsonpytorch}.
 
- \section{Applications}
+ \subsection{Applications}
  \index{CNN!Applications}
  Convolutional Neural Networks (CNNs) have found widespread use across many domains due to their ability to automatically extract hierarchical features from raw data \cite{goodfellow2016deep, pinto2022springer}. Key applications include:
- 
- \subsection{Image Classification}
- CNNs classify an image into a category by extracting hierarchical features from raw pixel data \cite{goodfellow2016deep, pinto2022springer}. Typical applications include:
- 
- \subsection{Image Classification}
- CNNs classify an image into a category by extracting hierarchical features from raw pixel data \cite{goodfellow2016deep, pinto2022springer}. Typical applications include:
  
  \begin{itemize}
  	\item License plate recognition at airports and toll booths.
@@ -151,7 +145,7 @@ When implemented in frameworks like PyTorch, these components are seamlessly int
  	\caption{Example of CNN-based image classification. The network extracts features from the input image and predicts the correct class.}
  \end{figure}
  
- \subsection{Object Detection and Localization}
+ \paragraph{Object Detection and Localization}
  CNNs detect and locate multiple objects within images using bounding boxes over feature maps \cite{ren2015faster, redmon2016you}. Typical applications include:
  
  \begin{itemize}
@@ -167,7 +161,7 @@ When implemented in frameworks like PyTorch, these components are seamlessly int
  	\caption{Example of CNN-based object detection. The network identifies and localizes objects within an image.}
  \end{figure}
  
- \subsection{Image Segmentation and Medical Imaging}
+ \paragraph{Image Segmentation and Medical Imaging}
  CNNs perform pixel-level classification, useful for semantic segmentation and medical imaging applications \cite{ronneberger2015u, chen2018deeplab}. Typical applications include:
  
  \begin{itemize}
@@ -183,7 +177,7 @@ When implemented in frameworks like PyTorch, these components are seamlessly int
  	\caption{Example of CNN-based image segmentation. Each pixel is labeled according to its class, enabling detailed analysis.}
  \end{figure}
  
- \subsection{Video Analysis and Facial Recognition}
+ \paragraph{Video Analysis and Facial Recognition}
  CNNs process spatial-temporal features to analyze video frames or recognize faces \cite{pytorchdocs}. Typical applications include:
  
  \begin{itemize}
@@ -200,9 +194,8 @@ When implemented in frameworks like PyTorch, these components are seamlessly int
  \end{figure}
  
 % --------------------------------------------------------
-\section{Relevance}
+\subsection{Relevance}
 \index{CNN!Relevance}
-\subsection{General Relevance of CNNs}
 
 Convolutional Neural Networks (CNNs) have revolutionized the field of computer vision and pattern recognition due to their ability to automatically learn hierarchical representations from raw data \cite{lecun1998gradient, goodfellow2016deep}. Unlike traditional machine learning approaches that rely on handcrafted features, CNNs can extract edges, textures, and shapes directly from images through convolutional layers. This automatic feature learning has enabled CNNs to achieve state-of-the-art performance in tasks such as image classification, object detection, and segmentation \cite{krizhevsky2012imagenet}.
 

@@ -15,8 +15,13 @@
 
 \usetikzlibrary{arrows.meta, positioning}
 
-\subsection{Data Transformation}
+\chapter{Knowledge Discovery in Databases (KDD) - Data Transformation}
+\label{ch:kdd_data_transformation}
+\index{Knowledge Discovery in Databases (KDD) - Data Transformation}
+
+\section{Data Transformation}
 \label{subsec:kdd_data_transformation}
+\index{Knowledge Discovery in Databases (KDD) - Data Transformation}
 
 In the KDD process, \textit{data transformation} is the final conversion step that produces the \textbf{exact input representation required by the model}. In this project, earlier \textit{data processing} (cleaning, labeling checks, augmentation) is performed offline during dataset preparation, while \textit{data transformation} is performed \textbf{per frame} just before inference (and equivalently inside the training loader during training runs).
 
@@ -42,7 +47,7 @@ In the deployed system, these transformations are executed \textbf{on the Jetson
 \paragraph{Why the transformations are required}
 YOLO detectors require a fixed input tensor shape and a consistent numeric representation. Without resizing, normalization, and correct channel ordering, the trained weights cannot be applied reliably and inference results become unstable (e.g., reduced confidence, incorrect bounding boxes, or complete failure to detect plates).
 
-\subsection{Data Mining}
+\section{Data Mining}
 \label{subsec:kdd_data_mining}
 
 In KDD terminology, \textit{data mining} is the phase where patterns are extracted from transformed data. For this application, the mined pattern is the \textbf{presence and location of a license plate} in an image.
