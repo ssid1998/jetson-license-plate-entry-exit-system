@@ -1,0 +1,101 @@
+
+\usetikzlibrary{shapes, arrows.meta, positioning, fit, backgrounds, shadows, calc}
+
+% --- DEFINING COLORS ---
+\definecolor{hostblue}{RGB}{232, 241, 250}   % Light Blue background for PC
+\definecolor{hostborder}{RGB}{70, 130, 180}  % Darker Blue for border
+\definecolor{edgegreen}{RGB}{235, 250, 235}  % Light Green background for Jetson
+\definecolor{edgeborder}{RGB}{34, 139, 34}   % Darker Green for border
+\definecolor{nvidialime}{RGB}{118, 185, 0}   % NVIDIA Lime
+
+
+	
+	\begin{tikzpicture}[
+		node distance=1.5cm and 1.5cm,
+		font=\sffamily\small,
+		% Node Styles
+		process/.style={
+			rectangle, 
+			draw=black!70, 
+			fill=white, 
+			rounded corners=3pt, 
+			minimum height=1cm, 
+			minimum width=2.5cm, 
+			align=center,
+			drop shadow,
+			thick
+		},
+		artifact/.style={
+			rectangle, 
+			draw=black!60, 
+			fill=yellow!10, 
+			dashed,
+			minimum height=0.8cm, 
+			minimum width=2cm, 
+			align=center,
+			font=\ttfamily\footnotesize
+		},
+		arrow/.style={
+			-{Latex[length=3mm, width=2mm]}, 
+			thick, 
+			draw=black!70
+		},
+		labelbox/.style={
+			font=\bfseries\large, 
+			anchor=north west
+		}
+		]
+		
+		% --- ZONE 1: TRAINING HOST (Workstation) ---
+		% Nodes
+		\node[process, fill=hostblue!50] (training) {Training Loop\\(YOLOv8)};
+		\node[artifact, below=0.8cm of training] (weights) {best.pt\\(PyTorch Weights)};
+		\node[process, below=0.8cm of weights] (export) {Export to\\Open Standard};
+		\node[artifact, below=0.8cm of export] (onnx) {model.onnx\\(Intermediate)};
+		
+		% Dataset Input
+		\node[left=1.5cm of training, align=center] (dataset) {Labeled\\Dataset};
+		\draw[arrow] (dataset) -- (training);
+		
+		% Internal Flows
+		\draw[arrow] (training) -- (weights);
+		\draw[arrow] (weights) -- (export);
+		\draw[arrow] (export) -- (onnx);
+		
+		% --- ZONE 2: INFERENCE HOST (Jetson Nano) ---
+		% We position this relative to the ONNX node to create a "bridge"
+		\node[process, right=4cm of export, fill=edgegreen!50] (builder) {TensorRT Builder\\(fp16 Optimization)};
+		
+		% The "Transfer" logic
+		\node[artifact, above=0.8cm of builder] (onnx_nano) {model.onnx\\(Copy)};
+		\node[artifact, below=1cm of builder, fill=nvidialime!20, draw=nvidialime] (engine) {best.engine\\(Serialized Binary)};
+		\node[process, below=0.8cm of engine, fill=nvidialime!40, thick] (inference) {Real-Time\\Inference App};
+		
+		% Internal Flows
+		\draw[arrow] (onnx_nano) -- (builder);
+		\draw[arrow] (builder) -- node[right, font=\tiny] {Hardware Specific} (engine);
+		\draw[arrow] (engine) -- (inference);
+		
+		% --- CONNECTING THE WORLDS ---
+		\draw[arrow, dashed, very thick, color=red!70] (onnx.east) -- node[above, font=\footnotesize, color=black] {SSH } (onnx_nano.west);
+		
+		% --- BACKGROUND BOXES ---
+		\begin{scope}[on background layer]
+			% Training Host Box
+			\node[fit=(dataset)(training)(onnx)(export), 
+			fill=hostblue, draw=hostborder, dashed, rounded corners=10pt,
+			inner sep=0.5cm, yshift=0.2cm] (pc_box) {};
+			\node[labelbox, text=hostborder] at (pc_box.north west) {1. Training Host (PC)};
+			
+			% Inference Host Box
+			\node[fit=(onnx_nano)(builder)(inference)(engine), 
+			fill=edgegreen, draw=edgeborder, dashed, rounded corners=10pt,
+			inner sep=0.8cm, yshift=0.2cm] (nano_box) {};
+			\node[labelbox, text=edgeborder] at (nano_box.north west) {2. Inference (Jetson)};
+		\end{scope}
+		
+		% --- DECORATIVE HARDWARE SPECS (Optional text blocks) ---
+		\node[below=0.2cm of pc_box, font=\scriptsize\color{gray}] {Environment: x86\_64 / RTX GPU / Linux};
+		\node[below=0.2cm of nano_box, font=\scriptsize\color{gray}] {Environment: ARM64 / Maxwell GPU / JetPack};
+		
+	\end{tikzpicture}
