@@ -3,10 +3,7 @@
 % $Autor: Gautam Ramesh$
 % $Datum: 2025-10-27 23:08:09Z $
 % $Pfad: /Manual/Chapters/en/SafetyGuidelines.tex $
-% $Version: 2 (Cleaned & Finalised)$
-%
-% !TeX encoding = utf8
-% !TeX root = Rename
+% $Version: 3 (Integrated Visuals)$
 %
 %%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -14,59 +11,130 @@
 
 \section{Safety Guidelines}
 
-The following safety guidelines are essential to ensure the reliable, secure, and fault-free operation of the \textbf{License Plate Detection System}.  
-They cover electrical, thermal, mechanical, and operational aspects relevant to the embedded AI hardware setupx.
+The following safety guidelines are essential to ensure the reliable, secure, and fault-free operation of the \textbf{License Plate Detection System}. Failure to adhere to these protocols may result in hardware damage, data corruption, or safety hazards.
 
-\vspace{0.4cm}
+\vspace{0.5cm}
+
+% --- INTEGRATED VISUAL SUMMARY ---
+\begin{figure}[htbp]
+	\centering
+	\begin{tikzpicture}[
+		font=\sffamily,
+		% Styles
+		safetyBox/.style={
+			rectangle,
+			rounded corners=5pt,
+			minimum width=6.2cm,
+			minimum height=4.2cm,
+			text width=5.8cm,
+			align=left,
+			fill=white,
+			draw=gray!30,
+			thick,
+			blur shadow={shadow blur steps=5},
+			inner sep=8pt
+		},
+		header/.style={
+			rectangle,
+			rounded corners=3pt,
+			minimum width=2.4cm,
+			minimum height=0.7cm,
+			text=white,
+			font=\bfseries\small,
+			align=center,
+			blur shadow
+		}
+		]
+		% Colors
+		\definecolor{elecYellow}{RGB}{255, 190, 0}
+		\definecolor{thermRed}{RGB}{220, 50, 50}
+		\definecolor{opsBlue}{RGB}{0, 100, 180}
+		\definecolor{mechGray}{RGB}{80, 80, 90}
+		
+		% QUADRANT 1: ELECTRICAL
+		\node[safetyBox, draw=elecYellow] (elec) at (0,0) {
+			\vspace{0.6cm}
+			\begin{itemize}
+				\item Use certified 5V/4A Power Supply.
+				\item No hot-plugging (HDMI/Camera).
+				\item Use surge protection devices.
+				\item Inspect cable insulation daily.
+			\end{itemize}
+		};
+		\node[header, fill=elecYellow, anchor=north west] at ($(elec.north west)+(0.2, -0.2)$) {ELECTRICAL};
+		
+		% QUADRANT 2: THERMAL
+		\node[safetyBox, draw=thermRed, right=0.6cm of elec] (therm) {
+			\vspace{0.6cm}
+			\begin{itemize}
+				\item Operational: 0$^\circ$C to 40$^\circ$C.
+				\item Do NOT block heatsink vents.
+				\item Active cooling required if $>40^\circ$C.
+				\item Keep dry and away from humidity.
+			\end{itemize}
+		};
+		\node[header, fill=thermRed, anchor=north west] at ($(therm.north west)+(0.2, -0.2)$) {THERMAL};
+		
+		% QUADRANT 3: OPERATIONAL
+		\node[safetyBox, draw=opsBlue, below=0.6cm of elec] (ops) {
+			\vspace{0.6cm}
+			\begin{itemize}
+				\item Always use \texttt{sudo poweroff}.
+				\item Avoid forced hard reboots.
+				\item Monitor logs during high AI load.
+				\item Disconnect power before transit.
+			\end{itemize}
+		};
+		\node[header, fill=opsBlue, anchor=north west] at ($(ops.north west)+(0.2, -0.2)$) {OPERATIONAL};
+		
+		% QUADRANT 4: MECHANICAL
+		\node[safetyBox, draw=mechGray, right=0.6cm of ops] (mech) {
+			\vspace{0.6cm}
+			\begin{itemize}
+				\item Use ESD Wrist Strap on PCB.
+				\item Secure Camera mounting brackets.
+				\item Prevent cable tension/strain.
+				\item Use stable, level surface.
+			\end{itemize}
+		};
+		\node[header, fill=mechGray, anchor=north west] at ($(mech.north west)+(0.2, -0.2)$) {MECHANICAL};
+		
+	\end{tikzpicture}
+	\caption{Safety Protocol Matrix: Multi-domain operational constraints.}
+	\label{fig:safety_matrix}
+\end{figure}
+
+\vspace{0.5cm}
+
 \subsection{Electrical Safety}
-
+The Jetson Nano is sensitive to voltage fluctuations. Strict adherence to power standards is required:
 \begin{itemize}
-	\item Always use a certified \textbf{5V / 4A USB-C power supply} with built-in safety protection against overcurrent and short-circuits.  
-	\item Avoid connecting or disconnecting peripherals (camera, HDMI, USB) while the main unit is powered on.  
-	\item Check all cables for damage or wear before use, and make sure they are properly insulated.  
-	\item Use grounded power outlets or a surge protector to prevent voltage spikes or static discharge.  
-	\item Connecting cables incorrectly may cause permanent damage to the board or its peripherals.  
-	\item Avoid operating the main unit outdoors during rain, lightning, or unstable weather conditions.
+	\item \textbf{Power Supply:} Always use a certified \textbf{5V / 4A USB-C power supply}. Undervoltage will cause the system to shut down unexpectedly during AI inference spikes.
+	\item \textbf{Hot-Plugging:} Never connect or disconnect peripherals (Camera, HDMI) while the main unit is live. This can cause transient voltage spikes damaging the board's logic gates.
+	\item \textbf{Cabling:} Regularly check cables for fraying. Ensure all connectors are fully seated and not loose.
+	\item \textbf{Grounding:} Use surge-protected outlets to prevent static or grid spikes from reaching the board.
 \end{itemize}
 
-\vspace{0.4cm}
 \subsection{Thermal and Mechanical Safety}
-
+The system relies on a combination of passive aluminum heatsinks and optional active cooling.
 \begin{itemize}
-	\item Ensure good ventilation around the aluminum case — do not block any openings, as the main unit relies on passive cooling.  
-	\item Keep the device within a safe temperature range (\textbf{0\,\textdegree C to 40\,\textdegree C}).  
-	In hotter environments, use a small fan to maintain airflow.  
-	\item Keep liquids, food, or heavy objects away from the unit. Avoid high humidity environments.  
-	\item Mount the camera securely and ensure it cannot fall or shift during operation.  
-	\item When handling the main unit's  board directly, use anti-static precautions (e.g., an ESD wrist strap).
+	\item \textbf{Ventilation:} Do not block the vents of the case. Ambient heat buildup can lead to thermal throttling, reducing the FPS of the detection engine.
+	\item \textbf{Temperature Range:} Operating range is strictly \textbf{0\,\textdegree C to 40\,\textdegree C}. If deployed in gatehouses without climate control, active fan cooling is mandatory.
+	\item \textbf{Liquids:} The board has no conformal coating; keep all liquids and conductive dust away.
+	\item \textbf{ESD Protection:} Static electricity can kill a Maxwell GPU instantly. Use an anti-static wrist strap when opening the case.
 \end{itemize}
 
-\vspace{0.4cm}
 \subsection{Operational Safety}
-
+Software-level safety ensures the longevity of the file system and database.
 \begin{itemize}
-	\item Always shut down the main unit properly using software commands (e.g., \texttt{sudo shutdown}) before unplugging power.  
-	\item Do not overload the USB ports with high-power accessories or unverified devices.  
-	\item Monitor for abnormal heating, flickering, or warning messages — if detected, power off immediately and inspect hardware.  
-	\item Avoid sudden reboots or forced shutdowns while detections or database operations are running.  
-	\item During cleaning or relocation, ensure the power supply is fully disconnected.
+	\item \textbf{Shutdown Procedure:} Sudden power loss can corrupt the SQLite \texttt{parking.db} file. Always initiate a shutdown via the dashboard button or terminal.
+	\item \textbf{Monitoring:} If the device exhibits abnormal fan noise or LED flickering, power off immediately.
+	\item \textbf{Database Integrity:} Ensure database operations are finished before relocating the hardware to avoid write-errors on the SSD.
 \end{itemize}
 
-\vspace{0.4cm}
-\subsection{Power and Inference Safety}
-
-Continuous AI processing generates both heat and power load.  
-To keep the main unit safe and stable:
-
+\subsection{Inference Safety}
+Continuous AI processing generates cumulative heat. 
 \begin{itemize}
-	\item Periodically check the power draw using a USB power meter or multimeter — it should remain within the adapter’s rated limit.  
-	\item Avoid keeping the main unit under heavy load for long hours without monitoring temperature.  
-	\item Allow short cooling breaks after extended operation or testing sessions.  
+	\item \textbf{Load Monitoring:} It is recommended to check the GPU load periodically. Avoid 100\% utilization in direct sunlight.
+	\item \textbf{Cooling Breaks:} After 24 hours of continuous high-load testing, allow the device a short idle period to stabilize internal temperatures.
 \end{itemize}
-
-%\vspace{0.4cm}
-%\subsection*{Summary}
-%
-%Following these safety rules protects both the hardware and the environment where it operates.  
-%Electrical and thermal safety prevent component damage, while operational care ensures stability and uptime.  
-%With regular checks, stable power use, and proper handling, the License Plate Detection System can operate safely and efficiently for years in real-world airport conditions.

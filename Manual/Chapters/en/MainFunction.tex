@@ -17,6 +17,12 @@ These special plates are pre-registered in the main unit’s database, ensuring 
 \vspace{0.5em}
 All vehicle data, including plate number, entry time, exit time, duration, and payment status, are securely stored inside the device.  
 This ensures transparency, traceability, and smooth traffic flow at both the entry and exit points of the airport 
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=0.85\textwidth]{general/dashboard.png}
+	\caption{The Operator Dashboard showing the live video feed (left) and the real-time entry/exit log (right).}
+	\label{fig:dashboard_view}
+\end{figure}
 
 \vspace{0.3em}
 \noindent\textbf{Key Highlights:}
@@ -27,16 +33,14 @@ This ensures transparency, traceability, and smooth traffic flow at both the ent
 	\item Works fully offline — no internet or network setup required.
 	\item Stores all records locally for reporting, auditing, or payment.
 \end{itemize}
+
 \section{Billing Mechanism}
 
-<<<<<<< Updated upstream
-\section{Billing Mechanism}
-=======
-\begin{figure}[h!]
+\begin{figure}[H]
 	\centering
-%	\includegraphics[width=0.8\textwidth]{images/billing_flow.png}
-	\caption{Automatic Billing Workflow for Parking Duration}
-	\label{fig:billing_flow}
+	\includegraphics[width=0.65\textwidth]{general/sidebar.png}
+	\caption{The real-time entry/exit log}
+	\label{fig:sidebar_log}
 \end{figure}
 
 The billing process automatically determines whether a vehicle should be charged based on its total parking duration. The workflow is divided into four main scenarios as described below.
@@ -87,238 +91,61 @@ The billing process automatically determines whether a vehicle should be charged
 	\]
 	The user is then prompted to make the payment before exit authorization.
 \end{flushleft}
->>>>>>> Stashed changes
 
-The billing process automatically determines whether a vehicle should be charged based on its total parking duration. If the total duration is less than 15 inutes it is not charged and if it is greater than 15 minutes 2 Euros is charged .The workflow is divided into four main scenarios as described below.
+\section{System Power Control}
+To ensure the longevity of the Jetson Nano hardware and prevent corruption of the local SQLite database, the system must be shut down correctly at the end of the operating hours. 
 
-\subsection{Vehicle Entry}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.4\textwidth]{general/shutDownbutton.png}
+	\caption{The Software Shutdown/Stop Button located on the Dashboard.}
+	\label{fig:stop_button}
+\end{figure}
+
+\noindent\textbf{Safe Shutdown Procedure:}
+\begin{enumerate}
+	\item Locate the red \textbf{Stop/Shutdown} button at the bottom of the dashboard sidebar.
+	\item Click the button once; a confirmation dialogue will appear on the screen.
+	\item Upon confirmation, the system will finalize all database writes and safely power off the Jetson Nano.
+	\item Only after the screen goes completely dark should the physical power cable be disconnected.
+\end{enumerate}
+
+\section{Operational Environment and Setup}
+\noindent\textbf{Camera Placement and Setup:}
 \begin{itemize}
-	\item When a car enters the premises, the main unit automatically detects and records the license plate number.
-	\item The entry time is stored in the database with a timestamp.
-	\item Then the Driver is shown with the Welcome message(Eg. Willkommen - EMD AB 1234 - Timestamp ) with the Number plate  with the Time stamp
-	\item No payment is initiated at this stage.
-%	\begin{center}
-%		\includegraphics[width=0.5\textwidth]{General/entry.png}
-%	\end{center}
+	\item Mount the camera about \textbf{2.0–2.5 metres above ground level}, facing the vehicle lane at a \textbf{30–40° angle}.
+	\item Keep a distance of about \textbf{3–5 metres} between the camera and the point where vehicles stop or slow down.
+	\item Ensure there is enough ambient light. During night hours, add a small \textbf{LED lamp or floodlight} near the gate for better clarity.
+	\item Keep the camera lens clean and free of dust, water spots, or scratches.
 \end{itemize}
 
-\subsection{Vehicle Exit}
-\begin{itemize}
-	\item On exit, the main unit again detects the license plate and retrieves the corresponding entry record.
-	\item The current time is compared with the stored entry timestamp.
-	\item The total parking duration is computed in minutes.
-%	\begin{center}
-%		\includegraphics[width=0.8\textwidth]{General/end.png}
-%	\end{center}
-\end{itemize}
-
-\subsubsection{Scenario 1: Duration Less Than 15 Minutes}
-\begin{itemize}
-	\item If the total parking time is \textbf{less than 15 minutes}, the main unit classifies the session as \textbf{free of cost}.
-	\item The details of the parking session are Displayed
-	\item The display automatically displays to the \textbf{“Danke” (Thank You)} page (Eg. Danke - EMD AB 1234 - Total time ).
-	\item The barrier opens and the vehicle exits without any payment.
-%	\begin{center}
-%		\includegraphics[width=0.8\textwidth]{general/exit<15.png}
-%	\end{center}
-\end{itemize}
-
-\subsubsection{Scenario 2: Duration Greater Than 15 Minutes}
-\begin{itemize}
-	\item If the parking duration \textbf{exceeds 15 minutes}, the main unit calculates the billing amount is at  flat 2 Euros
-	\item The total payable amount is shown on the display screen.
-	\item Once the transaction is successful , Car is allowed to exit.
-%	\begin{center}
-%		\includegraphics[width=0.8\textwidth]{General/exit>15.png}
-%	\end{center}
-\end{itemize}
-
-\begin{center}
-	\begin{tabular}{|c|c|}
-		\hline
-		\textbf{Parking Duration} & \textbf{Billing Amount} \\ \hline
-		0 -- 15 minutes & Free of Cost \\ \hline
-		$>$ 15 minutes & €2.00 flat\\ \hline
-	\end{tabular}
-\end{center}
-% --------------------------------------------------
-% Section 1: How the System Works
-% --------------------------------------------------
-
-\clearpage
-%\section{How the System Works}
-%\noindent
-%%\begin{minipage}{\linewidth}
-%%	\centering
-%%	\vspace{-0.2cm}
-%%	\begin{tikzpicture}[
-%%		scale=0.9, transform shape,
-%%		font=\small\sffamily,
-%%		node distance=1.0cm and 1.8cm,
-%%		>=latex, thick,
-%%		startstop/.style={rectangle, rounded corners=6pt, draw=gray!80, fill=gray!10,
-%%			text centered, minimum width=3.3cm, minimum height=0.9cm},
-%%		process/.style={rectangle, rounded corners=6pt, draw=blue!70!black, fill=blue!10,
-%%			text centered, minimum width=3.8cm, minimum height=0.9cm},
-%%		decision/.style={diamond, draw=orange!80!black, fill=orange!10,
-%%			text width=3.1cm, align=center, aspect=1.7, inner sep=1pt},
-%%		terminator/.style={ellipse, draw=gray!70!black, fill=gray!15,
-%%			minimum width=3.3cm, text centered},
-%%		arrow/.style={->, thick, draw=black!70},
-%%		every node/.style={align=center}
-%%		]
-%%		
-%%		% ---- Nodes (Vertical layout) ----
-%%		\node[startstop] (start) {\textbf{System Start}};
-%%		\node[process, below=of start] (entry) {\faCar~Vehicle Entry\\Plate Captured};
-%%		\node[process, below=of entry] (store) {\faSave~Save Entry Time};
-%%		\node[decision, below=of store] (exempt) {Emergency or\\Government Vehicle?};
-%%		\node[process, right=5.2cm of exempt] (exfree) {\faCheckCircle~Free Exit\\(Exempt Vehicle)};
-%%		\node[process, below=of exempt] (exit) {\faCarSide~Vehicle Exit\\Plate Detected Again};
-%%		\node[process, below=of exit] (duration) {\faClock~Calculate Stay Duration};
-%%		\node[decision, below=of duration] (check15) {Stay $\leq$ 15 minutes?};
-%%		\node[process, right=3.4cm of check15] (free) {\faSmile~Free Exit\\(Short Stay)};
-%%		\node[process, below=of check15] (charge) {\faBalanceScale~Display the amount user needs to Pay};
-%%		\node[process, below=of charge] (log) {\faDatabase~Save Record\\(Billing / Audit)};
-%%		\node[terminator, below=of log] (end) {\textbf{End of Process}};
-%%		
-%%		% ---- Arrows ----
-%%		\draw[arrow] (start) -- (entry);
-%%		\draw[arrow] (entry) -- (store);
-%%		\draw[arrow] (store) -- (exempt);
-%%		\draw[arrow] (exempt) -- node[above]{Yes} (exfree);
-%%		\draw[arrow] (exempt) -- node[left]{No} (exit);
-%%		\draw[arrow] (exit) -- (duration);
-%%		\draw[arrow] (duration) -- (check15);
-%%		\draw[arrow] (check15) -- node[above]{Yes} (free);
-%%		\draw[arrow] (check15) -- node[left]{No} (charge);
-%%		\draw[arrow] (charge) -- (log);
-%%		\draw[arrow] (free) |- (log);
-%%		\draw[arrow] (exfree) |- (log);
-%%		\draw[arrow] (log) -- (end);
-%%		
-%%	\end{tikzpicture}
-%%	\vspace{-0.2cm}
-%%	\captionof{figure}{Final airport entry–exit workflow with exemptions, duration check, and billing logic.}
-%%	\label{fig:airport_flow_vertical}
-%%\end{minipage}
-%
-%
-%\vspace{0.3cm}
-%\noindent
-%The system repeats this workflow continuously throughout the day.  
-%By automatically checking for exempt vehicles and applying the 15-minute free rule, it guarantees fairness, speed, and efficiency for all users.
-%
-%% --------------------------------------------------
-%% Section 2: Operating Environment
-%% --------------------------------------------------
-%
-%\begin{figure}[H]
-%	\centering
-%	\fbox{
-%		\begin{minipage}[c][5cm][c]{0.8\textwidth}
-%			\centering
-%			\textbf{[Future Image Placeholder]}\\[4pt]
-%			Concept image of the airport setup will be added here.
-%		\end{minipage}
-%	}
-%	\caption{Placeholder: Concept image showing system deployment.}
-%	\label{fig:future_concept}
-%\end{figure}
-%
-%The system is built to work smoothly and automatically with no special setup.  
-%Once the device is connected to power, it starts on its own and is ready for use within a few seconds.  
-%The camera watches both the entry and exit lanes, while the screen shows every vehicle that passes — along with how long it stayed and whether any charge applies.
-%
-%\vspace{0.4em}
-%All processing happens inside the compact system.  
-%There is no need for an internet connection or external software.  
-%The system is designed to be reliable even during continuous, all-day operation.
-%
-%\vspace{0.8em}
-%\noindent
-%\textbf{Camera Placement and Setup:}
-%\begin{itemize}
-%	\item Mount the camera about \textbf{2.0–2.5 metres above ground level}, facing the vehicle lane at a \textbf{30–40° angle}.
-%	\item Keep a distance of about \textbf{3–5 metres} between the camera and the point where vehicles stop or slow down.
-%	\item Avoid placing the camera directly opposite bright lights or reflective surfaces.
-%	\item Ensure there is enough ambient light. During night hours, add a small \textbf{LED lamp or floodlight} near the gate for better clarity.
-%	\item Keep the camera lens clean and free of dust, water spots, or scratches.
-%	\item Do not position the camera behind glass or near strong sunlight to prevent reflections.
-%\end{itemize}
-%
-\vspace{0.8em}
-\noindent
 \textbf{Plausibility and Manual Verification:}
 \begin{itemize}
 	\item If the main unit cannot read a plate clearly (for example, due to dirt, glare, or motion blur), it will display a \textbf{“Detection Unclear”} message on the screen.
-	\item In such cases, the operator can manually enter the license plate number using a simple on-screen input field or log sheet.
+	\item In such cases, the operator can manually enter the license plate number using a simple on-screen input field.
 	\item The main unit checks for \textbf{duplicate or incomplete entries} to avoid double billing.
 	\item If an entry or exit is missing, the software automatically flags the record for review.
-	\item For fairness, vehicles with unreadable plates are temporarily marked as \textbf{“Pending Verification”} until corrected by staff.
-	\item Regular cleaning of the lens and maintaining good lighting reduces the chance of detection errors.
-	\item The main unit  is capable of detecting German license plates and validating them. In the event , where the non German plate is recognized the main unit displays an 'Invalid Licence plate ' .
 \end{itemize}
 
-\vspace{0.8em}
-%\noindent
-%\textbf{In simple terms:}
-%\begin{itemize}
-%	\item Plug in the power — the system starts automatically.
-%	\item The camera reads license plates at entry and exit points.
-%	\item The display shows vehicle timing and free/charge status.
-%	\item Emergency or government vehicles are recognised and never charged.
-%	\item In rare cases of unclear detection, staff can correct the record manually.
-%	\item Everything runs locally — no internet or cloud connection required.
-%\end{itemize}
-%
-%---
-%
-%% --------------------------------------------------
-%% Section 3: User Interaction
-%% --------------------------------------------------
-%\section{User Interaction}
-%
-%The system is designed for daily airport use with minimal user effort.  
-%All detections, timings, and charge decisions appear automatically on the display — no keyboard or technical input is required.  
-%The operator only monitors the live feed and confirms that vehicles are captured correctly.
-%
-%\vspace{0.6em}
-%\noindent
-%\textbf{Interface Overview:}
-%\begin{itemize}
-%	\item The screen displays the \textbf{camera view} on the left and the \textbf{detection log} on the right.
-%	\item Each entry shows the plate number, time, duration, and parking status — “Free” (green) or “Charge” (orange).
-%	\item Exempt vehicles such as police or ambulance appear in blue with “No Charge.”
-%\end{itemize}
-%
-%\vspace{0.6em}
-%\noindent
-%\textbf{User Feedback and Manual Input:}
-%\begin{itemize}
-%	\item A short sound confirms each successful detection.
-%	\item If a plate is unclear, the alert \textit{“Detection Unclear – Please Verify”} appears.
-%	\item The operator can type the correct number manually; it is saved instantly as a verified record.
-%\end{itemize}
-%
-%\vspace{0.6em}
-%\noindent
-%\textbf{Managing Exempt Vehicles:}
-%\begin{itemize}
-%	\item Exempt vehicle numbers are stored in a simple text file (\texttt{exempt\_list.txt}).
-%	\item Staff can edit this list before startup; changes take effect immediately.
-%\end{itemize}
-%
-%\vspace{0.6em}
-%\noindent
-%\textbf{Daily Operation:}
-%\begin{itemize}
-%	\item Power on — the system starts automatically.
-%	\item Observe the live feed and alerts.
-%	\item Update exempt list when needed.
-%	\item Turn off display and power after working hours; all data is saved automatically.
-%\end{itemize}
-%
-%\vspace{0.4cm}
-%\noindent
-%This workflow ensures clear, automatic, and reliable operation for non-technical staff, focusing on smooth vehicle flow and accurate billing.
+\section{User Interaction}
+The system is designed for daily airport use with minimal user effort. All detections, timings, and charge decisions appear automatically on the display.
+
+\vspace{0.6em}
+\noindent\textbf{Interface Overview:}
+\begin{itemize}
+	\item The screen displays the \textbf{camera view} on the left and the \textbf{detection log} on the right.
+	\item Each entry shows the plate number, time, duration, and parking status — “Free” (green) or “Charge” (orange).
+	\item Exempt vehicles such as police or ambulance appear in blue with “No Charge.”
+\end{itemize}
+
+\vspace{0.6em}
+\noindent\textbf{Daily Operation:}
+\begin{itemize}
+	\item Power on — the system starts automatically and the AI engine initializes.
+	\item Observe the live feed and alerts for any unreadable plates.
+	\item Use the \textbf{Stop Button} (Fig. \ref{fig:stop_button}) to turn off the display and power after working hours; all data is saved automatically.
+\end{itemize}
+
+\vspace{0.4cm}
+\noindent
+This workflow ensures clear, automatic, and reliable operation for non-technical staff, focusing on smooth vehicle flow and accurate billing.

@@ -119,14 +119,11 @@ These checks help maintain main unit  stability, reduce downtime, and ensure uni
 		\item Run \texttt{sqlite3 plates.db "PRAGMA journal\_mode=WAL;"} for safer writes.  
 		\item Restart the app to release file locks.
 	\end{itemize}
-	\begin{figure}[h!]
-		\centering
-		\fbox{\parbox[c][3cm][c]{10cm}{
-				\centering \textbf{TODO: Insert image showing database corrupeiont issue.} \\
-				(Example: screenshot of image showing database corruption issue.)}}
-		\caption{(To be added) Sample troubleshooting interface for real-time error monitoring.}
-		\label{fig:todo_troubleshoot_ui}
-	\end{figure}
+\begin{figure}[h!] % h! = "here, force placement"
+	\centering
+	\includegraphics[width=1.1\textwidth]{General/DBcorrupt.jpeg}
+	\label{fig:jetson_setup}
+\end{figure}
 	\item \textbf{Database missing or corrupted:}
 	\begin{itemize}
 		\item Restore from backup using \texttt{sqlite3 plates.db < backup.sql}.  

@@ -5,16 +5,16 @@
 \section{Application Domain Knowledge: Software}
 \label{sec:software_domain}
 
-While hardware provides the physical substrate for computation tasks, software domains serve as the cognitive logic of the License Plate Recognition (LPR) system. In embedded edge AI, software architectures are not only defined by application code but also by rigid constraints of underlying Operating System (OS).
+While hardware provides the physical substrate for computational tasks, the software domain serves as the cognitive logic of the License Plate Recognition (LPR) system. In the context of embedded Edge AI, software architectures are defined not merely by application code, but by the rigid constraints of the underlying Operating System (OS) and the scarcity of physical resources.
 
-This section explains the software ecosystem while establishing the Operating System limitations along with defining the engineered deployment pipelines, the memory management architecture, and the specific application logic used by the YOLO object detector and OCR models.
+This section details the software ecosystem, establishing the Operating System limitations, the engineered deployment pipelines, the memory management architecture (RAM vs. Swap), and the specific persistence logic used to store vehicle data and calculate parking duration.
 
 % ---------------------------------------------------------------------------
-% SUBSECTION: DESCRIPTION & OS
+% SUBSECTION: LEGACY ECOSYSTEM
 % ---------------------------------------------------------------------------
 \subsection{System Description: The Legacy Ecosystem}
 
-Primarily, a software constraint in the context of this project is the NVIDIA JetPack SDK version supported by the Jetson Nano. As opposed to modern desktop environments, the Jetson Nano is locked to **JetPack 4.6**, which is built upon **Ubuntu 18.04 LTS**. This imposes a "Legacy Software Ecosystem" challenge that dictates every subsequent architectural decision.
+A primary software constraint for this project is the NVIDIA JetPack SDK version supported by the Jetson Nano (4GB). Unlike modern desktop environments which update frequently, the Jetson Nano is locked to **JetPack 4.6**, which is built upon **Ubuntu 18.04 LTS**. This imposes a "Legacy Software Ecosystem" challenge.
 
 \vspace{0.5cm}
 
@@ -26,14 +26,16 @@ Primarily, a software constraint in the context of this project is the NVIDIA Je
 	\label{fig:software_stack}
 \end{figure}
 
-As visualized in Figure \ref{fig:software_stack}, the dependency layer creates a critical bottleneck. Modern AI libraries, such as \texttt{Ultralytics YOLOv8} and \texttt{Pandas 2.0}, natively require Python 3.8 or newer. The Jetson's default Python 3.6 environment is incompatible with these standard pip packages. Consequently, the "System Description" includes not just the standard libraries, but a set of custom "Monkey Patching" scripts engineered to map deprecated API calls to legacy endpoints, ensuring runtime stability.
+As visualized in Figure \ref{fig:software_stack}, this dependency layer creates a critical compatibility bottleneck. Modern AI libraries, such as \texttt{Ultralytics YOLOv8} and \texttt{Pandas 2.0}, natively require Python 3.8 or newer. The Jetson's default Python 3.6 environment is incompatible with these standard package distributions. 
+
+To resolve this, we employed a **Custom Compilation Strategy**. Instead of installing pre-built binaries via \texttt{pip}, critical libraries (like \texttt{jetson-inference}) were compiled from source code directly on the device using \texttt{GCC 7.5.0}. This ensures that the application binaries are linked correctly against the legacy system libraries (glibc 2.27), preventing "ABI (Application Binary Interface) Incompatibility" errors during runtime.
 
 % ---------------------------------------------------------------------------
-% SUBSECTION: DESIGN & INSTALLATION (DEPLOYMENT PIPELINE)
+% SUBSECTION: DEPLOYMENT PIPELINE
 % ---------------------------------------------------------------------------
 \subsection{Software Design and Installation Pipeline}
 
-To overcome the computational and software limitations of the edge device, we adopted a \textbf{Split-Architecture Design}. Training a Convolutional Neural Network (CNN) directly on the Jetson Nano is unfeasible due to memory exhaustion. Therefore, the "Installation" phase is not a single step but a pipeline spanning two distinct computing environments: the Training Host (High-Performance PC) and the Inference Host (Jetson Nano).
+To overcome the computational limitations of the edge device, we adopted a \textbf{Split-Architecture Design}. Training a complex Convolutional Neural Network (CNN) directly on the Jetson Nano is unfeasible due to memory exhaustion and thermal throttling. Therefore, the "Installation" phase is not a single step but a pipeline spanning two distinct computing environments.
 
 \vspace{0.5cm}
 
@@ -45,18 +47,21 @@ To overcome the computational and software limitations of the edge device, we ad
 	\label{fig:deployment_pipeline}
 \end{figure}
 
-The workflow illustrated in Figure \ref{fig:deployment_pipeline} addresses the "Cross-Compilation" challenge. The YOLOv8 model is trained on a powerful workstation. The resulting weights (\texttt{.pt} file) are exported to the \textbf{ONNX} (Open Neural Network Exchange) format. This representation is transferred to the Jetson Nano, compiled into a \textbf{TensorRT} engine file. This binary format is optimized for the Nano's Maxwell GPU architecture, providing a 40-50\% improvement in inference speed (FPS) as oppposed to running raw PyTorch code.
+The workflow illustrated in Figure \ref{fig:deployment_pipeline} addresses the "Cross-Compilation" challenge:
+\begin{enumerate}
+	\item \textbf{Training Host (PC):} The model is trained on a high-performance workstation using PyTorch. This environment handles the heavy matrix multiplications required for backpropagation.
+	\item \textbf{Export (ONNX):} The model weights are exported to the Open Neural Network Exchange (ONNX) format (Opset 11). This step strips away Python-specific dependencies, leaving only the computational graph.
+	\item \textbf{Inference Host (Jetson):} The ONNX file is transferred to the Jetson, where it is compiled into a \textbf{TensorRT Engine} plan. This binary format is optimized for the Nano's Maxwell GPU architecture, utilizing \textbf{FP16 (Half-Precision)} arithmetic. This optimization reduces the memory bandwidth requirement by 50\%, yielding a 40--50\% improvement in inference speed compared to raw PyTorch execution.
+\end{enumerate}
 
 % ---------------------------------------------------------------------------
-% SUBSECTION: MEMORY MANAGEMENT (DATA & QUANTITY)
+% SUBSECTION: MEMORY MANAGEMENT (RAM)
 % ---------------------------------------------------------------------------
-\subsection{Data Structure and Memory Architecture}
+\subsection{Memory Management Architecture}
 
-A defining characteristic of the "Software Domain" on embedded devices is the scarcity of Random Access Memory (RAM). The Jetson Nano possesses a unified memory architecture where the CPU and GPU share a single 4GB pool. This creates a "Zero-Sum Game": every megabyte used by the Ubuntu OS is a megabyte denied to the AI model.
+A defining characteristic of the embedded software domain is the scarcity of Random Access Memory (RAM). The Jetson Nano possesses a \textbf{Unified Memory Architecture} where the CPU and GPU share a single 4GB physical pool. This creates a "Zero-Sum Game": every megabyte used by the Ubuntu OS is a megabyte denied to the AI model.
 
-During initial testing, the simultaneous loading of the OS ($\approx 1.2$ GB), the YOLOv8 model ($\approx 1.5$ GB), and the EasyOCR engine ($\approx 1.8$ GB) resulted in a total demand of $\approx 4.5$ GB. This exceeded physical capacity, causing the Linux kernel to invoke the \textbf{OOM (Out of Memory) Killer}, terminating the application immediately.
-
-To resolve this, we engineered a virtual memory expansion using a \textbf{6GB Swap Partition} on the external SSD.
+During stress testing, the simultaneous load of the OS ($\approx 1.2$ GB), the Object Detector ($\approx 1.5$ GB), and the OCR Engine ($\approx 1.0$ GB) resulted in a total demand exceeding 4GB. This triggered the Linux kernel's \textbf{OOM (Out of Memory) Killer}, which terminates processes to prevent a system crash.
 
 \vspace{0.5cm}
 
@@ -68,31 +73,53 @@ To resolve this, we engineered a virtual memory expansion using a \textbf{6GB Sw
 	\label{fig:memory_architecture}
 \end{figure}
 
-As shown in Figure \ref{fig:memory_architecture}, the Swap partition allows the OS to offload inactive memory pages (like the GUI desktop manager) to the SSD, freeing up the fast physical RAM for the active CUDA tensors required by YOLOv8. While SSD access is slower than RAM, this trade-off is acceptable for background processes and enables the system to run without crashing.
-
-\subsubsection{Data Types and Database Structure}
-Data handled within the software comprises of structured entry/exit events.In order to promote persistence through power cycles, a local \textbf{SQLite} database is implemented. Schema  normalization is performed aiding in database table simplification optimized for CRUD applications while license plated timestamps are being recorded and processed in the parking application:
-
-\begin{itemize}
-	\item \textbf{Table:} \texttt{vehicle\_logs}
-	\item \textbf{Columns:} 
-	\begin{itemize}
-		\item \texttt{id} (INTEGER PRIMARY KEY)
-		\item \texttt{license\_plate} (TEXT, Indexed for O(1) retrieval)
-		\item \texttt{entry\_timestamp} (DATETIME, ISO 8601 format)
-		\item \texttt{exit\_timestamp} (DATETIME, Nullable)
-		\item \texttt{fee\_calculated} (FLOAT)
-	\end{itemize}
-\end{itemize}
-
-This structure allows the billing logic to perform a simple SQL query: \texttt{SELECT entry\_timestamp FROM vehicle\_logs WHERE license\_plate = ? AND exit\_timestamp IS NULL}. If a record is found, the car is exiting; if not, it is entering.
+To resolve this, we engineered a virtual memory expansion using a \textbf{6GB Swap Partition} on the external SSD (Figure \ref{fig:memory_architecture}). This strategy allows the OS to "page out" inactive memory blocks (such as the Desktop GUI and background services) to the SSD, reserving the high-speed physical RAM for the active CUDA tensors required by the AI inference engine. By placing the Swap on a high-speed SSD (USB 3.0) rather than the slower SD card, we minimize the latency penalty known as "Swap Thrashing."
 
 % ---------------------------------------------------------------------------
-% SUBSECTION: REMOTE DEVELOPMENT (PROTOCOLS)
+% SUBSECTION: DATA STORAGE & LOGIC (SQLITE)
+% ---------------------------------------------------------------------------
+\subsection{Data Persistence and Business Logic}
+
+Reliable data storage is critical for an automated parking system. Unlike volatile memory (RAM), the system requires a persistent storage layer to ensure that parking records are preserved during power cycles or system reboots.
+
+\subsubsection{Storage Offloading Strategy}
+The Jetson Nano boots from a microSD card, which is inherently prone to corruption if subjected to heavy write cycles (e.g., continuous database logging). To mitigate this risk, we implemented a \textbf{Storage Offloading} architecture:
+\begin{itemize}
+	\item \textbf{Internal Storage (SD Card):} Reserved strictly for the Read-Only Operating System and system libraries.
+	\item \textbf{External Storage (SSD):} The application database (\texttt{parking.db}) and logs are physically stored on the mounted SSD partition at \texttt{/media/myssd}. This drive utilizes the **EXT4** journaling file system, providing superior data integrity against power loss.
+\end{itemize}
+
+\subsubsection{Database Schema (SQLite)}
+We utilized \textbf{SQLite}, a serverless, self-contained SQL database engine, rather than a client-server database like MySQL. This reduces memory overhead while providing full ACID (Atomicity, Consistency, Isolation, Durability) compliance. The data is structured in a single normalized table:
+
+\begin{itemize}
+	\item \textbf{Table Name:} \texttt{visits}
+	\item \textbf{Column 1:} \texttt{plate} (TEXT, Primary Key) - The unique license plate identifier.
+	\item \textbf{Column 2:} \texttt{entry\_ts} (REAL) - The Unix timestamp of the first detection event.
+	\item \textbf{Column 3:} \texttt{last\_seen\_ts} (REAL) - The Unix timestamp of the most recent detection.
+\end{itemize}
+
+\subsubsection{Car Park Duration Algorithm}
+The core business logic—calculating the parking duration and fee—is derived dynamically from the timestamps. The system uses a "State-Based" calculation rather than an incrementing counter. This stateless design ensures accuracy even if the software restarts or crashes mid-session.
+
+The duration $\Delta t$ is calculated as:
+\begin{equation}
+	\Delta t = t_{current} - t_{entry\_ts}
+\end{equation}
+
+Where $t_{current}$ is the system time at the moment of the request. The parking fee ($C$) is then derived by applying the billing rate ($R$):
+\begin{equation}
+	C = \Delta t \times R \quad (\text{e.g., } R = 0.10 \text{\euro}/s)
+\end{equation}
+
+This approach ensures that the financial calculation is deterministic and historically reconstructible. The system utilizes **Python Threading** to handle video processing and database I/O concurrently, ensuring that database writes do not block the video feed frame rate.
+
+% ---------------------------------------------------------------------------
+% SUBSECTION: REMOTE PROTOCOLS
 % ---------------------------------------------------------------------------
 \subsection{Protocols and Remote Development Strategy}
 
-An important milestone was solving challenges with respect to using standard modern development tools, unusable in the "Configuration" domain. The VS Code Remote Server recently updated its requirements to demand \texttt{glibc 2.28}, whereas the Jetson's OS is locked to \texttt{glibc 2.27}. This incompatibility rendered standard remote debugging impossible.
+An important milestone was solving challenges regarding standard development tools. The VS Code Remote Server requires \texttt{glibc 2.28}, whereas the Jetson's OS is locked to \texttt{glibc 2.27}. This incompatibility rendered standard remote debugging impossible.
 
 To circumvent this, we architected a protocol switch from the standard VS Code Server agent to a lightweight \textbf{SSH-FS (Secure Shell File System)} implementation.
 
@@ -106,7 +133,4 @@ To circumvent this, we architected a protocol switch from the standard VS Code S
 	\label{fig:remote_protocol}
 \end{figure}
 
-As depicted in Figure \ref{fig:remote_protocol}, instead of running a binary agent on the Jetson (which fails due to library versioning), we mount the Jetson's filesystem locally on the development laptop. This allows us to edit code using the laptop's powerful CPU and modern libraries, while the files are physically saved to the Jetson's SSD in real-time. Execution is then triggered via a standard SSH terminal, which requires very few dependencies.
-
-\subsubsection{Conclusion of Software Analysis}
-The Software Domain of this project is characterized by adaptation. The application logic (YOLO detection, Billing) is robust, but it sits atop a fragile legacy foundation. The successful operation of the system serves as a proof-of-concept that modern AI workloads can be back-ported to older edge hardware through rigorous memory management (Swap), strategic pipeline design (TensorRT), and protocol flexibility (SSH-FS).
+As depicted in Figure \ref{fig:remote_protocol}, instead of running a binary agent on the Jetson, we mount the Jetson's filesystem locally on the development laptop via the SSH protocol (Port 22). This allows code editing using the laptop's modern environment while files are physically saved to the Jetson's SSD in real-time. This eliminates the need for heavyweight server-side dependencies on the edge device.

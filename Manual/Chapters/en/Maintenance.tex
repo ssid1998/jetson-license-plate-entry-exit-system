@@ -1,3 +1,6 @@
+\definecolor{corpBlue}{RGB}{0, 85, 150}      % Deep Engineering Blue
+\definecolor{corpLight}{RGB}{240, 245, 255}  % Very Light Blue Background
+\definecolor{accentGray}{RGB}{80, 80, 80}    % Dark Text
 \chapter{Maintenance}
 
 \section{Maintenance}
@@ -40,25 +43,73 @@ This section describes how users can care for the hardware and software to ensur
 	Check every few weeks that the camera faces the correct lane and captures clear plates without obstruction.
 \end{itemize}
 
-\begin{figure}[h!]
-	\centering
-	\begin{tikzpicture}[node distance=1.5cm, >=stealth, thick]
-		\tikzstyle{block}=[rectangle, draw=gray!80!black, fill=gray!10, rounded corners, text width=4.5cm, minimum height=1cm, align=center]
-		\tikzstyle{arrow}=[->, thick]
-		
-		\node[block] (check1) {Clean Camera and  main unit Case};
-		\node[block, below=of check1] (check2) {Inspect Power and USB Cables};
-		\node[block, below=of check2] (check3) {Ensure Proper Cooling};
-		\node[block, below=of check3] (check4) {Verify Camera Angle and Focus};
-		
-		\draw[arrow] (check1) -- (check2);
-		\draw[arrow] (check2) -- (check3);
-		\draw[arrow] (check3) -- (check4);
-	\end{tikzpicture}
-	\caption{Routine hardware maintenance flow.}
-	\label{fig:maintenance_flow_user}
-\end{figure}
-
+\begin{tikzpicture}[
+	font=\sffamily,
+	% 1. STYLE: The Central Hub
+	hub/.style={
+		circle,
+		minimum size=3.5cm,
+		align=center,
+		top color=corpBlue!10,
+		bottom color=corpBlue!30,
+		draw=corpBlue,
+		very thick,
+		blur shadow={shadow blur steps=5}
+	},
+	% 2. STYLE: The Satellite Nodes (Tasks)
+	task/.style={
+		rectangle,
+		rounded corners=5pt,
+		minimum width=4cm,
+		minimum height=1.2cm,
+		align=center,
+		fill=white,
+		draw=accentGray!30,
+		thick,
+		blur shadow,
+		font=\bfseries\small
+	},
+	% 3. STYLE: The Connecting Arcs
+	cycleArrow/.style={
+		-{Latex[width=3mm, length=3mm]},
+		line width=1mm,
+		draw=corpBlue!80,
+		shorten >=5pt,
+		shorten <=5pt
+	}
+	]
+	
+	% --- CENTRAL HUB ---
+	\node[hub] (center) at (0,0) {\textbf{Routine}\\ \textbf{Maintenance}\\ \textbf{Protocol}};
+	
+	% --- NODES (Polar Coordinates) ---
+	% 1. Top Right (45 deg)
+	\node[task, anchor=south west] (node1) at (45:2.5cm) {1. OPTICS\\ \normalfont Clean Camera Lens};
+	
+	% 2. Bottom Right (-45 deg)
+	\node[task, anchor=north west] (node2) at (-45:2.5cm) {2. CONNECTIVITY\\ \normalfont Check USB \& Power};
+	
+	% 3. Bottom Left (-135 deg)
+	\node[task, anchor=north east] (node3) at (-135:2.5cm) {3. THERMAL\\ \normalfont Verify Cooling/Fan};
+	
+	% 4. Top Left (135 deg)
+	\node[task, anchor=south east] (node4) at (135:2.5cm) {4. CALIBRATION\\ \normalfont Verify Angle/Focus};
+	
+	% --- CONNECTING ARROWS (The Cycle) ---
+	% Drawing curved arrows between the quadrants
+	\draw[cycleArrow] (50:2cm) arc (50:-40:2cm);
+	\draw[cycleArrow] (-40:2cm) arc (-40:-130:2cm);
+	\draw[cycleArrow] (-130:2cm) arc (-130:-220:2cm);
+	\draw[cycleArrow] (140:2cm) arc (140:50:2cm);
+	
+	% --- DECORATIVE CONNECTORS ---
+	% Thin lines connecting center to nodes
+	\foreach \angle in {45, -45, -135, 135} {
+		\draw[dashed, gray] (0,0) -- (\angle:2.3cm);
+		\fill[corpBlue] (\angle:2.3cm) circle (2pt);
+	}
+	
+\end{tikzpicture}
 
 % ==========================================================
 \subsection{Software Maintenance}
