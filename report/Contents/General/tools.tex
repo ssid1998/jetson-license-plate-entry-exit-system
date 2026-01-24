@@ -11,7 +11,7 @@
 %
 %%%
 
-\chapter{\textcolor{red}{Domain Knowledge -- Tools}}
+\chapter{\textcolor{red}{Development Environment -- Python}}
 \index{Domain Knowledge -- Tools}
 
 \providecommand{\TBD}[1]{\textcolor{red}{#1}}
@@ -20,10 +20,7 @@
 This chapter documents the \textbf{project-relevant} tools and the system environment used to build and run the license plate detection system.
 The emphasis is on \textbf{usage, configuration, and validation} required for reproducible execution (not on tutorials).
 
-
-\section{Development Environment -- Python}
-
-\subsection{Version}
+\section{Version}
 \noindent
 Python is the primary runtime used to execute the end-to-end pipeline (camera capture, image preprocessing, model inference, OCR, and logging).
 The interpreter version was verified directly on the target device using \SHELL{python3 --version}.
@@ -32,7 +29,7 @@ The interpreter version was verified directly on the target device using \SHELL{
 \noindent
 \textbf{Recorded value:} Python 3.6.9 (\FILE{/usr/bin/python3}).
 
-\subsection{Description}
+\section{Description}
 \noindent
 Python is used for the complete processing chain:
 \begin{itemize}
@@ -55,7 +52,7 @@ Python is used for the complete processing chain:
 		\item \textbf{UI layer:} Flask web dashboard (live view + billing table) served from the Jetson (\TBD{confirm final port and launch command}).
 	\end{itemize}
 
-\subsection{Installation}
+\section{Installation}
 \noindent
 Python is provided by the Jetson OS image (JetPack/L4T) and does not require separate installation.
 Project dependencies were installed via \SHELL{pip}/\SHELL{pip3}, ideally from a pinned requirements file.
@@ -79,7 +76,7 @@ Project dependencies were installed via \SHELL{pip}/\SHELL{pip3}, ideally from a
 	\item \textbf{Flask:} \texttt{Flask==2.0.3}.
 \end{itemize}
 
-\subsection{Configuration}
+\section{Configuration}
 \noindent
 Only project-relevant configuration is required:
 \begin{itemize}
@@ -89,7 +86,7 @@ Only project-relevant configuration is required:
 		\item \textbf{Post-processing:} \TBD{confirm whether IoU-based NMS is implemented in the final demo script, or if confidence filtering/top-1 selection is used.}
 \end{itemize}
 
-\subsection{First Steps}
+\section{First Steps}
 \noindent
 Before running the full pipeline, the environment was validated with a short checklist:
 \begin{itemize}
@@ -124,7 +121,7 @@ Figure~\ref{fig:python_verification_flow} summarizes the Python verification wor
 	\label{fig:python_verification_flow}
 \end{figure}
 
-\subsection{Program ``Hello World''}
+\section{Program ``Hello World''}
 \noindent
 This is not a generic \PYTHON{print("Hello World")} example.
 Instead, a minimal project-relevant script validates that the Python environment can (i) import the required libraries and (ii) access the camera to read a frame.
@@ -152,9 +149,7 @@ rulecolor=\color{black!30}
 
 \providecommand{\TBD}[1]{\textcolor{red}{#1}}
 
-\section{Development Environment -- Hardware / OS / System Tools}
-
-\subsection{Version}
+\section{Version}
 \noindent
 The project is deployed on the \textbf{Seeed Studio reComputer J1010} platform, integrating an \textbf{NVIDIA Jetson Nano (4~GB, B01 revision)} module on the \textbf{J101 carrier board}.
 The OS and NVIDIA acceleration stack are provided via JetPack/L4T.
@@ -170,7 +165,7 @@ The OS and NVIDIA acceleration stack are provided via JetPack/L4T.
 	\item \textbf{TensorRT:} \texttt{TensorRT 8.2.1.8} (\texttt{tensorrt==8.2.1.8}).
 \end{itemize}
 
-\subsection{Description}
+\section{Description}
 \noindent
 The Jetson system is used as an \textbf{edge AI device} to run the full pipeline locally: camera capture, license plate detection, OCR, and decision/logging.
 Operating locally reduces latency and avoids dependence on external servers for the core recognition/billing decision.
@@ -184,7 +179,7 @@ Project-relevant system aspects include:
 	\item \textbf{Resource constraints:} Jetson Nano has 4\,GB unified memory, requiring memory-aware configuration for stable inference.
 \end{itemize}
 
-\subsection{Installation}
+\section{Installation}
 \noindent
 The base system installation consists of installing a JetPack/L4T image to the boot medium and completing first-boot initialization.
 For this project, the root filesystem is on internal flash storage (\texttt{/dev/mmcblk0p1}, 14\,GB partition), and an external SSD is mounted at \FILE{/media/myssd} for project storage.
@@ -198,7 +193,7 @@ A concise installation procedure is:
 	\item Update system packages and verify baseline readiness (camera, CUDA/TensorRT where applicable).
 \end{itemize}
 
-\subsection{Configuration}
+\section{Configuration}
 \noindent
 System configuration steps relevant to this project:
 \begin{itemize}
@@ -211,7 +206,7 @@ System configuration steps relevant to this project:
 	\item \textbf{TensorRT engine build (on-device):} \TBD{confirm final command and ONNX source path; example: \SHELL{/usr/src/tensorrt/bin/trtexec --onnx=best.onnx --saveEngine=best.engine --fp16}.}
 	\end{itemize}
 
-\subsection{First Steps (GUI / UI)}
+\section{First Steps (GUI / UI)}
 \noindent
 Initial system validation is performed either via GUI terminal or SSH:
 \begin{itemize}
@@ -220,7 +215,7 @@ Initial system validation is performed either via GUI terminal or SSH:
 	\item Verify monitoring tools (\SHELL{tegrastats}) and basic resource availability (RAM/swap/disk).
 \end{itemize}
 
-\subsection{Program ``Hello World'' / Bash Verification}
+\section{Program ``Hello World'' / Bash Verification}
 \noindent
 As a minimal OS-level verification, a short Bash script checks whether the platform exposes the required system capabilities
 (OS identity, CUDA/TensorRT presence, monitoring tools, and basic resources).
