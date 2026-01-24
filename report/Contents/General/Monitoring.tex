@@ -1,0 +1,251 @@
+%%%
+%
+% $Autor: Shubhankar Dumka, Gautam Ramesh, Siddhanth Sharma $
+% $Date: 2026-01-24 $
+% $File: Monitoring.tex $
+% $Version: 1.0 $
+%
+% !TeX spellcheck = en_GB
+% !TeX program = pdflatex
+% !TeX encoding = utf8
+%
+%%%
+
+\chapter{Monitoring}
+\label{ch:monitoring}
+\index{Monitoring}
+
+\noindent
+This chapter documents how the running license plate recognition system is observed, validated, and maintained over time on an edge device (NVIDIA Jetson Nano).
+The goal is a realistic, student-project scale approach: lightweight monitoring that fits the compute/storage constraints and works without cloud dependencies.
+
+% --------------------------------------------------------
+\section{Idea and Motivation}
+\index{Monitoring!Idea and Motivation}
+
+\noindent
+Once deployed, the pipeline (camera $\rightarrow$ detection $\rightarrow$ OCR $\rightarrow$ database) can degrade due to environmental changes (lighting, camera angle), hardware limits (thermal throttling), or simple runtime issues (camera disconnects, corrupted frames).
+Monitoring is therefore required to (i) detect failures early, (ii) preserve evidence for debugging, and (iii) collect new data for iterative improvement.
+
+\noindent
+The core objectives for this project are:
+\begin{itemize}
+	\item \textbf{Performance:} ensure the system stays responsive (e.g., stable processing rate / acceptable latency).
+	\item \textbf{Hardware health:} detect resource pressure and thermal throttling on the Jetson Nano.
+	\item \textbf{Availability:} detect crashes, camera failures, and model-load failures quickly.
+	\item \textbf{Data quality:} identify unreadable/low-quality plate crops and collect them as new training data.
+\end{itemize}
+
+% --------------------------------------------------------
+\section{Plan / Description (Implementation Approach)}
+\index{Monitoring!Plan / Description}
+
+\subsection{What is monitored}
+\index{Monitoring!Plan / Description!What is monitored}
+
+\noindent
+The project uses a small set of practical signals that are easy to collect locally:
+\begin{itemize}
+	\item \textbf{Detection/OCR quality:} plate text, OCR confidence, and whether the output matches a German plate format.
+	\item \textbf{Throughput indicator:} processing interval / FPS-style feedback during testing (e.g., camera test scripts overlay FPS).
+	\item \textbf{System resources (Jetson):} temperature, CPU/GPU load, memory usage, and disk space using built-in OS tools.
+	\item \textbf{Operational events:} errors such as camera not opening, empty frames, and model-load failures.
+\end{itemize}
+
+\subsection{How metrics are collected and stored}
+\index{Monitoring!Plan / Description!Collection and storage}
+
+\noindent
+To remain feasible on a Jetson Nano, metrics are stored locally and kept simple:
+\begin{itemize}
+	\item \textbf{Event log (SQLite):}
+	detections are persisted in a lightweight SQLite database using \PYTHON{sqlite3}.
+	In the reference implementation, \PYTHON{DatabaseManager} (see \FILE{Code/LicencePlateDetection/jetson\_app/db.py}) stores \PYTHON{plate\_text}, \PYTHON{confidence}, and \PYTHON{timestamp} in the local database file\linebreak
+	\FILE{Code/LicencePlateDetection/jetson\_app/parking.db}.
+	\item \textbf{Failure evidence (images):}
+	when a plate crop cannot be read, the system stores the crop image in a dedicated directory for later analysis (created on demand in \FILE{Code/LicencePlateDetection/jetson\_app/dashboard.py}).
+	\item \textbf{Resource snapshots (manual / scheduled):}
+	during testing and demos, Jetson resource metrics can be observed with \SHELL{tegrastats} or by reading thermal sensors from \FILE{/sys/devices/virtual/thermal/}.
+	If required, these outputs can be appended to a plain log file at a low frequency (e.g., every 10--30 seconds) to avoid overhead.
+\end{itemize}
+
+\subsection{Simple monitoring architecture}
+\index{Monitoring!Plan / Description!Architecture}
+
+\noindent
+The monitoring concept follows the deployed data flow:
+	\begin{enumerate}
+		\item \textbf{Camera input} is validated (camera opens, frames are non-empty).
+		\item \textbf{Detection} runs with a confidence threshold (example: \PYTHON{conf=0.2} in \FILE{Code/LicencePlateDetection/jetson\_app/detector.py}).
+		\item \textbf{OCR pipeline} validates output format and confidence (example: \PYTHON{validateGermanPlate()} and \PYTHON{confThreshold}).
+		\item \textbf{Logging layer} writes a minimal event record (SQLite) and stores failure samples as images.
+		\item \textbf{Operator checks} (during operation) confirm system resources and review logs/samples.
+	\end{enumerate}
+
+% --------------------------------------------------------
+\section{Getting New Data During Operation}
+\index{Monitoring!Getting New Data}
+
+\noindent
+To improve robustness over time, the system collects new samples from real operation instead of relying purely on the original dataset.
+The collection strategy is intentionally selective to control storage usage on the edge device.
+
+\subsection{Trigger-based capture}
+\index{Monitoring!Getting New Data!Trigger-based capture}
+
+\noindent
+New data is captured under conditions that indicate that the current model/pipeline struggles:
+\begin{itemize}
+	\item \textbf{Unreadable OCR:} if the OCR result is empty or invalid, the best plate crop is stored for later inspection (see \FILE{Code/LicencePlateDetection/jetson\_app/dashboard.py}).
+	\item \textbf{High-confidence detections:} the detector script periodically saves frames and plate crops when detection confidence exceeds a threshold (example: \PYTHON{captureConfidence=0.5} with a minimum interval of \PYTHON{1500ms} in \FILE{Code/LicencePlateDetection/jetson\_app/detector.py}).
+	\item \textbf{Sharpest sample selection:} multiple candidate crops are buffered and the sharpest crop is selected using the variance of Laplacian (implemented in \FILE{Code/LicencePlateDetection/jetson\_app/dashboard.py}).
+\end{itemize}
+
+\noindent
+This approach creates a focused "hard cases" dataset (blur, glare, angle issues, partial occlusions) that is valuable for retraining and debugging.
+
+% --------------------------------------------------------
+\section{Data Updating in the ML Pipeline}
+\index{Monitoring!Data Updating in the ML Pipeline}
+
+\noindent
+Retraining in this student project is intentionally \textbf{offline and partially manual}.
+The Jetson Nano focuses on inference, while dataset curation and training are performed on a development machine or a controlled environment.
+
+\subsection{Review and annotation workflow}
+\index{Monitoring!Data Updating in the ML Pipeline!Review and annotation}
+
+\noindent
+The stored captures are periodically reviewed:
+\begin{itemize}
+	\item Remove corrupted or unusable images (e.g., empty crops).
+	\item Label new plates (bounding boxes in YOLO format) and, if required, create corresponding OCR ground truth for evaluation.
+	\item Track the data source and conditions (night/day, rain, camera position) as lightweight metadata (directory naming or CSV).
+\end{itemize}
+
+\subsection{Retraining and model update}
+\index{Monitoring!Data Updating in the ML Pipeline!Retraining and deployment}
+
+\noindent
+The model update strategy is:
+\begin{enumerate}
+	\item Train or fine-tune the detector offline (example script: \FILE{Code/LicencePlateDetection/scripts/train\_german\_lpr.py}).
+	\item Validate the new model on a fixed local test set (same image set each iteration) and on recent "hard cases" collected from operation.
+	\item Deploy by replacing the model artifact on the Jetson (e.g., updated \PYTHON{best.pt} weights) and re-running the startup checks.
+\end{enumerate}
+
+\noindent
+Basic versioning is achieved by keeping dated model folders (e.g., \texttt{runs/train/...}) and preserving the previous working model for rollback.
+
+% --------------------------------------------------------
+\section{Checks (System Health Validation)}
+\index{Monitoring!Checks}
+
+\noindent
+Checks are used at three times: \textbf{startup}, \textbf{runtime}, and \textbf{periodic review}.
+
+\subsection{Startup checks}
+\index{Monitoring!Checks!Startup}
+
+\begin{itemize}
+	\item \textbf{Python environment sanity:} verify imports and camera access using the project script \FILE{report/Code/SystemTools/python\_project\_sanity\_check.py}.
+	\item \textbf{Model availability:} verify the expected model file exists before starting inference (paths are printed during initialization in \FILE{Code/LicencePlateDetection/jetson\_app/dashboard.py}).
+	\item \textbf{Database readiness:} ensure the SQLite table exists on startup (\PYTHON{DatabaseManager.\_create\_table()} in \FILE{Code/LicencePlateDetection/jetson\_app/db.py}).
+\end{itemize}
+
+\subsection{Runtime checks}
+\index{Monitoring!Checks!Runtime}
+
+\begin{itemize}
+	\item \textbf{Frame validity:} skip empty frames / empty plate crops (handled in\linebreak
+	\FILE{Code/LicencePlateDetection/jetson\_app/ocr\_pipeline.py} and\linebreak
+	\FILE{Code/LicencePlateDetection/jetson\_app/dashboard.py}).
+	\item \textbf{Camera fallback:} attempt an external camera first and fall back to a default camera index if unavailable (implemented in\linebreak
+	\FILE{Code/LicencePlateDetection/jetson\_app/dashboard.py}).
+	\item \textbf{Output plausibility:} validate plate text against a German plate pattern before accepting it (implemented in\linebreak
+	\PYTHON{validateGermanPlate()} in\linebreak
+	\FILE{Code/LicencePlateDetection/jetson\_app/ocr\_pipeline.py}).
+\end{itemize}
+
+\subsection{Periodic review checks}
+\index{Monitoring!Checks!Periodic review}
+
+\noindent
+During longer runs or demos, logs and system resources are reviewed:
+\begin{itemize}
+	\item \textbf{SQLite growth:} ensure the database file does not grow without bounds:\linebreak
+	\FILE{Code/LicencePlateDetection/jetson\_app/parking.db}.
+	\item \textbf{Disk usage:} ensure the capture directories do not fill the device storage.
+	\item \textbf{Thermals:} check for thermal throttling symptoms (e.g., sudden FPS drops) and verify with Jetson OS tools.
+\end{itemize}
+
+% --------------------------------------------------------
+\section{Code: Monitoring-Related Functions}
+\index{Monitoring!Code Functions}
+
+\noindent
+To keep monitoring logic maintainable, the project separates core concerns into small functions/classes:
+\begin{itemize}
+	\item \textbf{Event persistence:} \PYTHON{DatabaseManager.log\_detection()} and \PYTHON{get\_first\_detection\_today()} in \FILE{Code/LicencePlateDetection/jetson\_app/db.py} encapsulate SQLite operations.
+	\item \textbf{Quality gating:} \PYTHON{PlateOcrPipeline.readPlate()} combines preprocessing, OCR execution, normalization, and format validation in one reusable pipeline (\FILE{Code/LicencePlateDetection/jetson\_app/ocr\_pipeline.py}).
+	\item \textbf{Sample selection:} sharpness scoring and buffering reduce noisy captures and improve the quality of stored samples (\FILE{Code/LicencePlateDetection/jetson\_app/dashboard.py}).
+	\item \textbf{Performance feedback (testing):} \PYTHON{draw\_fps()} in \FILE{Code/LicencePlateDetection/scripts/test\_camera.py} provides quick runtime feedback during development.
+\end{itemize}
+
+% --------------------------------------------------------
+\section{Code: Test Strategy}
+\index{Monitoring!Code Test}
+
+\noindent
+Testing focuses on fast checks that catch deployment blockers early:
+\begin{itemize}
+	\item \textbf{Import and environment tests:} validate dependencies and basic runtime readiness (example: \FILE{Code/LicencePlateDetection/scripts/test\_yolo\_import.py} and \FILE{report/Code/SystemTools/python\_project\_sanity\_check.py}).
+	\item \textbf{Camera and throughput tests:} validate camera read loop and visual overlays (example: \FILE{Code/LicencePlateDetection/scripts/test\_camera.py}).
+	\item \textbf{End-to-end dry runs:} run the full pipeline and confirm that detections appear in SQLite and that unreadable crops are stored when OCR fails (dashboard run).
+\end{itemize}
+
+% --------------------------------------------------------
+\section{Privacy}
+\index{Monitoring!Privacy}
+
+\noindent
+License plates are personal data in many jurisdictions, therefore monitoring must minimize data exposure:
+\begin{itemize}
+	\item \textbf{Data minimization:} the default operational log stores plate text, timestamp, and confidence (SQLite) instead of storing full video streams.
+	\item \textbf{Restricted access:} logs and captured images remain on the device and are intended for project team access only.
+	\item \textbf{Retention:} captured images for debugging/retraining should be deleted after they have been reviewed and incorporated into an updated dataset; database entries should be pruned to a defined retention window (e.g., last N days) for the demo setup.
+\end{itemize}
+
+% --------------------------------------------------------
+\section{Robustness}
+\index{Monitoring!Robustness}
+
+\noindent
+The system is designed to degrade gracefully under common edge failures:
+\begin{itemize}
+	\item \textbf{Camera issues:} the application detects missing cameras and either falls back to another device index or terminates with a clear error.
+	\item \textbf{OCR failures:} empty/invalid crops are handled without crashing, and failures are recorded as samples for later improvement.
+	\item \textbf{GPU/CPU variability:} OCR can run on CPU if GPU resources are constrained (fallback behaviour exists in \PYTHON{PlateOcrPipeline.\_ensureReader()} in \FILE{Code/LicencePlateDetection/jetson\_app/ocr\_pipeline.py}).
+\end{itemize}
+
+% --------------------------------------------------------
+\section{Process (Operational Workflow)}
+\index{Monitoring!Process}
+
+\noindent
+A typical operational workflow for a demo run on the Jetson Nano is:
+\begin{enumerate}
+	\item \textbf{Start:} run the sanity check (\FILE{report/Code/SystemTools/python\_project\_sanity\_check.py}), then start the dashboard application.
+	\item \textbf{Observe:} verify that the UI updates, detections are shown, and that \FILE{Code/LicencePlateDetection/jetson\_app/parking.db} records events.
+	\item \textbf{Monitor resources:} periodically check Jetson temperatures and utilization using OS tools during longer runs.
+	\item \textbf{Stop:} terminate the application cleanly and archive logs/captures if needed.
+	\item \textbf{Review:} inspect unreadable/failed captures and add useful samples to the retraining dataset.
+\end{enumerate}
+
+\noindent
+Example decision rules used during operation:
+\begin{itemize}
+	\item If the processing rate drops noticeably, check Jetson thermals and system load; reduce camera resolution or processing frequency if necessary.
+	\item If many plates become unreadable, inspect recent captures to identify whether the cause is motion blur, lighting changes, or camera focus, and collect samples for retraining.
+	\item If detections are missing entirely, run the startup checks again (camera access, model path, CUDA availability) before changing thresholds.
+\end{itemize}
