@@ -33,24 +33,24 @@ In the KDD process, \textit{data transformation} is the final conversion step th
 \end{figure}
 
 \paragraph{Concrete transformations applied before model execution}
-For each camera frame, the following transformations are applied immediately before the detector runs:
+For each camera frame, the following formatting transformations are applied immediately before the detector runs (tool-specific requirements that do not change the semantic meaning of the frame):
 \begin{itemize}
-	\item \textbf{Resize / letterbox to model input size:} frames are mapped to the fixed detector input resolution (e.g., \texttt{imgsz = 640} for the YOLO model used in this project).
-	\item \textbf{Pixel normalization:} pixel values are converted from \texttt{uint8} in \([0,255]\) to \texttt{float} in \([0.0,1.0]\) to match the neural network input convention.
-	\item \textbf{Channel order:} OpenCV provides frames as BGR; for PyTorch-based YOLO inference the data is converted to RGB.
-	\item \textbf{Tensor layout:} the model input is converted from \(\text{H}\times\text{W}\times\text{C}\) to \(\text{C}\times\text{H}\times\text{W}\) (and a batch dimension is added).
+	\item \textbf{Resize to model input size:} the camera frame is resized to \(640\times640\) pixels for the detector engine input.
+	\item \textbf{Pixel normalization:} pixel values are converted from \texttt{uint8} in \([0,255]\) to \texttt{float32} in \([0.0,1.0]\).
+	\item \textbf{Channel order:} OpenCV provides frames as BGR; the inference engine expects RGB (\texttt{BGR\(\rightarrow\)RGB}).
+	\item \textbf{Tensor layout:} the input is converted from \(\text{H}\times\text{W}\times\text{C}\) to \(\text{C}\times\text{H}\times\text{W}\), then flattened to match the TensorRT input binding.
 \end{itemize}
 
 \paragraph{Where the transformation happens (Jetson vs.\ offline)}
-In the deployed system, these transformations are executed \textbf{on the Jetson Nano in real time} for every frame coming from the LifeCam. During development/training, the same transformations are applied offline (or inside the training pipeline) to ensure that the network sees inputs with the same size, scale, and channel conventions as in deployment.
+In the deployed system, these transformations are executed \textbf{on the Jetson Nano in real time} for every frame coming from the LifeCam. During development/training, the same conventions are applied in the training pipeline so that the network sees inputs with the same scale and channel conventions as in deployment.
 
 \paragraph{Why the transformations are required}
-YOLO detectors require a fixed input tensor shape and a consistent numeric representation. Without resizing, normalization, and correct channel ordering, the trained weights cannot be applied reliably and inference results become unstable (e.g., reduced confidence, incorrect bounding boxes, or complete failure to detect plates).
+The deployed detector runs as a TensorRT engine, which requires a fixed input tensor shape and numeric format. Without resizing, normalization, and correct channel ordering/layout, the engine cannot be executed correctly and detection results become unstable or invalid.
 
 \section{Data Mining}
 \label{subsec:kdd_data_mining}
 
-\subsection{\textcolor{red}{Data Mining Application}}
+\subsection{Data Mining Application}
 \label{subsec:kdd_hyperparameters}
 
 For this application, the mined pattern is the \textbf{presence and location of a license plate} in an image.
@@ -63,14 +63,14 @@ The data mining task is \textbf{supervised learning} in the form of \textbf{obje
 \end{itemize}
 
 \paragraph{Technique and justification}
-We use a \textbf{YOLO-based detector} (Ultralytics workflow) because it provides a strong speed--accuracy trade-off for small objects (license plates) and is suitable for real-time inference on constrained edge hardware. The model is initialized with \textbf{pre-trained weights} and then fine-tuned on the project dataset so that the detector learns airport-specific viewpoints, lighting, and background context while retaining general visual features from large-scale pretraining.
+We use a \textbf{YOLO-based detector} because it provides a strong speed--accuracy trade-off for small objects (license plates) and is suitable for real-time inference on constrained edge hardware. The detector is trained/fine-tuned in a PyTorch workflow and then deployed as an \textbf{optimized TensorRT engine} on the Jetson Nano. The weights are initialized from \textbf{pre-trained parameters} and fine-tuned on the project dataset so that the detector adapts to airport-specific viewpoints, lighting, and background context while retaining generic visual features from large-scale pretraining.
 
-\subsection{\textcolor{red}{Hyperparameters}}
+\subsection{Hyperparameters}
 \label{subsec:kdd_hyperparameters}
 
 This section documents the most important hyperparameters that control detector behaviour, and highlights constraints introduced by the Jetson Nano deployment.
 
-\paragraph{\textcolor{red}{Training hyperparameters (fine-tuning run)}}
+\paragraph{Training hyperparameters (fine-tuning run)}
 Table~\ref{tab:kdd_train_hyperparams} summarizes the key hyperparameters from a recorded training run (YOLOv8 workflow, fine-tuning on the German plate dataset).
 
 \begin{table}[htbp]
@@ -95,13 +95,14 @@ Table~\ref{tab:kdd_train_hyperparams} summarizes the key hyperparameters from a 
 \paragraph{Inference hyperparameters (runtime on Jetson)}
 At runtime, threshold parameters strongly influence the \textit{knowledge quality} produced by the pipeline:
 \begin{itemize}
-	\item \textbf{Confidence threshold:} tuned to reduce missed plates (e.g., \texttt{conf \(\approx\) 0.2--0.4} depending on scene and lighting).
-	\item \textbf{NMS IoU threshold:} used to suppress duplicate boxes (e.g., \texttt{iou \(\approx\) 0.5} in the real-time script; higher values keep more overlapping candidates).
-	\item \textbf{Max detections:} upper bound for the number of boxes processed per frame to keep latency bounded on the edge device.
+	\item \textbf{Detection confidence threshold:} a minimum detection score is required before a candidate box is considered valid (e.g., \texttt{0.45} in the deployed dashboard).
+	\item \textbf{OCR minimum character confidence:} OCR results below a confidence threshold are discarded when assembling the plate string (e.g., \texttt{0.4}).
+	\item \textbf{Stability/cooldown gates:} OCR is executed only after the detected box is stable for a short delay (e.g., \texttt{0.5 s}) and then rate-limited by a cooldown (e.g., \texttt{2.0 s}) to avoid repeated triggers.
+	\item \textbf{Border rejection:} detections that touch the image borders are rejected to avoid truncated crops that degrade OCR.
 \end{itemize}
 
 \paragraph{Hardware constraint awareness}
-On a Jetson Nano with 4\,GB unified memory, batch sizes for training are limited and OCR is configured to avoid GPU memory pressure. For stable real-time inference, the selected input size and thresholds are a compromise between recall (not missing plates) and latency (processing each frame fast enough for moving vehicles).
+On a Jetson Nano with 4\,GB unified memory, the deployed detector is executed as a TensorRT engine on the GPU, while OCR is configured to run on CPU to preserve GPU memory and maintain stable frame processing. For stable real-time inference, the selected input size and thresholds are a compromise between recall (not missing plates) and latency (processing each frame fast enough for moving vehicles).
 
 \begin{table}[htbp]
 	\centering
@@ -110,22 +111,23 @@ On a Jetson Nano with 4\,GB unified memory, batch sizes for training are limited
 	\begin{tabular}{@{}ll@{}}
 		\toprule
 		\textbf{Item} & \textbf{Definition / Typical setting} \\ \midrule
-		Raw frame (OpenCV) & \(\text{H}\times\text{W}\times 3\), \texttt{uint8}, BGR, \([0,255]\) \\
-		Model input & \(1\times 3\times 640\times 640\), RGB, normalized \([0.0,1.0]\) \\
-		Confidence threshold (\texttt{conf}) & \(\approx 0.2\) (raise if too many false positives) \\
-		NMS IoU threshold (\texttt{iou}) & \(\approx 0.5\) \\
-		Max detections & bounded per frame to control latency \\ \bottomrule
+		Raw frame (OpenCV) & \(480\times640\times3\), \texttt{uint8}, BGR, \([0,255]\) \\
+		Detector input (TensorRT) & \(1\times3\times640\times640\), \texttt{float32}, RGB, \([0.0,1.0]\) \\
+		Detection threshold & \texttt{0.45} (accept/reject candidate detections) \\
+		Post-processing & top-1 selection by max score (no NMS in deployed dashboard) \\
+		OCR engine & EasyOCR on CPU (\texttt{gpu=False}, \texttt{quantize=True}) \\
+		OCR gates & stable-box delay \texttt{0.5 s}, cooldown \texttt{2.0 s} \\ \bottomrule
 	\end{tabular}
 \end{table}
 
-\subsection{\textcolor{red}{Input}}
+\subsection{Input}
 \label{subsec:kdd_input}
 
 \paragraph{Formal input definition}
 The detector input is an image tensor derived from the camera stream:
 \begin{itemize}
-	\item \textbf{Raw camera frame (OpenCV):} \(\text{H}\times\text{W}\times 3\), \texttt{uint8}, BGR, value range \([0,255]\).
-	\item \textbf{Model input tensor (after transformation):} \(1\times 3\times 640\times 640\), \texttt{float32} (or \texttt{float16} when using optimized inference), RGB, value range \([0.0,1.0]\).
+	\item \textbf{Raw camera frame (OpenCV):} \(480\times640\times3\), \texttt{uint8}, BGR, value range \([0,255]\).
+	\item \textbf{Detector input tensor (after transformation):} \(1\times3\times640\times640\), \texttt{float32}, RGB, value range \([0.0,1.0]\), packed according to the TensorRT engine input binding.
 \end{itemize}
 
 \paragraph{Training vs.\ inference}
@@ -147,7 +149,7 @@ During training, each batch performs:
 \end{itemize}
 
 \paragraph{Constraint-driven choices}
-Since the deployment target is an edge device, model choice and input size are selected to keep inference latency low. Training uses a batch size that fits the available memory in the development environment, while deployment uses batch size 1 (streaming frames) and relies on optimized inference settings (e.g., TensorRT engine export where applicable).
+Since the deployment target is an edge device, model choice and input size are selected to keep inference latency low. Training uses a batch size that fits the available memory in the development environment. For deployment, the trained model is exported and converted into a TensorRT engine and stored on an external SSD, enabling accelerated inference on the Jetson GPU with consistent startup and persistent artefact storage.
 
 \subsection{Interpretation}
 \label{subsec:kdd_interpretation}
@@ -157,9 +159,11 @@ In KDD, \textit{interpretation} converts the raw model output into usable knowle
 \paragraph{From raw outputs to a plate region}
 The detector produces candidate bounding boxes with confidence values. Interpretation consists of:
 \begin{itemize}
-	\item \textbf{Confidence filtering:} discard boxes below a minimum confidence threshold.
-	\item \textbf{Non-Maximum Suppression (NMS):} remove duplicate overlapping detections using an IoU criterion.
-	\item \textbf{Bounding box extraction:} select the final box coordinates \((x_1,y_1,x_2,y_2)\) and crop the corresponding image region.
+	\item \textbf{Confidence filtering:} proceed only if the maximum detection score exceeds a minimum threshold.
+	\item \textbf{Top-1 selection:} select the single highest-scoring candidate (the deployed dashboard uses top-1 selection rather than IoU-based NMS).
+	\item \textbf{Coordinate conversion:} convert normalized/model-space coordinates back to pixel coordinates of the \(640\times480\) camera frame and clamp to image bounds.
+	\item \textbf{Heuristics for OCR quality:} reject boxes that touch the image borders and require a short stability window before triggering OCR.
+	\item \textbf{Bounding box extraction:} crop the corresponding image region and pass it to OCR preprocessing.
 \end{itemize}
 
 \paragraph{Link to OCR}
@@ -170,9 +174,9 @@ Only after a plate crop is finalized through interpretation, the cropped region 
 
 The final KDD output (the ``knowledge product'') is the \textbf{identified license plate event} derived from the live video stream. For each detected vehicle instance, the system outputs:
 \begin{itemize}
-	\item \textbf{Plate localization:} bounding box coordinates (and the cropped plate image region).
-	\item \textbf{Plate identity:} recognized plate string from OCR with a confidence score.
-	\item \textbf{Operational metadata:} timestamp and optional frame/plate image capture for traceability.
+	\item \textbf{Plate localization:} the plate bounding box and the corresponding cropped region for recognition.
+	\item \textbf{Plate identity:} recognized plate string from OCR (German-format validation applied).
+	\item \textbf{Operational metadata:} timestamps (entry and last-seen) persisted in a SQLite database on external SSD storage.
 \end{itemize}
 
-These outputs close the loop back to the original application goal: reliably detecting vehicles and extracting their license plate identifiers in real time on an edge device, enabling downstream tasks such as logging, access control, or billing logic.
+These outputs close the loop back to the original application goal: reliably detecting vehicles and extracting their license plate identifiers in real time on an edge device, enabling downstream tasks such as visit logging and billing display in the web dashboard.

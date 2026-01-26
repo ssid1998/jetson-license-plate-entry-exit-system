@@ -59,7 +59,7 @@ The data pipeline utilizes standard formats to ensure compatibility between the 
 \begin{itemize}
 	\item \textbf{Images (JPEG/PNG):} Raw camera frames are stored as JPEG for storage efficiency during collection (LifeCam stream) and PNG for lossless quality during the annotation phase.
 	\item \textbf{Annotations (TXT):} Annotations follow the YOLO format (class\_id, x\_center, y\_center, width, height), normalized to [0,1]. This text-based format is lightweight and natively supported by the Ultralytics training pipeline.
-	\item \textbf{Metadata (SQLite/CSV):} Operational metadata (timestamps, confidence scores, detected text) is stored in a local SQLite database for the application logic and exported to CSV for performance analysis.
+	\item \textbf{Operational logs (SQLite):} In deployment, operational metadata (license plate ID and timestamps) is stored in a local SQLite database on an external SSD for persistence during continuous operation.
 \end{itemize}
 
 \subsection{Quality - Data Vetting Process}
@@ -80,14 +80,14 @@ The total effective dataset for the specific German license plate task consists 
 	\begin{tabular}{@{}lcccc@{}}
 		\toprule
 		\textbf{Split Set} & \textbf{Percentage} & \textbf{No. of Images} & \textbf{Instances} & \textbf{Purpose} \\ \midrule
-		Training & 70\% & 870 & $\sim$915 & Model fitting (Weights) \\
-		Validation & 20\% & 249 & $\sim$260 & Hyperparameter tuning \\
-		Testing & 10\% & 124 & $\sim$130 & Final evaluation (Unseen) \\ \midrule
-		\textbf{Total} & \textbf{100\%} & \textbf{1,243} & \textbf{$\sim$1,305} & \\ \bottomrule
+		Training & $\approx$70\% & 865 & 891 & Model fitting (weights) \\
+		Validation & $\approx$20\% & 246 & 255 & Hyperparameter tuning and early stopping checks \\
+		Testing & $\approx$10\% & 132 & 132 & Final evaluation (unseen) \\ \midrule
+		\textbf{Total} & \textbf{100\%} & \textbf{1,243} & \textbf{1,278} & \\ \bottomrule
 	\end{tabular}
 \end{table}
 
-While compact, this dataset is highly targeted, allowing the YOLOv8-Nano model to converge quickly without the overhead of millions of irrelevant samples.
+While compact, this dataset is highly targeted, allowing the YOLO-based detector to converge quickly without the overhead of millions of irrelevant samples.
 
 \subsection{Fairness/Bias: Bias Analysis}
 An analysis of the dataset reveals potential biases:
@@ -102,22 +102,21 @@ An analysis of the dataset reveals potential biases:
 
 Once selected, the data undergoes a transformation pipeline to prepare it for the neural network.
 
-\subsection{\textcolor{red}{One Database: Data Structure}}
-\TBD{Check if this is the correct understanding of One database}
-The data is organized in a standard YOLO directory structure on the Jetson Nano and development workstations:
+\paragraph{Data Structure: Prepared dataset vs.\ operational database}
+The prepared training dataset is organized in the standard YOLO directory structure on the development workstation:
 \begin{verbatim}
 	/dataset
 	/train
 	/images
 	/labels
-	/val
+	/valid
 	/images
 	/labels
 	/test
 	/images
 	/labels
 \end{verbatim}
-This structure allows the training scripts to automatically map image files to their corresponding text annotations. The operational database (SQLite) is separate, storing only the inference results (Event Logs) rather than the raw training data.
+This structure allows the training scripts to automatically map image files to their corresponding text annotations. The operational database is \textbf{separate} and stores only inference results (vehicle visits), not the raw training images. For deployment robustness, the database and model artefacts are stored on an \textbf{external SSD} connected to the Jetson Nano.
 
 \subsection{Properties: Data Transformation}
 Before entering the model, data is transformed to match the network's input layer requirements:
@@ -128,7 +127,7 @@ Before entering the model, data is transformed to match the network's input laye
 	\item \textbf{OCR Preprocessing:} For the recognition stage, cropped plate regions undergo grayscaling and binary thresholding to enhance character edges for EasyOCR.
 \end{itemize}
 
-\subsection{Outliers: Handling Outliers}
+\paragraph{Outliers: Handling Outliers}
 Outliers that could destabilize training are managed as follows:
 \begin{itemize}
 	\item \textbf{Extreme Aspects:} Plates seen from extreme acute angles ($>45^\circ$) are excluded from the training set as they are unlikely to yield readable text and may confuse the bounding box regression loss.
@@ -136,7 +135,7 @@ Outliers that could destabilize training are managed as follows:
 	\item \textbf{False Positives:} Negative mining is performed by including images of the background environment (road, signage) without license plates to teach the model what \textit{not} to detect.
 \end{itemize}
 
-\subsection{Anomalies: Anomaly Detection}
+\paragraph{Anomalies: Anomaly Detection}
 Automated scripts check for data integrity before training begins:
 \begin{itemize}
 	\item \textbf{Coordinate Checks:} A script validates that all normalized bounding box coordinates $(x, y, w, h)$ are strictly within the $[0, 1]$ interval.
@@ -144,7 +143,7 @@ Automated scripts check for data integrity before training begins:
 	\item \textbf{Class Index:} Verification that all class indices in the label files map correctly to the defined classes (i.e., only index `0` for license plate).
 \end{itemize}
 
-\subsection{Augmentation: Data Augmentation Techniques}
+\paragraph{Augmentation: Data Augmentation Techniques}
 To artificially expand the training set and improve robustness against the environmental variables identified in the Features section, the following augmentations are applied during the training pipeline:
 \begin{itemize}
 	\item \textbf{Mosaic Augmentation:} Combines 4 training images into one, forcing the model to learn context and detect smaller objects.
