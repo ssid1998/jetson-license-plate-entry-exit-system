@@ -1,0 +1,132 @@
+\documentclass[25pt,a0paper,portrait]{tikzposter}
+\usepackage[utf8]{inputenc}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{tikz}
+
+\makeatletter
+\def\TP@titlegraphictotitledistance{-6cm}
+\settitle{
+	\centering
+	\vbox{
+		\@titlegraphic \\ [\TP@titlegraphictotitledistance]
+		\centering
+		\color{titlefgcolor}
+		{\bfseries \Huge \sc \@title \par}
+		\vspace*{1em}
+		{\huge \@author \par}
+	}
+}
+\makeatother
+
+\setlength{\columnsep}{1.5cm}
+
+\title{License Plate Detection System}
+\author{Gautam, Siddhanth, Shubhankar}
+\titlegraphic{\raisebox{0.7cm}{%
+	\includegraphics[height=6.8cm]{images/logo_hs_technik}}
+	\hfill
+	\vspace{-0.45cm}
+	\includegraphics[height=7.8cm]{images/BIDA}
+}
+
+\usetheme{Desert}
+
+\begin{document}
+	
+	\maketitle
+	
+		\begin{columns}
+			
+		% Left column: Problem Description + Challenges
+		\column{0.5}
+		{
+			\colorlet{blocktitlebgcolor}{blue}
+					\block{Problem Description}
+					{
+					Efficient vehicle handling at high-throughput gates (airport drop-off / parking) needs fast and reliable identification without manual checks. This project implements an \textbf{edge-first} License Plate Detection System on the \textbf{NVIDIA Jetson Nano}, using a single USB camera and fully on-device inference to support gate-level decisions.\newline
+					
+						The system observes vehicles at the lane, detects the license plate in real time, and extracts the alphanumeric text to identify the vehicle session. Our design goal is low latency with continuous operation: the pipeline runs locally (no cloud dependency) and maintains persistent state so it can recover cleanly after restarts. In operation, the camera continuously captures frames; a YOLOv8 detector accelerated with TensorRT localizes the license plate; the detected region is cropped and preprocessed; EasyOCR runs on the CPU to read the characters; and the recognized string is validated using an allowlist and German-plate formatting constraints before being stored.\newline
+						
+						For each recognized plate, the system logs an entry timestamp and an exit timestamp in a local SQLite database. The parking duration (dwell time) is computed as the difference between the exit and entry timestamps, enabling a configurable billing/time-limit decision. Results are presented as a live annotated video stream and a local web dashboard that lists recent plates together with timestamps and the computed fee.
+						
+					}
+				
+				\block{Challenges}
+				{
+				Deploying license plate recognition on a low-power edge device introduces practical constraints beyond model accuracy:\newline
+				
+					\begin{itemize}
+						\item \textbf{Compute and Memory Limits (Edge Hardware)}\\
+						The Jetson Nano has 4\,GB unified memory shared between CPU and GPU. Running YOLO detection, OCR, video encoding, and a live dashboard concurrently can exhaust RAM and reduce throughput. We had to keep the pipeline lightweight (efficient preprocessing, minimal buffering) and balance GPU detection with CPU OCR.\newline
+						
+						\item \textbf{Storage Constraints (Production Module)}\\
+						Internal storage is limited (16\,GB eMMC) and our deployment does \textbf{not} use an SD card. Runtime artefacts (TensorRT engine, database, logs) must be stored on an external SSD and referenced via stable mount paths. This also affects reliability: abrupt shutdowns or write interruptions can corrupt state if storage is not handled carefully.\newline
+						
+						\item \textbf{Runtime Robustness}\\
+						A gate system must run continuously and recover from transient failures. Long runs can trigger memory pressure, swap thrashing, camera read dropouts, and thermal throttling that reduces performance. Stable operation requires resource monitoring, conservative thresholds, and a design that keeps the system responsive under load.\newline
+						
+						\item \textbf{Legacy Software Ecosystem}\\
+						JetPack 4.6 (Ubuntu 18.04 / Python 3.6) constrains library versions and compatibility. Many modern ML packages expect newer Python/CUDA stacks, so deployment choices must fit the Jetson environment. This increases integration effort and motivates using exported/optimized artefacts (e.g., TensorRT engines) instead of heavy training stacks on-device.\newline
+						
+						\item \textbf{Real-World Imaging Conditions}\\
+						Lighting changes, glare, shadows, dirty/occluded plates, motion blur, and oblique viewing angles reduce OCR quality even when detection is correct.\newline Camera placement (height/angle/distance) and exposure settings strongly influence readability. In addition, plate-like textures (logos/reflections) can cause false detection if thresholds are not tuned.\newline
+						
+						\item \textbf{OCR Ambiguity and Validation}\\
+						OCR often produces noisy strings: missing separators, swapped characters, and look-alike symbols (O/0, B/8). German plates also have variable prefix lengths and formatting rules, so we need allow lists and format validation to accept plausible outputs only. Without validation, incorrect reads quickly accumulate in the database and reduce trust in the system.\newline \newline
+						
+						% \item \textbf{Timing in real time}\\
+						% OCR is much more expensive than detection, and running it on every frame is not feasible. The runtime must select when to OCR (stability window + cooldown) so it reacts quickly to new vehicles but avoids repeated OCR on near-identical frames. This trade-off directly affects throughput, responsiveness, and the perceived ``instant'' behavior at the gate.
+					\end{itemize}
+				
+					
+				}
+			}
+		
+		% Right column: Sales Dashboard + Solutions + Results stacked
+		\column{0.5}
+		{
+			\colorlet{blocktitlebgcolor}{blue}
+			\block{System Illustration}
+			{
+			\begin{center}
+				\vspace{-0.3cm}
+				\includegraphics[width=0.95\linewidth,keepaspectratio]{images/JetsonNanoPoster}
+			\end{center} 
+			}
+			
+			\block{Solutions}
+			{
+			
+			We combined hardware-aware deployment, optimized inference, and practical validation logic to achieve real-time operation on the Jetson Nano: \newline
+			
+			\begin{itemize}
+				\item \textbf{Hardware-aware Deployment}\\
+					Store runtime artefacts (TensorRT engine and database) on an external SSD mounted at /media/myssd. Use swap on SSD to reduce out-of-memory failures during long runs.\newline
+				
+				
+				\item \textbf{Real-Time Detection on GPU}\\
+				Deploy the detector as a TensorRT engine for accelerated inference. Use a lightweight model variant suitable for stable edge performance.\newline
+				
+				
+				\item \textbf{OCR and Validation on CPU}\\
+				Run EasyOCR in CPU mode and preprocess plate crops (resize and thresholding) for improved readability. Apply an allowlist and German-format validation (city-prefix handling and numeric suffix rules) to reduce false reads.\newline
+				
+				
+				\item \textbf{Persistence and Local UI}\\
+				Log visits to a local SQLite database with entry and exit timestamps for each recognized plate. Provide a local Flask dashboard (live stream and billing table) for on-site monitoring and reporting.\newline
+					
+				\end{itemize}
+			
+			}
+			
+			\block{Results}
+			{
+			The system runs end-to-end on the Jetson Nano and produces actionable, real-time outputs suitable for continuous edge operation. In our deployment, the detector maintains stable real-time throughput of approximately 13--15 FPS using TensorRT acceleration. \newline The complete pipeline captures camera frames, detects the license plate, extracts text using OCR, validates the result, and records the visit in a local database before presenting the output on a live dashboard. \newline \newline
+			The dashboard provides operationally useful information by listing recognized plates together with timestamps and a computed dwell-time fee derived from stored visit data. Because processing and logging are performed locally on the Jetson, the system remains responsive without relying on external servers. The final deployment runs on a Jetson Nano (4\,GB) with an external SSD used to store runtime artefacts and persistent logs. \newline
+			}
+		}
+		
+	\end{columns}
+	
+\end{document}
