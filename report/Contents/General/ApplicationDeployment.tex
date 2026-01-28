@@ -1,23 +1,450 @@
-%%%
+%%%%%%%%%%%%%%%%%%%%%%%%
 %
-% $Autor: Shubhankar Dumka $
+% $Autor: Shubhankar Dumka$
 % $Datum: 2026-01-28 $
-% $Dateiname: 
-% $Version: 4620 $
+% $Pfad: report/Contents/General/DepSid.tex $
+% $Version: 1 $
 %
-% !TeX spellcheck = GB
-% !TeX program = pdflatex
 % !TeX encoding = utf8
+% !TeX root = Rename
 %
-%%%
+%%%%%%%%%%%%%%%%%%%%%%%%
 
+\chapter{Application Deployment}
+\label{ch:application_deployment}
+\index{Deployment}
 
-\index{ApplicationDeployment}
+\noindent
+This part describes how the license plate recognition pipeline is transitioned from development (training and experimentation on a laptop/PC) to a reproducible deployment on the NVIDIA Jetson Nano.
+The focus is on the practical steps and artefacts: packaging the trained detector, setting up the Jetson runtime environment, and using an inference backend that meets the real-time constraints of an edge device.
 
 % --------------------------------------------------------
-\chapter{Deployment}
 \section{Deployment Pipeline}
+\label{sec:deployment_pipeline}
+\index{Deployment!Pipeline}
+
+\noindent
+In this project, deployment is not ``shipping a model'' but shipping an end-to-end application that must run continuously on-device: camera capture, plate detection, OCR, post-processing/validation, and persistence (database + logs).
+Across the repository, two Jetson runtime variants exist:
+\begin{itemize}
+	\item \textbf{Ultralytics (PyTorch) runtime:} \FILE{Code/LicencePlateDetection/jetson\_app/main.py} and \FILE{Code/LicencePlateDetection/jetson\_app/detector.py}.
+	\item \textbf{TensorRT runtime + dashboard:} \FILE{Code/LicencePlateDetection/jetson-inference/python/www/flask/dashboard2.py} loads a pre-built TensorRT engine file (\PATH{best.engine}) for accelerated inference.
+\end{itemize}
+
+\noindent
+The resulting deployment pipeline can be summarised as the following sequence:
+\begin{enumerate}
+	\item \textbf{Develop and train on the laptop/PC:} iterate on dataset preparation, training, and evaluation until a stable detector checkpoint is produced (e.g., YOLO weights such as \PATH{best.pt}).
+	\item \textbf{Freeze the deployment artefacts:} decide which artefacts are required at runtime (model weights/engine, OCR assets, configuration defaults, and database location).
+	\item \textbf{Provision the Jetson environment:} install JetPack/CUDA-compatible dependencies and Python packages that can be built on the Jetson stack \cite{nvidia-jetson}.
+	\item \textbf{Copy code and artefacts to the Jetson:} synchronise the application folder and place large runtime artefacts on stable storage (in our setup: external SSD mount points such as \PATH{/media/myssd/} are used for the TensorRT engine and SQLite database).
+	\item \textbf{Run and validate on-device:} verify camera access, confirm real-time throughput, and validate OCR output quality under real lighting and motion conditions.
+	\item \textbf{Operational hardening:} ensure the system can be restarted deterministically (startup loads model/engine, initializes OCR once, and continues updating persistent state).
+\end{enumerate}
+
+\subsection{Jetson deployment runtime flow (overview)}
+\label{sec:deployment_runtime_flow}
+\index{Deployment!Runtime flow}
+
+\noindent
+Figure~\ref{fig:jetson_runtime_ultralytics_vs_tensorrt} summarises how the application runs on the Jetson Nano for the two runtime variants present in this repository.
+Both variants share the same real-world constraints (JetPack versions, camera device access, thermal and power limits), but they differ in how the detector is executed (PyTorch weights vs.\ TensorRT engine) and how results are exposed (local OpenCV window vs.\ Flask dashboard).
+
+\begin{figure}[htbp]
+	\centering
+	\input{../../tikz/7DomainKnowledgeAppDev/JetsonRuntimeUltralyticsVsTensorRT.tikz}
+	\caption{Runtime flow on Jetson Nano: Ultralytics (PyTorch) pipeline vs.\ TensorRT engine + Flask dashboard pipeline.}
+	\label{fig:jetson_runtime_ultralytics_vs_tensorrt}
+\end{figure}
+
+\subsection{Ultralytics (PyTorch) runtime}
+\label{sec:deployment_ultralytics_runtime}
+\index{Ultralytics}
+\index{Deployment!Ultralytics runtime}
+\index{PyTorch}
+
+\noindent
+The Ultralytics runtime is the simplest deployment variant: it loads a YOLOv8 \PATH{.pt} checkpoint and runs inference directly through the Ultralytics/PyTorch stack.
+This approach is convenient for development (fast iteration, minimal conversion steps), but on Jetson-class devices it usually has higher runtime overhead than a dedicated inference runtime.
+
+\subsubsection*{Entrypoint and module roles}
+\noindent
+The entrypoint is a minimal wrapper that simply calls the detector loop:
+
+\begin{lstlisting}[language=Python,caption={Entrypoint for the Ultralytics runtime (\FILE{Code/LicencePlateDetection/jetson\_app/main.py})},label={lst:jetson_ultralytics_main}]
+	# File: Code/LicencePlateDetection/jetson_app/main.py
+	# Deployment meaning:
+	#   - Keeps the runtime entry stable ("python3 jetson_app/main.py")
+	#   - Delegates all device-specific work (camera, inference, OCR) to detector.py
+	
+	from detector import main
+	
+	if __name__ == "__main__":
+	main()
+\end{lstlisting}
+
+\noindent
+The detector loop in \FILE{Code/LicencePlateDetection/jetson\_app/detector.py} performs four deployment-critical functions:
+(1) load the trained model weights, (2) select GPU/CPU execution, (3) run frame-by-frame inference, and (4) integrate OCR/validation for producing a final plate string.
+
+\subsubsection*{Annotated code path (deployment-critical blocks)}
+\noindent
+The following excerpt highlights the core deployment logic: model loading and device selection, the inference call, and how OCR is integrated into the runtime loop.
+
+\begin{lstlisting}[language=Python,caption={Ultralytics runtime: model loading, inference loop, and OCR integration (\FILE{Code/LicencePlateDetection/jetson\_app/detector.py})},label={lst:jetson_ultralytics_detector}]
+	# File: Code/LicencePlateDetection/jetson_app/detector.py
+	
+	import cv2
+	import torch
+	from ultralytics import YOLO
+	from ocr_pipeline import PlateOcrPipeline
+	
+	def main():
+	# 1) Model artefact selection:
+	#    - In this runtime, the detector is a YOLOv8 PyTorch checkpoint (.pt).
+	#    - The checkpoint is kept in the repository under the training output folder.
+	modelPath = os.path.abspath(os.path.join(
+	os.path.dirname(__file__), "..", "german_lpr_trained", "train2", "weights", "best.pt"
+	))
+	
+	# 2) Device selection on Jetson:
+	#    - If CUDA is available (JetPack provides CUDA drivers), use GPU.
+	#    - Otherwise, fall back to CPU (slower, but still functional for debugging).
+	device = "cuda" if torch.cuda.is_available() else "cpu"
+	yoloModel = YOLO(modelPath)
+	try:
+	yoloModel.to(device)
+	except Exception:
+	# Some Jetson/PyTorch builds may not support moving in the same way;
+	# the code keeps the runtime robust by falling back.
+	print("Warning: could not move model to requested device, using default.")
+	
+	# 3) OCR pipeline init:
+	#    - EasyOCR is initialized (with download disabled) and reused frame-by-frame.
+	#    - The OCR pipeline contains preprocessing + validation + temporal smoothing.
+	ocrPipeline = PlateOcrPipeline(
+	allowlist="ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789",
+	confThreshold=0.6,
+	euMaskRatio=0.15,
+	debug=False,
+	useGpu=torch.cuda.is_available(),
+	)
+	
+	# 4) Camera capture:
+	#    - The runtime assumes the USB camera is reachable via /dev/video*.
+	cap = cv2.VideoCapture(0)
+	if not cap.isOpened():
+	print("ERROR: Camera not detected")
+	return
+	
+	while True:
+	retVal, frameImg = cap.read()
+	if not retVal:
+	break
+	
+	# 5) Detector inference:
+	#    - Ultralytics returns boxes; the code crops each ROI and runs OCR.
+	results = yoloModel(frameImg, imgsz=640, device=device, verbose=False, conf=0.2, iou=0.5)[0]
+	
+	for box in results.boxes:
+	x1, y1, x2, y2 = map(int, box.xyxy[0])
+	plateCrop = frameImg[y1:y2, x1:x2]
+	
+	# 6) OCR + temporal smoothing:
+	plateText, plateConf, _ = ocrPipeline.readPlate(plateCrop)
+	ocrPipeline.updateTemporalVote(plateText, plateConf)
+	smoothText, smoothConf = ocrPipeline.getTemporalConsensus()
+	
+	# 7) Overlay and user feedback (local display):
+	displayText = smoothText or plateText
+	displayConf = smoothConf if smoothText else plateConf
+	# ... draw box and putText(...)
+\end{lstlisting}
+
+\noindent
+\textbf{Deployment note (OCR assets):} \FILE{Code/LicencePlateDetection/jetson\_app/ocr\_pipeline.py} initializes EasyOCR with \PYTHON{download\_enabled=False}.
+For deployment, the EasyOCR model files must already exist on the Jetson user account (typically under \PATH{\textasciitilde/.EasyOCR/}); otherwise OCR initialization fails.
+
+\subsection{TensorRT runtime + dashboard}
+\label{sec:deployment_tensorrt_runtime_dashboard}
+\index{Deployment!TensorRT runtime}
+\index{Flask}
+\index{SQLite}
+
+\noindent
+The TensorRT runtime variant is a deployment-oriented stack: inference is performed using a pre-built \PATH{.engine} file, and the outputs are integrated into a Flask web dashboard with persistence.
+In practice, this variant is closer to a real deployment because it is designed for headless operation: a browser can connect to the Jetson by IP, while the Jetson runs the full loop locally.
+
+\subsubsection*{Architecture and responsibilities}
+\noindent
+The file \FILE{Code/LicencePlateDetection/jetson-inference/python/www/flask/dashboard2.py} combines three responsibilities:
+\begin{itemize}
+	\item \textbf{TensorRT inference loop (GPU):} loads \PYTHON{best.engine}, transfers input tensors to GPU memory, executes inference, and reads back output buffers.
+	\item \textbf{OCR and domain validation (CPU):} runs EasyOCR and German-format cleanup to produce a stable plate string.
+	\item \textbf{Application layer:} persists plate visit state in SQLite and exposes a web UI through Flask (\PYTHON{/video\_feed}, \PYTHON{/api/billing}).
+\end{itemize}
+
+\subsubsection*{Annotated code path: engine load, memory bindings, inference, and persistence}
+\noindent
+The following excerpts show \emph{where TensorRT is used for deployment} and how the engine file becomes the runtime model artefact on the Jetson:
+
+\begin{lstlisting}[language=Python,caption={TensorRT runtime: configuration and engine loading (\FILE{Code/LicencePlateDetection/jetson-inference/python/www/flask/dashboard2.py})},label={lst:tensorrt_dashboard_engine_load}]
+	# File: Code/LicencePlateDetection/jetson-inference/python/www/flask/dashboard2.py
+	
+	import tensorrt as trt
+	import pycuda.driver as cuda
+	import pycuda.autoinit
+	
+	# Deployment-relevant paths:
+	# - ENGINE_PATH points to the serialized TensorRT engine (.engine).
+	# - DB_PATH points to a file-backed SQLite DB on the SSD (persistence across restarts).
+	ENGINE_PATH = "/media/myssd/jetson-inference/data/networks/best.engine"
+	DB_PATH = "/media/myssd/jetson-inference/python/www/flask/parking.db"
+	
+	def run_yolo_ai():
+	# TensorRT runtime object:
+	# - Logger controls verbosity during engine load and execution.
+	TRT_LOGGER = trt.Logger(trt.Logger.INFO)
+	
+	# Engine deserialization:
+	# - The engine contains a GPU-optimized inference plan for this Jetson device.
+	# - Deserialization recreates the executable network in memory.
+	with open(ENGINE_PATH, "rb") as f, trt.Runtime(TRT_LOGGER) as runtime:
+	engine = runtime.deserialize_cuda_engine(f.read())
+	context = engine.create_execution_context()
+	
+	# Bindings and CUDA stream:
+	# - TensorRT executes by binding GPU buffers to named inputs/outputs.
+	# - We allocate page-locked host buffers + device buffers for async transfers.
+	inputs, outputs, bindings, stream = [], [], [], cuda.Stream()
+	for binding in engine:
+	size = trt.volume(engine.get_binding_shape(binding))
+	dtype = trt.nptype(engine.get_binding_dtype(binding))
+	host_mem = cuda.pagelocked_empty(size, dtype)
+	cuda_mem = cuda.mem_alloc(host_mem.nbytes)
+	bindings.append(int(cuda_mem))
+	if engine.binding_is_input(binding):
+	inputs.append({'host': host_mem, 'device': cuda_mem})
+	else:
+	outputs.append({'host': host_mem, 'device': cuda_mem})
+\end{lstlisting}
+
+\noindent
+Once buffers are allocated, the main loop performs preprocessing, runs the engine, and consumes the output tensor.
+The key deployment idea is that \textbf{the heavy model computation now happens inside TensorRT}, while Python only orchestrates data movement and post-processing:
+
+\begin{lstlisting}[language=Python,caption={TensorRT runtime: preprocessing + execute\_async\_v2 + output decoding (\FILE{Code/LicencePlateDetection/jetson-inference/python/www/flask/dashboard2.py})},label={lst:tensorrt_dashboard_inference}]
+	# Still in dashboard2.py, inside the frame loop:
+	
+	# 1) Preprocess to match the engine input:
+	#    - Resize to 640x640, normalize to [0,1], convert BGR->RGB, and flatten to NCHW.
+	blob = cv2.resize(frame_cv, (640, 640)).astype(np.float32) / 255.0
+	blob = cv2.cvtColor(blob, cv2.COLOR_BGR2RGB)
+	blob = blob.transpose(2, 0, 1).ravel()
+	np.copyto(inputs[0]['host'], blob)
+	
+	# 2) Host->Device copy (async):
+	cuda.memcpy_htod_async(inputs[0]['device'], inputs[0]['host'], stream)
+	
+	# 3) Execute TensorRT graph (async):
+	#    - TensorRT reads the input GPU buffer and writes results into output GPU buffers.
+	context.execute_async_v2(bindings=bindings, stream_handle=stream.handle)
+	
+	# 4) Device->Host copy (async) + synchronize:
+	cuda.memcpy_dtoh_async(outputs[0]['host'], outputs[0]['device'], stream)
+	stream.synchronize()
+	
+	# 5) Decode model outputs (YOLO-style tensor layout):
+	predictions = outputs[0]['host'].reshape(1, 25200, 6)
+	scores = predictions[0, :, 4]
+	max_score = np.max(scores)
+\end{lstlisting}
+
+\noindent
+When a valid plate is recognized, the deployment integrates persistence by updating SQLite on the SSD (a restart continues with the existing DB state):
+
+\begin{lstlisting}[language=Python,caption={TensorRT runtime: persistence (SQLite) after OCR validation (\FILE{Code/LicencePlateDetection/jetson-inference/python/www/flask/dashboard2.py})},label={lst:tensorrt_dashboard_sqlite}]
+	# After OCR + German format cleanup produced a plate string "clean":
+	
+	conn = sqlite3.connect(DB_PATH)
+	c = conn.cursor()
+	c.execute("SELECT entry_ts FROM visits WHERE plate=?", (clean,))
+	row = c.fetchone()
+	
+	if row is None:
+	# First time the plate is seen => new session row
+	c.execute(
+	"INSERT INTO visits (plate, entry_ts, last_seen_ts) VALUES (?, ?, ?)",
+	(clean, now, now),
+	)
+	else:
+	# Plate already in DB => update last_seen timestamp
+	c.execute("UPDATE visits SET last_seen_ts=? WHERE plate=?", (now, clean))
+	
+	conn.commit()
+	conn.close()
+\end{lstlisting}
+
+% --------------------------------------------------------
 \section{TensorRT}
+\label{sec:deployment_tensorrt}
+\index{TensorRT}
+
 \subsection{Description}
-\subsection{Example}
-\subsection{Project Use}
+\index{TensorRT!Description}
+
+\noindent
+TensorRT is NVIDIA's inference optimizer and runtime for deploying neural networks efficiently on NVIDIA GPUs.
+Instead of executing a full training framework on-device, the model is converted into a \textbf{serialized engine} (often called a \emph{plan} file, e.g., \PATH{best.engine}) that is optimized for the target GPU architecture.
+Typical optimizations include graph-level fusion, kernel auto-tuning, and reduced-precision execution (e.g., FP16) to increase throughput and reduce latency on Jetson-class devices.
+
+\subsection{TensorRT engine files (\PATH{.engine} / \PATH{.plan} / \PATH{.trt})}
+\label{sec:tensorrt_engine_files}
+\index{TensorRT!Engine files}
+
+\noindent
+In a Jetson deployment, the TensorRT engine file is the \textbf{runtime model artefact}.
+Conceptually, it is the compiled form of the network for a specific GPU and TensorRT version:
+\begin{itemize}
+	\item \textbf{What the engine contains:} a serialized execution plan with layer implementations (tactics), tensor shapes, and precision choices (e.g., FP16) selected by TensorRT during build time.
+	\item \textbf{Why it is device-specific:} tactic selection depends on the GPU architecture (Jetson Nano: Maxwell), CUDA version, and TensorRT version. As a result, an engine built on a different machine or JetPack version may not load or may perform poorly.
+	\item \textbf{Why it helps deployment:} engine files avoid installing training stacks on-device and replace ``run PyTorch'' with ``run an optimized inference runtime''. This reduces startup overhead, improves throughput, and stabilizes runtime behaviour.
+\end{itemize}
+
+\noindent
+\textbf{Important operational implication:} engines are treated like binaries. If JetPack/TensorRT is upgraded or the target GPU changes, the engine should be rebuilt on the target device.
+
+\subsection{The 5-step TensorRT deployment pipeline (project view)}
+\label{sec:tensorrt_5step_pipeline}
+\index{Deployment!TensorRT pipeline}
+
+\noindent
+Figure~\ref{fig:tensorrt_5step_pipeline} provides the deployment pipeline that connects training on a host PC with execution on the Jetson Nano.
+The key transition is: \textbf{PyTorch training artefact} $\rightarrow$ \textbf{ONNX export} $\rightarrow$ \textbf{device-compiled TensorRT engine} $\rightarrow$ \textbf{application runtime}.
+
+\begin{figure}[htbp]
+	\centering
+	\input{../../tikz/7DomainKnowledgeAppDev/TensorRTDeployment5Steps.tikz}
+	\caption{The 5-step TensorRT deployment pipeline from host training to Jetson execution.}
+	\label{fig:tensorrt_5step_pipeline}
+\end{figure}
+
+\subsubsection*{Step 1: Training and export (Host PC)}
+\noindent
+Training is performed on a higher-performance machine where the full ML toolchain is available.
+Deployment begins when the trained detector is exported to \textbf{ONNX}, which acts as an interchange format between frameworks and runtimes.
+For Ultralytics YOLO, a typical export command is:
+
+\begin{lstlisting}[language=MyBash,style=bashstyle,caption={Example: export YOLOv8 checkpoint to ONNX (host PC)},label={lst:yolo_export_onnx}]
+	# Example (host PC):
+	# Produces best.onnx from best.pt (exact flags depend on your training setup)
+	yolo export model=best.pt format=onnx imgsz=640
+\end{lstlisting}
+
+\subsubsection*{Step 2: Environment preparation (Jetson Nano)}
+\noindent
+On Jetson, performance and thermals strongly influence both benchmarking and engine build time.
+For maximum deterministic performance during compilation and testing, the device is typically set to its maximum power and clocks:
+
+\begin{lstlisting}[language=MyBash,style=bashstyle,caption={Jetson Nano: lock performance profile for deployment testing},label={lst:jetson_perf_lock}]
+	sudo nvpmodel -m 0
+	sudo jetson_clocks
+\end{lstlisting}
+
+\subsubsection*{Step 3: Engine compilation (On-device optimization)}
+\noindent
+The ONNX model is transferred to the Jetson and compiled into a TensorRT engine.
+This is the ``baking'' step: TensorRT benchmarks alternative layer implementations on the target GPU and chooses fast tactics.
+One common approach uses the TensorRT tool \COMMAND{trtexec}:
+
+\begin{lstlisting}[language=MyBash,style=bashstyle,caption={Example: build \PATH{best.engine} from ONNX on the Jetson},label={lst:trtexec_build_engine}]
+	# Example (Jetson Nano):
+	# Build a serialized engine file that can be loaded by Python at runtime.
+	trtexec --onnx=best.onnx --saveEngine=best.engine --fp16
+\end{lstlisting}
+
+\noindent
+\textbf{Note:} this repository contains the \emph{engine loader/runtime} code, but not a dedicated engine-build script.
+In practice, the engine can be generated with \COMMAND{trtexec} or with a small TensorRT Python builder utility.
+
+\subsubsection*{Step 4: Precision selection (FP16)}
+\noindent
+FP16 (half-precision) reduces memory bandwidth and can increase throughput on supported layers.
+Unlike INT8, FP16 does not require a calibration dataset; it is a precision mode that TensorRT applies where compatible.
+In deployment, FP16 is chosen by adding \COMMAND{--fp16} in \COMMAND{trtexec} or by enabling FP16 in the TensorRT builder config.
+
+\subsubsection*{Step 5: Application integration (load the engine and run)}
+\noindent
+The final step is integrating the engine into the running Jetson application.
+In our project, this is implemented in \FILE{Code/LicencePlateDetection/jetson-inference/python/www/flask/dashboard2.py} by:
+(1) deserializing \PATH{best.engine} into an executable network,
+(2) allocating GPU buffers for inputs/outputs,
+(3) executing \PYTHON{context.execute\_async\_v2(...)} in the frame loop, and
+(4) post-processing the outputs into application-level events (OCR, validation, DB update, and dashboard output).
+
+\subsection{How TensorRT is used by the application (API view)}
+\label{sec:tensorrt_api_view}
+\index{TensorRT!API}
+
+\noindent
+TensorRT exposes two different concerns that matter for deployment:
+\begin{itemize}
+	\item \textbf{Build-time API (engine generation):} parse the network (e.g., ONNX), select precision and tactics, and serialize an engine file.
+	\item \textbf{Run-time API (engine execution):} deserialize the engine, bind GPU buffers, and execute inference repeatedly.
+\end{itemize}
+
+\noindent
+Our repository mainly uses the \textbf{run-time API} (engine execution) inside \FILE{Code/LicencePlateDetection/jetson-inference/python/www/flask/dashboard2.py}.
+For completeness, Listing~\ref{lst:tensorrt_build_engine_python} shows an illustrative \emph{build-time} Python snippet (a typical pattern) that generates an engine from ONNX:
+
+\begin{lstlisting}[language=Python,caption={Illustrative: building a TensorRT engine from ONNX in Python (engine generation utility)},label={lst:tensorrt_build_engine_python}]
+	# Illustrative utility script (not currently included as a file in this repo):
+	# Purpose: take best.onnx and produce best.engine on the target Jetson device.
+	
+	import tensorrt as trt
+	
+	TRT_LOGGER = trt.Logger(trt.Logger.INFO)
+	
+	def build_engine(onnx_path: str, engine_path: str) -> None:
+	builder = trt.Builder(TRT_LOGGER)
+	network = builder.create_network(1 << int(trt.NetworkDefinitionCreationFlag.EXPLICIT_BATCH))
+	parser = trt.OnnxParser(network, TRT_LOGGER)
+	
+	with open(onnx_path, "rb") as f:
+	if not parser.parse(f.read()):
+	raise RuntimeError("ONNX parse failed")
+	
+	config = builder.create_builder_config()
+	config.set_flag(trt.BuilderFlag.FP16)   # FP16 precision (where supported)
+	
+	serialized = builder.build_serialized_network(network, config)
+	with open(engine_path, "wb") as f:
+	f.write(serialized)
+\end{lstlisting}
+
+\subsection{Code Example}
+\index{TensorRT!Code Example}
+
+\noindent
+In our codebase, the TensorRT-based runtime loads a pre-built engine and executes inference by binding host/device buffers and calling the TensorRT execution context (simplified excerpt from \FILE{Code/LicencePlateDetection/jetson-inference/python/www/flask/dashboard2.py}):
+\begin{quote}\ttfamily
+	TRT\_LOGGER = trt.Logger(trt.Logger.INFO)\\
+	with open(ENGINE\_PATH, "rb") as f, trt.Runtime(TRT\_LOGGER) as runtime:\\
+	\hspace*{1.6em}engine = runtime.deserialize\_cuda\_engine(f.read())\\
+	\hspace*{1.6em}context = engine.create\_execution\_context()\\
+	\ldots\\
+	cuda.memcpy\_htod\_async(inputs[0]['device'], inputs[0]['host'], stream)\\
+	context.execute\_async\_v2(bindings=bindings, stream\_handle=stream.handle)\\
+	cuda.memcpy\_dtoh\_async(outputs[0]['host'], outputs[0]['device'], stream)
+\end{quote}
+
+\subsection{Use in the project}
+\index{TensorRT!Use in the project}
+
+\noindent
+TensorRT is used in the Jetson deployment variant that targets \textbf{stable real-time performance}:
+\begin{itemize}
+	\item \textbf{Entrypoint:} \FILE{Code/LicencePlateDetection/jetson-inference/python/www/flask/dashboard2.py}.
+	\item \textbf{Engine artefact:} the application expects a TensorRT engine at \PATH{/media/myssd/jetson-inference/data/networks/best.engine} (\PYTHON{ENGINE\_PATH}) and loads it during startup.
+	\item \textbf{Reason for use:} on Jetson Nano, TensorRT avoids running a full training stack at runtime and provides an optimized, GPU-accelerated inference path that is better suited for continuous edge operation.
+\end{itemize}
