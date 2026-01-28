@@ -1,0 +1,67 @@
+\begin{tikzpicture}[
+	node distance=9mm and 10mm,
+	box/.style={
+		rectangle,
+		draw=blue!60,
+		fill=blue!5,
+		very thick,
+		rounded corners,
+		align=center,
+		text width=0.28\linewidth,
+		minimum height=10mm
+	},
+	box2/.style={
+		rectangle,
+		draw=green!50!black,
+		fill=green!8,
+		thick,
+		rounded corners,
+		align=center,
+		text width=0.28\linewidth,
+		minimum height=10mm
+	},
+	io/.style={
+		rectangle,
+		draw=orange!70!black,
+		fill=orange!10,
+		thick,
+		rounded corners,
+		align=center,
+		text width=0.28\linewidth,
+		minimum height=10mm
+	},
+	arrow/.style={-Latex, thick, blue!60},
+	arrow2/.style={-Latex, thick, green!50!black},
+	dasharrow/.style={-Latex, thick, dashed, gray!70}
+]
+
+	% --- Left lane: Ultralytics runtime (PyTorch) ---
+	\node[io, label=above:\textbf{Ultralytics (PyTorch) runtime}] (camA) {Camera capture\\\tiny \texttt{cv2.VideoCapture(0)}};
+	\node[box, below=of camA] (yoloA) {YOLOv8 inference\\\tiny \FILE{jetson\_app/detector.py}\\\tiny \texttt{YOLO(best.pt)}};
+	\node[box, below=of yoloA] (cropA) {Crop plate ROI\\and draw overlay};
+	\node[box, below=of cropA] (ocrA) {OCR + validation\\\tiny \FILE{jetson\_app/ocr\_pipeline.py}};
+	\node[io, below=of ocrA] (uiA) {Local UI\\\tiny \texttt{cv2.imshow()}\\Optional: save captures};
+
+	\draw[arrow] (camA) -- (yoloA);
+	\draw[arrow] (yoloA) -- (cropA);
+	\draw[arrow] (cropA) -- (ocrA);
+	\draw[arrow] (ocrA) -- (uiA);
+
+	% --- Right lane: TensorRT runtime + dashboard ---
+	\node[io, right=18mm of camA, label=above:\textbf{TensorRT runtime + dashboard}] (camB) {Camera capture\\\tiny \texttt{cv2.VideoCapture(0/1)}};
+	\node[box2, below=of camB] (prepB) {Preprocess frame\\\tiny resize to 640$\times$640\\RGB + NCHW};
+	\node[box2, below=of prepB] (trtB) {TensorRT engine inference\\\tiny \FILE{.../dashboard2.py}\\\tiny \texttt{best.engine}};
+	\node[box2, below=of trtB] (ocrB) {OCR + German format cleanup\\\tiny EasyOCR CPU};
+	\node[io, below=of ocrB] (persistB) {Persistence + UI\\\tiny SQLite (\texttt{parking.db})\\Flask endpoints + MJPEG};
+
+	\draw[arrow2] (camB) -- (prepB);
+	\draw[arrow2] (prepB) -- (trtB);
+	\draw[arrow2] (trtB) -- (ocrB);
+	\draw[arrow2] (ocrB) -- (persistB);
+
+	% --- Shared deployment notes (dashed) ---
+	\node[box, right=18mm of yoloA, fill=gray!6, draw=gray!50, text width=0.32\linewidth] (shared) {Shared deployment concerns\\\tiny JetPack/CUDA versions,\\camera device access,\\thermal/performance settings,\\stable storage paths};
+	\draw[dasharrow] (yoloA.east) -- (shared.west);
+	\draw[dasharrow] (trtB.west) -- (shared.east);
+
+\end{tikzpicture}

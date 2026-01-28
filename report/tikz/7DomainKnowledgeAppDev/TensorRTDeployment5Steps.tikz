@@ -1,0 +1,41 @@
+\begin{tikzpicture}[
+	node distance=9mm and 9mm,
+	stepbox/.style={
+		rectangle,
+		draw=blue!60,
+		fill=blue!5,
+		very thick,
+		rounded corners,
+		align=left,
+		text width=0.86\linewidth,
+		minimum height=10mm
+	},
+	arrow/.style={-Latex, thick, blue!60}
+]
+
+	\node[stepbox] (s1) {\textbf{1) Training + export (Host PC)}\\
+	\tiny Train YOLOv8 in PyTorch, then export the trained network to ONNX (bridge format).\\
+	\tiny Output artefact: \texttt{best.onnx}};
+
+	\node[stepbox, below=of s1] (s2) {\textbf{2) Environment preparation (Jetson Nano)}\\
+	\tiny Lock power/clock settings for consistent benchmarking and compilation: \\
+	\tiny \texttt{sudo nvpmodel -m 0} \quad and \quad \texttt{sudo jetson\_clocks}};
+
+	\node[stepbox, below=of s2] (s3) {\textbf{3) Engine compilation (On-device optimization)}\\
+	\tiny Build a TensorRT engine from \texttt{best.onnx} on the Jetson (device-specific tactics).\\
+	\tiny Output artefact: \texttt{best.engine} (serialized plan)};
+
+	\node[stepbox, below=of s3] (s4) {\textbf{4) Precision selection (FP16)}\\
+	\tiny Compile/use FP16 where supported to reduce latency and increase throughput, while validating accuracy.\\
+	\tiny Note: speedup depends on the model, layers, and TensorRT version};
+
+	\node[stepbox, below=of s4] (s5) {\textbf{5) Application integration + run}\\
+	\tiny Load \texttt{best.engine} from the application (\texttt{tensorrt} + \texttt{pycuda}) and execute inference inside the runtime loop.\\
+	\tiny Example integration: \FILE{Code/LicencePlateDetection/jetson-inference/python/www/flask/dashboard2.py}};
+
+	\draw[arrow] (s1) -- (s2);
+	\draw[arrow] (s2) -- (s3);
+	\draw[arrow] (s3) -- (s4);
+	\draw[arrow] (s4) -- (s5);
+
+\end{tikzpicture}
