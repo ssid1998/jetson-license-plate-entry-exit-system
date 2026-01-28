@@ -1,0 +1,179 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{microtype}
+
+\graphicspath{{../Poster/images/}{Poster/images/}}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue,
+  urlcolor=blue,
+  citecolor=blue
+}
+
+\setlist[enumerate]{leftmargin=*, itemsep=0.35em, topsep=0.25em}
+\setlist[itemize]{leftmargin=*, itemsep=0.25em, topsep=0.25em}
+\setlength{\emergencystretch}{2em}
+
+\begin{document}
+
+\begin{center}
+    {\LARGE \textbf{Quick Start Guide}\par}
+    \vspace{0.2cm}
+    \hrule
+    \vspace{0.7cm}
+    {\Large License Plate Detection System (Jetson Nano)\par}
+    \vspace{0.6cm}
+    \includegraphics[width=0.50\linewidth]{white.png}
+\end{center}
+
+\section{Introduction}
+This quick start guide summarises the minimum steps needed to set up and run the License Plate Detection System in this repository.
+The demo detects a German license plate in a live camera stream, runs OCR on the plate crop, and overlays the recognised text on the video output.
+
+\section{Commissioning}
+
+\subsection{Hardware Setup}
+\textbf{Required hardware:} NVIDIA Jetson Nano (or compatible Linux PC), USB camera, monitor + HDMI cable, keyboard/mouse, and stable power supply.
+For long-running operation we recommend an external SSD (USB 3.0) for logs/captures and (optional) swap.
+
+\begin{enumerate}
+    \item \textbf{Connect peripherals}\\
+    Connect the USB camera, monitor (HDMI), keyboard/mouse, and (optional) external SSD to the Jetson Nano.
+
+    \item \textbf{Power on and verify boot}\\
+    Power on the Jetson Nano and log in to the desktop or terminal.
+
+    \item \textbf{Place and aim the camera}\\
+    Place the camera so the plate is readable (minimal angle, reduced glare). As a rule of thumb: the plate should occupy a noticeable portion of the image (avoid tiny plate crops).
+\end{enumerate}
+
+\textbf{The hardware is now ready for operation.}
+
+\subsection{Software Setup (First Time Only)}
+\textbf{Prerequisites:}
+\begin{itemize}
+    \item Python 3 and \texttt{pip}
+    \item A working OpenCV camera backend (USB camera available as \texttt{/dev/video*} on Linux)
+    \item Internet access at least once (recommended) to install Python packages and (optionally) OCR model files
+\end{itemize}
+
+\begin{enumerate}
+    \item \textbf{Open a terminal and go to the project folder}\\
+    From the repository root, change into the code folder:
+    \begin{quote}\ttfamily
+    cd Code/LicencePlateDetection
+    \end{quote}
+
+    \item \textbf{Create and activate a virtual environment}\\
+    \begin{quote}\ttfamily
+    python3 -m venv .venv\\
+    source .venv/bin/activate
+    \end{quote}
+
+    \item \textbf{Install dependencies}\\
+    \begin{quote}\ttfamily
+    pip install --upgrade pip\\
+    pip install -r requirements.txt
+    \end{quote}
+
+    \item \textbf{Ensure OCR assets are available (EasyOCR)}\\
+    The OCR pipeline in \path{Code/LicencePlateDetection/jetson_app/ocr_pipeline.py} initialises EasyOCR with \texttt{download\_enabled=False}.
+    If EasyOCR models are not already present on the device, OCR will fail to initialise.
+    Recommended approach: run once on a machine with internet to populate \texttt{\textasciitilde/.EasyOCR/} and copy that folder to the Jetson Nano user account.
+\end{enumerate}
+
+\subsection{Starting the License Plate Detection Demo}
+\begin{enumerate}
+    \item \textbf{Activate the virtual environment}\\
+    If not already active:
+    \begin{quote}\ttfamily
+    cd Code/LicencePlateDetection\\
+    source .venv/bin/activate
+    \end{quote}
+
+    \item \textbf{Run the live demo}\\
+    \begin{quote}\ttfamily
+    python3 jetson\_app/main.py
+    \end{quote}
+    A window titled \textit{German Plate Detection + OCR} opens and shows the camera feed with detected plates and OCR text overlays.
+
+    \item \textbf{Stop the demo}\\
+    Press \texttt{q} in the video window to quit cleanly.
+\end{enumerate}
+
+\textbf{Output files:} The demo periodically saves annotated frames and plate crops to \path{Code/LicencePlateDetection/jetson_app/captures/}.
+
+\subsection{Recommended Jetson Nano Configuration (Optional)}
+For long-running gate/parking deployments, storage and memory pressure are common failure modes on Jetson-class devices.
+If you use an external SSD, you can also place swap space on it to reduce out-of-memory crashes.
+
+\begin{enumerate}
+    \item \textbf{Mount an external SSD}\\
+    Connect the SSD over USB 3.0 and mount it at a stable path (example: \texttt{/media/myssd}).
+    Ensure the mount is persistent across reboots (e.g., via \texttt{/etc/fstab}).
+
+    \item \textbf{(Optional) Create swap on the SSD}\\
+    Example (creates a 6\,GB swap file):
+    \begin{quote}\ttfamily
+    sudo fallocate -l 6G /media/myssd/swapfile\\
+    sudo chmod 600 /media/myssd/swapfile\\
+    sudo mkswap /media/myssd/swapfile\\
+    sudo swapon /media/myssd/swapfile
+    \end{quote}
+    Verify with \texttt{swapon --show}. To enable swap automatically at boot, add an entry to \texttt{/etc/fstab}.
+\end{enumerate}
+
+\section{Troubleshooting}
+\begin{enumerate}
+    \item \textbf{Camera not detected}\\
+    If the program prints \texttt{ERROR: Camera not detected}, check the camera connection and that a video device exists.
+    On Linux, try listing devices:
+    \begin{quote}\ttfamily
+    ls /dev/video*
+    \end{quote}
+    If your camera is not at index \texttt{0}, update \texttt{cv2.VideoCapture(0)} in:
+    \begin{quote}\ttfamily
+    Code/LicencePlateDetection/jetson\_app/detector.py
+    \end{quote}
+
+    \item \textbf{Model file not found}\\
+    The detector loads the trained weights from:
+    \begin{quote}\ttfamily
+    Code/LicencePlateDetection/german\_lpr\_trained/train2/weights/best.pt
+    \end{quote}
+    If you moved files, restore the folder structure or update the model path in:
+    \begin{quote}\ttfamily
+    Code/LicencePlateDetection/jetson\_app/detector.py
+    \end{quote}
+
+    \item \textbf{OCR returns empty/unreadable text}\\
+    Improve camera placement (focus, distance, angle), reduce glare, and ensure the plate crop is sharp.\\
+    If OCR fails during startup, ensure EasyOCR model files exist under \texttt{\textasciitilde/.EasyOCR/} (see setup section).
+
+    \item \textbf{Performance issues (low FPS / freezes)}\\
+    Reduce camera resolution, reduce scene motion, and avoid running other heavy workloads.
+    On Jetson-class devices, OCR is usually CPU-bound; minimise how often OCR runs if you customise the pipeline.
+\end{enumerate}
+
+\section{Optional: OCR Pipeline Test on Saved Plate Crops}
+You can test OCR on a folder of plate crops (images) without running the live camera:
+\begin{quote}\ttfamily
+cd Code/LicencePlateDetection\\
+source .venv/bin/activate\\
+mkdir -p data/sample\_plates\\
+python3 test\_ocr\_pipeline.py --dir data/sample\_plates
+\end{quote}
+Place plate-crop images (e.g., \texttt{.jpg}, \texttt{.png}) into \path{data/sample_plates} before running the test.
+
+\end{document}

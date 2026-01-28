@@ -1,0 +1,175 @@
+%%%
+%
+% $Autor: Wings $
+% $Datum: 2021-05-14 $
+% $Pfad:  $
+% $Dateiname: ListOfMaterial
+% $Version: 4620 $
+%
+% !TeX spellcheck = de_DE/GB
+% !TeX program = pdflatex
+% !BIB program = biber/bibtex
+% !TeX encoding = utf8
+%
+%%%
+
+
+\documentclass[10pt,a4paper,b ibliography=totoc]{scrbook}
+
+
+\input{../report/General/packages}
+\input{../report/General/commands}
+\input{../report/General/tikzdefs}
+
+\input{../report/General/acronyms}
+\input{../report/General/Hyphenations}%
+
+
+
+%\renewcommand{\Ausblenden}[1]{#1}
+\usetikzlibrary{matrix,positioning}
+
+% Reduce vertical whitespace before/after chapter headings (KOMA-Script)
+\RedeclareSectionCommand[
+beforeskip=0pt,
+afterskip=1.0\baselineskip
+]{chapter}
+
+\KOMAoptions{open=any}
+\begin{document}
+
+%\chapter*{Parts}
+\chapter*{\textcolor{black}{List of Parts}}
+
+\begin{center}
+	\begin{longtable}{|>{\centering\arraybackslash}m{0.7cm}|>{\centering\arraybackslash}m{2.7cm}|>{\centering\arraybackslash}m{4cm}|>{\centering\arraybackslash}m{1.4cm}|>{\centering\arraybackslash}m{3cm}|>{\centering\arraybackslash}m{2.2cm}|}
+		\caption{Hardware Components List} \\
+		
+		\hline
+		\textbf{S.No} & \textbf{Item} & \textbf{Description} & \textbf{Price (€)} & \textbf{Link} & \textbf{Image} \\ \hline
+		\endfirsthead
+		
+		\multicolumn{6}{c}%
+		{{\bfseries \tablename\ \thetable{} -- continued from previous page}} \\
+		\hline
+		\textbf{S.No} & \textbf{Item} & \textbf{Description} & \textbf{Price (€)} & \textbf{Link} & \textbf{Image} \\ \hline
+		\endhead
+		
+		\hline \multicolumn{6}{r}{{Continued on next page}} \\ \hline
+		\endfoot
+		
+		\hline
+		\endlastfoot
+		
+		1 & Seeed Studio reComputer J1010 (Nvidia Jetson Nano Bundle) & Computing device with case and heatsink & 219.00 & \href{http://reichelt.de/de/de/shop/produkt/nvidia_jetson_nano_bundle_4x_1_4_ghz_4_gb_ram-335036}{NVidia Jetson Nano Bundle} & 
+		\raisebox{0.1cm}{\hspace{0.1cm}\includegraphics[height=1.3cm,keepaspectratio]{../report/Images/BOM/jetson_nano.png}\hspace{0.1cm}} \\ \hline
+		
+		2 & Power Adapter & Jetson Nano power supply & ~15.99 & Not Applicable (Bundled with Seed Studio reComputer J1010) & 
+		\raisebox{0.1cm}{\hspace{0.1cm}\includegraphics[height=1.3cm,keepaspectratio]{../report/Images/BOM/adapter.jpg}\hspace{0.1cm}} \\ \hline
+		
+		3 & MicroSD Card & SD Card for JetPack OS model and dataset storage & 8.95 & \href{https://www.reichelt.de/de/de/shop/produkt/microsdhx-speicherkarte_64gb-358282}{Micro SD Card} & 
+		\raisebox{0.1cm}{\hspace{0.1cm}\includegraphics[height=1.3cm,keepaspectratio]{../report/Images/BOM/sd_card.png}\hspace{0.1cm}} \\ \hline
+		
+		4 & Microsoft Lifecam USB Camera & Camera interface & ~132.90 & Not Applicable (Available Offline)  & 
+		\raisebox{0.1cm}{\hspace{0.1cm}\includegraphics[height=1.3cm,keepaspectratio]{../report/Images/Lifecam/cam1.jpg}\hspace{0.1cm}} \\ \hline
+		
+		5 & Camera Support Stand & Stand enabling stable positioning & ~6.95 & Not Applicable (Bundled with Microsoft Lifecam USB Camera)  & 
+		\raisebox{0.1cm}{\hspace{0.1cm}\includegraphics[height=1.3cm,keepaspectratio]{../report/Images/Lifecam/cam3_rod.jpg}\hspace{0.1cm}} \\ \hline
+		
+		6 & HDMI Cable & Cable to connect Jetson Nano with a monitor & 9.50 & \href{https://www.reichelt.com/de/en/shop/product/high-retention_hdmi_cable_2_0m-287016}{HDMI Cable} & 
+		\raisebox{0.1cm}{\hspace{0.1cm}\includegraphics[height=1.3cm,keepaspectratio]{../report/Images/BOM/hdmi_cable.png}\hspace{0.1cm}} \\ \hline
+		
+		7 & Benq Monitor (1080p) & Monitor for graphical user interfacing and debugging & 89.95 & \href{https://www.reichelt.com/de/en/shop/product/monitor-369028}{Monitor} & 
+		\raisebox{0.1cm}{\hspace{0.1cm}\includegraphics[height=1.3cm,keepaspectratio]{../report/Images/BOM/monitor.png}\hspace{0.1cm}} \\ \hline
+		
+		8 & Generic USB Keyboard & Keyboard for interfacing with the Jetson Nano & 16.95 & \href{https://www.reichelt.com/de/en/shop/product/keyboard_-_usb_-_black_-_uk_layout-195318}{USB Keyboard} & 
+		\raisebox{0.1cm}{\hspace{0.1cm}\includegraphics[height=1.3cm,keepaspectratio]{../report/Images/BOM/keyboard.png}\hspace{0.1cm}} \\ \hline
+		
+		9 & Generic USB Mouse & Mouse for interfacing with the Jetson Nano & 4.79 & \href{https://www.reichelt.com/de/en/shop/product/mouse_mouse_cable_usb_white-195758}{USB Mouse} & 
+		\raisebox{0.1cm}{\hspace{0.1cm}\includegraphics[height=1.3cm,keepaspectratio]{../report/Images/BOM/mouse.png}\hspace{0.1cm}} \\ \hline
+		
+		10 & Ethernet Cable & CAT5e cable for network connectivity & 3.95 & \href{https://www.reichelt.com/de/en/shop/product/patch_cable_cat_5e_utp_yellow_2_m-348997}{CAT 5E Cable} & 
+		\raisebox{0.1cm}{\hspace{0.1cm}\includegraphics[height=1.3cm,keepaspectratio]{../report/Images/BOM/cat_cable.png}\hspace{0.1cm}} \\ \hline
+		
+		11 & Fan (5 Volts) & Fan preventing overheating during model inference & 2.90 & \href{https://www.reichelt.com/de/en/shop/product/fan_40_x_40_x_10_mm_5_v_dc_0_47_w_5800_rpm-239812}{Cooling Fan} & 
+		\raisebox{0.1cm}{\hspace{0.1cm}\includegraphics[height=1.3cm,keepaspectratio]{../report/Images/BOM/cooling_fan.png}\hspace{0.1cm}} \\ \hline
+		
+		&  & \textbf{Total} & \textbf{448.88} &  &  \\
+		
+	\end{longtable}
+\end{center}
+
+\chapter*{\textcolor{black}{List of Additional Parts Used}}
+\begin{center}
+	\begin{longtable}{|>{\centering\arraybackslash}m{0.7cm}|>{\centering\arraybackslash}m{2.7cm}|>{\centering\arraybackslash}m{4cm}|>{\centering\arraybackslash}m{1.4cm}|>{\centering\arraybackslash}m{3cm}|>{\centering\arraybackslash}m{2.2cm}|}
+		\caption{List of Additional Parts Used} \\
+		
+		\hline
+		\textbf{S.No} & \textbf{Item} & \textbf{Description} & \textbf{Price (€)} & \textbf{Link} & \textbf{Image} \\ \hline
+		\endfirsthead
+		
+		\multicolumn{6}{c}%
+		{{\bfseries \tablename\ \thetable{} -- continued from previous page}} \\
+		\hline
+		\textbf{S.No} & \textbf{Item} & \textbf{Description} & \textbf{Price (€)} & \textbf{Link} & \textbf{Image} \\ \hline
+		\endhead
+		
+		\hline \multicolumn{6}{r}{{Continued on next page}} \\ \hline
+		\endfoot
+		
+		\hline
+		\endlastfoot
+		
+		1 & Benq Monitor (1080p) & Monitor for graphical user interfacing and debugging & 89.95 &
+		\href{https://www.reichelt.com/de/en/shop/product/monitor-369028}{Monitor} &
+		\raisebox{0.1cm}{\hspace{0.1cm}\includegraphics[height=1.3cm,keepaspectratio]{../report/Images/BOM/monitor.png}\hspace{0.1cm}} \\ \hline
+		
+		2 & Generic USB Keyboard & Keyboard for interfacing with the Jetson Nano & 16.95 &
+		\href{https://www.reichelt.com/de/en/shop/product/keyboard_-_usb_-_black_-_uk_layout-195318}{USB Keyboard} &
+		\raisebox{0.1cm}{\hspace{0.1cm}\includegraphics[height=1.3cm,keepaspectratio]{../report/Images/BOM/keyboard.png}\hspace{0.1cm}} \\ \hline
+		
+		3 & Generic USB Mouse & Mouse for interfacing with the Jetson Nano & 4.79 &
+		\href{https://www.reichelt.com/de/en/shop/product/mouse_mouse_cable_usb_white-195758}{USB Mouse} &
+		\raisebox{0.1cm}{\hspace{0.1cm}\includegraphics[height=1.3cm,keepaspectratio]{../report/Images/BOM/mouse.png}\hspace{0.1cm}} \\ \hline
+		
+		4 & External SSD (USB) & Optional high-speed storage for datasets, logs, and backups & 114.50 &
+		\href{https://www.reichelt.de/de/de/shop/produkt/sandisk_portable_ssd_1_tb-360653}{Portable SSD (1 TB)} &
+		\raisebox{0.1cm}{\hspace{0.1cm}\includegraphics[height=1.3cm,keepaspectratio]{../report/Images/BOM/ssd.png}\hspace{0.1cm}} \\ \hline
+		
+		&  & \textbf{Total} & \textbf{226.28} &  &  \\
+		
+	\end{longtable}
+\end{center}
+
+
+\chapter*{\textcolor{black}{List of Parts Not Used}}
+\begin{center}
+	\begin{longtable}{|>{\centering\arraybackslash}m{0.7cm}|>{\centering\arraybackslash}m{2.7cm}|>{\centering\arraybackslash}m{4cm}|>{\centering\arraybackslash}m{1.4cm}|>{\centering\arraybackslash}m{3cm}|>{\centering\arraybackslash}m{2.2cm}|}
+		\caption{List of Parts Not Used} \\
+		
+		\hline
+		\textbf{S.No} & \textbf{Item} & \textbf{Description} & \textbf{Price (€)} & \textbf{Link} & \textbf{Image} \\ \hline
+		\endfirsthead
+		
+		\multicolumn{6}{c}%
+		{{\bfseries \tablename\ \thetable{} -- continued from previous page}} \\
+		\hline
+		\textbf{S.No} & \textbf{Item} & \textbf{Description} & \textbf{Price (€)} & \textbf{Link} & \textbf{Image} \\ \hline
+		\endhead
+		
+		\hline \multicolumn{6}{r}{{Continued on next page}} \\ \hline
+		\endfoot
+		
+		\hline
+		\endlastfoot
+		
+		1 & MicroSD Card & SD Card for JetPack OS model and dataset storage & 8.95 &
+		\href{https://www.reichelt.de/de/de/shop/produkt/microsdhx-speicherkarte_64gb-358282}{Micro SD Card} &
+		\raisebox{0.1cm}{\hspace{0.1cm}\includegraphics[height=1.3cm,keepaspectratio]{../report/Images/BOM/sd_card.png}\hspace{0.1cm}} \\ \hline
+		
+		&  & \textbf{Total} & \textbf{8.95} &  &  \\
+		
+	\end{longtable}
+\end{center}
+
+\end{document}
