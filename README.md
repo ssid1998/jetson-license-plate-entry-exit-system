@@ -37,6 +37,9 @@ A simplified view of the repository:
 └── README.md                     # This file
 ```
 
+## 🖼️ Poster
+<img src="Poster/images/JetsonNanoPoster.png" alt="Jetson Nano ANPR Poster" width="900" />
+
 ## 📚 Literature
 The literature collection under `Presentations/Literatures/References/` covers:
 - Deep learning approaches for license plate detection
