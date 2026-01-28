@@ -1,5 +1,7 @@
 # Car License Plate Identification with Jetson Nano
 
+<img src="Poster/images/JetsonNanoPoster.png" alt="Jetson Nano ANPR Poster" width="750" />
+
 ## 📖 Project Overview
 This project implements *Automatic Number Plate Recognition (ANPR)* on the *NVIDIA Jetson Nano*.
 It leverages *deep learning–based object detection* methods (e.g., YOLO, CNNs) and *OCR techniques* to detect and recognize license plates in real time.
@@ -37,8 +39,7 @@ A simplified view of the repository:
 └── README.md                     # This file
 ```
 
-## 🖼️ Poster
-<img src="Poster/images/JetsonNanoPoster.png" alt="Jetson Nano ANPR Poster" width="900" />
+
 
 ## 📚 Literature
 The literature collection under `Presentations/Literatures/References/` covers:
