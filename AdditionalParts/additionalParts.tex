@@ -1,0 +1,49 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Authors: Gautam Ramesh, Siddanth Sharma, Shubhankar Dumka
+% File: AdditionalParts.tex
+% Description: Inventory of external peripherals required for operation
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{List of Additional Parts}
+
+While the core License Plate Detection System is self-contained within the reComputer chassis, several external peripherals are required for system configuration, monitoring, and data retention. These "Additional Parts" are essential for the operator interface and must meet the specifications listed below.
+
+\section{Peripheral Inventory}
+
+\begin{table}[H]
+	\centering
+	\caption{Additional External Components}
+	\label{tab:additional_parts}
+	\begin{tabular}{|L{3.5cm}|L{5.5cm}|L{5.0cm}|}
+		\hline
+		\textbf{Component} & \textbf{Specification} & \textbf{Operational Purpose} \\ \hline
+		
+		\textbf{Display Monitor} & 
+		1080p Resolution (1920x1080), HDMI Input & 
+		[cite_start]Visualizes the Operator Dashboard, live camera feed, and detection logs[cite: 760]. \\ \hline
+		
+		\textbf{Keyboard} & 
+		Standard USB (Type-A) or Wireless with Dongle & 
+		Required for initial system login (\texttt{nvidia}) and entering terminal commands. \\ \hline
+		
+		\textbf{Mouse} & 
+		Standard USB (Type-A) Optical Mouse & 
+		[cite_start]Necessary for interacting with the GUI and clicking the "Safe Shutdown" button[cite: 772]. \\ \hline
+		
+		\textbf{External SSD} & 
+		USB 3.0 Interface, 256GB or larger (High R/W Speed) & 
+		Provides high-speed expansion storage for the SQLite database and historical logs. \\ \hline
+		
+		\textbf{HDMI Cable} & 
+		High-Speed HDMI (Male-to-Male), $<$ 2 meters & 
+		[cite_start]Transmits the video signal from the Main Unit to the Display[cite: 766]. \\ \hline
+	\end{tabular}
+\end{table}
+
+\section{Component Selection Notes}
+\begin{itemize}
+	\item \textbf{SSD Requirement:} Do not use a standard USB flash drive for the database. The high volume of read/write operations requires the durability and speed of an SSD connected to the \textbf{Blue USB 3.0} port.
+	\item \textbf{Input Devices:} Simple, wired peripherals are recommended over Bluetooth devices to ensure compatibility during the boot sequence (BIOS/Bootloader level).
+\end{itemize}
