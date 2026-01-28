@@ -1,0 +1,27 @@
+[Unit]
+Description=License Plate Recognition Kiosk Service
+After=network.target graphical.target
+Wants=graphical.target
+
+[Service]
+# Run as the default jetson user
+User=jetson
+Group=jetson
+
+# Environment variables for GUI (Required for cv2.imshow to work)
+Environment="DISPLAY=:0"
+Environment="XAUTHORITY=/run/user/1000/gdm/Xauthority"
+
+# Path to your Python Project
+# CHANGE THIS PATH to match your actual folder structure!
+WorkingDirectory=/home/jetson/LicensePlateProject/
+ExecStart=/usr/bin/python3 /home/jetson/LicensePlateProject/dashboard2.py
+
+# --- The Watchdog Configuration (Matches your Report) ---
+Restart=always
+RestartSec=3s
+StartLimitInterval=60s
+StartLimitBurst=5
+
+[Install]
+WantedBy=graphical.target

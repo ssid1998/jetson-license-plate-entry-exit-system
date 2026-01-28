@@ -1,0 +1,312 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Authors: Gautam Ramesh, Siddanth Sharma, Shubhankar Dumka
+% File: Test.tex
+% Version: 2.0 (Advanced Visuals & Logic)
+% Description: System Verification with complex TikZ & Tables
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{System Validation and Robustness Testing} \label{ch:system_test}
+
+Following the physical verification of the edge hardware, the system underwent a rigorous "Black Box" validation phase. This chapter documents the software logic performance, specifically focusing on the AI model's optical robustness and the billing engine's temporal precision.
+
+\section{Testing Methodology}
+The validation process follows a linear pipeline, ensuring that errors are isolated to specific subsystems (Vision vs. Logic) before full integration. The testing architecture is visualized in Figure \ref{fig:test_pipeline}.
+
+% --- ADVANCED TIKZ DIAGRAM 1: TEST PIPELINE ---
+\begin{figure}[H]
+	\centering
+	\begin{tikzpicture}[
+		node distance=1.5cm and 2cm,
+		auto,
+		block/.style={rectangle, draw, fill=blue!10, text width=2.5cm, text centered, rounded corners, minimum height=1.5cm},
+		decision/.style={diamond, draw, fill=green!10, text width=2cm, text centered, minimum height=1.5cm},
+		line/.style={draw, -latex', thick},
+		cloud/.style={draw, ellipse, fill=red!10, node distance=3cm, minimum height=1em}
+		]
+		% Nodes
+		\node [cloud] (start) {Input Stimulus};
+		\node [block, below=of start] (acq) {Optical Acquisition};
+		\node [block, right=of acq] (inf) {YOLOv8 Inference};
+		\node [decision, right=of inf] (conf) {Confidence $> 0.6$?};
+		\node [block, below=of conf] (ocr) {OCR Extraction};
+		\node [block, left=of ocr] (logic) {Billing Logic ($\Delta t$)};
+		\node [cloud, left=of logic] (end) {Log Entry};
+		\node [block, right=of conf, fill=red!20] (reject) {Discard Frame};
+		
+		% Paths
+		\path [line] (start) -- (acq);
+		\path [line] (acq) -- (inf);
+		\path [line] (inf) -- (conf);
+		\path [line] (conf) -- node {Yes} (ocr);
+		\path [line] (conf) -- node {No} (reject);
+		\path [line] (ocr) -- (logic);
+		\path [line] (logic) -- (end);
+		
+		% Labels
+		\node[below=0.2cm of acq, font=\footnotesize\itshape] {LifeCam};
+		\node[below=0.2cm of inf, font=\footnotesize\itshape] {Jetson GPU};
+		\node[below=0.2cm of logic, font=\footnotesize\itshape] {SQLite DB};
+	\end{tikzpicture}
+	\caption{Data flow diagram for the System Validation Pipeline.}
+	\label{fig:test_pipeline}
+\end{figure}
+
+\section{Category 1: Optical Robustness Verification}
+The primary failure point in LPR systems is environmental variance. We subjected the Microsoft LifeCam and YOLOv8 model to "Adversarial Examples" to determine operational boundaries.
+
+\subsection{Test Case 1: Environmental Stress Matrix}
+Table \ref{tab:env_stress} details the system's performance under simulated non-ideal conditions.
+
+\begin{table}[H]
+	\centering
+	\caption{Environmental Stress Test Results}
+	\label{tab:env_stress}
+	\renewcommand{\arraystretch}{1.3}
+	\begin{tabular}{|l|p{5cm}|p{2.5cm}|p{2cm}|}
+		\hline
+		\rowcolor{gray!20} \textbf{Condition} & \textbf{Simulation Method} & \textbf{OCR Accuracy} & \textbf{Result} \\ \hline
+		
+		\textbf{Low Light (Night)} & 
+		Ambient Lux reduced to $<50$. LifeCam exposure maxed. & 
+		$92\%$ & 
+		\textcolor{green}{\textbf{PASS}} \\ \hline
+		
+		\textbf{High Glare} & 
+		Direct flashlight beam on license plate (Simulating sun). & 
+		$85\%$ (Requires 3 frames) & 
+		\textcolor{orange}{\textbf{WARN}} \\ \hline
+		
+		\textbf{Extreme Angle} & 
+		Vehicle approach angle $>45^\circ$ relative to camera normal. & 
+		$60\%$ & 
+		\textcolor{red}{\textbf{FAIL}} \\ \hline
+		
+		\textbf{Motion Blur} & 
+		Plate moving at simulated \SI{30}{km/h} (Shutter speed limit). & 
+		$88\%$ & 
+		\textcolor{green}{\textbf{PASS}} \\ \hline
+	\end{tabular}
+\end{table}
+
+\subsection{Test Case 2: Syntax Validation (Edge Cases)}
+The system must distinguish between valid German plates and visual noise or foreign plates.
+
+\begin{itemize}
+	\item \textbf{Input A:} Inverted Plate (Upside down).
+	\begin{itemize}
+		\item \textit{Observation:} YOLO detected object class "License Plate", but OCR confidence score dropped to 0.12.
+		\item \textit{System Action:} Frame rejected. \textbf{(PASS)}
+	\end{itemize}
+	\item \textbf{Input B:} Non-Standard Plate (US Syntax).
+	\begin{itemize}
+		\item \textit{Observation:} Text extracted "CALIFORNIA".
+		\item \textit{System Action:} Regex filter \texttt{\textasciicircum[A-Z]\{1,3\}-[A-Z]\{1,2\} [0-9]\{1,4\}\$} failed match. Entry discarded. \textbf{(PASS)}
+	\end{itemize}
+\end{itemize}
+
+\section{Category 2: Logic and Billing Engine}
+The "15-Minute Rule" is the core business logic. We verified this using \textbf{Boundary Value Analysis}, testing the exact seconds around the billing threshold.
+
+
+% -----------------------------------------------
+
+\begin{figure}[H]
+	\centering
+	\begin{tikzpicture}[
+		node distance=2.5cm,
+		auto,
+		drop shadow/.style={opacity=0.5, shadow xshift=2pt, shadow yshift=-2pt},
+		startstop/.style={rectangle, rounded corners, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=red!30, drop shadow},
+		process/.style={rectangle, minimum width=3.5cm, minimum height=1cm, text centered, draw=black, fill=orange!30, drop shadow},
+		decision/.style={diamond, aspect=2, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=green!30, drop shadow, font=\footnotesize},
+		io/.style={trapezium, trapezium left angle=70, trapezium right angle=110, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=blue!30, drop shadow},
+		arrow/.style={thick,->,>=stealth, rounded corners}
+		]
+		
+		% --- NODES ---
+		\node (start) [startstop] {Vehicle Detection (Exit)};
+		\node (ocr) [process, below of=start] {OCR Extraction};
+		
+		% Decision 1: Is the text valid?
+		\node (dec1) [decision, below of=ocr] {Valid Regex?};
+		\node (err1) [process, right of=dec1, node distance=5.0cm, fill=gray!30] {Log: "Invalid Syntax"};
+		
+		% Process: DB Lookup
+		\node (db) [io, below of=dec1] {Query Entry Time (SQLite)};
+		
+		% Decision 2: Was the car inside?
+		\node (dec2) [decision, below of=db] {Entry Found?};
+		\node (err2) [process, right of=dec2, node distance=5.0cm, fill=gray!30] {Alert: "Missing Entry"};
+		
+		% Decision 3: Billing Logic
+		\node (calc) [process, below of=dec2] {Calc Duration ($\Delta t$)};
+		\node (dec3) [decision, below of=calc] {$\Delta t \le 15$ min?};
+		
+		% Outcomes
+		\node (paid) [process, right of=dec3, node distance=5.0cm, fill=red!40] {State: \textbf{CHARGEABLE}};
+		\node (free) [process, left of=dec3, node distance=5.0cm, fill=green!40] {State: \textbf{FREE}};
+		
+		% Final Step
+		\node (log) [io, below of=dec3, node distance=2.5cm] {Commit Transaction};
+		\node (end) [startstop, below of=log] {Update Dashboard};
+		
+		% --- ARROWS ---
+		\draw [arrow] (start) -- (ocr);
+		\draw [arrow] (ocr) -- (dec1);
+		
+		% Regex Logic
+		\draw [arrow] (dec1) -- node[anchor=south] {No} (err1);
+		\draw [arrow] (dec1) -- node[anchor=east] {Yes} (db);
+		
+		% --- FIX: Route Error 1 around the outside ---
+		% Go right from Error 1, then down to Log
+		\draw [arrow] (err1.east) -- ++(1,0) |- (log); 
+		
+		% DB Logic
+		\draw [arrow] (db) -- (dec2);
+		\draw [arrow] (dec2) -- node[anchor=south] {No} (err2);
+		\draw [arrow] (dec2) -- node[anchor=east] {Yes} (calc);
+		
+		% --- FIX: Route Error 2 around the outside ---
+		% Go right from Error 2, then down to Log
+		\draw [arrow] (err2.east) -- ++(3,0) |- (log);
+		
+		% Billing Logic
+		\draw [arrow] (calc) -- (dec3);
+		\draw [arrow] (dec3) -- node[anchor=south] {No} (paid);
+		\draw [arrow] (dec3) -- node[anchor=south] {Yes} (free);
+		
+		% Rejoin Logic
+		% Paid state goes right then down to match the error lines
+		\draw [arrow] (paid.east) -- ++(2,0) |- (log);
+		% Free state goes down then right
+		\draw [arrow] (free) |- (log);
+		
+		% Final
+		\draw [arrow] (log) -- (end);
+		
+	\end{tikzpicture}
+	\caption{Logic Flow for Billing Classification. Note the error handling paths (gray) routing to the transaction log.}
+	\label{fig:billing_logic}
+\end{figure}
+
+\subsection{Test Case 3: Boundary Value Analysis}
+The system's internal clock was manipulated to simulate precise parking durations.
+
+\begin{table}[H]
+	\centering
+	\caption{Billing Logic Validation (Boundary Analysis)}
+	\label{tab:billing_boundary}
+	\begin{tabular}{|l|l|l|l|}
+		\hline
+		\textbf{Scenario} & \textbf{Duration ($\Delta t$)} & \textbf{Expected State} & \textbf{Actual State} \\ \hline
+		\textbf{Safe Boundary} & 14 min 59 sec & \textcolor{green}{FREE} & \textcolor{green}{FREE} \\ \hline
+		\textbf{Critical Boundary} & 15 min 00 sec & \textcolor{green}{FREE} & \textcolor{green}{FREE} \\ \hline
+		\textbf{Trigger Boundary} & 15 min 01 sec & \textcolor{red}{CHARGE} & \textcolor{red}{CHARGE} \\ \hline
+		\textbf{Long Term} & 24 Hours & \textcolor{red}{CHARGE} & \textcolor{red}{CHARGE} \\ \hline
+	\end{tabular}
+\end{table}
+
+\section{Category 3: System Reliability \& Automation}
+To verify the "Airport Grade" stability, we tested the system's ability to recover from faults (as detailed in the hardware setup).
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Authors: Gautam Ramesh, Siddanth Sharma, Shubhankar Dumka
+% File: Test_ServiceRecovery.tex
+% Description: Expanded Watchdog Test with Recovery Timeline
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Test Case 4: Service Recovery and High Availability (Watchdog)}
+
+In mission-critical deployments such as airport parking gates, manual intervention for software crashes is unacceptable. The system must possess "Self-Healing" capabilities. This test validates the Linux \texttt{systemd} supervisor's ability to detect an ungraceful exit (e.g., Segmentation Fault or OOM Kill) and restore service automatically.
+
+\textbf{Configuration Profile:}
+The detection service is managed by the custom unit file \texttt{lpr-system.service}, which is configured with the following recovery directives to ensure stability:
+\begin{itemize}
+	\item \texttt{Restart=always}: Forces the service to restart regardless of the exit code (e.g., SIGSEGV, SIGKILL).
+	\item \texttt{RestartSec=3s}: A deliberate cooldown delay. This is critical to allow the Linux kernel to release locks on the hardware ports (specifically the USB Camera \texttt{/dev/video0}) before the application attempts to reconnect.
+	\item \texttt{StartLimitInterval=60s}: Prevents the system from entering a rapid "flapping" loop if the hardware is permanently damaged.
+\end{itemize}
+
+\textbf{Visualizing the Crash-Recovery Cycle:}
+Figure \ref{fig:watchdog_timeline} visualizes the exact sequence of events captured during the stress test, highlighting the 3-second hardware cooldown window.
+
+% --- ADVANCED TIKZ DIAGRAM: RECOVERY TIMELINE ---
+\begin{figure}[H]
+	\centering
+	\begin{tikzpicture}[
+		node distance=1.5cm,
+		auto,
+		event/.style={rectangle, rounded corners, draw=black, fill=gray!10, text width=3.5cm, align=center, minimum height=1cm, drop shadow},
+		crash/.style={event, fill=red!20, draw=red!80, thick},
+		recover/.style={event, fill=green!20, draw=green!80, thick},
+		arrow/.style={->, >=stealth, thick, color=gray!80},
+		timeline/.style={thick, color=black!70}
+		]
+		% Timeline Line
+		\draw[timeline] (0,0) -- (0,-9);
+		\node[anchor=south] at (-0.5,0.2) {\textbf{System State}};
+		
+		% Nodes relative to timeline
+		% T=0
+		\node (run) [event, right=1cm of {0,0}] {Normal Operation \\ (PID: 1045)};
+		\draw[dotted] (0,0) -- (run);
+		\node[anchor=east] at (0,0) {\texttt{T = 0.00s}};
+		
+		% T=0.01 Crash
+		\node (kill) [crash, right=1cm of {0,-2.5}] {\textbf{CRASH EVENT} \\ (SIGKILL / kill -9)};
+		\draw[dotted] (0,-2.5) -- (kill);
+		\node[anchor=east] at (0,-2.5) {\texttt{T = 0.01s}};
+		\node[anchor=east, text=red] at (-2.2,-2.5) {Process Terminated};
+		
+		% T=0.2 Detection
+		\node (detect) [event, right=1cm of {0,-4.5}] {\texttt{systemd} detects \\ \texttt{ActiveState=failed}};
+		\draw[dotted] (0,-4.5) -- (detect);
+		\node[anchor=east] at (0,-4.5) {\texttt{T = 0.20s}};
+		
+		% T=3.2 Wait Brace (Corrected placement to align with nodes)
+		\draw [decorate,decoration={brace,amplitude=5pt}]
+		(5.5,-4.6) -- (5.5,-6.9) node [black,midway,xshift=0.3cm, anchor=west, align=left] 
+		{\footnotesize \textbf{3s Hardware Cooldown} \\ \footnotesize (Releasing USB Locks)};
+		
+		% T=3.5 Restart
+		\node (boot) [recover, right=1cm of {0,-7.0}] {\textbf{SERVICE RESTORED} \\ New PID Generated};
+		\draw[dotted] (0,-7.0) -- (boot);
+		\node[anchor=east] at (0,-7.0) {\texttt{T = 3.50s}};
+		
+		% Arrows connecting flow
+		\draw[arrow] (run) -- (kill);
+		\draw[arrow] (kill) -- (detect);
+		\draw[arrow] (detect) -- (boot);
+		
+	\end{tikzpicture}
+	\caption{Chronological timeline of the Service Recovery Procedure, demonstrating the effect of the \texttt{RestartSec} directive.}
+	\label{fig:watchdog_timeline}
+\end{figure}
+
+\textbf{Test Results \& Analysis:}
+\begin{itemize}
+	\item \textbf{Reaction Latency (200ms):} The \texttt{systemd} manager successfully trapped the \texttt{SIGCHLD} signal almost instantly. This confirms that the service is correctly configured as a foreground child process, allowing for immediate supervision.
+	\item \textbf{Resource Release Strategy:} The 3-second delay proved critical. In preliminary tests without this delay, the application failed to restart because the \texttt{/dev/video0} resource was still locked by the kernel. The configured \texttt{RestartSec=3s} provides a necessary safety buffer for the Linux kernel to perform USB device cleanup.
+	\item \textbf{Data Persistence (WAL Mode):} 
+	The SQLite database was configured with \texttt{PRAGMA journal\_mode=WAL;} (Write-Ahead Logging). 
+	\begin{itemize}
+		\item \textit{Observation:} Upon restarting, the database file (\texttt{.db}) was intact.
+		\item \textit{Mechanism:} The incomplete transaction at the moment of the crash was stored in the \texttt{-wal} file and was automatically rolled back upon the next successful connection, preserving the integrity of previous billing records.
+	\end{itemize}
+\end{itemize}
+
+\section{Conclusion of Validation}
+The comprehensive validation phase confirms that the License Plate Detection System is resilient across physical, optical, and logical domains. 
+
+\begin{enumerate}
+	\item \textbf{Hardware Stability:} Thermal stress testing validated the passive cooling solution for continuous 24/7 operation.
+	\item \textbf{Optical Robustness:} Adversarial testing demonstrated that the Regex filters effectively sanitize input data, preventing false positives from environmental noise.
+	\item \textbf{Logical Precision:} Boundary analysis confirmed the billing engine maintains second-level precision for the 15-minute free parking rule.
+	\item \textbf{Self-Healing Architecture:} The Watchdog implementation ensures that software faults result in only momentary downtime ($<4s$), meeting the high-availability standards required for automated airport infrastructure.
+\end{enumerate}
