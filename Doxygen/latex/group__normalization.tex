@@ -1,0 +1,75 @@
+\doxysubsubsection{Normalization }
+\hypertarget{group__normalization}{}\label{group__normalization}\index{Normalization@{Normalization}}
+\doxysubsubsubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+cuda\+Error\+\_\+t \doxymbox{\hyperlink{group__normalization_ga84d13c8a867b4bb12d54e5bd171e8c71}{cuda\+Normalize}} (float \texorpdfstring{$\ast$}{*}input, const float2 \&input\+\_\+range, float \texorpdfstring{$\ast$}{*}output, const float2 \&output\+\_\+range, size\+\_\+t width, size\+\_\+t height, cuda\+Stream\+\_\+t stream=0)
+\item 
+cuda\+Error\+\_\+t \doxymbox{\hyperlink{group__normalization_ga09e32a155daf820ee6e85ca2c27af167}{cuda\+Normalize}} (float3 \texorpdfstring{$\ast$}{*}input, const float2 \&input\+\_\+range, float3 \texorpdfstring{$\ast$}{*}output, const float2 \&output\+\_\+range, size\+\_\+t width, size\+\_\+t height, cuda\+Stream\+\_\+t stream=0)
+\item 
+cuda\+Error\+\_\+t \doxymbox{\hyperlink{group__normalization_gadf91000e23beefa3203bae44ff675b92}{cuda\+Normalize}} (float4 \texorpdfstring{$\ast$}{*}input, const float2 \&input\+\_\+range, float4 \texorpdfstring{$\ast$}{*}output, const float2 \&output\+\_\+range, size\+\_\+t width, size\+\_\+t height, cuda\+Stream\+\_\+t stream=0)
+\item 
+cuda\+Error\+\_\+t \doxymbox{\hyperlink{group__normalization_gaf16ca95fa8f640f9d145b6bb602ecff8}{cuda\+Normalize}} (void \texorpdfstring{$\ast$}{*}input, const float2 \&input\+\_\+range, void \texorpdfstring{$\ast$}{*}output, const float2 \&output\+\_\+range, size\+\_\+t width, size\+\_\+t height, \doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{image\+Format}} format, cuda\+Stream\+\_\+t stream=0)
+\end{DoxyCompactItemize}
+
+
+\doxysubsubsubsection{Detailed Description}
+Normalize the pixel intensities of an image between two ranges. 
+
+\label{doc-func-members}
+\Hypertarget{group__normalization_doc-func-members}
+\doxysubsubsubsection{Function Documentation}
+\Hypertarget{group__normalization_ga84d13c8a867b4bb12d54e5bd171e8c71}\index{Normalization@{Normalization}!cudaNormalize@{cudaNormalize}}
+\index{cudaNormalize@{cudaNormalize}!Normalization@{Normalization}}
+\doxysubsubsubsubsection{\texorpdfstring{cudaNormalize()}{cudaNormalize()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily \label{group__normalization_ga84d13c8a867b4bb12d54e5bd171e8c71} 
+cuda\+Error\+\_\+t cuda\+Normalize (\begin{DoxyParamCaption}\item[{float \texorpdfstring{$\ast$}{*}}]{input}{, }\item[{const float2 \&}]{input\+\_\+range}{, }\item[{float \texorpdfstring{$\ast$}{*}}]{output}{, }\item[{const float2 \&}]{output\+\_\+range}{, }\item[{size\+\_\+t}]{width}{, }\item[{size\+\_\+t}]{height}{, }\item[{cuda\+Stream\+\_\+t}]{stream}{ = {\ttfamily 0}}\end{DoxyParamCaption})}
+
+Normalize the pixel intensities of a floating-\/point grayscale image between two scales. For example, convert an image with values between {\ttfamily \+[0,1]\+} to {\ttfamily \+[0,255]\+} 
+\begin{DoxyParams}{Parameters}
+{\em input\+\_\+range} & the range of pixel values of the input image (e.\+g. {\ttfamily \+[0,1]\+}) \\
+\hline
+{\em output\+\_\+range} & the desired range of pixel values of the output image (e.\+g. {\ttfamily \+[0,255]\+}) \\
+\hline
+\end{DoxyParams}
+\Hypertarget{group__normalization_ga09e32a155daf820ee6e85ca2c27af167}\index{Normalization@{Normalization}!cudaNormalize@{cudaNormalize}}
+\index{cudaNormalize@{cudaNormalize}!Normalization@{Normalization}}
+\doxysubsubsubsubsection{\texorpdfstring{cudaNormalize()}{cudaNormalize()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily \label{group__normalization_ga09e32a155daf820ee6e85ca2c27af167} 
+cuda\+Error\+\_\+t cuda\+Normalize (\begin{DoxyParamCaption}\item[{float3 \texorpdfstring{$\ast$}{*}}]{input}{, }\item[{const float2 \&}]{input\+\_\+range}{, }\item[{float3 \texorpdfstring{$\ast$}{*}}]{output}{, }\item[{const float2 \&}]{output\+\_\+range}{, }\item[{size\+\_\+t}]{width}{, }\item[{size\+\_\+t}]{height}{, }\item[{cuda\+Stream\+\_\+t}]{stream}{ = {\ttfamily 0}}\end{DoxyParamCaption})}
+
+Normalize the pixel intensities of a float3 RGB/\+\+BGR image between two scales. For example, convert an image with values between {\ttfamily \+[0,1]\+} to {\ttfamily \+[0,255]\+} 
+\begin{DoxyParams}{Parameters}
+{\em input\+\_\+range} & the range of pixel values of the input image (e.\+g. {\ttfamily \+[0,1]\+}) \\
+\hline
+{\em output\+\_\+range} & the desired range of pixel values of the output image (e.\+g. {\ttfamily \+[0,255]\+}) \\
+\hline
+\end{DoxyParams}
+\Hypertarget{group__normalization_gadf91000e23beefa3203bae44ff675b92}\index{Normalization@{Normalization}!cudaNormalize@{cudaNormalize}}
+\index{cudaNormalize@{cudaNormalize}!Normalization@{Normalization}}
+\doxysubsubsubsubsection{\texorpdfstring{cudaNormalize()}{cudaNormalize()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily \label{group__normalization_gadf91000e23beefa3203bae44ff675b92} 
+cuda\+Error\+\_\+t cuda\+Normalize (\begin{DoxyParamCaption}\item[{float4 \texorpdfstring{$\ast$}{*}}]{input}{, }\item[{const float2 \&}]{input\+\_\+range}{, }\item[{float4 \texorpdfstring{$\ast$}{*}}]{output}{, }\item[{const float2 \&}]{output\+\_\+range}{, }\item[{size\+\_\+t}]{width}{, }\item[{size\+\_\+t}]{height}{, }\item[{cuda\+Stream\+\_\+t}]{stream}{ = {\ttfamily 0}}\end{DoxyParamCaption})}
+
+Normalize the pixel intensities of a float4 RGBA/\+\+BGRA image between two scales. For example, convert an image with values between {\ttfamily \+[0,1]\+} to {\ttfamily \+[0,255]\+} 
+\begin{DoxyParams}{Parameters}
+{\em input\+\_\+range} & the range of pixel values of the input image (e.\+g. {\ttfamily \+[0,1]\+}) \\
+\hline
+{\em output\+\_\+range} & the desired range of pixel values of the output image (e.\+g. {\ttfamily \+[0,255]\+}) \\
+\hline
+\end{DoxyParams}
+\Hypertarget{group__normalization_gaf16ca95fa8f640f9d145b6bb602ecff8}\index{Normalization@{Normalization}!cudaNormalize@{cudaNormalize}}
+\index{cudaNormalize@{cudaNormalize}!Normalization@{Normalization}}
+\doxysubsubsubsubsection{\texorpdfstring{cudaNormalize()}{cudaNormalize()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily \label{group__normalization_gaf16ca95fa8f640f9d145b6bb602ecff8} 
+cuda\+Error\+\_\+t cuda\+Normalize (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}}]{input}{, }\item[{const float2 \&}]{input\+\_\+range}{, }\item[{void \texorpdfstring{$\ast$}{*}}]{output}{, }\item[{const float2 \&}]{output\+\_\+range}{, }\item[{size\+\_\+t}]{width}{, }\item[{size\+\_\+t}]{height}{, }\item[{\doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{image\+Format}}}]{format}{, }\item[{cuda\+Stream\+\_\+t}]{stream}{ = {\ttfamily 0}}\end{DoxyParamCaption})}
+
+Normalize the pixel intensities of an image between two scales. For example, convert an image with values between {\ttfamily \+[0,1]\+} to {\ttfamily \+[0,255]\+} 
+\begin{DoxyParams}{Parameters}
+{\em input\+\_\+range} & the range of pixel values of the input image (e.\+g. {\ttfamily \+[0,1]\+}) \\
+\hline
+{\em output\+\_\+range} & the desired range of pixel values of the output image (e.\+g. {\ttfamily \+[0,255]\+}) \\
+\hline
+{\em format} & the image format -\/ valid formats are gray32f, rgb32f/\+bgr32f, and rgba32f/\+bgra32f. \\
+\hline
+\end{DoxyParams}

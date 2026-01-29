@@ -1,0 +1,507 @@
+\doxysection{tensor\+Net.\+h}
+\hypertarget{tensor_net_8h_source}{}\label{tensor_net_8h_source}\index{jetson-\/inference/build/aarch64/include/jetson-\/inference/tensorNet.h@{jetson-\/inference/build/aarch64/include/jetson-\/inference/tensorNet.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ *\ Copyright\ (c)\ 2017,\ NVIDIA\ CORPORATION.\ All\ rights\ reserved.}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ *\ Permission\ is\ hereby\ granted,\ free\ of\ charge,\ to\ any\ person\ obtaining\ a}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ *\ copy\ of\ this\ software\ and\ associated\ documentation\ files\ (the\ "{}Software"{}),}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ *\ to\ deal\ in\ the\ Software\ without\ restriction,\ including\ without\ limitation}}
+\DoxyCodeLine{00007\ \textcolor{comment}{\ *\ the\ rights\ to\ use,\ copy,\ modify,\ merge,\ publish,\ distribute,\ sublicense,}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ *\ and/or\ sell\ copies\ of\ the\ Software,\ and\ to\ permit\ persons\ to\ whom\ the}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ *\ Software\ is\ furnished\ to\ do\ so,\ subject\ to\ the\ following\ conditions:}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ *\ The\ above\ copyright\ notice\ and\ this\ permission\ notice\ shall\ be\ included\ in}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ *\ all\ copies\ or\ substantial\ portions\ of\ the\ Software.}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ *\ THE\ SOFTWARE\ IS\ PROVIDED\ "{}AS\ IS"{},\ WITHOUT\ WARRANTY\ OF\ ANY\ KIND,\ EXPRESS\ OR}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ *\ IMPLIED,\ INCLUDING\ BUT\ NOT\ LIMITED\ TO\ THE\ WARRANTIES\ OF\ MERCHANTABILITY,}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ *\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE\ AND\ NONINFRINGEMENT.\ \ IN\ NO\ EVENT\ SHALL}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ *\ THE\ AUTHORS\ OR\ COPYRIGHT\ HOLDERS\ BE\ LIABLE\ FOR\ ANY\ CLAIM,\ DAMAGES\ OR\ OTHER}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ *\ LIABILITY,\ WHETHER\ IN\ AN\ ACTION\ OF\ CONTRACT,\ TORT\ OR\ OTHERWISE,\ ARISING}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ *\ FROM,\ OUT\ OF\ OR\ IN\ CONNECTION\ WITH\ THE\ SOFTWARE\ OR\ THE\ USE\ OR\ OTHER}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ *\ DEALINGS\ IN\ THE\ SOFTWARE.}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00022\ \ }
+\DoxyCodeLine{00023\ \textcolor{preprocessor}{\#ifndef\ \_\_TENSOR\_NET\_H\_\_}}
+\DoxyCodeLine{00024\ \textcolor{preprocessor}{\#define\ \_\_TENSOR\_NET\_H\_\_}}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \textcolor{comment}{//\ forward\ declaration\ of\ IInt8Calibrator}}
+\DoxyCodeLine{00027\ \textcolor{keyword}{namespace\ }nvinfer1\ \{\ \textcolor{keyword}{class\ }IInt8Calibrator;\ \}}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \textcolor{comment}{//\ includes}}
+\DoxyCodeLine{00030\ \textcolor{preprocessor}{\#include\ <NvInfer.h>}}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \textcolor{preprocessor}{\#include\ <jetson-\/utils/cudaUtility.h>}}
+\DoxyCodeLine{00033\ \textcolor{preprocessor}{\#include\ <jetson-\/utils/commandLine.h>}}
+\DoxyCodeLine{00034\ \textcolor{preprocessor}{\#include\ <jetson-\/utils/imageFormat.h>}}
+\DoxyCodeLine{00035\ \textcolor{preprocessor}{\#include\ <jetson-\/utils/timespec.h>}}
+\DoxyCodeLine{00036\ \textcolor{preprocessor}{\#include\ <jetson-\/utils/logging.h>}}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00039\ \textcolor{preprocessor}{\#include\ <sstream>}}
+\DoxyCodeLine{00040\ \textcolor{preprocessor}{\#include\ <math.h>}}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ \textcolor{preprocessor}{\#if\ NV\_TENSORRT\_MAJOR\ >=\ 6}}
+\DoxyCodeLine{00044\ \textcolor{keyword}{typedef}\ nvinfer1::Dims3\ Dims3;}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ \textcolor{preprocessor}{\#define\ DIMS\_C(x)\ x.d[0]}}
+\DoxyCodeLine{00047\ \textcolor{preprocessor}{\#define\ DIMS\_H(x)\ x.d[1]}}
+\DoxyCodeLine{00048\ \textcolor{preprocessor}{\#define\ DIMS\_W(x)\ x.d[2]}}
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00050\ \textcolor{preprocessor}{\#elif\ NV\_TENSORRT\_MAJOR\ >=\ 2}}
+\DoxyCodeLine{00051\ \textcolor{keyword}{typedef}\ nvinfer1::DimsCHW\ Dims3;}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00053\ \textcolor{preprocessor}{\#define\ DIMS\_C(x)\ x.d[0]}}
+\DoxyCodeLine{00054\ \textcolor{preprocessor}{\#define\ DIMS\_H(x)\ x.d[1]}}
+\DoxyCodeLine{00055\ \textcolor{preprocessor}{\#define\ DIMS\_W(x)\ x.d[2]}}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00057\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00058\ \textcolor{keyword}{typedef}\ nvinfer1::Dims3\ Dims3;\ }
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00060\ \textcolor{preprocessor}{\#define\ DIMS\_C(x)\ x.c}}
+\DoxyCodeLine{00061\ \textcolor{preprocessor}{\#define\ DIMS\_H(x)\ x.h}}
+\DoxyCodeLine{00062\ \textcolor{preprocessor}{\#define\ DIMS\_W(x)\ x.w}}
+\DoxyCodeLine{00063\ }
+\DoxyCodeLine{00064\ \textcolor{preprocessor}{\#ifndef\ NV\_TENSORRT\_MAJOR}}
+\DoxyCodeLine{00065\ \textcolor{preprocessor}{\#define\ NV\_TENSORRT\_MAJOR\ 1}}
+\DoxyCodeLine{00066\ \textcolor{preprocessor}{\#define\ NV\_TENSORRT\_MINOR\ 0}}
+\DoxyCodeLine{00067\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00068\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00069\ }
+\DoxyCodeLine{00070\ \textcolor{preprocessor}{\#if\ NV\_TENSORRT\_MAJOR\ >=\ 8}}
+\DoxyCodeLine{00071\ \textcolor{preprocessor}{\#define\ NOEXCEPT\ noexcept}}
+\DoxyCodeLine{00072\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00073\ \textcolor{preprocessor}{\#define\ NOEXCEPT}}
+\DoxyCodeLine{00074\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00075\ }
+\DoxyCodeLine{00076\ }
+\DoxyCodeLine{00082\ \textcolor{preprocessor}{\#define\ TENSORRT\_VERSION\_CHECK(major,\ minor,\ patch)\ \ (NV\_TENSORRT\_MAJOR\ >\ major\ ||\ (NV\_TENSORRT\_MAJOR\ ==\ major\ \&\&\ NV\_TENSORRT\_MINOR\ >\ minor)\ ||\ (NV\_TENSORRT\_MAJOR\ ==\ major\ \&\&\ NV\_TENSORRT\_MINOR\ ==\ minor\ \&\&\ NV\_TENSORRT\_PATCH\ >=\ patch))}}
+\DoxyCodeLine{00083\ }
+\DoxyCodeLine{00088\ \textcolor{preprocessor}{\#define\ DEFAULT\_MAX\_BATCH\_SIZE\ \ 1}}
+\DoxyCodeLine{00089\ }
+\DoxyCodeLine{00094\ \textcolor{preprocessor}{\#define\ LOG\_TRT\ "{}[TRT]\ \ \ \ "{}}}
+\DoxyCodeLine{00095\ }
+\DoxyCodeLine{00096\ }
+\DoxyCodeLine{00102\ \textcolor{keyword}{enum}\ \doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precisionType}}}
+\DoxyCodeLine{00103\ \{}
+\DoxyCodeLine{00104\ \ \ \ \ \doxymbox{\hyperlink{group__tensor_net_ggaac6604fd52c6e5db82877390e0378623a1a4ed47814b2f80f0e92daad5af7bc38}{TYPE\_DISABLED}}\ =\ 0,\ \ }
+\DoxyCodeLine{00105\ \ \ \ \ \doxymbox{\hyperlink{group__tensor_net_ggaac6604fd52c6e5db82877390e0378623a1d325738f49e8e4c424ff671624e66f9}{TYPE\_FASTEST}},\ \ \ \ \ \ \ }
+\DoxyCodeLine{00106\ \ \ \ \ \doxymbox{\hyperlink{group__tensor_net_ggaac6604fd52c6e5db82877390e0378623a5bbefcad9ecb657a3841c2e8db6828d3}{TYPE\_FP32}},\ \ \ \ \ \ }
+\DoxyCodeLine{00107\ \ \ \ \ \doxymbox{\hyperlink{group__tensor_net_ggaac6604fd52c6e5db82877390e0378623a085813e6021d0d8884d768725151a526}{TYPE\_FP16}},\ \ \ \ \ \ }
+\DoxyCodeLine{00108\ \ \ \ \ \doxymbox{\hyperlink{group__tensor_net_ggaac6604fd52c6e5db82877390e0378623a12cf69049b0ce2b80538213ab4ee4908}{TYPE\_INT8}},\ \ \ \ \ \ }
+\DoxyCodeLine{00109\ \ \ \ \ \doxymbox{\hyperlink{group__tensor_net_ggaac6604fd52c6e5db82877390e0378623ad5386697191943144fa63df529e1a310}{NUM\_PRECISIONS}}\ \ \ \ \ \ }
+\DoxyCodeLine{00110\ \};}
+\DoxyCodeLine{00111\ }
+\DoxyCodeLine{00116\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \doxymbox{\hyperlink{group__tensor_net_ga51d59f199c8d2313cb2fbb9e56dd3772}{precisionTypeToStr}}(\ \doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precisionType}}\ type\ );}
+\DoxyCodeLine{00117\ }
+\DoxyCodeLine{00122\ \doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precisionType}}\ \doxymbox{\hyperlink{group__tensor_net_ga70317416490f79e0150e9c4f46444116}{precisionTypeFromStr}}(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ str\ );}
+\DoxyCodeLine{00123\ }
+\DoxyCodeLine{00129\ \textcolor{keyword}{enum}\ \doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{deviceType}}}
+\DoxyCodeLine{00130\ \{}
+\DoxyCodeLine{00131\ \ \ \ \ \doxymbox{\hyperlink{group__tensor_net_ggaa5d3f9981cdbd91516c1474006a80fe4adc7f3f88455afa81458863e5b3092e4b}{DEVICE\_GPU}}\ =\ 0,\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00132\ \ \ \ \ \doxymbox{\hyperlink{group__tensor_net_ggaa5d3f9981cdbd91516c1474006a80fe4aeaef16f066c95dd987fbde765b8b30b2}{DEVICE\_DLA}},\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00133\ \ \ \ \ \doxymbox{\hyperlink{group__tensor_net_ggaa5d3f9981cdbd91516c1474006a80fe4a4950aeb02ff7fba02eb2fd2437788399}{DEVICE\_DLA\_0}}\ =\ \doxymbox{\hyperlink{group__tensor_net_ggaa5d3f9981cdbd91516c1474006a80fe4aeaef16f066c95dd987fbde765b8b30b2}{DEVICE\_DLA}},\ \ }
+\DoxyCodeLine{00134\ \ \ \ \ \doxymbox{\hyperlink{group__tensor_net_ggaa5d3f9981cdbd91516c1474006a80fe4a63fbbad29461776cf20c2137a3d124f0}{DEVICE\_DLA\_1}},\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00135\ \ \ \ \ \doxymbox{\hyperlink{group__tensor_net_ggaa5d3f9981cdbd91516c1474006a80fe4a3025e0cdcbdfca820726c95f384ebf87}{NUM\_DEVICES}}\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00136\ \};}
+\DoxyCodeLine{00137\ }
+\DoxyCodeLine{00142\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \doxymbox{\hyperlink{group__tensor_net_gab8eca6940513a1fe2fc2a557f03bd6a7}{deviceTypeToStr}}(\ \doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{deviceType}}\ type\ );}
+\DoxyCodeLine{00143\ }
+\DoxyCodeLine{00148\ \doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{deviceType}}\ \doxymbox{\hyperlink{group__tensor_net_ga35c5a50fb1ab97a827b18012534fd7a7}{deviceTypeFromStr}}(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ str\ );}
+\DoxyCodeLine{00149\ }
+\DoxyCodeLine{00155\ \textcolor{keyword}{enum}\ \doxymbox{\hyperlink{group__tensor_net_ga5d4597e0e7beae7133d542e220528725}{modelType}}}
+\DoxyCodeLine{00156\ \{}
+\DoxyCodeLine{00157\ \ \ \ \ \doxymbox{\hyperlink{group__tensor_net_gga5d4597e0e7beae7133d542e220528725aad94b3fe48299211488aae3c133721b1}{MODEL\_CUSTOM}}\ =\ 0,\ \ \ }
+\DoxyCodeLine{00158\ \ \ \ \ \doxymbox{\hyperlink{group__tensor_net_gga5d4597e0e7beae7133d542e220528725af850960ce09a0b0d4b38edef40e5d0e4}{MODEL\_CAFFE}},\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00159\ \ \ \ \ \doxymbox{\hyperlink{group__tensor_net_gga5d4597e0e7beae7133d542e220528725a90e832c5673631bdfe24da7cd8eb52c9}{MODEL\_ONNX}},\ \ \ \ \ }
+\DoxyCodeLine{00160\ \ \ \ \ \doxymbox{\hyperlink{group__tensor_net_gga5d4597e0e7beae7133d542e220528725ad8c909322673d53ee28de66aa57bcccd}{MODEL\_UFF}},\ \ \ \ \ \ }
+\DoxyCodeLine{00161\ \ \ \ \ \doxymbox{\hyperlink{group__tensor_net_gga5d4597e0e7beae7133d542e220528725ad0f2ee11de0bfff76dace6976463556b}{MODEL\_ENGINE}}\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00162\ \};}
+\DoxyCodeLine{00163\ }
+\DoxyCodeLine{00168\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \doxymbox{\hyperlink{group__tensor_net_gade383f13864bac6955bab48da53eb0c1}{modelTypeToStr}}(\ \doxymbox{\hyperlink{group__tensor_net_ga5d4597e0e7beae7133d542e220528725}{modelType}}\ type\ );}
+\DoxyCodeLine{00169\ }
+\DoxyCodeLine{00174\ \doxymbox{\hyperlink{group__tensor_net_ga5d4597e0e7beae7133d542e220528725}{modelType}}\ \doxymbox{\hyperlink{group__tensor_net_ga85f7b445f4341d24c65bb3bbc4a3204c}{modelTypeFromStr}}(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ str\ );}
+\DoxyCodeLine{00175\ }
+\DoxyCodeLine{00180\ \doxymbox{\hyperlink{group__tensor_net_ga5d4597e0e7beae7133d542e220528725}{modelType}}\ \doxymbox{\hyperlink{group__tensor_net_ga675fb15bc5d4e2b8c4758c62adc6920d}{modelTypeFromPath}}(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ path\ );}
+\DoxyCodeLine{00181\ }
+\DoxyCodeLine{00187\ \textcolor{keyword}{enum}\ \doxymbox{\hyperlink{group__tensor_net_gae34d45c0faa674ef4cc0fbfc8fae5809}{profilerQuery}}}
+\DoxyCodeLine{00188\ \{}
+\DoxyCodeLine{00189\ \ \ \ \ PROFILER\_PREPROCESS\ =\ 0,}
+\DoxyCodeLine{00190\ \ \ \ \ PROFILER\_NETWORK,}
+\DoxyCodeLine{00191\ \ \ \ \ PROFILER\_POSTPROCESS,}
+\DoxyCodeLine{00192\ \ \ \ \ PROFILER\_VISUALIZE,}
+\DoxyCodeLine{00193\ \ \ \ \ PROFILER\_TOTAL,}
+\DoxyCodeLine{00194\ \};}
+\DoxyCodeLine{00195\ }
+\DoxyCodeLine{00200\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \doxymbox{\hyperlink{group__tensor_net_ga2f7ae6e515887afbeaa323be8fa63e95}{profilerQueryToStr}}(\ \doxymbox{\hyperlink{group__tensor_net_gae34d45c0faa674ef4cc0fbfc8fae5809}{profilerQuery}}\ query\ );}
+\DoxyCodeLine{00201\ }
+\DoxyCodeLine{00206\ \textcolor{keyword}{enum}\ \doxymbox{\hyperlink{group__tensor_net_gaaa4127ed22c7165a32d0474ebf97975e}{profilerDevice}}}
+\DoxyCodeLine{00207\ \{}
+\DoxyCodeLine{00208\ \ \ \ \ \doxymbox{\hyperlink{group__tensor_net_ggaaa4127ed22c7165a32d0474ebf97975eaf33631f978127920224cd10c937e78d5}{PROFILER\_CPU}}\ =\ 0,\ \ \ }
+\DoxyCodeLine{00209\ \ \ \ \ \doxymbox{\hyperlink{group__tensor_net_ggaaa4127ed22c7165a32d0474ebf97975eadbfd2a2033cd2a8df5fa51e13ff528b7}{PROFILER\_CUDA}},\ \ \ \ \ \ \ }
+\DoxyCodeLine{00210\ \};}
+\DoxyCodeLine{00211\ }
+\DoxyCodeLine{00212\ }
+\DoxyCodeLine{00218\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{classtensor_net_ab6e617d96e5542bef023ee9d4c96388a}{tensorNet}}}
+\DoxyCodeLine{00219\ \{}
+\DoxyCodeLine{00220\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00224\ \ \ \ \ \textcolor{keyword}{virtual}\ \doxymbox{\hyperlink{classtensor_net_ad19aafbfa262f9b8ffb0bff561f4d7f7}{\string~tensorNet}}();}
+\DoxyCodeLine{00225\ \ \ \ \ }
+\DoxyCodeLine{00235\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{classtensor_net_a2e63d4670461814bd863ee0d9bd41526}{LoadNetwork}}(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ prototxt,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ model,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ mean=NULL,}
+\DoxyCodeLine{00236\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ input\_blob=\textcolor{stringliteral}{"{}data"{}},\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ output\_blob=\textcolor{stringliteral}{"{}prob"{}},}
+\DoxyCodeLine{00237\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ maxBatchSize=\doxymbox{\hyperlink{group__tensor_net_ga5a46a965749d6118e01307fd4d4865c9}{DEFAULT\_MAX\_BATCH\_SIZE}},\ \doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precisionType}}\ precision=\doxymbox{\hyperlink{group__tensor_net_ggaac6604fd52c6e5db82877390e0378623a1d325738f49e8e4c424ff671624e66f9}{TYPE\_FASTEST}},}
+\DoxyCodeLine{00238\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{deviceType}}\ device=\doxymbox{\hyperlink{group__tensor_net_ggaa5d3f9981cdbd91516c1474006a80fe4adc7f3f88455afa81458863e5b3092e4b}{DEVICE\_GPU}},\ \textcolor{keywordtype}{bool}\ allowGPUFallback=\textcolor{keyword}{true},}
+\DoxyCodeLine{00239\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ nvinfer1::IInt8Calibrator*\ calibrator=NULL,\ cudaStream\_t\ stream=NULL\ );}
+\DoxyCodeLine{00240\ }
+\DoxyCodeLine{00250\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{classtensor_net_a0a06ffd12b465f39160f4a6925cccd9f}{LoadNetwork}}(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ prototxt,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ model,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ mean,}
+\DoxyCodeLine{00251\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ input\_blob,\ \textcolor{keyword}{const}\ std::vector<std::string>\&\ output\_blobs,}
+\DoxyCodeLine{00252\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ maxBatchSize=\doxymbox{\hyperlink{group__tensor_net_ga5a46a965749d6118e01307fd4d4865c9}{DEFAULT\_MAX\_BATCH\_SIZE}},\ \doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precisionType}}\ precision=\doxymbox{\hyperlink{group__tensor_net_ggaac6604fd52c6e5db82877390e0378623a1d325738f49e8e4c424ff671624e66f9}{TYPE\_FASTEST}},}
+\DoxyCodeLine{00253\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{deviceType}}\ device=\doxymbox{\hyperlink{group__tensor_net_ggaa5d3f9981cdbd91516c1474006a80fe4adc7f3f88455afa81458863e5b3092e4b}{DEVICE\_GPU}},\ \textcolor{keywordtype}{bool}\ allowGPUFallback=\textcolor{keyword}{true},}
+\DoxyCodeLine{00254\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ nvinfer1::IInt8Calibrator*\ calibrator=NULL,\ cudaStream\_t\ stream=NULL\ );}
+\DoxyCodeLine{00255\ }
+\DoxyCodeLine{00265\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{classtensor_net_a68a6f21680ae91bc51bea376221d1c48}{LoadNetwork}}(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ prototxt,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ model,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ mean,}
+\DoxyCodeLine{00266\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::vector<std::string>\&\ input\_blobs,\ }
+\DoxyCodeLine{00267\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::vector<std::string>\&\ output\_blobs,}
+\DoxyCodeLine{00268\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ maxBatchSize=\doxymbox{\hyperlink{group__tensor_net_ga5a46a965749d6118e01307fd4d4865c9}{DEFAULT\_MAX\_BATCH\_SIZE}},\ }
+\DoxyCodeLine{00269\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precisionType}}\ precision=\doxymbox{\hyperlink{group__tensor_net_ggaac6604fd52c6e5db82877390e0378623a1d325738f49e8e4c424ff671624e66f9}{TYPE\_FASTEST}},}
+\DoxyCodeLine{00270\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{deviceType}}\ device=\doxymbox{\hyperlink{group__tensor_net_ggaa5d3f9981cdbd91516c1474006a80fe4adc7f3f88455afa81458863e5b3092e4b}{DEVICE\_GPU}},\ \textcolor{keywordtype}{bool}\ allowGPUFallback=\textcolor{keyword}{true},}
+\DoxyCodeLine{00271\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ nvinfer1::IInt8Calibrator*\ calibrator=NULL,\ cudaStream\_t\ stream=NULL\ );}
+\DoxyCodeLine{00272\ }
+\DoxyCodeLine{00283\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{classtensor_net_a168c7f75c9fd6d264afd016e144f3878}{LoadNetwork}}(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ prototxt,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ model,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ mean,}
+\DoxyCodeLine{00284\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ input\_blob,\ \textcolor{keyword}{const}\ Dims3\&\ input\_dims,\ }
+\DoxyCodeLine{00285\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::vector<std::string>\&\ output\_blobs,}
+\DoxyCodeLine{00286\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ maxBatchSize=\doxymbox{\hyperlink{group__tensor_net_ga5a46a965749d6118e01307fd4d4865c9}{DEFAULT\_MAX\_BATCH\_SIZE}},\ }
+\DoxyCodeLine{00287\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precisionType}}\ precision=\doxymbox{\hyperlink{group__tensor_net_ggaac6604fd52c6e5db82877390e0378623a1d325738f49e8e4c424ff671624e66f9}{TYPE\_FASTEST}},}
+\DoxyCodeLine{00288\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{deviceType}}\ device=\doxymbox{\hyperlink{group__tensor_net_ggaa5d3f9981cdbd91516c1474006a80fe4adc7f3f88455afa81458863e5b3092e4b}{DEVICE\_GPU}},\ \textcolor{keywordtype}{bool}\ allowGPUFallback=\textcolor{keyword}{true},}
+\DoxyCodeLine{00289\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ nvinfer1::IInt8Calibrator*\ calibrator=NULL,\ cudaStream\_t\ stream=NULL\ );}
+\DoxyCodeLine{00290\ }
+\DoxyCodeLine{00301\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{classtensor_net_a8f34a6001c2da01662b85670de9246e4}{LoadNetwork}}(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ prototxt,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ model,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ mean,}
+\DoxyCodeLine{00302\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::vector<std::string>\&\ input\_blobs,\ }
+\DoxyCodeLine{00303\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::vector<Dims3>\&\ input\_dims,\ }
+\DoxyCodeLine{00304\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::vector<std::string>\&\ output\_blobs,}
+\DoxyCodeLine{00305\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ maxBatchSize=\doxymbox{\hyperlink{group__tensor_net_ga5a46a965749d6118e01307fd4d4865c9}{DEFAULT\_MAX\_BATCH\_SIZE}},\ }
+\DoxyCodeLine{00306\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precisionType}}\ precision=\doxymbox{\hyperlink{group__tensor_net_ggaac6604fd52c6e5db82877390e0378623a1d325738f49e8e4c424ff671624e66f9}{TYPE\_FASTEST}},}
+\DoxyCodeLine{00307\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{deviceType}}\ device=\doxymbox{\hyperlink{group__tensor_net_ggaa5d3f9981cdbd91516c1474006a80fe4adc7f3f88455afa81458863e5b3092e4b}{DEVICE\_GPU}},\ \textcolor{keywordtype}{bool}\ allowGPUFallback=\textcolor{keyword}{true},}
+\DoxyCodeLine{00308\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ nvinfer1::IInt8Calibrator*\ calibrator=NULL,\ cudaStream\_t\ stream=NULL\ );}
+\DoxyCodeLine{00309\ }
+\DoxyCodeLine{00316\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{classtensor_net_acb8076f6ab8d13b6507140826cf438d8}{LoadEngine}}(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ engine\_filename,}
+\DoxyCodeLine{00317\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::vector<std::string>\&\ input\_blobs,\ }
+\DoxyCodeLine{00318\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::vector<std::string>\&\ output\_blobs,}
+\DoxyCodeLine{00319\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ nvinfer1::IPluginFactory*\ pluginFactory=NULL,}
+\DoxyCodeLine{00320\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{deviceType}}\ device=\doxymbox{\hyperlink{group__tensor_net_ggaa5d3f9981cdbd91516c1474006a80fe4adc7f3f88455afa81458863e5b3092e4b}{DEVICE\_GPU}},}
+\DoxyCodeLine{00321\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cudaStream\_t\ stream=NULL\ );}
+\DoxyCodeLine{00322\ }
+\DoxyCodeLine{00330\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{classtensor_net_aaa4efe2b8d91fe914a22c87b725ac063}{LoadEngine}}(\ \textcolor{keywordtype}{char}*\ engine\_stream,\ \textcolor{keywordtype}{size\_t}\ engine\_size,}
+\DoxyCodeLine{00331\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::vector<std::string>\&\ input\_blobs,\ }
+\DoxyCodeLine{00332\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::vector<std::string>\&\ output\_blobs,}
+\DoxyCodeLine{00333\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ nvinfer1::IPluginFactory*\ pluginFactory=NULL,}
+\DoxyCodeLine{00334\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{deviceType}}\ device=\doxymbox{\hyperlink{group__tensor_net_ggaa5d3f9981cdbd91516c1474006a80fe4adc7f3f88455afa81458863e5b3092e4b}{DEVICE\_GPU}},}
+\DoxyCodeLine{00335\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cudaStream\_t\ stream=NULL\ );}
+\DoxyCodeLine{00336\ }
+\DoxyCodeLine{00344\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{classtensor_net_a2d6fe13696a49d61e9abfa9729153e65}{LoadEngine}}(\ nvinfer1::ICudaEngine*\ engine,}
+\DoxyCodeLine{00345\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::vector<std::string>\&\ input\_blobs,\ }
+\DoxyCodeLine{00346\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::vector<std::string>\&\ output\_blobs,}
+\DoxyCodeLine{00347\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{deviceType}}\ device=\doxymbox{\hyperlink{group__tensor_net_ggaa5d3f9981cdbd91516c1474006a80fe4adc7f3f88455afa81458863e5b3092e4b}{DEVICE\_GPU}},}
+\DoxyCodeLine{00348\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cudaStream\_t\ stream=NULL\ );}
+\DoxyCodeLine{00349\ }
+\DoxyCodeLine{00353\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{classtensor_net_a89755f8e4b72ead7460deed394967386}{LoadEngine}}(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ filename,\ \textcolor{keywordtype}{char}**\ stream,\ \textcolor{keywordtype}{size\_t}*\ size\ );}
+\DoxyCodeLine{00354\ }
+\DoxyCodeLine{00358\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{classtensor_net_a24831e27745d99ed9524ec25a205205a}{LoadBinary}}(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ filename,\ \textcolor{keywordtype}{char}**\ stream,\ \textcolor{keywordtype}{size\_t}*\ size\ );}
+\DoxyCodeLine{00359\ \ \ \ \ }
+\DoxyCodeLine{00365\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{classtensor_net_a57cacfea82e9329c2cf776837dd00aef}{LoadClassLabels}}(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ filename,\ std::vector<std::string>\&\ descriptions,\ \textcolor{keywordtype}{int}\ expectedClasses=-\/1\ );}
+\DoxyCodeLine{00366\ }
+\DoxyCodeLine{00372\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{classtensor_net_aa92022958d3a46655a5e2f2ed416e6b5}{LoadClassLabels}}(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ filename,\ std::vector<std::string>\&\ descriptions,\ std::vector<std::string>\&\ synsets,\ \textcolor{keywordtype}{int}\ expectedClasses=-\/1\ );}
+\DoxyCodeLine{00373\ }
+\DoxyCodeLine{00379\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{classtensor_net_a7b87410f9133aea37b46979d543219b9}{LoadClassColors}}(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ filename,\ float4*\ colors,\ \textcolor{keywordtype}{int}\ expectedClasses,\ \textcolor{keywordtype}{float}\ defaultAlpha=255.0f\ );}
+\DoxyCodeLine{00380\ }
+\DoxyCodeLine{00386\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{classtensor_net_ae5dd58e2481f6c703abb9abbcfce805e}{LoadClassColors}}(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ filename,\ float4**\ colors,\ \textcolor{keywordtype}{int}\ expectedClasses,\ \textcolor{keywordtype}{float}\ defaultAlpha=255.0f\ );}
+\DoxyCodeLine{00387\ }
+\DoxyCodeLine{00392\ \ \ \ \ \textcolor{keyword}{static}\ float4\ \doxymbox{\hyperlink{classtensor_net_a4fe18908c74efda1708029ca3b04f0e8}{GenerateColor}}(\ uint32\_t\ classID,\ \textcolor{keywordtype}{float}\ alpha=255.0f\ );\ }
+\DoxyCodeLine{00393\ \ \ \ \ }
+\DoxyCodeLine{00397\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{classtensor_net_a3413eb0ad4f240f457f192f39e2e03e8}{EnableLayerProfiler}}();}
+\DoxyCodeLine{00398\ }
+\DoxyCodeLine{00402\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{classtensor_net_ae49f74ff83e46112a30318fa0576cace}{EnableDebug}}();}
+\DoxyCodeLine{00403\ }
+\DoxyCodeLine{00407\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{classtensor_net_a7d0ec0d8504ac8b26c5ab4a6136599ca}{AllowGPUFallback}}()\textcolor{keyword}{\ const\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\{\ \textcolor{keywordflow}{return}\ mAllowGPUFallback;\ \}}
+\DoxyCodeLine{00408\ }
+\DoxyCodeLine{00412\ \ \ \ \ \textcolor{keyword}{inline}\ \doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{deviceType}}\ \doxymbox{\hyperlink{classtensor_net_a92bb737172d26bda5f67d15346a02514}{GetDevice}}()\textcolor{keyword}{\ const\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\{\ \textcolor{keywordflow}{return}\ mDevice;\ \}}
+\DoxyCodeLine{00413\ }
+\DoxyCodeLine{00417\ \ \ \ \ \textcolor{keyword}{inline}\ \doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precisionType}}\ \doxymbox{\hyperlink{classtensor_net_afb38b5f171025e987a00214cc4379ca9}{GetPrecision}}()\textcolor{keyword}{\ const\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\{\ \textcolor{keywordflow}{return}\ mPrecision;\ \}}
+\DoxyCodeLine{00418\ }
+\DoxyCodeLine{00422\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{classtensor_net_a6b8e8dba05bc5c677027913d8c64f259}{IsPrecision}}(\ \doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precisionType}}\ type\ )\textcolor{keyword}{\ const\ \ \ \ \ }\{\ \textcolor{keywordflow}{return}\ (mPrecision\ ==\ type);\ \}}
+\DoxyCodeLine{00423\ }
+\DoxyCodeLine{00427\ \ \ \ \ \textcolor{keyword}{static}\ \doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precisionType}}\ \doxymbox{\hyperlink{classtensor_net_a3c0509631176be6f9e25673cb0aa12dc}{SelectPrecision}}(\ \doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precisionType}}\ precision,\ \doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{deviceType}}\ device=\doxymbox{\hyperlink{group__tensor_net_ggaa5d3f9981cdbd91516c1474006a80fe4adc7f3f88455afa81458863e5b3092e4b}{DEVICE\_GPU}},\ \textcolor{keywordtype}{bool}\ allowInt8=\textcolor{keyword}{true}\ );}
+\DoxyCodeLine{00428\ }
+\DoxyCodeLine{00432\ \ \ \ \ \textcolor{keyword}{static}\ \doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precisionType}}\ \doxymbox{\hyperlink{classtensor_net_abe33fae5332296e2d917cb4ce435e255}{FindFastestPrecision}}(\ \doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{deviceType}}\ device=\doxymbox{\hyperlink{group__tensor_net_ggaa5d3f9981cdbd91516c1474006a80fe4adc7f3f88455afa81458863e5b3092e4b}{DEVICE\_GPU}},\ \textcolor{keywordtype}{bool}\ allowInt8=\textcolor{keyword}{true}\ );}
+\DoxyCodeLine{00433\ }
+\DoxyCodeLine{00437\ \ \ \ \ \textcolor{keyword}{static}\ std::vector<precisionType>\ \doxymbox{\hyperlink{classtensor_net_ae53b31ae407d3b1f18130c1313e4b099}{DetectNativePrecisions}}(\ \doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{deviceType}}\ device=\doxymbox{\hyperlink{group__tensor_net_ggaa5d3f9981cdbd91516c1474006a80fe4adc7f3f88455afa81458863e5b3092e4b}{DEVICE\_GPU}}\ );}
+\DoxyCodeLine{00438\ \ \ \ \ }
+\DoxyCodeLine{00442\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{classtensor_net_aa3bf1a3bf1fca38b39a200b4d8f727b2}{DetectNativePrecision}}(\ \textcolor{keyword}{const}\ std::vector<precisionType>\&\ nativeTypes,\ \doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precisionType}}\ type\ );}
+\DoxyCodeLine{00443\ }
+\DoxyCodeLine{00447\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{classtensor_net_a7d72ec8bbaf61278ce533afd60d5391c}{DetectNativePrecision}}(\ \doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precisionType}}\ precision,\ \doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{deviceType}}\ device=\doxymbox{\hyperlink{group__tensor_net_ggaa5d3f9981cdbd91516c1474006a80fe4adc7f3f88455afa81458863e5b3092e4b}{DEVICE\_GPU}}\ );}
+\DoxyCodeLine{00448\ }
+\DoxyCodeLine{00452\ \ \ \ \ \textcolor{keyword}{inline}\ cudaStream\_t\ \doxymbox{\hyperlink{classtensor_net_a34e350ec6185277ac09ae55a79403e62}{GetStream}}()\textcolor{keyword}{\ const\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\{\ \textcolor{keywordflow}{return}\ mStream;\ \}}
+\DoxyCodeLine{00453\ }
+\DoxyCodeLine{00457\ \ \ \ \ cudaStream\_t\ \doxymbox{\hyperlink{classtensor_net_a78cecfb7505be0ea59d29041abc85cbb}{CreateStream}}(\ \textcolor{keywordtype}{bool}\ nonBlocking=\textcolor{keyword}{true}\ );}
+\DoxyCodeLine{00458\ }
+\DoxyCodeLine{00462\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{classtensor_net_a679b177784c85bfdba63dcd1008ff633}{SetStream}}(\ cudaStream\_t\ stream\ );}
+\DoxyCodeLine{00463\ }
+\DoxyCodeLine{00467\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \doxymbox{\hyperlink{classtensor_net_acf9c21a1e031071c7fa8bacddc5901e1}{GetPrototxtPath}}()\textcolor{keyword}{\ const\ \ \ \ \ \ \ \ \ \ \ \ \ \ }\{\ \textcolor{keywordflow}{return}\ mPrototxtPath.c\_str();\ \}}
+\DoxyCodeLine{00468\ }
+\DoxyCodeLine{00472\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \doxymbox{\hyperlink{classtensor_net_ab7c42b9da47d4566e8f1dac0231638dd}{GetModelPath}}()\textcolor{keyword}{\ const\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\{\ \textcolor{keywordflow}{return}\ mModelPath.c\_str();\ \}}
+\DoxyCodeLine{00473\ }
+\DoxyCodeLine{00477\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \doxymbox{\hyperlink{classtensor_net_a3b64097cd334bb5af48913d58ae074b3}{GetModelFilename}}()\textcolor{keyword}{\ const\ \ \ \ \ \ \ \ \ \ \ \ \ }\{\ \textcolor{keywordflow}{return}\ mModelFile.c\_str();\ \}}
+\DoxyCodeLine{00478\ \ \ \ \ }
+\DoxyCodeLine{00482\ \ \ \ \ \textcolor{keyword}{inline}\ \doxymbox{\hyperlink{group__tensor_net_ga5d4597e0e7beae7133d542e220528725}{modelType}}\ \doxymbox{\hyperlink{classtensor_net_acfa7f1f01b46f658ffc96f8a002e8d48}{GetModelType}}()\textcolor{keyword}{\ const\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\{\ \textcolor{keywordflow}{return}\ mModelType;\ \}}
+\DoxyCodeLine{00483\ }
+\DoxyCodeLine{00487\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{classtensor_net_a0a09d691ea080bd9734c5782c8fff6fd}{IsModelType}}(\ \doxymbox{\hyperlink{group__tensor_net_ga5d4597e0e7beae7133d542e220528725}{modelType}}\ type\ )\textcolor{keyword}{\ const\ \ \ \ \ \ \ \ \ }\{\ \textcolor{keywordflow}{return}\ (mModelType\ ==\ type);\ \}}
+\DoxyCodeLine{00488\ }
+\DoxyCodeLine{00492\ \ \ \ \ \textcolor{keyword}{inline}\ uint32\_t\ \doxymbox{\hyperlink{classtensor_net_ac583b8de1dd64b47338b4a3eb42ac166}{GetInputLayers}}()\textcolor{keyword}{\ const\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\{\ \textcolor{keywordflow}{return}\ mInputs.size();\ \}}
+\DoxyCodeLine{00493\ }
+\DoxyCodeLine{00497\ \ \ \ \ \textcolor{keyword}{inline}\ uint32\_t\ \doxymbox{\hyperlink{classtensor_net_a2dcc770a7215e2e76a8d520a36689e16}{GetOutputLayers}}()\textcolor{keyword}{\ const\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\{\ \textcolor{keywordflow}{return}\ mOutputs.size();\ \}}
+\DoxyCodeLine{00498\ }
+\DoxyCodeLine{00502\ \ \ \ \ \textcolor{keyword}{inline}\ Dims3\ \doxymbox{\hyperlink{classtensor_net_adcfe61596f291e75a87d36c3771f25df}{GetInputDims}}(\ uint32\_t\ layer=0\ )\textcolor{keyword}{\ const\ \ \ \ \ }\{\ \textcolor{keywordflow}{return}\ mInputs[layer].dims;\ \}}
+\DoxyCodeLine{00503\ }
+\DoxyCodeLine{00507\ \ \ \ \ \textcolor{keyword}{inline}\ uint32\_t\ \doxymbox{\hyperlink{classtensor_net_a2d75ef6f579d1a71ff472bfafd0b7795}{GetInputWidth}}(\ uint32\_t\ layer=0\ )\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ DIMS\_W(mInputs[layer].dims);\ \}}
+\DoxyCodeLine{00508\ }
+\DoxyCodeLine{00512\ \ \ \ \ \textcolor{keyword}{inline}\ uint32\_t\ \doxymbox{\hyperlink{classtensor_net_a214a92c41dcdcb58b3cd8496aac0857a}{GetInputHeight}}(\ uint32\_t\ layer=0\ )\textcolor{keyword}{\ const\ \ \ \ }\{\ \textcolor{keywordflow}{return}\ DIMS\_H(mInputs[layer].dims);\ \}}
+\DoxyCodeLine{00513\ }
+\DoxyCodeLine{00517\ \ \ \ \ \textcolor{keyword}{inline}\ uint32\_t\ \doxymbox{\hyperlink{classtensor_net_a2c80d46f8a01335e77e41023544102c9}{GetInputSize}}(\ uint32\_t\ layer=0\ )\textcolor{keyword}{\ const\ \ \ \ \ \ }\{\ \textcolor{keywordflow}{return}\ mInputs[layer].size;\ \}}
+\DoxyCodeLine{00518\ }
+\DoxyCodeLine{00522\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{float}*\ \doxymbox{\hyperlink{classtensor_net_a3d04135aeef2b4204852ebd5b4363a68}{GetInputPtr}}(\ uint32\_t\ layer=0\ )\textcolor{keyword}{\ const\ \ \ \ \ }\{\ \textcolor{keywordflow}{return}\ mInputs[layer].CUDA;\ \}}
+\DoxyCodeLine{00523\ \ \ \ \ }
+\DoxyCodeLine{00527\ \ \ \ \ \textcolor{keyword}{inline}\ Dims3\ \doxymbox{\hyperlink{classtensor_net_a77703f2a7b59f836c93ae28811e22cb0}{GetOutputDims}}(\ uint32\_t\ layer=0\ )\textcolor{keyword}{\ const\ \ \ \ \ \ \ \ }\{\ \textcolor{keywordflow}{return}\ mOutputs[layer].dims;\ \}}
+\DoxyCodeLine{00528\ }
+\DoxyCodeLine{00532\ \ \ \ \ \textcolor{keyword}{inline}\ uint32\_t\ \doxymbox{\hyperlink{classtensor_net_a09d63a8fd906c99f8158bf9460a83c02}{GetOutputWidth}}(\ uint32\_t\ layer=0\ )\textcolor{keyword}{\ const\ \ \ \ }\{\ \textcolor{keywordflow}{return}\ DIMS\_W(mOutputs[layer].dims);\ \}}
+\DoxyCodeLine{00533\ }
+\DoxyCodeLine{00537\ \ \ \ \ \textcolor{keyword}{inline}\ uint32\_t\ \doxymbox{\hyperlink{classtensor_net_a613679e8ee5315f3b5b16a39011ba76e}{GetOutputHeight}}(\ uint32\_t\ layer=0\ )\textcolor{keyword}{\ const\ \ \ }\{\ \textcolor{keywordflow}{return}\ DIMS\_H(mOutputs[layer].dims);\ \}}
+\DoxyCodeLine{00538\ }
+\DoxyCodeLine{00542\ \ \ \ \ \textcolor{keyword}{inline}\ uint32\_t\ \doxymbox{\hyperlink{classtensor_net_ae1486438dcdbe0d7f5e88e5336a42efa}{GetOutputSize}}(\ uint32\_t\ layer=0\ )\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ mOutputs[layer].size;\ \}}
+\DoxyCodeLine{00543\ }
+\DoxyCodeLine{00547\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{float}*\ \doxymbox{\hyperlink{classtensor_net_a5dd41d9c028fa562b1b8f7cb61a4e6f4}{GetOutputPtr}}(\ uint32\_t\ layer=0\ )\textcolor{keyword}{\ const\ \ \ \ \ \ \ \ }\{\ \textcolor{keywordflow}{return}\ mOutputs[layer].CUDA;\ \}}
+\DoxyCodeLine{00548\ \ \ \ \ }
+\DoxyCodeLine{00552\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{classtensor_net_a9dd2db089176ae6878e9ea7dd8fd80c3}{GetNetworkFPS}}()\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{\ \textcolor{keywordflow}{return}\ 1000.0f\ /\ \doxymbox{\hyperlink{classtensor_net_a49faef5920860345e503023b7c84423c}{GetNetworkTime}}();\ \}}
+\DoxyCodeLine{00553\ }
+\DoxyCodeLine{00557\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{classtensor_net_a49faef5920860345e503023b7c84423c}{GetNetworkTime}}()\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{\ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{classtensor_net_ad266f93035a80dca80cd84d971e4f69b}{GetProfilerTime}}(PROFILER\_NETWORK,\ \doxymbox{\hyperlink{group__tensor_net_ggaaa4127ed22c7165a32d0474ebf97975eadbfd2a2033cd2a8df5fa51e13ff528b7}{PROFILER\_CUDA}});\ \}}
+\DoxyCodeLine{00558\ \ \ \ \ }
+\DoxyCodeLine{00562\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \doxymbox{\hyperlink{classtensor_net_a688f17acc51061a039f60cc8ab4f4e5b}{GetNetworkName}}()\textcolor{keyword}{\ const\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\{\ \textcolor{keywordflow}{return}\ mModelFile.c\_str();\ \}}
+\DoxyCodeLine{00563\ \ \ \ \ }
+\DoxyCodeLine{00567\ \ \ \ \ \textcolor{keyword}{inline}\ float2\ \doxymbox{\hyperlink{classtensor_net_ad266f93035a80dca80cd84d971e4f69b}{GetProfilerTime}}(\ \doxymbox{\hyperlink{group__tensor_net_gae34d45c0faa674ef4cc0fbfc8fae5809}{profilerQuery}}\ query\ )\ \ \ \ \ \ \ \ \{\ \doxymbox{\hyperlink{classtensor_net_ae2e0ae17baf6e1975aaad7a7f5c60ce9}{PROFILER\_QUERY}}(query);\ \textcolor{keywordflow}{return}\ mProfilerTimes[query];\ \}}
+\DoxyCodeLine{00568\ \ \ \ \ }
+\DoxyCodeLine{00572\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{classtensor_net_a27cf81b3fecf93d2e63a61220a54b393}{GetProfilerTime}}(\ \doxymbox{\hyperlink{group__tensor_net_gae34d45c0faa674ef4cc0fbfc8fae5809}{profilerQuery}}\ query,\ \doxymbox{\hyperlink{group__tensor_net_gaaa4127ed22c7165a32d0474ebf97975e}{profilerDevice}}\ device\ )\ \{\ \doxymbox{\hyperlink{classtensor_net_ae2e0ae17baf6e1975aaad7a7f5c60ce9}{PROFILER\_QUERY}}(query);\ \textcolor{keywordflow}{return}\ (device\ ==\ \doxymbox{\hyperlink{group__tensor_net_ggaaa4127ed22c7165a32d0474ebf97975eaf33631f978127920224cd10c937e78d5}{PROFILER\_CPU}})\ ?\ mProfilerTimes[query].x\ :\ mProfilerTimes[query].y;\ \}}
+\DoxyCodeLine{00573\ \ \ \ \ }
+\DoxyCodeLine{00577\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{classtensor_net_afc0f50abcf6ac71e96d51eba3ed53d4b}{PrintProfilerTimes}}()}
+\DoxyCodeLine{00578\ \ \ \ \ \{}
+\DoxyCodeLine{00579\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{group__log_ga228a21f91213b15d7fdce08182d825e8}{LogInfo}}(\textcolor{stringliteral}{"{}\(\backslash\)n"{}});}
+\DoxyCodeLine{00580\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{group__log_ga228a21f91213b15d7fdce08182d825e8}{LogInfo}}(\doxymbox{\hyperlink{group__tensor_net_ga3c048e603c3c16fb810eb11c36242f82}{LOG\_TRT}}\ \textcolor{stringliteral}{"{}-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\(\backslash\)n"{}});}
+\DoxyCodeLine{00581\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{group__log_ga228a21f91213b15d7fdce08182d825e8}{LogInfo}}(\doxymbox{\hyperlink{group__tensor_net_ga3c048e603c3c16fb810eb11c36242f82}{LOG\_TRT}}\ \textcolor{stringliteral}{"{}Timing\ Report\ \%s\(\backslash\)n"{}},\ \doxymbox{\hyperlink{classtensor_net_ab7c42b9da47d4566e8f1dac0231638dd}{GetModelPath}}());}
+\DoxyCodeLine{00582\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{group__log_ga228a21f91213b15d7fdce08182d825e8}{LogInfo}}(\doxymbox{\hyperlink{group__tensor_net_ga3c048e603c3c16fb810eb11c36242f82}{LOG\_TRT}}\ \textcolor{stringliteral}{"{}-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\(\backslash\)n"{}});}
+\DoxyCodeLine{00583\ }
+\DoxyCodeLine{00584\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(\ uint32\_t\ n=0;\ n\ <=\ PROFILER\_TOTAL;\ n++\ )}
+\DoxyCodeLine{00585\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00586\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{group__tensor_net_gae34d45c0faa674ef4cc0fbfc8fae5809}{profilerQuery}}\ query\ =\ (\doxymbox{\hyperlink{group__tensor_net_gae34d45c0faa674ef4cc0fbfc8fae5809}{profilerQuery}})n;}
+\DoxyCodeLine{00587\ }
+\DoxyCodeLine{00588\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\ \doxymbox{\hyperlink{classtensor_net_ae2e0ae17baf6e1975aaad7a7f5c60ce9}{PROFILER\_QUERY}}(query)\ )}
+\DoxyCodeLine{00589\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{group__log_ga228a21f91213b15d7fdce08182d825e8}{LogInfo}}(\doxymbox{\hyperlink{group__tensor_net_ga3c048e603c3c16fb810eb11c36242f82}{LOG\_TRT}}\ \textcolor{stringliteral}{"{}\%-\/12s\ \ CPU\ \%9.5fms\ \ CUDA\ \%9.5fms\(\backslash\)n"{}},\ \doxymbox{\hyperlink{group__tensor_net_ga2f7ae6e515887afbeaa323be8fa63e95}{profilerQueryToStr}}(query),\ mProfilerTimes[n].x,\ mProfilerTimes[n].y);}
+\DoxyCodeLine{00590\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00591\ }
+\DoxyCodeLine{00592\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{group__log_ga228a21f91213b15d7fdce08182d825e8}{LogInfo}}(\doxymbox{\hyperlink{group__tensor_net_ga3c048e603c3c16fb810eb11c36242f82}{LOG\_TRT}}\ \textcolor{stringliteral}{"{}-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\(\backslash\)n\(\backslash\)n"{}});}
+\DoxyCodeLine{00593\ }
+\DoxyCodeLine{00594\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ first\_run=\textcolor{keyword}{true};}
+\DoxyCodeLine{00595\ }
+\DoxyCodeLine{00596\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\ first\_run\ )}
+\DoxyCodeLine{00597\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00598\ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{group__log_ga923829d777617140de2576c40e3880ed}{LogWarning}}(\doxymbox{\hyperlink{group__tensor_net_ga3c048e603c3c16fb810eb11c36242f82}{LOG\_TRT}}\ \textcolor{stringliteral}{"{}note\ -\/-\/\ when\ processing\ a\ single\ image,\ run\ 'sudo\ jetson\_clocks'\ before\(\backslash\)n"{}}}
+\DoxyCodeLine{00599\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ to\ disable\ DVFS\ for\ more\ accurate\ profiling/timing\ measurements\(\backslash\)n\(\backslash\)n"{}});}
+\DoxyCodeLine{00600\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00601\ \ \ \ \ \ \ \ \ \ \ \ \ first\_run\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00602\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00603\ \ \ \ \ \}}
+\DoxyCodeLine{00604\ \ \ \ \ }
+\DoxyCodeLine{00605\ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00606\ }
+\DoxyCodeLine{00610\ \ \ \ \ \doxymbox{\hyperlink{classtensor_net_ab6e617d96e5542bef023ee9d4c96388a}{tensorNet}}();}
+\DoxyCodeLine{00611\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00619\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{classtensor_net_a2e8dd909e797dfcfbb058dc6b351c586}{ProcessNetwork}}(\ \textcolor{keywordtype}{bool}\ sync=\textcolor{keyword}{true}\ );}
+\DoxyCodeLine{00620\ \ \ \ \ \ \ }
+\DoxyCodeLine{00631\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{classtensor_net_a2fbc013f70b52f885867302446e0dca1}{ProfileModel}}(\ \textcolor{keyword}{const}\ std::string\&\ deployFile,\ \textcolor{keyword}{const}\ std::string\&\ modelFile,}
+\DoxyCodeLine{00632\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::vector<std::string>\&\ inputs,\ \textcolor{keyword}{const}\ std::vector<Dims3>\&\ inputDims,}
+\DoxyCodeLine{00633\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::vector<std::string>\&\ outputs,\ uint32\_t\ maxBatchSize,\ }
+\DoxyCodeLine{00634\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precisionType}}\ precision,\ \doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{deviceType}}\ device,\ \textcolor{keywordtype}{bool}\ allowGPUFallback,}
+\DoxyCodeLine{00635\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ nvinfer1::IInt8Calibrator*\ calibrator,\ \textcolor{keywordtype}{char}**\ engineStream,\ \textcolor{keywordtype}{size\_t}*\ engineSize\ );}
+\DoxyCodeLine{00636\ }
+\DoxyCodeLine{00640\ \textcolor{preprocessor}{\#if\ NV\_TENSORRT\_MAJOR\ >=\ 8}}
+\DoxyCodeLine{00641\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{classtensor_net_a7a898dfb2553869cdc318ecb03e153f1}{ConfigureBuilder}}(\ nvinfer1::IBuilder*\ builder,\ nvinfer1::IBuilderConfig*\ config,\ \ }
+\DoxyCodeLine{00642\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ maxBatchSize,\ uint32\_t\ workspaceSize,\ \doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precisionType}}\ precision,\ }
+\DoxyCodeLine{00643\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{deviceType}}\ device,\ \textcolor{keywordtype}{bool}\ allowGPUFallback,\ }
+\DoxyCodeLine{00644\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ nvinfer1::IInt8Calibrator*\ calibrator\ );}
+\DoxyCodeLine{00645\ \textcolor{preprocessor}{\#else\ \ \ \ }}
+\DoxyCodeLine{00646\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{classtensor_net_a7a898dfb2553869cdc318ecb03e153f1}{ConfigureBuilder}}(\ nvinfer1::IBuilder*\ builder,\ uint32\_t\ maxBatchSize,\ }
+\DoxyCodeLine{00647\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ workspaceSize,\ \doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precisionType}}\ precision,\ }
+\DoxyCodeLine{00648\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{deviceType}}\ device,\ \textcolor{keywordtype}{bool}\ allowGPUFallback,\ }
+\DoxyCodeLine{00649\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ nvinfer1::IInt8Calibrator*\ calibrator\ );}
+\DoxyCodeLine{00650\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00651\ }
+\DoxyCodeLine{00655\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{classtensor_net_a6e2fe0a467929d76b20940771b8f96c3}{ValidateEngine}}(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ model\_path,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ cache\_path,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ checksum\_path\ );}
+\DoxyCodeLine{00656\ }
+\DoxyCodeLine{00660\ \ \ \ \ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{classtensor_net_1_1_logger}{Logger}}\ :\ \textcolor{keyword}{public}\ nvinfer1::ILogger\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00661\ \ \ \ \ \{}
+\DoxyCodeLine{00662\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00663\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ log(\ Severity\ severity,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ msg\ )\ NOEXCEPT\ \textcolor{keyword}{override}}
+\DoxyCodeLine{00664\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00665\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\ severity\ ==\ Severity::kWARNING\ )}
+\DoxyCodeLine{00666\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00667\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{group__log_ga923829d777617140de2576c40e3880ed}{LogWarning}}(\doxymbox{\hyperlink{group__tensor_net_ga3c048e603c3c16fb810eb11c36242f82}{LOG\_TRT}}\ \textcolor{stringliteral}{"{}\%s\(\backslash\)n"{}},\ msg);}
+\DoxyCodeLine{00668\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00669\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}(\ severity\ ==\ Severity::kINFO\ )}
+\DoxyCodeLine{00670\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00671\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{group__log_ga228a21f91213b15d7fdce08182d825e8}{LogInfo}}(\doxymbox{\hyperlink{group__tensor_net_ga3c048e603c3c16fb810eb11c36242f82}{LOG\_TRT}}\ \textcolor{stringliteral}{"{}\%s\(\backslash\)n"{}},\ msg);}
+\DoxyCodeLine{00672\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00673\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \#if\ NV\_TENSORRT\_MAJOR\ >=\ 6}}
+\DoxyCodeLine{00674\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}(\ severity\ ==\ Severity::kVERBOSE\ )}
+\DoxyCodeLine{00675\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00676\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{group__log_ga98544477d87d57d0b8e2b3ac03481785}{LogVerbose}}(\doxymbox{\hyperlink{group__tensor_net_ga3c048e603c3c16fb810eb11c36242f82}{LOG\_TRT}}\ \textcolor{stringliteral}{"{}\%s\(\backslash\)n"{}},\ msg);}
+\DoxyCodeLine{00677\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00678\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \#endif}}
+\DoxyCodeLine{00679\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00680\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00681\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{group__log_ga0f3919667d0ac0b001e44edb569d22fe}{LogError}}(\doxymbox{\hyperlink{group__tensor_net_ga3c048e603c3c16fb810eb11c36242f82}{LOG\_TRT}}\ \textcolor{stringliteral}{"{}\%s\(\backslash\)n"{}},\ msg);}
+\DoxyCodeLine{00682\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00683\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00684\ \ \ \ \ \}\ \textcolor{keyword}{static}\ gLogger;}
+\DoxyCodeLine{00685\ }
+\DoxyCodeLine{00689\ \ \ \ \ \textcolor{keyword}{class\ }Profiler\ :\ \textcolor{keyword}{public}\ nvinfer1::IProfiler}
+\DoxyCodeLine{00690\ \ \ \ \ \{}
+\DoxyCodeLine{00691\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00692\ \ \ \ \ \ \ \ \ Profiler()\ :\ timingAccumulator(0.0f)\ \ \ \ \{\ \}}
+\DoxyCodeLine{00693\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00694\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ reportLayerTime(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ layerName,\ \textcolor{keywordtype}{float}\ ms)\ NOEXCEPT}
+\DoxyCodeLine{00695\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00696\ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{group__log_ga98544477d87d57d0b8e2b3ac03481785}{LogVerbose}}(\doxymbox{\hyperlink{group__tensor_net_ga3c048e603c3c16fb810eb11c36242f82}{LOG\_TRT}}\ \textcolor{stringliteral}{"{}layer\ \%s\ -\/\ \%f\ ms\(\backslash\)n"{}},\ layerName,\ ms);}
+\DoxyCodeLine{00697\ \ \ \ \ \ \ \ \ \ \ \ \ timingAccumulator\ +=\ ms;}
+\DoxyCodeLine{00698\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00699\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00700\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ timingAccumulator;}
+\DoxyCodeLine{00701\ \ \ \ \ \}\ gProfiler;}
+\DoxyCodeLine{00702\ }
+\DoxyCodeLine{00706\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{classtensor_net_a088c3bf591e45e52ec227491f6f299ad}{PROFILER\_BEGIN}}(\ \doxymbox{\hyperlink{group__tensor_net_gae34d45c0faa674ef4cc0fbfc8fae5809}{profilerQuery}}\ query\ )\ \ \ \ \ \ \ }
+\DoxyCodeLine{00707\ \ \ \ \ \{\ }
+\DoxyCodeLine{00708\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ uint32\_t\ evt\ =\ query*2;\ }
+\DoxyCodeLine{00709\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ uint32\_t\ flag\ =\ (1\ <<\ query);}
+\DoxyCodeLine{00710\ }
+\DoxyCodeLine{00711\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{group__cuda_error_ga5af54ef2b094a11a88feb67b327e1d19}{CUDA}}(cudaEventRecord(mEventsGPU[evt],\ mStream));\ }
+\DoxyCodeLine{00712\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{group__time_ga43627a5af271e9abfd46b467d2e309a8}{timestamp}}(\&mEventsCPU[evt]);\ }
+\DoxyCodeLine{00713\ }
+\DoxyCodeLine{00714\ \ \ \ \ \ \ \ \ mProfilerQueriesUsed\ |=\ flag;}
+\DoxyCodeLine{00715\ \ \ \ \ \ \ \ \ mProfilerQueriesDone\ \&=\ \string~flag;}
+\DoxyCodeLine{00716\ \ \ \ \ \}}
+\DoxyCodeLine{00717\ }
+\DoxyCodeLine{00721\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{classtensor_net_ac8582b9a6099e3265da4c3f9fdf804ea}{PROFILER\_END}}(\ \doxymbox{\hyperlink{group__tensor_net_gae34d45c0faa674ef4cc0fbfc8fae5809}{profilerQuery}}\ query\ )\ \ \ \ \ }
+\DoxyCodeLine{00722\ \ \ \ \ \{\ }
+\DoxyCodeLine{00723\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ uint32\_t\ evt\ =\ query*2+1;\ }
+\DoxyCodeLine{00724\ }
+\DoxyCodeLine{00725\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{group__cuda_error_ga5af54ef2b094a11a88feb67b327e1d19}{CUDA}}(cudaEventRecord(mEventsGPU[evt]));\ }
+\DoxyCodeLine{00726\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{group__time_ga43627a5af271e9abfd46b467d2e309a8}{timestamp}}(\&mEventsCPU[evt]);\ }
+\DoxyCodeLine{00727\ \ \ \ \ \ \ \ \ timespec\ cpuTime;\ }
+\DoxyCodeLine{00728\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{group__time_ga3c4b729b99d06b423956e7a3a17aaeb4}{timeDiff}}(mEventsCPU[evt-\/1],\ mEventsCPU[evt],\ \&cpuTime);}
+\DoxyCodeLine{00729\ \ \ \ \ \ \ \ \ mProfilerTimes[query].x\ =\ \doxymbox{\hyperlink{group__time_ga762b4a9f55b4fb1a50d459cc7c384b92}{timeFloat}}(cpuTime);}
+\DoxyCodeLine{00730\ }
+\DoxyCodeLine{00731\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\ mEnableProfiler\ \&\&\ query\ ==\ PROFILER\_NETWORK\ )\ }
+\DoxyCodeLine{00732\ \ \ \ \ \ \ \ \ \{\ }
+\DoxyCodeLine{00733\ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{group__log_ga98544477d87d57d0b8e2b3ac03481785}{LogVerbose}}(\doxymbox{\hyperlink{group__tensor_net_ga3c048e603c3c16fb810eb11c36242f82}{LOG\_TRT}}\ \textcolor{stringliteral}{"{}layer\ network\ time\ -\/\ \%f\ ms\(\backslash\)n"{}},\ gProfiler.timingAccumulator);\ }
+\DoxyCodeLine{00734\ \ \ \ \ \ \ \ \ \ \ \ \ gProfiler.timingAccumulator\ =\ 0.0f;\ }
+\DoxyCodeLine{00735\ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{group__log_ga923829d777617140de2576c40e3880ed}{LogWarning}}(\doxymbox{\hyperlink{group__tensor_net_ga3c048e603c3c16fb810eb11c36242f82}{LOG\_TRT}}\ \textcolor{stringliteral}{"{}note\ -\/-\/\ when\ processing\ a\ single\ image,\ run\ 'sudo\ jetson\_clocks'\ before\(\backslash\)n"{}}}
+\DoxyCodeLine{00736\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ to\ disable\ DVFS\ for\ more\ accurate\ profiling/timing\ measurements\(\backslash\)n"{}});\ }
+\DoxyCodeLine{00737\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00738\ \ \ \ \ \}}
+\DoxyCodeLine{00739\ \ \ \ \ }
+\DoxyCodeLine{00743\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{classtensor_net_ae2e0ae17baf6e1975aaad7a7f5c60ce9}{PROFILER\_QUERY}}(\ \doxymbox{\hyperlink{group__tensor_net_gae34d45c0faa674ef4cc0fbfc8fae5809}{profilerQuery}}\ query\ )}
+\DoxyCodeLine{00744\ \ \ \ \ \{}
+\DoxyCodeLine{00745\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ uint32\_t\ flag\ =\ (1\ <<\ query);}
+\DoxyCodeLine{00746\ }
+\DoxyCodeLine{00747\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\ query\ ==\ PROFILER\_TOTAL\ )}
+\DoxyCodeLine{00748\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00749\ \ \ \ \ \ \ \ \ \ \ \ \ mProfilerTimes[PROFILER\_TOTAL].x\ =\ 0.0f;}
+\DoxyCodeLine{00750\ \ \ \ \ \ \ \ \ \ \ \ \ mProfilerTimes[PROFILER\_TOTAL].y\ =\ 0.0f;}
+\DoxyCodeLine{00751\ }
+\DoxyCodeLine{00752\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(\ uint32\_t\ n=0;\ n\ <\ PROFILER\_TOTAL;\ n++\ )}
+\DoxyCodeLine{00753\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00754\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\ \doxymbox{\hyperlink{classtensor_net_ae2e0ae17baf6e1975aaad7a7f5c60ce9}{PROFILER\_QUERY}}((\doxymbox{\hyperlink{group__tensor_net_gae34d45c0faa674ef4cc0fbfc8fae5809}{profilerQuery}})n)\ )}
+\DoxyCodeLine{00755\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00756\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mProfilerTimes[PROFILER\_TOTAL].x\ +=\ mProfilerTimes[n].x;}
+\DoxyCodeLine{00757\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mProfilerTimes[PROFILER\_TOTAL].y\ +=\ mProfilerTimes[n].y;}
+\DoxyCodeLine{00758\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00759\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00760\ }
+\DoxyCodeLine{00761\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00762\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00763\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}(\ mProfilerQueriesUsed\ \&\ flag\ )}
+\DoxyCodeLine{00764\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00765\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\ !(mProfilerQueriesDone\ \&\ flag)\ )}
+\DoxyCodeLine{00766\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00767\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ uint32\_t\ evt\ =\ query*2;}
+\DoxyCodeLine{00768\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ cuda\_time\ =\ 0.0f;}
+\DoxyCodeLine{00769\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{group__cuda_error_ga5af54ef2b094a11a88feb67b327e1d19}{CUDA}}(cudaEventElapsedTime(\&cuda\_time,\ mEventsGPU[evt],\ mEventsGPU[evt+1]));}
+\DoxyCodeLine{00770\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mProfilerTimes[query].y\ =\ cuda\_time;}
+\DoxyCodeLine{00771\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mProfilerQueriesDone\ |=\ flag;}
+\DoxyCodeLine{00772\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//mProfilerQueriesUsed\ \&=\ \string~flag;}}
+\DoxyCodeLine{00773\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00774\ }
+\DoxyCodeLine{00775\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00776\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00777\ }
+\DoxyCodeLine{00778\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00779\ \ \ \ \ \}}
+\DoxyCodeLine{00780\ }
+\DoxyCodeLine{00781\ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00782\ }
+\DoxyCodeLine{00783\ \ \ \ \ \textcolor{comment}{/*\ Member\ Variables\ */}}
+\DoxyCodeLine{00784\ \ \ \ \ std::string\ mPrototxtPath;}
+\DoxyCodeLine{00785\ \ \ \ \ std::string\ mModelPath;}
+\DoxyCodeLine{00786\ \ \ \ \ std::string\ mModelFile;}
+\DoxyCodeLine{00787\ \ \ \ \ std::string\ mMeanPath;}
+\DoxyCodeLine{00788\ \ \ \ \ std::string\ mCacheEnginePath;}
+\DoxyCodeLine{00789\ \ \ \ \ std::string\ mCacheCalibrationPath;}
+\DoxyCodeLine{00790\ \ \ \ \ std::string\ mChecksumPath;}
+\DoxyCodeLine{00791\ \ \ \ \ }
+\DoxyCodeLine{00792\ \ \ \ \ \doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{deviceType}}\ \ \ \ mDevice;}
+\DoxyCodeLine{00793\ \ \ \ \ \doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precisionType}}\ mPrecision;}
+\DoxyCodeLine{00794\ \ \ \ \ \doxymbox{\hyperlink{group__tensor_net_ga5d4597e0e7beae7133d542e220528725}{modelType}}\ \ \ \ \ mModelType;}
+\DoxyCodeLine{00795\ \ \ \ \ cudaStream\_t\ \ mStream;}
+\DoxyCodeLine{00796\ \ \ \ \ cudaEvent\_t\ \ \ mEventsGPU[PROFILER\_TOTAL\ *\ 2];}
+\DoxyCodeLine{00797\ \ \ \ \ timespec\ \ \ \ \ \ mEventsCPU[PROFILER\_TOTAL\ *\ 2];}
+\DoxyCodeLine{00798\ }
+\DoxyCodeLine{00799\ \ \ \ \ nvinfer1::IRuntime*\ mInfer;}
+\DoxyCodeLine{00800\ \ \ \ \ nvinfer1::ICudaEngine*\ mEngine;}
+\DoxyCodeLine{00801\ \ \ \ \ nvinfer1::IExecutionContext*\ mContext;}
+\DoxyCodeLine{00802\ \ \ \ \ }
+\DoxyCodeLine{00803\ \ \ \ \ float2\ \ \ mProfilerTimes[PROFILER\_TOTAL\ +\ 1];}
+\DoxyCodeLine{00804\ \ \ \ \ uint32\_t\ mProfilerQueriesUsed;}
+\DoxyCodeLine{00805\ \ \ \ \ uint32\_t\ mProfilerQueriesDone;}
+\DoxyCodeLine{00806\ \ \ \ \ uint32\_t\ mWorkspaceSize;}
+\DoxyCodeLine{00807\ \ \ \ \ uint32\_t\ mMaxBatchSize;}
+\DoxyCodeLine{00808\ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ mEnableProfiler;}
+\DoxyCodeLine{00809\ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ mEnableDebug;}
+\DoxyCodeLine{00810\ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ mAllowGPUFallback;}
+\DoxyCodeLine{00811\ \ \ \ \ \textcolor{keywordtype}{void}**\ \ \ mBindings;}
+\DoxyCodeLine{00812\ }
+\DoxyCodeLine{00813\ \ \ \ \ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{structtensor_net_1_1layer_info}{layerInfo}}}
+\DoxyCodeLine{00814\ \ \ \ \ \{}
+\DoxyCodeLine{00815\ \ \ \ \ \ \ \ \ std::string\ name;}
+\DoxyCodeLine{00816\ \ \ \ \ \ \ \ \ Dims3\ dims;}
+\DoxyCodeLine{00817\ \ \ \ \ \ \ \ \ uint32\_t\ size;}
+\DoxyCodeLine{00818\ \ \ \ \ \ \ \ \ uint32\_t\ binding;}
+\DoxyCodeLine{00819\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}*\ CPU;}
+\DoxyCodeLine{00820\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}*\ CUDA;}
+\DoxyCodeLine{00821\ \ \ \ \ \};}
+\DoxyCodeLine{00822\ \ \ \ \ }
+\DoxyCodeLine{00823\ \ \ \ \ std::vector<layerInfo>\ mInputs;}
+\DoxyCodeLine{00824\ \ \ \ \ std::vector<layerInfo>\ mOutputs;}
+\DoxyCodeLine{00825\ \};}
+\DoxyCodeLine{00826\ }
+\DoxyCodeLine{00827\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

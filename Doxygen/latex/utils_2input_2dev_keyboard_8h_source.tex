@@ -1,0 +1,64 @@
+\doxysection{dev\+Keyboard.\+h}
+\hypertarget{utils_2input_2dev_keyboard_8h_source}{}\label{utils_2input_2dev_keyboard_8h_source}\index{jetson-\/inference/utils/input/devKeyboard.h@{jetson-\/inference/utils/input/devKeyboard.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ *\ Copyright\ (c)\ 2017,\ NVIDIA\ CORPORATION.\ All\ rights\ reserved.}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ *\ Permission\ is\ hereby\ granted,\ free\ of\ charge,\ to\ any\ person\ obtaining\ a}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ *\ copy\ of\ this\ software\ and\ associated\ documentation\ files\ (the\ "{}Software"{}),}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ *\ to\ deal\ in\ the\ Software\ without\ restriction,\ including\ without\ limitation}}
+\DoxyCodeLine{00007\ \textcolor{comment}{\ *\ the\ rights\ to\ use,\ copy,\ modify,\ merge,\ publish,\ distribute,\ sublicense,}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ *\ and/or\ sell\ copies\ of\ the\ Software,\ and\ to\ permit\ persons\ to\ whom\ the}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ *\ Software\ is\ furnished\ to\ do\ so,\ subject\ to\ the\ following\ conditions:}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ *\ The\ above\ copyright\ notice\ and\ this\ permission\ notice\ shall\ be\ included\ in}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ *\ all\ copies\ or\ substantial\ portions\ of\ the\ Software.}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ *\ THE\ SOFTWARE\ IS\ PROVIDED\ "{}AS\ IS"{},\ WITHOUT\ WARRANTY\ OF\ ANY\ KIND,\ EXPRESS\ OR}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ *\ IMPLIED,\ INCLUDING\ BUT\ NOT\ LIMITED\ TO\ THE\ WARRANTIES\ OF\ MERCHANTABILITY,}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ *\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE\ AND\ NONINFRINGEMENT.\ \ IN\ NO\ EVENT\ SHALL}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ *\ THE\ AUTHORS\ OR\ COPYRIGHT\ HOLDERS\ BE\ LIABLE\ FOR\ ANY\ CLAIM,\ DAMAGES\ OR\ OTHER}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ *\ LIABILITY,\ WHETHER\ IN\ AN\ ACTION\ OF\ CONTRACT,\ TORT\ OR\ OTHERWISE,\ ARISING}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ *\ FROM,\ OUT\ OF\ OR\ IN\ CONNECTION\ WITH\ THE\ SOFTWARE\ OR\ THE\ USE\ OR\ OTHER}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ *\ DEALINGS\ IN\ THE\ SOFTWARE.}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \textcolor{preprocessor}{\#ifndef\ \_\_DEV\_KEYBOARD\_H\_\_}}
+\DoxyCodeLine{00024\ \textcolor{preprocessor}{\#define\ \_\_DEV\_KEYBOARD\_H\_\_}}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \textcolor{preprocessor}{\#include\ <stdio.h>}}
+\DoxyCodeLine{00027\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
+\DoxyCodeLine{00028\ \textcolor{preprocessor}{\#include\ <string.h>}}
+\DoxyCodeLine{00029\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \textcolor{preprocessor}{\#include\ <linux/input-\/event-\/codes.h>}}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00038\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_keyboard_device}{KeyboardDevice}}}
+\DoxyCodeLine{00039\ \{}
+\DoxyCodeLine{00040\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keyword}{static}\ KeyboardDevice*\ \doxymbox{\hyperlink{class_keyboard_device_a7e8c550fde7a3d27c3c6fea09ce37acc}{Create}}(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ path=\textcolor{stringliteral}{"{}/dev/input/by-\/path/platform-\/i8042-\/serio-\/0-\/event-\/kbd"{}}\ );}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00049\ \ \ \ \ \doxymbox{\hyperlink{class_keyboard_device_ad3086c34ac8d37d209dc101fb8dec4a4}{\string~KeyboardDevice}}();}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00054\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_keyboard_device_ac46438355ae53c08d5990ef36c4dccb0}{Poll}}(\ uint32\_t\ timeout=0\ );}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00059\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_keyboard_device_af9b88a016a7ef8f2e5d81678ff22f1d0}{KeyDown}}(\ uint32\_t\ code\ )\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00061\ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{comment}{//\ constructor}}
+\DoxyCodeLine{00063\ \ \ \ \ KeyboardDevice();}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00065\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ MAX\_KEYS\ =\ 256;}
+\DoxyCodeLine{00066\ }
+\DoxyCodeLine{00067\ \ \ \ \ \textcolor{keywordtype}{int}\ \ mKeyMap[MAX\_KEYS];}
+\DoxyCodeLine{00068\ \ \ \ \ \textcolor{keywordtype}{int}\ \ mFD;}
+\DoxyCodeLine{00069\ }
+\DoxyCodeLine{00070\ \ \ \ \ std::string\ mPath;}
+\DoxyCodeLine{00071\ \};}
+\DoxyCodeLine{00072\ }
+\DoxyCodeLine{00073\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00074\ }
+
+\end{DoxyCode}

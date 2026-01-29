@@ -1,0 +1,120 @@
+\doxysection{cuda\+Point\+Cloud.\+h}
+\hypertarget{build_2aarch64_2include_2jetson-utils_2cuda_point_cloud_8h_source}{}\label{build_2aarch64_2include_2jetson-utils_2cuda_point_cloud_8h_source}\index{jetson-\/inference/build/aarch64/include/jetson-\/utils/cudaPointCloud.h@{jetson-\/inference/build/aarch64/include/jetson-\/utils/cudaPointCloud.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ *\ Copyright\ (c)\ 2019,\ NVIDIA\ CORPORATION.\ All\ rights\ reserved.}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ *\ Permission\ is\ hereby\ granted,\ free\ of\ charge,\ to\ any\ person\ obtaining\ a}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ *\ copy\ of\ this\ software\ and\ associated\ documentation\ files\ (the\ "{}Software"{}),}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ *\ to\ deal\ in\ the\ Software\ without\ restriction,\ including\ without\ limitation}}
+\DoxyCodeLine{00007\ \textcolor{comment}{\ *\ the\ rights\ to\ use,\ copy,\ modify,\ merge,\ publish,\ distribute,\ sublicense,}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ *\ and/or\ sell\ copies\ of\ the\ Software,\ and\ to\ permit\ persons\ to\ whom\ the}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ *\ Software\ is\ furnished\ to\ do\ so,\ subject\ to\ the\ following\ conditions:}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ *\ The\ above\ copyright\ notice\ and\ this\ permission\ notice\ shall\ be\ included\ in}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ *\ all\ copies\ or\ substantial\ portions\ of\ the\ Software.}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ *\ THE\ SOFTWARE\ IS\ PROVIDED\ "{}AS\ IS"{},\ WITHOUT\ WARRANTY\ OF\ ANY\ KIND,\ EXPRESS\ OR}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ *\ IMPLIED,\ INCLUDING\ BUT\ NOT\ LIMITED\ TO\ THE\ WARRANTIES\ OF\ MERCHANTABILITY,}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ *\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE\ AND\ NONINFRINGEMENT.\ \ IN\ NO\ EVENT\ SHALL}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ *\ THE\ AUTHORS\ OR\ COPYRIGHT\ HOLDERS\ BE\ LIABLE\ FOR\ ANY\ CLAIM,\ DAMAGES\ OR\ OTHER}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ *\ LIABILITY,\ WHETHER\ IN\ AN\ ACTION\ OF\ CONTRACT,\ TORT\ OR\ OTHERWISE,\ ARISING}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ *\ FROM,\ OUT\ OF\ OR\ IN\ CONNECTION\ WITH\ THE\ SOFTWARE\ OR\ THE\ USE\ OR\ OTHER}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ *\ DEALINGS\ IN\ THE\ SOFTWARE.}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \textcolor{preprocessor}{\#ifndef\ \_\_CUDA\_POINT\_CLOUD\_H\_\_}}
+\DoxyCodeLine{00024\ \textcolor{preprocessor}{\#define\ \_\_CUDA\_POINT\_CLOUD\_H\_\_}}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \textcolor{preprocessor}{\#include\ "{}cudaUtility.h"{}}}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \textcolor{comment}{//\ forward\ declarations}}
+\DoxyCodeLine{00031\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{classgl_buffer}{glBuffer}};}
+\DoxyCodeLine{00032\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{classgl_camera}{glCamera}};}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00039\ \textcolor{keyword}{class\ }cudaPointCloud}
+\DoxyCodeLine{00040\ \{}
+\DoxyCodeLine{00041\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{structcuda_point_cloud_1_1_vertex}{Vertex}}}
+\DoxyCodeLine{00046\ \ \ \ \ \{}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ float3\ \doxymbox{\hyperlink{structcuda_point_cloud_1_1_vertex_aeefd8bd73d94b0b27dd071306ba367de}{pos}};}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ uchar3\ \doxymbox{\hyperlink{structcuda_point_cloud_1_1_vertex_a9e6e1a12c0d2947927183297f4138c81}{color}};}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ uint8\_t\ \doxymbox{\hyperlink{structcuda_point_cloud_1_1_vertex_a58e8de6d6aba73bcd40d0f9fc193ff76}{classID}};}
+\DoxyCodeLine{00063\ }
+\DoxyCodeLine{00064\ \ \ \ \ \}\ \_\_attribute\_\_((packed));}
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00069\ \ \ \ \ \textcolor{keyword}{static}\ cudaPointCloud*\ \doxymbox{\hyperlink{classcuda_point_cloud_a1aa7dbf23e550955aabc21a09d53d18e}{Create}}();}
+\DoxyCodeLine{00070\ }
+\DoxyCodeLine{00074\ \ \ \ \ \doxymbox{\hyperlink{classcuda_point_cloud_a512877c3645cb6eb705c4785e7d66911}{\string~cudaPointCloud}}();}
+\DoxyCodeLine{00075\ \ \ \ \ }
+\DoxyCodeLine{00083\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{classcuda_point_cloud_a9f5e49c1601898cd67749b1a46d9594b}{Reserve}}(\ uint32\_t\ maxPoints\ );}
+\DoxyCodeLine{00084\ }
+\DoxyCodeLine{00088\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{classcuda_point_cloud_af3e91a3b536a34b1b510136d04f9d782}{Free}}();}
+\DoxyCodeLine{00089\ }
+\DoxyCodeLine{00093\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{classcuda_point_cloud_a779a39e8cacd830e10e33aa9d0d7a1a2}{Clear}}();}
+\DoxyCodeLine{00094\ }
+\DoxyCodeLine{00098\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{classcuda_point_cloud_a66eea4468c09e816ee78b378382ab8fd}{Extract}}(\ \textcolor{keywordtype}{float}*\ depth,\ float4*\ rgba,\ uint32\_t\ width,\ uint32\_t\ height\ );}
+\DoxyCodeLine{00099\ }
+\DoxyCodeLine{00103\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{classcuda_point_cloud_a073facf26574cc15b695c5dbf39e8f01}{Extract}}(\ \textcolor{keywordtype}{float}*\ depth,\ uint32\_t\ depth\_width,\ uint32\_t\ depth\_height,}
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ float4*\ rgba,\ uint32\_t\ color\_width,\ uint32\_t\ color\_height\ );}
+\DoxyCodeLine{00105\ }
+\DoxyCodeLine{00109\ \ \ \ \ \textcolor{keyword}{inline}\ uint32\_t\ \doxymbox{\hyperlink{classcuda_point_cloud_abeefc53319ad08f9da52a9c5a7cb324a}{GetNumPoints}}()\textcolor{keyword}{\ const\ \ \ \ \ \ \ \ }\{\ \textcolor{keywordflow}{return}\ mNumPoints;\ \}}
+\DoxyCodeLine{00110\ }
+\DoxyCodeLine{00114\ \ \ \ \ \textcolor{keyword}{inline}\ uint32\_t\ \doxymbox{\hyperlink{classcuda_point_cloud_a21bc4243e26313ce9db0007ddd217407}{GetMaxPoints}}()\textcolor{keyword}{\ const\ \ \ \ \ \ \ \ }\{\ \textcolor{keywordflow}{return}\ mMaxPoints;\ \}}
+\DoxyCodeLine{00115\ }
+\DoxyCodeLine{00119\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{size\_t}\ \doxymbox{\hyperlink{classcuda_point_cloud_af10d3cc8025aeb86f4334f4e9008a5ae}{GetSize}}()\textcolor{keyword}{\ const\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\{\ \textcolor{keywordflow}{return}\ mNumPoints\ *\ \textcolor{keyword}{sizeof}(\doxymbox{\hyperlink{structcuda_point_cloud_1_1_vertex}{Vertex}});\ \}}
+\DoxyCodeLine{00120\ }
+\DoxyCodeLine{00124\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{size\_t}\ \doxymbox{\hyperlink{classcuda_point_cloud_a4f6bad10283464e4d9994f6c5e981731}{GetMaxSize}}()\textcolor{keyword}{\ const\ \ \ \ \ \ \ \ \ \ \ \ }\{\ \textcolor{keywordflow}{return}\ mMaxPoints\ *\ \textcolor{keyword}{sizeof}(\doxymbox{\hyperlink{structcuda_point_cloud_1_1_vertex}{Vertex}});\ \}}
+\DoxyCodeLine{00125\ }
+\DoxyCodeLine{00129\ \ \ \ \ \textcolor{keyword}{inline}\ \doxymbox{\hyperlink{structcuda_point_cloud_1_1_vertex}{Vertex}}*\ \doxymbox{\hyperlink{classcuda_point_cloud_a3e6ed78b6f624b9c80b45a65008c8a2f}{GetData}}()\textcolor{keyword}{\ const\ \ \ \ \ \ \ \ \ \ }\{\ \textcolor{keywordflow}{return}\ mPointsCPU;\ \}}
+\DoxyCodeLine{00130\ }
+\DoxyCodeLine{00134\ \ \ \ \ \textcolor{keyword}{inline}\ \doxymbox{\hyperlink{structcuda_point_cloud_1_1_vertex}{Vertex}}*\ \doxymbox{\hyperlink{classcuda_point_cloud_aaaaad3288c54cb44961fca3d836cd9ec}{GetData}}(\ \textcolor{keywordtype}{size\_t}\ index\ )\textcolor{keyword}{\ const\ \ \ \ }\{\ \textcolor{keywordflow}{return}\ mPointsCPU\ +\ index;\ \}}
+\DoxyCodeLine{00135\ \ }
+\DoxyCodeLine{00139\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{classcuda_point_cloud_a0b3b029a6589afe1fbdc20eb2b6d4788}{HasRGB}}()\textcolor{keyword}{\ const\ \ \ \ \ \ \ \ \ \ \ \ \ \ }\{\ \textcolor{keywordflow}{return}\ mHasRGB;\ \}}
+\DoxyCodeLine{00140\ }
+\DoxyCodeLine{00144\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{classcuda_point_cloud_af9de940249e215774fb83f7e3132c19f}{Render}}();}
+\DoxyCodeLine{00145\ }
+\DoxyCodeLine{00149\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{classcuda_point_cloud_aafd186953251ba2228d574bb7227907f}{Save}}(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ filename\ );}
+\DoxyCodeLine{00150\ }
+\DoxyCodeLine{00154\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{classcuda_point_cloud_aa083a64e739dba0957b8078515300d2b}{SetCalibration}}(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ filename\ );}
+\DoxyCodeLine{00155\ }
+\DoxyCodeLine{00159\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{classcuda_point_cloud_aa083a64e739dba0957b8078515300d2b}{SetCalibration}}(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ K[3][3]\ );}
+\DoxyCodeLine{00160\ }
+\DoxyCodeLine{00164\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{classcuda_point_cloud_aa083a64e739dba0957b8078515300d2b}{SetCalibration}}(\ \textcolor{keyword}{const}\ float2\&\ focalLength,\ \textcolor{keyword}{const}\ float2\&\ principalPoint\ );}
+\DoxyCodeLine{00165\ }
+\DoxyCodeLine{00166\ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00167\ \ \ \ \ \doxymbox{\hyperlink{classcuda_point_cloud}{cudaPointCloud}}();}
+\DoxyCodeLine{00168\ }
+\DoxyCodeLine{00169\ \ \ \ \ \textcolor{keywordtype}{bool}\ allocBufferGL();}
+\DoxyCodeLine{00170\ \ \ \ \ \textcolor{keywordtype}{bool}\ allocDepthResize(\ \textcolor{keywordtype}{size\_t}\ size\ );}
+\DoxyCodeLine{00171\ \ \ \ \ }
+\DoxyCodeLine{00172\ \ \ \ \ Vertex*\ mPointsCPU;}
+\DoxyCodeLine{00173\ \ \ \ \ Vertex*\ mPointsGPU;}
+\DoxyCodeLine{00174\ }
+\DoxyCodeLine{00175\ \ \ \ \ \doxymbox{\hyperlink{classgl_buffer}{glBuffer}}*\ mBufferGL;}
+\DoxyCodeLine{00176\ \ \ \ \ \doxymbox{\hyperlink{classgl_camera}{glCamera}}*\ mCameraGL;}
+\DoxyCodeLine{00177\ }
+\DoxyCodeLine{00178\ \ \ \ \ uint32\_t\ mNumPoints;}
+\DoxyCodeLine{00179\ \ \ \ \ uint32\_t\ mMaxPoints;}
+\DoxyCodeLine{00180\ }
+\DoxyCodeLine{00181\ \ \ \ \ float2\ mFocalLength;}
+\DoxyCodeLine{00182\ \ \ \ \ float2\ mPrincipalPoint;}
+\DoxyCodeLine{00183\ }
+\DoxyCodeLine{00184\ \ \ \ \ \textcolor{keywordtype}{float}*\ mDepthResize;}
+\DoxyCodeLine{00185\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ mDepthSize;}
+\DoxyCodeLine{00186\ }
+\DoxyCodeLine{00187\ \ \ \ \ \textcolor{keywordtype}{bool}\ mHasRGB;}
+\DoxyCodeLine{00188\ \ \ \ \ \textcolor{keywordtype}{bool}\ mHasNewPoints;}
+\DoxyCodeLine{00189\ \ \ \ \ \textcolor{keywordtype}{bool}\ mHasCalibration;}
+\DoxyCodeLine{00190\ \};}
+\DoxyCodeLine{00191\ }
+\DoxyCodeLine{00192\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00193\ }
+
+\end{DoxyCode}

@@ -1,0 +1,108 @@
+\doxysection{gl\+Texture.\+h}
+\hypertarget{utils_2display_2gl_texture_8h_source}{}\label{utils_2display_2gl_texture_8h_source}\index{jetson-\/inference/utils/display/glTexture.h@{jetson-\/inference/utils/display/glTexture.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ *\ Copyright\ (c)\ 2017,\ NVIDIA\ CORPORATION.\ All\ rights\ reserved.}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ *\ Permission\ is\ hereby\ granted,\ free\ of\ charge,\ to\ any\ person\ obtaining\ a}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ *\ copy\ of\ this\ software\ and\ associated\ documentation\ files\ (the\ "{}Software"{}),}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ *\ to\ deal\ in\ the\ Software\ without\ restriction,\ including\ without\ limitation}}
+\DoxyCodeLine{00007\ \textcolor{comment}{\ *\ the\ rights\ to\ use,\ copy,\ modify,\ merge,\ publish,\ distribute,\ sublicense,}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ *\ and/or\ sell\ copies\ of\ the\ Software,\ and\ to\ permit\ persons\ to\ whom\ the}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ *\ Software\ is\ furnished\ to\ do\ so,\ subject\ to\ the\ following\ conditions:}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ *\ The\ above\ copyright\ notice\ and\ this\ permission\ notice\ shall\ be\ included\ in}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ *\ all\ copies\ or\ substantial\ portions\ of\ the\ Software.}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ *\ THE\ SOFTWARE\ IS\ PROVIDED\ "{}AS\ IS"{},\ WITHOUT\ WARRANTY\ OF\ ANY\ KIND,\ EXPRESS\ OR}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ *\ IMPLIED,\ INCLUDING\ BUT\ NOT\ LIMITED\ TO\ THE\ WARRANTIES\ OF\ MERCHANTABILITY,}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ *\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE\ AND\ NONINFRINGEMENT.\ \ IN\ NO\ EVENT\ SHALL}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ *\ THE\ AUTHORS\ OR\ COPYRIGHT\ HOLDERS\ BE\ LIABLE\ FOR\ ANY\ CLAIM,\ DAMAGES\ OR\ OTHER}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ *\ LIABILITY,\ WHETHER\ IN\ AN\ ACTION\ OF\ CONTRACT,\ TORT\ OR\ OTHERWISE,\ ARISING}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ *\ FROM,\ OUT\ OF\ OR\ IN\ CONNECTION\ WITH\ THE\ SOFTWARE\ OR\ THE\ USE\ OR\ OTHER}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ *\ DEALINGS\ IN\ THE\ SOFTWARE.}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00022\ \ }
+\DoxyCodeLine{00023\ \textcolor{preprocessor}{\#ifndef\ \_\_GL\_TEXTURE\_H\_\_}}
+\DoxyCodeLine{00024\ \textcolor{preprocessor}{\#define\ \_\_GL\_TEXTURE\_H\_\_}}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \textcolor{preprocessor}{\#include\ "{}glBuffer.h"{}}}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00034\ \textcolor{preprocessor}{\#ifndef\ GL\_RGB32F}}
+\DoxyCodeLine{00035\ \textcolor{preprocessor}{\#define\ GL\_RGB32F\ GL\_RGB32F\_ARB}}
+\DoxyCodeLine{00036\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00042\ \textcolor{preprocessor}{\#ifndef\ GL\_RGBA32F}}
+\DoxyCodeLine{00043\ \textcolor{preprocessor}{\#define\ GL\_RGBA32F\ GL\_RGBA32F\_ARB}}
+\DoxyCodeLine{00044\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00051\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{classgl_texture}{glTexture}}}
+\DoxyCodeLine{00052\ \{}
+\DoxyCodeLine{00053\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{keyword}{static}\ glTexture*\ \doxymbox{\hyperlink{classgl_texture_a6c2e07d39bbb9741b569c030ec8a7398}{Create}}(\ uint32\_t\ width,\ uint32\_t\ height,\ uint32\_t\ format,\ \textcolor{keywordtype}{void}*\ data=NULL\ );}
+\DoxyCodeLine{00062\ \ \ \ \ }
+\DoxyCodeLine{00066\ \ \ \ \ \doxymbox{\hyperlink{classgl_texture_accb8f44543b92f75a137d768194a10d2}{\string~glTexture}}();}
+\DoxyCodeLine{00067\ \ \ \ \ }
+\DoxyCodeLine{00071\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{classgl_texture_a600cb151e484ef4497e50d96f9bfc2a9}{Bind}}();}
+\DoxyCodeLine{00072\ }
+\DoxyCodeLine{00076\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{classgl_texture_a803c368b6a26675b4cc45b0aae47f9c3}{Unbind}}();}
+\DoxyCodeLine{00077\ }
+\DoxyCodeLine{00081\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{classgl_texture_aacbc1ed68a99930b628b41d69997227e}{Render}}(\ \textcolor{keywordtype}{float}\ x,\ \textcolor{keywordtype}{float}\ y\ );}
+\DoxyCodeLine{00082\ }
+\DoxyCodeLine{00086\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{classgl_texture_a38103fc1ec96018601b21131db5144c9}{Render}}(\ \textcolor{keywordtype}{float}\ x,\ \textcolor{keywordtype}{float}\ y,\ \textcolor{keywordtype}{float}\ width,\ \textcolor{keywordtype}{float}\ height\ );}
+\DoxyCodeLine{00087\ }
+\DoxyCodeLine{00091\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{classgl_texture_ab449860cc3d739a6615d93f4a1764f20}{Render}}(\ \textcolor{keyword}{const}\ float4\&\ rect\ );}
+\DoxyCodeLine{00092\ \ \ \ \ }
+\DoxyCodeLine{00096\ \ \ \ \ \textcolor{keyword}{inline}\ uint32\_t\ \doxymbox{\hyperlink{classgl_texture_acba11f3282339fb2490c930177ec8562}{GetID}}()\textcolor{keyword}{\ const\ \ \ \ \ \ \ }\{\ \textcolor{keywordflow}{return}\ mID;\ \}}
+\DoxyCodeLine{00097\ }
+\DoxyCodeLine{00101\ \ \ \ \ \textcolor{keyword}{inline}\ uint32\_t\ \doxymbox{\hyperlink{classgl_texture_ab4e7455f84741b4bc4601bd44df95063}{GetWidth}}()\textcolor{keyword}{\ const\ \ \ \ }\{\ \textcolor{keywordflow}{return}\ mWidth;\ \}}
+\DoxyCodeLine{00102\ }
+\DoxyCodeLine{00106\ \ \ \ \ \textcolor{keyword}{inline}\ uint32\_t\ \doxymbox{\hyperlink{classgl_texture_a7e83b13ce1281d90a59c0cfca7f80834}{GetHeight}}()\textcolor{keyword}{\ const\ \ \ }\{\ \textcolor{keywordflow}{return}\ mHeight;\ \}}
+\DoxyCodeLine{00107\ }
+\DoxyCodeLine{00111\ \ \ \ \ \textcolor{keyword}{inline}\ uint32\_t\ \doxymbox{\hyperlink{classgl_texture_a24d1124dd9e3ee4a885037680e034d24}{GetFormat}}()\textcolor{keyword}{\ const\ \ \ }\{\ \textcolor{keywordflow}{return}\ mFormat;\ \}}
+\DoxyCodeLine{00112\ }
+\DoxyCodeLine{00116\ \ \ \ \ \textcolor{keyword}{inline}\ uint32\_t\ \doxymbox{\hyperlink{classgl_texture_a35ba15763a0a187bd4e103eda1e2ab5c}{GetSize}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ mSize;\ \}}
+\DoxyCodeLine{00117\ \ \ \ \ }
+\DoxyCodeLine{00133\ \ \ \ \ \textcolor{keywordtype}{void}*\ \doxymbox{\hyperlink{classgl_texture_a733b8be6eda6175c6ad20c70a4c85c7c}{Map}}(\ uint32\_t\ device,\ uint32\_t\ flags,\ cudaStream\_t\ stream=0\ );}
+\DoxyCodeLine{00134\ }
+\DoxyCodeLine{00139\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{classgl_texture_a3ba2d3be870be62897ab8419b1e7ac98}{Unmap}}(\ cudaStream\_t\ stream=0\ );}
+\DoxyCodeLine{00140\ }
+\DoxyCodeLine{00158\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{classgl_texture_af0b8f369c6b406a055de954091e3b894}{Copy}}(\ \textcolor{keywordtype}{void}*\ ptr,\ uint32\_t\ flags,\ cudaStream\_t\ stream=0\ );}
+\DoxyCodeLine{00159\ }
+\DoxyCodeLine{00176\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{classgl_texture_ade80a24c6411628df32e537697d9ae36}{Copy}}(\ \textcolor{keywordtype}{void}*\ ptr,\ uint32\_t\ size,\ uint32\_t\ flags,\ cudaStream\_t\ stream=0\ );}
+\DoxyCodeLine{00177\ }
+\DoxyCodeLine{00198\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{classgl_texture_a9cb6fe79ded37e3a8aade8eca4a5f0c0}{Copy}}(\ \textcolor{keywordtype}{void}*\ ptr,\ uint32\_t\ offset,\ uint32\_t\ size,\ uint32\_t\ flags,\ cudaStream\_t\ stream=0\ );}
+\DoxyCodeLine{00199\ }
+\DoxyCodeLine{00200\ \ \ \ \ }
+\DoxyCodeLine{00201\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00202\ \ \ \ \ glTexture();}
+\DoxyCodeLine{00203\ }
+\DoxyCodeLine{00204\ \ \ \ \ \textcolor{keywordtype}{bool}\ init(\ uint32\_t\ width,\ uint32\_t\ height,\ uint32\_t\ format,\ \textcolor{keywordtype}{void}*\ data\ );}
+\DoxyCodeLine{00205\ }
+\DoxyCodeLine{00206\ \ \ \ \ uint32\_t\ allocDMA(\ uint32\_t\ type\ );}
+\DoxyCodeLine{00207\ \ \ \ \ cudaGraphicsResource*\ allocInterop(\ uint32\_t\ type,\ uint32\_t\ flags\ );}
+\DoxyCodeLine{00208\ }
+\DoxyCodeLine{00209\ \ \ \ \ uint32\_t\ mID;}
+\DoxyCodeLine{00210\ \ \ \ \ uint32\_t\ mPackDMA;}
+\DoxyCodeLine{00211\ \ \ \ \ uint32\_t\ mUnpackDMA;}
+\DoxyCodeLine{00212\ }
+\DoxyCodeLine{00213\ \ \ \ \ uint32\_t\ mWidth;}
+\DoxyCodeLine{00214\ \ \ \ \ uint32\_t\ mHeight;}
+\DoxyCodeLine{00215\ \ \ \ \ uint32\_t\ mFormat;}
+\DoxyCodeLine{00216\ \ \ \ \ uint32\_t\ mSize;}
+\DoxyCodeLine{00217\ }
+\DoxyCodeLine{00218\ \ \ \ \ uint32\_t\ mMapDevice;}
+\DoxyCodeLine{00219\ \ \ \ \ uint32\_t\ mMapFlags;}
+\DoxyCodeLine{00220\ }
+\DoxyCodeLine{00221\ \ \ \ \ cudaGraphicsResource*\ mInteropPack;}
+\DoxyCodeLine{00222\ \ \ \ \ cudaGraphicsResource*\ mInteropUnpack;}
+\DoxyCodeLine{00223\ \};}
+\DoxyCodeLine{00224\ }
+\DoxyCodeLine{00225\ }
+\DoxyCodeLine{00226\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

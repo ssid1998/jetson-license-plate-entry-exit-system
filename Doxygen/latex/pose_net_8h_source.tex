@@ -1,0 +1,277 @@
+\doxysection{pose\+Net.\+h}
+\hypertarget{pose_net_8h_source}{}\label{pose_net_8h_source}\index{jetson-\/inference/build/aarch64/include/jetson-\/inference/poseNet.h@{jetson-\/inference/build/aarch64/include/jetson-\/inference/poseNet.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ *\ Copyright\ (c)\ 2021,\ NVIDIA\ CORPORATION.\ All\ rights\ reserved.}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ *\ Permission\ is\ hereby\ granted,\ free\ of\ charge,\ to\ any\ person\ obtaining\ a}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ *\ copy\ of\ this\ software\ and\ associated\ documentation\ files\ (the\ "{}Software"{}),}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ *\ to\ deal\ in\ the\ Software\ without\ restriction,\ including\ without\ limitation}}
+\DoxyCodeLine{00007\ \textcolor{comment}{\ *\ the\ rights\ to\ use,\ copy,\ modify,\ merge,\ publish,\ distribute,\ sublicense,}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ *\ and/or\ sell\ copies\ of\ the\ Software,\ and\ to\ permit\ persons\ to\ whom\ the}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ *\ Software\ is\ furnished\ to\ do\ so,\ subject\ to\ the\ following\ conditions:}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ *\ The\ above\ copyright\ notice\ and\ this\ permission\ notice\ shall\ be\ included\ in}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ *\ all\ copies\ or\ substantial\ portions\ of\ the\ Software.}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ *\ THE\ SOFTWARE\ IS\ PROVIDED\ "{}AS\ IS"{},\ WITHOUT\ WARRANTY\ OF\ ANY\ KIND,\ EXPRESS\ OR}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ *\ IMPLIED,\ INCLUDING\ BUT\ NOT\ LIMITED\ TO\ THE\ WARRANTIES\ OF\ MERCHANTABILITY,}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ *\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE\ AND\ NONINFRINGEMENT.\ \ IN\ NO\ EVENT\ SHALL}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ *\ THE\ AUTHORS\ OR\ COPYRIGHT\ HOLDERS\ BE\ LIABLE\ FOR\ ANY\ CLAIM,\ DAMAGES\ OR\ OTHER}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ *\ LIABILITY,\ WHETHER\ IN\ AN\ ACTION\ OF\ CONTRACT,\ TORT\ OR\ OTHERWISE,\ ARISING}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ *\ FROM,\ OUT\ OF\ OR\ IN\ CONNECTION\ WITH\ THE\ SOFTWARE\ OR\ THE\ USE\ OR\ OTHER}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ *\ DEALINGS\ IN\ THE\ SOFTWARE.}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00022\ \ }
+\DoxyCodeLine{00023\ \textcolor{preprocessor}{\#ifndef\ \_\_POSE\_NET\_H\_\_}}
+\DoxyCodeLine{00024\ \textcolor{preprocessor}{\#define\ \_\_POSE\_NET\_H\_\_}}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \textcolor{preprocessor}{\#include\ "{}tensorNet.h"{}}}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \textcolor{preprocessor}{\#include\ <array>}}
+\DoxyCodeLine{00030\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00037\ \textcolor{preprocessor}{\#define\ POSENET\_DEFAULT\_INPUT\ \ \ "{}input"{}}}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00043\ \textcolor{preprocessor}{\#define\ POSENET\_DEFAULT\_CMAP\ \ "{}cmap"{}}}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00049\ \textcolor{preprocessor}{\#define\ POSENET\_DEFAULT\_PAF\ \ "{}paf"{}}}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00055\ \textcolor{preprocessor}{\#define\ POSENET\_DEFAULT\_THRESHOLD\ 0.15f}}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00062\ \textcolor{preprocessor}{\#define\ POSENET\_DEFAULT\_KEYPOINT\_SCALE\ 0.0052f}}
+\DoxyCodeLine{00063\ }
+\DoxyCodeLine{00069\ \textcolor{preprocessor}{\#define\ POSENET\_DEFAULT\_LINK\_SCALE\ 0.0013f}}
+\DoxyCodeLine{00070\ }
+\DoxyCodeLine{00075\ \textcolor{preprocessor}{\#define\ POSENET\_MODEL\_TYPE\ "{}pose"{}}}
+\DoxyCodeLine{00076\ }
+\DoxyCodeLine{00081\ \textcolor{preprocessor}{\#define\ POSENET\_USAGE\_STRING\ \ "{}poseNet\ arguments:\ \(\backslash\)n"{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00082\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ "{}\ \ -\/-\/network=NETWORK\ \ \ \ \ pre-\/trained\ model\ to\ load,\ one\ of\ the\ following:\(\backslash\)n"{}\ \ \(\backslash\)}}
+\DoxyCodeLine{00083\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ "{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ resnet18-\/body\ (default)\(\backslash\)n"{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00084\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ "{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ resnet18-\/hand\(\backslash\)n"{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00085\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ "{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ densenet121-\/body\(\backslash\)n"{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00086\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ "{}\ \ -\/-\/model=MODEL\ \ \ \ \ \ \ \ \ path\ to\ custom\ model\ to\ load\ (caffemodel,\ uff,\ or\ onnx)\(\backslash\)n"{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00087\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ "{}\ \ -\/-\/prototxt=PROTOTXT\ \ \ path\ to\ custom\ prototxt\ to\ load\ (for\ .caffemodel\ only)\(\backslash\)n"{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00088\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ "{}\ \ -\/-\/labels=LABELS\ \ \ \ \ \ \ path\ to\ text\ file\ containing\ the\ labels\ for\ each\ class\(\backslash\)n"{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00089\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ "{}\ \ -\/-\/input-\/blob=INPUT\ \ \ \ name\ of\ the\ input\ layer\ (default\ is\ '"{}\ POSENET\_DEFAULT\_INPUT\ "{}')\(\backslash\)n"{}\ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00090\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ "{}\ \ -\/-\/output-\/cvg=COVERAGE\ name\ of\ the\ coverge\ output\ layer\ (default\ is\ '"{}\ POSENET\_DEFAULT\_CMAP\ "{}')\(\backslash\)n"{}\ \ \(\backslash\)}}
+\DoxyCodeLine{00091\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ "{}\ \ -\/-\/output-\/bbox=BOXES\ \ \ name\ of\ the\ bounding\ output\ layer\ (default\ is\ '"{}\ POSENET\_DEFAULT\_PAF\ "{}')\(\backslash\)n"{}\ \ \(\backslash\)}}
+\DoxyCodeLine{00092\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ "{}\ \ -\/-\/mean-\/pixel=PIXEL\ \ \ \ mean\ pixel\ value\ to\ subtract\ from\ input\ (default\ is\ 0.0)\(\backslash\)n"{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00093\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ "{}\ \ -\/-\/threshold=THRESHOLD\ minimum\ threshold\ for\ detection\ (default\ is\ 0.5)\(\backslash\)n"{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00094\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ "{}\ \ -\/-\/overlay=OVERLAY\ \ \ \ \ detection\ overlay\ flags\ (e.g.\ -\/-\/overlay=links,keypoints)\(\backslash\)n"{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00095\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ "{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ valid\ combinations\ are:\ \ 'box',\ 'links',\ 'keypoints',\ 'none'\(\backslash\)n"{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00096\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ "{}\ \ -\/-\/keypoint-\/scale=X\ \ \ \ radius\ scale\ for\ keypoints,\ relative\ to\ image\ (default:\ 0.0052)\(\backslash\)n"{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00097\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ "{}\ \ -\/-\/link-\/scale=X\ \ \ \ \ \ \ \ line\ width\ scale\ for\ links,\ relative\ to\ image\ (default:\ 0.0013)\(\backslash\)n"{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00098\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ "{}\ \ -\/-\/profile\ \ \ \ \ \ \ \ \ \ \ \ \ enable\ layer\ profiling\ in\ TensorRT\(\backslash\)n\(\backslash\)n"{}}}
+\DoxyCodeLine{00099\ }
+\DoxyCodeLine{00100\ }
+\DoxyCodeLine{00105\ \textcolor{keyword}{class\ }poseNet\ :\ \textcolor{keyword}{public}\ \doxymbox{\hyperlink{classtensor_net_ab6e617d96e5542bef023ee9d4c96388a}{tensorNet}}}
+\DoxyCodeLine{00106\ \{}
+\DoxyCodeLine{00107\ \textcolor{keyword}{public}:\ }
+\DoxyCodeLine{00112\ \ \ \ \ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{structpose_net_1_1_object_pose}{ObjectPose}}}
+\DoxyCodeLine{00113\ \ \ \ \ \{\ \ \ \ \ \ \ }
+\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ uint32\_t\ \doxymbox{\hyperlink{structpose_net_1_1_object_pose_a581b90cc2974bb8a90fbafc2f5448fce}{ID}};\ \ \ \ }
+\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{structpose_net_1_1_object_pose_a4bb68db2ef92240a0e5dbc9c6f3dea9e}{Left}};\ }
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{structpose_net_1_1_object_pose_ad87a8bf3dfaa0ca9ec20831b44def4e1}{Right}};\ \ \ \ }
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{structpose_net_1_1_object_pose_adece53f539c88290c4062193f0fd7ae7}{Top}};\ \ }
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{structpose_net_1_1_object_pose_a333bb92ee586133a7221ace0f5f4d557}{Bottom}};\ \ \ }
+\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{structpose_net_1_1_object_pose_1_1_keypoint}{Keypoint}}}
+\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ \doxymbox{\hyperlink{structpose_net_1_1_object_pose_1_1_keypoint_a1f5c06d8ac261651f451c127279ec723}{ID}};\ \ \ \ }
+\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{structpose_net_1_1_object_pose_1_1_keypoint_aaab84896609ee951cd43b699881f3d8f}{x}};\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{structpose_net_1_1_object_pose_1_1_keypoint_a06cb6a3a66934abede6d3e84ebb7931f}{y}};\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ std::vector<Keypoint>\ \doxymbox{\hyperlink{structpose_net_1_1_object_pose_a695103397589cdf95d56eec30b8869ef}{Keypoints}};\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ std::vector<std::array<uint32\_t,\ 2>>\ \doxymbox{\hyperlink{structpose_net_1_1_object_pose_aa0cad49daab2c621d2313d52a1746f85}{Links}};\ }
+\DoxyCodeLine{00133\ }
+\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{structpose_net_1_1_object_pose_a7401105ef9346854261b8fb9b86bf827}{FindKeypoint}}(uint32\_t\ \textcolor{keywordtype}{id})\ \textcolor{keyword}{const};\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{int}\ FindLink(uint32\_t\ a,\ uint32\_t\ b)\ \textcolor{keyword}{const};\ \ }
+\DoxyCodeLine{00139\ \ \ \ \ \};}
+\DoxyCodeLine{00140\ \ \ \ \ }
+\DoxyCodeLine{00144\ \ \ \ \ \textcolor{keyword}{enum}\ \doxymbox{\hyperlink{classpose_net_afda0875e027f7039538b8d2f6b92118a}{OverlayFlags}}}
+\DoxyCodeLine{00145\ \ \ \ \ \{}
+\DoxyCodeLine{00146\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{classpose_net_afda0875e027f7039538b8d2f6b92118aac903ec60b2ac0e00b29a15f5b42380c3}{OVERLAY\_NONE}}\ \ \ \ \ \ =\ 0,\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00147\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{classpose_net_afda0875e027f7039538b8d2f6b92118aa22fcdd5a4a06b67fdcb1e063a8755f23}{OVERLAY\_BOX}}\ \ \ \ \ \ \ =\ (1\ <<\ 0),\ \ }
+\DoxyCodeLine{00148\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{classpose_net_afda0875e027f7039538b8d2f6b92118aa5af88efc86c145ebe02280e6bcdfa98a}{OVERLAY\_LINKS}}\ \ \ \ \ =\ (1\ <<\ 1),\ \ }
+\DoxyCodeLine{00149\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{classpose_net_afda0875e027f7039538b8d2f6b92118aa23db8b890105e87de352e4199beb2758}{OVERLAY\_KEYPOINTS}}\ =\ (1\ <<\ 2),\ \ }
+\DoxyCodeLine{00150\ \ \ \ \ \ \ \ \ OVERLAY\_DEFAULT\ \ \ =\ \doxymbox{\hyperlink{classpose_net_afda0875e027f7039538b8d2f6b92118aa5af88efc86c145ebe02280e6bcdfa98a}{OVERLAY\_LINKS}}|\doxymbox{\hyperlink{classpose_net_afda0875e027f7039538b8d2f6b92118aa23db8b890105e87de352e4199beb2758}{OVERLAY\_KEYPOINTS}},}
+\DoxyCodeLine{00151\ \ \ \ \ \};}
+\DoxyCodeLine{00152\ }
+\DoxyCodeLine{00159\ \ \ \ \ \textcolor{keyword}{static}\ uint32\_t\ \doxymbox{\hyperlink{classpose_net_a1bebbf414fd20210c469223433bb604a}{OverlayFlagsFromStr}}(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ flags\ );}
+\DoxyCodeLine{00160\ }
+\DoxyCodeLine{00167\ \ \ \ \ \textcolor{keyword}{static}\ poseNet*\ \doxymbox{\hyperlink{classpose_net_a5ebf96b95c78f16cbd1179561c81511c}{Create}}(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ network=\textcolor{stringliteral}{"{}resnet18-\/body"{}},\ \textcolor{keywordtype}{float}\ threshold=\doxymbox{\hyperlink{group__pose_net_ga9be57c475962d2397058c45c835cc2b5}{POSENET\_DEFAULT\_THRESHOLD}},\ }
+\DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ maxBatchSize=\doxymbox{\hyperlink{group__tensor_net_ga5a46a965749d6118e01307fd4d4865c9}{DEFAULT\_MAX\_BATCH\_SIZE}},\ \doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precisionType}}\ precision=\doxymbox{\hyperlink{group__tensor_net_ggaac6604fd52c6e5db82877390e0378623a1d325738f49e8e4c424ff671624e66f9}{TYPE\_FASTEST}},\ }
+\DoxyCodeLine{00169\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{deviceType}}\ device=\doxymbox{\hyperlink{group__tensor_net_ggaa5d3f9981cdbd91516c1474006a80fe4adc7f3f88455afa81458863e5b3092e4b}{DEVICE\_GPU}},\ \textcolor{keywordtype}{bool}\ allowGPUFallback=\textcolor{keyword}{true}\ );}
+\DoxyCodeLine{00170\ \ \ \ \ }
+\DoxyCodeLine{00182\ \ \ \ \ \textcolor{keyword}{static}\ poseNet*\ \doxymbox{\hyperlink{classpose_net_ae410038d9f194fdffc8213afbbbbc145}{Create}}(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ model\_path,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ topology,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ colors,}
+\DoxyCodeLine{00183\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ threshold=\doxymbox{\hyperlink{group__pose_net_ga9be57c475962d2397058c45c835cc2b5}{POSENET\_DEFAULT\_THRESHOLD}},\ }
+\DoxyCodeLine{00184\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ input\ =\ \doxymbox{\hyperlink{group__pose_net_ga0d5023ddb3b0f2e2348f476f2950fed7}{POSENET\_DEFAULT\_INPUT}},\ }
+\DoxyCodeLine{00185\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ cmap\ =\ \doxymbox{\hyperlink{group__pose_net_ga21376894ab9de2658349498fce9ba116}{POSENET\_DEFAULT\_CMAP}},\ }
+\DoxyCodeLine{00186\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ paf\ =\ \doxymbox{\hyperlink{group__pose_net_ga6301da70768db25c4a7a0ee2e03cb79d}{POSENET\_DEFAULT\_PAF}},}
+\DoxyCodeLine{00187\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ maxBatchSize=\doxymbox{\hyperlink{group__tensor_net_ga5a46a965749d6118e01307fd4d4865c9}{DEFAULT\_MAX\_BATCH\_SIZE}},\ }
+\DoxyCodeLine{00188\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precisionType}}\ precision=\doxymbox{\hyperlink{group__tensor_net_ggaac6604fd52c6e5db82877390e0378623a1d325738f49e8e4c424ff671624e66f9}{TYPE\_FASTEST}},}
+\DoxyCodeLine{00189\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{deviceType}}\ device=\doxymbox{\hyperlink{group__tensor_net_ggaa5d3f9981cdbd91516c1474006a80fe4adc7f3f88455afa81458863e5b3092e4b}{DEVICE\_GPU}},\ \textcolor{keywordtype}{bool}\ allowGPUFallback=\textcolor{keyword}{true}\ );}
+\DoxyCodeLine{00190\ }
+\DoxyCodeLine{00194\ \ \ \ \ \textcolor{keyword}{static}\ poseNet*\ \doxymbox{\hyperlink{classpose_net_afc09184c62367ac2b0c9c9207773d64e}{Create}}(\ \textcolor{keywordtype}{int}\ argc,\ \textcolor{keywordtype}{char}**\ argv\ );}
+\DoxyCodeLine{00195\ \ \ \ \ }
+\DoxyCodeLine{00199\ \ \ \ \ \textcolor{keyword}{static}\ poseNet*\ \doxymbox{\hyperlink{classpose_net_a23ab12a25435f069f3c9b20f1f404d17}{Create}}(\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{classcommand_line}{commandLine}}\&\ cmdLine\ );}
+\DoxyCodeLine{00200\ \ \ \ \ }
+\DoxyCodeLine{00204\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \doxymbox{\hyperlink{classpose_net_a5f1dea586d249793a7917b652a909a12}{Usage}}()\ \ \ \ \ \ \ \{\ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{group__image_net_ga4f809f603917dd53041335c0881b198e}{POSENET\_USAGE\_STRING}};\ \}}
+\DoxyCodeLine{00205\ }
+\DoxyCodeLine{00209\ \ \ \ \ \textcolor{keyword}{virtual}\ \doxymbox{\hyperlink{classpose_net_a6457d98a7e7f195d5115a2e26d9091d4}{\string~poseNet}}();}
+\DoxyCodeLine{00210\ \ \ \ \ }
+\DoxyCodeLine{00220\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{classpose_net_ac429431dc3b83dcd5a5f3fcffe446047}{Process}}(\ T*\ image,\ uint32\_t\ width,\ uint32\_t\ height,\ std::vector<ObjectPose>\&\ poses,\ uint32\_t\ overlay=OVERLAY\_DEFAULT\ )\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{\ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{classpose_net_ac429431dc3b83dcd5a5f3fcffe446047}{Process}}((\textcolor{keywordtype}{void}*)image,\ width,\ height,\ imageFormatFromType<T>(),\ poses,\ overlay);\ \}}
+\DoxyCodeLine{00221\ }
+\DoxyCodeLine{00231\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{classpose_net_a660791bc726ceb4672d3a6b75b7e8486}{Process}}(\ \textcolor{keywordtype}{void}*\ image,\ uint32\_t\ width,\ uint32\_t\ height,\ \doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{imageFormat}}\ format,\ std::vector<ObjectPose>\&\ poses,\ uint32\_t\ overlay=OVERLAY\_DEFAULT\ );}
+\DoxyCodeLine{00232\ \ \ \ \ }
+\DoxyCodeLine{00241\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{classpose_net_a8ecb6dbc5b0246c6145c1f6222772996}{Process}}(\ T*\ image,\ uint32\_t\ width,\ uint32\_t\ height,\ uint32\_t\ overlay=OVERLAY\_DEFAULT\ )\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{\ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{classpose_net_a8ecb6dbc5b0246c6145c1f6222772996}{Process}}((\textcolor{keywordtype}{void}*)image,\ width,\ height,\ imageFormatFromType<T>(),\ overlay);\ \}}
+\DoxyCodeLine{00242\ }
+\DoxyCodeLine{00251\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{classpose_net_a63311574884f4be3aa0b5747813f0bbe}{Process}}(\ \textcolor{keywordtype}{void}*\ image,\ uint32\_t\ width,\ uint32\_t\ height,\ \doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{imageFormat}}\ format,\ uint32\_t\ overlay=OVERLAY\_DEFAULT\ );}
+\DoxyCodeLine{00252\ }
+\DoxyCodeLine{00256\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{classpose_net_a2c3161cef2215a8cae4e673042d644db}{Overlay}}(\ T*\ input,\ T*\ output,\ uint32\_t\ width,\ uint32\_t\ height,\ \textcolor{keyword}{const}\ std::vector<ObjectPose>\&\ poses,\ uint32\_t\ overlay=OVERLAY\_DEFAULT\ )\ \ \ \ \ \ \ \{\ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{classpose_net_a2c3161cef2215a8cae4e673042d644db}{Overlay}}((\textcolor{keywordtype}{void}*)input,\ (\textcolor{keywordtype}{void}*)output,\ width,\ height,\ imageFormatFromType<T>(),\ overlay);\ \}}
+\DoxyCodeLine{00257\ \ \ \ \ }
+\DoxyCodeLine{00261\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{classpose_net_a33653eab2f50e1ac5b0b6fc4ecd793ce}{Overlay}}(\ \textcolor{keywordtype}{void}*\ input,\ \textcolor{keywordtype}{void}*\ output,\ uint32\_t\ width,\ uint32\_t\ height,\ \doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{imageFormat}}\ format,\ \textcolor{keyword}{const}\ std::vector<ObjectPose>\&\ poses,\ uint32\_t\ overlay=OVERLAY\_DEFAULT\ );}
+\DoxyCodeLine{00262\ \ \ \ \ }
+\DoxyCodeLine{00266\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{classpose_net_a96e03b5516c924ed2f025300b4fbfbf6}{GetThreshold}}()\textcolor{keyword}{\ const\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\{\ \textcolor{keywordflow}{return}\ mThreshold;\ \}}
+\DoxyCodeLine{00267\ }
+\DoxyCodeLine{00271\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{classpose_net_a8cfd6a21798664d025bd166d26ab7004}{SetThreshold}}(\ \textcolor{keywordtype}{float}\ threshold\ )\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{\ mThreshold\ =\ threshold;\ \}}
+\DoxyCodeLine{00272\ }
+\DoxyCodeLine{00276\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \doxymbox{\hyperlink{classpose_net_a6662ffc132fdee2b41a91644f8454b0c}{GetCategory}}()\textcolor{keyword}{\ const\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\{\ \textcolor{keywordflow}{return}\ mTopology.category.c\_str();\ \}}
+\DoxyCodeLine{00277\ \ \ \ \ }
+\DoxyCodeLine{00281\ \ \ \ \ \textcolor{keyword}{inline}\ uint32\_t\ \doxymbox{\hyperlink{classpose_net_a212119ed54dbae900c977576f5aea72a}{GetNumKeypoints}}()\textcolor{keyword}{\ const\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\{\ \textcolor{keywordflow}{return}\ mTopology.keypoints.size();\ \}}
+\DoxyCodeLine{00282\ \ \ \ \ }
+\DoxyCodeLine{00286\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \doxymbox{\hyperlink{classpose_net_afabcd96af836898f3faeac2b5e86956d}{GetKeypointName}}(\ uint32\_t\ index\ )\textcolor{keyword}{\ const\ \ \ \ \ \ \ \ \ \ }\{\ \textcolor{keywordflow}{return}\ mTopology.keypoints[index].c\_str();\ \}}
+\DoxyCodeLine{00287\ \ \ \ \ }
+\DoxyCodeLine{00291\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{classpose_net_af103237289d1e4abd55c4a4457b675e0}{FindKeypointID}}(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ name\ )\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00292\ }
+\DoxyCodeLine{00296\ \ \ \ \ \textcolor{keyword}{inline}\ float4\ \doxymbox{\hyperlink{classpose_net_aec84aecce84762533afb017778117446}{GetKeypointColor}}(\ uint32\_t\ index\ )\textcolor{keyword}{\ const\ \ \ \ \ \ \ \ \ \ \ \ \ \ }\{\ \textcolor{keywordflow}{return}\ mKeypointColors[index];\ \}}
+\DoxyCodeLine{00297\ \ \ \ \ }
+\DoxyCodeLine{00301\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{classpose_net_acdbdb599f7f0ae08b2ab3c11d2db625e}{SetKeypointColor}}(\ uint32\_t\ index,\ \textcolor{keyword}{const}\ float4\&\ color\ )\ \{\ mKeypointColors[index]\ =\ color;\ \}}
+\DoxyCodeLine{00302\ \ \ \ \ }
+\DoxyCodeLine{00306\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{classpose_net_a635342be17027229bb25e68fe7bd96b9}{SetKeypointAlpha}}(\ uint32\_t\ index,\ \textcolor{keywordtype}{float}\ alpha\ )\ \ \ \ \ \ \ \ \ \{\ mKeypointColors[index].w\ =\ alpha;\ \}}
+\DoxyCodeLine{00307\ \ \ \ \ }
+\DoxyCodeLine{00311\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{classpose_net_a635342be17027229bb25e68fe7bd96b9}{SetKeypointAlpha}}(\ \textcolor{keywordtype}{float}\ alpha\ );}
+\DoxyCodeLine{00312\ \ \ \ \ }
+\DoxyCodeLine{00316\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{classpose_net_a6a2934b5843740670019eee8424de5f2}{GetKeypointScale}}()\textcolor{keyword}{\ const\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\{\ \textcolor{keywordflow}{return}\ mKeypointScale;\ \}}
+\DoxyCodeLine{00317\ \ \ \ \ }
+\DoxyCodeLine{00322\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{classpose_net_a90970ad4e9c23f1624bb7415ddc5db5c}{SetKeypointScale}}(\ \textcolor{keywordtype}{float}\ scale\ )\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{\ mKeypointScale\ =\ scale;\ \}}
+\DoxyCodeLine{00323\ \ \ \ \ }
+\DoxyCodeLine{00327\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{classpose_net_a7f3dbc604b5f6343734b0d4e3d0082d3}{GetLinkScale}}()\textcolor{keyword}{\ const\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\{\ \textcolor{keywordflow}{return}\ mLinkScale;\ \}}
+\DoxyCodeLine{00328\ \ \ \ \ }
+\DoxyCodeLine{00333\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{classpose_net_a54a554418a2328e46504c9152e4a5330}{SetLinkScale}}(\ \textcolor{keywordtype}{float}\ scale\ )\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{\ mLinkScale\ =\ scale;\ \}}
+\DoxyCodeLine{00334\ \ \ \ \ }
+\DoxyCodeLine{00335\ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00336\ }
+\DoxyCodeLine{00337\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ CMAP\_WINDOW\_SIZE=5;}
+\DoxyCodeLine{00338\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ PAF\_INTEGRAL\_SAMPLES=7;}
+\DoxyCodeLine{00339\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ MAX\_LINKS=100;}
+\DoxyCodeLine{00340\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ MAX\_OBJECTS=100;}
+\DoxyCodeLine{00341\ \ \ \ \ }
+\DoxyCodeLine{00342\ \ \ \ \ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{structpose_net_1_1_topology}{Topology}}}
+\DoxyCodeLine{00343\ \ \ \ \ \{}
+\DoxyCodeLine{00344\ \ \ \ \ \ \ \ \ std::string\ category;}
+\DoxyCodeLine{00345\ \ \ \ \ \ \ \ \ std::vector<std::string>\ keypoints;}
+\DoxyCodeLine{00346\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ links[MAX\_LINKS\ *\ 4];}
+\DoxyCodeLine{00347\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ numLinks;}
+\DoxyCodeLine{00348\ \ \ \ \ \};}
+\DoxyCodeLine{00349\ \ \ \ \ }
+\DoxyCodeLine{00350\ \ \ \ \ \textcolor{comment}{//\ constructor}}
+\DoxyCodeLine{00351\ \ \ \ \ poseNet();}
+\DoxyCodeLine{00352\ }
+\DoxyCodeLine{00353\ \ \ \ \ \textcolor{keywordtype}{bool}\ init(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ model\_path,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ topology,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ colors,\ \textcolor{keywordtype}{float}\ threshold,\ }
+\DoxyCodeLine{00354\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ input,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ cmap,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ paf,\ uint32\_t\ maxBatchSize,\ }
+\DoxyCodeLine{00355\ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precisionType}}\ precision,\ \doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{deviceType}}\ device,\ \textcolor{keywordtype}{bool}\ allowGPUFallback\ );}
+\DoxyCodeLine{00356\ }
+\DoxyCodeLine{00357\ \ \ \ \ \textcolor{keywordtype}{bool}\ postProcess(std::vector<ObjectPose>\&\ poses,\ uint32\_t\ width,\ uint32\_t\ height);}
+\DoxyCodeLine{00358\ \ \ \ \ }
+\DoxyCodeLine{00359\ \ \ \ \ \textcolor{keywordtype}{bool}\ loadTopology(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ json\_path,\ \doxymbox{\hyperlink{structpose_net_1_1_topology}{Topology}}*\ topology\ );}
+\DoxyCodeLine{00360\ \ \ \ \ \textcolor{keywordtype}{bool}\ loadKeypointColors(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ filename\ );}
+\DoxyCodeLine{00361\ \ \ \ \ }
+\DoxyCodeLine{00362\ \ \ \ \ \doxymbox{\hyperlink{structpose_net_1_1_topology}{Topology}}\ mTopology;}
+\DoxyCodeLine{00363\ \ \ \ \ }
+\DoxyCodeLine{00364\ \ \ \ \ \textcolor{keywordtype}{float}\ mThreshold;}
+\DoxyCodeLine{00365\ \ \ \ \ \textcolor{keywordtype}{float}\ mLinkScale;}
+\DoxyCodeLine{00366\ \ \ \ \ \textcolor{keywordtype}{float}\ mKeypointScale;}
+\DoxyCodeLine{00367\ }
+\DoxyCodeLine{00368\ \ \ \ \ float4*\ mKeypointColors;}
+\DoxyCodeLine{00369\ \ \ \ \ }
+\DoxyCodeLine{00370\ \ \ \ \ \textcolor{comment}{//\ post-\/processing\ buffers}}
+\DoxyCodeLine{00371\ \ \ \ \ \textcolor{keywordtype}{int}*\ mPeaks;}
+\DoxyCodeLine{00372\ \ \ \ \ \textcolor{keywordtype}{int}*\ mPeakCounts;}
+\DoxyCodeLine{00373\ \ \ \ \ \textcolor{keywordtype}{int}*\ mConnections;}
+\DoxyCodeLine{00374\ \ \ \ \ \textcolor{keywordtype}{int}*\ mObjects;}
+\DoxyCodeLine{00375\ \ \ \ \ \textcolor{keywordtype}{int}\ \ mNumObjects;}
+\DoxyCodeLine{00376\ \ \ \ \ }
+\DoxyCodeLine{00377\ \ \ \ \ \textcolor{keywordtype}{float}*\ mRefinedPeaks;}
+\DoxyCodeLine{00378\ \ \ \ \ \textcolor{keywordtype}{float}*\ mScoreGraph;}
+\DoxyCodeLine{00379\ \ \ \ \ }
+\DoxyCodeLine{00380\ \ \ \ \ \textcolor{keywordtype}{void}*\ mAssignmentWorkspace;}
+\DoxyCodeLine{00381\ \ \ \ \ \textcolor{keywordtype}{void}*\ mConnectionWorkspace;}
+\DoxyCodeLine{00382\ \};}
+\DoxyCodeLine{00383\ }
+\DoxyCodeLine{00384\ }
+\DoxyCodeLine{00385\ \textcolor{comment}{//\ FindKeypointID}}
+\DoxyCodeLine{00386\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{classpose_net_af103237289d1e4abd55c4a4457b675e0}{poseNet::FindKeypointID}}(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ name\ )\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00387\ \textcolor{keyword}{}\{}
+\DoxyCodeLine{00388\ \ \ \ \ \textcolor{keywordflow}{if}(\ !name\ )}
+\DoxyCodeLine{00389\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ -\/1;}
+\DoxyCodeLine{00390\ \ \ \ \ }
+\DoxyCodeLine{00391\ \ \ \ \ \textcolor{keyword}{const}\ uint32\_t\ numKeypoints\ =\ \doxymbox{\hyperlink{classpose_net_a212119ed54dbae900c977576f5aea72a}{GetNumKeypoints}}();}
+\DoxyCodeLine{00392\ \ \ \ \ }
+\DoxyCodeLine{00393\ \ \ \ \ \textcolor{keywordflow}{for}(\ uint32\_t\ n=0;\ n\ <\ numKeypoints;\ n++\ )}
+\DoxyCodeLine{00394\ \ \ \ \ \{}
+\DoxyCodeLine{00395\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\ strcasecmp(\doxymbox{\hyperlink{classpose_net_afabcd96af836898f3faeac2b5e86956d}{GetKeypointName}}(n),\ name)\ ==\ 0\ )}
+\DoxyCodeLine{00396\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ n;}
+\DoxyCodeLine{00397\ \ \ \ \ \}}
+\DoxyCodeLine{00398\ \ \ \ \ }
+\DoxyCodeLine{00399\ \ \ \ \ \textcolor{keywordflow}{return}\ -\/1;}
+\DoxyCodeLine{00400\ \}}
+\DoxyCodeLine{00401\ }
+\DoxyCodeLine{00402\ \textcolor{comment}{//\ FindKeypoint}}
+\DoxyCodeLine{00403\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{structpose_net_1_1_object_pose_a7401105ef9346854261b8fb9b86bf827}{poseNet::ObjectPose::FindKeypoint}}(\ uint32\_t\ \textcolor{keywordtype}{id}\ )\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00404\ \textcolor{keyword}{}\{}
+\DoxyCodeLine{00405\ \ \ \ \ \textcolor{keyword}{const}\ uint32\_t\ numKeypoints\ =\ \doxymbox{\hyperlink{structpose_net_1_1_object_pose_a695103397589cdf95d56eec30b8869ef}{Keypoints}}.size();}
+\DoxyCodeLine{00406\ \ \ \ \ }
+\DoxyCodeLine{00407\ \ \ \ \ \textcolor{keywordflow}{for}(\ uint32\_t\ n=0;\ n\ <\ numKeypoints;\ n++\ )}
+\DoxyCodeLine{00408\ \ \ \ \ \{}
+\DoxyCodeLine{00409\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\ \textcolor{keywordtype}{id}\ ==\ \doxymbox{\hyperlink{structpose_net_1_1_object_pose_a695103397589cdf95d56eec30b8869ef}{Keypoints}}[n].\doxymbox{\hyperlink{structpose_net_1_1_object_pose_a581b90cc2974bb8a90fbafc2f5448fce}{ID}}\ )}
+\DoxyCodeLine{00410\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ n;}
+\DoxyCodeLine{00411\ \ \ \ \ \}}
+\DoxyCodeLine{00412\ \ \ \ \ }
+\DoxyCodeLine{00413\ \ \ \ \ \textcolor{keywordflow}{return}\ -\/1;}
+\DoxyCodeLine{00414\ \}}
+\DoxyCodeLine{00415\ }
+\DoxyCodeLine{00416\ \textcolor{comment}{//\ FindLink}}
+\DoxyCodeLine{00417\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{int}\ poseNet::ObjectPose::FindLink(\ uint32\_t\ a,\ uint32\_t\ b\ )\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00418\ \textcolor{keyword}{}\{}
+\DoxyCodeLine{00419\ \ \ \ \ \textcolor{keyword}{const}\ uint32\_t\ numLinks\ =\ Links.size();}
+\DoxyCodeLine{00420\ \ \ \ \ }
+\DoxyCodeLine{00421\ \ \ \ \ \textcolor{keywordflow}{for}(\ uint32\_t\ n=0;\ n\ <\ numLinks;\ n++\ )}
+\DoxyCodeLine{00422\ \ \ \ \ \{}
+\DoxyCodeLine{00423\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\ a\ ==\ Keypoints[Links[n][0]].ID\ \&\&\ b\ ==\ Keypoints[Links[n][1]].ID\ )}
+\DoxyCodeLine{00424\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ n;}
+\DoxyCodeLine{00425\ \ \ \ \ \}}
+\DoxyCodeLine{00426\ \ \ \ \ }
+\DoxyCodeLine{00427\ \ \ \ \ \textcolor{keywordflow}{return}\ -\/1;}
+\DoxyCodeLine{00428\ \}}
+\DoxyCodeLine{00429\ }
+\DoxyCodeLine{00430\ \textcolor{comment}{//\ SetKeypointAlpha}}
+\DoxyCodeLine{00431\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{classpose_net_a635342be17027229bb25e68fe7bd96b9}{poseNet::SetKeypointAlpha}}(\ \textcolor{keywordtype}{float}\ alpha\ )}
+\DoxyCodeLine{00432\ \{}
+\DoxyCodeLine{00433\ \ \ \ \ \textcolor{keyword}{const}\ uint32\_t\ numKeypoints\ =\ \doxymbox{\hyperlink{classpose_net_a212119ed54dbae900c977576f5aea72a}{GetNumKeypoints}}();}
+\DoxyCodeLine{00434\ \ \ \ \ }
+\DoxyCodeLine{00435\ \ \ \ \ \textcolor{keywordflow}{for}(\ uint32\_t\ n=0;\ n\ <\ numKeypoints;\ n++\ )}
+\DoxyCodeLine{00436\ \ \ \ \ \ \ \ \ mKeypointColors[n].w\ =\ alpha;}
+\DoxyCodeLine{00437\ \}}
+\DoxyCodeLine{00438\ }
+\DoxyCodeLine{00439\ }
+\DoxyCodeLine{00440\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

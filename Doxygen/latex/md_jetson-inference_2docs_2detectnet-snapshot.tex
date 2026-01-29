@@ -1,0 +1,51 @@
+\chapter{detectnet-\/snapshot }
+\hypertarget{md_jetson-inference_2docs_2detectnet-snapshot}{}\label{md_jetson-inference_2docs_2detectnet-snapshot}\index{detectnet-\/snapshot@{detectnet-\/snapshot}}
+ 
+
+\textsuperscript{\href{detectnet-training.md}{\texttt{Back}} \texorpdfstring{$\vert$}{|} \href{detectnet-console.md}{\texttt{Next}} \texorpdfstring{$\vert$}{|} }\href{../README.md\#two-days-to-a-demo-digits}{\texttt{\textsuperscript{Contents}}} ~\newline
+ \textsuperscript{Object Detection}\hypertarget{md_jetson-inference_2docs_2detectnet-snapshot_autotoc_md209}{}\doxysection{\texorpdfstring{Downloading the Detection Model to Jetson}{Downloading the Detection Model to Jetson}}\label{md_jetson-inference_2docs_2detectnet-snapshot_autotoc_md209}
+Next, download and extract the trained model snapshot to Jetson. From the browser on your Jetson TX1/\+\+TX2, navigate to your DIGITS server and the {\ttfamily Detect\+Net-\/\+COCO-\/\+Dog} model. Under the {\ttfamily Trained Models} section, select the desired snapshot from the drop-\/down (usually the one with the highest epoch) and click the {\ttfamily Download Model} button.
+
+
+
+Alternatively, if your Jetson and DIGITS server aren\textquotesingle{}t accessible from the same network, you can use the step above to download the snapshot to an intermediary machine and then use SCP or USB stick to copy it to Jetson. ~\newline
+
+
+Then extract the archive with a command similar to:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ <directory\ where\ you\ downloaded\ the\ snapshot>}
+\DoxyCodeLine{tar\ -\/xzvf\ 20170504-\/190602-\/879f\_epoch\_100.0.tar.gz}
+
+\end{DoxyCode}
+\hypertarget{md_jetson-inference_2docs_2detectnet-snapshot_autotoc_md210}{}\doxysubsubsection{\texorpdfstring{Detect\+Net Patches for Tensor\+RT}{Detect\+Net Patches for Tensor\+RT}}\label{md_jetson-inference_2docs_2detectnet-snapshot_autotoc_md210}
+In the original Detect\+Net prototxt exists a Python clustering layer which isn\textquotesingle{}t available in Tensor\+RT and should be deleted from the {\ttfamily deploy.\+prototxt} included in the snapshot. In this repo the \href{detectNet.h}{\texttt{{\ttfamily detect\+Net}}} class handles the clustering as opposed to Python.
+
+At the end of {\ttfamily deploy.\+prototxt}, delete the layer named {\ttfamily cluster}:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{layer\ \{}
+\DoxyCodeLine{\ \ name:\ "{}cluster"{}}
+\DoxyCodeLine{\ \ type:\ "{}Python"{}}
+\DoxyCodeLine{\ \ bottom:\ "{}coverage"{}}
+\DoxyCodeLine{\ \ bottom:\ "{}bboxes"{}}
+\DoxyCodeLine{\ \ top:\ "{}bbox-\/list"{}}
+\DoxyCodeLine{\ \ python\_param\ \{}
+\DoxyCodeLine{\ \ \ \ module:\ "{}caffe.layers.detectnet.clustering"{}}
+\DoxyCodeLine{\ \ \ \ layer:\ "{}ClusterDetections"{}}
+\DoxyCodeLine{\ \ \ \ param\_str:\ "{}640,\ 640,\ 16,\ 0.6,\ 2,\ 0.02,\ 22,\ 1"{}}
+\DoxyCodeLine{\ \ \}}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+
+
+Without this Python layer, the snapshot can now be imported into Tensor\+RT onboard the Jetson.\hypertarget{md_jetson-inference_2docs_2detectnet-snapshot_autotoc_md211}{}\doxysubsection{\texorpdfstring{autotoc\+\_\+md211}{autotoc\+\_\+md211}}\label{md_jetson-inference_2docs_2detectnet-snapshot_autotoc_md211}
+Next \texorpdfstring{$\vert$}{|} {\bfseries{\href{detectnet-console.md}{\texttt{Detecting Objects from the Command Line}}}} ~\newline
+ Back \texorpdfstring{$\vert$}{|} {\bfseries{\href{detectnet-training.md}{\texttt{Locating Object Coordinates using Detect\+Net}}}}
+
+{\bfseries{ }}
+
+\textsuperscript{© 2016-\/2019 NVIDIA \texorpdfstring{$\vert$}{|} }\href{../README.md\#two-days-to-a-demo-digits}{\texttt{\textsuperscript{Table of Contents}}}

@@ -1,0 +1,1616 @@
+\doxysection{xml.\+h}
+\hypertarget{build_2aarch64_2include_2jetson-utils_2xml_8h_source}{}\label{build_2aarch64_2include_2jetson-utils_2xml_8h_source}\index{jetson-\/inference/build/aarch64/include/jetson-\/utils/xml.h@{jetson-\/inference/build/aarch64/include/jetson-\/utils/xml.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00002\ \textcolor{comment}{Original\ code\ by\ Lee\ Thomason\ (www.grinninglizard.com)}}
+\DoxyCodeLine{00003\ \textcolor{comment}{}}
+\DoxyCodeLine{00004\ \textcolor{comment}{This\ software\ is\ provided\ 'as-\/is',\ without\ any\ express\ or\ implied}}
+\DoxyCodeLine{00005\ \textcolor{comment}{warranty.\ In\ no\ event\ will\ the\ authors\ be\ held\ liable\ for\ any}}
+\DoxyCodeLine{00006\ \textcolor{comment}{damages\ arising\ from\ the\ use\ of\ this\ software.}}
+\DoxyCodeLine{00007\ \textcolor{comment}{}}
+\DoxyCodeLine{00008\ \textcolor{comment}{Permission\ is\ granted\ to\ anyone\ to\ use\ this\ software\ for\ any}}
+\DoxyCodeLine{00009\ \textcolor{comment}{purpose,\ including\ commercial\ applications,\ and\ to\ alter\ it\ and}}
+\DoxyCodeLine{00010\ \textcolor{comment}{redistribute\ it\ freely,\ subject\ to\ the\ following\ restrictions:}}
+\DoxyCodeLine{00011\ \textcolor{comment}{}}
+\DoxyCodeLine{00012\ \textcolor{comment}{1.\ The\ origin\ of\ this\ software\ must\ not\ be\ misrepresented;\ you\ must}}
+\DoxyCodeLine{00013\ \textcolor{comment}{not\ claim\ that\ you\ wrote\ the\ original\ software.\ If\ you\ use\ this}}
+\DoxyCodeLine{00014\ \textcolor{comment}{software\ in\ a\ product,\ an\ acknowledgment\ in\ the\ product\ documentation}}
+\DoxyCodeLine{00015\ \textcolor{comment}{would\ be\ appreciated\ but\ is\ not\ required.}}
+\DoxyCodeLine{00016\ \textcolor{comment}{}}
+\DoxyCodeLine{00017\ \textcolor{comment}{2.\ Altered\ source\ versions\ must\ be\ plainly\ marked\ as\ such,\ and}}
+\DoxyCodeLine{00018\ \textcolor{comment}{must\ not\ be\ misrepresented\ as\ being\ the\ original\ software.}}
+\DoxyCodeLine{00019\ \textcolor{comment}{}}
+\DoxyCodeLine{00020\ \textcolor{comment}{3.\ This\ notice\ may\ not\ be\ removed\ or\ altered\ from\ any\ source}}
+\DoxyCodeLine{00021\ \textcolor{comment}{distribution.}}
+\DoxyCodeLine{00022\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \textcolor{preprocessor}{\#ifndef\ TINYXML2\_INCLUDED}}
+\DoxyCodeLine{00025\ \textcolor{preprocessor}{\#define\ TINYXML2\_INCLUDED}}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \textcolor{preprocessor}{\#if\ defined(ANDROID\_NDK)\ ||\ defined(\_\_BORLANDC\_\_)\ ||\ defined(\_\_QNXNTO\_\_)}}
+\DoxyCodeLine{00028\ \textcolor{preprocessor}{\#\ \ \ include\ <ctype.h>}}
+\DoxyCodeLine{00029\ \textcolor{preprocessor}{\#\ \ \ include\ <limits.h>}}
+\DoxyCodeLine{00030\ \textcolor{preprocessor}{\#\ \ \ include\ <stdio.h>}}
+\DoxyCodeLine{00031\ \textcolor{preprocessor}{\#\ \ \ include\ <stdlib.h>}}
+\DoxyCodeLine{00032\ \textcolor{preprocessor}{\#\ \ \ include\ <string.h>}}
+\DoxyCodeLine{00033\ \textcolor{preprocessor}{\#\ \ \ if\ defined(\_\_PS3\_\_)}}
+\DoxyCodeLine{00034\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ include\ <stddef.h>}}
+\DoxyCodeLine{00035\ \textcolor{preprocessor}{\#\ \ \ endif}}
+\DoxyCodeLine{00036\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00037\ \textcolor{preprocessor}{\#\ \ \ include\ <cctype>}}
+\DoxyCodeLine{00038\ \textcolor{preprocessor}{\#\ \ \ include\ <climits>}}
+\DoxyCodeLine{00039\ \textcolor{preprocessor}{\#\ \ \ include\ <cstdio>}}
+\DoxyCodeLine{00040\ \textcolor{preprocessor}{\#\ \ \ include\ <cstdlib>}}
+\DoxyCodeLine{00041\ \textcolor{preprocessor}{\#\ \ \ include\ <cstring>}}
+\DoxyCodeLine{00042\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00043\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00045\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00046\ \textcolor{comment}{\ \ \ TODO:\ intern\ strings\ instead\ of\ allocation.}}
+\DoxyCodeLine{00047\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00048\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00049\ \textcolor{comment}{\ \ \ \ gcc:}}
+\DoxyCodeLine{00050\ \textcolor{comment}{\ \ \ \ \ \ \ \ g++\ -\/Wall\ -\/DTINYXML2\_DEBUG\ tinyxml2.cpp\ xmltest.cpp\ -\/o\ gccxmltest.exe}}
+\DoxyCodeLine{00051\ \textcolor{comment}{}}
+\DoxyCodeLine{00052\ \textcolor{comment}{\ \ \ \ Formatting,\ Artistic\ Style:}}
+\DoxyCodeLine{00053\ \textcolor{comment}{\ \ \ \ \ \ \ \ AStyle.exe\ -\/-\/style=1tbs\ -\/-\/indent-\/switches\ -\/-\/break-\/closing-\/brackets\ -\/-\/indent-\/preprocessor\ tinyxml2.cpp\ tinyxml2.h}}
+\DoxyCodeLine{00054\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ \textcolor{preprocessor}{\#if\ defined(\ \_DEBUG\ )\ ||\ defined\ (\_\_DEBUG\_\_)}}
+\DoxyCodeLine{00057\ \textcolor{preprocessor}{\#\ \ \ ifndef\ TINYXML2\_DEBUG}}
+\DoxyCodeLine{00058\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ define\ TINYXML2\_DEBUG}}
+\DoxyCodeLine{00059\ \textcolor{preprocessor}{\#\ \ \ endif}}
+\DoxyCodeLine{00060\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00062\ \textcolor{preprocessor}{\#ifdef\ \_MSC\_VER}}
+\DoxyCodeLine{00063\ \textcolor{preprocessor}{\#\ \ \ pragma\ warning(push)}}
+\DoxyCodeLine{00064\ \textcolor{preprocessor}{\#\ \ \ pragma\ warning(disable:\ 4251)}}
+\DoxyCodeLine{00065\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00066\ }
+\DoxyCodeLine{00067\ \textcolor{preprocessor}{\#ifdef\ \_WIN32}}
+\DoxyCodeLine{00068\ \textcolor{preprocessor}{\#\ \ \ ifdef\ TINYXML2\_EXPORT}}
+\DoxyCodeLine{00069\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ define\ TINYXML2\_LIB\ \_\_declspec(dllexport)}}
+\DoxyCodeLine{00070\ \textcolor{preprocessor}{\#\ \ \ elif\ defined(TINYXML2\_IMPORT)}}
+\DoxyCodeLine{00071\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ define\ TINYXML2\_LIB\ \_\_declspec(dllimport)}}
+\DoxyCodeLine{00072\ \textcolor{preprocessor}{\#\ \ \ else}}
+\DoxyCodeLine{00073\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ define\ TINYXML2\_LIB}}
+\DoxyCodeLine{00074\ \textcolor{preprocessor}{\#\ \ \ endif}}
+\DoxyCodeLine{00075\ \textcolor{preprocessor}{\#elif\ \_\_GNUC\_\_\ >=\ 4}}
+\DoxyCodeLine{00076\ \textcolor{preprocessor}{\#\ \ \ define\ TINYXML2\_LIB\ \_\_attribute\_\_((visibility("{}default"{})))}}
+\DoxyCodeLine{00077\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00078\ \textcolor{preprocessor}{\#\ \ \ define\ TINYXML2\_LIB}}
+\DoxyCodeLine{00079\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00080\ }
+\DoxyCodeLine{00081\ }
+\DoxyCodeLine{00082\ \textcolor{preprocessor}{\#if\ defined(TINYXML2\_DEBUG)}}
+\DoxyCodeLine{00083\ \textcolor{preprocessor}{\#\ \ \ if\ defined(\_MSC\_VER)}}
+\DoxyCodeLine{00084\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ }\textcolor{comment}{//\ "{}(void)0,"{}\ is\ for\ suppressing\ C4127\ warning\ in\ "{}assert(false)"{},\ "{}assert(true)"{}\ and\ the\ like}}
+\DoxyCodeLine{00085\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ define\ TIXMLASSERT(\ x\ )\ \ \ \ \ \ \ \ \ \ \ if\ (\ !((void)0,(x)))\ \{\ \_\_debugbreak();\ \}}}
+\DoxyCodeLine{00086\ \textcolor{preprocessor}{\#\ \ \ elif\ defined\ (ANDROID\_NDK)}}
+\DoxyCodeLine{00087\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ include\ <android/log.h>}}
+\DoxyCodeLine{00088\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ define\ TIXMLASSERT(\ x\ )\ \ \ \ \ \ \ \ \ \ \ if\ (\ !(x))\ \{\ \_\_android\_log\_assert(\ "{}assert"{},\ "{}grinliz"{},\ "{}ASSERT\ in\ '\%s'\ at\ \%d."{},\ \_\_FILE\_\_,\ \_\_LINE\_\_\ );\ \}}}
+\DoxyCodeLine{00089\ \textcolor{preprocessor}{\#\ \ \ else}}
+\DoxyCodeLine{00090\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ include\ <assert.h>}}
+\DoxyCodeLine{00091\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ define\ TIXMLASSERT\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ assert}}
+\DoxyCodeLine{00092\ \textcolor{preprocessor}{\#\ \ \ endif}}
+\DoxyCodeLine{00093\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00094\ \textcolor{preprocessor}{\#\ \ \ define\ TIXMLASSERT(\ x\ )\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{\}}}
+\DoxyCodeLine{00095\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00096\ }
+\DoxyCodeLine{00097\ }
+\DoxyCodeLine{00098\ \textcolor{comment}{/*\ Versioning,\ past\ 1.0.14:}}
+\DoxyCodeLine{00099\ \textcolor{comment}{\ \ \ \ http://semver.org/}}
+\DoxyCodeLine{00100\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00101\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ TIXML2\_MAJOR\_VERSION\ =\ 6;}
+\DoxyCodeLine{00102\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ TIXML2\_MINOR\_VERSION\ =\ 2;}
+\DoxyCodeLine{00103\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ TIXML2\_PATCH\_VERSION\ =\ 0;}
+\DoxyCodeLine{00104\ }
+\DoxyCodeLine{00105\ \textcolor{preprocessor}{\#define\ TINYXML2\_MAJOR\_VERSION\ 6}}
+\DoxyCodeLine{00106\ \textcolor{preprocessor}{\#define\ TINYXML2\_MINOR\_VERSION\ 2}}
+\DoxyCodeLine{00107\ \textcolor{preprocessor}{\#define\ TINYXML2\_PATCH\_VERSION\ 0}}
+\DoxyCodeLine{00108\ }
+\DoxyCodeLine{00109\ \textcolor{comment}{//\ A\ fixed\ element\ depth\ limit\ is\ problematic.\ There\ needs\ to\ be\ a\ }}
+\DoxyCodeLine{00110\ \textcolor{comment}{//\ limit\ to\ avoid\ a\ stack\ overflow.\ However,\ that\ limit\ varies\ per\ }}
+\DoxyCodeLine{00111\ \textcolor{comment}{//\ system,\ and\ the\ capacity\ of\ the\ stack.\ On\ the\ other\ hand,\ it's\ a\ trivial\ }}
+\DoxyCodeLine{00112\ \textcolor{comment}{//\ attack\ that\ can\ result\ from\ ill,\ malicious,\ or\ even\ correctly\ formed\ XML,\ }}
+\DoxyCodeLine{00113\ \textcolor{comment}{//\ so\ there\ needs\ to\ be\ a\ limit\ in\ place.}}
+\DoxyCodeLine{00114\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ TINYXML2\_MAX\_ELEMENT\_DEPTH\ =\ 100;}
+\DoxyCodeLine{00115\ }
+\DoxyCodeLine{00116\ \textcolor{keyword}{namespace\ }tinyxml2}
+\DoxyCodeLine{00117\ \{}
+\DoxyCodeLine{00118\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_document}{XMLDocument}};}
+\DoxyCodeLine{00119\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_element}{XMLElement}};}
+\DoxyCodeLine{00120\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_attribute}{XMLAttribute}};}
+\DoxyCodeLine{00121\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_comment}{XMLComment}};}
+\DoxyCodeLine{00122\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_text}{XMLText}};}
+\DoxyCodeLine{00123\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_declaration}{XMLDeclaration}};}
+\DoxyCodeLine{00124\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_unknown}{XMLUnknown}};}
+\DoxyCodeLine{00125\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_printer}{XMLPrinter}};}
+\DoxyCodeLine{00126\ }
+\DoxyCodeLine{00127\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00128\ \textcolor{comment}{\ \ \ \ A\ class\ that\ wraps\ strings.\ Normally\ stores\ the\ start\ and\ end}}
+\DoxyCodeLine{00129\ \textcolor{comment}{\ \ \ \ pointers\ into\ the\ XML\ file\ itself,\ and\ will\ apply\ normalization}}
+\DoxyCodeLine{00130\ \textcolor{comment}{\ \ \ \ and\ entity\ translation\ if\ actually\ read.\ Can\ also\ store\ (and\ memory}}
+\DoxyCodeLine{00131\ \textcolor{comment}{\ \ \ \ manage)\ a\ traditional\ char[]}}
+\DoxyCodeLine{00132\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00133\ \textcolor{keyword}{class\ }StrPair}
+\DoxyCodeLine{00134\ \{}
+\DoxyCodeLine{00135\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00136\ \ \ \ \ \textcolor{keyword}{enum}\ \{}
+\DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ NEEDS\_ENTITY\_PROCESSING\ \ \ \ \ \ \ \ \ =\ 0x01,}
+\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ NEEDS\_NEWLINE\_NORMALIZATION\ \ \ \ \ =\ 0x02,}
+\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ NEEDS\_WHITESPACE\_COLLAPSING\ \ \ \ \ =\ 0x04,}
+\DoxyCodeLine{00140\ }
+\DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ TEXT\_ELEMENT\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ NEEDS\_ENTITY\_PROCESSING\ |\ NEEDS\_NEWLINE\_NORMALIZATION,}
+\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ TEXT\_ELEMENT\_LEAVE\_ENTITIES\ \ \ \ \ =\ NEEDS\_NEWLINE\_NORMALIZATION,}
+\DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ ATTRIBUTE\_NAME\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ 0,}
+\DoxyCodeLine{00144\ \ \ \ \ \ \ \ \ ATTRIBUTE\_VALUE\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ NEEDS\_ENTITY\_PROCESSING\ |\ NEEDS\_NEWLINE\_NORMALIZATION,}
+\DoxyCodeLine{00145\ \ \ \ \ \ \ \ \ ATTRIBUTE\_VALUE\_LEAVE\_ENTITIES\ \ =\ NEEDS\_NEWLINE\_NORMALIZATION,}
+\DoxyCodeLine{00146\ \ \ \ \ \ \ \ \ COMMENT\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ NEEDS\_NEWLINE\_NORMALIZATION}
+\DoxyCodeLine{00147\ \ \ \ \ \};}
+\DoxyCodeLine{00148\ }
+\DoxyCodeLine{00149\ \ \ \ \ StrPair()\ :\ \_flags(\ 0\ ),\ \_start(\ 0\ ),\ \_end(\ 0\ )\ \{\}}
+\DoxyCodeLine{00150\ \ \ \ \ \string~StrPair();}
+\DoxyCodeLine{00151\ }
+\DoxyCodeLine{00152\ \ \ \ \ \textcolor{keywordtype}{void}\ Set(\ \textcolor{keywordtype}{char}*\ start,\ \textcolor{keywordtype}{char}*\ end,\ \textcolor{keywordtype}{int}\ flags\ )\ \{}
+\DoxyCodeLine{00153\ \ \ \ \ \ \ \ \ TIXMLASSERT(\ start\ );}
+\DoxyCodeLine{00154\ \ \ \ \ \ \ \ \ TIXMLASSERT(\ end\ );}
+\DoxyCodeLine{00155\ \ \ \ \ \ \ \ \ Reset();}
+\DoxyCodeLine{00156\ \ \ \ \ \ \ \ \ \_start\ \ =\ start;}
+\DoxyCodeLine{00157\ \ \ \ \ \ \ \ \ \_end\ \ \ \ =\ end;}
+\DoxyCodeLine{00158\ \ \ \ \ \ \ \ \ \_flags\ \ =\ flags\ |\ NEEDS\_FLUSH;}
+\DoxyCodeLine{00159\ \ \ \ \ \}}
+\DoxyCodeLine{00160\ }
+\DoxyCodeLine{00161\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ GetStr();}
+\DoxyCodeLine{00162\ }
+\DoxyCodeLine{00163\ \ \ \ \ \textcolor{keywordtype}{bool}\ Empty()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00164\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \_start\ ==\ \_end;}
+\DoxyCodeLine{00165\ \ \ \ \ \}}
+\DoxyCodeLine{00166\ }
+\DoxyCodeLine{00167\ \ \ \ \ \textcolor{keywordtype}{void}\ SetInternedStr(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ str\ )\ \{}
+\DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ Reset();}
+\DoxyCodeLine{00169\ \ \ \ \ \ \ \ \ \_start\ =\ \textcolor{keyword}{const\_cast<}\textcolor{keywordtype}{char}*\textcolor{keyword}{>}(str);}
+\DoxyCodeLine{00170\ \ \ \ \ \}}
+\DoxyCodeLine{00171\ }
+\DoxyCodeLine{00172\ \ \ \ \ \textcolor{keywordtype}{void}\ SetStr(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ str,\ \textcolor{keywordtype}{int}\ flags=0\ );}
+\DoxyCodeLine{00173\ }
+\DoxyCodeLine{00174\ \ \ \ \ \textcolor{keywordtype}{char}*\ ParseText(\ \textcolor{keywordtype}{char}*\ in,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ endTag,\ \textcolor{keywordtype}{int}\ strFlags,\ \textcolor{keywordtype}{int}*\ curLineNumPtr\ );}
+\DoxyCodeLine{00175\ \ \ \ \ \textcolor{keywordtype}{char}*\ ParseName(\ \textcolor{keywordtype}{char}*\ in\ );}
+\DoxyCodeLine{00176\ }
+\DoxyCodeLine{00177\ \ \ \ \ \textcolor{keywordtype}{void}\ TransferTo(\ StrPair*\ other\ );}
+\DoxyCodeLine{00178\ \ \ \ \ \textcolor{keywordtype}{void}\ Reset();}
+\DoxyCodeLine{00179\ }
+\DoxyCodeLine{00180\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00181\ \ \ \ \ \textcolor{keywordtype}{void}\ CollapseWhitespace();}
+\DoxyCodeLine{00182\ }
+\DoxyCodeLine{00183\ \ \ \ \ \textcolor{keyword}{enum}\ \{}
+\DoxyCodeLine{00184\ \ \ \ \ \ \ \ \ NEEDS\_FLUSH\ =\ 0x100,}
+\DoxyCodeLine{00185\ \ \ \ \ \ \ \ \ NEEDS\_DELETE\ =\ 0x200}
+\DoxyCodeLine{00186\ \ \ \ \ \};}
+\DoxyCodeLine{00187\ }
+\DoxyCodeLine{00188\ \ \ \ \ \textcolor{keywordtype}{int}\ \ \ \ \ \_flags;}
+\DoxyCodeLine{00189\ \ \ \ \ \textcolor{keywordtype}{char}*\ \ \ \_start;}
+\DoxyCodeLine{00190\ \ \ \ \ \textcolor{keywordtype}{char}*\ \ \ \_end;}
+\DoxyCodeLine{00191\ }
+\DoxyCodeLine{00192\ \ \ \ \ StrPair(\ \textcolor{keyword}{const}\ StrPair\&\ other\ );\ \ \ \ \textcolor{comment}{//\ not\ supported}}
+\DoxyCodeLine{00193\ \ \ \ \ \textcolor{keywordtype}{void}\ operator=(\ StrPair\&\ other\ );\ \ \ \textcolor{comment}{//\ not\ supported,\ use\ TransferTo()}}
+\DoxyCodeLine{00194\ \};}
+\DoxyCodeLine{00195\ }
+\DoxyCodeLine{00196\ }
+\DoxyCodeLine{00197\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00198\ \textcolor{comment}{\ \ \ \ A\ dynamic\ array\ of\ Plain\ Old\ Data.\ Doesn't\ support\ constructors,\ etc.}}
+\DoxyCodeLine{00199\ \textcolor{comment}{\ \ \ \ Has\ a\ small\ initial\ memory\ pool,\ so\ that\ low\ or\ no\ usage\ will\ not}}
+\DoxyCodeLine{00200\ \textcolor{comment}{\ \ \ \ cause\ a\ call\ to\ new/delete}}
+\DoxyCodeLine{00201\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00202\ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T,\ \textcolor{keywordtype}{int}\ INITIAL\_SIZE>}
+\DoxyCodeLine{00203\ \textcolor{keyword}{class\ }DynArray}
+\DoxyCodeLine{00204\ \{}
+\DoxyCodeLine{00205\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00206\ \ \ \ \ DynArray()\ :}
+\DoxyCodeLine{00207\ \ \ \ \ \ \ \ \ \_mem(\ \_pool\ ),}
+\DoxyCodeLine{00208\ \ \ \ \ \ \ \ \ \_allocated(\ INITIAL\_SIZE\ ),}
+\DoxyCodeLine{00209\ \ \ \ \ \ \ \ \ \_size(\ 0\ )}
+\DoxyCodeLine{00210\ \ \ \ \ \{}
+\DoxyCodeLine{00211\ \ \ \ \ \}}
+\DoxyCodeLine{00212\ }
+\DoxyCodeLine{00213\ \ \ \ \ \string~DynArray()\ \{}
+\DoxyCodeLine{00214\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ \_mem\ !=\ \_pool\ )\ \{}
+\DoxyCodeLine{00215\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}\ []\ \_mem;}
+\DoxyCodeLine{00216\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00217\ \ \ \ \ \}}
+\DoxyCodeLine{00218\ }
+\DoxyCodeLine{00219\ \ \ \ \ \textcolor{keywordtype}{void}\ Clear()\ \{}
+\DoxyCodeLine{00220\ \ \ \ \ \ \ \ \ \_size\ =\ 0;}
+\DoxyCodeLine{00221\ \ \ \ \ \}}
+\DoxyCodeLine{00222\ }
+\DoxyCodeLine{00223\ \ \ \ \ \textcolor{keywordtype}{void}\ Push(\ T\ t\ )\ \{}
+\DoxyCodeLine{00224\ \ \ \ \ \ \ \ \ TIXMLASSERT(\ \_size\ <\ INT\_MAX\ );}
+\DoxyCodeLine{00225\ \ \ \ \ \ \ \ \ EnsureCapacity(\ \_size+1\ );}
+\DoxyCodeLine{00226\ \ \ \ \ \ \ \ \ \_mem[\_size]\ =\ t;}
+\DoxyCodeLine{00227\ \ \ \ \ \ \ \ \ ++\_size;}
+\DoxyCodeLine{00228\ \ \ \ \ \}}
+\DoxyCodeLine{00229\ }
+\DoxyCodeLine{00230\ \ \ \ \ T*\ PushArr(\ \textcolor{keywordtype}{int}\ count\ )\ \{}
+\DoxyCodeLine{00231\ \ \ \ \ \ \ \ \ TIXMLASSERT(\ count\ >=\ 0\ );}
+\DoxyCodeLine{00232\ \ \ \ \ \ \ \ \ TIXMLASSERT(\ \_size\ <=\ INT\_MAX\ -\/\ count\ );}
+\DoxyCodeLine{00233\ \ \ \ \ \ \ \ \ EnsureCapacity(\ \_size+count\ );}
+\DoxyCodeLine{00234\ \ \ \ \ \ \ \ \ T*\ ret\ =\ \&\_mem[\_size];}
+\DoxyCodeLine{00235\ \ \ \ \ \ \ \ \ \_size\ +=\ count;}
+\DoxyCodeLine{00236\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ret;}
+\DoxyCodeLine{00237\ \ \ \ \ \}}
+\DoxyCodeLine{00238\ }
+\DoxyCodeLine{00239\ \ \ \ \ T\ Pop()\ \{}
+\DoxyCodeLine{00240\ \ \ \ \ \ \ \ \ TIXMLASSERT(\ \_size\ >\ 0\ );}
+\DoxyCodeLine{00241\ \ \ \ \ \ \ \ \ -\/-\/\_size;}
+\DoxyCodeLine{00242\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \_mem[\_size];}
+\DoxyCodeLine{00243\ \ \ \ \ \}}
+\DoxyCodeLine{00244\ }
+\DoxyCodeLine{00245\ \ \ \ \ \textcolor{keywordtype}{void}\ PopArr(\ \textcolor{keywordtype}{int}\ count\ )\ \{}
+\DoxyCodeLine{00246\ \ \ \ \ \ \ \ \ TIXMLASSERT(\ \_size\ >=\ count\ );}
+\DoxyCodeLine{00247\ \ \ \ \ \ \ \ \ \_size\ -\/=\ count;}
+\DoxyCodeLine{00248\ \ \ \ \ \}}
+\DoxyCodeLine{00249\ }
+\DoxyCodeLine{00250\ \ \ \ \ \textcolor{keywordtype}{bool}\ Empty()\textcolor{keyword}{\ const\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00251\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \_size\ ==\ 0;}
+\DoxyCodeLine{00252\ \ \ \ \ \}}
+\DoxyCodeLine{00253\ }
+\DoxyCodeLine{00254\ \ \ \ \ T\&\ operator[](\textcolor{keywordtype}{int}\ i)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00255\ \ \ \ \ \ \ \ \ TIXMLASSERT(\ i>=\ 0\ \&\&\ i\ <\ \_size\ );}
+\DoxyCodeLine{00256\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \_mem[i];}
+\DoxyCodeLine{00257\ \ \ \ \ \}}
+\DoxyCodeLine{00258\ }
+\DoxyCodeLine{00259\ \ \ \ \ \textcolor{keyword}{const}\ T\&\ operator[](\textcolor{keywordtype}{int}\ i)\textcolor{keyword}{\ const\ \ \ \ }\{}
+\DoxyCodeLine{00260\ \ \ \ \ \ \ \ \ TIXMLASSERT(\ i>=\ 0\ \&\&\ i\ <\ \_size\ );}
+\DoxyCodeLine{00261\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \_mem[i];}
+\DoxyCodeLine{00262\ \ \ \ \ \}}
+\DoxyCodeLine{00263\ }
+\DoxyCodeLine{00264\ \ \ \ \ \textcolor{keyword}{const}\ T\&\ PeekTop()\textcolor{keyword}{\ const\ \ \ \ \ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00265\ \ \ \ \ \ \ \ \ TIXMLASSERT(\ \_size\ >\ 0\ );}
+\DoxyCodeLine{00266\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \_mem[\ \_size\ -\/\ 1];}
+\DoxyCodeLine{00267\ \ \ \ \ \}}
+\DoxyCodeLine{00268\ }
+\DoxyCodeLine{00269\ \ \ \ \ \textcolor{keywordtype}{int}\ Size()\textcolor{keyword}{\ const\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00270\ \ \ \ \ \ \ \ \ TIXMLASSERT(\ \_size\ >=\ 0\ );}
+\DoxyCodeLine{00271\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \_size;}
+\DoxyCodeLine{00272\ \ \ \ \ \}}
+\DoxyCodeLine{00273\ }
+\DoxyCodeLine{00274\ \ \ \ \ \textcolor{keywordtype}{int}\ Capacity()\textcolor{keyword}{\ const\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00275\ \ \ \ \ \ \ \ \ TIXMLASSERT(\ \_allocated\ >=\ INITIAL\_SIZE\ );}
+\DoxyCodeLine{00276\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \_allocated;}
+\DoxyCodeLine{00277\ \ \ \ \ \}}
+\DoxyCodeLine{00278\ }
+\DoxyCodeLine{00279\ \ \ \ \ \textcolor{keywordtype}{void}\ SwapRemove(\textcolor{keywordtype}{int}\ i)\ \{}
+\DoxyCodeLine{00280\ \ \ \ \ \ \ \ \ TIXMLASSERT(i\ >=\ 0\ \&\&\ i\ <\ \_size);}
+\DoxyCodeLine{00281\ \ \ \ \ \ \ \ \ TIXMLASSERT(\_size\ >\ 0);}
+\DoxyCodeLine{00282\ \ \ \ \ \ \ \ \ \_mem[i]\ =\ \_mem[\_size\ -\/\ 1];}
+\DoxyCodeLine{00283\ \ \ \ \ \ \ \ \ -\/-\/\_size;}
+\DoxyCodeLine{00284\ \ \ \ \ \}}
+\DoxyCodeLine{00285\ }
+\DoxyCodeLine{00286\ \ \ \ \ \textcolor{keyword}{const}\ T*\ Mem()\textcolor{keyword}{\ const\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00287\ \ \ \ \ \ \ \ \ TIXMLASSERT(\ \_mem\ );}
+\DoxyCodeLine{00288\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \_mem;}
+\DoxyCodeLine{00289\ \ \ \ \ \}}
+\DoxyCodeLine{00290\ }
+\DoxyCodeLine{00291\ \ \ \ \ T*\ Mem()\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00292\ \ \ \ \ \ \ \ \ TIXMLASSERT(\ \_mem\ );}
+\DoxyCodeLine{00293\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \_mem;}
+\DoxyCodeLine{00294\ \ \ \ \ \}}
+\DoxyCodeLine{00295\ }
+\DoxyCodeLine{00296\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00297\ \ \ \ \ DynArray(\ \textcolor{keyword}{const}\ DynArray\&\ );\ \textcolor{comment}{//\ not\ supported}}
+\DoxyCodeLine{00298\ \ \ \ \ \textcolor{keywordtype}{void}\ operator=(\ \textcolor{keyword}{const}\ DynArray\&\ );\ \textcolor{comment}{//\ not\ supported}}
+\DoxyCodeLine{00299\ }
+\DoxyCodeLine{00300\ \ \ \ \ \textcolor{keywordtype}{void}\ EnsureCapacity(\ \textcolor{keywordtype}{int}\ cap\ )\ \{}
+\DoxyCodeLine{00301\ \ \ \ \ \ \ \ \ TIXMLASSERT(\ cap\ >\ 0\ );}
+\DoxyCodeLine{00302\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ cap\ >\ \_allocated\ )\ \{}
+\DoxyCodeLine{00303\ \ \ \ \ \ \ \ \ \ \ \ \ TIXMLASSERT(\ cap\ <=\ INT\_MAX\ /\ 2\ );}
+\DoxyCodeLine{00304\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ newAllocated\ =\ cap\ *\ 2;}
+\DoxyCodeLine{00305\ \ \ \ \ \ \ \ \ \ \ \ \ T*\ newMem\ =\ \textcolor{keyword}{new}\ T[newAllocated];}
+\DoxyCodeLine{00306\ \ \ \ \ \ \ \ \ \ \ \ \ TIXMLASSERT(\ newAllocated\ >=\ \_size\ );}
+\DoxyCodeLine{00307\ \ \ \ \ \ \ \ \ \ \ \ \ memcpy(\ newMem,\ \_mem,\ \textcolor{keyword}{sizeof}(T)*\_size\ );\ \ \ \ \textcolor{comment}{//\ warning:\ not\ using\ constructors,\ only\ works\ for\ PODs}}
+\DoxyCodeLine{00308\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ \_mem\ !=\ \_pool\ )\ \{}
+\DoxyCodeLine{00309\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}\ []\ \_mem;}
+\DoxyCodeLine{00310\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00311\ \ \ \ \ \ \ \ \ \ \ \ \ \_mem\ =\ newMem;}
+\DoxyCodeLine{00312\ \ \ \ \ \ \ \ \ \ \ \ \ \_allocated\ =\ newAllocated;}
+\DoxyCodeLine{00313\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00314\ \ \ \ \ \}}
+\DoxyCodeLine{00315\ }
+\DoxyCodeLine{00316\ \ \ \ \ T*\ \ \_mem;}
+\DoxyCodeLine{00317\ \ \ \ \ T\ \ \ \_pool[INITIAL\_SIZE];}
+\DoxyCodeLine{00318\ \ \ \ \ \textcolor{keywordtype}{int}\ \_allocated;\ \ \ \ \ \textcolor{comment}{//\ objects\ allocated}}
+\DoxyCodeLine{00319\ \ \ \ \ \textcolor{keywordtype}{int}\ \_size;\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ number\ objects\ in\ use}}
+\DoxyCodeLine{00320\ \};}
+\DoxyCodeLine{00321\ }
+\DoxyCodeLine{00322\ }
+\DoxyCodeLine{00323\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00324\ \textcolor{comment}{\ \ \ \ Parent\ virtual\ class\ of\ a\ pool\ for\ fast\ allocation}}
+\DoxyCodeLine{00325\ \textcolor{comment}{\ \ \ \ and\ deallocation\ of\ objects.}}
+\DoxyCodeLine{00326\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00327\ \textcolor{keyword}{class\ }MemPool}
+\DoxyCodeLine{00328\ \{}
+\DoxyCodeLine{00329\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00330\ \ \ \ \ MemPool()\ \{\}}
+\DoxyCodeLine{00331\ \ \ \ \ \textcolor{keyword}{virtual}\ \string~MemPool()\ \{\}}
+\DoxyCodeLine{00332\ }
+\DoxyCodeLine{00333\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{int}\ ItemSize()\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{00334\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}*\ Alloc()\ =\ 0;}
+\DoxyCodeLine{00335\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ Free(\ \textcolor{keywordtype}{void}*\ )\ =\ 0;}
+\DoxyCodeLine{00336\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ SetTracked()\ =\ 0;}
+\DoxyCodeLine{00337\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ Clear()\ =\ 0;}
+\DoxyCodeLine{00338\ \};}
+\DoxyCodeLine{00339\ }
+\DoxyCodeLine{00340\ }
+\DoxyCodeLine{00341\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00342\ \textcolor{comment}{\ \ \ \ Template\ child\ class\ to\ create\ pools\ of\ the\ correct\ type.}}
+\DoxyCodeLine{00343\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00344\ \textcolor{keyword}{template}<\ \textcolor{keywordtype}{int}\ ITEM\_SIZE\ >}
+\DoxyCodeLine{00345\ \textcolor{keyword}{class\ }MemPoolT\ :\ \textcolor{keyword}{public}\ MemPool}
+\DoxyCodeLine{00346\ \{}
+\DoxyCodeLine{00347\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00348\ \ \ \ \ MemPoolT()\ :\ \_blockPtrs(),\ \_root(0),\ \_currentAllocs(0),\ \_nAllocs(0),\ \_maxAllocs(0),\ \_nUntracked(0)\ \ \{\}}
+\DoxyCodeLine{00349\ \ \ \ \ \string~MemPoolT()\ \{}
+\DoxyCodeLine{00350\ \ \ \ \ \ \ \ \ Clear();}
+\DoxyCodeLine{00351\ \ \ \ \ \}}
+\DoxyCodeLine{00352\ \ \ \ \ }
+\DoxyCodeLine{00353\ \ \ \ \ \textcolor{keywordtype}{void}\ Clear()\ \{}
+\DoxyCodeLine{00354\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Delete\ the\ blocks.}}
+\DoxyCodeLine{00355\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}(\ !\_blockPtrs.Empty())\ \{}
+\DoxyCodeLine{00356\ \ \ \ \ \ \ \ \ \ \ \ \ Block*\ lastBlock\ =\ \_blockPtrs.Pop();}
+\DoxyCodeLine{00357\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}\ lastBlock;}
+\DoxyCodeLine{00358\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00359\ \ \ \ \ \ \ \ \ \_root\ =\ 0;}
+\DoxyCodeLine{00360\ \ \ \ \ \ \ \ \ \_currentAllocs\ =\ 0;}
+\DoxyCodeLine{00361\ \ \ \ \ \ \ \ \ \_nAllocs\ =\ 0;}
+\DoxyCodeLine{00362\ \ \ \ \ \ \ \ \ \_maxAllocs\ =\ 0;}
+\DoxyCodeLine{00363\ \ \ \ \ \ \ \ \ \_nUntracked\ =\ 0;}
+\DoxyCodeLine{00364\ \ \ \ \ \}}
+\DoxyCodeLine{00365\ }
+\DoxyCodeLine{00366\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{int}\ ItemSize()\textcolor{keyword}{\ const\ \ \ \ }\{}
+\DoxyCodeLine{00367\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ITEM\_SIZE;}
+\DoxyCodeLine{00368\ \ \ \ \ \}}
+\DoxyCodeLine{00369\ \ \ \ \ \textcolor{keywordtype}{int}\ CurrentAllocs()\textcolor{keyword}{\ const\ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00370\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \_currentAllocs;}
+\DoxyCodeLine{00371\ \ \ \ \ \}}
+\DoxyCodeLine{00372\ }
+\DoxyCodeLine{00373\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}*\ Alloc()\ \{}
+\DoxyCodeLine{00374\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ !\_root\ )\ \{}
+\DoxyCodeLine{00375\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Need\ a\ new\ block.}}
+\DoxyCodeLine{00376\ \ \ \ \ \ \ \ \ \ \ \ \ Block*\ block\ =\ \textcolor{keyword}{new}\ Block();}
+\DoxyCodeLine{00377\ \ \ \ \ \ \ \ \ \ \ \ \ \_blockPtrs.Push(\ block\ );}
+\DoxyCodeLine{00378\ }
+\DoxyCodeLine{00379\ \ \ \ \ \ \ \ \ \ \ \ \ Item*\ blockItems\ =\ block-\/>items;}
+\DoxyCodeLine{00380\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(\ \textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ ITEMS\_PER\_BLOCK\ -\/\ 1;\ ++i\ )\ \{}
+\DoxyCodeLine{00381\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ blockItems[i].next\ =\ \&(blockItems[i\ +\ 1]);}
+\DoxyCodeLine{00382\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00383\ \ \ \ \ \ \ \ \ \ \ \ \ blockItems[ITEMS\_PER\_BLOCK\ -\/\ 1].next\ =\ 0;}
+\DoxyCodeLine{00384\ \ \ \ \ \ \ \ \ \ \ \ \ \_root\ =\ blockItems;}
+\DoxyCodeLine{00385\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00386\ \ \ \ \ \ \ \ \ Item*\ \textcolor{keyword}{const}\ result\ =\ \_root;}
+\DoxyCodeLine{00387\ \ \ \ \ \ \ \ \ TIXMLASSERT(\ result\ !=\ 0\ );}
+\DoxyCodeLine{00388\ \ \ \ \ \ \ \ \ \_root\ =\ \_root-\/>next;}
+\DoxyCodeLine{00389\ }
+\DoxyCodeLine{00390\ \ \ \ \ \ \ \ \ ++\_currentAllocs;}
+\DoxyCodeLine{00391\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ \_currentAllocs\ >\ \_maxAllocs\ )\ \{}
+\DoxyCodeLine{00392\ \ \ \ \ \ \ \ \ \ \ \ \ \_maxAllocs\ =\ \_currentAllocs;}
+\DoxyCodeLine{00393\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00394\ \ \ \ \ \ \ \ \ ++\_nAllocs;}
+\DoxyCodeLine{00395\ \ \ \ \ \ \ \ \ ++\_nUntracked;}
+\DoxyCodeLine{00396\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00397\ \ \ \ \ \}}
+\DoxyCodeLine{00398\ \ \ \ \ }
+\DoxyCodeLine{00399\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ Free(\ \textcolor{keywordtype}{void}*\ mem\ )\ \{}
+\DoxyCodeLine{00400\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ !mem\ )\ \{}
+\DoxyCodeLine{00401\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00402\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00403\ \ \ \ \ \ \ \ \ -\/-\/\_currentAllocs;}
+\DoxyCodeLine{00404\ \ \ \ \ \ \ \ \ Item*\ item\ =\ \textcolor{keyword}{static\_cast<}Item*\textcolor{keyword}{>}(\ mem\ );}
+\DoxyCodeLine{00405\ \textcolor{preprocessor}{\#ifdef\ TINYXML2\_DEBUG}}
+\DoxyCodeLine{00406\ \ \ \ \ \ \ \ \ memset(\ item,\ 0xfe,\ \textcolor{keyword}{sizeof}(\ *item\ )\ );}
+\DoxyCodeLine{00407\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00408\ \ \ \ \ \ \ \ \ item-\/>next\ =\ \_root;}
+\DoxyCodeLine{00409\ \ \ \ \ \ \ \ \ \_root\ =\ item;}
+\DoxyCodeLine{00410\ \ \ \ \ \}}
+\DoxyCodeLine{00411\ \ \ \ \ \textcolor{keywordtype}{void}\ Trace(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ name\ )\ \{}
+\DoxyCodeLine{00412\ \ \ \ \ \ \ \ \ printf(\ \textcolor{stringliteral}{"{}Mempool\ \%s\ watermark=\%d\ [\%dk]\ current=\%d\ size=\%d\ nAlloc=\%d\ blocks=\%d\(\backslash\)n"{}},}
+\DoxyCodeLine{00413\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ name,\ \_maxAllocs,\ \_maxAllocs\ *\ ITEM\_SIZE\ /\ 1024,\ \_currentAllocs,}
+\DoxyCodeLine{00414\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ITEM\_SIZE,\ \_nAllocs,\ \_blockPtrs.Size()\ );}
+\DoxyCodeLine{00415\ \ \ \ \ \}}
+\DoxyCodeLine{00416\ }
+\DoxyCodeLine{00417\ \ \ \ \ \textcolor{keywordtype}{void}\ SetTracked()\ \{}
+\DoxyCodeLine{00418\ \ \ \ \ \ \ \ \ -\/-\/\_nUntracked;}
+\DoxyCodeLine{00419\ \ \ \ \ \}}
+\DoxyCodeLine{00420\ }
+\DoxyCodeLine{00421\ \ \ \ \ \textcolor{keywordtype}{int}\ Untracked()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00422\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \_nUntracked;}
+\DoxyCodeLine{00423\ \ \ \ \ \}}
+\DoxyCodeLine{00424\ }
+\DoxyCodeLine{00425\ \ \ \ \ \textcolor{comment}{//\ This\ number\ is\ perf\ sensitive.\ 4k\ seems\ like\ a\ good\ tradeoff\ on\ my\ machine.}}
+\DoxyCodeLine{00426\ \ \ \ \ \textcolor{comment}{//\ The\ test\ file\ is\ large,\ 170k.}}
+\DoxyCodeLine{00427\ \ \ \ \ \textcolor{comment}{//\ Release:\ \ \ \ \ VS2010\ gcc(no\ opt)}}
+\DoxyCodeLine{00428\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ 1k:\ \ \ \ \ 4000}}
+\DoxyCodeLine{00429\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ 2k:\ \ \ \ \ 4000}}
+\DoxyCodeLine{00430\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ 4k:\ \ \ \ \ 3900\ \ \ \ 21000}}
+\DoxyCodeLine{00431\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ 16k:\ \ \ \ 5200}}
+\DoxyCodeLine{00432\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ 32k:\ \ \ \ 4300}}
+\DoxyCodeLine{00433\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ 64k:\ \ \ \ 4000\ \ \ \ 21000}}
+\DoxyCodeLine{00434\ \ \ \ \ \textcolor{comment}{//\ Declared\ public\ because\ some\ compilers\ do\ not\ accept\ to\ use\ ITEMS\_PER\_BLOCK}}
+\DoxyCodeLine{00435\ \ \ \ \ \textcolor{comment}{//\ in\ private\ part\ if\ ITEMS\_PER\_BLOCK\ is\ private}}
+\DoxyCodeLine{00436\ \ \ \ \ \textcolor{keyword}{enum}\ \{\ ITEMS\_PER\_BLOCK\ =\ (4\ *\ 1024)\ /\ ITEM\_SIZE\ \};}
+\DoxyCodeLine{00437\ }
+\DoxyCodeLine{00438\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00439\ \ \ \ \ MemPoolT(\ \textcolor{keyword}{const}\ MemPoolT\&\ );\ \textcolor{comment}{//\ not\ supported}}
+\DoxyCodeLine{00440\ \ \ \ \ \textcolor{keywordtype}{void}\ operator=(\ \textcolor{keyword}{const}\ MemPoolT\&\ );\ \textcolor{comment}{//\ not\ supported}}
+\DoxyCodeLine{00441\ }
+\DoxyCodeLine{00442\ \ \ \ \ \textcolor{keyword}{union\ }Item\ \{}
+\DoxyCodeLine{00443\ \ \ \ \ \ \ \ \ Item*\ \ \ next;}
+\DoxyCodeLine{00444\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{char}\ \ \ \ itemData[ITEM\_SIZE];}
+\DoxyCodeLine{00445\ \ \ \ \ \};}
+\DoxyCodeLine{00446\ \ \ \ \ \textcolor{keyword}{struct\ }Block\ \{}
+\DoxyCodeLine{00447\ \ \ \ \ \ \ \ \ Item\ items[ITEMS\_PER\_BLOCK];}
+\DoxyCodeLine{00448\ \ \ \ \ \};}
+\DoxyCodeLine{00449\ \ \ \ \ \doxymbox{\hyperlink{classtinyxml2_1_1_dyn_array}{DynArray<\ Block*,\ 10\ >}}\ \_blockPtrs;}
+\DoxyCodeLine{00450\ \ \ \ \ Item*\ \_root;}
+\DoxyCodeLine{00451\ }
+\DoxyCodeLine{00452\ \ \ \ \ \textcolor{keywordtype}{int}\ \_currentAllocs;}
+\DoxyCodeLine{00453\ \ \ \ \ \textcolor{keywordtype}{int}\ \_nAllocs;}
+\DoxyCodeLine{00454\ \ \ \ \ \textcolor{keywordtype}{int}\ \_maxAllocs;}
+\DoxyCodeLine{00455\ \ \ \ \ \textcolor{keywordtype}{int}\ \_nUntracked;}
+\DoxyCodeLine{00456\ \};}
+\DoxyCodeLine{00457\ }
+\DoxyCodeLine{00458\ }
+\DoxyCodeLine{00459\ }
+\DoxyCodeLine{00479\ \textcolor{keyword}{class\ }TINYXML2\_LIB\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_visitor}{XMLVisitor}}}
+\DoxyCodeLine{00480\ \{}
+\DoxyCodeLine{00481\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00482\ \ \ \ \ \textcolor{keyword}{virtual}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_visitor}{\string~XMLVisitor}}()\ \{\}}
+\DoxyCodeLine{00483\ }
+\DoxyCodeLine{00485\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_visitor_acb3c22fc5f60eb9db98f533f2761f67d}{VisitEnter}}(\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_document}{XMLDocument}}\&\ \textcolor{comment}{/*doc*/}\ )\ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00486\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00487\ \ \ \ \ \}}
+\DoxyCodeLine{00489\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_visitor_a170e9989cd046ba904f302d087e07086}{VisitExit}}(\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_document}{XMLDocument}}\&\ \textcolor{comment}{/*doc*/}\ )\ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00490\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00491\ \ \ \ \ \}}
+\DoxyCodeLine{00492\ }
+\DoxyCodeLine{00494\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_visitor_af97980a17dd4e37448b181f5ddfa92b5}{VisitEnter}}(\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_element}{XMLElement}}\&\ \textcolor{comment}{/*element*/},\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_attribute}{XMLAttribute}}*\ \textcolor{comment}{/*firstAttribute*/}\ )\ \ \ \ \{}
+\DoxyCodeLine{00495\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00496\ \ \ \ \ \}}
+\DoxyCodeLine{00498\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_visitor_a772f10ddc83f881956d32628faa16eb6}{VisitExit}}(\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_element}{XMLElement}}\&\ \textcolor{comment}{/*element*/}\ )\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00499\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00500\ \ \ \ \ \}}
+\DoxyCodeLine{00501\ }
+\DoxyCodeLine{00503\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_visitor_adc75bd459fc7ba8223b50f0616767f9a}{Visit}}(\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_declaration}{XMLDeclaration}}\&\ \textcolor{comment}{/*declaration*/}\ )\ \ \ \ \ \{}
+\DoxyCodeLine{00504\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00505\ \ \ \ \ \}}
+\DoxyCodeLine{00507\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_visitor_af30233565856480ea48b6fa0d6dec65b}{Visit}}(\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_text}{XMLText}}\&\ \textcolor{comment}{/*text*/}\ )\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00508\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00509\ \ \ \ \ \}}
+\DoxyCodeLine{00511\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_visitor_acc8147fb5a85f6c65721654e427752d7}{Visit}}(\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_comment}{XMLComment}}\&\ \textcolor{comment}{/*comment*/}\ )\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00512\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00513\ \ \ \ \ \}}
+\DoxyCodeLine{00515\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_visitor_a14e4748387c34bf53d24e8119bb1f292}{Visit}}(\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_unknown}{XMLUnknown}}\&\ \textcolor{comment}{/*unknown*/}\ )\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00516\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00517\ \ \ \ \ \}}
+\DoxyCodeLine{00518\ \};}
+\DoxyCodeLine{00519\ }
+\DoxyCodeLine{00520\ \textcolor{comment}{//\ WARNING:\ must\ match\ XMLDocument::\_errorNames[]}}
+\DoxyCodeLine{00521\ \textcolor{keyword}{enum}\ XMLError\ \{}
+\DoxyCodeLine{00522\ \ \ \ \ XML\_SUCCESS\ =\ 0,}
+\DoxyCodeLine{00523\ \ \ \ \ XML\_NO\_ATTRIBUTE,}
+\DoxyCodeLine{00524\ \ \ \ \ XML\_WRONG\_ATTRIBUTE\_TYPE,}
+\DoxyCodeLine{00525\ \ \ \ \ XML\_ERROR\_FILE\_NOT\_FOUND,}
+\DoxyCodeLine{00526\ \ \ \ \ XML\_ERROR\_FILE\_COULD\_NOT\_BE\_OPENED,}
+\DoxyCodeLine{00527\ \ \ \ \ XML\_ERROR\_FILE\_READ\_ERROR,}
+\DoxyCodeLine{00528\ \ \ \ \ UNUSED\_XML\_ERROR\_ELEMENT\_MISMATCH,\ \ \textcolor{comment}{//\ remove\ at\ next\ major\ version}}
+\DoxyCodeLine{00529\ \ \ \ \ XML\_ERROR\_PARSING\_ELEMENT,}
+\DoxyCodeLine{00530\ \ \ \ \ XML\_ERROR\_PARSING\_ATTRIBUTE,}
+\DoxyCodeLine{00531\ \ \ \ \ UNUSED\_XML\_ERROR\_IDENTIFYING\_TAG,\ \ \ \textcolor{comment}{//\ remove\ at\ next\ major\ version}}
+\DoxyCodeLine{00532\ \ \ \ \ XML\_ERROR\_PARSING\_TEXT,}
+\DoxyCodeLine{00533\ \ \ \ \ XML\_ERROR\_PARSING\_CDATA,}
+\DoxyCodeLine{00534\ \ \ \ \ XML\_ERROR\_PARSING\_COMMENT,}
+\DoxyCodeLine{00535\ \ \ \ \ XML\_ERROR\_PARSING\_DECLARATION,}
+\DoxyCodeLine{00536\ \ \ \ \ XML\_ERROR\_PARSING\_UNKNOWN,}
+\DoxyCodeLine{00537\ \ \ \ \ XML\_ERROR\_EMPTY\_DOCUMENT,}
+\DoxyCodeLine{00538\ \ \ \ \ XML\_ERROR\_MISMATCHED\_ELEMENT,}
+\DoxyCodeLine{00539\ \ \ \ \ XML\_ERROR\_PARSING,}
+\DoxyCodeLine{00540\ \ \ \ \ XML\_CAN\_NOT\_CONVERT\_TEXT,}
+\DoxyCodeLine{00541\ \ \ \ \ XML\_NO\_TEXT\_NODE,}
+\DoxyCodeLine{00542\ \ \ \ \ XML\_ELEMENT\_DEPTH\_EXCEEDED,}
+\DoxyCodeLine{00543\ }
+\DoxyCodeLine{00544\ \ \ \ \ XML\_ERROR\_COUNT}
+\DoxyCodeLine{00545\ \};}
+\DoxyCodeLine{00546\ }
+\DoxyCodeLine{00547\ }
+\DoxyCodeLine{00548\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00549\ \textcolor{comment}{\ \ \ \ Utility\ functionality.}}
+\DoxyCodeLine{00550\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00551\ \textcolor{keyword}{class\ }TINYXML2\_LIB\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_util}{XMLUtil}}}
+\DoxyCodeLine{00552\ \{}
+\DoxyCodeLine{00553\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00554\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ SkipWhiteSpace(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ p,\ \textcolor{keywordtype}{int}*\ curLineNumPtr\ )\ \ \{}
+\DoxyCodeLine{00555\ \ \ \ \ \ \ \ \ TIXMLASSERT(\ p\ );}
+\DoxyCodeLine{00556\ }
+\DoxyCodeLine{00557\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}(\ IsWhiteSpace(*p)\ )\ \{}
+\DoxyCodeLine{00558\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (curLineNumPtr\ \&\&\ *p\ ==\ \textcolor{charliteral}{'\(\backslash\)n'})\ \{}
+\DoxyCodeLine{00559\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ++(*curLineNumPtr);}
+\DoxyCodeLine{00560\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00561\ \ \ \ \ \ \ \ \ \ \ \ \ ++p;}
+\DoxyCodeLine{00562\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00563\ \ \ \ \ \ \ \ \ TIXMLASSERT(\ p\ );}
+\DoxyCodeLine{00564\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ p;}
+\DoxyCodeLine{00565\ \ \ \ \ \}}
+\DoxyCodeLine{00566\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{char}*\ SkipWhiteSpace(\ \textcolor{keywordtype}{char}*\ p,\ \textcolor{keywordtype}{int}*\ curLineNumPtr\ )\ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00567\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{const\_cast<}\textcolor{keywordtype}{char}*\textcolor{keyword}{>}(\ SkipWhiteSpace(\ \textcolor{keyword}{const\_cast<}\textcolor{keyword}{const\ }\textcolor{keywordtype}{char}*\textcolor{keyword}{>}(p),\ curLineNumPtr\ )\ );}
+\DoxyCodeLine{00568\ \ \ \ \ \}}
+\DoxyCodeLine{00569\ }
+\DoxyCodeLine{00570\ \ \ \ \ \textcolor{comment}{//\ Anything\ in\ the\ high\ order\ range\ of\ UTF-\/8\ is\ assumed\ to\ not\ be\ whitespace.\ This\ isn't}}
+\DoxyCodeLine{00571\ \ \ \ \ \textcolor{comment}{//\ correct,\ but\ simple,\ and\ usually\ works.}}
+\DoxyCodeLine{00572\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ IsWhiteSpace(\ \textcolor{keywordtype}{char}\ p\ )\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00573\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ !IsUTF8Continuation(p)\ \&\&\ isspace(\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\textcolor{keyword}{>}(p)\ );}
+\DoxyCodeLine{00574\ \ \ \ \ \}}
+\DoxyCodeLine{00575\ \ \ \ \ }
+\DoxyCodeLine{00576\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ IsNameStartChar(\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ ch\ )\ \{}
+\DoxyCodeLine{00577\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ ch\ >=\ 128\ )\ \{}
+\DoxyCodeLine{00578\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ This\ is\ a\ heuristic\ guess\ in\ attempt\ to\ not\ implement\ Unicode-\/aware\ isalpha()}}
+\DoxyCodeLine{00579\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00580\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00581\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ isalpha(\ ch\ )\ )\ \{}
+\DoxyCodeLine{00582\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00583\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00584\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ch\ ==\ \textcolor{charliteral}{':'}\ ||\ ch\ ==\ \textcolor{charliteral}{'\_'};}
+\DoxyCodeLine{00585\ \ \ \ \ \}}
+\DoxyCodeLine{00586\ \ \ \ \ }
+\DoxyCodeLine{00587\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ IsNameChar(\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ ch\ )\ \{}
+\DoxyCodeLine{00588\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ IsNameStartChar(\ ch\ )}
+\DoxyCodeLine{00589\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ||\ isdigit(\ ch\ )}
+\DoxyCodeLine{00590\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ||\ ch\ ==\ \textcolor{charliteral}{'.'}}
+\DoxyCodeLine{00591\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ||\ ch\ ==\ \textcolor{charliteral}{'-\/'};}
+\DoxyCodeLine{00592\ \ \ \ \ \}}
+\DoxyCodeLine{00593\ }
+\DoxyCodeLine{00594\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ StringEqual(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ p,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ q,\ \textcolor{keywordtype}{int}\ nChar=INT\_MAX\ )\ \ \{}
+\DoxyCodeLine{00595\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ p\ ==\ q\ )\ \{}
+\DoxyCodeLine{00596\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00597\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00598\ \ \ \ \ \ \ \ \ TIXMLASSERT(\ p\ );}
+\DoxyCodeLine{00599\ \ \ \ \ \ \ \ \ TIXMLASSERT(\ q\ );}
+\DoxyCodeLine{00600\ \ \ \ \ \ \ \ \ TIXMLASSERT(\ nChar\ >=\ 0\ );}
+\DoxyCodeLine{00601\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ strncmp(\ p,\ q,\ nChar\ )\ ==\ 0;}
+\DoxyCodeLine{00602\ \ \ \ \ \}}
+\DoxyCodeLine{00603\ \ \ \ \ }
+\DoxyCodeLine{00604\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ IsUTF8Continuation(\ \textcolor{keywordtype}{char}\ p\ )\ \{}
+\DoxyCodeLine{00605\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (\ p\ \&\ 0x80\ )\ !=\ 0;}
+\DoxyCodeLine{00606\ \ \ \ \ \}}
+\DoxyCodeLine{00607\ }
+\DoxyCodeLine{00608\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ ReadBOM(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ p,\ \textcolor{keywordtype}{bool}*\ hasBOM\ );}
+\DoxyCodeLine{00609\ \ \ \ \ \textcolor{comment}{//\ p\ is\ the\ starting\ location,}}
+\DoxyCodeLine{00610\ \ \ \ \ \textcolor{comment}{//\ the\ UTF-\/8\ value\ of\ the\ entity\ will\ be\ placed\ in\ value,\ and\ length\ filled\ in.}}
+\DoxyCodeLine{00611\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ GetCharacterRef(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ p,\ \textcolor{keywordtype}{char}*\ value,\ \textcolor{keywordtype}{int}*\ length\ );}
+\DoxyCodeLine{00612\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ ConvertUTF32ToUTF8(\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}\ input,\ \textcolor{keywordtype}{char}*\ output,\ \textcolor{keywordtype}{int}*\ length\ );}
+\DoxyCodeLine{00613\ }
+\DoxyCodeLine{00614\ \ \ \ \ \textcolor{comment}{//\ converts\ primitive\ types\ to\ strings}}
+\DoxyCodeLine{00615\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ ToStr(\ \textcolor{keywordtype}{int}\ v,\ \textcolor{keywordtype}{char}*\ buffer,\ \textcolor{keywordtype}{int}\ bufferSize\ );}
+\DoxyCodeLine{00616\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ ToStr(\ \textcolor{keywordtype}{unsigned}\ v,\ \textcolor{keywordtype}{char}*\ buffer,\ \textcolor{keywordtype}{int}\ bufferSize\ );}
+\DoxyCodeLine{00617\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ ToStr(\ \textcolor{keywordtype}{bool}\ v,\ \textcolor{keywordtype}{char}*\ buffer,\ \textcolor{keywordtype}{int}\ bufferSize\ );}
+\DoxyCodeLine{00618\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ ToStr(\ \textcolor{keywordtype}{float}\ v,\ \textcolor{keywordtype}{char}*\ buffer,\ \textcolor{keywordtype}{int}\ bufferSize\ );}
+\DoxyCodeLine{00619\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ ToStr(\ \textcolor{keywordtype}{double}\ v,\ \textcolor{keywordtype}{char}*\ buffer,\ \textcolor{keywordtype}{int}\ bufferSize\ );}
+\DoxyCodeLine{00620\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ ToStr(int64\_t\ v,\ \textcolor{keywordtype}{char}*\ buffer,\ \textcolor{keywordtype}{int}\ bufferSize);}
+\DoxyCodeLine{00621\ }
+\DoxyCodeLine{00622\ \ \ \ \ \textcolor{comment}{//\ converts\ strings\ to\ primitive\ types}}
+\DoxyCodeLine{00623\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ ToInt(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ str,\ \textcolor{keywordtype}{int}*\ value\ );}
+\DoxyCodeLine{00624\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ ToUnsigned(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ str,\ \textcolor{keywordtype}{unsigned}*\ value\ );}
+\DoxyCodeLine{00625\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ ToBool(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ str,\ \textcolor{keywordtype}{bool}*\ value\ );}
+\DoxyCodeLine{00626\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ ToFloat(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ str,\ \textcolor{keywordtype}{float}*\ value\ );}
+\DoxyCodeLine{00627\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ ToDouble(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ str,\ \textcolor{keywordtype}{double}*\ value\ );}
+\DoxyCodeLine{00628\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ ToInt64(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ str,\ int64\_t*\ value);}
+\DoxyCodeLine{00629\ }
+\DoxyCodeLine{00630\ \ \ \ \ \textcolor{comment}{//\ Changes\ what\ is\ serialized\ for\ a\ boolean\ value.}}
+\DoxyCodeLine{00631\ \ \ \ \ \textcolor{comment}{//\ Default\ to\ "{}true"{}\ and\ "{}false"{}.\ Shouldn't\ be\ changed}}
+\DoxyCodeLine{00632\ \ \ \ \ \textcolor{comment}{//\ unless\ you\ have\ a\ special\ testing\ or\ compatibility\ need.}}
+\DoxyCodeLine{00633\ \ \ \ \ \textcolor{comment}{//\ Be\ careful:\ static,\ global,\ \&\ not\ thread\ safe.}}
+\DoxyCodeLine{00634\ \ \ \ \ \textcolor{comment}{//\ Be\ sure\ to\ set\ static\ const\ memory\ as\ parameters.}}
+\DoxyCodeLine{00635\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ SetBoolSerialization(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ writeTrue,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ writeFalse);}
+\DoxyCodeLine{00636\ }
+\DoxyCodeLine{00637\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00638\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ writeBoolTrue;}
+\DoxyCodeLine{00639\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ writeBoolFalse;}
+\DoxyCodeLine{00640\ \};}
+\DoxyCodeLine{00641\ }
+\DoxyCodeLine{00642\ }
+\DoxyCodeLine{00668\ \textcolor{keyword}{class\ }TINYXML2\_LIB\ XMLNode}
+\DoxyCodeLine{00669\ \{}
+\DoxyCodeLine{00670\ \ \ \ \ \textcolor{keyword}{friend}\ \textcolor{keyword}{class\ }XMLDocument;}
+\DoxyCodeLine{00671\ \ \ \ \ \textcolor{keyword}{friend}\ \textcolor{keyword}{class\ }XMLElement;}
+\DoxyCodeLine{00672\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00673\ }
+\DoxyCodeLine{00675\ \ \ \ \ \textcolor{keyword}{const}\ XMLDocument*\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_node_a6ce3bbe80357f5a4dc5db31a66f2bb18}{GetDocument}}()\textcolor{keyword}{\ const\ \ }\{}
+\DoxyCodeLine{00676\ \ \ \ \ \ \ \ \ TIXMLASSERT(\ \_document\ );}
+\DoxyCodeLine{00677\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \_document;}
+\DoxyCodeLine{00678\ \ \ \ \ \}}
+\DoxyCodeLine{00680\ \ \ \ \ XMLDocument*\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_node_a48d1695f7c834129e072548957a50501}{GetDocument}}()\ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00681\ \ \ \ \ \ \ \ \ TIXMLASSERT(\ \_document\ );}
+\DoxyCodeLine{00682\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \_document;}
+\DoxyCodeLine{00683\ \ \ \ \ \}}
+\DoxyCodeLine{00684\ }
+\DoxyCodeLine{00686\ \ \ \ \ \textcolor{keyword}{virtual}\ XMLElement*\ \ \ \ \ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_node_a9417e1f8a9787ae27741605493514b18}{ToElement}}()\ \ \ \ \ \{}
+\DoxyCodeLine{00687\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{00688\ \ \ \ \ \}}
+\DoxyCodeLine{00690\ \ \ \ \ \textcolor{keyword}{virtual}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_text}{XMLText}}*\ \ \ \ \ \ \ \ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_node_a0aea8c9c5853c35a06da1988486abc60}{ToText}}()\ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00691\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{00692\ \ \ \ \ \}}
+\DoxyCodeLine{00694\ \ \ \ \ \textcolor{keyword}{virtual}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_comment}{XMLComment}}*\ \ \ \ \ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_node_a5dc13f02ae49e3fa609e426f47c8466d}{ToComment}}()\ \ \ \ \ \{}
+\DoxyCodeLine{00695\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{00696\ \ \ \ \ \}}
+\DoxyCodeLine{00698\ \ \ \ \ \textcolor{keyword}{virtual}\ XMLDocument*\ \ \ \ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_node_a6107c3f57ab6e0755959947762953652}{ToDocument}}()\ \ \ \ \{}
+\DoxyCodeLine{00699\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{00700\ \ \ \ \ \}}
+\DoxyCodeLine{00702\ \ \ \ \ \textcolor{keyword}{virtual}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_declaration}{XMLDeclaration}}*\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_node_a12aa783a3a4445ad5557c7d56cd8dc4a}{ToDeclaration}}()\ \{}
+\DoxyCodeLine{00703\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{00704\ \ \ \ \ \}}
+\DoxyCodeLine{00706\ \ \ \ \ \textcolor{keyword}{virtual}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_unknown}{XMLUnknown}}*\ \ \ \ \ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_node_aa8a2dd38b786c3b8d406c2047753cbfd}{ToUnknown}}()\ \ \ \ \ \{}
+\DoxyCodeLine{00707\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{00708\ \ \ \ \ \}}
+\DoxyCodeLine{00709\ }
+\DoxyCodeLine{00710\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_element}{XMLElement}}*\ \ \ \ \ \ \ ToElement()\textcolor{keyword}{\ const\ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00711\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{00712\ \ \ \ \ \}}
+\DoxyCodeLine{00713\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keyword}{const}\ XMLText*\ \ \ \ \ \ \ \ \ \ ToText()\textcolor{keyword}{\ const\ \ \ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00714\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{00715\ \ \ \ \ \}}
+\DoxyCodeLine{00716\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keyword}{const}\ XMLComment*\ \ \ \ \ \ \ ToComment()\textcolor{keyword}{\ const\ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00717\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{00718\ \ \ \ \ \}}
+\DoxyCodeLine{00719\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keyword}{const}\ XMLDocument*\ \ \ \ \ \ ToDocument()\textcolor{keyword}{\ const\ \ \ \ \ \ }\{}
+\DoxyCodeLine{00720\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{00721\ \ \ \ \ \}}
+\DoxyCodeLine{00722\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keyword}{const}\ XMLDeclaration*\ \ \ ToDeclaration()\textcolor{keyword}{\ const\ \ \ }\{}
+\DoxyCodeLine{00723\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{00724\ \ \ \ \ \}}
+\DoxyCodeLine{00725\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keyword}{const}\ XMLUnknown*\ \ \ \ \ \ \ ToUnknown()\textcolor{keyword}{\ const\ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00726\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{00727\ \ \ \ \ \}}
+\DoxyCodeLine{00728\ }
+\DoxyCodeLine{00738\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ Value()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00739\ }
+\DoxyCodeLine{00743\ \ \ \ \ \textcolor{keywordtype}{void}\ SetValue(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ val,\ \textcolor{keywordtype}{bool}\ staticMem=\textcolor{keyword}{false}\ );}
+\DoxyCodeLine{00744\ }
+\DoxyCodeLine{00746\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_node_a9b5fc636646fda761d342c72e91cb286}{GetLineNum}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \_parseLineNum;\ \}}
+\DoxyCodeLine{00747\ }
+\DoxyCodeLine{00749\ \ \ \ \ \textcolor{keyword}{const}\ XMLNode*\ \ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_node_a4d76b30d1bf4b166d3e4fa3419d51595}{Parent}}()\textcolor{keyword}{\ const\ \ \ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00750\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \_parent;}
+\DoxyCodeLine{00751\ \ \ \ \ \}}
+\DoxyCodeLine{00752\ }
+\DoxyCodeLine{00753\ \ \ \ \ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_node}{XMLNode}}*\ Parent()\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00754\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \_parent;}
+\DoxyCodeLine{00755\ \ \ \ \ \}}
+\DoxyCodeLine{00756\ }
+\DoxyCodeLine{00758\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_node_ac3ab489e6e202a3cd1762d3b332e89d4}{NoChildren}}()\textcolor{keyword}{\ const\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00759\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ !\_firstChild;}
+\DoxyCodeLine{00760\ \ \ \ \ \}}
+\DoxyCodeLine{00761\ }
+\DoxyCodeLine{00763\ \ \ \ \ \textcolor{keyword}{const}\ XMLNode*\ \ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_node_abcc2e572dce329539689b426a0840661}{FirstChild}}()\textcolor{keyword}{\ const\ \ \ \ \ \ }\{}
+\DoxyCodeLine{00764\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \_firstChild;}
+\DoxyCodeLine{00765\ \ \ \ \ \}}
+\DoxyCodeLine{00766\ }
+\DoxyCodeLine{00767\ \ \ \ \ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_node}{XMLNode}}*\ \ \ \ \ \ \ \ FirstChild()\ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00768\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \_firstChild;}
+\DoxyCodeLine{00769\ \ \ \ \ \}}
+\DoxyCodeLine{00770\ }
+\DoxyCodeLine{00774\ \ \ \ \ \textcolor{keyword}{const}\ XMLElement*\ FirstChildElement(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ name\ =\ 0\ )\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00775\ }
+\DoxyCodeLine{00776\ \ \ \ \ XMLElement*\ FirstChildElement(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ name\ =\ 0\ )\ \ \ \{}
+\DoxyCodeLine{00777\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{const\_cast<}XMLElement*\textcolor{keyword}{>}(\textcolor{keyword}{const\_cast<}\textcolor{keyword}{const\ }XMLNode*\textcolor{keyword}{>}(\textcolor{keyword}{this})-\/>FirstChildElement(\ name\ ));}
+\DoxyCodeLine{00778\ \ \ \ \ \}}
+\DoxyCodeLine{00779\ }
+\DoxyCodeLine{00781\ \ \ \ \ \textcolor{keyword}{const}\ XMLNode*\ \ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_node_a69a29bb8263ff5e9815be180bf27e7af}{LastChild}}()\textcolor{keyword}{\ const\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00782\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \_lastChild;}
+\DoxyCodeLine{00783\ \ \ \ \ \}}
+\DoxyCodeLine{00784\ }
+\DoxyCodeLine{00785\ \ \ \ \ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_node}{XMLNode}}*\ \ \ \ \ \ \ \ LastChild()\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00786\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \_lastChild;}
+\DoxyCodeLine{00787\ \ \ \ \ \}}
+\DoxyCodeLine{00788\ }
+\DoxyCodeLine{00792\ \ \ \ \ \textcolor{keyword}{const}\ XMLElement*\ LastChildElement(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ name\ =\ 0\ )\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00793\ }
+\DoxyCodeLine{00794\ \ \ \ \ XMLElement*\ LastChildElement(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ name\ =\ 0\ )\ \ \ \ \{}
+\DoxyCodeLine{00795\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{const\_cast<}XMLElement*\textcolor{keyword}{>}(\textcolor{keyword}{const\_cast<}\textcolor{keyword}{const\ }XMLNode*\textcolor{keyword}{>}(\textcolor{keyword}{this})-\/>LastChildElement(name)\ );}
+\DoxyCodeLine{00796\ \ \ \ \ \}}
+\DoxyCodeLine{00797\ }
+\DoxyCodeLine{00799\ \ \ \ \ \textcolor{keyword}{const}\ XMLNode*\ \ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_node_a92ee96b0d8628bc609f1d34e56d69dfa}{PreviousSibling}}()\textcolor{keyword}{\ const\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00800\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \_prev;}
+\DoxyCodeLine{00801\ \ \ \ \ \}}
+\DoxyCodeLine{00802\ }
+\DoxyCodeLine{00803\ \ \ \ \ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_node}{XMLNode}}*\ \ \ \ PreviousSibling()\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00804\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \_prev;}
+\DoxyCodeLine{00805\ \ \ \ \ \}}
+\DoxyCodeLine{00806\ }
+\DoxyCodeLine{00808\ \ \ \ \ \textcolor{keyword}{const}\ XMLElement*\ \ \ PreviousSiblingElement(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ name\ =\ 0\ )\ \textcolor{keyword}{const}\ ;}
+\DoxyCodeLine{00809\ }
+\DoxyCodeLine{00810\ \ \ \ \ XMLElement*\ PreviousSiblingElement(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ name\ =\ 0\ )\ \{}
+\DoxyCodeLine{00811\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{const\_cast<}XMLElement*\textcolor{keyword}{>}(\textcolor{keyword}{const\_cast<}\textcolor{keyword}{const\ }XMLNode*\textcolor{keyword}{>}(\textcolor{keyword}{this})-\/>PreviousSiblingElement(\ name\ )\ );}
+\DoxyCodeLine{00812\ \ \ \ \ \}}
+\DoxyCodeLine{00813\ }
+\DoxyCodeLine{00815\ \ \ \ \ \textcolor{keyword}{const}\ XMLNode*\ \ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_node_af986c568061b020cf6232bec091388c0}{NextSibling}}()\textcolor{keyword}{\ const\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00816\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \_next;}
+\DoxyCodeLine{00817\ \ \ \ \ \}}
+\DoxyCodeLine{00818\ }
+\DoxyCodeLine{00819\ \ \ \ \ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_node}{XMLNode}}*\ \ \ \ NextSibling()\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00820\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \_next;}
+\DoxyCodeLine{00821\ \ \ \ \ \}}
+\DoxyCodeLine{00822\ }
+\DoxyCodeLine{00824\ \ \ \ \ \textcolor{keyword}{const}\ XMLElement*\ \ \ NextSiblingElement(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ name\ =\ 0\ )\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00825\ }
+\DoxyCodeLine{00826\ \ \ \ \ XMLElement*\ NextSiblingElement(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ name\ =\ 0\ )\ \ \{}
+\DoxyCodeLine{00827\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{const\_cast<}XMLElement*\textcolor{keyword}{>}(\textcolor{keyword}{const\_cast<}\textcolor{keyword}{const\ }XMLNode*\textcolor{keyword}{>}(\textcolor{keyword}{this})-\/>NextSiblingElement(\ name\ )\ );}
+\DoxyCodeLine{00828\ \ \ \ \ \}}
+\DoxyCodeLine{00829\ }
+\DoxyCodeLine{00837\ \ \ \ \ XMLNode*\ InsertEndChild(\ XMLNode*\ addThis\ );}
+\DoxyCodeLine{00838\ }
+\DoxyCodeLine{00839\ \ \ \ \ XMLNode*\ LinkEndChild(\ XMLNode*\ addThis\ )\ \ \ \{}
+\DoxyCodeLine{00840\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ InsertEndChild(\ addThis\ );}
+\DoxyCodeLine{00841\ \ \ \ \ \}}
+\DoxyCodeLine{00849\ \ \ \ \ XMLNode*\ InsertFirstChild(\ XMLNode*\ addThis\ );}
+\DoxyCodeLine{00858\ \ \ \ \ XMLNode*\ InsertAfterChild(\ XMLNode*\ afterThis,\ XMLNode*\ addThis\ );}
+\DoxyCodeLine{00859\ }
+\DoxyCodeLine{00863\ \ \ \ \ \textcolor{keywordtype}{void}\ DeleteChildren();}
+\DoxyCodeLine{00864\ }
+\DoxyCodeLine{00868\ \ \ \ \ \textcolor{keywordtype}{void}\ DeleteChild(\ XMLNode*\ node\ );}
+\DoxyCodeLine{00869\ }
+\DoxyCodeLine{00879\ \ \ \ \ \textcolor{keyword}{virtual}\ XMLNode*\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_node_a9046880c05b81ad99ee645f4b2a53ecd}{ShallowClone}}(\ XMLDocument*\ document\ )\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{00880\ }
+\DoxyCodeLine{00894\ \ \ \ \ XMLNode*\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_node_a3bb369fd733f1989b751d99a9417adab}{DeepClone}}(\ XMLDocument*\ target\ )\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00895\ }
+\DoxyCodeLine{00902\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_node_a7ce18b751c3ea09eac292dca264f9226}{ShallowEqual}}(\ \textcolor{keyword}{const}\ XMLNode*\ compare\ )\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{00903\ }
+\DoxyCodeLine{00926\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_node_a81e66df0a44c67a7af17f3b77a152785}{Accept}}(\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_visitor}{XMLVisitor}}*\ visitor\ )\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{00927\ }
+\DoxyCodeLine{00933\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_node_a002978fc889cc011d143185f2377eca2}{SetUserData}}(\textcolor{keywordtype}{void}*\ userData)\ \ \ \ \{\ \_userData\ =\ userData;\ \}}
+\DoxyCodeLine{00934\ }
+\DoxyCodeLine{00940\ \ \ \ \ \textcolor{keywordtype}{void}*\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_node_a18cc02ebd0b06f6bf5db7ef87653e00e}{GetUserData}}()\textcolor{keyword}{\ const\ \ \ \ \ \ \ \ \ \ \ }\{\ \textcolor{keywordflow}{return}\ \_userData;\ \}}
+\DoxyCodeLine{00941\ }
+\DoxyCodeLine{00942\ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00943\ \ \ \ \ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_node}{XMLNode}}(\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_document}{XMLDocument}}*\ );}
+\DoxyCodeLine{00944\ \ \ \ \ \textcolor{keyword}{virtual}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_node}{\string~XMLNode}}();}
+\DoxyCodeLine{00945\ }
+\DoxyCodeLine{00946\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{char}*\ ParseDeep(\ \textcolor{keywordtype}{char}*\ p,\ \doxymbox{\hyperlink{classtinyxml2_1_1_str_pair}{StrPair}}*\ parentEndTag,\ \textcolor{keywordtype}{int}*\ curLineNumPtr);}
+\DoxyCodeLine{00947\ }
+\DoxyCodeLine{00948\ \ \ \ \ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_document}{XMLDocument}}*\ \ \ \ \_document;}
+\DoxyCodeLine{00949\ \ \ \ \ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_node}{XMLNode}}*\ \ \ \ \ \ \ \ \_parent;}
+\DoxyCodeLine{00950\ \ \ \ \ \textcolor{keyword}{mutable}\ \doxymbox{\hyperlink{classtinyxml2_1_1_str_pair}{StrPair}}\ \_value;}
+\DoxyCodeLine{00951\ \ \ \ \ \textcolor{keywordtype}{int}\ \ \ \ \ \ \ \ \ \ \ \ \ \_parseLineNum;}
+\DoxyCodeLine{00952\ }
+\DoxyCodeLine{00953\ \ \ \ \ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_node}{XMLNode}}*\ \ \ \ \ \ \ \ \_firstChild;}
+\DoxyCodeLine{00954\ \ \ \ \ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_node}{XMLNode}}*\ \ \ \ \ \ \ \ \_lastChild;}
+\DoxyCodeLine{00955\ }
+\DoxyCodeLine{00956\ \ \ \ \ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_node}{XMLNode}}*\ \ \ \ \ \ \ \ \_prev;}
+\DoxyCodeLine{00957\ \ \ \ \ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_node}{XMLNode}}*\ \ \ \ \ \ \ \ \_next;}
+\DoxyCodeLine{00958\ }
+\DoxyCodeLine{00959\ \ \ \ \ \textcolor{keywordtype}{void}*\ \ \ \ \ \ \ \ \ \ \ \_userData;}
+\DoxyCodeLine{00960\ }
+\DoxyCodeLine{00961\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00962\ \ \ \ \ \doxymbox{\hyperlink{classtinyxml2_1_1_mem_pool}{MemPool}}*\ \ \ \ \ \ \ \ \_memPool;}
+\DoxyCodeLine{00963\ \ \ \ \ \textcolor{keywordtype}{void}\ Unlink(\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_node}{XMLNode}}*\ child\ );}
+\DoxyCodeLine{00964\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ DeleteNode(\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_node}{XMLNode}}*\ node\ );}
+\DoxyCodeLine{00965\ \ \ \ \ \textcolor{keywordtype}{void}\ InsertChildPreamble(\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_node}{XMLNode}}*\ insertThis\ )\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00966\ \ \ \ \ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_element}{XMLElement}}*\ ToElementWithName(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ name\ )\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00967\ }
+\DoxyCodeLine{00968\ \ \ \ \ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_node}{XMLNode}}(\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_node}{XMLNode}}\&\ );\ \ \textcolor{comment}{//\ not\ supported}}
+\DoxyCodeLine{00969\ \ \ \ \ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_node}{XMLNode}}\&\ operator=(\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_node}{XMLNode}}\&\ );\ \ \ \textcolor{comment}{//\ not\ supported}}
+\DoxyCodeLine{00970\ \};}
+\DoxyCodeLine{00971\ }
+\DoxyCodeLine{00972\ }
+\DoxyCodeLine{00985\ \textcolor{keyword}{class\ }TINYXML2\_LIB\ XMLText\ :\ \textcolor{keyword}{public}\ XMLNode}
+\DoxyCodeLine{00986\ \{}
+\DoxyCodeLine{00987\ \ \ \ \ \textcolor{keyword}{friend}\ \textcolor{keyword}{class\ }XMLDocument;}
+\DoxyCodeLine{00988\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00989\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_text_a537c60d7e18fb59c45ac2737a29ac47a}{Accept}}(\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_visitor}{XMLVisitor}}*\ visitor\ )\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00990\ }
+\DoxyCodeLine{00991\ \ \ \ \ \textcolor{keyword}{virtual}\ XMLText*\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_text_aa5f022b8424f270302ff281c0b9c360b}{ToText}}()\ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00992\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{this};}
+\DoxyCodeLine{00993\ \ \ \ \ \}}
+\DoxyCodeLine{00994\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_text}{XMLText}}*\ ToText()\textcolor{keyword}{\ const\ \ \ }\{}
+\DoxyCodeLine{00995\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{this};}
+\DoxyCodeLine{00996\ \ \ \ \ \}}
+\DoxyCodeLine{00997\ }
+\DoxyCodeLine{00999\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_text_ad080357d76ab7cc59d7651249949329d}{SetCData}}(\ \textcolor{keywordtype}{bool}\ isCData\ )\ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01000\ \ \ \ \ \ \ \ \ \_isCData\ =\ isCData;}
+\DoxyCodeLine{01001\ \ \ \ \ \}}
+\DoxyCodeLine{01003\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_text_ac1bb5ea4166c320882d9e0ad16fd385b}{CData}}()\textcolor{keyword}{\ const\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{01004\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \_isCData;}
+\DoxyCodeLine{01005\ \ \ \ \ \}}
+\DoxyCodeLine{01006\ }
+\DoxyCodeLine{01007\ \ \ \ \ \textcolor{keyword}{virtual}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_node}{XMLNode}}*\ ShallowClone(\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_document}{XMLDocument}}*\ document\ )\ \textcolor{keyword}{const};}
+\DoxyCodeLine{01008\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ ShallowEqual(\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_node}{XMLNode}}*\ compare\ )\ \textcolor{keyword}{const};}
+\DoxyCodeLine{01009\ }
+\DoxyCodeLine{01010\ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{01011\ \ \ \ \ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_text}{XMLText}}(\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_document}{XMLDocument}}*\ doc\ )\ :\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_node}{XMLNode}}(\ doc\ ),\ \_isCData(\ false\ )\ \{\}}
+\DoxyCodeLine{01012\ \ \ \ \ \textcolor{keyword}{virtual}\ \string~XMLText()\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{\}}
+\DoxyCodeLine{01013\ }
+\DoxyCodeLine{01014\ \ \ \ \ \textcolor{keywordtype}{char}*\ ParseDeep(\ \textcolor{keywordtype}{char}*\ p,\ StrPair*\ parentEndTag,\ \textcolor{keywordtype}{int}*\ curLineNumPtr\ );}
+\DoxyCodeLine{01015\ }
+\DoxyCodeLine{01016\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{01017\ \ \ \ \ \textcolor{keywordtype}{bool}\ \_isCData;}
+\DoxyCodeLine{01018\ }
+\DoxyCodeLine{01019\ \ \ \ \ XMLText(\ \textcolor{keyword}{const}\ XMLText\&\ );\ \ \textcolor{comment}{//\ not\ supported}}
+\DoxyCodeLine{01020\ \ \ \ \ XMLText\&\ operator=(\ \textcolor{keyword}{const}\ XMLText\&\ );\ \ \ \textcolor{comment}{//\ not\ supported}}
+\DoxyCodeLine{01021\ \};}
+\DoxyCodeLine{01022\ }
+\DoxyCodeLine{01023\ }
+\DoxyCodeLine{01025\ \textcolor{keyword}{class\ }TINYXML2\_LIB\ XMLComment\ :\ \textcolor{keyword}{public}\ XMLNode}
+\DoxyCodeLine{01026\ \{}
+\DoxyCodeLine{01027\ \ \ \ \ \textcolor{keyword}{friend}\ \textcolor{keyword}{class\ }XMLDocument;}
+\DoxyCodeLine{01028\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{01029\ \ \ \ \ \textcolor{keyword}{virtual}\ XMLComment*\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_comment_a5aa77d6d2499f6b81074ae0d20336c7e}{ToComment}}()\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01030\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{this};}
+\DoxyCodeLine{01031\ \ \ \ \ \}}
+\DoxyCodeLine{01032\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_comment}{XMLComment}}*\ ToComment()\textcolor{keyword}{\ const\ \ \ \ \ }\{}
+\DoxyCodeLine{01033\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{this};}
+\DoxyCodeLine{01034\ \ \ \ \ \}}
+\DoxyCodeLine{01035\ }
+\DoxyCodeLine{01036\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ Accept(\ XMLVisitor*\ visitor\ )\ \textcolor{keyword}{const};}
+\DoxyCodeLine{01037\ }
+\DoxyCodeLine{01038\ \ \ \ \ \textcolor{keyword}{virtual}\ XMLNode*\ ShallowClone(\ XMLDocument*\ document\ )\ \textcolor{keyword}{const};}
+\DoxyCodeLine{01039\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ ShallowEqual(\ \textcolor{keyword}{const}\ XMLNode*\ compare\ )\ \textcolor{keyword}{const};}
+\DoxyCodeLine{01040\ }
+\DoxyCodeLine{01041\ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{01042\ \ \ \ \ XMLComment(\ XMLDocument*\ doc\ );}
+\DoxyCodeLine{01043\ \ \ \ \ \textcolor{keyword}{virtual}\ \string~XMLComment();}
+\DoxyCodeLine{01044\ }
+\DoxyCodeLine{01045\ \ \ \ \ \textcolor{keywordtype}{char}*\ ParseDeep(\ \textcolor{keywordtype}{char}*\ p,\ StrPair*\ parentEndTag,\ \textcolor{keywordtype}{int}*\ curLineNumPtr);}
+\DoxyCodeLine{01046\ }
+\DoxyCodeLine{01047\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{01048\ \ \ \ \ XMLComment(\ \textcolor{keyword}{const}\ XMLComment\&\ );\ \ \ \ \textcolor{comment}{//\ not\ supported}}
+\DoxyCodeLine{01049\ \ \ \ \ XMLComment\&\ operator=(\ \textcolor{keyword}{const}\ XMLComment\&\ );\ \textcolor{comment}{//\ not\ supported}}
+\DoxyCodeLine{01050\ \};}
+\DoxyCodeLine{01051\ }
+\DoxyCodeLine{01052\ }
+\DoxyCodeLine{01064\ \textcolor{keyword}{class\ }TINYXML2\_LIB\ XMLDeclaration\ :\ \textcolor{keyword}{public}\ XMLNode}
+\DoxyCodeLine{01065\ \{}
+\DoxyCodeLine{01066\ \ \ \ \ \textcolor{keyword}{friend}\ \textcolor{keyword}{class\ }XMLDocument;}
+\DoxyCodeLine{01067\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{01068\ \ \ \ \ \textcolor{keyword}{virtual}\ XMLDeclaration*\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_declaration_aa24eb89ab36119e0b18ee06c82ff6c24}{ToDeclaration}}()\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01069\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{this};}
+\DoxyCodeLine{01070\ \ \ \ \ \}}
+\DoxyCodeLine{01071\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_declaration}{XMLDeclaration}}*\ ToDeclaration()\textcolor{keyword}{\ const\ \ \ \ \ }\{}
+\DoxyCodeLine{01072\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{this};}
+\DoxyCodeLine{01073\ \ \ \ \ \}}
+\DoxyCodeLine{01074\ }
+\DoxyCodeLine{01075\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ Accept(\ XMLVisitor*\ visitor\ )\ \textcolor{keyword}{const};}
+\DoxyCodeLine{01076\ }
+\DoxyCodeLine{01077\ \ \ \ \ \textcolor{keyword}{virtual}\ XMLNode*\ ShallowClone(\ XMLDocument*\ document\ )\ \textcolor{keyword}{const};}
+\DoxyCodeLine{01078\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ ShallowEqual(\ \textcolor{keyword}{const}\ XMLNode*\ compare\ )\ \textcolor{keyword}{const};}
+\DoxyCodeLine{01079\ }
+\DoxyCodeLine{01080\ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{01081\ \ \ \ \ XMLDeclaration(\ XMLDocument*\ doc\ );}
+\DoxyCodeLine{01082\ \ \ \ \ \textcolor{keyword}{virtual}\ \string~XMLDeclaration();}
+\DoxyCodeLine{01083\ }
+\DoxyCodeLine{01084\ \ \ \ \ \textcolor{keywordtype}{char}*\ ParseDeep(\ \textcolor{keywordtype}{char}*\ p,\ StrPair*\ parentEndTag,\ \textcolor{keywordtype}{int}*\ curLineNumPtr\ );}
+\DoxyCodeLine{01085\ }
+\DoxyCodeLine{01086\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{01087\ \ \ \ \ XMLDeclaration(\ \textcolor{keyword}{const}\ XMLDeclaration\&\ );\ \ \ \ \textcolor{comment}{//\ not\ supported}}
+\DoxyCodeLine{01088\ \ \ \ \ XMLDeclaration\&\ operator=(\ \textcolor{keyword}{const}\ XMLDeclaration\&\ );\ \textcolor{comment}{//\ not\ supported}}
+\DoxyCodeLine{01089\ \};}
+\DoxyCodeLine{01090\ }
+\DoxyCodeLine{01091\ }
+\DoxyCodeLine{01099\ \textcolor{keyword}{class\ }TINYXML2\_LIB\ XMLUnknown\ :\ \textcolor{keyword}{public}\ XMLNode}
+\DoxyCodeLine{01100\ \{}
+\DoxyCodeLine{01101\ \ \ \ \ \textcolor{keyword}{friend}\ \textcolor{keyword}{class\ }XMLDocument;}
+\DoxyCodeLine{01102\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{01103\ \ \ \ \ \textcolor{keyword}{virtual}\ XMLUnknown*\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_unknown_a7724b3762750762aa7582322f7047086}{ToUnknown}}()\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01104\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{this};}
+\DoxyCodeLine{01105\ \ \ \ \ \}}
+\DoxyCodeLine{01106\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_unknown}{XMLUnknown}}*\ ToUnknown()\textcolor{keyword}{\ const\ \ \ \ \ }\{}
+\DoxyCodeLine{01107\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{this};}
+\DoxyCodeLine{01108\ \ \ \ \ \}}
+\DoxyCodeLine{01109\ }
+\DoxyCodeLine{01110\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ Accept(\ XMLVisitor*\ visitor\ )\ \textcolor{keyword}{const};}
+\DoxyCodeLine{01111\ }
+\DoxyCodeLine{01112\ \ \ \ \ \textcolor{keyword}{virtual}\ XMLNode*\ ShallowClone(\ XMLDocument*\ document\ )\ \textcolor{keyword}{const};}
+\DoxyCodeLine{01113\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ ShallowEqual(\ \textcolor{keyword}{const}\ XMLNode*\ compare\ )\ \textcolor{keyword}{const};}
+\DoxyCodeLine{01114\ }
+\DoxyCodeLine{01115\ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{01116\ \ \ \ \ XMLUnknown(\ XMLDocument*\ doc\ );}
+\DoxyCodeLine{01117\ \ \ \ \ \textcolor{keyword}{virtual}\ \string~XMLUnknown();}
+\DoxyCodeLine{01118\ }
+\DoxyCodeLine{01119\ \ \ \ \ \textcolor{keywordtype}{char}*\ ParseDeep(\ \textcolor{keywordtype}{char}*\ p,\ StrPair*\ parentEndTag,\ \textcolor{keywordtype}{int}*\ curLineNumPtr\ );}
+\DoxyCodeLine{01120\ }
+\DoxyCodeLine{01121\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{01122\ \ \ \ \ XMLUnknown(\ \textcolor{keyword}{const}\ XMLUnknown\&\ );\ \ \ \ \textcolor{comment}{//\ not\ supported}}
+\DoxyCodeLine{01123\ \ \ \ \ XMLUnknown\&\ operator=(\ \textcolor{keyword}{const}\ XMLUnknown\&\ );\ \textcolor{comment}{//\ not\ supported}}
+\DoxyCodeLine{01124\ \};}
+\DoxyCodeLine{01125\ }
+\DoxyCodeLine{01126\ }
+\DoxyCodeLine{01127\ }
+\DoxyCodeLine{01134\ \textcolor{keyword}{class\ }TINYXML2\_LIB\ XMLAttribute}
+\DoxyCodeLine{01135\ \{}
+\DoxyCodeLine{01136\ \ \ \ \ \textcolor{keyword}{friend}\ \textcolor{keyword}{class\ }XMLElement;}
+\DoxyCodeLine{01137\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{01139\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_attribute_a5a5c135d24cce7abda6f17301c6274d8}{Name}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{01140\ }
+\DoxyCodeLine{01142\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_attribute_ab1c5cd993f836a771818ca408994b14e}{Value}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{01143\ }
+\DoxyCodeLine{01145\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_attribute_a02d5ea924586e35f9c13857d1671b765}{GetLineNum}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \_parseLineNum;\ \}}
+\DoxyCodeLine{01146\ }
+\DoxyCodeLine{01148\ \ \ \ \ \textcolor{keyword}{const}\ XMLAttribute*\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_attribute_aa8c7cf4c94a636ae75046658e551614e}{Next}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{01149\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \_next;}
+\DoxyCodeLine{01150\ \ \ \ \ \}}
+\DoxyCodeLine{01151\ }
+\DoxyCodeLine{01156\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_attribute_adfa2433f0fdafd5c3880936de9affa80}{IntValue}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{01157\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ i\ =\ 0;}
+\DoxyCodeLine{01158\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_attribute_a6d5176260db00ea301c01af8457cd993}{QueryIntValue}}(\&i);}
+\DoxyCodeLine{01159\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ i;}
+\DoxyCodeLine{01160\ \ \ \ \ \}}
+\DoxyCodeLine{01161\ }
+\DoxyCodeLine{01162\ \ \ \ \ int64\_t\ Int64Value()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{01163\ \ \ \ \ \ \ \ \ int64\_t\ i\ =\ 0;}
+\DoxyCodeLine{01164\ \ \ \ \ \ \ \ \ QueryInt64Value(\&i);}
+\DoxyCodeLine{01165\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ i;}
+\DoxyCodeLine{01166\ \ \ \ \ \}}
+\DoxyCodeLine{01167\ }
+\DoxyCodeLine{01169\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_attribute_a0be5343b08a957c42c02c5d32c35d338}{UnsignedValue}}()\textcolor{keyword}{\ const\ \ \ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{01170\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ i=0;}
+\DoxyCodeLine{01171\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_attribute_a48a7f3496f1415832e451bd8d09c9cb9}{QueryUnsignedValue}}(\ \&i\ );}
+\DoxyCodeLine{01172\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ i;}
+\DoxyCodeLine{01173\ \ \ \ \ \}}
+\DoxyCodeLine{01175\ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_attribute_a98ce5207344ad33a265b0422addae1ff}{BoolValue}}()\textcolor{keyword}{\ const\ \ \ \ \ \ \ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{01176\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ b=\textcolor{keyword}{false};}
+\DoxyCodeLine{01177\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_attribute_a5f32e038954256f61c21ff20fd13a09c}{QueryBoolValue}}(\ \&b\ );}
+\DoxyCodeLine{01178\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ b;}
+\DoxyCodeLine{01179\ \ \ \ \ \}}
+\DoxyCodeLine{01181\ \ \ \ \ \textcolor{keywordtype}{double}\ \ \ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_attribute_a4aa73513f54ff0087d3e804f0f54e30f}{DoubleValue}}()\textcolor{keyword}{\ const\ \ \ \ \ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{01182\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ d=0;}
+\DoxyCodeLine{01183\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_attribute_a2aa6e55e8ea03af0609cf6690bff79b9}{QueryDoubleValue}}(\ \&d\ );}
+\DoxyCodeLine{01184\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ d;}
+\DoxyCodeLine{01185\ \ \ \ \ \}}
+\DoxyCodeLine{01187\ \ \ \ \ \textcolor{keywordtype}{float}\ \ \ \ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_attribute_a27797b45d21c981257720db94f5f8801}{FloatValue}}()\textcolor{keyword}{\ const\ \ \ \ \ \ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{01188\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ f=0;}
+\DoxyCodeLine{01189\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_attribute_a049dea6449a6259b6cfed44a9427b607}{QueryFloatValue}}(\ \&f\ );}
+\DoxyCodeLine{01190\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ f;}
+\DoxyCodeLine{01191\ \ \ \ \ \}}
+\DoxyCodeLine{01192\ }
+\DoxyCodeLine{01197\ \ \ \ \ XMLError\ QueryIntValue(\ \textcolor{keywordtype}{int}*\ value\ )\ \textcolor{keyword}{const};}
+\DoxyCodeLine{01199\ \ \ \ \ XMLError\ QueryUnsignedValue(\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}*\ value\ )\ \textcolor{keyword}{const};}
+\DoxyCodeLine{01201\ \ \ \ \ XMLError\ QueryInt64Value(int64\_t*\ value)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{01203\ \ \ \ \ XMLError\ QueryBoolValue(\ \textcolor{keywordtype}{bool}*\ value\ )\ \textcolor{keyword}{const};}
+\DoxyCodeLine{01205\ \ \ \ \ XMLError\ QueryDoubleValue(\ \textcolor{keywordtype}{double}*\ value\ )\ \textcolor{keyword}{const};}
+\DoxyCodeLine{01207\ \ \ \ \ XMLError\ QueryFloatValue(\ \textcolor{keywordtype}{float}*\ value\ )\ \textcolor{keyword}{const};}
+\DoxyCodeLine{01208\ }
+\DoxyCodeLine{01210\ \ \ \ \ \textcolor{keywordtype}{void}\ SetAttribute(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ value\ );}
+\DoxyCodeLine{01212\ \ \ \ \ \textcolor{keywordtype}{void}\ SetAttribute(\ \textcolor{keywordtype}{int}\ value\ );}
+\DoxyCodeLine{01214\ \ \ \ \ \textcolor{keywordtype}{void}\ SetAttribute(\ \textcolor{keywordtype}{unsigned}\ value\ );}
+\DoxyCodeLine{01216\ \ \ \ \ \textcolor{keywordtype}{void}\ SetAttribute(int64\_t\ value);}
+\DoxyCodeLine{01218\ \ \ \ \ \textcolor{keywordtype}{void}\ SetAttribute(\ \textcolor{keywordtype}{bool}\ value\ );}
+\DoxyCodeLine{01220\ \ \ \ \ \textcolor{keywordtype}{void}\ SetAttribute(\ \textcolor{keywordtype}{double}\ value\ );}
+\DoxyCodeLine{01222\ \ \ \ \ \textcolor{keywordtype}{void}\ SetAttribute(\ \textcolor{keywordtype}{float}\ value\ );}
+\DoxyCodeLine{01223\ }
+\DoxyCodeLine{01224\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{01225\ \ \ \ \ \textcolor{keyword}{enum}\ \{\ BUF\_SIZE\ =\ 200\ \};}
+\DoxyCodeLine{01226\ }
+\DoxyCodeLine{01227\ \ \ \ \ XMLAttribute()\ :\ \_name(),\ \_value(),\_parseLineNum(\ 0\ ),\ \_next(\ 0\ ),\ \_memPool(\ 0\ )\ \{\}}
+\DoxyCodeLine{01228\ \ \ \ \ \textcolor{keyword}{virtual}\ \string~XMLAttribute()\ \{\}}
+\DoxyCodeLine{01229\ }
+\DoxyCodeLine{01230\ \ \ \ \ XMLAttribute(\ \textcolor{keyword}{const}\ XMLAttribute\&\ );\ \ \ \ \textcolor{comment}{//\ not\ supported}}
+\DoxyCodeLine{01231\ \ \ \ \ \textcolor{keywordtype}{void}\ operator=(\ \textcolor{keyword}{const}\ XMLAttribute\&\ );\ \ \textcolor{comment}{//\ not\ supported}}
+\DoxyCodeLine{01232\ \ \ \ \ \textcolor{keywordtype}{void}\ SetName(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ name\ );}
+\DoxyCodeLine{01233\ }
+\DoxyCodeLine{01234\ \ \ \ \ \textcolor{keywordtype}{char}*\ ParseDeep(\ \textcolor{keywordtype}{char}*\ p,\ \textcolor{keywordtype}{bool}\ processEntities,\ \textcolor{keywordtype}{int}*\ curLineNumPtr\ );}
+\DoxyCodeLine{01235\ }
+\DoxyCodeLine{01236\ \ \ \ \ \textcolor{keyword}{mutable}\ StrPair\ \_name;}
+\DoxyCodeLine{01237\ \ \ \ \ \textcolor{keyword}{mutable}\ StrPair\ \_value;}
+\DoxyCodeLine{01238\ \ \ \ \ \textcolor{keywordtype}{int}\ \ \ \ \ \ \ \ \ \ \ \ \ \_parseLineNum;}
+\DoxyCodeLine{01239\ \ \ \ \ XMLAttribute*\ \ \ \_next;}
+\DoxyCodeLine{01240\ \ \ \ \ MemPool*\ \ \ \ \ \ \ \ \_memPool;}
+\DoxyCodeLine{01241\ \};}
+\DoxyCodeLine{01242\ }
+\DoxyCodeLine{01243\ }
+\DoxyCodeLine{01248\ \textcolor{keyword}{class\ }TINYXML2\_LIB\ XMLElement\ :\ \textcolor{keyword}{public}\ XMLNode}
+\DoxyCodeLine{01249\ \{}
+\DoxyCodeLine{01250\ \ \ \ \ \textcolor{keyword}{friend}\ \textcolor{keyword}{class\ }XMLDocument;}
+\DoxyCodeLine{01251\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{01253\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_element_abd36e34e4428a8eeeffbe87eab0b124d}{Name}}()\textcolor{keyword}{\ const\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{01254\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_node_a0485e51c670e741884cfd8362274d680}{Value}}();}
+\DoxyCodeLine{01255\ \ \ \ \ \}}
+\DoxyCodeLine{01257\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_element_a97712009a530d8cb8a63bf705f02b4f1}{SetName}}(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ str,\ \textcolor{keywordtype}{bool}\ staticMem=\textcolor{keyword}{false}\ )\ \ \ \{}
+\DoxyCodeLine{01258\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_node_a09dd68cf9eae137579f6e50f36487513}{SetValue}}(\ str,\ staticMem\ );}
+\DoxyCodeLine{01259\ \ \ \ \ \}}
+\DoxyCodeLine{01260\ }
+\DoxyCodeLine{01261\ \ \ \ \ \textcolor{keyword}{virtual}\ XMLElement*\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_element_abade4c59bd6f16c85caa42d3c9eb617d}{ToElement}}()\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01262\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{this};}
+\DoxyCodeLine{01263\ \ \ \ \ \}}
+\DoxyCodeLine{01264\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_element}{XMLElement}}*\ ToElement()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{01265\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{this};}
+\DoxyCodeLine{01266\ \ \ \ \ \}}
+\DoxyCodeLine{01267\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ Accept(\ XMLVisitor*\ visitor\ )\ \textcolor{keyword}{const};}
+\DoxyCodeLine{01268\ }
+\DoxyCodeLine{01292\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ Attribute(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ name,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ value=0\ )\ \textcolor{keyword}{const};}
+\DoxyCodeLine{01293\ }
+\DoxyCodeLine{01300\ \ \ \ \ \textcolor{keywordtype}{int}\ IntAttribute(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ name,\ \textcolor{keywordtype}{int}\ defaultValue\ =\ 0)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{01302\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ UnsignedAttribute(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ name,\ \textcolor{keywordtype}{unsigned}\ defaultValue\ =\ 0)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{01304\ \ \ \ \ int64\_t\ Int64Attribute(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ name,\ int64\_t\ defaultValue\ =\ 0)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{01306\ \ \ \ \ \textcolor{keywordtype}{bool}\ BoolAttribute(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ name,\ \textcolor{keywordtype}{bool}\ defaultValue\ =\ \textcolor{keyword}{false})\ \textcolor{keyword}{const};}
+\DoxyCodeLine{01308\ \ \ \ \ \textcolor{keywordtype}{double}\ DoubleAttribute(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ name,\ \textcolor{keywordtype}{double}\ defaultValue\ =\ 0)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{01310\ \ \ \ \ \textcolor{keywordtype}{float}\ FloatAttribute(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ name,\ \textcolor{keywordtype}{float}\ defaultValue\ =\ 0)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{01311\ }
+\DoxyCodeLine{01325\ \ \ \ \ XMLError\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_element_a8a78bc1187c1c45ad89f2690eab567b1}{QueryIntAttribute}}(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ name,\ \textcolor{keywordtype}{int}*\ value\ )\textcolor{keyword}{\ const\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{01326\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_attribute}{XMLAttribute}}*\ a\ =\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_element_a157750dac8037a316fd1af1a973dfa2c}{FindAttribute}}(\ name\ );}
+\DoxyCodeLine{01327\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ !a\ )\ \{}
+\DoxyCodeLine{01328\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ XML\_NO\_ATTRIBUTE;}
+\DoxyCodeLine{01329\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01330\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ a-\/>\doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_attribute_a6d5176260db00ea301c01af8457cd993}{QueryIntValue}}(\ value\ );}
+\DoxyCodeLine{01331\ \ \ \ \ \}}
+\DoxyCodeLine{01332\ }
+\DoxyCodeLine{01334\ \ \ \ \ XMLError\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_element_a26fc84cbfba6769dafcfbf256c05e22f}{QueryUnsignedAttribute}}(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ name,\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}*\ value\ )\textcolor{keyword}{\ const\ \ }\{}
+\DoxyCodeLine{01335\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_attribute}{XMLAttribute}}*\ a\ =\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_element_a157750dac8037a316fd1af1a973dfa2c}{FindAttribute}}(\ name\ );}
+\DoxyCodeLine{01336\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ !a\ )\ \{}
+\DoxyCodeLine{01337\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ XML\_NO\_ATTRIBUTE;}
+\DoxyCodeLine{01338\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01339\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ a-\/>\doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_attribute_a48a7f3496f1415832e451bd8d09c9cb9}{QueryUnsignedValue}}(\ value\ );}
+\DoxyCodeLine{01340\ \ \ \ \ \}}
+\DoxyCodeLine{01341\ }
+\DoxyCodeLine{01343\ \ \ \ \ XMLError\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_element_a7c0955d80b6f8d196744eacb0f6e90a8}{QueryInt64Attribute}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ name,\ int64\_t*\ value)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{01344\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_attribute}{XMLAttribute}}*\ a\ =\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_element_a157750dac8037a316fd1af1a973dfa2c}{FindAttribute}}(name);}
+\DoxyCodeLine{01345\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!a)\ \{}
+\DoxyCodeLine{01346\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ XML\_NO\_ATTRIBUTE;}
+\DoxyCodeLine{01347\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01348\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ a-\/>\doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_attribute_a4e25344d6e4159026be34dbddf1dcac2}{QueryInt64Value}}(value);}
+\DoxyCodeLine{01349\ \ \ \ \ \}}
+\DoxyCodeLine{01350\ }
+\DoxyCodeLine{01352\ \ \ \ \ XMLError\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_element_a14c1bb77c39689838be01838d86ca872}{QueryBoolAttribute}}(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ name,\ \textcolor{keywordtype}{bool}*\ value\ )\textcolor{keyword}{\ const\ \ \ \ \ \ \ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{01353\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_attribute}{XMLAttribute}}*\ a\ =\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_element_a157750dac8037a316fd1af1a973dfa2c}{FindAttribute}}(\ name\ );}
+\DoxyCodeLine{01354\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ !a\ )\ \{}
+\DoxyCodeLine{01355\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ XML\_NO\_ATTRIBUTE;}
+\DoxyCodeLine{01356\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01357\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ a-\/>\doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_attribute_a5f32e038954256f61c21ff20fd13a09c}{QueryBoolValue}}(\ value\ );}
+\DoxyCodeLine{01358\ \ \ \ \ \}}
+\DoxyCodeLine{01360\ \ \ \ \ XMLError\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_element_a5f0964e2dbd8e2ee7fce9beab689443c}{QueryDoubleAttribute}}(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ name,\ \textcolor{keywordtype}{double}*\ value\ )\textcolor{keyword}{\ const\ \ \ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{01361\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_attribute}{XMLAttribute}}*\ a\ =\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_element_a157750dac8037a316fd1af1a973dfa2c}{FindAttribute}}(\ name\ );}
+\DoxyCodeLine{01362\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ !a\ )\ \{}
+\DoxyCodeLine{01363\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ XML\_NO\_ATTRIBUTE;}
+\DoxyCodeLine{01364\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01365\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ a-\/>\doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_attribute_a2aa6e55e8ea03af0609cf6690bff79b9}{QueryDoubleValue}}(\ value\ );}
+\DoxyCodeLine{01366\ \ \ \ \ \}}
+\DoxyCodeLine{01368\ \ \ \ \ XMLError\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_element_acd5eeddf6002ef90806af794b9d9a5a5}{QueryFloatAttribute}}(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ name,\ \textcolor{keywordtype}{float}*\ value\ )\textcolor{keyword}{\ const\ \ \ \ \ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{01369\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_attribute}{XMLAttribute}}*\ a\ =\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_element_a157750dac8037a316fd1af1a973dfa2c}{FindAttribute}}(\ name\ );}
+\DoxyCodeLine{01370\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ !a\ )\ \{}
+\DoxyCodeLine{01371\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ XML\_NO\_ATTRIBUTE;}
+\DoxyCodeLine{01372\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01373\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ a-\/>\doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_attribute_a049dea6449a6259b6cfed44a9427b607}{QueryFloatValue}}(\ value\ );}
+\DoxyCodeLine{01374\ \ \ \ \ \}}
+\DoxyCodeLine{01375\ }
+\DoxyCodeLine{01377\ \ \ \ \ XMLError\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_element_adb8ae765f98d0c5037faec48deea78bc}{QueryStringAttribute}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ name,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}**\ value)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{01378\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_attribute}{XMLAttribute}}*\ a\ =\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_element_a157750dac8037a316fd1af1a973dfa2c}{FindAttribute}}(name);}
+\DoxyCodeLine{01379\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!a)\ \{}
+\DoxyCodeLine{01380\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ XML\_NO\_ATTRIBUTE;}
+\DoxyCodeLine{01381\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01382\ \ \ \ \ \ \ \ \ *value\ =\ a-\/>\doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_attribute_ab1c5cd993f836a771818ca408994b14e}{Value}}();}
+\DoxyCodeLine{01383\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ XML\_SUCCESS;}
+\DoxyCodeLine{01384\ \ \ \ \ \}}
+\DoxyCodeLine{01385\ }
+\DoxyCodeLine{01386\ }
+\DoxyCodeLine{01387\ \ \ \ \ }
+\DoxyCodeLine{01405\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_element_a042fc30504347b84a56cf863ad528a4f}{QueryAttribute}}(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ name,\ \textcolor{keywordtype}{int}*\ value\ )\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{01406\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_element_a8a78bc1187c1c45ad89f2690eab567b1}{QueryIntAttribute}}(\ name,\ value\ );}
+\DoxyCodeLine{01407\ \ \ \ \ \}}
+\DoxyCodeLine{01408\ }
+\DoxyCodeLine{01409\ \ \ \ \ \textcolor{keywordtype}{int}\ QueryAttribute(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ name,\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}*\ value\ )\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{01410\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ QueryUnsignedAttribute(\ name,\ value\ );}
+\DoxyCodeLine{01411\ \ \ \ \ \}}
+\DoxyCodeLine{01412\ }
+\DoxyCodeLine{01413\ \ \ \ \ \textcolor{keywordtype}{int}\ QueryAttribute(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ name,\ int64\_t*\ value)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{01414\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ QueryInt64Attribute(name,\ value);}
+\DoxyCodeLine{01415\ \ \ \ \ \}}
+\DoxyCodeLine{01416\ }
+\DoxyCodeLine{01417\ \ \ \ \ \textcolor{keywordtype}{int}\ QueryAttribute(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ name,\ \textcolor{keywordtype}{bool}*\ value\ )\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{01418\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ QueryBoolAttribute(\ name,\ value\ );}
+\DoxyCodeLine{01419\ \ \ \ \ \}}
+\DoxyCodeLine{01420\ }
+\DoxyCodeLine{01421\ \ \ \ \ \textcolor{keywordtype}{int}\ QueryAttribute(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ name,\ \textcolor{keywordtype}{double}*\ value\ )\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{01422\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ QueryDoubleAttribute(\ name,\ value\ );}
+\DoxyCodeLine{01423\ \ \ \ \ \}}
+\DoxyCodeLine{01424\ }
+\DoxyCodeLine{01425\ \ \ \ \ \textcolor{keywordtype}{int}\ QueryAttribute(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ name,\ \textcolor{keywordtype}{float}*\ value\ )\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{01426\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ QueryFloatAttribute(\ name,\ value\ );}
+\DoxyCodeLine{01427\ \ \ \ \ \}}
+\DoxyCodeLine{01428\ }
+\DoxyCodeLine{01430\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_element_a11943abf2d0831548c3790dd5d9f119c}{SetAttribute}}(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ name,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ value\ )\ \ \ \ \{}
+\DoxyCodeLine{01431\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_attribute}{XMLAttribute}}*\ a\ =\ FindOrCreateAttribute(\ name\ );}
+\DoxyCodeLine{01432\ \ \ \ \ \ \ \ \ a-\/>\doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_attribute_a406d2c4a13c7af99a65edb59dd9f7581}{SetAttribute}}(\ value\ );}
+\DoxyCodeLine{01433\ \ \ \ \ \}}
+\DoxyCodeLine{01435\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_element_aae6568c64c7f1cc88be8461ba41a79cf}{SetAttribute}}(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ name,\ \textcolor{keywordtype}{int}\ value\ )\ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01436\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_attribute}{XMLAttribute}}*\ a\ =\ FindOrCreateAttribute(\ name\ );}
+\DoxyCodeLine{01437\ \ \ \ \ \ \ \ \ a-\/>\doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_attribute_a406d2c4a13c7af99a65edb59dd9f7581}{SetAttribute}}(\ value\ );}
+\DoxyCodeLine{01438\ \ \ \ \ \}}
+\DoxyCodeLine{01440\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_element_ae143997e90064ba82326b29a9930ea8f}{SetAttribute}}(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ name,\ \textcolor{keywordtype}{unsigned}\ value\ )\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01441\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_attribute}{XMLAttribute}}*\ a\ =\ FindOrCreateAttribute(\ name\ );}
+\DoxyCodeLine{01442\ \ \ \ \ \ \ \ \ a-\/>\doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_attribute_a406d2c4a13c7af99a65edb59dd9f7581}{SetAttribute}}(\ value\ );}
+\DoxyCodeLine{01443\ \ \ \ \ \}}
+\DoxyCodeLine{01444\ }
+\DoxyCodeLine{01446\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_element_aaeefdf9171fec91b13a776b42299b0dd}{SetAttribute}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ name,\ int64\_t\ value)\ \{}
+\DoxyCodeLine{01447\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_attribute}{XMLAttribute}}*\ a\ =\ FindOrCreateAttribute(name);}
+\DoxyCodeLine{01448\ \ \ \ \ \ \ \ \ a-\/>\doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_attribute_a406d2c4a13c7af99a65edb59dd9f7581}{SetAttribute}}(value);}
+\DoxyCodeLine{01449\ \ \ \ \ \}}
+\DoxyCodeLine{01450\ }
+\DoxyCodeLine{01452\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_element_aa848b696e6a75e4e545c6da9893b11e1}{SetAttribute}}(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ name,\ \textcolor{keywordtype}{bool}\ value\ )\ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01453\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_attribute}{XMLAttribute}}*\ a\ =\ FindOrCreateAttribute(\ name\ );}
+\DoxyCodeLine{01454\ \ \ \ \ \ \ \ \ a-\/>\doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_attribute_a406d2c4a13c7af99a65edb59dd9f7581}{SetAttribute}}(\ value\ );}
+\DoxyCodeLine{01455\ \ \ \ \ \}}
+\DoxyCodeLine{01457\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_element_a233397ee81e70eb5d4b814c5f8698533}{SetAttribute}}(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ name,\ \textcolor{keywordtype}{double}\ value\ )\ \ \ \ \ \{}
+\DoxyCodeLine{01458\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_attribute}{XMLAttribute}}*\ a\ =\ FindOrCreateAttribute(\ name\ );}
+\DoxyCodeLine{01459\ \ \ \ \ \ \ \ \ a-\/>\doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_attribute_a406d2c4a13c7af99a65edb59dd9f7581}{SetAttribute}}(\ value\ );}
+\DoxyCodeLine{01460\ \ \ \ \ \}}
+\DoxyCodeLine{01462\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_element_a554b70d882e65b28fc084b23df9b9759}{SetAttribute}}(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ name,\ \textcolor{keywordtype}{float}\ value\ )\ \ \ \ \ \ \{}
+\DoxyCodeLine{01463\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_attribute}{XMLAttribute}}*\ a\ =\ FindOrCreateAttribute(\ name\ );}
+\DoxyCodeLine{01464\ \ \ \ \ \ \ \ \ a-\/>\doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_attribute_a406d2c4a13c7af99a65edb59dd9f7581}{SetAttribute}}(\ value\ );}
+\DoxyCodeLine{01465\ \ \ \ \ \}}
+\DoxyCodeLine{01466\ }
+\DoxyCodeLine{01470\ \ \ \ \ \textcolor{keywordtype}{void}\ DeleteAttribute(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ name\ );}
+\DoxyCodeLine{01471\ }
+\DoxyCodeLine{01473\ \ \ \ \ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_attribute}{XMLAttribute}}*\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_element_a4a7c4392658833bb8138c474d15a805a}{FirstAttribute}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{01474\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \_rootAttribute;}
+\DoxyCodeLine{01475\ \ \ \ \ \}}
+\DoxyCodeLine{01477\ \ \ \ \ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_attribute}{XMLAttribute}}*\ FindAttribute(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ name\ )\ \textcolor{keyword}{const};}
+\DoxyCodeLine{01478\ }
+\DoxyCodeLine{01507\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ GetText()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{01508\ }
+\DoxyCodeLine{01543\ \ \ \ \ \textcolor{keywordtype}{void}\ SetText(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ inText\ );}
+\DoxyCodeLine{01545\ \ \ \ \ \textcolor{keywordtype}{void}\ SetText(\ \textcolor{keywordtype}{int}\ value\ );}
+\DoxyCodeLine{01547\ \ \ \ \ \textcolor{keywordtype}{void}\ SetText(\ \textcolor{keywordtype}{unsigned}\ value\ );\ \ }
+\DoxyCodeLine{01549\ \ \ \ \ \textcolor{keywordtype}{void}\ SetText(int64\_t\ value);}
+\DoxyCodeLine{01551\ \ \ \ \ \textcolor{keywordtype}{void}\ SetText(\ \textcolor{keywordtype}{bool}\ value\ );\ \ }
+\DoxyCodeLine{01553\ \ \ \ \ \textcolor{keywordtype}{void}\ SetText(\ \textcolor{keywordtype}{double}\ value\ );\ \ }
+\DoxyCodeLine{01555\ \ \ \ \ \textcolor{keywordtype}{void}\ SetText(\ \textcolor{keywordtype}{float}\ value\ );\ \ }
+\DoxyCodeLine{01556\ }
+\DoxyCodeLine{01583\ \ \ \ \ XMLError\ QueryIntText(\ \textcolor{keywordtype}{int}*\ ival\ )\ \textcolor{keyword}{const};}
+\DoxyCodeLine{01585\ \ \ \ \ XMLError\ QueryUnsignedText(\ \textcolor{keywordtype}{unsigned}*\ uval\ )\ \textcolor{keyword}{const};}
+\DoxyCodeLine{01587\ \ \ \ \ XMLError\ QueryInt64Text(int64\_t*\ uval)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{01589\ \ \ \ \ XMLError\ QueryBoolText(\ \textcolor{keywordtype}{bool}*\ bval\ )\ \textcolor{keyword}{const};}
+\DoxyCodeLine{01591\ \ \ \ \ XMLError\ QueryDoubleText(\ \textcolor{keywordtype}{double}*\ dval\ )\ \textcolor{keyword}{const};}
+\DoxyCodeLine{01593\ \ \ \ \ XMLError\ QueryFloatText(\ \textcolor{keywordtype}{float}*\ fval\ )\ \textcolor{keyword}{const};}
+\DoxyCodeLine{01594\ }
+\DoxyCodeLine{01595\ \ \ \ \ \textcolor{keywordtype}{int}\ IntText(\textcolor{keywordtype}{int}\ defaultValue\ =\ 0)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{01596\ }
+\DoxyCodeLine{01598\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ UnsignedText(\textcolor{keywordtype}{unsigned}\ defaultValue\ =\ 0)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{01600\ \ \ \ \ int64\_t\ Int64Text(int64\_t\ defaultValue\ =\ 0)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{01602\ \ \ \ \ \textcolor{keywordtype}{bool}\ BoolText(\textcolor{keywordtype}{bool}\ defaultValue\ =\ \textcolor{keyword}{false})\ \textcolor{keyword}{const};}
+\DoxyCodeLine{01604\ \ \ \ \ \textcolor{keywordtype}{double}\ DoubleText(\textcolor{keywordtype}{double}\ defaultValue\ =\ 0)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{01606\ \ \ \ \ \textcolor{keywordtype}{float}\ FloatText(\textcolor{keywordtype}{float}\ defaultValue\ =\ 0)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{01607\ }
+\DoxyCodeLine{01608\ \ \ \ \ \textcolor{comment}{//\ internal:}}
+\DoxyCodeLine{01609\ \ \ \ \ \textcolor{keyword}{enum}\ ElementClosingType\ \{}
+\DoxyCodeLine{01610\ \ \ \ \ \ \ \ \ OPEN,\ \ \ \ \ \ \ \textcolor{comment}{//\ <foo>}}
+\DoxyCodeLine{01611\ \ \ \ \ \ \ \ \ CLOSED,\ \ \ \ \ \textcolor{comment}{//\ <foo/>}}
+\DoxyCodeLine{01612\ \ \ \ \ \ \ \ \ CLOSING\ \ \ \ \ \textcolor{comment}{//\ </foo>}}
+\DoxyCodeLine{01613\ \ \ \ \ \};}
+\DoxyCodeLine{01614\ \ \ \ \ ElementClosingType\ ClosingType()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{01615\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \_closingType;}
+\DoxyCodeLine{01616\ \ \ \ \ \}}
+\DoxyCodeLine{01617\ \ \ \ \ \textcolor{keyword}{virtual}\ XMLNode*\ ShallowClone(\ XMLDocument*\ document\ )\ \textcolor{keyword}{const};}
+\DoxyCodeLine{01618\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ ShallowEqual(\ \textcolor{keyword}{const}\ XMLNode*\ compare\ )\ \textcolor{keyword}{const};}
+\DoxyCodeLine{01619\ }
+\DoxyCodeLine{01620\ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{01621\ \ \ \ \ \textcolor{keywordtype}{char}*\ ParseDeep(\ \textcolor{keywordtype}{char}*\ p,\ StrPair*\ parentEndTag,\ \textcolor{keywordtype}{int}*\ curLineNumPtr\ );}
+\DoxyCodeLine{01622\ }
+\DoxyCodeLine{01623\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{01624\ \ \ \ \ XMLElement(\ XMLDocument*\ doc\ );}
+\DoxyCodeLine{01625\ \ \ \ \ \textcolor{keyword}{virtual}\ \string~XMLElement();}
+\DoxyCodeLine{01626\ \ \ \ \ XMLElement(\ \textcolor{keyword}{const}\ XMLElement\&\ );\ \ \ \ \textcolor{comment}{//\ not\ supported}}
+\DoxyCodeLine{01627\ \ \ \ \ \textcolor{keywordtype}{void}\ operator=(\ \textcolor{keyword}{const}\ XMLElement\&\ );\ \ \ \ \textcolor{comment}{//\ not\ supported}}
+\DoxyCodeLine{01628\ }
+\DoxyCodeLine{01629\ \ \ \ \ XMLAttribute*\ FindAttribute(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ name\ )\ \{}
+\DoxyCodeLine{01630\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{const\_cast<}XMLAttribute*\textcolor{keyword}{>}(\textcolor{keyword}{const\_cast<}\textcolor{keyword}{const\ }XMLElement*\textcolor{keyword}{>}(\textcolor{keyword}{this})-\/>FindAttribute(\ name\ ));}
+\DoxyCodeLine{01631\ \ \ \ \ \}}
+\DoxyCodeLine{01632\ \ \ \ \ XMLAttribute*\ FindOrCreateAttribute(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ name\ );}
+\DoxyCodeLine{01633\ \ \ \ \ \textcolor{comment}{//void\ LinkAttribute(\ XMLAttribute*\ attrib\ );}}
+\DoxyCodeLine{01634\ \ \ \ \ \textcolor{keywordtype}{char}*\ ParseAttributes(\ \textcolor{keywordtype}{char}*\ p,\ \textcolor{keywordtype}{int}*\ curLineNumPtr\ );}
+\DoxyCodeLine{01635\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ DeleteAttribute(\ XMLAttribute*\ attribute\ );}
+\DoxyCodeLine{01636\ \ \ \ \ XMLAttribute*\ CreateAttribute();}
+\DoxyCodeLine{01637\ }
+\DoxyCodeLine{01638\ \ \ \ \ \textcolor{keyword}{enum}\ \{\ BUF\_SIZE\ =\ 200\ \};}
+\DoxyCodeLine{01639\ \ \ \ \ ElementClosingType\ \_closingType;}
+\DoxyCodeLine{01640\ \ \ \ \ \textcolor{comment}{//\ The\ attribute\ list\ is\ ordered;\ there\ is\ no\ 'lastAttribute'}}
+\DoxyCodeLine{01641\ \ \ \ \ \textcolor{comment}{//\ because\ the\ list\ needs\ to\ be\ scanned\ for\ dupes\ before\ adding}}
+\DoxyCodeLine{01642\ \ \ \ \ \textcolor{comment}{//\ a\ new\ attribute.}}
+\DoxyCodeLine{01643\ \ \ \ \ XMLAttribute*\ \_rootAttribute;}
+\DoxyCodeLine{01644\ \};}
+\DoxyCodeLine{01645\ }
+\DoxyCodeLine{01646\ }
+\DoxyCodeLine{01647\ \textcolor{keyword}{enum}\ Whitespace\ \{}
+\DoxyCodeLine{01648\ \ \ \ \ PRESERVE\_WHITESPACE,}
+\DoxyCodeLine{01649\ \ \ \ \ COLLAPSE\_WHITESPACE}
+\DoxyCodeLine{01650\ \};}
+\DoxyCodeLine{01651\ }
+\DoxyCodeLine{01652\ }
+\DoxyCodeLine{01658\ \textcolor{keyword}{class\ }TINYXML2\_LIB\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_document_a57ddf17b6e054dda10af98991b1b8f70}{XMLDocument}}\ :\ \textcolor{keyword}{public}\ XMLNode}
+\DoxyCodeLine{01659\ \{}
+\DoxyCodeLine{01660\ \ \ \ \ \textcolor{keyword}{friend}\ \textcolor{keyword}{class\ }XMLElement;}
+\DoxyCodeLine{01661\ \ \ \ \ \textcolor{comment}{//\ Gives\ access\ to\ SetError\ and\ Push/PopDepth,\ but\ over-\/access\ for\ everything\ else.}}
+\DoxyCodeLine{01662\ \ \ \ \ \textcolor{comment}{//\ Wishing\ C++\ had\ "{}internal"{}\ scope.}}
+\DoxyCodeLine{01663\ \ \ \ \ \textcolor{keyword}{friend}\ \textcolor{keyword}{class\ }XMLNode;\ \ \ \ \ \ \ }
+\DoxyCodeLine{01664\ \ \ \ \ \textcolor{keyword}{friend}\ \textcolor{keyword}{class\ }XMLText;}
+\DoxyCodeLine{01665\ \ \ \ \ \textcolor{keyword}{friend}\ \textcolor{keyword}{class\ }XMLComment;}
+\DoxyCodeLine{01666\ \ \ \ \ \textcolor{keyword}{friend}\ \textcolor{keyword}{class\ }XMLDeclaration;}
+\DoxyCodeLine{01667\ \ \ \ \ \textcolor{keyword}{friend}\ \textcolor{keyword}{class\ }XMLUnknown;}
+\DoxyCodeLine{01668\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{01670\ \ \ \ \ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_document_a57ddf17b6e054dda10af98991b1b8f70}{XMLDocument}}(\ \textcolor{keywordtype}{bool}\ processEntities\ =\ \textcolor{keyword}{true},\ Whitespace\ whitespaceMode\ =\ PRESERVE\_WHITESPACE\ );}
+\DoxyCodeLine{01671\ \ \ \ \ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_document_a57ddf17b6e054dda10af98991b1b8f70}{\string~XMLDocument}}();}
+\DoxyCodeLine{01672\ }
+\DoxyCodeLine{01673\ \ \ \ \ \textcolor{keyword}{virtual}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_document_a57ddf17b6e054dda10af98991b1b8f70}{XMLDocument}}*\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_document_a88dfd725068a410aed08f55b825f6907}{ToDocument}}()\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01674\ \ \ \ \ \ \ \ \ TIXMLASSERT(\ \textcolor{keyword}{this}\ ==\ \_document\ );}
+\DoxyCodeLine{01675\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{this};}
+\DoxyCodeLine{01676\ \ \ \ \ \}}
+\DoxyCodeLine{01677\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_document}{XMLDocument}}*\ ToDocument()\textcolor{keyword}{\ const\ \ \ }\{}
+\DoxyCodeLine{01678\ \ \ \ \ \ \ \ \ TIXMLASSERT(\ \textcolor{keyword}{this}\ ==\ \_document\ );}
+\DoxyCodeLine{01679\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{this};}
+\DoxyCodeLine{01680\ \ \ \ \ \}}
+\DoxyCodeLine{01681\ }
+\DoxyCodeLine{01692\ \ \ \ \ XMLError\ Parse(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ xml,\ \textcolor{keywordtype}{size\_t}\ nBytes=(\textcolor{keywordtype}{size\_t})(-\/1)\ );}
+\DoxyCodeLine{01693\ }
+\DoxyCodeLine{01699\ \ \ \ \ XMLError\ LoadFile(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ filename\ );}
+\DoxyCodeLine{01700\ }
+\DoxyCodeLine{01712\ \ \ \ \ XMLError\ LoadFile(\ FILE*\ );}
+\DoxyCodeLine{01713\ }
+\DoxyCodeLine{01719\ \ \ \ \ XMLError\ SaveFile(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ filename,\ \textcolor{keywordtype}{bool}\ compact\ =\ \textcolor{keyword}{false}\ );}
+\DoxyCodeLine{01720\ }
+\DoxyCodeLine{01728\ \ \ \ \ XMLError\ SaveFile(\ FILE*\ fp,\ \textcolor{keywordtype}{bool}\ compact\ =\ \textcolor{keyword}{false}\ );}
+\DoxyCodeLine{01729\ }
+\DoxyCodeLine{01730\ \ \ \ \ \textcolor{keywordtype}{bool}\ ProcessEntities()\textcolor{keyword}{\ const\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{01731\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \_processEntities;}
+\DoxyCodeLine{01732\ \ \ \ \ \}}
+\DoxyCodeLine{01733\ \ \ \ \ Whitespace\ WhitespaceMode()\textcolor{keyword}{\ const\ \ \ }\{}
+\DoxyCodeLine{01734\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \_whitespaceMode;}
+\DoxyCodeLine{01735\ \ \ \ \ \}}
+\DoxyCodeLine{01736\ }
+\DoxyCodeLine{01740\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_document_a33fc5d159db873a179fa26338adb05bd}{HasBOM}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{01741\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \_writeBOM;}
+\DoxyCodeLine{01742\ \ \ \ \ \}}
+\DoxyCodeLine{01745\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_document_a14419b698f7c4b140df4e80f3f0c93b0}{SetBOM}}(\ \textcolor{keywordtype}{bool}\ useBOM\ )\ \{}
+\DoxyCodeLine{01746\ \ \ \ \ \ \ \ \ \_writeBOM\ =\ useBOM;}
+\DoxyCodeLine{01747\ \ \ \ \ \}}
+\DoxyCodeLine{01748\ }
+\DoxyCodeLine{01752\ \ \ \ \ XMLElement*\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_document_a0e6855771cbe87d839fb301d3646f5b8}{RootElement}}()\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01753\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_node_a1bec132dcf085284e0a10755f2cf0d57}{FirstChildElement}}();}
+\DoxyCodeLine{01754\ \ \ \ \ \}}
+\DoxyCodeLine{01755\ \ \ \ \ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_element}{XMLElement}}*\ RootElement()\textcolor{keyword}{\ const\ \ \ }\{}
+\DoxyCodeLine{01756\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ FirstChildElement();}
+\DoxyCodeLine{01757\ \ \ \ \ \}}
+\DoxyCodeLine{01758\ }
+\DoxyCodeLine{01773\ \ \ \ \ \textcolor{keywordtype}{void}\ Print(\ XMLPrinter*\ streamer=0\ )\ \textcolor{keyword}{const};}
+\DoxyCodeLine{01774\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ Accept(\ XMLVisitor*\ visitor\ )\ \textcolor{keyword}{const};}
+\DoxyCodeLine{01775\ }
+\DoxyCodeLine{01781\ \ \ \ \ XMLElement*\ NewElement(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ name\ );}
+\DoxyCodeLine{01787\ \ \ \ \ XMLComment*\ NewComment(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ comment\ );}
+\DoxyCodeLine{01793\ \ \ \ \ XMLText*\ NewText(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ text\ );}
+\DoxyCodeLine{01805\ \ \ \ \ XMLDeclaration*\ NewDeclaration(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ text=0\ );}
+\DoxyCodeLine{01811\ \ \ \ \ XMLUnknown*\ NewUnknown(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ text\ );}
+\DoxyCodeLine{01812\ }
+\DoxyCodeLine{01817\ \ \ \ \ \textcolor{keywordtype}{void}\ DeleteNode(\ XMLNode*\ node\ );}
+\DoxyCodeLine{01818\ }
+\DoxyCodeLine{01819\ \ \ \ \ \textcolor{keywordtype}{void}\ ClearError()\ \{}
+\DoxyCodeLine{01820\ \ \ \ \ \ \ \ \ SetError(XML\_SUCCESS,\ 0,\ 0);}
+\DoxyCodeLine{01821\ \ \ \ \ \}}
+\DoxyCodeLine{01822\ }
+\DoxyCodeLine{01824\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_document_a34e6318e182e40e3cc4f4ba5d59ed9ed}{Error}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{01825\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \_errorID\ !=\ XML\_SUCCESS;}
+\DoxyCodeLine{01826\ \ \ \ \ \}}
+\DoxyCodeLine{01828\ \ \ \ \ XMLError\ \ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_document_afa3ed33b3107f920ec2b301f805ac17d}{ErrorID}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{01829\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \_errorID;}
+\DoxyCodeLine{01830\ \ \ \ \ \}}
+\DoxyCodeLine{01831\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ ErrorName()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{01832\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ ErrorIDToName(XMLError\ errorID);}
+\DoxyCodeLine{01833\ }
+\DoxyCodeLine{01837\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ ErrorStr()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{01838\ }
+\DoxyCodeLine{01840\ \ \ \ \ \textcolor{keywordtype}{void}\ PrintError()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{01841\ }
+\DoxyCodeLine{01843\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_document_a57400f816dbe7799ece33615ead9ab76}{ErrorLineNum}}()\textcolor{keyword}{\ const}}
+\DoxyCodeLine{01844\ \textcolor{keyword}{\ \ \ \ }\{}
+\DoxyCodeLine{01845\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \_errorLineNum;}
+\DoxyCodeLine{01846\ \ \ \ \ \}}
+\DoxyCodeLine{01847\ \ \ \ \ }
+\DoxyCodeLine{01849\ \ \ \ \ \textcolor{keywordtype}{void}\ Clear();}
+\DoxyCodeLine{01850\ }
+\DoxyCodeLine{01858\ \ \ \ \ \textcolor{keywordtype}{void}\ DeepCopy(\doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_document}{XMLDocument}}*\ target)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{01859\ }
+\DoxyCodeLine{01860\ \ \ \ \ \textcolor{comment}{//\ internal}}
+\DoxyCodeLine{01861\ \ \ \ \ \textcolor{keywordtype}{char}*\ Identify(\ \textcolor{keywordtype}{char}*\ p,\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_node}{XMLNode}}**\ node\ );}
+\DoxyCodeLine{01862\ }
+\DoxyCodeLine{01863\ \ \ \ \ \textcolor{comment}{//\ internal}}
+\DoxyCodeLine{01864\ \ \ \ \ \textcolor{keywordtype}{void}\ MarkInUse(\doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_node}{XMLNode}}*);}
+\DoxyCodeLine{01865\ }
+\DoxyCodeLine{01866\ \ \ \ \ \textcolor{keyword}{virtual}\ XMLNode*\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_document_af4f866a4dace2120ec8cdf6f5ff79f61}{ShallowClone}}(\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_document_a57ddf17b6e054dda10af98991b1b8f70}{XMLDocument}}*\ \textcolor{comment}{/*document*/}\ )\textcolor{keyword}{\ const\ \ \ \ }\{}
+\DoxyCodeLine{01867\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{01868\ \ \ \ \ \}}
+\DoxyCodeLine{01869\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_document_a6fe5ef18699091844fcf64b56ffa5bf9}{ShallowEqual}}(\ \textcolor{keyword}{const}\ XMLNode*\ \textcolor{comment}{/*compare*/}\ )\textcolor{keyword}{\ const\ \ \ }\{}
+\DoxyCodeLine{01870\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{01871\ \ \ \ \ \}}
+\DoxyCodeLine{01872\ }
+\DoxyCodeLine{01873\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{01874\ \ \ \ \ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_document}{XMLDocument}}(\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_document}{XMLDocument}}\&\ );\ \ \textcolor{comment}{//\ not\ supported}}
+\DoxyCodeLine{01875\ \ \ \ \ \textcolor{keywordtype}{void}\ operator=(\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_document}{XMLDocument}}\&\ );\ \ \ \textcolor{comment}{//\ not\ supported}}
+\DoxyCodeLine{01876\ }
+\DoxyCodeLine{01877\ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ \ \ \ \ \_writeBOM;}
+\DoxyCodeLine{01878\ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ \ \ \ \ \_processEntities;}
+\DoxyCodeLine{01879\ \ \ \ \ XMLError\ \ \ \ \ \ \ \ \_errorID;}
+\DoxyCodeLine{01880\ \ \ \ \ Whitespace\ \ \ \ \ \ \_whitespaceMode;}
+\DoxyCodeLine{01881\ \ \ \ \ \textcolor{keyword}{mutable}\ \doxymbox{\hyperlink{classtinyxml2_1_1_str_pair}{StrPair}}\ \_errorStr;}
+\DoxyCodeLine{01882\ \ \ \ \ \textcolor{keywordtype}{int}\ \ \ \ \ \ \ \ \ \ \ \ \ \_errorLineNum;}
+\DoxyCodeLine{01883\ \ \ \ \ \textcolor{keywordtype}{char}*\ \ \ \ \ \ \ \ \ \ \ \_charBuffer;}
+\DoxyCodeLine{01884\ \ \ \ \ \textcolor{keywordtype}{int}\ \ \ \ \ \ \ \ \ \ \ \ \ \_parseCurLineNum;}
+\DoxyCodeLine{01885\ \ \ \ \ \textcolor{keywordtype}{int}\ \ \ \ \ \ \ \ \ \ \ \ \ \_parsingDepth;}
+\DoxyCodeLine{01886\ \ \ \ \ \textcolor{comment}{//\ Memory\ tracking\ does\ add\ some\ overhead.}}
+\DoxyCodeLine{01887\ \ \ \ \ \textcolor{comment}{//\ However,\ the\ code\ assumes\ that\ you\ don't}}
+\DoxyCodeLine{01888\ \ \ \ \ \textcolor{comment}{//\ have\ a\ bunch\ of\ unlinked\ nodes\ around.}}
+\DoxyCodeLine{01889\ \ \ \ \ \textcolor{comment}{//\ Therefore\ it\ takes\ less\ memory\ to\ track}}
+\DoxyCodeLine{01890\ \ \ \ \ \textcolor{comment}{//\ in\ the\ document\ vs.\ a\ linked\ list\ in\ the\ XMLNode,}}
+\DoxyCodeLine{01891\ \ \ \ \ \textcolor{comment}{//\ and\ the\ performance\ is\ the\ same.}}
+\DoxyCodeLine{01892\ \ \ \ \ \doxymbox{\hyperlink{classtinyxml2_1_1_dyn_array}{DynArray<XMLNode*,\ 10>}}\ \_unlinked;}
+\DoxyCodeLine{01893\ }
+\DoxyCodeLine{01894\ \ \ \ \ \doxymbox{\hyperlink{classtinyxml2_1_1_mem_pool_t}{MemPoolT}}<\ \textcolor{keyword}{sizeof}(\doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_element}{XMLElement}})\ >\ \ \ \_elementPool;}
+\DoxyCodeLine{01895\ \ \ \ \ \doxymbox{\hyperlink{classtinyxml2_1_1_mem_pool_t}{MemPoolT}}<\ \textcolor{keyword}{sizeof}(\doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_attribute}{XMLAttribute}})\ >\ \_attributePool;}
+\DoxyCodeLine{01896\ \ \ \ \ \doxymbox{\hyperlink{classtinyxml2_1_1_mem_pool_t}{MemPoolT}}<\ \textcolor{keyword}{sizeof}(\doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_text}{XMLText}})\ >\ \ \ \ \ \ \_textPool;}
+\DoxyCodeLine{01897\ \ \ \ \ \doxymbox{\hyperlink{classtinyxml2_1_1_mem_pool_t}{MemPoolT}}<\ \textcolor{keyword}{sizeof}(\doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_comment}{XMLComment}})\ >\ \ \ \_commentPool;}
+\DoxyCodeLine{01898\ }
+\DoxyCodeLine{01899\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \_errorNames[XML\_ERROR\_COUNT];}
+\DoxyCodeLine{01900\ }
+\DoxyCodeLine{01901\ \ \ \ \ \textcolor{keywordtype}{void}\ Parse();}
+\DoxyCodeLine{01902\ }
+\DoxyCodeLine{01903\ \ \ \ \ \textcolor{keywordtype}{void}\ SetError(\ XMLError\ error,\ \textcolor{keywordtype}{int}\ lineNum,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ format,\ ...\ );}
+\DoxyCodeLine{01904\ }
+\DoxyCodeLine{01905\ \ \ \ \ \textcolor{comment}{//\ Something\ of\ an\ obvious\ security\ hole,\ once\ it\ was\ discovered.}}
+\DoxyCodeLine{01906\ \ \ \ \ \textcolor{comment}{//\ Either\ an\ ill-\/formed\ XML\ or\ an\ excessively\ deep\ one\ can\ overflow}}
+\DoxyCodeLine{01907\ \ \ \ \ \textcolor{comment}{//\ the\ stack.\ Track\ stack\ depth,\ and\ error\ out\ if\ needed.}}
+\DoxyCodeLine{01908\ \ \ \ \ \textcolor{keyword}{class\ }DepthTracker\ \{}
+\DoxyCodeLine{01909\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{01910\ \ \ \ \ \ \ \ \ DepthTracker(\doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_document}{XMLDocument}}\ *\ document)\ \{\ }
+\DoxyCodeLine{01911\ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>\_document\ =\ document;\ }
+\DoxyCodeLine{01912\ \ \ \ \ \ \ \ \ \ \ \ \ document-\/>PushDepth();}
+\DoxyCodeLine{01913\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01914\ \ \ \ \ \ \ \ \ \string~DepthTracker()\ \{}
+\DoxyCodeLine{01915\ \ \ \ \ \ \ \ \ \ \ \ \ \_document-\/>PopDepth();}
+\DoxyCodeLine{01916\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01917\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{01918\ \ \ \ \ \ \ \ \ XMLDocument\ *\ \_document;}
+\DoxyCodeLine{01919\ \ \ \ \ \};}
+\DoxyCodeLine{01920\ \ \ \ \ \textcolor{keywordtype}{void}\ PushDepth();}
+\DoxyCodeLine{01921\ \ \ \ \ \textcolor{keywordtype}{void}\ PopDepth();}
+\DoxyCodeLine{01922\ }
+\DoxyCodeLine{01923\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ NodeType,\ \textcolor{keywordtype}{int}\ PoolElementSize>}
+\DoxyCodeLine{01924\ \ \ \ \ NodeType*\ CreateUnlinkedNode(\ MemPoolT<PoolElementSize>\&\ pool\ );}
+\DoxyCodeLine{01925\ \};}
+\DoxyCodeLine{01926\ }
+\DoxyCodeLine{01927\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ NodeType,\ \textcolor{keywordtype}{int}\ PoolElementSize>}
+\DoxyCodeLine{01928\ \textcolor{keyword}{inline}\ NodeType*\ XMLDocument::CreateUnlinkedNode(\ \doxymbox{\hyperlink{classtinyxml2_1_1_mem_pool_t}{MemPoolT<PoolElementSize>}}\&\ pool\ )}
+\DoxyCodeLine{01929\ \{}
+\DoxyCodeLine{01930\ \ \ \ \ TIXMLASSERT(\ \textcolor{keyword}{sizeof}(\ NodeType\ )\ ==\ PoolElementSize\ );}
+\DoxyCodeLine{01931\ \ \ \ \ TIXMLASSERT(\ \textcolor{keyword}{sizeof}(\ NodeType\ )\ ==\ pool.ItemSize()\ );}
+\DoxyCodeLine{01932\ \ \ \ \ NodeType*\ returnNode\ =\ \textcolor{keyword}{new}\ (pool.Alloc())\ NodeType(\ \textcolor{keyword}{this}\ );}
+\DoxyCodeLine{01933\ \ \ \ \ TIXMLASSERT(\ returnNode\ );}
+\DoxyCodeLine{01934\ \ \ \ \ returnNode-\/>\_memPool\ =\ \&pool;}
+\DoxyCodeLine{01935\ }
+\DoxyCodeLine{01936\ \ \ \ \ \_unlinked.Push(returnNode);}
+\DoxyCodeLine{01937\ \ \ \ \ \textcolor{keywordflow}{return}\ returnNode;}
+\DoxyCodeLine{01938\ \}}
+\DoxyCodeLine{01939\ }
+\DoxyCodeLine{01995\ \textcolor{keyword}{class\ }TINYXML2\_LIB\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_handle_a9c240a35c18f053509b4b97ddccd9793}{XMLHandle}}}
+\DoxyCodeLine{01996\ \{}
+\DoxyCodeLine{01997\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{01999\ \ \ \ \ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_handle_a9c240a35c18f053509b4b97ddccd9793}{XMLHandle}}(\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_node}{XMLNode}}*\ node\ )\ :\ \_node(\ node\ )\ \{}
+\DoxyCodeLine{02000\ \ \ \ \ \}}
+\DoxyCodeLine{02002\ \ \ \ \ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_handle_aa2edbc1c0d3e3e8259bd98de7f1cf500}{XMLHandle}}(\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_node}{XMLNode}}\&\ node\ )\ :\ \_node(\ \&node\ )\ \{}
+\DoxyCodeLine{02003\ \ \ \ \ \}}
+\DoxyCodeLine{02005\ \ \ \ \ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_handle_afd8e01e6018c07347b8e6d80272466aa}{XMLHandle}}(\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_handle_a9c240a35c18f053509b4b97ddccd9793}{XMLHandle}}\&\ ref\ )\ :\ \_node(\ ref.\_node\ )\ \{}
+\DoxyCodeLine{02006\ \ \ \ \ \}}
+\DoxyCodeLine{02008\ \ \ \ \ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_handle_a9c240a35c18f053509b4b97ddccd9793}{XMLHandle}}\&\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_handle_aa07c9a53f78d7b2dc1018668641521d8}{operator=}}(\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_handle_a9c240a35c18f053509b4b97ddccd9793}{XMLHandle}}\&\ ref\ )\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{02009\ \ \ \ \ \ \ \ \ \_node\ =\ ref.\_node;}
+\DoxyCodeLine{02010\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{02011\ \ \ \ \ \}}
+\DoxyCodeLine{02012\ }
+\DoxyCodeLine{02014\ \ \ \ \ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_handle_a9c240a35c18f053509b4b97ddccd9793}{XMLHandle}}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_handle_a536447dc7f54c0cd11e031dad94795ae}{FirstChild}}()\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{02015\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_handle_a9c240a35c18f053509b4b97ddccd9793}{XMLHandle}}(\ \_node\ ?\ \_node-\/>FirstChild()\ :\ 0\ );}
+\DoxyCodeLine{02016\ \ \ \ \ \}}
+\DoxyCodeLine{02018\ \ \ \ \ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_handle_a9c240a35c18f053509b4b97ddccd9793}{XMLHandle}}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_handle_a74b04dd0f15e0bf01860e282b840b6a3}{FirstChildElement}}(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ name\ =\ 0\ )\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{02019\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_handle_a9c240a35c18f053509b4b97ddccd9793}{XMLHandle}}(\ \_node\ ?\ \_node-\/>FirstChildElement(\ name\ )\ :\ 0\ );}
+\DoxyCodeLine{02020\ \ \ \ \ \}}
+\DoxyCodeLine{02022\ \ \ \ \ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_handle_a9c240a35c18f053509b4b97ddccd9793}{XMLHandle}}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_handle_a9d09f04435f0f2f7d0816b0198d0517b}{LastChild}}()\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{02023\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_handle_a9c240a35c18f053509b4b97ddccd9793}{XMLHandle}}(\ \_node\ ?\ \_node-\/>LastChild()\ :\ 0\ );}
+\DoxyCodeLine{02024\ \ \ \ \ \}}
+\DoxyCodeLine{02026\ \ \ \ \ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_handle_a9c240a35c18f053509b4b97ddccd9793}{XMLHandle}}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_handle_a42cccd0ce8b1ce704f431025e9f19e0c}{LastChildElement}}(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ name\ =\ 0\ )\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{02027\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_handle_a9c240a35c18f053509b4b97ddccd9793}{XMLHandle}}(\ \_node\ ?\ \_node-\/>LastChildElement(\ name\ )\ :\ 0\ );}
+\DoxyCodeLine{02028\ \ \ \ \ \}}
+\DoxyCodeLine{02030\ \ \ \ \ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_handle_a9c240a35c18f053509b4b97ddccd9793}{XMLHandle}}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_handle_a428374e756f4db4cbc287fec64eae02c}{PreviousSibling}}()\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{02031\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_handle_a9c240a35c18f053509b4b97ddccd9793}{XMLHandle}}(\ \_node\ ?\ \_node-\/>PreviousSibling()\ :\ 0\ );}
+\DoxyCodeLine{02032\ \ \ \ \ \}}
+\DoxyCodeLine{02034\ \ \ \ \ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_handle_a9c240a35c18f053509b4b97ddccd9793}{XMLHandle}}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_handle_a786957e498039554ed334cdc36612a7e}{PreviousSiblingElement}}(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ name\ =\ 0\ )\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{02035\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_handle_a9c240a35c18f053509b4b97ddccd9793}{XMLHandle}}(\ \_node\ ?\ \_node-\/>PreviousSiblingElement(\ name\ )\ :\ 0\ );}
+\DoxyCodeLine{02036\ \ \ \ \ \}}
+\DoxyCodeLine{02038\ \ \ \ \ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_handle_a9c240a35c18f053509b4b97ddccd9793}{XMLHandle}}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_handle_aad2eccc7c7c7b18145877c978c3850b5}{NextSibling}}()\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{02039\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_handle_a9c240a35c18f053509b4b97ddccd9793}{XMLHandle}}(\ \_node\ ?\ \_node-\/>NextSibling()\ :\ 0\ );}
+\DoxyCodeLine{02040\ \ \ \ \ \}}
+\DoxyCodeLine{02042\ \ \ \ \ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_handle_a9c240a35c18f053509b4b97ddccd9793}{XMLHandle}}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_handle_ae41d88ee061f3c49a081630ff753b2c5}{NextSiblingElement}}(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ name\ =\ 0\ )\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{02043\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_handle_a9c240a35c18f053509b4b97ddccd9793}{XMLHandle}}(\ \_node\ ?\ \_node-\/>NextSiblingElement(\ name\ )\ :\ 0\ );}
+\DoxyCodeLine{02044\ \ \ \ \ \}}
+\DoxyCodeLine{02045\ }
+\DoxyCodeLine{02047\ \ \ \ \ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_node}{XMLNode}}*\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_handle_a689453c96dd3d4016437d2298d1de691}{ToNode}}()\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{02048\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \_node;}
+\DoxyCodeLine{02049\ \ \ \ \ \}}
+\DoxyCodeLine{02051\ \ \ \ \ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_element}{XMLElement}}*\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_handle_ab2371c4adb8b04afe04ed216bf9b0676}{ToElement}}()\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{02052\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (\ \_node\ ?\ \_node-\/>ToElement()\ :\ 0\ );}
+\DoxyCodeLine{02053\ \ \ \ \ \}}
+\DoxyCodeLine{02055\ \ \ \ \ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_text}{XMLText}}*\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_handle_accc80bcbd81e816f13a23c172587c288}{ToText}}()\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{02056\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (\ \_node\ ?\ \_node-\/>ToText()\ :\ 0\ );}
+\DoxyCodeLine{02057\ \ \ \ \ \}}
+\DoxyCodeLine{02059\ \ \ \ \ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_unknown}{XMLUnknown}}*\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_handle_add97784cbe14ef42bb36e158ad6e6082}{ToUnknown}}()\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{02060\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (\ \_node\ ?\ \_node-\/>ToUnknown()\ :\ 0\ );}
+\DoxyCodeLine{02061\ \ \ \ \ \}}
+\DoxyCodeLine{02063\ \ \ \ \ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_declaration}{XMLDeclaration}}*\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_handle_a85d0c76920a013ea2a29456dbf7d160d}{ToDeclaration}}()\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{02064\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (\ \_node\ ?\ \_node-\/>ToDeclaration()\ :\ 0\ );}
+\DoxyCodeLine{02065\ \ \ \ \ \}}
+\DoxyCodeLine{02066\ }
+\DoxyCodeLine{02067\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{02068\ \ \ \ \ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_node}{XMLNode}}*\ \_node;}
+\DoxyCodeLine{02069\ \};}
+\DoxyCodeLine{02070\ }
+\DoxyCodeLine{02071\ }
+\DoxyCodeLine{02076\ \textcolor{keyword}{class\ }TINYXML2\_LIB\ XMLConstHandle}
+\DoxyCodeLine{02077\ \{}
+\DoxyCodeLine{02078\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{02079\ \ \ \ \ XMLConstHandle(\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_node}{XMLNode}}*\ node\ )\ :\ \_node(\ node\ )\ \{}
+\DoxyCodeLine{02080\ \ \ \ \ \}}
+\DoxyCodeLine{02081\ \ \ \ \ XMLConstHandle(\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_node}{XMLNode}}\&\ node\ )\ :\ \_node(\ \&node\ )\ \{}
+\DoxyCodeLine{02082\ \ \ \ \ \}}
+\DoxyCodeLine{02083\ \ \ \ \ XMLConstHandle(\ \textcolor{keyword}{const}\ XMLConstHandle\&\ ref\ )\ :\ \_node(\ ref.\_node\ )\ \{}
+\DoxyCodeLine{02084\ \ \ \ \ \}}
+\DoxyCodeLine{02085\ }
+\DoxyCodeLine{02086\ \ \ \ \ XMLConstHandle\&\ operator=(\ \textcolor{keyword}{const}\ XMLConstHandle\&\ ref\ )\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{02087\ \ \ \ \ \ \ \ \ \_node\ =\ ref.\_node;}
+\DoxyCodeLine{02088\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{02089\ \ \ \ \ \}}
+\DoxyCodeLine{02090\ }
+\DoxyCodeLine{02091\ \ \ \ \ \textcolor{keyword}{const}\ XMLConstHandle\ FirstChild()\textcolor{keyword}{\ const\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{02092\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ XMLConstHandle(\ \_node\ ?\ \_node-\/>FirstChild()\ :\ 0\ );}
+\DoxyCodeLine{02093\ \ \ \ \ \}}
+\DoxyCodeLine{02094\ \ \ \ \ \textcolor{keyword}{const}\ XMLConstHandle\ FirstChildElement(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ name\ =\ 0\ )\textcolor{keyword}{\ const\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{02095\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ XMLConstHandle(\ \_node\ ?\ \_node-\/>FirstChildElement(\ name\ )\ :\ 0\ );}
+\DoxyCodeLine{02096\ \ \ \ \ \}}
+\DoxyCodeLine{02097\ \ \ \ \ \textcolor{keyword}{const}\ XMLConstHandle\ LastChild()\textcolor{keyword}{\ \ \ \ const\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{02098\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ XMLConstHandle(\ \_node\ ?\ \_node-\/>LastChild()\ :\ 0\ );}
+\DoxyCodeLine{02099\ \ \ \ \ \}}
+\DoxyCodeLine{02100\ \ \ \ \ \textcolor{keyword}{const}\ XMLConstHandle\ LastChildElement(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ name\ =\ 0\ )\textcolor{keyword}{\ const\ \ \ \ \ \ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{02101\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ XMLConstHandle(\ \_node\ ?\ \_node-\/>LastChildElement(\ name\ )\ :\ 0\ );}
+\DoxyCodeLine{02102\ \ \ \ \ \}}
+\DoxyCodeLine{02103\ \ \ \ \ \textcolor{keyword}{const}\ XMLConstHandle\ PreviousSibling()\textcolor{keyword}{\ const\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{02104\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ XMLConstHandle(\ \_node\ ?\ \_node-\/>PreviousSibling()\ :\ 0\ );}
+\DoxyCodeLine{02105\ \ \ \ \ \}}
+\DoxyCodeLine{02106\ \ \ \ \ \textcolor{keyword}{const}\ XMLConstHandle\ PreviousSiblingElement(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ name\ =\ 0\ )\textcolor{keyword}{\ const\ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{02107\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ XMLConstHandle(\ \_node\ ?\ \_node-\/>PreviousSiblingElement(\ name\ )\ :\ 0\ );}
+\DoxyCodeLine{02108\ \ \ \ \ \}}
+\DoxyCodeLine{02109\ \ \ \ \ \textcolor{keyword}{const}\ XMLConstHandle\ NextSibling()\textcolor{keyword}{\ const\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{02110\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ XMLConstHandle(\ \_node\ ?\ \_node-\/>NextSibling()\ :\ 0\ );}
+\DoxyCodeLine{02111\ \ \ \ \ \}}
+\DoxyCodeLine{02112\ \ \ \ \ \textcolor{keyword}{const}\ XMLConstHandle\ NextSiblingElement(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ name\ =\ 0\ )\textcolor{keyword}{\ const\ \ \ \ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{02113\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ XMLConstHandle(\ \_node\ ?\ \_node-\/>NextSiblingElement(\ name\ )\ :\ 0\ );}
+\DoxyCodeLine{02114\ \ \ \ \ \}}
+\DoxyCodeLine{02115\ }
+\DoxyCodeLine{02116\ }
+\DoxyCodeLine{02117\ \ \ \ \ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_node}{XMLNode}}*\ ToNode()\textcolor{keyword}{\ const\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{02118\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \_node;}
+\DoxyCodeLine{02119\ \ \ \ \ \}}
+\DoxyCodeLine{02120\ \ \ \ \ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_element}{XMLElement}}*\ ToElement()\textcolor{keyword}{\ const\ \ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{02121\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (\ \_node\ ?\ \_node-\/>ToElement()\ :\ 0\ );}
+\DoxyCodeLine{02122\ \ \ \ \ \}}
+\DoxyCodeLine{02123\ \ \ \ \ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_text}{XMLText}}*\ ToText()\textcolor{keyword}{\ const\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{02124\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (\ \_node\ ?\ \_node-\/>ToText()\ :\ 0\ );}
+\DoxyCodeLine{02125\ \ \ \ \ \}}
+\DoxyCodeLine{02126\ \ \ \ \ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_unknown}{XMLUnknown}}*\ ToUnknown()\textcolor{keyword}{\ const\ \ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{02127\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (\ \_node\ ?\ \_node-\/>ToUnknown()\ :\ 0\ );}
+\DoxyCodeLine{02128\ \ \ \ \ \}}
+\DoxyCodeLine{02129\ \ \ \ \ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_declaration}{XMLDeclaration}}*\ ToDeclaration()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{02130\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (\ \_node\ ?\ \_node-\/>ToDeclaration()\ :\ 0\ );}
+\DoxyCodeLine{02131\ \ \ \ \ \}}
+\DoxyCodeLine{02132\ }
+\DoxyCodeLine{02133\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{02134\ \ \ \ \ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_node}{XMLNode}}*\ \_node;}
+\DoxyCodeLine{02135\ \};}
+\DoxyCodeLine{02136\ }
+\DoxyCodeLine{02137\ }
+\DoxyCodeLine{02180\ \textcolor{keyword}{class\ }TINYXML2\_LIB\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_printer_aa6d3841c069085f5b8a27bc7103c04f7}{XMLPrinter}}\ :\ \textcolor{keyword}{public}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_visitor}{XMLVisitor}}}
+\DoxyCodeLine{02181\ \{}
+\DoxyCodeLine{02182\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{02189\ \ \ \ \ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_printer_aa6d3841c069085f5b8a27bc7103c04f7}{XMLPrinter}}(\ FILE*\ file=0,\ \textcolor{keywordtype}{bool}\ compact\ =\ \textcolor{keyword}{false},\ \textcolor{keywordtype}{int}\ depth\ =\ 0\ );}
+\DoxyCodeLine{02190\ \ \ \ \ \textcolor{keyword}{virtual}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_printer_aa6d3841c069085f5b8a27bc7103c04f7}{\string~XMLPrinter}}()\ \ \ \{\}}
+\DoxyCodeLine{02191\ }
+\DoxyCodeLine{02193\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_printer_a178c608ce8476043d5d6513819cde903}{PushHeader}}(\ \textcolor{keywordtype}{bool}\ writeBOM,\ \textcolor{keywordtype}{bool}\ writeDeclaration\ );}
+\DoxyCodeLine{02197\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_printer_a20fb06c83bd13e5140d7dd13af06c010}{OpenElement}}(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ name,\ \textcolor{keywordtype}{bool}\ compactMode=\textcolor{keyword}{false}\ );}
+\DoxyCodeLine{02199\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_printer_a9a4e2c9348b42e147629d5a99f4af3f0}{PushAttribute}}(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ name,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ value\ );}
+\DoxyCodeLine{02200\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_printer_a9a4e2c9348b42e147629d5a99f4af3f0}{PushAttribute}}(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ name,\ \textcolor{keywordtype}{int}\ value\ );}
+\DoxyCodeLine{02201\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_printer_a9a4e2c9348b42e147629d5a99f4af3f0}{PushAttribute}}(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ name,\ \textcolor{keywordtype}{unsigned}\ value\ );}
+\DoxyCodeLine{02202\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_printer_a9a4e2c9348b42e147629d5a99f4af3f0}{PushAttribute}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ name,\ int64\_t\ value);}
+\DoxyCodeLine{02203\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_printer_a9a4e2c9348b42e147629d5a99f4af3f0}{PushAttribute}}(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ name,\ \textcolor{keywordtype}{bool}\ value\ );}
+\DoxyCodeLine{02204\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_printer_a9a4e2c9348b42e147629d5a99f4af3f0}{PushAttribute}}(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ name,\ \textcolor{keywordtype}{double}\ value\ );}
+\DoxyCodeLine{02206\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_printer_af1fb439e5d800999646f333fa2f0699a}{CloseElement}}(\ \textcolor{keywordtype}{bool}\ compactMode=\textcolor{keyword}{false}\ );}
+\DoxyCodeLine{02207\ }
+\DoxyCodeLine{02209\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_printer_a1cc16a9362df4332012cb13cff6441b3}{PushText}}(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ text,\ \textcolor{keywordtype}{bool}\ cdata=\textcolor{keyword}{false}\ );}
+\DoxyCodeLine{02211\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_printer_a1cc16a9362df4332012cb13cff6441b3}{PushText}}(\ \textcolor{keywordtype}{int}\ value\ );}
+\DoxyCodeLine{02213\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_printer_a1cc16a9362df4332012cb13cff6441b3}{PushText}}(\ \textcolor{keywordtype}{unsigned}\ value\ );}
+\DoxyCodeLine{02215\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_printer_a1cc16a9362df4332012cb13cff6441b3}{PushText}}(int64\_t\ value);}
+\DoxyCodeLine{02217\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_printer_a1cc16a9362df4332012cb13cff6441b3}{PushText}}(\ \textcolor{keywordtype}{bool}\ value\ );}
+\DoxyCodeLine{02219\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_printer_a1cc16a9362df4332012cb13cff6441b3}{PushText}}(\ \textcolor{keywordtype}{float}\ value\ );}
+\DoxyCodeLine{02221\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_printer_a1cc16a9362df4332012cb13cff6441b3}{PushText}}(\ \textcolor{keywordtype}{double}\ value\ );}
+\DoxyCodeLine{02222\ }
+\DoxyCodeLine{02224\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_printer_afc8416814219591c2fd5656e0c233140}{PushComment}}(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ comment\ );}
+\DoxyCodeLine{02225\ }
+\DoxyCodeLine{02226\ \ \ \ \ \textcolor{keywordtype}{void}\ PushDeclaration(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ value\ );}
+\DoxyCodeLine{02227\ \ \ \ \ \textcolor{keywordtype}{void}\ PushUnknown(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ value\ );}
+\DoxyCodeLine{02228\ }
+\DoxyCodeLine{02229\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_printer_a9aa1de11a55a07db55a90fde37d7afad}{VisitEnter}}(\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_document}{XMLDocument}}\&\ \textcolor{comment}{/*doc*/}\ );}
+\DoxyCodeLine{02230\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_printer_a15fc1f2b922f540917dcf52808737b29}{VisitExit}}(\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_document}{XMLDocument}}\&\ \textcolor{comment}{/*doc*/}\ )\ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{02231\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{02232\ \ \ \ \ \}}
+\DoxyCodeLine{02233\ }
+\DoxyCodeLine{02234\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ VisitEnter(\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_element}{XMLElement}}\&\ element,\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_attribute}{XMLAttribute}}*\ attribute\ );}
+\DoxyCodeLine{02235\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ VisitExit(\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_element}{XMLElement}}\&\ element\ );}
+\DoxyCodeLine{02236\ }
+\DoxyCodeLine{02237\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ Visit(\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_text}{XMLText}}\&\ text\ );}
+\DoxyCodeLine{02238\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ Visit(\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_comment}{XMLComment}}\&\ comment\ );}
+\DoxyCodeLine{02239\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ Visit(\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_declaration}{XMLDeclaration}}\&\ declaration\ );}
+\DoxyCodeLine{02240\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ Visit(\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_unknown}{XMLUnknown}}\&\ unknown\ );}
+\DoxyCodeLine{02241\ }
+\DoxyCodeLine{02246\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_printer_abfa772366c44a17cdeb8aea294d57f78}{CStr}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{02247\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \_buffer.Mem();}
+\DoxyCodeLine{02248\ \ \ \ \ \}}
+\DoxyCodeLine{02254\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_printer_a3256cf3523d4898b91abb18b924be04c}{CStrSize}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{02255\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \_buffer.Size();}
+\DoxyCodeLine{02256\ \ \ \ \ \}}
+\DoxyCodeLine{02261\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_printer_a216157765b7267bf389975b1cbf9a909}{ClearBuffer}}()\ \{}
+\DoxyCodeLine{02262\ \ \ \ \ \ \ \ \ \_buffer.Clear();}
+\DoxyCodeLine{02263\ \ \ \ \ \ \ \ \ \_buffer.Push(0);}
+\DoxyCodeLine{02264\ \ \ \ \ \ \ \ \ \_firstElement\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{02265\ \ \ \ \ \}}
+\DoxyCodeLine{02266\ }
+\DoxyCodeLine{02267\ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{02268\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ CompactMode(\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{classtinyxml2_1_1_x_m_l_element}{XMLElement}}\&\ )\ \ \ \{\ \textcolor{keywordflow}{return}\ \_compactMode;\ \}}
+\DoxyCodeLine{02269\ }
+\DoxyCodeLine{02273\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ PrintSpace(\ \textcolor{keywordtype}{int}\ depth\ );}
+\DoxyCodeLine{02274\ \ \ \ \ \textcolor{keywordtype}{void}\ Print(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ format,\ ...\ );}
+\DoxyCodeLine{02275\ \ \ \ \ \textcolor{keywordtype}{void}\ Write(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ data,\ \textcolor{keywordtype}{size\_t}\ size\ );}
+\DoxyCodeLine{02276\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ Write(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ data\ )\ \ \ \ \ \ \ \ \ \ \ \{\ Write(\ data,\ strlen(\ data\ )\ );\ \}}
+\DoxyCodeLine{02277\ \ \ \ \ \textcolor{keywordtype}{void}\ Putc(\ \textcolor{keywordtype}{char}\ ch\ );}
+\DoxyCodeLine{02278\ }
+\DoxyCodeLine{02279\ \ \ \ \ \textcolor{keywordtype}{void}\ SealElementIfJustOpened();}
+\DoxyCodeLine{02280\ \ \ \ \ \textcolor{keywordtype}{bool}\ \_elementJustOpened;}
+\DoxyCodeLine{02281\ \ \ \ \ DynArray<\ const\ char*,\ 10\ >\ \_stack;}
+\DoxyCodeLine{02282\ }
+\DoxyCodeLine{02283\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{02284\ \ \ \ \ \textcolor{keywordtype}{void}\ PrintString(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*,\ \textcolor{keywordtype}{bool}\ restrictedEntitySet\ );\ \ \textcolor{comment}{//\ prints\ out,\ after\ detecting\ entities.}}
+\DoxyCodeLine{02285\ }
+\DoxyCodeLine{02286\ \ \ \ \ \textcolor{keywordtype}{bool}\ \_firstElement;}
+\DoxyCodeLine{02287\ \ \ \ \ FILE*\ \_fp;}
+\DoxyCodeLine{02288\ \ \ \ \ \textcolor{keywordtype}{int}\ \_depth;}
+\DoxyCodeLine{02289\ \ \ \ \ \textcolor{keywordtype}{int}\ \_textDepth;}
+\DoxyCodeLine{02290\ \ \ \ \ \textcolor{keywordtype}{bool}\ \_processEntities;}
+\DoxyCodeLine{02291\ \ \ \ \ \textcolor{keywordtype}{bool}\ \_compactMode;}
+\DoxyCodeLine{02292\ }
+\DoxyCodeLine{02293\ \ \ \ \ \textcolor{keyword}{enum}\ \{}
+\DoxyCodeLine{02294\ \ \ \ \ \ \ \ \ ENTITY\_RANGE\ =\ 64,}
+\DoxyCodeLine{02295\ \ \ \ \ \ \ \ \ BUF\_SIZE\ =\ 200}
+\DoxyCodeLine{02296\ \ \ \ \ \};}
+\DoxyCodeLine{02297\ \ \ \ \ \textcolor{keywordtype}{bool}\ \_entityFlag[ENTITY\_RANGE];}
+\DoxyCodeLine{02298\ \ \ \ \ \textcolor{keywordtype}{bool}\ \_restrictedEntityFlag[ENTITY\_RANGE];}
+\DoxyCodeLine{02299\ }
+\DoxyCodeLine{02300\ \ \ \ \ DynArray<\ char,\ 20\ >\ \_buffer;}
+\DoxyCodeLine{02301\ }
+\DoxyCodeLine{02302\ \ \ \ \ \textcolor{comment}{//\ Prohibit\ cloning,\ intentionally\ not\ implemented}}
+\DoxyCodeLine{02303\ \ \ \ \ XMLPrinter(\ \textcolor{keyword}{const}\ XMLPrinter\&\ );}
+\DoxyCodeLine{02304\ \ \ \ \ XMLPrinter\&\ operator=(\ \textcolor{keyword}{const}\ XMLPrinter\&\ );}
+\DoxyCodeLine{02305\ \};}
+\DoxyCodeLine{02306\ }
+\DoxyCodeLine{02307\ }
+\DoxyCodeLine{02308\ \}\ \ \ \textcolor{comment}{//\ tinyxml2}}
+\DoxyCodeLine{02309\ }
+\DoxyCodeLine{02310\ \textcolor{preprocessor}{\#if\ defined(\_MSC\_VER)}}
+\DoxyCodeLine{02311\ \textcolor{preprocessor}{\#\ \ \ pragma\ warning(pop)}}
+\DoxyCodeLine{02312\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{02313\ }
+\DoxyCodeLine{02314\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ TINYXML2\_INCLUDED}}
+
+\end{DoxyCode}

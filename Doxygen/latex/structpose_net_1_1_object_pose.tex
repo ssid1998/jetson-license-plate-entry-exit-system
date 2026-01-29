@@ -1,0 +1,102 @@
+\doxysection{pose\+Net::\+Object\+Pose Struct Reference}
+\hypertarget{structpose_net_1_1_object_pose}{}\label{structpose_net_1_1_object_pose}\index{poseNet::ObjectPose@{poseNet::ObjectPose}}
+
+
+{\ttfamily \+\#include $<$pose\+Net.\+h$>$}
+
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \doxymbox{\hyperlink{structpose_net_1_1_object_pose_1_1_keypoint}{Keypoint}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \doxymbox{\hyperlink{structpose_net_1_1_object_pose_a7401105ef9346854261b8fb9b86bf827}{Find\+Keypoint}} (uint32\+\_\+t id) const
+\item 
+\Hypertarget{structpose_net_1_1_object_pose_a872163e2d0c63d5c1b69b59c732ef515}\label{structpose_net_1_1_object_pose_a872163e2d0c63d5c1b69b59c732ef515} 
+int {\bfseries Find\+Link} (uint32\+\_\+t a, uint32\+\_\+t b) const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+uint32\+\_\+t \doxymbox{\hyperlink{structpose_net_1_1_object_pose_a581b90cc2974bb8a90fbafc2f5448fce}{ID}}
+\item 
+float \doxymbox{\hyperlink{structpose_net_1_1_object_pose_a4bb68db2ef92240a0e5dbc9c6f3dea9e}{Left}}
+\item 
+float \doxymbox{\hyperlink{structpose_net_1_1_object_pose_ad87a8bf3dfaa0ca9ec20831b44def4e1}{Right}}
+\item 
+float \doxymbox{\hyperlink{structpose_net_1_1_object_pose_adece53f539c88290c4062193f0fd7ae7}{Top}}
+\item 
+float \doxymbox{\hyperlink{structpose_net_1_1_object_pose_a333bb92ee586133a7221ace0f5f4d557}{Bottom}}
+\item 
+std::\+vector$<$ \doxymbox{\hyperlink{structpose_net_1_1_object_pose_1_1_keypoint}{Keypoint}} $>$ \doxymbox{\hyperlink{structpose_net_1_1_object_pose_a695103397589cdf95d56eec30b8869ef}{Keypoints}}
+\item 
+std::\+vector$<$ std::\+array$<$ uint32\+\_\+t, 2 $>$ $>$ \doxymbox{\hyperlink{structpose_net_1_1_object_pose_aa0cad49daab2c621d2313d52a1746f85}{Links}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\doxylink{requirements_The}{The} pose of an object, composed of links between keypoints. Each image can have multiple objects detected per frame. 
+
+\label{doc-func-members}
+\Hypertarget{structpose_net_1_1_object_pose_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{structpose_net_1_1_object_pose_a7401105ef9346854261b8fb9b86bf827}\index{poseNet::ObjectPose@{poseNet::ObjectPose}!FindKeypoint@{FindKeypoint}}
+\index{FindKeypoint@{FindKeypoint}!poseNet::ObjectPose@{poseNet::ObjectPose}}
+\doxysubsubsection{\texorpdfstring{FindKeypoint()}{FindKeypoint()}}
+{\footnotesize\ttfamily \label{structpose_net_1_1_object_pose_a7401105ef9346854261b8fb9b86bf827} 
+int pose\+Net::\+\+Object\+Pose::\+\+Find\+Keypoint (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{id}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Find a link index by two keypoint ID\textquotesingle{}s, or return -\/1 if not found. This returns an index into the Links list 
+
+\label{doc-variable-members}
+\Hypertarget{structpose_net_1_1_object_pose_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{structpose_net_1_1_object_pose_a333bb92ee586133a7221ace0f5f4d557}\index{poseNet::ObjectPose@{poseNet::ObjectPose}!Bottom@{Bottom}}
+\index{Bottom@{Bottom}!poseNet::ObjectPose@{poseNet::ObjectPose}}
+\doxysubsubsection{\texorpdfstring{Bottom}{Bottom}}
+{\footnotesize\ttfamily \label{structpose_net_1_1_object_pose_a333bb92ee586133a7221ace0f5f4d557} 
+float pose\+Net::\+\+Object\+Pose::\+\+Bottom}
+
+Bounding box bottom, as determined by the bottom-\/most keypoint in the pose \Hypertarget{structpose_net_1_1_object_pose_a581b90cc2974bb8a90fbafc2f5448fce}\index{poseNet::ObjectPose@{poseNet::ObjectPose}!ID@{ID}}
+\index{ID@{ID}!poseNet::ObjectPose@{poseNet::ObjectPose}}
+\doxysubsubsection{\texorpdfstring{ID}{ID}}
+{\footnotesize\ttfamily \label{structpose_net_1_1_object_pose_a581b90cc2974bb8a90fbafc2f5448fce} 
+uint32\+\_\+t pose\+Net::\+\+Object\+Pose::\+\+ID}
+
+Object ID in the image frame, starting with 0 \Hypertarget{structpose_net_1_1_object_pose_a695103397589cdf95d56eec30b8869ef}\index{poseNet::ObjectPose@{poseNet::ObjectPose}!Keypoints@{Keypoints}}
+\index{Keypoints@{Keypoints}!poseNet::ObjectPose@{poseNet::ObjectPose}}
+\doxysubsubsection{\texorpdfstring{Keypoints}{Keypoints}}
+{\footnotesize\ttfamily \label{structpose_net_1_1_object_pose_a695103397589cdf95d56eec30b8869ef} 
+std::\+vector$<$\doxymbox{\hyperlink{structpose_net_1_1_object_pose_1_1_keypoint}{Keypoint}}$>$ pose\+Net::\+\+Object\+Pose::\+\+Keypoints}
+
+List of keypoints in the object, which contain the keypoint ID and x/\+y coordinates \Hypertarget{structpose_net_1_1_object_pose_a4bb68db2ef92240a0e5dbc9c6f3dea9e}\index{poseNet::ObjectPose@{poseNet::ObjectPose}!Left@{Left}}
+\index{Left@{Left}!poseNet::ObjectPose@{poseNet::ObjectPose}}
+\doxysubsubsection{\texorpdfstring{Left}{Left}}
+{\footnotesize\ttfamily \label{structpose_net_1_1_object_pose_a4bb68db2ef92240a0e5dbc9c6f3dea9e} 
+float pose\+Net::\+\+Object\+Pose::\+\+Left}
+
+Bounding box left, as determined by the left-\/most keypoint in the pose \Hypertarget{structpose_net_1_1_object_pose_aa0cad49daab2c621d2313d52a1746f85}\index{poseNet::ObjectPose@{poseNet::ObjectPose}!Links@{Links}}
+\index{Links@{Links}!poseNet::ObjectPose@{poseNet::ObjectPose}}
+\doxysubsubsection{\texorpdfstring{Links}{Links}}
+{\footnotesize\ttfamily \label{structpose_net_1_1_object_pose_aa0cad49daab2c621d2313d52a1746f85} 
+std::\+vector$<$std::\+array$<$uint32\+\_\+t, 2$>$ $>$ pose\+Net::\+\+Object\+Pose::\+\+Links}
+
+List of links in the object. Each link has two keypoint indexes into the Keypoints list Find a keypoint index by it\textquotesingle{}s ID, or return -\/1 if not found. This returns an index into the Keypoints list \Hypertarget{structpose_net_1_1_object_pose_ad87a8bf3dfaa0ca9ec20831b44def4e1}\index{poseNet::ObjectPose@{poseNet::ObjectPose}!Right@{Right}}
+\index{Right@{Right}!poseNet::ObjectPose@{poseNet::ObjectPose}}
+\doxysubsubsection{\texorpdfstring{Right}{Right}}
+{\footnotesize\ttfamily \label{structpose_net_1_1_object_pose_ad87a8bf3dfaa0ca9ec20831b44def4e1} 
+float pose\+Net::\+\+Object\+Pose::\+\+Right}
+
+Bounding box right, as determined by the right-\/most keypoint in the pose \Hypertarget{structpose_net_1_1_object_pose_adece53f539c88290c4062193f0fd7ae7}\index{poseNet::ObjectPose@{poseNet::ObjectPose}!Top@{Top}}
+\index{Top@{Top}!poseNet::ObjectPose@{poseNet::ObjectPose}}
+\doxysubsubsection{\texorpdfstring{Top}{Top}}
+{\footnotesize\ttfamily \label{structpose_net_1_1_object_pose_adece53f539c88290c4062193f0fd7ae7} 
+float pose\+Net::\+\+Object\+Pose::\+\+Top}
+
+Bounding box top, as determined by the top-\/most keypoint in the pose 
+
+The documentation for this struct was generated from the following file:\+\begin{DoxyCompactItemize}
+\item 
+jetson-\/inference/\+build/\+aarch64/\+include/\+jetson-\/inference/\+pose\+Net.\+h\end{DoxyCompactItemize}

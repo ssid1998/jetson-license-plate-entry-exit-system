@@ -1,0 +1,89 @@
+\chapter{webrtc-\/flask }
+\hypertarget{md_jetson-inference_2docs_2webrtc-flask}{}\label{md_jetson-inference_2docs_2webrtc-flask}\index{webrtc-\/flask@{webrtc-\/flask}}
+ 
+
+\textsuperscript{\href{webrtc-html.md}{\texttt{Back}} \texorpdfstring{$\vert$}{|} \href{webrtc-dash.md}{\texttt{Next}} \texorpdfstring{$\vert$}{|} }\href{../README.md\#hello-ai-world}{\texttt{\textsuperscript{Contents}}} ~\newline
+ \textsuperscript{Web\+App Frameworks}\hypertarget{md_jetson-inference_2docs_2webrtc-flask_autotoc_md435}{}\doxysection{\texorpdfstring{Flask + REST}{Flask + REST}}\label{md_jetson-inference_2docs_2webrtc-flask_autotoc_md435}
+\href{https://flask.palletsprojects.com/en/2.2.x/}{\texttt{Flask}} is a popular Python web micro-\/framework that routes HTTP/\+\+HTTPS requests to user-\/implemented Python functions. You can also easily handle backend REST requests with it, which can be used by the client to dynamically control properties and trigger content from the frontend based on user inputs. This interactive DNN playground (found under \href{../python/www/flask}{\texttt{{\ttfamily python/\+www/\+flask}}}) has multiple vision models that you can toggle simultaneously from the webapp and control their various settings with the UI in realtime:\+
+
+
+
+It also uses \href{https://getbootstrap.com/}{\texttt{Bootstrap CSS}} for styling of the UI components. \doxylink{requirements_The}{The} main source files for this example are as follows:\+
+
+
+\begin{DoxyItemize}
+\item \href{../python/www/flask/app.py}{\texttt{{\ttfamily app.\+py}}} (webserver)
+\item \href{../python/www/flask/stream.py}{\texttt{{\ttfamily stream.\+py}}} (Web\+RTC streaming thread)
+\item \href{../python/www/flask/model.py}{\texttt{{\ttfamily model.\+py}}} (DNN inferencing)
+\item \href{../python/www/flask/templates/index.html}{\texttt{{\ttfamily index.\+html}}} (frontend presentation)
+\end{DoxyItemize}\hypertarget{md_jetson-inference_2docs_2webrtc-flask_autotoc_md436}{}\doxysubsection{\texorpdfstring{Running the Example}{Running the Example}}\label{md_jetson-inference_2docs_2webrtc-flask_autotoc_md436}
+Launching app.\+py will start a Flask webserver, along with a streaming thread that runs the Web\+RTC capture/\+transport and inferencing code:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{\$\ cd\ jetson-\/inference/python/www/flask}
+\DoxyCodeLine{\$\ pip3\ install\ -\/r\ requirements.txt}
+\DoxyCodeLine{\$\ python3\ app.py\ -\/-\/detection=ssd-\/mobilenet-\/v2\ -\/-\/pose=resnet18-\/hand\ -\/-\/action=resnet18-\/kinetics}
+
+\end{DoxyCode}
+
+
+\begin{quote}
+{\bfseries{note}}:\+ receiving browser webcams requires \href{webrtc-server.md\#enabling-https--ssl}{\texttt{HTTPS/\+\+SSL}} to be enabled \end{quote}
+
+
+You should then be able to navigate your browser to {\ttfamily \href{https://}{\texttt{https:\+/\+/\+}}\texorpdfstring{$<$}{<}JETSON-\/\+IP\texorpdfstring{$>$}{>}:\+8050} and start the stream. 8050 is the default port used, but you can change that with the {\ttfamily -\/-\/port=N} command-\/line argument. It\textquotesingle{}s also configured by default for Web\+RTC input and output, but if you want to use a different \href{aux-streaming.md\#input-streams}{\texttt{video input device}}, you can set that with the {\ttfamily -\/-\/\doxylink{group__input}{Input}} argument (for example, {\ttfamily -\/-\/\doxylink{group__input}{Input}=/\+dev/\+video0} for a V4\+L2 camera that\textquotesingle{}s directly attached to your Jetson).\hypertarget{md_jetson-inference_2docs_2webrtc-flask_autotoc_md437}{}\doxysubsubsection{\texorpdfstring{Loading DNN Models}{Loading DNN Models}}\label{md_jetson-inference_2docs_2webrtc-flask_autotoc_md437}
+This example supports loading multiple DNN models which can run simultaneously (classification, detection, segmentation, pose estimation, action recognition, and background removal). When you launch the app, you can pick which models are loaded like so:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{\$\ python3\ app.py\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ -\/-\/classification=resnet18\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ -\/-\/detection=ssd-\/mobilenet-\/v2\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ -\/-\/segmentation=fcn-\/resnet18-\/mhp\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ -\/-\/pose=resnet18-\/body\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ -\/-\/action=resnet18-\/kinetics\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ -\/-\/background=u2net}
+
+\end{DoxyCode}
+
+
+\begin{quote}
+{\bfseries{note}}:\+ depending on your Jetson and background processes, you may not have enough memory available to load all of these models at once or the compute capacity to run them all in realtime. See \href{pytorch-transfer-learning.md\#mounting-swap}{\texttt{Mounting Swap}} and \href{pytorch-transfer-learning.md\#disabling-the-desktop-gui}{\texttt{Disabling the Desktop GUI}} to conserve memory. \end{quote}
+
+
+To list which built-\/in models are available, you can run {\ttfamily app.\+py -\/-\/help} or view \href{../data/networks/models.json}{\texttt{{\ttfamily data/\+networks/\+models.\+json}}}. Each model has an expandable drop-\/down for turning it on/\+off, along with interactive controls for changing its settings. \doxylink{requirements_The}{The} client/\+server communication for implementing these are done using REST JSON queries, which are discussed below.\hypertarget{md_jetson-inference_2docs_2webrtc-flask_autotoc_md438}{}\doxysubsection{\texorpdfstring{REST Queries}{REST Queries}}\label{md_jetson-inference_2docs_2webrtc-flask_autotoc_md438}
+This app takes the core HTML/\+\+Java\+Script code for streaming Web\+RTC from the \doxysectlink{md_jetson-inference_2docs_2webrtc-html}{previous example}{0}, and builds on it with REST JSON queries for dynamically updating various components and parameters. You can see the backend stubs for these in \href{../python/www/flask/app.py}{\texttt{app.\+py}}, which Java\+Script queries from the client in \href{../python/www/flask/templates/index.html}{\texttt{index.\+html}}. Templates and macros are used to reduce the amount of boilerplate code for adding new settings:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ python}
+\DoxyCodeLine{\#\ backend\ -\/\ app.py\ (Python)}
+\DoxyCodeLine{@app.route('/classification/enabled',\ methods=['GET',\ 'PUT'])}
+\DoxyCodeLine{def\ classification\_enabled():}
+\DoxyCodeLine{\ \ \ return\ rest\_property(stream.models['classification'].IsEnabled,\ stream.models['classification'].SetEnabled,\ bool)}
+\DoxyCodeLine{\ \ \ }
+\DoxyCodeLine{@app.route('/classification/confidence\_threshold',\ methods=['GET',\ 'PUT'])}
+\DoxyCodeLine{def\ classification\_confidence\_threshold():}
+\DoxyCodeLine{\ \ \ return\ rest\_property(stream.models['classification'].net.GetThreshold,\ stream.models['classification'].net.SetThreshold,\ float)}
+\DoxyCodeLine{\ \ \ \ \ \ \ }
+\DoxyCodeLine{\#\ frontend\ -\/\ index.html\ (Jinja/HTML/JavaScript)}
+\DoxyCodeLine{\{\{\ checkbox('classification\_enabled',\ '/classification/enabled',\ 'Classification\ Enabled')\ \}\}}
+\DoxyCodeLine{\{\{\ slider('classification\_confidence\_threshold',\ '/classification/confidence\_threshold',\ 'Confidence\ Threshold')\ \}\}}
+
+\end{DoxyCode}
+
+
+These snippets above implement the controls for the classification model, and there are others for the different type of DNNs. ~\newline
+
+
+\href{../python/www/flask/utils.py}{\texttt{{\ttfamily rest\+\_\+property()}}} is backend utility function in Python that handles {\ttfamily GET} and {\ttfamily PUT} REST requests for getting/\+setting user-\/defined attributes. \href{../python/www/flask/templates/macros.html}{\texttt{{\ttfamily checkbox()}}} and \href{../python/www/flask/templates/macros.html}{\texttt{{\ttfamily slider()}}} are Jinja macros that render the HTML components for the controls and Java\+Script for executing the REST queries. If you\textquotesingle{}re wondering what the {\ttfamily \{\{ ... \}\}} code is in index.\+html, those are dynamic \href{https://jinja.palletsprojects.com/en/3.1.x/templates/}{\texttt{Jinja}} template expressions that get evaluated server-\/side to generate the page content when Flask handles requests from the client.
+
+Next \texorpdfstring{$\vert$}{|} {\bfseries{\href{webrtc-dash.md}{\texttt{Plotly Dashboard}}}} ~\newline
+ Back \texorpdfstring{$\vert$}{|} {\bfseries{\href{webrtc-html.md}{\texttt{HTML /\+ Java\+Script}}}}
+
+{\bfseries{ }}
+
+\textsuperscript{© 2016-\/2023 NVIDIA \texorpdfstring{$\vert$}{|} }\href{../README.md\#hello-ai-world}{\texttt{\textsuperscript{Table of Contents}}}

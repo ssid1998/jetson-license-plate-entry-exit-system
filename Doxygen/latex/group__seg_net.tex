@@ -1,0 +1,86 @@
+\doxysubsection{seg\+Net }
+\hypertarget{group__seg_net}{}\label{group__seg_net}\index{segNet@{segNet}}
+\doxysubsubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \doxymbox{\hyperlink{classseg_net}{seg\+Net}}
+\end{DoxyCompactItemize}
+\doxysubsubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\+\#define \doxymbox{\hyperlink{group__seg_net_ga33b5fd20f8ed468725c55eb0bcc5af71}{SEGNET\+\_\+\+DEFAULT\+\_\+\+INPUT}}~"{}input\+\_\+0"{}
+\item 
+\+\#define \doxymbox{\hyperlink{group__seg_net_ga05c359c7dcd0c1e855543a3a9a18c422}{SEGNET\+\_\+\+DEFAULT\+\_\+\+OUTPUT}}~"{}output\+\_\+0"{}
+\item 
+\+\#define \doxymbox{\hyperlink{group__seg_net_ga19f1910138ebb47efda640bf02f7caee}{SEGNET\+\_\+\+DEFAULT\+\_\+\+ALPHA}}~150
+\item 
+\+\#define \doxymbox{\hyperlink{group__seg_net_gad66854e2f925b6648b1d3f68335658e4}{SEGNET\+\_\+\+MODEL\+\_\+\+TYPE}}~"{}segmentation"{}
+\item 
+\+\#define \doxymbox{\hyperlink{group__seg_net_ga1b784139a64e71b3698a234d83ae2cf8}{SEGNET\+\_\+\+USAGE\+\_\+\+STRING}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsubsection{Detailed Description}
+Semantic segmentation DNN (FCN or Fully-\/\+Convolutional Networks) 
+
+\label{doc-define-members}
+\Hypertarget{group__seg_net_doc-define-members}
+\doxysubsubsection{Macro Definition Documentation}
+\Hypertarget{group__seg_net_ga19f1910138ebb47efda640bf02f7caee}\index{segNet@{segNet}!SEGNET\_DEFAULT\_ALPHA@{SEGNET\_DEFAULT\_ALPHA}}
+\index{SEGNET\_DEFAULT\_ALPHA@{SEGNET\_DEFAULT\_ALPHA}!segNet@{segNet}}
+\doxysubsubsubsection{\texorpdfstring{SEGNET\_DEFAULT\_ALPHA}{SEGNET\_DEFAULT\_ALPHA}}
+{\footnotesize\ttfamily \label{group__seg_net_ga19f1910138ebb47efda640bf02f7caee} 
+\+\#define SEGNET\+\_\+\+DEFAULT\+\_\+\+ALPHA~150}
+
+Default alpha blending value used during overlay \Hypertarget{group__seg_net_ga33b5fd20f8ed468725c55eb0bcc5af71}\index{segNet@{segNet}!SEGNET\_DEFAULT\_INPUT@{SEGNET\_DEFAULT\_INPUT}}
+\index{SEGNET\_DEFAULT\_INPUT@{SEGNET\_DEFAULT\_INPUT}!segNet@{segNet}}
+\doxysubsubsubsection{\texorpdfstring{SEGNET\_DEFAULT\_INPUT}{SEGNET\_DEFAULT\_INPUT}}
+{\footnotesize\ttfamily \label{group__seg_net_ga33b5fd20f8ed468725c55eb0bcc5af71} 
+\+\#define SEGNET\+\_\+\+DEFAULT\+\_\+\+INPUT~"{}input\+\_\+0"{}}
+
+Name of default input blob for segmentation model. \Hypertarget{group__seg_net_ga05c359c7dcd0c1e855543a3a9a18c422}\index{segNet@{segNet}!SEGNET\_DEFAULT\_OUTPUT@{SEGNET\_DEFAULT\_OUTPUT}}
+\index{SEGNET\_DEFAULT\_OUTPUT@{SEGNET\_DEFAULT\_OUTPUT}!segNet@{segNet}}
+\doxysubsubsubsection{\texorpdfstring{SEGNET\_DEFAULT\_OUTPUT}{SEGNET\_DEFAULT\_OUTPUT}}
+{\footnotesize\ttfamily \label{group__seg_net_ga05c359c7dcd0c1e855543a3a9a18c422} 
+\+\#define SEGNET\+\_\+\+DEFAULT\+\_\+\+OUTPUT~"{}output\+\_\+0"{}}
+
+Name of default output blob for segmentation model. \Hypertarget{group__seg_net_gad66854e2f925b6648b1d3f68335658e4}\index{segNet@{segNet}!SEGNET\_MODEL\_TYPE@{SEGNET\_MODEL\_TYPE}}
+\index{SEGNET\_MODEL\_TYPE@{SEGNET\_MODEL\_TYPE}!segNet@{segNet}}
+\doxysubsubsubsection{\texorpdfstring{SEGNET\_MODEL\_TYPE}{SEGNET\_MODEL\_TYPE}}
+{\footnotesize\ttfamily \label{group__seg_net_gad66854e2f925b6648b1d3f68335658e4} 
+\+\#define SEGNET\+\_\+\+MODEL\+\_\+\+TYPE~"{}segmentation"{}}
+
+\doxylink{requirements_The}{The} model type for \doxylink{classseg_net}{seg\+Net} in data/\+networks/\+models.\+json \Hypertarget{group__seg_net_ga1b784139a64e71b3698a234d83ae2cf8}\index{segNet@{segNet}!SEGNET\_USAGE\_STRING@{SEGNET\_USAGE\_STRING}}
+\index{SEGNET\_USAGE\_STRING@{SEGNET\_USAGE\_STRING}!segNet@{segNet}}
+\doxysubsubsubsection{\texorpdfstring{SEGNET\_USAGE\_STRING}{SEGNET\_USAGE\_STRING}}
+{\footnotesize\ttfamily \label{group__seg_net_ga1b784139a64e71b3698a234d83ae2cf8} 
+\+\#define SEGNET\+\_\+\+USAGE\+\_\+\+STRING}
+
+{\bfseries Value:\+}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{stringliteral}{"{}segNet\ arguments:\ \(\backslash\)n"{}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\textcolor{stringliteral}{"{}\ \ -\/-\/network=NETWORK\ \ \ \ pre-\/trained\ model\ to\ load,\ one\ of\ the\ following:\(\backslash\)n"{}}\ \ \ \(\backslash\)}
+\DoxyCodeLine{\textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ fcn-\/resnet18-\/cityscapes-\/512x256\(\backslash\)n"{}}\ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ fcn-\/resnet18-\/cityscapes-\/1024x512\(\backslash\)n"{}}\ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ fcn-\/resnet18-\/cityscapes-\/2048x1024\(\backslash\)n"{}}\ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ fcn-\/resnet18-\/deepscene-\/576x320\(\backslash\)n"{}}\ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ fcn-\/resnet18-\/deepscene-\/864x480\(\backslash\)n"{}}\ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ fcn-\/resnet18-\/mhp-\/512x320\(\backslash\)n"{}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ fcn-\/resnet18-\/mhp-\/640x360\(\backslash\)n"{}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ fcn-\/resnet18-\/voc-\/320x320\ (default)\(\backslash\)n"{}}\ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ fcn-\/resnet18-\/voc-\/512x320\(\backslash\)n"{}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ fcn-\/resnet18-\/sun-\/512x400\(\backslash\)n"{}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ fcn-\/resnet18-\/sun-\/640x512\(\backslash\)n"{}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\textcolor{stringliteral}{"{}\ \ -\/-\/model=MODEL\ \ \ \ \ \ \ \ path\ to\ custom\ model\ to\ load\ (caffemodel,\ uff,\ or\ onnx)\(\backslash\)n"{}}\ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\textcolor{stringliteral}{"{}\ \ -\/-\/prototxt=PROTOTXT\ \ path\ to\ custom\ prototxt\ to\ load\ (for\ .caffemodel\ only)\(\backslash\)n"{}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\textcolor{stringliteral}{"{}\ \ -\/-\/labels=LABELS\ \ \ \ \ \ path\ to\ text\ file\ containing\ the\ labels\ for\ each\ class\(\backslash\)n"{}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\textcolor{stringliteral}{"{}\ \ -\/-\/colors=COLORS\ \ \ \ \ \ path\ to\ text\ file\ containing\ the\ colors\ for\ each\ class\(\backslash\)n"{}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\textcolor{stringliteral}{"{}\ \ -\/-\/input-\/blob=INPUT\ \ \ name\ of\ the\ input\ layer\ (default:\ '"{}}\ \doxymbox{\hyperlink{group__seg_net_ga33b5fd20f8ed468725c55eb0bcc5af71}{SEGNET\_DEFAULT\_INPUT}}\ \textcolor{stringliteral}{"{}')\(\backslash\)n"{}}\ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\textcolor{stringliteral}{"{}\ \ -\/-\/output-\/blob=OUTPUT\ name\ of\ the\ output\ layer\ (default:\ '"{}}\ \doxymbox{\hyperlink{group__seg_net_ga05c359c7dcd0c1e855543a3a9a18c422}{SEGNET\_DEFAULT\_OUTPUT}}\ \textcolor{stringliteral}{"{}')\(\backslash\)n"{}}\ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \textcolor{stringliteral}{"{}\ \ -\/-\/alpha=ALPHA\ \ \ \ \ \ \ \ overlay\ alpha\ blending\ value,\ range\ 0-\/255\ (default:\ 150)\(\backslash\)n"{}}\ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\textcolor{stringliteral}{"{}\ \ -\/-\/visualize=VISUAL\ \ \ visualization\ flags\ (e.g.\ -\/-\/visualize=overlay,mask)\(\backslash\)n"{}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ valid\ combinations\ are:\ \ 'overlay',\ 'mask'\(\backslash\)n"{}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\textcolor{stringliteral}{"{}\ \ -\/-\/profile\ \ \ \ \ \ \ \ \ \ \ \ enable\ layer\ profiling\ in\ TensorRT\(\backslash\)n\(\backslash\)n"{}}}
+
+\end{DoxyCode}
+Standard command-\/line options able to be passed to \doxylink{classseg_net_a2bdc5f47befa50f0ae96e99f0613333d}{seg\+Net::\+\+Create()} 

@@ -1,0 +1,1031 @@
+\doxysection{video\+Source Class Reference}
+\hypertarget{classvideo_source}{}\label{classvideo_source}\index{videoSource@{videoSource}}
+
+
+{\ttfamily \+\#include $<$video\+Source.\+h$>$}
+
+Inheritance diagram for video\+Source:\+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classvideo_source}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \doxymbox{\hyperlink{classvideo_source_adf535af6425bba4700aa49a8a1c31fc8}{Status}} \{ \newline
+\doxymbox{\hyperlink{classvideo_source_adf535af6425bba4700aa49a8a1c31fc8a43cef1ac6c4a3af84df3179bdffe528d}{ERROR}} = -\/2
+, \doxymbox{\hyperlink{classvideo_source_adf535af6425bba4700aa49a8a1c31fc8a70a9bb5ecd83b7f5a0b9483c144b74c5}{EOS}} = -\/1
+, \doxymbox{\hyperlink{classvideo_source_adf535af6425bba4700aa49a8a1c31fc8aee109bb5b2643da575fb3320655f3dda}{TIMEOUT}} = 0
+, \doxymbox{\hyperlink{classvideo_source_adf535af6425bba4700aa49a8a1c31fc8a51c45fa274bf173ca1af54643748fa87}{OK}} = 1
+, \newline
+\doxymbox{\hyperlink{classvideo_source_adf535af6425bba4700aa49a8a1c31fc8a43cef1ac6c4a3af84df3179bdffe528d}{ERROR}} = -\/2
+, \doxymbox{\hyperlink{classvideo_source_adf535af6425bba4700aa49a8a1c31fc8a70a9bb5ecd83b7f5a0b9483c144b74c5}{EOS}} = -\/1
+, \doxymbox{\hyperlink{classvideo_source_adf535af6425bba4700aa49a8a1c31fc8aee109bb5b2643da575fb3320655f3dda}{TIMEOUT}} = 0
+, \doxymbox{\hyperlink{classvideo_source_adf535af6425bba4700aa49a8a1c31fc8a51c45fa274bf173ca1af54643748fa87}{OK}} = 1
+ \}
+\item 
+enum \doxymbox{\hyperlink{classvideo_source_adf535af6425bba4700aa49a8a1c31fc8}{Status}} \{ \newline
+\doxymbox{\hyperlink{classvideo_source_adf535af6425bba4700aa49a8a1c31fc8a43cef1ac6c4a3af84df3179bdffe528d}{ERROR}} = -\/2
+, \doxymbox{\hyperlink{classvideo_source_adf535af6425bba4700aa49a8a1c31fc8a70a9bb5ecd83b7f5a0b9483c144b74c5}{EOS}} = -\/1
+, \doxymbox{\hyperlink{classvideo_source_adf535af6425bba4700aa49a8a1c31fc8aee109bb5b2643da575fb3320655f3dda}{TIMEOUT}} = 0
+, \doxymbox{\hyperlink{classvideo_source_adf535af6425bba4700aa49a8a1c31fc8a51c45fa274bf173ca1af54643748fa87}{OK}} = 1
+, \newline
+\doxymbox{\hyperlink{classvideo_source_adf535af6425bba4700aa49a8a1c31fc8a43cef1ac6c4a3af84df3179bdffe528d}{ERROR}} = -\/2
+, \doxymbox{\hyperlink{classvideo_source_adf535af6425bba4700aa49a8a1c31fc8a70a9bb5ecd83b7f5a0b9483c144b74c5}{EOS}} = -\/1
+, \doxymbox{\hyperlink{classvideo_source_adf535af6425bba4700aa49a8a1c31fc8aee109bb5b2643da575fb3320655f3dda}{TIMEOUT}} = 0
+, \doxymbox{\hyperlink{classvideo_source_adf535af6425bba4700aa49a8a1c31fc8a51c45fa274bf173ca1af54643748fa87}{OK}} = 1
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual \doxymbox{\hyperlink{classvideo_source_af74e73fbeb8cc35ecfe747cca877872c}{\texorpdfstring{$\sim$}{\string~}video\+Source}} ()
+\item 
+{\footnotesize template$<$typename T$>$ }\\bool \doxymbox{\hyperlink{classvideo_source_a151da5e63cbd96a1b4761316dbd4eb68}{Capture}} (T \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}image, int \texorpdfstring{$\ast$}{*}status, cuda\+Stream\+\_\+t stream=0)
+\item 
+{\footnotesize template$<$typename T$>$ }\\bool \doxymbox{\hyperlink{classvideo_source_a0d4d98198329cb94640969e18e7fbc50}{Capture}} (T \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}image, uint64\+\_\+t timeout=\doxymbox{\hyperlink{classvideo_source_a3e144d758672a9d304ae6518cbe57508}{DEFAULT\+\_\+\+TIMEOUT}}, int \texorpdfstring{$\ast$}{*}status=NULL, cuda\+Stream\+\_\+t stream=0)
+\item 
+virtual bool \doxymbox{\hyperlink{classvideo_source_aec2a9d2a119aec21abc7a0fba9c1e8bb}{Capture}} (void \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}image, \doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{image\+Format}} format, uint64\+\_\+t timeout=\doxymbox{\hyperlink{classvideo_source_a3e144d758672a9d304ae6518cbe57508}{DEFAULT\+\_\+\+TIMEOUT}}, int \texorpdfstring{$\ast$}{*}status=NULL, cuda\+Stream\+\_\+t stream=0)=0
+\item 
+virtual bool \doxymbox{\hyperlink{classvideo_source_ae2e57a6ea37947798fb12ca98a09ba06}{Open}} ()
+\item 
+virtual void \doxymbox{\hyperlink{classvideo_source_a7682192dfd1cc8b803c0d832c7170341}{Close}} ()
+\item 
+bool \doxymbox{\hyperlink{classvideo_source_a0ce18fd4c3a8f934e7ec000f0d36b7e9}{Is\+Streaming}} () const
+\item 
+uint32\+\_\+t \doxymbox{\hyperlink{classvideo_source_a17f0c43e832d4de85a014b3aa4265732}{Get\+Width}} () const
+\item 
+uint32\+\_\+t \doxymbox{\hyperlink{classvideo_source_a6ca24054da683cae18b0bfad01dbf1d0}{Get\+Height}} () const
+\item 
+uint32\+\_\+t \doxymbox{\hyperlink{classvideo_source_a4e6ac667bd17a49cc94a6b16173a06ba}{Get\+Frame\+Rate}} () const
+\item 
+uint64\+\_\+t \doxymbox{\hyperlink{classvideo_source_a2f1adda850349479bb3b4c4e90b3c429}{Get\+Frame\+Count}} () const
+\item 
+uint64\+\_\+t \doxymbox{\hyperlink{classvideo_source_a36ef21c0eb8cc9a7ce181cebf3d88e06}{Get\+Last\+Timestamp}} () const
+\item 
+\doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{image\+Format}} \doxymbox{\hyperlink{classvideo_source_af170b23f004c98754479f84351ef4c51}{Get\+Raw\+Format}} () const
+\item 
+const \doxymbox{\hyperlink{struct_u_r_i}{URI}} \& \doxymbox{\hyperlink{classvideo_source_ad930ea7163b10516207c74fb0f839bc0}{Get\+Resource}} () const
+\item 
+const \doxymbox{\hyperlink{structvideo_options}{video\+Options}} \& \doxymbox{\hyperlink{classvideo_source_a5872b65d8b2f2419b2222a2da5646603}{Get\+Options}} () const
+\item 
+virtual uint32\+\_\+t \doxymbox{\hyperlink{classvideo_source_a76f6f92cf40ad72e9d7f76538d583e37}{Get\+Type}} () const
+\item 
+bool \doxymbox{\hyperlink{classvideo_source_a0883cf58cd0d8d0c05fb192a01250b7a}{Is\+Type}} (uint32\+\_\+t type) const
+\item 
+{\footnotesize template$<$typename T$>$ }\\bool \doxymbox{\hyperlink{classvideo_source_ad3c1689db5baf2786099d2c0be075010}{Is\+Type}} () const
+\item 
+const char \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classvideo_source_aa37500e48b7ca86a2eec406ff6029bd6}{Type\+To\+Str}} () const
+\item 
+virtual \doxymbox{\hyperlink{classvideo_source_a2cae1095df64b7c61de77935b77032bb}{\texorpdfstring{$\sim$}{\string~}video\+Source}} ()
+\item 
+{\footnotesize template$<$typename T$>$ }\\bool \doxymbox{\hyperlink{classvideo_source_a151da5e63cbd96a1b4761316dbd4eb68}{Capture}} (T \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}image, int \texorpdfstring{$\ast$}{*}status, cuda\+Stream\+\_\+t stream=0)
+\item 
+{\footnotesize template$<$typename T$>$ }\\bool \doxymbox{\hyperlink{classvideo_source_a0d4d98198329cb94640969e18e7fbc50}{Capture}} (T \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}image, uint64\+\_\+t timeout=\doxymbox{\hyperlink{classvideo_source_a3e144d758672a9d304ae6518cbe57508}{DEFAULT\+\_\+\+TIMEOUT}}, int \texorpdfstring{$\ast$}{*}status=NULL, cuda\+Stream\+\_\+t stream=0)
+\item 
+virtual bool \doxymbox{\hyperlink{classvideo_source_aec2a9d2a119aec21abc7a0fba9c1e8bb}{Capture}} (void \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}image, \doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{image\+Format}} format, uint64\+\_\+t timeout=\doxymbox{\hyperlink{classvideo_source_a3e144d758672a9d304ae6518cbe57508}{DEFAULT\+\_\+\+TIMEOUT}}, int \texorpdfstring{$\ast$}{*}status=NULL, cuda\+Stream\+\_\+t stream=0)=0
+\item 
+virtual bool \doxymbox{\hyperlink{classvideo_source_aa7907ba2392b6ea5f747409d1bfbc18b}{Open}} ()
+\item 
+virtual void \doxymbox{\hyperlink{classvideo_source_a19ed8f98e4ce28462296b498804005ae}{Close}} ()
+\item 
+bool \doxymbox{\hyperlink{classvideo_source_a0ce18fd4c3a8f934e7ec000f0d36b7e9}{Is\+Streaming}} () const
+\item 
+uint32\+\_\+t \doxymbox{\hyperlink{classvideo_source_a17f0c43e832d4de85a014b3aa4265732}{Get\+Width}} () const
+\item 
+uint32\+\_\+t \doxymbox{\hyperlink{classvideo_source_a6ca24054da683cae18b0bfad01dbf1d0}{Get\+Height}} () const
+\item 
+uint32\+\_\+t \doxymbox{\hyperlink{classvideo_source_a4e6ac667bd17a49cc94a6b16173a06ba}{Get\+Frame\+Rate}} () const
+\item 
+uint64\+\_\+t \doxymbox{\hyperlink{classvideo_source_a2f1adda850349479bb3b4c4e90b3c429}{Get\+Frame\+Count}} () const
+\item 
+uint64\+\_\+t \doxymbox{\hyperlink{classvideo_source_a36ef21c0eb8cc9a7ce181cebf3d88e06}{Get\+Last\+Timestamp}} () const
+\item 
+\doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{image\+Format}} \doxymbox{\hyperlink{classvideo_source_af170b23f004c98754479f84351ef4c51}{Get\+Raw\+Format}} () const
+\item 
+const \doxymbox{\hyperlink{struct_u_r_i}{URI}} \& \doxymbox{\hyperlink{classvideo_source_ad930ea7163b10516207c74fb0f839bc0}{Get\+Resource}} () const
+\item 
+const \doxymbox{\hyperlink{structvideo_options}{video\+Options}} \& \doxymbox{\hyperlink{classvideo_source_a5872b65d8b2f2419b2222a2da5646603}{Get\+Options}} () const
+\item 
+virtual uint32\+\_\+t \doxymbox{\hyperlink{classvideo_source_a76f6f92cf40ad72e9d7f76538d583e37}{Get\+Type}} () const
+\item 
+bool \doxymbox{\hyperlink{classvideo_source_a0883cf58cd0d8d0c05fb192a01250b7a}{Is\+Type}} (uint32\+\_\+t type) const
+\item 
+{\footnotesize template$<$typename T$>$ }\\bool \doxymbox{\hyperlink{classvideo_source_ad3c1689db5baf2786099d2c0be075010}{Is\+Type}} () const
+\item 
+const char \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classvideo_source_aa37500e48b7ca86a2eec406ff6029bd6}{Type\+To\+Str}} () const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \doxymbox{\hyperlink{classvideo_source}{video\+Source}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classvideo_source_a971493dd39e0706bf53779d47621565e}{Create}} (const \doxymbox{\hyperlink{structvideo_options}{video\+Options}} \&options)
+\item 
+static \doxymbox{\hyperlink{classvideo_source}{video\+Source}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classvideo_source_a7e75b4ea4ba057fe821a56d057f029f9}{Create}} (const int argc, char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}argv, int position\+Arg=-\/1)
+\item 
+static \doxymbox{\hyperlink{classvideo_source}{video\+Source}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classvideo_source_aec0344111b430cbbabb4c81e7ef7ccf6}{Create}} (const \doxymbox{\hyperlink{classcommand_line}{command\+Line}} \&cmd\+Line, int position\+Arg=-\/1)
+\item 
+static \doxymbox{\hyperlink{classvideo_source}{video\+Source}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classvideo_source_aa112d38efeab1713437b211ecbce232d}{Create}} (const char \texorpdfstring{$\ast$}{*}\doxymbox{\hyperlink{struct_u_r_i}{URI}}, const \doxymbox{\hyperlink{structvideo_options}{video\+Options}} \&options=\doxymbox{\hyperlink{structvideo_options}{video\+Options}}())
+\item 
+static \doxymbox{\hyperlink{classvideo_source}{video\+Source}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classvideo_source_a08817c3e2e203c7ad0d8170e31c9aabd}{Create}} (const char \texorpdfstring{$\ast$}{*}\doxymbox{\hyperlink{struct_u_r_i}{URI}}, const \doxymbox{\hyperlink{classcommand_line}{command\+Line}} \&cmd\+Line, int position\+Arg=-\/1, const \doxymbox{\hyperlink{structvideo_options}{video\+Options}} \&options=\doxymbox{\hyperlink{structvideo_options}{video\+Options}}())
+\item 
+static \doxymbox{\hyperlink{classvideo_source}{video\+Source}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classvideo_source_af5226af374e12a9903fd91817da4f514}{Create}} (const char \texorpdfstring{$\ast$}{*}\doxymbox{\hyperlink{struct_u_r_i}{URI}}, const int argc, char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}argv, int position\+Arg=-\/1, const \doxymbox{\hyperlink{structvideo_options}{video\+Options}} \&options=\doxymbox{\hyperlink{structvideo_options}{video\+Options}}())
+\item 
+static const char \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classvideo_source_a70c9a1475dd59b60cbf1edf7970b26d1}{Usage}} ()
+\item 
+static const char \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classvideo_source_a628552bb154b63d88aa5520e7ce3769c}{Type\+To\+Str}} (uint32\+\_\+t type)
+\item 
+static \doxymbox{\hyperlink{classvideo_source}{video\+Source}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classvideo_source_aed130cb4c5a4b16da56780d02d64d6a4}{Create}} (const \doxymbox{\hyperlink{structvideo_options}{video\+Options}} \&options)
+\item 
+static \doxymbox{\hyperlink{classvideo_source}{video\+Source}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classvideo_source_ae58d958c5f24c957a6d80fb70428af26}{Create}} (const int argc, char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}argv, int position\+Arg=-\/1)
+\item 
+static \doxymbox{\hyperlink{classvideo_source}{video\+Source}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classvideo_source_a5aa81cd8e297c2c0d9b74da589368815}{Create}} (const \doxymbox{\hyperlink{classcommand_line}{command\+Line}} \&cmd\+Line, int position\+Arg=-\/1)
+\item 
+static \doxymbox{\hyperlink{classvideo_source}{video\+Source}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classvideo_source_aaea81813938f8810da311cd2f5284173}{Create}} (const char \texorpdfstring{$\ast$}{*}\doxymbox{\hyperlink{struct_u_r_i}{URI}}, const \doxymbox{\hyperlink{structvideo_options}{video\+Options}} \&options=\doxymbox{\hyperlink{structvideo_options}{video\+Options}}())
+\item 
+static \doxymbox{\hyperlink{classvideo_source}{video\+Source}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classvideo_source_ab4c8bd9c287f9b97e0b213487ab5a88f}{Create}} (const char \texorpdfstring{$\ast$}{*}\doxymbox{\hyperlink{struct_u_r_i}{URI}}, const \doxymbox{\hyperlink{classcommand_line}{command\+Line}} \&cmd\+Line, int position\+Arg=-\/1, const \doxymbox{\hyperlink{structvideo_options}{video\+Options}} \&options=\doxymbox{\hyperlink{structvideo_options}{video\+Options}}())
+\item 
+static \doxymbox{\hyperlink{classvideo_source}{video\+Source}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classvideo_source_addb47e863e3a2533e2c1ea1c852ba709}{Create}} (const char \texorpdfstring{$\ast$}{*}\doxymbox{\hyperlink{struct_u_r_i}{URI}}, const int argc, char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}argv, int position\+Arg=-\/1, const \doxymbox{\hyperlink{structvideo_options}{video\+Options}} \&options=\doxymbox{\hyperlink{structvideo_options}{video\+Options}}())
+\item 
+static const char \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classvideo_source_a70c9a1475dd59b60cbf1edf7970b26d1}{Usage}} ()
+\item 
+static const char \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classvideo_source_a412ea9a54245142dbb88752eef0460f9}{Type\+To\+Str}} (uint32\+\_\+t type)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static const uint64\+\_\+t \doxymbox{\hyperlink{classvideo_source_a3e144d758672a9d304ae6518cbe57508}{DEFAULT\+\_\+\+TIMEOUT}} =1000
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classvideo_source_aaee65d53e3dfb3f4644608c0eebcf833}\label{classvideo_source_aaee65d53e3dfb3f4644608c0eebcf833} 
+{\bfseries video\+Source} (const \doxymbox{\hyperlink{structvideo_options}{video\+Options}} \&options)
+\item 
+\Hypertarget{classvideo_source_aaee65d53e3dfb3f4644608c0eebcf833}\label{classvideo_source_aaee65d53e3dfb3f4644608c0eebcf833} 
+{\bfseries video\+Source} (const \doxymbox{\hyperlink{structvideo_options}{video\+Options}} \&options)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classvideo_source_a0907f7140f13fa75fef5b23a1f44b55b}\label{classvideo_source_a0907f7140f13fa75fef5b23a1f44b55b} 
+bool {\bfseries m\+Streaming}
+\item 
+\Hypertarget{classvideo_source_aa3c05686659fae747ff8709be2c9b445}\label{classvideo_source_aa3c05686659fae747ff8709be2c9b445} 
+\doxymbox{\hyperlink{structvideo_options}{video\+Options}} {\bfseries m\+Options}
+\item 
+\Hypertarget{classvideo_source_a587c9a356b2714ba9d6ab0d3bdeeacb2}\label{classvideo_source_a587c9a356b2714ba9d6ab0d3bdeeacb2} 
+uint64\+\_\+t {\bfseries m\+Last\+Timestamp}
+\item 
+\Hypertarget{classvideo_source_a5f558c27bfac5e117100f8735f09f5bc}\label{classvideo_source_a5f558c27bfac5e117100f8735f09f5bc} 
+\doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{image\+Format}} {\bfseries m\+Raw\+Format}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\doxylink{requirements_The}{The} \doxylink{classvideo_source}{video\+Source} API is for capturing frames from video input devices such as MIPI CSI cameras, V4\+L2 cameras, video/\+images files from disk, directories containing a sequence of images, and from RTP/\+\+RTSP network video streams over UDP/\+\+IP.
+
+\doxylink{classvideo_source}{video\+Source} interfaces are implemented by \doxylink{classgst_camera}{gst\+Camera}, \doxylink{classgst_decoder}{gst\+Decoder}, and \doxylink{classimage_loader}{image\+Loader}. \doxylink{requirements_The}{The} specific implementation is selected at runtime based on the type of resource \doxylink{struct_u_r_i}{URI}.
+
+\doxylink{classvideo_source}{video\+Source} supports the following protocols and resource \doxylink{struct_u_r_i}{URI}\textquotesingle{}s:\+ \begin{DoxyVerb}-  `csi://0` for MIPI CSI cameras, where `0` can be replaced with the camera port.
+   It is also assumed that if a number with no protocol is specified (e.g. `"0"`),
+   this means to use the MIPI CSI camera of that number (`"0"` -> `csi://0`).
+
+- `v4l2:///dev/video0` for V4L2 cameras, where `/dev/video0` can be replaced with
+   a different video device (e.g. `v4l2:///dev/video1` for V4L2 video device `1`).
+   If no protocol is specified but the string begins with `/dev/video`, then it is
+   assumed that the protocol is V4L2 (`/dev/video0` -> `v4l2:///dev/video0`)
+
+- `rtp://@:1234` to recieve an RTP network stream, where `1234` is the port and `@` is shorthand
+   for localhost.  `@` can also be substituted for the IP address of a multicast group.
+   Note that it is important to manually specify the codec of the stream when using RTP,
+   as the codec cannot be discovered from the RTP stream itself and need to be provided.
+   @see videoOptions for more info about the `--input-codec` option.
+
+- `rtsp://username:password@<remote-host>:1234` to subscribe to an RTSP network stream, where
+   `<remote-host>` should be substituted for the remote host's IP address or hostname, and 
+   `1234` is the port.  For example, `rtsp://192.168.1.2:5000`.  The `username` and `password` 
+   are optional, and are only used for RTSP streams that require authentication.
+
+- `file:///home/user/my_video.mp4` for disk-based videos, images, and directories of images.
+   You can leave off the `file://` protocol identifier and it will be deduced from the path.
+   It can be a relative or absolute path.  If a directory is specified that contains images,
+   those images will be loaded in sequence (sorted alphanumerically).  The path can also
+   contain wildcard characters, for example `"images/*.jpg"` - however when using wildcards
+   from the command line, enclose the string in quotes otherwise the OS will pre-expand them.
+   Supported video formats for loading include MKV, MP4, AVI, and FLV. Supported codecs for 
+   decoding include H.264, H.265, VP8, VP9, MPEG-2, MPEG-4, and MJPEG. Supported image formats
+   for loading include JPG, PNG, TGA, BMP, GIF, PSD, HDR, PIC, and PNM (PPM/PGM binary).
+\end{DoxyVerb}
+
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{struct_u_r_i}{URI} for info about resource \doxylink{struct_u_r_i}{URI} formats. 
+
+\doxylink{structvideo_options}{video\+Options} for additional options and command-\/line arguments. 
+\end{DoxySeeAlso}
+
+
+\label{doc-enum-members}
+\Hypertarget{classvideo_source_doc-enum-members}
+\doxysubsection{Member Enumeration Documentation}
+\Hypertarget{classvideo_source_adf535af6425bba4700aa49a8a1c31fc8}\index{videoSource@{videoSource}!Status@{Status}}
+\index{Status@{Status}!videoSource@{videoSource}}
+\doxysubsubsection{\texorpdfstring{Status}{Status}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classvideo_source_adf535af6425bba4700aa49a8a1c31fc8} 
+enum \doxymbox{\hyperlink{classvideo_source_adf535af6425bba4700aa49a8a1c31fc8}{video\+Source::\+\+Status}}}
+
+Stream status codes that are optionally returned from \doxylink{classvideo_source_a151da5e63cbd96a1b4761316dbd4eb68}{Capture()} \begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ERROR@{ERROR}!videoSource@{videoSource}}
+\index{videoSource@{videoSource}!ERROR@{ERROR}}
+}\Hypertarget{classvideo_source_adf535af6425bba4700aa49a8a1c31fc8a43cef1ac6c4a3af84df3179bdffe528d}\label{classvideo_source_adf535af6425bba4700aa49a8a1c31fc8a43cef1ac6c4a3af84df3179bdffe528d} 
+ERROR&an error occurred \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{EOS@{EOS}!videoSource@{videoSource}}
+\index{videoSource@{videoSource}!EOS@{EOS}}
+}\Hypertarget{classvideo_source_adf535af6425bba4700aa49a8a1c31fc8a70a9bb5ecd83b7f5a0b9483c144b74c5}\label{classvideo_source_adf535af6425bba4700aa49a8a1c31fc8a70a9bb5ecd83b7f5a0b9483c144b74c5} 
+EOS&end-\/of-\/stream (EOS) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TIMEOUT@{TIMEOUT}!videoSource@{videoSource}}
+\index{videoSource@{videoSource}!TIMEOUT@{TIMEOUT}}
+}\Hypertarget{classvideo_source_adf535af6425bba4700aa49a8a1c31fc8aee109bb5b2643da575fb3320655f3dda}\label{classvideo_source_adf535af6425bba4700aa49a8a1c31fc8aee109bb5b2643da575fb3320655f3dda} 
+TIMEOUT&a timeout occurred \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OK@{OK}!videoSource@{videoSource}}
+\index{videoSource@{videoSource}!OK@{OK}}
+}\Hypertarget{classvideo_source_adf535af6425bba4700aa49a8a1c31fc8a51c45fa274bf173ca1af54643748fa87}\label{classvideo_source_adf535af6425bba4700aa49a8a1c31fc8a51c45fa274bf173ca1af54643748fa87} 
+OK&frame capture successful \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ERROR@{ERROR}!videoSource@{videoSource}}
+\index{videoSource@{videoSource}!ERROR@{ERROR}}
+}\Hypertarget{classvideo_source_adf535af6425bba4700aa49a8a1c31fc8a43cef1ac6c4a3af84df3179bdffe528d}\label{classvideo_source_adf535af6425bba4700aa49a8a1c31fc8a43cef1ac6c4a3af84df3179bdffe528d} 
+ERROR&an error occurred \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{EOS@{EOS}!videoSource@{videoSource}}
+\index{videoSource@{videoSource}!EOS@{EOS}}
+}\Hypertarget{classvideo_source_adf535af6425bba4700aa49a8a1c31fc8a70a9bb5ecd83b7f5a0b9483c144b74c5}\label{classvideo_source_adf535af6425bba4700aa49a8a1c31fc8a70a9bb5ecd83b7f5a0b9483c144b74c5} 
+EOS&end-\/of-\/stream (EOS) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TIMEOUT@{TIMEOUT}!videoSource@{videoSource}}
+\index{videoSource@{videoSource}!TIMEOUT@{TIMEOUT}}
+}\Hypertarget{classvideo_source_adf535af6425bba4700aa49a8a1c31fc8aee109bb5b2643da575fb3320655f3dda}\label{classvideo_source_adf535af6425bba4700aa49a8a1c31fc8aee109bb5b2643da575fb3320655f3dda} 
+TIMEOUT&a timeout occurred \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OK@{OK}!videoSource@{videoSource}}
+\index{videoSource@{videoSource}!OK@{OK}}
+}\Hypertarget{classvideo_source_adf535af6425bba4700aa49a8a1c31fc8a51c45fa274bf173ca1af54643748fa87}\label{classvideo_source_adf535af6425bba4700aa49a8a1c31fc8a51c45fa274bf173ca1af54643748fa87} 
+OK&frame capture successful \\
+\hline
+
+\end{DoxyEnumFields}
+\Hypertarget{classvideo_source_adf535af6425bba4700aa49a8a1c31fc8}\index{videoSource@{videoSource}!Status@{Status}}
+\index{Status@{Status}!videoSource@{videoSource}}
+\doxysubsubsection{\texorpdfstring{Status}{Status}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classvideo_source_adf535af6425bba4700aa49a8a1c31fc8} 
+enum \doxymbox{\hyperlink{classvideo_source_adf535af6425bba4700aa49a8a1c31fc8}{video\+Source::\+\+Status}}}
+
+Stream status codes that are optionally returned from \doxylink{classvideo_source_a151da5e63cbd96a1b4761316dbd4eb68}{Capture()} \begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ERROR@{ERROR}!videoSource@{videoSource}}
+\index{videoSource@{videoSource}!ERROR@{ERROR}}
+}\Hypertarget{classvideo_source_adf535af6425bba4700aa49a8a1c31fc8a43cef1ac6c4a3af84df3179bdffe528d}\label{classvideo_source_adf535af6425bba4700aa49a8a1c31fc8a43cef1ac6c4a3af84df3179bdffe528d} 
+ERROR&an error occurred \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{EOS@{EOS}!videoSource@{videoSource}}
+\index{videoSource@{videoSource}!EOS@{EOS}}
+}\Hypertarget{classvideo_source_adf535af6425bba4700aa49a8a1c31fc8a70a9bb5ecd83b7f5a0b9483c144b74c5}\label{classvideo_source_adf535af6425bba4700aa49a8a1c31fc8a70a9bb5ecd83b7f5a0b9483c144b74c5} 
+EOS&end-\/of-\/stream (EOS) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TIMEOUT@{TIMEOUT}!videoSource@{videoSource}}
+\index{videoSource@{videoSource}!TIMEOUT@{TIMEOUT}}
+}\Hypertarget{classvideo_source_adf535af6425bba4700aa49a8a1c31fc8aee109bb5b2643da575fb3320655f3dda}\label{classvideo_source_adf535af6425bba4700aa49a8a1c31fc8aee109bb5b2643da575fb3320655f3dda} 
+TIMEOUT&a timeout occurred \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OK@{OK}!videoSource@{videoSource}}
+\index{videoSource@{videoSource}!OK@{OK}}
+}\Hypertarget{classvideo_source_adf535af6425bba4700aa49a8a1c31fc8a51c45fa274bf173ca1af54643748fa87}\label{classvideo_source_adf535af6425bba4700aa49a8a1c31fc8a51c45fa274bf173ca1af54643748fa87} 
+OK&frame capture successful \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ERROR@{ERROR}!videoSource@{videoSource}}
+\index{videoSource@{videoSource}!ERROR@{ERROR}}
+}\Hypertarget{classvideo_source_adf535af6425bba4700aa49a8a1c31fc8a43cef1ac6c4a3af84df3179bdffe528d}\label{classvideo_source_adf535af6425bba4700aa49a8a1c31fc8a43cef1ac6c4a3af84df3179bdffe528d} 
+ERROR&an error occurred \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{EOS@{EOS}!videoSource@{videoSource}}
+\index{videoSource@{videoSource}!EOS@{EOS}}
+}\Hypertarget{classvideo_source_adf535af6425bba4700aa49a8a1c31fc8a70a9bb5ecd83b7f5a0b9483c144b74c5}\label{classvideo_source_adf535af6425bba4700aa49a8a1c31fc8a70a9bb5ecd83b7f5a0b9483c144b74c5} 
+EOS&end-\/of-\/stream (EOS) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TIMEOUT@{TIMEOUT}!videoSource@{videoSource}}
+\index{videoSource@{videoSource}!TIMEOUT@{TIMEOUT}}
+}\Hypertarget{classvideo_source_adf535af6425bba4700aa49a8a1c31fc8aee109bb5b2643da575fb3320655f3dda}\label{classvideo_source_adf535af6425bba4700aa49a8a1c31fc8aee109bb5b2643da575fb3320655f3dda} 
+TIMEOUT&a timeout occurred \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OK@{OK}!videoSource@{videoSource}}
+\index{videoSource@{videoSource}!OK@{OK}}
+}\Hypertarget{classvideo_source_adf535af6425bba4700aa49a8a1c31fc8a51c45fa274bf173ca1af54643748fa87}\label{classvideo_source_adf535af6425bba4700aa49a8a1c31fc8a51c45fa274bf173ca1af54643748fa87} 
+OK&frame capture successful \\
+\hline
+
+\end{DoxyEnumFields}
+
+
+\label{doc-constructors}
+\Hypertarget{classvideo_source_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classvideo_source_af74e73fbeb8cc35ecfe747cca877872c}\index{videoSource@{videoSource}!````~videoSource@{\texorpdfstring{$\sim$}{\string~}videoSource}}
+\index{````~videoSource@{\texorpdfstring{$\sim$}{\string~}videoSource}!videoSource@{videoSource}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}videoSource()}{\string~videoSource()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classvideo_source_af74e73fbeb8cc35ecfe747cca877872c} 
+video\+Source::\+\texorpdfstring{$\sim$}{\string~}video\+Source (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+Destroy interface and release all resources. \Hypertarget{classvideo_source_a2cae1095df64b7c61de77935b77032bb}\index{videoSource@{videoSource}!````~videoSource@{\texorpdfstring{$\sim$}{\string~}videoSource}}
+\index{````~videoSource@{\texorpdfstring{$\sim$}{\string~}videoSource}!videoSource@{videoSource}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}videoSource()}{\string~videoSource()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classvideo_source_a2cae1095df64b7c61de77935b77032bb} 
+virtual video\+Source::\+\texorpdfstring{$\sim$}{\string~}video\+Source (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+Destroy interface and release all resources. 
+
+\label{doc-func-members}
+\Hypertarget{classvideo_source_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classvideo_source_a151da5e63cbd96a1b4761316dbd4eb68}\index{videoSource@{videoSource}!Capture@{Capture}}
+\index{Capture@{Capture}!videoSource@{videoSource}}
+\doxysubsubsection{\texorpdfstring{Capture()}{Capture()}\hspace{0.1cm}{\footnotesize\ttfamily [1/6]}}
+{\footnotesize\ttfamily \label{classvideo_source_a151da5e63cbd96a1b4761316dbd4eb68} 
+template$<$typename T$>$ \\
+bool video\+Source::\+\+Capture (\begin{DoxyParamCaption}\item[{T \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{image}{, }\item[{int \texorpdfstring{$\ast$}{*}}]{status}{, }\item[{cuda\+Stream\+\_\+t}]{stream}{ = {\ttfamily 0}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Capture the next image from the video stream, using the default timeout of 1000ms.
+
+\doxylink{requirements_The}{The} image formats supported by this templated version of \doxylink{classvideo_source_a151da5e63cbd96a1b4761316dbd4eb68}{Capture()} include the following:\+
+
+
+\begin{DoxyItemize}
+\item uchar3 ({\ttfamily \doxylink{group__image_format_gga931c48e08f361637d093355d64583406a7e08074dcdc25f156e92c233807b048f}{IMAGE\+\_\+\+RGB8}})
+\item uchar4 ({\ttfamily \doxylink{group__image_format_gga931c48e08f361637d093355d64583406aa36c106df206651efeeba8c7c1e7bddc}{IMAGE\+\_\+\+RGBA8}})
+\item float3 ({\ttfamily \doxylink{group__image_format_gga931c48e08f361637d093355d64583406a9fd17a87f744486a238f2a7daf4143da}{IMAGE\+\_\+\+RGB32F}})
+\item float4 ({\ttfamily \doxylink{group__image_format_gga931c48e08f361637d093355d64583406a9396c3fdae6987bbf4abc2b2e63e3815}{IMAGE\+\_\+\+RGBA32F}})
+\end{DoxyItemize}
+
+\doxylink{requirements_The}{The} image format will automatically be deduced from these types. If other types are used with this overload, a static compile-\/time error will be asserted.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\doxymbox{\texttt{out}}  & {\em \doxylink{group__image}{Image I/\+O}} & output pointer that will be set to the memory containing the image. If this interface has it\textquotesingle{}s \doxylink{structvideo_options_afff91aa102908923622328e9f3ca3b83}{video\+Options::\+zero\+Copy} flag set to true, the memory was allocated in mapped CPU/\+\+GPU memory and is be accessible from both CPU and CUDA. Otherwise, it\textquotesingle{}s accessible only from CUDA.\\
+\hline
+\doxymbox{\texttt{out}}  & {\em status} & optional status code returned (\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\doxylink{classvideo_source_adf535af6425bba4700aa49a8a1c31fc8}{video\+Source::\+\+Status}). -\/2 on \doxylink{classvideo_source_adf535af6425bba4700aa49a8a1c31fc8a43cef1ac6c4a3af84df3179bdffe528d}{ERROR}, -\/1 on \doxylink{classvideo_source_adf535af6425bba4700aa49a8a1c31fc8a70a9bb5ecd83b7f5a0b9483c144b74c5}{EOS}, 0 on \doxylink{classvideo_source_adf535af6425bba4700aa49a8a1c31fc8aee109bb5b2643da575fb3320655f3dda}{TIMEOUT}, 1 on \doxylink{classvideo_source_adf535af6425bba4700aa49a8a1c31fc8a51c45fa274bf173ca1af54643748fa87}{OK}.
+\end{DoxySeeAlso}
+\begin{DoxyReturn}{Returns}
+{\ttfamily true} if a frame was captured, {\ttfamily false} if there was an error or a timeout occurred. 
+\end{DoxyReturn}
+\Hypertarget{classvideo_source_a151da5e63cbd96a1b4761316dbd4eb68}\index{videoSource@{videoSource}!Capture@{Capture}}
+\index{Capture@{Capture}!videoSource@{videoSource}}
+\doxysubsubsection{\texorpdfstring{Capture()}{Capture()}\hspace{0.1cm}{\footnotesize\ttfamily [2/6]}}
+{\footnotesize\ttfamily \label{classvideo_source_a151da5e63cbd96a1b4761316dbd4eb68} 
+template$<$typename T$>$ \\
+bool video\+Source::\+\+Capture (\begin{DoxyParamCaption}\item[{T \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{image}{, }\item[{int \texorpdfstring{$\ast$}{*}}]{status}{, }\item[{cuda\+Stream\+\_\+t}]{stream}{ = {\ttfamily 0}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Capture the next image from the video stream, using the default timeout of 1000ms.
+
+\doxylink{requirements_The}{The} image formats supported by this templated version of \doxylink{classvideo_source_a151da5e63cbd96a1b4761316dbd4eb68}{Capture()} include the following:\+
+
+
+\begin{DoxyItemize}
+\item uchar3 ({\ttfamily \doxylink{group__image_format_gga931c48e08f361637d093355d64583406a7e08074dcdc25f156e92c233807b048f}{IMAGE\+\_\+\+RGB8}})
+\item uchar4 ({\ttfamily \doxylink{group__image_format_gga931c48e08f361637d093355d64583406aa36c106df206651efeeba8c7c1e7bddc}{IMAGE\+\_\+\+RGBA8}})
+\item float3 ({\ttfamily \doxylink{group__image_format_gga931c48e08f361637d093355d64583406a9fd17a87f744486a238f2a7daf4143da}{IMAGE\+\_\+\+RGB32F}})
+\item float4 ({\ttfamily \doxylink{group__image_format_gga931c48e08f361637d093355d64583406a9396c3fdae6987bbf4abc2b2e63e3815}{IMAGE\+\_\+\+RGBA32F}})
+\end{DoxyItemize}
+
+\doxylink{requirements_The}{The} image format will automatically be deduced from these types. If other types are used with this overload, a static compile-\/time error will be asserted.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\doxymbox{\texttt{out}}  & {\em \doxylink{group__image}{Image I/\+O}} & output pointer that will be set to the memory containing the image. If this interface has it\textquotesingle{}s \doxylink{structvideo_options_afff91aa102908923622328e9f3ca3b83}{video\+Options::\+zero\+Copy} flag set to true, the memory was allocated in mapped CPU/\+\+GPU memory and is be accessible from both CPU and CUDA. Otherwise, it\textquotesingle{}s accessible only from CUDA.\\
+\hline
+\doxymbox{\texttt{out}}  & {\em status} & optional status code returned (\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\doxylink{classvideo_source_adf535af6425bba4700aa49a8a1c31fc8}{video\+Source::\+\+Status}). -\/2 on \doxylink{classvideo_source_adf535af6425bba4700aa49a8a1c31fc8a43cef1ac6c4a3af84df3179bdffe528d}{ERROR}, -\/1 on \doxylink{classvideo_source_adf535af6425bba4700aa49a8a1c31fc8a70a9bb5ecd83b7f5a0b9483c144b74c5}{EOS}, 0 on \doxylink{classvideo_source_adf535af6425bba4700aa49a8a1c31fc8aee109bb5b2643da575fb3320655f3dda}{TIMEOUT}, 1 on \doxylink{classvideo_source_adf535af6425bba4700aa49a8a1c31fc8a51c45fa274bf173ca1af54643748fa87}{OK}.
+\end{DoxySeeAlso}
+\begin{DoxyReturn}{Returns}
+{\ttfamily true} if a frame was captured, {\ttfamily false} if there was an error or a timeout occurred. 
+\end{DoxyReturn}
+\Hypertarget{classvideo_source_a0d4d98198329cb94640969e18e7fbc50}\index{videoSource@{videoSource}!Capture@{Capture}}
+\index{Capture@{Capture}!videoSource@{videoSource}}
+\doxysubsubsection{\texorpdfstring{Capture()}{Capture()}\hspace{0.1cm}{\footnotesize\ttfamily [3/6]}}
+{\footnotesize\ttfamily \label{classvideo_source_a0d4d98198329cb94640969e18e7fbc50} 
+template$<$typename T$>$ \\
+bool video\+Source::\+\+Capture (\begin{DoxyParamCaption}\item[{T \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{image}{, }\item[{uint64\+\_\+t}]{timeout}{ = {\ttfamily \doxymbox{\hyperlink{classvideo_source_a3e144d758672a9d304ae6518cbe57508}{DEFAULT\+\_\+\+TIMEOUT}}}, }\item[{int \texorpdfstring{$\ast$}{*}}]{status}{ = {\ttfamily NULL}, }\item[{cuda\+Stream\+\_\+t}]{stream}{ = {\ttfamily 0}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Capture the next image from the video stream.
+
+\doxylink{requirements_The}{The} image formats supported by this templated version of \doxylink{classvideo_source_a151da5e63cbd96a1b4761316dbd4eb68}{Capture()} include the following:\+
+
+
+\begin{DoxyItemize}
+\item uchar3 ({\ttfamily \doxylink{group__image_format_gga931c48e08f361637d093355d64583406a7e08074dcdc25f156e92c233807b048f}{IMAGE\+\_\+\+RGB8}})
+\item uchar4 ({\ttfamily \doxylink{group__image_format_gga931c48e08f361637d093355d64583406aa36c106df206651efeeba8c7c1e7bddc}{IMAGE\+\_\+\+RGBA8}})
+\item float3 ({\ttfamily \doxylink{group__image_format_gga931c48e08f361637d093355d64583406a9fd17a87f744486a238f2a7daf4143da}{IMAGE\+\_\+\+RGB32F}})
+\item float4 ({\ttfamily \doxylink{group__image_format_gga931c48e08f361637d093355d64583406a9396c3fdae6987bbf4abc2b2e63e3815}{IMAGE\+\_\+\+RGBA32F}})
+\end{DoxyItemize}
+
+\doxylink{requirements_The}{The} image format will automatically be deduced from these types. If other types are used with this overload, a static compile-\/time error will be asserted.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\doxymbox{\texttt{out}}  & {\em \doxylink{group__image}{Image I/\+O}} & output pointer that will be set to the memory containing the image. If this interface has it\textquotesingle{}s \doxylink{structvideo_options_afff91aa102908923622328e9f3ca3b83}{video\+Options::\+zero\+Copy} flag set to true, the memory was allocated in mapped CPU/\+\+GPU memory and is be accessible from both CPU and CUDA. Otherwise, it\textquotesingle{}s accessible only from CUDA.\\
+\hline
+\doxymbox{\texttt{in}}  & {\em timeout} & timeout in milliseconds to wait to capture the image before returning. \doxylink{requirements_The}{The} default is 1000ms. A timeout value of {\ttfamily UINT64\+\_\+\+MAX} will wait forever. A timeout of 0 will return instantly if a frame wasn\textquotesingle{}t immediately ready.\\
+\hline
+\doxymbox{\texttt{out}}  & {\em status} & optional status code returned (\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\doxylink{classvideo_source_adf535af6425bba4700aa49a8a1c31fc8}{video\+Source::\+\+Status}). -\/2 on \doxylink{classvideo_source_adf535af6425bba4700aa49a8a1c31fc8a43cef1ac6c4a3af84df3179bdffe528d}{ERROR}, -\/1 on \doxylink{classvideo_source_adf535af6425bba4700aa49a8a1c31fc8a70a9bb5ecd83b7f5a0b9483c144b74c5}{EOS}, 0 on \doxylink{classvideo_source_adf535af6425bba4700aa49a8a1c31fc8aee109bb5b2643da575fb3320655f3dda}{TIMEOUT}, 1 on \doxylink{classvideo_source_adf535af6425bba4700aa49a8a1c31fc8a51c45fa274bf173ca1af54643748fa87}{OK}.
+\end{DoxySeeAlso}
+\begin{DoxyReturn}{Returns}
+{\ttfamily true} if a frame was captured, {\ttfamily false} if there was an error or a timeout occurred. 
+\end{DoxyReturn}
+\Hypertarget{classvideo_source_a0d4d98198329cb94640969e18e7fbc50}\index{videoSource@{videoSource}!Capture@{Capture}}
+\index{Capture@{Capture}!videoSource@{videoSource}}
+\doxysubsubsection{\texorpdfstring{Capture()}{Capture()}\hspace{0.1cm}{\footnotesize\ttfamily [4/6]}}
+{\footnotesize\ttfamily \label{classvideo_source_a0d4d98198329cb94640969e18e7fbc50} 
+template$<$typename T$>$ \\
+bool video\+Source::\+\+Capture (\begin{DoxyParamCaption}\item[{T \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{image}{, }\item[{uint64\+\_\+t}]{timeout}{ = {\ttfamily \doxymbox{\hyperlink{classvideo_source_a3e144d758672a9d304ae6518cbe57508}{DEFAULT\+\_\+\+TIMEOUT}}}, }\item[{int \texorpdfstring{$\ast$}{*}}]{status}{ = {\ttfamily NULL}, }\item[{cuda\+Stream\+\_\+t}]{stream}{ = {\ttfamily 0}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Capture the next image from the video stream.
+
+\doxylink{requirements_The}{The} image formats supported by this templated version of \doxylink{classvideo_source_a151da5e63cbd96a1b4761316dbd4eb68}{Capture()} include the following:\+
+
+
+\begin{DoxyItemize}
+\item uchar3 ({\ttfamily \doxylink{group__image_format_gga931c48e08f361637d093355d64583406a7e08074dcdc25f156e92c233807b048f}{IMAGE\+\_\+\+RGB8}})
+\item uchar4 ({\ttfamily \doxylink{group__image_format_gga931c48e08f361637d093355d64583406aa36c106df206651efeeba8c7c1e7bddc}{IMAGE\+\_\+\+RGBA8}})
+\item float3 ({\ttfamily \doxylink{group__image_format_gga931c48e08f361637d093355d64583406a9fd17a87f744486a238f2a7daf4143da}{IMAGE\+\_\+\+RGB32F}})
+\item float4 ({\ttfamily \doxylink{group__image_format_gga931c48e08f361637d093355d64583406a9396c3fdae6987bbf4abc2b2e63e3815}{IMAGE\+\_\+\+RGBA32F}})
+\end{DoxyItemize}
+
+\doxylink{requirements_The}{The} image format will automatically be deduced from these types. If other types are used with this overload, a static compile-\/time error will be asserted.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\doxymbox{\texttt{out}}  & {\em \doxylink{group__image}{Image I/\+O}} & output pointer that will be set to the memory containing the image. If this interface has it\textquotesingle{}s \doxylink{structvideo_options_afff91aa102908923622328e9f3ca3b83}{video\+Options::\+zero\+Copy} flag set to true, the memory was allocated in mapped CPU/\+\+GPU memory and is be accessible from both CPU and CUDA. Otherwise, it\textquotesingle{}s accessible only from CUDA.\\
+\hline
+\doxymbox{\texttt{in}}  & {\em timeout} & timeout in milliseconds to wait to capture the image before returning. \doxylink{requirements_The}{The} default is 1000ms. A timeout value of {\ttfamily UINT64\+\_\+\+MAX} will wait forever. A timeout of 0 will return instantly if a frame wasn\textquotesingle{}t immediately ready.\\
+\hline
+\doxymbox{\texttt{out}}  & {\em status} & optional status code returned (\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\doxylink{classvideo_source_adf535af6425bba4700aa49a8a1c31fc8}{video\+Source::\+\+Status}). -\/2 on \doxylink{classvideo_source_adf535af6425bba4700aa49a8a1c31fc8a43cef1ac6c4a3af84df3179bdffe528d}{ERROR}, -\/1 on \doxylink{classvideo_source_adf535af6425bba4700aa49a8a1c31fc8a70a9bb5ecd83b7f5a0b9483c144b74c5}{EOS}, 0 on \doxylink{classvideo_source_adf535af6425bba4700aa49a8a1c31fc8aee109bb5b2643da575fb3320655f3dda}{TIMEOUT}, 1 on \doxylink{classvideo_source_adf535af6425bba4700aa49a8a1c31fc8a51c45fa274bf173ca1af54643748fa87}{OK}.
+\end{DoxySeeAlso}
+\begin{DoxyReturn}{Returns}
+{\ttfamily true} if a frame was captured, {\ttfamily false} if there was an error or a timeout occurred. 
+\end{DoxyReturn}
+\Hypertarget{classvideo_source_aec2a9d2a119aec21abc7a0fba9c1e8bb}\index{videoSource@{videoSource}!Capture@{Capture}}
+\index{Capture@{Capture}!videoSource@{videoSource}}
+\doxysubsubsection{\texorpdfstring{Capture()}{Capture()}\hspace{0.1cm}{\footnotesize\ttfamily [5/6]}}
+{\footnotesize\ttfamily \label{classvideo_source_aec2a9d2a119aec21abc7a0fba9c1e8bb} 
+virtual bool video\+Source::\+\+Capture (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{image}{, }\item[{\doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{image\+Format}}}]{format}{, }\item[{uint64\+\_\+t}]{timeout}{ = {\ttfamily \doxymbox{\hyperlink{classvideo_source_a3e144d758672a9d304ae6518cbe57508}{DEFAULT\+\_\+\+TIMEOUT}}}, }\item[{int \texorpdfstring{$\ast$}{*}}]{status}{ = {\ttfamily NULL}, }\item[{cuda\+Stream\+\_\+t}]{stream}{ = {\ttfamily 0}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+Capture the next image from the video stream.
+
+\doxylink{requirements_The}{The} image formats supported by \doxylink{classvideo_source_a151da5e63cbd96a1b4761316dbd4eb68}{Capture()} are {\ttfamily \doxylink{group__image_format_gga931c48e08f361637d093355d64583406a7e08074dcdc25f156e92c233807b048f}{IMAGE\+\_\+\+RGB8}} (uchar3), {\ttfamily \doxylink{group__image_format_gga931c48e08f361637d093355d64583406aa36c106df206651efeeba8c7c1e7bddc}{IMAGE\+\_\+\+RGBA8}} (uchar4), {\ttfamily \doxylink{group__image_format_gga931c48e08f361637d093355d64583406a9fd17a87f744486a238f2a7daf4143da}{IMAGE\+\_\+\+RGB32F}} (float3), and {\ttfamily \doxylink{group__image_format_gga931c48e08f361637d093355d64583406a9396c3fdae6987bbf4abc2b2e63e3815}{IMAGE\+\_\+\+RGBA32F}} (float4). \begin{DoxySeeAlso}{See also}
+\doxylink{group__image_format_ga931c48e08f361637d093355d64583406}{image\+Format} for more info.
+\end{DoxySeeAlso}
+
+\begin{DoxyParams}[1]{Parameters}
+\doxymbox{\texttt{out}}  & {\em \doxylink{group__image}{Image I/\+O}} & output pointer that will be set to the memory containing the image. If this interface has it\textquotesingle{}s \doxylink{structvideo_options_afff91aa102908923622328e9f3ca3b83}{video\+Options::\+zero\+Copy} flag set to true, the memory was allocated in mapped CPU/\+\+GPU memory and is be accessible from both CPU and CUDA. Otherwise, it\textquotesingle{}s accessible only from CUDA.\\
+\hline
+\doxymbox{\texttt{in}}  & {\em timeout} & timeout in milliseconds to wait to capture the image before returning. \doxylink{requirements_The}{The} default is 1000ms. A timeout value of {\ttfamily UINT64\+\_\+\+MAX} will wait forever. A timeout of 0 will return instantly if a frame wasn\textquotesingle{}t immediately ready.\\
+\hline
+\doxymbox{\texttt{out}}  & {\em status} & optional status code returned (\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\doxylink{classvideo_source_adf535af6425bba4700aa49a8a1c31fc8}{video\+Source::\+\+Status}). -\/2 on \doxylink{classvideo_source_adf535af6425bba4700aa49a8a1c31fc8a43cef1ac6c4a3af84df3179bdffe528d}{ERROR}, -\/1 on \doxylink{classvideo_source_adf535af6425bba4700aa49a8a1c31fc8a70a9bb5ecd83b7f5a0b9483c144b74c5}{EOS}, 0 on \doxylink{classvideo_source_adf535af6425bba4700aa49a8a1c31fc8aee109bb5b2643da575fb3320655f3dda}{TIMEOUT}, 1 on \doxylink{classvideo_source_adf535af6425bba4700aa49a8a1c31fc8a51c45fa274bf173ca1af54643748fa87}{OK}.
+\end{DoxySeeAlso}
+\begin{DoxyReturn}{Returns}
+{\ttfamily true} if a frame was captured, {\ttfamily false} if there was an error or a timeout occurred. 
+\end{DoxyReturn}
+
+
+Implemented in \doxymbox{\hyperlink{classgst_camera_a19b60020ce6025d0a429a72bddef5209}{gst\+Camera}}, \doxymbox{\hyperlink{classgst_camera_a88472964b8658ef381b64cf3f753d051}{gst\+Camera}}, \doxymbox{\hyperlink{classgst_decoder_ac9c236a817311af434313b1bb09f9ebc}{gst\+Decoder}}, \doxymbox{\hyperlink{classgst_decoder_adaf0107e88665f5434dc2440296d4ace}{gst\+Decoder}}, \doxymbox{\hyperlink{classimage_loader_af4535ce7c25aae2abf69580a1c9ada6f}{image\+Loader}}, and \doxymbox{\hyperlink{classimage_loader_a9da8f1bc5782bca0cf6acf4118b9c882}{image\+Loader}}.
+
+\Hypertarget{classvideo_source_aec2a9d2a119aec21abc7a0fba9c1e8bb}\index{videoSource@{videoSource}!Capture@{Capture}}
+\index{Capture@{Capture}!videoSource@{videoSource}}
+\doxysubsubsection{\texorpdfstring{Capture()}{Capture()}\hspace{0.1cm}{\footnotesize\ttfamily [6/6]}}
+{\footnotesize\ttfamily \label{classvideo_source_aec2a9d2a119aec21abc7a0fba9c1e8bb} 
+virtual bool video\+Source::\+\+Capture (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{image}{, }\item[{\doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{image\+Format}}}]{format}{, }\item[{uint64\+\_\+t}]{timeout}{ = {\ttfamily \doxymbox{\hyperlink{classvideo_source_a3e144d758672a9d304ae6518cbe57508}{DEFAULT\+\_\+\+TIMEOUT}}}, }\item[{int \texorpdfstring{$\ast$}{*}}]{status}{ = {\ttfamily NULL}, }\item[{cuda\+Stream\+\_\+t}]{stream}{ = {\ttfamily 0}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+Capture the next image from the video stream.
+
+\doxylink{requirements_The}{The} image formats supported by \doxylink{classvideo_source_a151da5e63cbd96a1b4761316dbd4eb68}{Capture()} are {\ttfamily \doxylink{group__image_format_gga931c48e08f361637d093355d64583406a7e08074dcdc25f156e92c233807b048f}{IMAGE\+\_\+\+RGB8}} (uchar3), {\ttfamily \doxylink{group__image_format_gga931c48e08f361637d093355d64583406aa36c106df206651efeeba8c7c1e7bddc}{IMAGE\+\_\+\+RGBA8}} (uchar4), {\ttfamily \doxylink{group__image_format_gga931c48e08f361637d093355d64583406a9fd17a87f744486a238f2a7daf4143da}{IMAGE\+\_\+\+RGB32F}} (float3), and {\ttfamily \doxylink{group__image_format_gga931c48e08f361637d093355d64583406a9396c3fdae6987bbf4abc2b2e63e3815}{IMAGE\+\_\+\+RGBA32F}} (float4). \begin{DoxySeeAlso}{See also}
+\doxylink{group__image_format_ga931c48e08f361637d093355d64583406}{image\+Format} for more info.
+\end{DoxySeeAlso}
+
+\begin{DoxyParams}[1]{Parameters}
+\doxymbox{\texttt{out}}  & {\em \doxylink{group__image}{Image I/\+O}} & output pointer that will be set to the memory containing the image. If this interface has it\textquotesingle{}s \doxylink{structvideo_options_afff91aa102908923622328e9f3ca3b83}{video\+Options::\+zero\+Copy} flag set to true, the memory was allocated in mapped CPU/\+\+GPU memory and is be accessible from both CPU and CUDA. Otherwise, it\textquotesingle{}s accessible only from CUDA.\\
+\hline
+\doxymbox{\texttt{in}}  & {\em timeout} & timeout in milliseconds to wait to capture the image before returning. \doxylink{requirements_The}{The} default is 1000ms. A timeout value of {\ttfamily UINT64\+\_\+\+MAX} will wait forever. A timeout of 0 will return instantly if a frame wasn\textquotesingle{}t immediately ready.\\
+\hline
+\doxymbox{\texttt{out}}  & {\em status} & optional status code returned (\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\doxylink{classvideo_source_adf535af6425bba4700aa49a8a1c31fc8}{video\+Source::\+\+Status}). -\/2 on \doxylink{classvideo_source_adf535af6425bba4700aa49a8a1c31fc8a43cef1ac6c4a3af84df3179bdffe528d}{ERROR}, -\/1 on \doxylink{classvideo_source_adf535af6425bba4700aa49a8a1c31fc8a70a9bb5ecd83b7f5a0b9483c144b74c5}{EOS}, 0 on \doxylink{classvideo_source_adf535af6425bba4700aa49a8a1c31fc8aee109bb5b2643da575fb3320655f3dda}{TIMEOUT}, 1 on \doxylink{classvideo_source_adf535af6425bba4700aa49a8a1c31fc8a51c45fa274bf173ca1af54643748fa87}{OK}.
+\end{DoxySeeAlso}
+\begin{DoxyReturn}{Returns}
+{\ttfamily true} if a frame was captured, {\ttfamily false} if there was an error or a timeout occurred. 
+\end{DoxyReturn}
+
+
+Implemented in \doxymbox{\hyperlink{classgst_camera_a19b60020ce6025d0a429a72bddef5209}{gst\+Camera}}, \doxymbox{\hyperlink{classgst_camera_a88472964b8658ef381b64cf3f753d051}{gst\+Camera}}, \doxymbox{\hyperlink{classgst_decoder_ac9c236a817311af434313b1bb09f9ebc}{gst\+Decoder}}, \doxymbox{\hyperlink{classgst_decoder_adaf0107e88665f5434dc2440296d4ace}{gst\+Decoder}}, \doxymbox{\hyperlink{classimage_loader_af4535ce7c25aae2abf69580a1c9ada6f}{image\+Loader}}, and \doxymbox{\hyperlink{classimage_loader_a9da8f1bc5782bca0cf6acf4118b9c882}{image\+Loader}}.
+
+\Hypertarget{classvideo_source_a7682192dfd1cc8b803c0d832c7170341}\index{videoSource@{videoSource}!Close@{Close}}
+\index{Close@{Close}!videoSource@{videoSource}}
+\doxysubsubsection{\texorpdfstring{Close()}{Close()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classvideo_source_a7682192dfd1cc8b803c0d832c7170341} 
+void video\+Source::\+\+Close (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+Stop streaming the device.
+
+\begin{DoxyNote}{Note}
+\doxylink{classvideo_source_a7682192dfd1cc8b803c0d832c7170341}{Close()} is automatically called by the \doxylink{classvideo_source}{video\+Source} destructor when it gets deleted, so you do not explicitly need to call \doxylink{classvideo_source_a7682192dfd1cc8b803c0d832c7170341}{Close()} before exiting the program if you delete your \doxylink{classvideo_source}{video\+Source} object. 
+\end{DoxyNote}
+
+
+Reimplemented in \doxymbox{\hyperlink{classgst_camera_af8043c610d01bcde93f212f5f5bb0fe1}{gst\+Camera}}, \doxymbox{\hyperlink{classgst_camera_a8798df5c10fff5ecbaf2598816c94f55}{gst\+Camera}}, \doxymbox{\hyperlink{classgst_decoder_a72b091d525c9bdfd63c6f5da84fa6fcb}{gst\+Decoder}}, \doxymbox{\hyperlink{classgst_decoder_a88ba5cb4519d8d50aaa3e28c9bf2c8f1}{gst\+Decoder}}, \doxymbox{\hyperlink{classimage_loader_ab76c62a239fd87d70ccc896e45f27387}{image\+Loader}}, and \doxymbox{\hyperlink{classimage_loader_ac06b32600a172fc0107ffe8240a13cb4}{image\+Loader}}.
+
+\Hypertarget{classvideo_source_a19ed8f98e4ce28462296b498804005ae}\index{videoSource@{videoSource}!Close@{Close}}
+\index{Close@{Close}!videoSource@{videoSource}}
+\doxysubsubsection{\texorpdfstring{Close()}{Close()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classvideo_source_a19ed8f98e4ce28462296b498804005ae} 
+virtual void video\+Source::\+\+Close (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+Stop streaming the device.
+
+\begin{DoxyNote}{Note}
+\doxylink{classvideo_source_a7682192dfd1cc8b803c0d832c7170341}{Close()} is automatically called by the \doxylink{classvideo_source}{video\+Source} destructor when it gets deleted, so you do not explicitly need to call \doxylink{classvideo_source_a7682192dfd1cc8b803c0d832c7170341}{Close()} before exiting the program if you delete your \doxylink{classvideo_source}{video\+Source} object. 
+\end{DoxyNote}
+
+
+Reimplemented in \doxymbox{\hyperlink{classgst_camera_af8043c610d01bcde93f212f5f5bb0fe1}{gst\+Camera}}, \doxymbox{\hyperlink{classgst_camera_a8798df5c10fff5ecbaf2598816c94f55}{gst\+Camera}}, \doxymbox{\hyperlink{classgst_decoder_a72b091d525c9bdfd63c6f5da84fa6fcb}{gst\+Decoder}}, \doxymbox{\hyperlink{classgst_decoder_a88ba5cb4519d8d50aaa3e28c9bf2c8f1}{gst\+Decoder}}, \doxymbox{\hyperlink{classimage_loader_ab76c62a239fd87d70ccc896e45f27387}{image\+Loader}}, and \doxymbox{\hyperlink{classimage_loader_ac06b32600a172fc0107ffe8240a13cb4}{image\+Loader}}.
+
+\Hypertarget{classvideo_source_a08817c3e2e203c7ad0d8170e31c9aabd}\index{videoSource@{videoSource}!Create@{Create}}
+\index{Create@{Create}!videoSource@{videoSource}}
+\doxysubsubsection{\texorpdfstring{Create()}{Create()}\hspace{0.1cm}{\footnotesize\ttfamily [1/12]}}
+{\footnotesize\ttfamily \label{classvideo_source_a08817c3e2e203c7ad0d8170e31c9aabd} 
+\doxymbox{\hyperlink{classvideo_source}{video\+Source}} \texorpdfstring{$\ast$}{*} video\+Source::\+\+Create (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{URI}{, }\item[{const \doxymbox{\hyperlink{classcommand_line}{command\+Line}} \&}]{cmd\+Line}{, }\item[{int}]{position\+Arg}{ = {\ttfamily -\/1}, }\item[{const \doxymbox{\hyperlink{structvideo_options}{video\+Options}} \&}]{options}{ = {\ttfamily \doxymbox{\hyperlink{structvideo_options}{video\+Options}}()}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Create \doxylink{classvideo_source}{video\+Source} interface from a resource \doxylink{struct_u_r_i}{URI} string and parsing command line arguments. 
+\begin{DoxyParams}{Parameters}
+{\em position\+Arg} & indicates the positional argument number in the command line of the resource \doxylink{struct_u_r_i}{URI} (or {\ttfamily -\/1} if a positional argument isn\textquotesingle{}t used). \\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\doxylink{structvideo_options}{video\+Options} for valid command-\/line arguments to be parsed. 
+
+the documentation above and the \doxylink{struct_u_r_i}{URI} struct for more info about resource \doxylink{struct_u_r_i}{URI}\textquotesingle{}s. 
+\end{DoxySeeAlso}
+\Hypertarget{classvideo_source_ab4c8bd9c287f9b97e0b213487ab5a88f}\index{videoSource@{videoSource}!Create@{Create}}
+\index{Create@{Create}!videoSource@{videoSource}}
+\doxysubsubsection{\texorpdfstring{Create()}{Create()}\hspace{0.1cm}{\footnotesize\ttfamily [2/12]}}
+{\footnotesize\ttfamily \label{classvideo_source_ab4c8bd9c287f9b97e0b213487ab5a88f} 
+\doxymbox{\hyperlink{classvideo_source}{video\+Source}} \texorpdfstring{$\ast$}{*} video\+Source::\+\+Create (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{URI}{, }\item[{const \doxymbox{\hyperlink{classcommand_line}{command\+Line}} \&}]{cmd\+Line}{, }\item[{int}]{position\+Arg}{ = {\ttfamily -\/1}, }\item[{const \doxymbox{\hyperlink{structvideo_options}{video\+Options}} \&}]{options}{ = {\ttfamily \doxymbox{\hyperlink{structvideo_options}{video\+Options}}()}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Create \doxylink{classvideo_source}{video\+Source} interface from a resource \doxylink{struct_u_r_i}{URI} string and parsing command line arguments. 
+\begin{DoxyParams}{Parameters}
+{\em position\+Arg} & indicates the positional argument number in the command line of the resource \doxylink{struct_u_r_i}{URI} (or {\ttfamily -\/1} if a positional argument isn\textquotesingle{}t used). \\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\doxylink{structvideo_options}{video\+Options} for valid command-\/line arguments to be parsed. 
+
+the documentation above and the \doxylink{struct_u_r_i}{URI} struct for more info about resource \doxylink{struct_u_r_i}{URI}\textquotesingle{}s. 
+\end{DoxySeeAlso}
+\Hypertarget{classvideo_source_af5226af374e12a9903fd91817da4f514}\index{videoSource@{videoSource}!Create@{Create}}
+\index{Create@{Create}!videoSource@{videoSource}}
+\doxysubsubsection{\texorpdfstring{Create()}{Create()}\hspace{0.1cm}{\footnotesize\ttfamily [3/12]}}
+{\footnotesize\ttfamily \label{classvideo_source_af5226af374e12a9903fd91817da4f514} 
+\doxymbox{\hyperlink{classvideo_source}{video\+Source}} \texorpdfstring{$\ast$}{*} video\+Source::\+\+Create (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{URI}{, }\item[{const int}]{argc}{, }\item[{char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{argv}{, }\item[{int}]{position\+Arg}{ = {\ttfamily -\/1}, }\item[{const \doxymbox{\hyperlink{structvideo_options}{video\+Options}} \&}]{options}{ = {\ttfamily \doxymbox{\hyperlink{structvideo_options}{video\+Options}}()}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Create \doxylink{classvideo_source}{video\+Source} interface from a resource \doxylink{struct_u_r_i}{URI} string and parsing command line arguments. 
+\begin{DoxyParams}{Parameters}
+{\em position\+Arg} & indicates the positional argument number in the command line of the resource \doxylink{struct_u_r_i}{URI} (or {\ttfamily -\/1} if a positional argument isn\textquotesingle{}t used). \\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\doxylink{structvideo_options}{video\+Options} for valid command-\/line arguments to be parsed. 
+
+the documentation above and the \doxylink{struct_u_r_i}{URI} struct for more info about resource \doxylink{struct_u_r_i}{URI}\textquotesingle{}s. 
+\end{DoxySeeAlso}
+\Hypertarget{classvideo_source_addb47e863e3a2533e2c1ea1c852ba709}\index{videoSource@{videoSource}!Create@{Create}}
+\index{Create@{Create}!videoSource@{videoSource}}
+\doxysubsubsection{\texorpdfstring{Create()}{Create()}\hspace{0.1cm}{\footnotesize\ttfamily [4/12]}}
+{\footnotesize\ttfamily \label{classvideo_source_addb47e863e3a2533e2c1ea1c852ba709} 
+\doxymbox{\hyperlink{classvideo_source}{video\+Source}} \texorpdfstring{$\ast$}{*} video\+Source::\+\+Create (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{URI}{, }\item[{const int}]{argc}{, }\item[{char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{argv}{, }\item[{int}]{position\+Arg}{ = {\ttfamily -\/1}, }\item[{const \doxymbox{\hyperlink{structvideo_options}{video\+Options}} \&}]{options}{ = {\ttfamily \doxymbox{\hyperlink{structvideo_options}{video\+Options}}()}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Create \doxylink{classvideo_source}{video\+Source} interface from a resource \doxylink{struct_u_r_i}{URI} string and parsing command line arguments. 
+\begin{DoxyParams}{Parameters}
+{\em position\+Arg} & indicates the positional argument number in the command line of the resource \doxylink{struct_u_r_i}{URI} (or {\ttfamily -\/1} if a positional argument isn\textquotesingle{}t used). \\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\doxylink{structvideo_options}{video\+Options} for valid command-\/line arguments to be parsed. 
+
+the documentation above and the \doxylink{struct_u_r_i}{URI} struct for more info about resource \doxylink{struct_u_r_i}{URI}\textquotesingle{}s. 
+\end{DoxySeeAlso}
+\Hypertarget{classvideo_source_aa112d38efeab1713437b211ecbce232d}\index{videoSource@{videoSource}!Create@{Create}}
+\index{Create@{Create}!videoSource@{videoSource}}
+\doxysubsubsection{\texorpdfstring{Create()}{Create()}\hspace{0.1cm}{\footnotesize\ttfamily [5/12]}}
+{\footnotesize\ttfamily \label{classvideo_source_aa112d38efeab1713437b211ecbce232d} 
+\doxymbox{\hyperlink{classvideo_source}{video\+Source}} \texorpdfstring{$\ast$}{*} video\+Source::\+\+Create (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{URI}{, }\item[{const \doxymbox{\hyperlink{structvideo_options}{video\+Options}} \&}]{options}{ = {\ttfamily \doxymbox{\hyperlink{structvideo_options}{video\+Options}}()}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Create \doxylink{classvideo_source}{video\+Source} interface from a resource \doxylink{struct_u_r_i}{URI} string and optional \doxylink{structvideo_options}{video\+Options}. \begin{DoxySeeAlso}{See also}
+the documentation above and the \doxylink{struct_u_r_i}{URI} struct for more info about resource \doxylink{struct_u_r_i}{URI}\textquotesingle{}s. 
+\end{DoxySeeAlso}
+\Hypertarget{classvideo_source_aaea81813938f8810da311cd2f5284173}\index{videoSource@{videoSource}!Create@{Create}}
+\index{Create@{Create}!videoSource@{videoSource}}
+\doxysubsubsection{\texorpdfstring{Create()}{Create()}\hspace{0.1cm}{\footnotesize\ttfamily [6/12]}}
+{\footnotesize\ttfamily \label{classvideo_source_aaea81813938f8810da311cd2f5284173} 
+\doxymbox{\hyperlink{classvideo_source}{video\+Source}} \texorpdfstring{$\ast$}{*} video\+Source::\+\+Create (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{URI}{, }\item[{const \doxymbox{\hyperlink{structvideo_options}{video\+Options}} \&}]{options}{ = {\ttfamily \doxymbox{\hyperlink{structvideo_options}{video\+Options}}()}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Create \doxylink{classvideo_source}{video\+Source} interface from a resource \doxylink{struct_u_r_i}{URI} string and optional \doxylink{structvideo_options}{video\+Options}. \begin{DoxySeeAlso}{See also}
+the documentation above and the \doxylink{struct_u_r_i}{URI} struct for more info about resource \doxylink{struct_u_r_i}{URI}\textquotesingle{}s. 
+\end{DoxySeeAlso}
+\Hypertarget{classvideo_source_aec0344111b430cbbabb4c81e7ef7ccf6}\index{videoSource@{videoSource}!Create@{Create}}
+\index{Create@{Create}!videoSource@{videoSource}}
+\doxysubsubsection{\texorpdfstring{Create()}{Create()}\hspace{0.1cm}{\footnotesize\ttfamily [7/12]}}
+{\footnotesize\ttfamily \label{classvideo_source_aec0344111b430cbbabb4c81e7ef7ccf6} 
+\doxymbox{\hyperlink{classvideo_source}{video\+Source}} \texorpdfstring{$\ast$}{*} video\+Source::\+\+Create (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{classcommand_line}{command\+Line}} \&}]{cmd\+Line}{, }\item[{int}]{position\+Arg}{ = {\ttfamily -\/1}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Create \doxylink{classvideo_source}{video\+Source} interface by parsing command line arguments, including the resource \doxylink{struct_u_r_i}{URI}. 
+\begin{DoxyParams}{Parameters}
+{\em position\+Arg} & indicates the positional argument number in the command line of the resource \doxylink{struct_u_r_i}{URI} (or {\ttfamily -\/1} if a positional argument isn\textquotesingle{}t used). \\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\doxylink{structvideo_options}{video\+Options} for valid command-\/line arguments to be parsed. 
+
+the documentation above and the \doxylink{struct_u_r_i}{URI} struct for more info about resource \doxylink{struct_u_r_i}{URI}\textquotesingle{}s. 
+\end{DoxySeeAlso}
+\Hypertarget{classvideo_source_a5aa81cd8e297c2c0d9b74da589368815}\index{videoSource@{videoSource}!Create@{Create}}
+\index{Create@{Create}!videoSource@{videoSource}}
+\doxysubsubsection{\texorpdfstring{Create()}{Create()}\hspace{0.1cm}{\footnotesize\ttfamily [8/12]}}
+{\footnotesize\ttfamily \label{classvideo_source_a5aa81cd8e297c2c0d9b74da589368815} 
+\doxymbox{\hyperlink{classvideo_source}{video\+Source}} \texorpdfstring{$\ast$}{*} video\+Source::\+\+Create (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{classcommand_line}{command\+Line}} \&}]{cmd\+Line}{, }\item[{int}]{position\+Arg}{ = {\ttfamily -\/1}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Create \doxylink{classvideo_source}{video\+Source} interface by parsing command line arguments, including the resource \doxylink{struct_u_r_i}{URI}. 
+\begin{DoxyParams}{Parameters}
+{\em position\+Arg} & indicates the positional argument number in the command line of the resource \doxylink{struct_u_r_i}{URI} (or {\ttfamily -\/1} if a positional argument isn\textquotesingle{}t used). \\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\doxylink{structvideo_options}{video\+Options} for valid command-\/line arguments to be parsed. 
+
+the documentation above and the \doxylink{struct_u_r_i}{URI} struct for more info about resource \doxylink{struct_u_r_i}{URI}\textquotesingle{}s. 
+\end{DoxySeeAlso}
+\Hypertarget{classvideo_source_a7e75b4ea4ba057fe821a56d057f029f9}\index{videoSource@{videoSource}!Create@{Create}}
+\index{Create@{Create}!videoSource@{videoSource}}
+\doxysubsubsection{\texorpdfstring{Create()}{Create()}\hspace{0.1cm}{\footnotesize\ttfamily [9/12]}}
+{\footnotesize\ttfamily \label{classvideo_source_a7e75b4ea4ba057fe821a56d057f029f9} 
+\doxymbox{\hyperlink{classvideo_source}{video\+Source}} \texorpdfstring{$\ast$}{*} video\+Source::\+\+Create (\begin{DoxyParamCaption}\item[{const int}]{argc}{, }\item[{char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{argv}{, }\item[{int}]{position\+Arg}{ = {\ttfamily -\/1}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Create \doxylink{classvideo_source}{video\+Source} interface by parsing command line arguments, including the resource \doxylink{struct_u_r_i}{URI}. 
+\begin{DoxyParams}{Parameters}
+{\em position\+Arg} & indicates the positional argument number in the command line of the resource \doxylink{struct_u_r_i}{URI} (or {\ttfamily -\/1} if a positional argument isn\textquotesingle{}t used). \\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\doxylink{structvideo_options}{video\+Options} for valid command-\/line arguments to be parsed. 
+
+the documentation above and the \doxylink{struct_u_r_i}{URI} struct for more info about resource \doxylink{struct_u_r_i}{URI}\textquotesingle{}s. 
+\end{DoxySeeAlso}
+\Hypertarget{classvideo_source_ae58d958c5f24c957a6d80fb70428af26}\index{videoSource@{videoSource}!Create@{Create}}
+\index{Create@{Create}!videoSource@{videoSource}}
+\doxysubsubsection{\texorpdfstring{Create()}{Create()}\hspace{0.1cm}{\footnotesize\ttfamily [10/12]}}
+{\footnotesize\ttfamily \label{classvideo_source_ae58d958c5f24c957a6d80fb70428af26} 
+\doxymbox{\hyperlink{classvideo_source}{video\+Source}} \texorpdfstring{$\ast$}{*} video\+Source::\+\+Create (\begin{DoxyParamCaption}\item[{const int}]{argc}{, }\item[{char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{argv}{, }\item[{int}]{position\+Arg}{ = {\ttfamily -\/1}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Create \doxylink{classvideo_source}{video\+Source} interface by parsing command line arguments, including the resource \doxylink{struct_u_r_i}{URI}. 
+\begin{DoxyParams}{Parameters}
+{\em position\+Arg} & indicates the positional argument number in the command line of the resource \doxylink{struct_u_r_i}{URI} (or {\ttfamily -\/1} if a positional argument isn\textquotesingle{}t used). \\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\doxylink{structvideo_options}{video\+Options} for valid command-\/line arguments to be parsed. 
+
+the documentation above and the \doxylink{struct_u_r_i}{URI} struct for more info about resource \doxylink{struct_u_r_i}{URI}\textquotesingle{}s. 
+\end{DoxySeeAlso}
+\Hypertarget{classvideo_source_a971493dd39e0706bf53779d47621565e}\index{videoSource@{videoSource}!Create@{Create}}
+\index{Create@{Create}!videoSource@{videoSource}}
+\doxysubsubsection{\texorpdfstring{Create()}{Create()}\hspace{0.1cm}{\footnotesize\ttfamily [11/12]}}
+{\footnotesize\ttfamily \label{classvideo_source_a971493dd39e0706bf53779d47621565e} 
+\doxymbox{\hyperlink{classvideo_source}{video\+Source}} \texorpdfstring{$\ast$}{*} video\+Source::\+\+Create (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{structvideo_options}{video\+Options}} \&}]{options}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Create \doxylink{classvideo_source}{video\+Source} interface from a \doxylink{structvideo_options}{video\+Options} struct that\textquotesingle{}s already been filled out. It\textquotesingle{}s expected that the supplied \doxylink{structvideo_options}{video\+Options} already contain a valid resource \doxylink{struct_u_r_i}{URI}. \Hypertarget{classvideo_source_aed130cb4c5a4b16da56780d02d64d6a4}\index{videoSource@{videoSource}!Create@{Create}}
+\index{Create@{Create}!videoSource@{videoSource}}
+\doxysubsubsection{\texorpdfstring{Create()}{Create()}\hspace{0.1cm}{\footnotesize\ttfamily [12/12]}}
+{\footnotesize\ttfamily \label{classvideo_source_aed130cb4c5a4b16da56780d02d64d6a4} 
+\doxymbox{\hyperlink{classvideo_source}{video\+Source}} \texorpdfstring{$\ast$}{*} video\+Source::\+\+Create (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{structvideo_options}{video\+Options}} \&}]{options}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Create \doxylink{classvideo_source}{video\+Source} interface from a \doxylink{structvideo_options}{video\+Options} struct that\textquotesingle{}s already been filled out. It\textquotesingle{}s expected that the supplied \doxylink{structvideo_options}{video\+Options} already contain a valid resource \doxylink{struct_u_r_i}{URI}. \Hypertarget{classvideo_source_a2f1adda850349479bb3b4c4e90b3c429}\index{videoSource@{videoSource}!GetFrameCount@{GetFrameCount}}
+\index{GetFrameCount@{GetFrameCount}!videoSource@{videoSource}}
+\doxysubsubsection{\texorpdfstring{GetFrameCount()}{GetFrameCount()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classvideo_source_a2f1adda850349479bb3b4c4e90b3c429} 
+uint64\+\_\+t video\+Source::\+\+Get\+Frame\+Count (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Return the number of frames captured. \Hypertarget{classvideo_source_a2f1adda850349479bb3b4c4e90b3c429}\index{videoSource@{videoSource}!GetFrameCount@{GetFrameCount}}
+\index{GetFrameCount@{GetFrameCount}!videoSource@{videoSource}}
+\doxysubsubsection{\texorpdfstring{GetFrameCount()}{GetFrameCount()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classvideo_source_a2f1adda850349479bb3b4c4e90b3c429} 
+uint64\+\_\+t video\+Source::\+\+Get\+Frame\+Count (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Return the number of frames captured. \Hypertarget{classvideo_source_a4e6ac667bd17a49cc94a6b16173a06ba}\index{videoSource@{videoSource}!GetFrameRate@{GetFrameRate}}
+\index{GetFrameRate@{GetFrameRate}!videoSource@{videoSource}}
+\doxysubsubsection{\texorpdfstring{GetFrameRate()}{GetFrameRate()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classvideo_source_a4e6ac667bd17a49cc94a6b16173a06ba} 
+uint32\+\_\+t video\+Source::\+\+Get\+Frame\+Rate (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Return the framerate, in Hz or FPS. \Hypertarget{classvideo_source_a4e6ac667bd17a49cc94a6b16173a06ba}\index{videoSource@{videoSource}!GetFrameRate@{GetFrameRate}}
+\index{GetFrameRate@{GetFrameRate}!videoSource@{videoSource}}
+\doxysubsubsection{\texorpdfstring{GetFrameRate()}{GetFrameRate()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classvideo_source_a4e6ac667bd17a49cc94a6b16173a06ba} 
+uint32\+\_\+t video\+Source::\+\+Get\+Frame\+Rate (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Return the framerate, in Hz or FPS. \Hypertarget{classvideo_source_a6ca24054da683cae18b0bfad01dbf1d0}\index{videoSource@{videoSource}!GetHeight@{GetHeight}}
+\index{GetHeight@{GetHeight}!videoSource@{videoSource}}
+\doxysubsubsection{\texorpdfstring{GetHeight()}{GetHeight()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classvideo_source_a6ca24054da683cae18b0bfad01dbf1d0} 
+uint32\+\_\+t video\+Source::\+\+Get\+Height (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Return the height of the stream, in pixels. \Hypertarget{classvideo_source_a6ca24054da683cae18b0bfad01dbf1d0}\index{videoSource@{videoSource}!GetHeight@{GetHeight}}
+\index{GetHeight@{GetHeight}!videoSource@{videoSource}}
+\doxysubsubsection{\texorpdfstring{GetHeight()}{GetHeight()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classvideo_source_a6ca24054da683cae18b0bfad01dbf1d0} 
+uint32\+\_\+t video\+Source::\+\+Get\+Height (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Return the height of the stream, in pixels. \Hypertarget{classvideo_source_a36ef21c0eb8cc9a7ce181cebf3d88e06}\index{videoSource@{videoSource}!GetLastTimestamp@{GetLastTimestamp}}
+\index{GetLastTimestamp@{GetLastTimestamp}!videoSource@{videoSource}}
+\doxysubsubsection{\texorpdfstring{GetLastTimestamp()}{GetLastTimestamp()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classvideo_source_a36ef21c0eb8cc9a7ce181cebf3d88e06} 
+uint64\+\_\+t video\+Source::\+\+Get\+Last\+Timestamp (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Get timestamp of the last captured frame, in nanoseconds. \Hypertarget{classvideo_source_a36ef21c0eb8cc9a7ce181cebf3d88e06}\index{videoSource@{videoSource}!GetLastTimestamp@{GetLastTimestamp}}
+\index{GetLastTimestamp@{GetLastTimestamp}!videoSource@{videoSource}}
+\doxysubsubsection{\texorpdfstring{GetLastTimestamp()}{GetLastTimestamp()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classvideo_source_a36ef21c0eb8cc9a7ce181cebf3d88e06} 
+uint64\+\_\+t video\+Source::\+\+Get\+Last\+Timestamp (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Get timestamp of the last captured frame, in nanoseconds. \Hypertarget{classvideo_source_a5872b65d8b2f2419b2222a2da5646603}\index{videoSource@{videoSource}!GetOptions@{GetOptions}}
+\index{GetOptions@{GetOptions}!videoSource@{videoSource}}
+\doxysubsubsection{\texorpdfstring{GetOptions()}{GetOptions()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classvideo_source_a5872b65d8b2f2419b2222a2da5646603} 
+const \doxymbox{\hyperlink{structvideo_options}{video\+Options}} \& video\+Source::\+\+Get\+Options (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Return the \doxylink{structvideo_options}{video\+Options} of the stream. \Hypertarget{classvideo_source_a5872b65d8b2f2419b2222a2da5646603}\index{videoSource@{videoSource}!GetOptions@{GetOptions}}
+\index{GetOptions@{GetOptions}!videoSource@{videoSource}}
+\doxysubsubsection{\texorpdfstring{GetOptions()}{GetOptions()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classvideo_source_a5872b65d8b2f2419b2222a2da5646603} 
+const \doxymbox{\hyperlink{structvideo_options}{video\+Options}} \& video\+Source::\+\+Get\+Options (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Return the \doxylink{structvideo_options}{video\+Options} of the stream. \Hypertarget{classvideo_source_af170b23f004c98754479f84351ef4c51}\index{videoSource@{videoSource}!GetRawFormat@{GetRawFormat}}
+\index{GetRawFormat@{GetRawFormat}!videoSource@{videoSource}}
+\doxysubsubsection{\texorpdfstring{GetRawFormat()}{GetRawFormat()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classvideo_source_af170b23f004c98754479f84351ef4c51} 
+\doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{image\+Format}} video\+Source::\+\+Get\+Raw\+Format (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Get raw image format. \Hypertarget{classvideo_source_af170b23f004c98754479f84351ef4c51}\index{videoSource@{videoSource}!GetRawFormat@{GetRawFormat}}
+\index{GetRawFormat@{GetRawFormat}!videoSource@{videoSource}}
+\doxysubsubsection{\texorpdfstring{GetRawFormat()}{GetRawFormat()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classvideo_source_af170b23f004c98754479f84351ef4c51} 
+\doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{image\+Format}} video\+Source::\+\+Get\+Raw\+Format (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Get raw image format. \Hypertarget{classvideo_source_ad930ea7163b10516207c74fb0f839bc0}\index{videoSource@{videoSource}!GetResource@{GetResource}}
+\index{GetResource@{GetResource}!videoSource@{videoSource}}
+\doxysubsubsection{\texorpdfstring{GetResource()}{GetResource()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classvideo_source_ad930ea7163b10516207c74fb0f839bc0} 
+const \doxymbox{\hyperlink{struct_u_r_i}{URI}} \& video\+Source::\+\+Get\+Resource (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Return the resource \doxylink{struct_u_r_i}{URI} of the stream. \Hypertarget{classvideo_source_ad930ea7163b10516207c74fb0f839bc0}\index{videoSource@{videoSource}!GetResource@{GetResource}}
+\index{GetResource@{GetResource}!videoSource@{videoSource}}
+\doxysubsubsection{\texorpdfstring{GetResource()}{GetResource()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classvideo_source_ad930ea7163b10516207c74fb0f839bc0} 
+const \doxymbox{\hyperlink{struct_u_r_i}{URI}} \& video\+Source::\+\+Get\+Resource (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Return the resource \doxylink{struct_u_r_i}{URI} of the stream. \Hypertarget{classvideo_source_a76f6f92cf40ad72e9d7f76538d583e37}\index{videoSource@{videoSource}!GetType@{GetType}}
+\index{GetType@{GetType}!videoSource@{videoSource}}
+\doxysubsubsection{\texorpdfstring{GetType()}{GetType()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classvideo_source_a76f6f92cf40ad72e9d7f76538d583e37} 
+virtual uint32\+\_\+t video\+Source::\+\+Get\+Type (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+Return the interface type of the stream. This could be one of the following values:\+
+
+
+\begin{DoxyItemize}
+\item \doxylink{classgst_camera_a0aabc26866f8ea803951754a82683976}{gst\+Camera::\+\+Type}
+\item \doxylink{classgst_decoder_ad117a9e9b2db658d80e62d8a890f0ac6}{gst\+Decoder::\+\+Type}
+\item \doxylink{classimage_loader_adcd71a3de201901d7f667e3346668a5a}{image\+Loader::\+\+Type} 
+\end{DoxyItemize}
+
+Reimplemented in \doxymbox{\hyperlink{classgst_camera_a40bdf4c4b7675e33bf670df07918e9c6}{gst\+Camera}}, \doxymbox{\hyperlink{classgst_camera_a40bdf4c4b7675e33bf670df07918e9c6}{gst\+Camera}}, \doxymbox{\hyperlink{classgst_decoder_ad9c4a4b64c50f8ae8712e3061e8a18df}{gst\+Decoder}}, \doxymbox{\hyperlink{classgst_decoder_ad9c4a4b64c50f8ae8712e3061e8a18df}{gst\+Decoder}}, \doxymbox{\hyperlink{classimage_loader_a4b196ca1c23d9322d5b9bba6e05e0bdf}{image\+Loader}}, and \doxymbox{\hyperlink{classimage_loader_a4b196ca1c23d9322d5b9bba6e05e0bdf}{image\+Loader}}.
+
+\Hypertarget{classvideo_source_a76f6f92cf40ad72e9d7f76538d583e37}\index{videoSource@{videoSource}!GetType@{GetType}}
+\index{GetType@{GetType}!videoSource@{videoSource}}
+\doxysubsubsection{\texorpdfstring{GetType()}{GetType()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classvideo_source_a76f6f92cf40ad72e9d7f76538d583e37} 
+virtual uint32\+\_\+t video\+Source::\+\+Get\+Type (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+Return the interface type of the stream. This could be one of the following values:\+
+
+
+\begin{DoxyItemize}
+\item \doxylink{classgst_camera_a0aabc26866f8ea803951754a82683976}{gst\+Camera::\+\+Type}
+\item \doxylink{classgst_decoder_ad117a9e9b2db658d80e62d8a890f0ac6}{gst\+Decoder::\+\+Type}
+\item \doxylink{classimage_loader_adcd71a3de201901d7f667e3346668a5a}{image\+Loader::\+\+Type} 
+\end{DoxyItemize}
+
+Reimplemented in \doxymbox{\hyperlink{classgst_camera_a40bdf4c4b7675e33bf670df07918e9c6}{gst\+Camera}}, \doxymbox{\hyperlink{classgst_camera_a40bdf4c4b7675e33bf670df07918e9c6}{gst\+Camera}}, \doxymbox{\hyperlink{classgst_decoder_ad9c4a4b64c50f8ae8712e3061e8a18df}{gst\+Decoder}}, \doxymbox{\hyperlink{classgst_decoder_ad9c4a4b64c50f8ae8712e3061e8a18df}{gst\+Decoder}}, \doxymbox{\hyperlink{classimage_loader_a4b196ca1c23d9322d5b9bba6e05e0bdf}{image\+Loader}}, and \doxymbox{\hyperlink{classimage_loader_a4b196ca1c23d9322d5b9bba6e05e0bdf}{image\+Loader}}.
+
+\Hypertarget{classvideo_source_a17f0c43e832d4de85a014b3aa4265732}\index{videoSource@{videoSource}!GetWidth@{GetWidth}}
+\index{GetWidth@{GetWidth}!videoSource@{videoSource}}
+\doxysubsubsection{\texorpdfstring{GetWidth()}{GetWidth()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classvideo_source_a17f0c43e832d4de85a014b3aa4265732} 
+uint32\+\_\+t video\+Source::\+\+Get\+Width (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Return the width of the stream, in pixels. \Hypertarget{classvideo_source_a17f0c43e832d4de85a014b3aa4265732}\index{videoSource@{videoSource}!GetWidth@{GetWidth}}
+\index{GetWidth@{GetWidth}!videoSource@{videoSource}}
+\doxysubsubsection{\texorpdfstring{GetWidth()}{GetWidth()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classvideo_source_a17f0c43e832d4de85a014b3aa4265732} 
+uint32\+\_\+t video\+Source::\+\+Get\+Width (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Return the width of the stream, in pixels. \Hypertarget{classvideo_source_a0ce18fd4c3a8f934e7ec000f0d36b7e9}\index{videoSource@{videoSource}!IsStreaming@{IsStreaming}}
+\index{IsStreaming@{IsStreaming}!videoSource@{videoSource}}
+\doxysubsubsection{\texorpdfstring{IsStreaming()}{IsStreaming()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classvideo_source_a0ce18fd4c3a8f934e7ec000f0d36b7e9} 
+bool video\+Source::\+\+Is\+Streaming (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Check if the device is actively streaming or not.
+
+\begin{DoxyReturn}{Returns}
+{\ttfamily true} if the device is streaming (open), or {\ttfamily false} if it\textquotesingle{}s closed or has reached EOS (End Of Stream). 
+\end{DoxyReturn}
+\Hypertarget{classvideo_source_a0ce18fd4c3a8f934e7ec000f0d36b7e9}\index{videoSource@{videoSource}!IsStreaming@{IsStreaming}}
+\index{IsStreaming@{IsStreaming}!videoSource@{videoSource}}
+\doxysubsubsection{\texorpdfstring{IsStreaming()}{IsStreaming()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classvideo_source_a0ce18fd4c3a8f934e7ec000f0d36b7e9} 
+bool video\+Source::\+\+Is\+Streaming (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Check if the device is actively streaming or not.
+
+\begin{DoxyReturn}{Returns}
+{\ttfamily true} if the device is streaming (open), or {\ttfamily false} if it\textquotesingle{}s closed or has reached EOS (End Of Stream). 
+\end{DoxyReturn}
+\Hypertarget{classvideo_source_ad3c1689db5baf2786099d2c0be075010}\index{videoSource@{videoSource}!IsType@{IsType}}
+\index{IsType@{IsType}!videoSource@{videoSource}}
+\doxysubsubsection{\texorpdfstring{IsType()}{IsType()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily \label{classvideo_source_ad3c1689db5baf2786099d2c0be075010} 
+template$<$typename T$>$ \\
+bool video\+Source::\+\+Is\+Type (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Check if a this stream is of a particular type. Can be used with \doxylink{classgst_camera}{gst\+Camera}, \doxylink{classgst_decoder}{gst\+Decoder}, and \doxylink{classimage_loader}{image\+Loader}. For example:\+ ~\newline
+
+
+if( stream-\/\texorpdfstring{$>$}{>}\doxylink{classvideo_source_a0883cf58cd0d8d0c05fb192a01250b7a}{Is\+Type$<$gst\+Camera$>$()} ) gst\+Camera\texorpdfstring{$\ast$}{*} camera = (gst\+Camera\texorpdfstring{$\ast$}{*})stream; /\+/\+ safe to cast \Hypertarget{classvideo_source_ad3c1689db5baf2786099d2c0be075010}\index{videoSource@{videoSource}!IsType@{IsType}}
+\index{IsType@{IsType}!videoSource@{videoSource}}
+\doxysubsubsection{\texorpdfstring{IsType()}{IsType()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily \label{classvideo_source_ad3c1689db5baf2786099d2c0be075010} 
+template$<$typename T$>$ \\
+bool video\+Source::\+\+Is\+Type (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Check if a this stream is of a particular type. Can be used with \doxylink{classgst_camera}{gst\+Camera}, \doxylink{classgst_decoder}{gst\+Decoder}, and \doxylink{classimage_loader}{image\+Loader}. For example:\+ ~\newline
+
+
+if( stream-\/\texorpdfstring{$>$}{>}\doxylink{classvideo_source_a0883cf58cd0d8d0c05fb192a01250b7a}{Is\+Type$<$gst\+Camera$>$()} ) gst\+Camera\texorpdfstring{$\ast$}{*} camera = (gst\+Camera\texorpdfstring{$\ast$}{*})stream; /\+/\+ safe to cast \Hypertarget{classvideo_source_a0883cf58cd0d8d0c05fb192a01250b7a}\index{videoSource@{videoSource}!IsType@{IsType}}
+\index{IsType@{IsType}!videoSource@{videoSource}}
+\doxysubsubsection{\texorpdfstring{IsType()}{IsType()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily \label{classvideo_source_a0883cf58cd0d8d0c05fb192a01250b7a} 
+bool video\+Source::\+\+Is\+Type (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{type}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Check if this stream is of a particular type. \begin{DoxySeeAlso}{See also}
+\doxylink{classvideo_source_a76f6f92cf40ad72e9d7f76538d583e37}{Get\+Type()} for possible values. 
+\end{DoxySeeAlso}
+\Hypertarget{classvideo_source_a0883cf58cd0d8d0c05fb192a01250b7a}\index{videoSource@{videoSource}!IsType@{IsType}}
+\index{IsType@{IsType}!videoSource@{videoSource}}
+\doxysubsubsection{\texorpdfstring{IsType()}{IsType()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily \label{classvideo_source_a0883cf58cd0d8d0c05fb192a01250b7a} 
+bool video\+Source::\+\+Is\+Type (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{type}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Check if this stream is of a particular type. \begin{DoxySeeAlso}{See also}
+\doxylink{classvideo_source_a76f6f92cf40ad72e9d7f76538d583e37}{Get\+Type()} for possible values. 
+\end{DoxySeeAlso}
+\Hypertarget{classvideo_source_ae2e57a6ea37947798fb12ca98a09ba06}\index{videoSource@{videoSource}!Open@{Open}}
+\index{Open@{Open}!videoSource@{videoSource}}
+\doxysubsubsection{\texorpdfstring{Open()}{Open()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classvideo_source_ae2e57a6ea37947798fb12ca98a09ba06} 
+bool video\+Source::\+\+Open (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+Begin streaming the device. After \doxylink{classvideo_source_ae2e57a6ea37947798fb12ca98a09ba06}{Open()} is called, frames from the device will begin to be captured.
+
+\doxylink{classvideo_source_ae2e57a6ea37947798fb12ca98a09ba06}{Open()} is not stricly necessary to call, if you call one of the \doxylink{classvideo_source_a151da5e63cbd96a1b4761316dbd4eb68}{Capture()} functions they will first check to make sure that the stream is opened, and if not they will open it automatically for you.
+
+\begin{DoxyReturn}{Returns}
+{\ttfamily true} on success, {\ttfamily false} if an error occurred opening the stream. 
+\end{DoxyReturn}
+
+
+Reimplemented in \doxymbox{\hyperlink{classgst_camera_a075aa94acb72f577f7c385e37a8c15b0}{gst\+Camera}}, \doxymbox{\hyperlink{classgst_camera_a28f4842c5648a253a1acee5276ac8486}{gst\+Camera}}, \doxymbox{\hyperlink{classgst_decoder_affaac0729dc378cfadacf330c32995b5}{gst\+Decoder}}, \doxymbox{\hyperlink{classgst_decoder_aab54dc71e937ed3e8ecd6fd129e16179}{gst\+Decoder}}, \doxymbox{\hyperlink{classimage_loader_a1cdb02865ce50c37a039c342488e6f62}{image\+Loader}}, and \doxymbox{\hyperlink{classimage_loader_a1af7d6e4e3ad6232c67dcc1307509677}{image\+Loader}}.
+
+\Hypertarget{classvideo_source_aa7907ba2392b6ea5f747409d1bfbc18b}\index{videoSource@{videoSource}!Open@{Open}}
+\index{Open@{Open}!videoSource@{videoSource}}
+\doxysubsubsection{\texorpdfstring{Open()}{Open()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classvideo_source_aa7907ba2392b6ea5f747409d1bfbc18b} 
+virtual bool video\+Source::\+\+Open (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+Begin streaming the device. After \doxylink{classvideo_source_ae2e57a6ea37947798fb12ca98a09ba06}{Open()} is called, frames from the device will begin to be captured.
+
+\doxylink{classvideo_source_ae2e57a6ea37947798fb12ca98a09ba06}{Open()} is not stricly necessary to call, if you call one of the \doxylink{classvideo_source_a151da5e63cbd96a1b4761316dbd4eb68}{Capture()} functions they will first check to make sure that the stream is opened, and if not they will open it automatically for you.
+
+\begin{DoxyReturn}{Returns}
+{\ttfamily true} on success, {\ttfamily false} if an error occurred opening the stream. 
+\end{DoxyReturn}
+
+
+Reimplemented in \doxymbox{\hyperlink{classgst_camera_a075aa94acb72f577f7c385e37a8c15b0}{gst\+Camera}}, \doxymbox{\hyperlink{classgst_camera_a28f4842c5648a253a1acee5276ac8486}{gst\+Camera}}, \doxymbox{\hyperlink{classgst_decoder_affaac0729dc378cfadacf330c32995b5}{gst\+Decoder}}, \doxymbox{\hyperlink{classgst_decoder_aab54dc71e937ed3e8ecd6fd129e16179}{gst\+Decoder}}, \doxymbox{\hyperlink{classimage_loader_a1cdb02865ce50c37a039c342488e6f62}{image\+Loader}}, and \doxymbox{\hyperlink{classimage_loader_a1af7d6e4e3ad6232c67dcc1307509677}{image\+Loader}}.
+
+\Hypertarget{classvideo_source_aa37500e48b7ca86a2eec406ff6029bd6}\index{videoSource@{videoSource}!TypeToStr@{TypeToStr}}
+\index{TypeToStr@{TypeToStr}!videoSource@{videoSource}}
+\doxysubsubsection{\texorpdfstring{TypeToStr()}{TypeToStr()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily \label{classvideo_source_aa37500e48b7ca86a2eec406ff6029bd6} 
+const char \texorpdfstring{$\ast$}{*} video\+Source::\+\+Type\+To\+Str (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Convert this stream\textquotesingle{}s class type to string. \Hypertarget{classvideo_source_aa37500e48b7ca86a2eec406ff6029bd6}\index{videoSource@{videoSource}!TypeToStr@{TypeToStr}}
+\index{TypeToStr@{TypeToStr}!videoSource@{videoSource}}
+\doxysubsubsection{\texorpdfstring{TypeToStr()}{TypeToStr()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily \label{classvideo_source_aa37500e48b7ca86a2eec406ff6029bd6} 
+const char \texorpdfstring{$\ast$}{*} video\+Source::\+\+Type\+To\+Str (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Convert this stream\textquotesingle{}s class type to string. \Hypertarget{classvideo_source_a628552bb154b63d88aa5520e7ce3769c}\index{videoSource@{videoSource}!TypeToStr@{TypeToStr}}
+\index{TypeToStr@{TypeToStr}!videoSource@{videoSource}}
+\doxysubsubsection{\texorpdfstring{TypeToStr()}{TypeToStr()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily \label{classvideo_source_a628552bb154b63d88aa5520e7ce3769c} 
+const char \texorpdfstring{$\ast$}{*} video\+Source::\+\+Type\+To\+Str (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{type}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Convert a class type to a string. \Hypertarget{classvideo_source_a412ea9a54245142dbb88752eef0460f9}\index{videoSource@{videoSource}!TypeToStr@{TypeToStr}}
+\index{TypeToStr@{TypeToStr}!videoSource@{videoSource}}
+\doxysubsubsection{\texorpdfstring{TypeToStr()}{TypeToStr()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily \label{classvideo_source_a412ea9a54245142dbb88752eef0460f9} 
+const char \texorpdfstring{$\ast$}{*} video\+Source::\+\+Type\+To\+Str (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{type}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Convert a class type to a string. \Hypertarget{classvideo_source_a70c9a1475dd59b60cbf1edf7970b26d1}\index{videoSource@{videoSource}!Usage@{Usage}}
+\index{Usage@{Usage}!videoSource@{videoSource}}
+\doxysubsubsection{\texorpdfstring{Usage()}{Usage()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classvideo_source_a70c9a1475dd59b60cbf1edf7970b26d1} 
+const char \texorpdfstring{$\ast$}{*} video\+Source::\+\+Usage (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+Usage string for command line arguments to \doxylink{classvideo_source_a971493dd39e0706bf53779d47621565e}{Create()} \Hypertarget{classvideo_source_a70c9a1475dd59b60cbf1edf7970b26d1}\index{videoSource@{videoSource}!Usage@{Usage}}
+\index{Usage@{Usage}!videoSource@{videoSource}}
+\doxysubsubsection{\texorpdfstring{Usage()}{Usage()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classvideo_source_a70c9a1475dd59b60cbf1edf7970b26d1} 
+const char \texorpdfstring{$\ast$}{*} video\+Source::\+\+Usage (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+Usage string for command line arguments to \doxylink{classvideo_source_a971493dd39e0706bf53779d47621565e}{Create()} 
+
+\label{doc-variable-members}
+\Hypertarget{classvideo_source_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classvideo_source_a3e144d758672a9d304ae6518cbe57508}\index{videoSource@{videoSource}!DEFAULT\_TIMEOUT@{DEFAULT\_TIMEOUT}}
+\index{DEFAULT\_TIMEOUT@{DEFAULT\_TIMEOUT}!videoSource@{videoSource}}
+\doxysubsubsection{\texorpdfstring{DEFAULT\_TIMEOUT}{DEFAULT\_TIMEOUT}}
+{\footnotesize\ttfamily \label{classvideo_source_a3e144d758672a9d304ae6518cbe57508} 
+const uint64\+\_\+t video\+Source::\+\+DEFAULT\+\_\+\+TIMEOUT =1000\hspace{0.3cm}{\ttfamily [static]}}
+
+\doxylink{requirements_The}{The} default Capture timeout (1000ms) 
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+jetson-\/inference/\+build/\+aarch64/\+include/\+jetson-\/utils/\+video\+Source.\+h\item 
+jetson-\/inference/\+utils/\+video/\+video\+Source.\+h\item 
+jetson-\/inference/\+utils/\+video/\+video\+Source.\+cpp\end{DoxyCompactItemize}

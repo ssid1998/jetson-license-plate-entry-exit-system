@@ -1,0 +1,318 @@
+\doxysubsection{tensor\+Net }
+\hypertarget{group__tensor_net}{}\label{group__tensor_net}\index{tensorNet@{tensorNet}}
+\doxysubsubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \doxymbox{\hyperlink{classtensor_net}{tensor\+Net}}
+\end{DoxyCompactItemize}
+\doxysubsubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\+\#define \doxymbox{\hyperlink{group__tensor_net_ga1d190b2948bf323a7c5f83fd3689c235}{TENSORRT\+\_\+\+VERSION\+\_\+\+CHECK}}(major,  minor,  patch)
+\item 
+\+\#define \doxymbox{\hyperlink{group__tensor_net_ga5a46a965749d6118e01307fd4d4865c9}{DEFAULT\+\_\+\+MAX\+\_\+\+BATCH\+\_\+\+SIZE}}~1
+\item 
+\+\#define \doxymbox{\hyperlink{group__tensor_net_ga3c048e603c3c16fb810eb11c36242f82}{LOG\+\_\+\+TRT}}~"{}\+[TRT]\+    "{}
+\end{DoxyCompactItemize}
+\doxysubsubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precision\+Type}} \{ \newline
+\doxymbox{\hyperlink{group__tensor_net_ggaac6604fd52c6e5db82877390e0378623a1a4ed47814b2f80f0e92daad5af7bc38}{TYPE\+\_\+\+DISABLED}} = 0
+, \doxymbox{\hyperlink{group__tensor_net_ggaac6604fd52c6e5db82877390e0378623a1d325738f49e8e4c424ff671624e66f9}{TYPE\+\_\+\+FASTEST}}
+, \doxymbox{\hyperlink{group__tensor_net_ggaac6604fd52c6e5db82877390e0378623a5bbefcad9ecb657a3841c2e8db6828d3}{TYPE\+\_\+\+FP32}}
+, \doxymbox{\hyperlink{group__tensor_net_ggaac6604fd52c6e5db82877390e0378623a085813e6021d0d8884d768725151a526}{TYPE\+\_\+\+FP16}}
+, \newline
+\doxymbox{\hyperlink{group__tensor_net_ggaac6604fd52c6e5db82877390e0378623a12cf69049b0ce2b80538213ab4ee4908}{TYPE\+\_\+\+INT8}}
+, \doxymbox{\hyperlink{group__tensor_net_ggaac6604fd52c6e5db82877390e0378623ad5386697191943144fa63df529e1a310}{NUM\+\_\+\+PRECISIONS}}
+ \}
+\item 
+enum \doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{device\+Type}} \{ \newline
+\doxymbox{\hyperlink{group__tensor_net_ggaa5d3f9981cdbd91516c1474006a80fe4adc7f3f88455afa81458863e5b3092e4b}{DEVICE\+\_\+\+GPU}} = 0
+, \doxymbox{\hyperlink{group__tensor_net_ggaa5d3f9981cdbd91516c1474006a80fe4aeaef16f066c95dd987fbde765b8b30b2}{DEVICE\+\_\+\+DLA}}
+, \doxymbox{\hyperlink{group__tensor_net_ggaa5d3f9981cdbd91516c1474006a80fe4a4950aeb02ff7fba02eb2fd2437788399}{DEVICE\+\_\+\+DLA\+\_\+0}} = DEVICE\+\_\+\+DLA
+, \doxymbox{\hyperlink{group__tensor_net_ggaa5d3f9981cdbd91516c1474006a80fe4a63fbbad29461776cf20c2137a3d124f0}{DEVICE\+\_\+\+DLA\+\_\+1}}
+, \newline
+\doxymbox{\hyperlink{group__tensor_net_ggaa5d3f9981cdbd91516c1474006a80fe4a3025e0cdcbdfca820726c95f384ebf87}{NUM\+\_\+\+DEVICES}}
+ \}
+\item 
+enum \doxymbox{\hyperlink{group__tensor_net_ga5d4597e0e7beae7133d542e220528725}{model\+Type}} \{ \newline
+\doxymbox{\hyperlink{group__tensor_net_gga5d4597e0e7beae7133d542e220528725aad94b3fe48299211488aae3c133721b1}{MODEL\+\_\+\+CUSTOM}} = 0
+, \doxymbox{\hyperlink{group__tensor_net_gga5d4597e0e7beae7133d542e220528725af850960ce09a0b0d4b38edef40e5d0e4}{MODEL\+\_\+\+CAFFE}}
+, \doxymbox{\hyperlink{group__tensor_net_gga5d4597e0e7beae7133d542e220528725a90e832c5673631bdfe24da7cd8eb52c9}{MODEL\+\_\+\+ONNX}}
+, \doxymbox{\hyperlink{group__tensor_net_gga5d4597e0e7beae7133d542e220528725ad8c909322673d53ee28de66aa57bcccd}{MODEL\+\_\+\+UFF}}
+, \newline
+\doxymbox{\hyperlink{group__tensor_net_gga5d4597e0e7beae7133d542e220528725ad0f2ee11de0bfff76dace6976463556b}{MODEL\+\_\+\+ENGINE}}
+ \}
+\item 
+enum \doxymbox{\hyperlink{group__tensor_net_gae34d45c0faa674ef4cc0fbfc8fae5809}{profiler\+Query}} \{ \newline
+{\bfseries PROFILER\+\_\+\+PREPROCESS} = 0
+, {\bfseries PROFILER\+\_\+\+NETWORK}
+, {\bfseries PROFILER\+\_\+\+POSTPROCESS}
+, {\bfseries PROFILER\+\_\+\+VISUALIZE}
+, \newline
+{\bfseries PROFILER\+\_\+\+TOTAL}
+ \}
+\item 
+enum \doxymbox{\hyperlink{group__tensor_net_gaaa4127ed22c7165a32d0474ebf97975e}{profiler\+Device}} \{ \doxymbox{\hyperlink{group__tensor_net_ggaaa4127ed22c7165a32d0474ebf97975eaf33631f978127920224cd10c937e78d5}{PROFILER\+\_\+\+CPU}} = 0
+, \doxymbox{\hyperlink{group__tensor_net_ggaaa4127ed22c7165a32d0474ebf97975eadbfd2a2033cd2a8df5fa51e13ff528b7}{PROFILER\+\_\+\+CUDA}}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+const char \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{group__tensor_net_ga51d59f199c8d2313cb2fbb9e56dd3772}{precision\+Type\+To\+Str}} (\doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precision\+Type}} type)
+\item 
+\doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precision\+Type}} \doxymbox{\hyperlink{group__tensor_net_ga70317416490f79e0150e9c4f46444116}{precision\+Type\+From\+Str}} (const char \texorpdfstring{$\ast$}{*}str)
+\item 
+const char \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{group__tensor_net_gab8eca6940513a1fe2fc2a557f03bd6a7}{device\+Type\+To\+Str}} (\doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{device\+Type}} type)
+\item 
+\doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{device\+Type}} \doxymbox{\hyperlink{group__tensor_net_ga35c5a50fb1ab97a827b18012534fd7a7}{device\+Type\+From\+Str}} (const char \texorpdfstring{$\ast$}{*}str)
+\item 
+const char \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{group__tensor_net_gade383f13864bac6955bab48da53eb0c1}{model\+Type\+To\+Str}} (\doxymbox{\hyperlink{group__tensor_net_ga5d4597e0e7beae7133d542e220528725}{model\+Type}} type)
+\item 
+\doxymbox{\hyperlink{group__tensor_net_ga5d4597e0e7beae7133d542e220528725}{model\+Type}} \doxymbox{\hyperlink{group__tensor_net_ga85f7b445f4341d24c65bb3bbc4a3204c}{model\+Type\+From\+Str}} (const char \texorpdfstring{$\ast$}{*}str)
+\item 
+\doxymbox{\hyperlink{group__tensor_net_ga5d4597e0e7beae7133d542e220528725}{model\+Type}} \doxymbox{\hyperlink{group__tensor_net_ga675fb15bc5d4e2b8c4758c62adc6920d}{model\+Type\+From\+Path}} (const char \texorpdfstring{$\ast$}{*}path)
+\item 
+const char \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{group__tensor_net_ga2f7ae6e515887afbeaa323be8fa63e95}{profiler\+Query\+To\+Str}} (\doxymbox{\hyperlink{group__tensor_net_gae34d45c0faa674ef4cc0fbfc8fae5809}{profiler\+Query}} query)
+\end{DoxyCompactItemize}
+
+
+\doxysubsubsection{Detailed Description}
+DNN abstract base class that provides Tensor\+RT functionality underneath. These functions aren\textquotesingle{}t typically accessed by end users unless they are implementing their own DNN class like \doxylink{classimage_net}{image\+Net} or \doxylink{classdetect_net}{detect\+Net}. 
+
+\label{doc-define-members}
+\Hypertarget{group__tensor_net_doc-define-members}
+\doxysubsubsection{Macro Definition Documentation}
+\Hypertarget{group__tensor_net_ga5a46a965749d6118e01307fd4d4865c9}\index{tensorNet@{tensorNet}!DEFAULT\_MAX\_BATCH\_SIZE@{DEFAULT\_MAX\_BATCH\_SIZE}}
+\index{DEFAULT\_MAX\_BATCH\_SIZE@{DEFAULT\_MAX\_BATCH\_SIZE}!tensorNet@{tensorNet}}
+\doxysubsubsubsection{\texorpdfstring{DEFAULT\_MAX\_BATCH\_SIZE}{DEFAULT\_MAX\_BATCH\_SIZE}}
+{\footnotesize\ttfamily \label{group__tensor_net_ga5a46a965749d6118e01307fd4d4865c9} 
+\+\#define DEFAULT\+\_\+\+MAX\+\_\+\+BATCH\+\_\+\+SIZE~1}
+
+Default maximum batch size \Hypertarget{group__tensor_net_ga3c048e603c3c16fb810eb11c36242f82}\index{tensorNet@{tensorNet}!LOG\_TRT@{LOG\_TRT}}
+\index{LOG\_TRT@{LOG\_TRT}!tensorNet@{tensorNet}}
+\doxysubsubsubsection{\texorpdfstring{LOG\_TRT}{LOG\_TRT}}
+{\footnotesize\ttfamily \label{group__tensor_net_ga3c048e603c3c16fb810eb11c36242f82} 
+\+\#define LOG\+\_\+\+TRT~"{}\+[TRT]\+    "{}}
+
+Prefix used for tagging printed log output from Tensor\+RT. \Hypertarget{group__tensor_net_ga1d190b2948bf323a7c5f83fd3689c235}\index{tensorNet@{tensorNet}!TENSORRT\_VERSION\_CHECK@{TENSORRT\_VERSION\_CHECK}}
+\index{TENSORRT\_VERSION\_CHECK@{TENSORRT\_VERSION\_CHECK}!tensorNet@{tensorNet}}
+\doxysubsubsubsection{\texorpdfstring{TENSORRT\_VERSION\_CHECK}{TENSORRT\_VERSION\_CHECK}}
+{\footnotesize\ttfamily \label{group__tensor_net_ga1d190b2948bf323a7c5f83fd3689c235} 
+\+\#define TENSORRT\+\_\+\+VERSION\+\_\+\+CHECK(\begin{DoxyParamCaption}\item[{}]{major}{, }\item[{}]{minor}{, }\item[{}]{patch}{}\end{DoxyParamCaption})}
+
+{\bfseries Value:\+}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{(NV\_TENSORRT\_MAJOR\ >\ major\ ||\ (NV\_TENSORRT\_MAJOR\ ==\ major\ \&\&\ NV\_TENSORRT\_MINOR\ >\ minor)\ ||\ (NV\_TENSORRT\_MAJOR\ ==\ major\ \&\&\ NV\_TENSORRT\_MINOR\ ==\ minor\ \&\&\ NV\_TENSORRT\_PATCH\ >=\ patch))}
+
+\end{DoxyCode}
+Macro for checking the minimum version of Tensor\+RT that is installed. This evaluates to true if Tensor\+RT is newer or equal to the provided version. 
+
+\label{doc-enum-members}
+\Hypertarget{group__tensor_net_doc-enum-members}
+\doxysubsubsection{Enumeration Type Documentation}
+\Hypertarget{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}\index{tensorNet@{tensorNet}!deviceType@{deviceType}}
+\index{deviceType@{deviceType}!tensorNet@{tensorNet}}
+\doxysubsubsubsection{\texorpdfstring{deviceType}{deviceType}}
+{\footnotesize\ttfamily \label{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4} 
+enum \doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{device\+Type}}}
+
+Enumeration for indicating the desired device that the network should run on, if available in hardware. \begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DEVICE\_GPU@{DEVICE\_GPU}!tensorNet@{tensorNet}}
+\index{tensorNet@{tensorNet}!DEVICE\_GPU@{DEVICE\_GPU}}
+}\Hypertarget{group__tensor_net_ggaa5d3f9981cdbd91516c1474006a80fe4adc7f3f88455afa81458863e5b3092e4b}\label{group__tensor_net_ggaa5d3f9981cdbd91516c1474006a80fe4adc7f3f88455afa81458863e5b3092e4b} 
+DEVICE\+\_\+\+GPU&GPU (if multiple GPUs are present, a specific GPU can be selected with cuda\+Set\+Device() \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DEVICE\_DLA@{DEVICE\_DLA}!tensorNet@{tensorNet}}
+\index{tensorNet@{tensorNet}!DEVICE\_DLA@{DEVICE\_DLA}}
+}\Hypertarget{group__tensor_net_ggaa5d3f9981cdbd91516c1474006a80fe4aeaef16f066c95dd987fbde765b8b30b2}\label{group__tensor_net_ggaa5d3f9981cdbd91516c1474006a80fe4aeaef16f066c95dd987fbde765b8b30b2} 
+DEVICE\+\_\+\+DLA&Deep Learning Accelerator (DLA) Core 0 (only on Jetson Xavier) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DEVICE\_DLA\_0@{DEVICE\_DLA\_0}!tensorNet@{tensorNet}}
+\index{tensorNet@{tensorNet}!DEVICE\_DLA\_0@{DEVICE\_DLA\_0}}
+}\Hypertarget{group__tensor_net_ggaa5d3f9981cdbd91516c1474006a80fe4a4950aeb02ff7fba02eb2fd2437788399}\label{group__tensor_net_ggaa5d3f9981cdbd91516c1474006a80fe4a4950aeb02ff7fba02eb2fd2437788399} 
+DEVICE\+\_\+\+DLA\+\_\+0&Deep Learning Accelerator (DLA) Core 0 (only on Jetson Xavier) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DEVICE\_DLA\_1@{DEVICE\_DLA\_1}!tensorNet@{tensorNet}}
+\index{tensorNet@{tensorNet}!DEVICE\_DLA\_1@{DEVICE\_DLA\_1}}
+}\Hypertarget{group__tensor_net_ggaa5d3f9981cdbd91516c1474006a80fe4a63fbbad29461776cf20c2137a3d124f0}\label{group__tensor_net_ggaa5d3f9981cdbd91516c1474006a80fe4a63fbbad29461776cf20c2137a3d124f0} 
+DEVICE\+\_\+\+DLA\+\_\+1&Deep Learning Accelerator (DLA) Core 1 (only on Jetson Xavier) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{NUM\_DEVICES@{NUM\_DEVICES}!tensorNet@{tensorNet}}
+\index{tensorNet@{tensorNet}!NUM\_DEVICES@{NUM\_DEVICES}}
+}\Hypertarget{group__tensor_net_ggaa5d3f9981cdbd91516c1474006a80fe4a3025e0cdcbdfca820726c95f384ebf87}\label{group__tensor_net_ggaa5d3f9981cdbd91516c1474006a80fe4a3025e0cdcbdfca820726c95f384ebf87} 
+NUM\+\_\+\+DEVICES&Number of device types defined \\
+\hline
+
+\end{DoxyEnumFields}
+\Hypertarget{group__tensor_net_ga5d4597e0e7beae7133d542e220528725}\index{tensorNet@{tensorNet}!modelType@{modelType}}
+\index{modelType@{modelType}!tensorNet@{tensorNet}}
+\doxysubsubsubsection{\texorpdfstring{modelType}{modelType}}
+{\footnotesize\ttfamily \label{group__tensor_net_ga5d4597e0e7beae7133d542e220528725} 
+enum \doxymbox{\hyperlink{group__tensor_net_ga5d4597e0e7beae7133d542e220528725}{model\+Type}}}
+
+Enumeration indicating the format of the model that\textquotesingle{}s imported in Tensor\+RT (either caffe, ONNX, or UFF). \begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MODEL\_CUSTOM@{MODEL\_CUSTOM}!tensorNet@{tensorNet}}
+\index{tensorNet@{tensorNet}!MODEL\_CUSTOM@{MODEL\_CUSTOM}}
+}\Hypertarget{group__tensor_net_gga5d4597e0e7beae7133d542e220528725aad94b3fe48299211488aae3c133721b1}\label{group__tensor_net_gga5d4597e0e7beae7133d542e220528725aad94b3fe48299211488aae3c133721b1} 
+MODEL\+\_\+\+CUSTOM&Created directly with Tensor\+RT API \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MODEL\_CAFFE@{MODEL\_CAFFE}!tensorNet@{tensorNet}}
+\index{tensorNet@{tensorNet}!MODEL\_CAFFE@{MODEL\_CAFFE}}
+}\Hypertarget{group__tensor_net_gga5d4597e0e7beae7133d542e220528725af850960ce09a0b0d4b38edef40e5d0e4}\label{group__tensor_net_gga5d4597e0e7beae7133d542e220528725af850960ce09a0b0d4b38edef40e5d0e4} 
+MODEL\+\_\+\+CAFFE&caffemodel \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MODEL\_ONNX@{MODEL\_ONNX}!tensorNet@{tensorNet}}
+\index{tensorNet@{tensorNet}!MODEL\_ONNX@{MODEL\_ONNX}}
+}\Hypertarget{group__tensor_net_gga5d4597e0e7beae7133d542e220528725a90e832c5673631bdfe24da7cd8eb52c9}\label{group__tensor_net_gga5d4597e0e7beae7133d542e220528725a90e832c5673631bdfe24da7cd8eb52c9} 
+MODEL\+\_\+\+ONNX&ONNX \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MODEL\_UFF@{MODEL\_UFF}!tensorNet@{tensorNet}}
+\index{tensorNet@{tensorNet}!MODEL\_UFF@{MODEL\_UFF}}
+}\Hypertarget{group__tensor_net_gga5d4597e0e7beae7133d542e220528725ad8c909322673d53ee28de66aa57bcccd}\label{group__tensor_net_gga5d4597e0e7beae7133d542e220528725ad8c909322673d53ee28de66aa57bcccd} 
+MODEL\+\_\+\+UFF&UFF \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MODEL\_ENGINE@{MODEL\_ENGINE}!tensorNet@{tensorNet}}
+\index{tensorNet@{tensorNet}!MODEL\_ENGINE@{MODEL\_ENGINE}}
+}\Hypertarget{group__tensor_net_gga5d4597e0e7beae7133d542e220528725ad0f2ee11de0bfff76dace6976463556b}\label{group__tensor_net_gga5d4597e0e7beae7133d542e220528725ad0f2ee11de0bfff76dace6976463556b} 
+MODEL\+\_\+\+ENGINE&Tensor\+RT engine/\+plan \\
+\hline
+
+\end{DoxyEnumFields}
+\Hypertarget{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}\index{tensorNet@{tensorNet}!precisionType@{precisionType}}
+\index{precisionType@{precisionType}!tensorNet@{tensorNet}}
+\doxysubsubsubsection{\texorpdfstring{precisionType}{precisionType}}
+{\footnotesize\ttfamily \label{group__tensor_net_gaac6604fd52c6e5db82877390e0378623} 
+enum \doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precision\+Type}}}
+
+Enumeration for indicating the desired precision that the network should run in, if available in hardware. \begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TYPE\_DISABLED@{TYPE\_DISABLED}!tensorNet@{tensorNet}}
+\index{tensorNet@{tensorNet}!TYPE\_DISABLED@{TYPE\_DISABLED}}
+}\Hypertarget{group__tensor_net_ggaac6604fd52c6e5db82877390e0378623a1a4ed47814b2f80f0e92daad5af7bc38}\label{group__tensor_net_ggaac6604fd52c6e5db82877390e0378623a1a4ed47814b2f80f0e92daad5af7bc38} 
+TYPE\+\_\+\+DISABLED&Unknown, unspecified, or disabled type \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TYPE\_FASTEST@{TYPE\_FASTEST}!tensorNet@{tensorNet}}
+\index{tensorNet@{tensorNet}!TYPE\_FASTEST@{TYPE\_FASTEST}}
+}\Hypertarget{group__tensor_net_ggaac6604fd52c6e5db82877390e0378623a1d325738f49e8e4c424ff671624e66f9}\label{group__tensor_net_ggaac6604fd52c6e5db82877390e0378623a1d325738f49e8e4c424ff671624e66f9} 
+TYPE\+\_\+\+FASTEST&\doxylink{requirements_The}{The} fastest detected precision should be use (i.\+e. try INT8, then FP16, then FP32) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TYPE\_FP32@{TYPE\_FP32}!tensorNet@{tensorNet}}
+\index{tensorNet@{tensorNet}!TYPE\_FP32@{TYPE\_FP32}}
+}\Hypertarget{group__tensor_net_ggaac6604fd52c6e5db82877390e0378623a5bbefcad9ecb657a3841c2e8db6828d3}\label{group__tensor_net_ggaac6604fd52c6e5db82877390e0378623a5bbefcad9ecb657a3841c2e8db6828d3} 
+TYPE\+\_\+\+FP32&32-\/bit floating-\/point precision (FP32) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TYPE\_FP16@{TYPE\_FP16}!tensorNet@{tensorNet}}
+\index{tensorNet@{tensorNet}!TYPE\_FP16@{TYPE\_FP16}}
+}\Hypertarget{group__tensor_net_ggaac6604fd52c6e5db82877390e0378623a085813e6021d0d8884d768725151a526}\label{group__tensor_net_ggaac6604fd52c6e5db82877390e0378623a085813e6021d0d8884d768725151a526} 
+TYPE\+\_\+\+FP16&16-\/bit floating-\/point half precision (FP16) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TYPE\_INT8@{TYPE\_INT8}!tensorNet@{tensorNet}}
+\index{tensorNet@{tensorNet}!TYPE\_INT8@{TYPE\_INT8}}
+}\Hypertarget{group__tensor_net_ggaac6604fd52c6e5db82877390e0378623a12cf69049b0ce2b80538213ab4ee4908}\label{group__tensor_net_ggaac6604fd52c6e5db82877390e0378623a12cf69049b0ce2b80538213ab4ee4908} 
+TYPE\+\_\+\+INT8&8-\/bit integer precision (INT8) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{NUM\_PRECISIONS@{NUM\_PRECISIONS}!tensorNet@{tensorNet}}
+\index{tensorNet@{tensorNet}!NUM\_PRECISIONS@{NUM\_PRECISIONS}}
+}\Hypertarget{group__tensor_net_ggaac6604fd52c6e5db82877390e0378623ad5386697191943144fa63df529e1a310}\label{group__tensor_net_ggaac6604fd52c6e5db82877390e0378623ad5386697191943144fa63df529e1a310} 
+NUM\+\_\+\+PRECISIONS&Number of precision types defined \\
+\hline
+
+\end{DoxyEnumFields}
+\Hypertarget{group__tensor_net_gaaa4127ed22c7165a32d0474ebf97975e}\index{tensorNet@{tensorNet}!profilerDevice@{profilerDevice}}
+\index{profilerDevice@{profilerDevice}!tensorNet@{tensorNet}}
+\doxysubsubsubsection{\texorpdfstring{profilerDevice}{profilerDevice}}
+{\footnotesize\ttfamily \label{group__tensor_net_gaaa4127ed22c7165a32d0474ebf97975e} 
+enum \doxymbox{\hyperlink{group__tensor_net_gaaa4127ed22c7165a32d0474ebf97975e}{profiler\+Device}}}
+
+Profiler device \begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{PROFILER\_CPU@{PROFILER\_CPU}!tensorNet@{tensorNet}}
+\index{tensorNet@{tensorNet}!PROFILER\_CPU@{PROFILER\_CPU}}
+}\Hypertarget{group__tensor_net_ggaaa4127ed22c7165a32d0474ebf97975eaf33631f978127920224cd10c937e78d5}\label{group__tensor_net_ggaaa4127ed22c7165a32d0474ebf97975eaf33631f978127920224cd10c937e78d5} 
+PROFILER\+\_\+\+CPU&CPU walltime \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{PROFILER\_CUDA@{PROFILER\_CUDA}!tensorNet@{tensorNet}}
+\index{tensorNet@{tensorNet}!PROFILER\_CUDA@{PROFILER\_CUDA}}
+}\Hypertarget{group__tensor_net_ggaaa4127ed22c7165a32d0474ebf97975eadbfd2a2033cd2a8df5fa51e13ff528b7}\label{group__tensor_net_ggaaa4127ed22c7165a32d0474ebf97975eadbfd2a2033cd2a8df5fa51e13ff528b7} 
+PROFILER\+\_\+\+CUDA&CUDA kernel time \\
+\hline
+
+\end{DoxyEnumFields}
+\Hypertarget{group__tensor_net_gae34d45c0faa674ef4cc0fbfc8fae5809}\index{tensorNet@{tensorNet}!profilerQuery@{profilerQuery}}
+\index{profilerQuery@{profilerQuery}!tensorNet@{tensorNet}}
+\doxysubsubsubsection{\texorpdfstring{profilerQuery}{profilerQuery}}
+{\footnotesize\ttfamily \label{group__tensor_net_gae34d45c0faa674ef4cc0fbfc8fae5809} 
+enum \doxymbox{\hyperlink{group__tensor_net_gae34d45c0faa674ef4cc0fbfc8fae5809}{profiler\+Query}}}
+
+Profiling queries \begin{DoxySeeAlso}{See also}
+\doxylink{classtensor_net_ad266f93035a80dca80cd84d971e4f69b}{tensor\+Net::\+\+Get\+Profiler\+Time()} 
+\end{DoxySeeAlso}
+
+
+\label{doc-func-members}
+\Hypertarget{group__tensor_net_doc-func-members}
+\doxysubsubsection{Function Documentation}
+\Hypertarget{group__tensor_net_ga35c5a50fb1ab97a827b18012534fd7a7}\index{tensorNet@{tensorNet}!deviceTypeFromStr@{deviceTypeFromStr}}
+\index{deviceTypeFromStr@{deviceTypeFromStr}!tensorNet@{tensorNet}}
+\doxysubsubsubsection{\texorpdfstring{deviceTypeFromStr()}{deviceTypeFromStr()}}
+{\footnotesize\ttfamily \label{group__tensor_net_ga35c5a50fb1ab97a827b18012534fd7a7} 
+\doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{device\+Type}} device\+Type\+From\+Str (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{str}{}\end{DoxyParamCaption})}
+
+Parse the device type from a string. \Hypertarget{group__tensor_net_gab8eca6940513a1fe2fc2a557f03bd6a7}\index{tensorNet@{tensorNet}!deviceTypeToStr@{deviceTypeToStr}}
+\index{deviceTypeToStr@{deviceTypeToStr}!tensorNet@{tensorNet}}
+\doxysubsubsubsection{\texorpdfstring{deviceTypeToStr()}{deviceTypeToStr()}}
+{\footnotesize\ttfamily \label{group__tensor_net_gab8eca6940513a1fe2fc2a557f03bd6a7} 
+const char \texorpdfstring{$\ast$}{*} device\+Type\+To\+Str (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{device\+Type}}}]{type}{}\end{DoxyParamCaption})}
+
+Stringize function that returns \doxylink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{device\+Type} in text. \Hypertarget{group__tensor_net_ga675fb15bc5d4e2b8c4758c62adc6920d}\index{tensorNet@{tensorNet}!modelTypeFromPath@{modelTypeFromPath}}
+\index{modelTypeFromPath@{modelTypeFromPath}!tensorNet@{tensorNet}}
+\doxysubsubsubsection{\texorpdfstring{modelTypeFromPath()}{modelTypeFromPath()}}
+{\footnotesize\ttfamily \label{group__tensor_net_ga675fb15bc5d4e2b8c4758c62adc6920d} 
+\doxymbox{\hyperlink{group__tensor_net_ga5d4597e0e7beae7133d542e220528725}{model\+Type}} model\+Type\+From\+Path (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{path}{}\end{DoxyParamCaption})}
+
+Parse the model format from a file path. \Hypertarget{group__tensor_net_ga85f7b445f4341d24c65bb3bbc4a3204c}\index{tensorNet@{tensorNet}!modelTypeFromStr@{modelTypeFromStr}}
+\index{modelTypeFromStr@{modelTypeFromStr}!tensorNet@{tensorNet}}
+\doxysubsubsubsection{\texorpdfstring{modelTypeFromStr()}{modelTypeFromStr()}}
+{\footnotesize\ttfamily \label{group__tensor_net_ga85f7b445f4341d24c65bb3bbc4a3204c} 
+\doxymbox{\hyperlink{group__tensor_net_ga5d4597e0e7beae7133d542e220528725}{model\+Type}} model\+Type\+From\+Str (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{str}{}\end{DoxyParamCaption})}
+
+Parse the model format from a string. \Hypertarget{group__tensor_net_gade383f13864bac6955bab48da53eb0c1}\index{tensorNet@{tensorNet}!modelTypeToStr@{modelTypeToStr}}
+\index{modelTypeToStr@{modelTypeToStr}!tensorNet@{tensorNet}}
+\doxysubsubsubsection{\texorpdfstring{modelTypeToStr()}{modelTypeToStr()}}
+{\footnotesize\ttfamily \label{group__tensor_net_gade383f13864bac6955bab48da53eb0c1} 
+const char \texorpdfstring{$\ast$}{*} model\+Type\+To\+Str (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{group__tensor_net_ga5d4597e0e7beae7133d542e220528725}{model\+Type}}}]{type}{}\end{DoxyParamCaption})}
+
+Stringize function that returns \doxylink{group__tensor_net_ga5d4597e0e7beae7133d542e220528725}{model\+Type} in text. \Hypertarget{group__tensor_net_ga70317416490f79e0150e9c4f46444116}\index{tensorNet@{tensorNet}!precisionTypeFromStr@{precisionTypeFromStr}}
+\index{precisionTypeFromStr@{precisionTypeFromStr}!tensorNet@{tensorNet}}
+\doxysubsubsubsection{\texorpdfstring{precisionTypeFromStr()}{precisionTypeFromStr()}}
+{\footnotesize\ttfamily \label{group__tensor_net_ga70317416490f79e0150e9c4f46444116} 
+\doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precision\+Type}} precision\+Type\+From\+Str (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{str}{}\end{DoxyParamCaption})}
+
+Parse the precision type from a string. \Hypertarget{group__tensor_net_ga51d59f199c8d2313cb2fbb9e56dd3772}\index{tensorNet@{tensorNet}!precisionTypeToStr@{precisionTypeToStr}}
+\index{precisionTypeToStr@{precisionTypeToStr}!tensorNet@{tensorNet}}
+\doxysubsubsubsection{\texorpdfstring{precisionTypeToStr()}{precisionTypeToStr()}}
+{\footnotesize\ttfamily \label{group__tensor_net_ga51d59f199c8d2313cb2fbb9e56dd3772} 
+const char \texorpdfstring{$\ast$}{*} precision\+Type\+To\+Str (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precision\+Type}}}]{type}{}\end{DoxyParamCaption})}
+
+Stringize function that returns \doxylink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precision\+Type} in text. \Hypertarget{group__tensor_net_ga2f7ae6e515887afbeaa323be8fa63e95}\index{tensorNet@{tensorNet}!profilerQueryToStr@{profilerQueryToStr}}
+\index{profilerQueryToStr@{profilerQueryToStr}!tensorNet@{tensorNet}}
+\doxysubsubsubsection{\texorpdfstring{profilerQueryToStr()}{profilerQueryToStr()}}
+{\footnotesize\ttfamily \label{group__tensor_net_ga2f7ae6e515887afbeaa323be8fa63e95} 
+const char \texorpdfstring{$\ast$}{*} profiler\+Query\+To\+Str (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{group__tensor_net_gae34d45c0faa674ef4cc0fbfc8fae5809}{profiler\+Query}}}]{query}{}\end{DoxyParamCaption})}
+
+Stringize function that returns \doxylink{group__tensor_net_gae34d45c0faa674ef4cc0fbfc8fae5809}{profiler\+Query} in text. 

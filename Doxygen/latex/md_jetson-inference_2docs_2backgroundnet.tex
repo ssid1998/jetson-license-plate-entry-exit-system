@@ -1,0 +1,63 @@
+\chapter{backgroundnet }
+\hypertarget{md_jetson-inference_2docs_2backgroundnet}{}\label{md_jetson-inference_2docs_2backgroundnet}\index{backgroundnet@{backgroundnet}}
+ 
+
+\textsuperscript{\href{actionnet.md}{\texttt{Back}} \texorpdfstring{$\vert$}{|} \href{depthnet.md}{\texttt{Next}} \texorpdfstring{$\vert$}{|} }\href{../README.md\#hello-ai-world}{\texttt{\textsuperscript{Contents}}} ~\newline
+ \textsuperscript{Background Removal}\hypertarget{md_jetson-inference_2docs_2backgroundnet_autotoc_md119}{}\doxysection{\texorpdfstring{Background Removal}{Background Removal}}\label{md_jetson-inference_2docs_2backgroundnet_autotoc_md119}
+Background removal (aka background subtraction, or salient object detection) generates a mask that segments the foreground from the background of an image. You can use it to replace or blur backgrounds (similar to video conferencing applications), or it clould aid in pre-\/processing for other vision DNN\textquotesingle{}s like object detection/\+tracking or motion detection. \doxylink{requirements_The}{The} model used is a fully-\/convolutional network \href{https://arxiv.org/abs/2005.09007}{\texttt{U²-\/\+Net}}.
+
+
+
+\doxylink{requirements_The}{The} \href{../c/backgroundNet.h}{\texttt{{\ttfamily background\+Net}}} object takes an image, and outputs the foreground mask. \href{../c/backgroundNet.h}{\texttt{{\ttfamily background\+Net}}} can be used from \href{https://rawgit.com/dusty-nv/jetson-inference/master/docs/html/python/jetson.inference.html\#backgroundNet}{\texttt{Python}} and \href{../c/backgroundNet.h}{\texttt{C++}}.
+
+As examples of using the {\ttfamily \doxylink{classbackground_net}{background\+Net}} class, there are sample programs for C++ and Python:\+
+
+
+\begin{DoxyItemize}
+\item \href{../examples/backgroundnet/backgroundnet.cpp}{\texttt{{\ttfamily backgroundnet.\+cpp}}} (C++)
+\item \href{../python/examples/backgroundnet.py}{\texttt{{\ttfamily backgroundnet.\+py}}} (Python)
+\end{DoxyItemize}\hypertarget{md_jetson-inference_2docs_2backgroundnet_autotoc_md120}{}\doxysubsection{\texorpdfstring{Running the Example}{Running the Example}}\label{md_jetson-inference_2docs_2backgroundnet_autotoc_md120}
+Here\textquotesingle{}s an example of removing and replacing the background of an image:\+
+
+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{\#\ C++}
+\DoxyCodeLine{\$\ ./backgroundnet\ images/bird\_0.jpg\ images/test/bird\_mask.png\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \#\ remove\ the\ background\ (with\ alpha)}
+\DoxyCodeLine{\$\ ./backgroundnet\ -\/-\/replace=images/snow.jpg\ images/bird\_0.jpg\ images/test/bird\_replace.jpg\ \ \ \ \#\ replace\ the\ background}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#\ Python}
+\DoxyCodeLine{\$\ ./backgroundnet.py\ images/bird\_0.jpg\ images/test/bird\_mask.png\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \#\ remove\ the\ background\ (with\ alpha)}
+\DoxyCodeLine{\$\ ./backgroundnet.py\ -\/-\/replace=images/snow.jpg\ images/bird\_0.jpg\ images/test/bird\_replace.jpg\ \#\ replace\ the\ background}
+
+\end{DoxyCode}
+
+
+\doxylink{requirements_The}{The} {\ttfamily -\/-\/replace} command-\/line argument accepts the filename of an image to replace the background with. It will be re-\/scaled to the same resolution as the input.\hypertarget{md_jetson-inference_2docs_2backgroundnet_autotoc_md121}{}\doxysubsubsection{\texorpdfstring{Live Streaming}{Live Streaming}}\label{md_jetson-inference_2docs_2backgroundnet_autotoc_md121}
+To run background removal or replacement on a live camera stream, pass in a device from the \doxysectlink{md_jetson-inference_2docs_2aux-streaming}{Camera Streaming and Multimedia}{0} page:\+
+
+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{\#\ C++}
+\DoxyCodeLine{\$\ ./backgroundnet\ /dev/video0\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \#\ remove\ the\ background}
+\DoxyCodeLine{\$\ ./backgroundnet\ -\/-\/replace=images/coral.jpg\ /dev/video0\ \ \#\ replace\ the\ background}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#\ Python}
+\DoxyCodeLine{\$\ ./backgroundnet\ /dev/video0\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \#\ remove\ the\ background}
+\DoxyCodeLine{\$\ ./backgroundnet\ -\/-\/replace=images/coral.jpg\ /dev/video0\ \ \#\ replace\ the\ background}
+
+\end{DoxyCode}
+
+
+By specifying an \href{aux-streaming.md\#output-streams}{\texttt{output stream}}, you can view this on a display (the default), over the network (like with Web\+RTC), or save it to a video file.\hypertarget{md_jetson-inference_2docs_2backgroundnet_autotoc_md122}{}\doxysubsection{\texorpdfstring{autotoc\+\_\+md122}{autotoc\+\_\+md122}}\label{md_jetson-inference_2docs_2backgroundnet_autotoc_md122}
+Next \texorpdfstring{$\vert$}{|} {\bfseries{\href{depthnet.md}{\texttt{Monocular Depth Estimation}}}} ~\newline
+ Back \texorpdfstring{$\vert$}{|} {\bfseries{\href{actionnet.md}{\texttt{Action Recognition}}}}
+
+{\bfseries{ }}
+
+\textsuperscript{© 2016-\/2021 NVIDIA \texorpdfstring{$\vert$}{|} }\href{../README.md\#hello-ai-world}{\texttt{\textsuperscript{Table of Contents}}}

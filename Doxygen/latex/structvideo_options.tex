@@ -1,0 +1,1455 @@
+\doxysection{video\+Options Struct Reference}
+\hypertarget{structvideo_options}{}\label{structvideo_options}\index{videoOptions@{videoOptions}}
+
+
+{\ttfamily \+\#include $<$video\+Options.\+h$>$}
+
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \doxymbox{\hyperlink{structvideo_options_a4065c77be7f3be75eddfc16b6efb36ed}{Device\+Type}} \{ \newline
+\doxymbox{\hyperlink{structvideo_options_a4065c77be7f3be75eddfc16b6efb36eda472ab160f2cec34c6798e70d1e4fdbfd}{DEVICE\+\_\+\+DEFAULT}} = 0
+, \doxymbox{\hyperlink{structvideo_options_a4065c77be7f3be75eddfc16b6efb36eda00076d8dcfad04e4170ff92818c5b04f}{DEVICE\+\_\+\+V4\+L2}}
+, \doxymbox{\hyperlink{structvideo_options_a4065c77be7f3be75eddfc16b6efb36eda42a1da7a25ef3e190c93a43455876033}{DEVICE\+\_\+\+CSI}}
+, \doxymbox{\hyperlink{structvideo_options_a4065c77be7f3be75eddfc16b6efb36edaf3d3416e7b238e6c6dcc0adecd5a74b7}{DEVICE\+\_\+\+IP}}
+, \newline
+\doxymbox{\hyperlink{structvideo_options_a4065c77be7f3be75eddfc16b6efb36eda781ebf62044a7e1ff17f9832fb28d758}{DEVICE\+\_\+\+FILE}}
+, \doxymbox{\hyperlink{structvideo_options_a4065c77be7f3be75eddfc16b6efb36eda2c39fc92225489afd7851a8e874401dd}{DEVICE\+\_\+\+DISPLAY}}
+, \doxymbox{\hyperlink{structvideo_options_a4065c77be7f3be75eddfc16b6efb36eda472ab160f2cec34c6798e70d1e4fdbfd}{DEVICE\+\_\+\+DEFAULT}} = 0
+, \doxymbox{\hyperlink{structvideo_options_a4065c77be7f3be75eddfc16b6efb36eda00076d8dcfad04e4170ff92818c5b04f}{DEVICE\+\_\+\+V4\+L2}}
+, \newline
+\doxymbox{\hyperlink{structvideo_options_a4065c77be7f3be75eddfc16b6efb36eda42a1da7a25ef3e190c93a43455876033}{DEVICE\+\_\+\+CSI}}
+, \doxymbox{\hyperlink{structvideo_options_a4065c77be7f3be75eddfc16b6efb36edaf3d3416e7b238e6c6dcc0adecd5a74b7}{DEVICE\+\_\+\+IP}}
+, \doxymbox{\hyperlink{structvideo_options_a4065c77be7f3be75eddfc16b6efb36eda781ebf62044a7e1ff17f9832fb28d758}{DEVICE\+\_\+\+FILE}}
+, \doxymbox{\hyperlink{structvideo_options_a4065c77be7f3be75eddfc16b6efb36eda2c39fc92225489afd7851a8e874401dd}{DEVICE\+\_\+\+DISPLAY}}
+ \}
+\item 
+enum \doxymbox{\hyperlink{structvideo_options_a7f7ae50399192afba10ee226310878b8}{Io\+Type}} \{ \doxymbox{\hyperlink{structvideo_options_a7f7ae50399192afba10ee226310878b8ab41fa1b7782b4e22548bd917a15ad181}{INPUT}} = 0
+, \doxymbox{\hyperlink{structvideo_options_a7f7ae50399192afba10ee226310878b8af197f25ad92514078dbd28bafa1710cb}{OUTPUT}}
+, \doxymbox{\hyperlink{structvideo_options_a7f7ae50399192afba10ee226310878b8ab41fa1b7782b4e22548bd917a15ad181}{INPUT}} = 0
+, \doxymbox{\hyperlink{structvideo_options_a7f7ae50399192afba10ee226310878b8af197f25ad92514078dbd28bafa1710cb}{OUTPUT}}
+ \}
+\item 
+enum \doxymbox{\hyperlink{structvideo_options_acd8d5155cc7b38791698b4e89c6a96ee}{Flip\+Method}} \{ \newline
+\doxymbox{\hyperlink{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eea1302ee053edc9aaa35619b19e17c6529}{FLIP\+\_\+\+NONE}} = 0
+, \doxymbox{\hyperlink{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eea792ce378541be240bdcb8b8c40e8d63d}{FLIP\+\_\+\+COUNTERCLOCKWISE}}
+, \doxymbox{\hyperlink{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eeaf6bcea96d2852de27d10047158f25c71}{FLIP\+\_\+\+ROTATE\+\_\+180}}
+, \doxymbox{\hyperlink{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eeaffa836e6587173f46110cac710942ddd}{FLIP\+\_\+\+CLOCKWISE}}
+, \newline
+\doxymbox{\hyperlink{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eea12de6ce800e456bae8c1715c4a30778f}{FLIP\+\_\+\+HORIZONTAL}}
+, \doxymbox{\hyperlink{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eeae1d1a1b2bc8a7f29abcd693d562665a4}{FLIP\+\_\+\+UPPER\+\_\+\+RIGHT\+\_\+\+DIAGONAL}}
+, \doxymbox{\hyperlink{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eead0bc96c4f600b7a7859dbd50f5e7b71e}{FLIP\+\_\+\+VERTICAL}}
+, \doxymbox{\hyperlink{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eeac2d4b99bd4f4c40f83d10618acf4cd26}{FLIP\+\_\+\+UPPER\+\_\+\+LEFT\+\_\+\+DIAGONAL}}
+, \newline
+\doxymbox{\hyperlink{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eea79bec6145a19215de4b522a2e6a4545e}{FLIP\+\_\+\+DEFAULT}} = FLIP\+\_\+\+NONE
+, \doxymbox{\hyperlink{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eea1302ee053edc9aaa35619b19e17c6529}{FLIP\+\_\+\+NONE}} = 0
+, \doxymbox{\hyperlink{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eea792ce378541be240bdcb8b8c40e8d63d}{FLIP\+\_\+\+COUNTERCLOCKWISE}}
+, \doxymbox{\hyperlink{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eeaf6bcea96d2852de27d10047158f25c71}{FLIP\+\_\+\+ROTATE\+\_\+180}}
+, \newline
+\doxymbox{\hyperlink{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eeaffa836e6587173f46110cac710942ddd}{FLIP\+\_\+\+CLOCKWISE}}
+, \doxymbox{\hyperlink{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eea12de6ce800e456bae8c1715c4a30778f}{FLIP\+\_\+\+HORIZONTAL}}
+, \doxymbox{\hyperlink{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eeae1d1a1b2bc8a7f29abcd693d562665a4}{FLIP\+\_\+\+UPPER\+\_\+\+RIGHT\+\_\+\+DIAGONAL}}
+, \doxymbox{\hyperlink{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eead0bc96c4f600b7a7859dbd50f5e7b71e}{FLIP\+\_\+\+VERTICAL}}
+, \newline
+\doxymbox{\hyperlink{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eeac2d4b99bd4f4c40f83d10618acf4cd26}{FLIP\+\_\+\+UPPER\+\_\+\+LEFT\+\_\+\+DIAGONAL}}
+, \doxymbox{\hyperlink{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eea79bec6145a19215de4b522a2e6a4545e}{FLIP\+\_\+\+DEFAULT}} = FLIP\+\_\+\+NONE
+ \}
+\item 
+enum \doxymbox{\hyperlink{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8f}{Codec}} \{ \newline
+\doxymbox{\hyperlink{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa0a8b4a6d2262619a5dc929a6bd6a3b7f}{CODEC\+\_\+\+UNKNOWN}} = 0
+, \doxymbox{\hyperlink{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa6d4d70855081e902df81941a8405b521}{CODEC\+\_\+\+RAW}}
+, \doxymbox{\hyperlink{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa808865a8507895d589028285d76f9385}{CODEC\+\_\+\+H264}}
+, \doxymbox{\hyperlink{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa7ecbacdc7e7aaafec3791bc882113b94}{CODEC\+\_\+\+H265}}
+, \newline
+\doxymbox{\hyperlink{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa5cb276a627b350964489b17fec18ba62}{CODEC\+\_\+\+VP8}}
+, \doxymbox{\hyperlink{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa7ed59d4245ba3236a3fe2c1778baf7fa}{CODEC\+\_\+\+VP9}}
+, \doxymbox{\hyperlink{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fae20d2ac6ddafb4172eeb194eaab82149}{CODEC\+\_\+\+MPEG2}}
+, \doxymbox{\hyperlink{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa4b680fc74561b8572d5fdc7e9458d753}{CODEC\+\_\+\+MPEG4}}
+, \newline
+\doxymbox{\hyperlink{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa757c8603f52d22f16cca42f88c6a8d34}{CODEC\+\_\+\+MJPEG}}
+, \doxymbox{\hyperlink{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa0a8b4a6d2262619a5dc929a6bd6a3b7f}{CODEC\+\_\+\+UNKNOWN}} = 0
+, \doxymbox{\hyperlink{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa6d4d70855081e902df81941a8405b521}{CODEC\+\_\+\+RAW}}
+, \doxymbox{\hyperlink{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa808865a8507895d589028285d76f9385}{CODEC\+\_\+\+H264}}
+, \newline
+\doxymbox{\hyperlink{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa7ecbacdc7e7aaafec3791bc882113b94}{CODEC\+\_\+\+H265}}
+, \doxymbox{\hyperlink{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa5cb276a627b350964489b17fec18ba62}{CODEC\+\_\+\+VP8}}
+, \doxymbox{\hyperlink{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa7ed59d4245ba3236a3fe2c1778baf7fa}{CODEC\+\_\+\+VP9}}
+, \doxymbox{\hyperlink{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fae20d2ac6ddafb4172eeb194eaab82149}{CODEC\+\_\+\+MPEG2}}
+, \newline
+\doxymbox{\hyperlink{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa4b680fc74561b8572d5fdc7e9458d753}{CODEC\+\_\+\+MPEG4}}
+, \doxymbox{\hyperlink{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa757c8603f52d22f16cca42f88c6a8d34}{CODEC\+\_\+\+MJPEG}}
+ \}
+\item 
+enum \doxymbox{\hyperlink{structvideo_options_a4e6a7e1158f7614ffdfcff4d58dcc3cc}{Codec\+Type}} \{ \newline
+\doxymbox{\hyperlink{structvideo_options_a4e6a7e1158f7614ffdfcff4d58dcc3ccad0a74e957cde0131abb48cb607b02ae4}{CODEC\+\_\+\+CPU}} = 0
+, \doxymbox{\hyperlink{structvideo_options_a4e6a7e1158f7614ffdfcff4d58dcc3cca5e866f272b0d66286049cd34bffb666b}{CODEC\+\_\+\+OMX}}
+, \doxymbox{\hyperlink{structvideo_options_a4e6a7e1158f7614ffdfcff4d58dcc3cca584cfa92353a07b0d764e4484e64a76c}{CODEC\+\_\+\+V4\+L2}}
+, \doxymbox{\hyperlink{structvideo_options_a4e6a7e1158f7614ffdfcff4d58dcc3cca230dab1cdf270f29280b9382c8d40bd6}{CODEC\+\_\+\+NVENC}}
+, \newline
+\doxymbox{\hyperlink{structvideo_options_a4e6a7e1158f7614ffdfcff4d58dcc3cca78b8e29d73c12499c3553df95ca390db}{CODEC\+\_\+\+NVDEC}}
+, \doxymbox{\hyperlink{structvideo_options_a4e6a7e1158f7614ffdfcff4d58dcc3ccad0a74e957cde0131abb48cb607b02ae4}{CODEC\+\_\+\+CPU}} = 0
+, \doxymbox{\hyperlink{structvideo_options_a4e6a7e1158f7614ffdfcff4d58dcc3cca5e866f272b0d66286049cd34bffb666b}{CODEC\+\_\+\+OMX}}
+, \doxymbox{\hyperlink{structvideo_options_a4e6a7e1158f7614ffdfcff4d58dcc3cca584cfa92353a07b0d764e4484e64a76c}{CODEC\+\_\+\+V4\+L2}}
+, \newline
+\doxymbox{\hyperlink{structvideo_options_a4e6a7e1158f7614ffdfcff4d58dcc3cca230dab1cdf270f29280b9382c8d40bd6}{CODEC\+\_\+\+NVENC}}
+, \doxymbox{\hyperlink{structvideo_options_a4e6a7e1158f7614ffdfcff4d58dcc3cca78b8e29d73c12499c3553df95ca390db}{CODEC\+\_\+\+NVDEC}}
+ \}
+\item 
+enum \doxymbox{\hyperlink{structvideo_options_a4065c77be7f3be75eddfc16b6efb36ed}{Device\+Type}} \{ \newline
+\doxymbox{\hyperlink{structvideo_options_a4065c77be7f3be75eddfc16b6efb36eda472ab160f2cec34c6798e70d1e4fdbfd}{DEVICE\+\_\+\+DEFAULT}} = 0
+, \doxymbox{\hyperlink{structvideo_options_a4065c77be7f3be75eddfc16b6efb36eda00076d8dcfad04e4170ff92818c5b04f}{DEVICE\+\_\+\+V4\+L2}}
+, \doxymbox{\hyperlink{structvideo_options_a4065c77be7f3be75eddfc16b6efb36eda42a1da7a25ef3e190c93a43455876033}{DEVICE\+\_\+\+CSI}}
+, \doxymbox{\hyperlink{structvideo_options_a4065c77be7f3be75eddfc16b6efb36edaf3d3416e7b238e6c6dcc0adecd5a74b7}{DEVICE\+\_\+\+IP}}
+, \newline
+\doxymbox{\hyperlink{structvideo_options_a4065c77be7f3be75eddfc16b6efb36eda781ebf62044a7e1ff17f9832fb28d758}{DEVICE\+\_\+\+FILE}}
+, \doxymbox{\hyperlink{structvideo_options_a4065c77be7f3be75eddfc16b6efb36eda2c39fc92225489afd7851a8e874401dd}{DEVICE\+\_\+\+DISPLAY}}
+, \doxymbox{\hyperlink{structvideo_options_a4065c77be7f3be75eddfc16b6efb36eda472ab160f2cec34c6798e70d1e4fdbfd}{DEVICE\+\_\+\+DEFAULT}} = 0
+, \doxymbox{\hyperlink{structvideo_options_a4065c77be7f3be75eddfc16b6efb36eda00076d8dcfad04e4170ff92818c5b04f}{DEVICE\+\_\+\+V4\+L2}}
+, \newline
+\doxymbox{\hyperlink{structvideo_options_a4065c77be7f3be75eddfc16b6efb36eda42a1da7a25ef3e190c93a43455876033}{DEVICE\+\_\+\+CSI}}
+, \doxymbox{\hyperlink{structvideo_options_a4065c77be7f3be75eddfc16b6efb36edaf3d3416e7b238e6c6dcc0adecd5a74b7}{DEVICE\+\_\+\+IP}}
+, \doxymbox{\hyperlink{structvideo_options_a4065c77be7f3be75eddfc16b6efb36eda781ebf62044a7e1ff17f9832fb28d758}{DEVICE\+\_\+\+FILE}}
+, \doxymbox{\hyperlink{structvideo_options_a4065c77be7f3be75eddfc16b6efb36eda2c39fc92225489afd7851a8e874401dd}{DEVICE\+\_\+\+DISPLAY}}
+ \}
+\item 
+enum \doxymbox{\hyperlink{structvideo_options_a7f7ae50399192afba10ee226310878b8}{Io\+Type}} \{ \doxymbox{\hyperlink{structvideo_options_a7f7ae50399192afba10ee226310878b8ab41fa1b7782b4e22548bd917a15ad181}{INPUT}} = 0
+, \doxymbox{\hyperlink{structvideo_options_a7f7ae50399192afba10ee226310878b8af197f25ad92514078dbd28bafa1710cb}{OUTPUT}}
+, \doxymbox{\hyperlink{structvideo_options_a7f7ae50399192afba10ee226310878b8ab41fa1b7782b4e22548bd917a15ad181}{INPUT}} = 0
+, \doxymbox{\hyperlink{structvideo_options_a7f7ae50399192afba10ee226310878b8af197f25ad92514078dbd28bafa1710cb}{OUTPUT}}
+ \}
+\item 
+enum \doxymbox{\hyperlink{structvideo_options_acd8d5155cc7b38791698b4e89c6a96ee}{Flip\+Method}} \{ \newline
+\doxymbox{\hyperlink{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eea1302ee053edc9aaa35619b19e17c6529}{FLIP\+\_\+\+NONE}} = 0
+, \doxymbox{\hyperlink{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eea792ce378541be240bdcb8b8c40e8d63d}{FLIP\+\_\+\+COUNTERCLOCKWISE}}
+, \doxymbox{\hyperlink{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eeaf6bcea96d2852de27d10047158f25c71}{FLIP\+\_\+\+ROTATE\+\_\+180}}
+, \doxymbox{\hyperlink{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eeaffa836e6587173f46110cac710942ddd}{FLIP\+\_\+\+CLOCKWISE}}
+, \newline
+\doxymbox{\hyperlink{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eea12de6ce800e456bae8c1715c4a30778f}{FLIP\+\_\+\+HORIZONTAL}}
+, \doxymbox{\hyperlink{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eeae1d1a1b2bc8a7f29abcd693d562665a4}{FLIP\+\_\+\+UPPER\+\_\+\+RIGHT\+\_\+\+DIAGONAL}}
+, \doxymbox{\hyperlink{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eead0bc96c4f600b7a7859dbd50f5e7b71e}{FLIP\+\_\+\+VERTICAL}}
+, \doxymbox{\hyperlink{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eeac2d4b99bd4f4c40f83d10618acf4cd26}{FLIP\+\_\+\+UPPER\+\_\+\+LEFT\+\_\+\+DIAGONAL}}
+, \newline
+\doxymbox{\hyperlink{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eea79bec6145a19215de4b522a2e6a4545e}{FLIP\+\_\+\+DEFAULT}} = FLIP\+\_\+\+NONE
+, \doxymbox{\hyperlink{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eea1302ee053edc9aaa35619b19e17c6529}{FLIP\+\_\+\+NONE}} = 0
+, \doxymbox{\hyperlink{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eea792ce378541be240bdcb8b8c40e8d63d}{FLIP\+\_\+\+COUNTERCLOCKWISE}}
+, \doxymbox{\hyperlink{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eeaf6bcea96d2852de27d10047158f25c71}{FLIP\+\_\+\+ROTATE\+\_\+180}}
+, \newline
+\doxymbox{\hyperlink{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eeaffa836e6587173f46110cac710942ddd}{FLIP\+\_\+\+CLOCKWISE}}
+, \doxymbox{\hyperlink{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eea12de6ce800e456bae8c1715c4a30778f}{FLIP\+\_\+\+HORIZONTAL}}
+, \doxymbox{\hyperlink{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eeae1d1a1b2bc8a7f29abcd693d562665a4}{FLIP\+\_\+\+UPPER\+\_\+\+RIGHT\+\_\+\+DIAGONAL}}
+, \doxymbox{\hyperlink{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eead0bc96c4f600b7a7859dbd50f5e7b71e}{FLIP\+\_\+\+VERTICAL}}
+, \newline
+\doxymbox{\hyperlink{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eeac2d4b99bd4f4c40f83d10618acf4cd26}{FLIP\+\_\+\+UPPER\+\_\+\+LEFT\+\_\+\+DIAGONAL}}
+, \doxymbox{\hyperlink{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eea79bec6145a19215de4b522a2e6a4545e}{FLIP\+\_\+\+DEFAULT}} = FLIP\+\_\+\+NONE
+ \}
+\item 
+enum \doxymbox{\hyperlink{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8f}{Codec}} \{ \newline
+\doxymbox{\hyperlink{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa0a8b4a6d2262619a5dc929a6bd6a3b7f}{CODEC\+\_\+\+UNKNOWN}} = 0
+, \doxymbox{\hyperlink{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa6d4d70855081e902df81941a8405b521}{CODEC\+\_\+\+RAW}}
+, \doxymbox{\hyperlink{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa808865a8507895d589028285d76f9385}{CODEC\+\_\+\+H264}}
+, \doxymbox{\hyperlink{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa7ecbacdc7e7aaafec3791bc882113b94}{CODEC\+\_\+\+H265}}
+, \newline
+\doxymbox{\hyperlink{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa5cb276a627b350964489b17fec18ba62}{CODEC\+\_\+\+VP8}}
+, \doxymbox{\hyperlink{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa7ed59d4245ba3236a3fe2c1778baf7fa}{CODEC\+\_\+\+VP9}}
+, \doxymbox{\hyperlink{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fae20d2ac6ddafb4172eeb194eaab82149}{CODEC\+\_\+\+MPEG2}}
+, \doxymbox{\hyperlink{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa4b680fc74561b8572d5fdc7e9458d753}{CODEC\+\_\+\+MPEG4}}
+, \newline
+\doxymbox{\hyperlink{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa757c8603f52d22f16cca42f88c6a8d34}{CODEC\+\_\+\+MJPEG}}
+, \doxymbox{\hyperlink{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa0a8b4a6d2262619a5dc929a6bd6a3b7f}{CODEC\+\_\+\+UNKNOWN}} = 0
+, \doxymbox{\hyperlink{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa6d4d70855081e902df81941a8405b521}{CODEC\+\_\+\+RAW}}
+, \doxymbox{\hyperlink{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa808865a8507895d589028285d76f9385}{CODEC\+\_\+\+H264}}
+, \newline
+\doxymbox{\hyperlink{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa7ecbacdc7e7aaafec3791bc882113b94}{CODEC\+\_\+\+H265}}
+, \doxymbox{\hyperlink{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa5cb276a627b350964489b17fec18ba62}{CODEC\+\_\+\+VP8}}
+, \doxymbox{\hyperlink{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa7ed59d4245ba3236a3fe2c1778baf7fa}{CODEC\+\_\+\+VP9}}
+, \doxymbox{\hyperlink{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fae20d2ac6ddafb4172eeb194eaab82149}{CODEC\+\_\+\+MPEG2}}
+, \newline
+\doxymbox{\hyperlink{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa4b680fc74561b8572d5fdc7e9458d753}{CODEC\+\_\+\+MPEG4}}
+, \doxymbox{\hyperlink{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa757c8603f52d22f16cca42f88c6a8d34}{CODEC\+\_\+\+MJPEG}}
+ \}
+\item 
+enum \doxymbox{\hyperlink{structvideo_options_a4e6a7e1158f7614ffdfcff4d58dcc3cc}{Codec\+Type}} \{ \newline
+\doxymbox{\hyperlink{structvideo_options_a4e6a7e1158f7614ffdfcff4d58dcc3ccad0a74e957cde0131abb48cb607b02ae4}{CODEC\+\_\+\+CPU}} = 0
+, \doxymbox{\hyperlink{structvideo_options_a4e6a7e1158f7614ffdfcff4d58dcc3cca5e866f272b0d66286049cd34bffb666b}{CODEC\+\_\+\+OMX}}
+, \doxymbox{\hyperlink{structvideo_options_a4e6a7e1158f7614ffdfcff4d58dcc3cca584cfa92353a07b0d764e4484e64a76c}{CODEC\+\_\+\+V4\+L2}}
+, \doxymbox{\hyperlink{structvideo_options_a4e6a7e1158f7614ffdfcff4d58dcc3cca230dab1cdf270f29280b9382c8d40bd6}{CODEC\+\_\+\+NVENC}}
+, \newline
+\doxymbox{\hyperlink{structvideo_options_a4e6a7e1158f7614ffdfcff4d58dcc3cca78b8e29d73c12499c3553df95ca390db}{CODEC\+\_\+\+NVDEC}}
+, \doxymbox{\hyperlink{structvideo_options_a4e6a7e1158f7614ffdfcff4d58dcc3ccad0a74e957cde0131abb48cb607b02ae4}{CODEC\+\_\+\+CPU}} = 0
+, \doxymbox{\hyperlink{structvideo_options_a4e6a7e1158f7614ffdfcff4d58dcc3cca5e866f272b0d66286049cd34bffb666b}{CODEC\+\_\+\+OMX}}
+, \doxymbox{\hyperlink{structvideo_options_a4e6a7e1158f7614ffdfcff4d58dcc3cca584cfa92353a07b0d764e4484e64a76c}{CODEC\+\_\+\+V4\+L2}}
+, \newline
+\doxymbox{\hyperlink{structvideo_options_a4e6a7e1158f7614ffdfcff4d58dcc3cca230dab1cdf270f29280b9382c8d40bd6}{CODEC\+\_\+\+NVENC}}
+, \doxymbox{\hyperlink{structvideo_options_a4e6a7e1158f7614ffdfcff4d58dcc3cca78b8e29d73c12499c3553df95ca390db}{CODEC\+\_\+\+NVDEC}}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{structvideo_options_afa1cc55ed3beeca6917d90607334079e}{video\+Options}} ()
+\item 
+void \doxymbox{\hyperlink{structvideo_options_aa69a63112b92c4e19a459427329ffd47}{Print}} (const char \texorpdfstring{$\ast$}{*}prefix=NULL) const
+\item 
+\Hypertarget{structvideo_options_a6197acbccbc460f7c5819368a0e5fc2c}\label{structvideo_options_a6197acbccbc460f7c5819368a0e5fc2c} 
+bool {\bfseries Parse} (const char \texorpdfstring{$\ast$}{*}\doxymbox{\hyperlink{struct_u_r_i}{URI}}, const int argc, char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}argv, \doxymbox{\hyperlink{structvideo_options_a7f7ae50399192afba10ee226310878b8}{Io\+Type}} \doxymbox{\hyperlink{structvideo_options_af48a7105c91b415ef158290be02f45e9}{io\+Type}}, int io\+Position\+Arg=-\/1)
+\item 
+\Hypertarget{structvideo_options_a9199084a1773ee6dd619a8d1c5618903}\label{structvideo_options_a9199084a1773ee6dd619a8d1c5618903} 
+bool {\bfseries Parse} (const char \texorpdfstring{$\ast$}{*}\doxymbox{\hyperlink{struct_u_r_i}{URI}}, const \doxymbox{\hyperlink{classcommand_line}{command\+Line}} \&cmd\+Line, \doxymbox{\hyperlink{structvideo_options_a7f7ae50399192afba10ee226310878b8}{Io\+Type}} \doxymbox{\hyperlink{structvideo_options_af48a7105c91b415ef158290be02f45e9}{io\+Type}}, int io\+Position\+Arg=-\/1)
+\item 
+\Hypertarget{structvideo_options_a7fc92ca9ada75b62f9d899d1f9f60741}\label{structvideo_options_a7fc92ca9ada75b62f9d899d1f9f60741} 
+bool {\bfseries Parse} (const int argc, char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}argv, \doxymbox{\hyperlink{structvideo_options_a7f7ae50399192afba10ee226310878b8}{Io\+Type}} \doxymbox{\hyperlink{structvideo_options_af48a7105c91b415ef158290be02f45e9}{io\+Type}}, int io\+Position\+Arg=-\/1)
+\item 
+\Hypertarget{structvideo_options_abafb7252c68d165e199597ec3cdea30b}\label{structvideo_options_abafb7252c68d165e199597ec3cdea30b} 
+bool {\bfseries Parse} (const \doxymbox{\hyperlink{classcommand_line}{command\+Line}} \&cmd\+Line, \doxymbox{\hyperlink{structvideo_options_a7f7ae50399192afba10ee226310878b8}{Io\+Type}} \doxymbox{\hyperlink{structvideo_options_af48a7105c91b415ef158290be02f45e9}{io\+Type}}, int io\+Position\+Arg=-\/1)
+\item 
+\doxymbox{\hyperlink{structvideo_options_afa1cc55ed3beeca6917d90607334079e}{video\+Options}} ()
+\item 
+void \doxymbox{\hyperlink{structvideo_options_aa69a63112b92c4e19a459427329ffd47}{Print}} (const char \texorpdfstring{$\ast$}{*}prefix=NULL) const
+\item 
+\Hypertarget{structvideo_options_a6197acbccbc460f7c5819368a0e5fc2c}\label{structvideo_options_a6197acbccbc460f7c5819368a0e5fc2c} 
+bool {\bfseries Parse} (const char \texorpdfstring{$\ast$}{*}\doxymbox{\hyperlink{struct_u_r_i}{URI}}, const int argc, char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}argv, \doxymbox{\hyperlink{structvideo_options_a7f7ae50399192afba10ee226310878b8}{Io\+Type}} \doxymbox{\hyperlink{structvideo_options_af48a7105c91b415ef158290be02f45e9}{io\+Type}}, int io\+Position\+Arg=-\/1)
+\item 
+\Hypertarget{structvideo_options_a9199084a1773ee6dd619a8d1c5618903}\label{structvideo_options_a9199084a1773ee6dd619a8d1c5618903} 
+bool {\bfseries Parse} (const char \texorpdfstring{$\ast$}{*}\doxymbox{\hyperlink{struct_u_r_i}{URI}}, const \doxymbox{\hyperlink{classcommand_line}{command\+Line}} \&cmd\+Line, \doxymbox{\hyperlink{structvideo_options_a7f7ae50399192afba10ee226310878b8}{Io\+Type}} \doxymbox{\hyperlink{structvideo_options_af48a7105c91b415ef158290be02f45e9}{io\+Type}}, int io\+Position\+Arg=-\/1)
+\item 
+\Hypertarget{structvideo_options_a7fc92ca9ada75b62f9d899d1f9f60741}\label{structvideo_options_a7fc92ca9ada75b62f9d899d1f9f60741} 
+bool {\bfseries Parse} (const int argc, char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}argv, \doxymbox{\hyperlink{structvideo_options_a7f7ae50399192afba10ee226310878b8}{Io\+Type}} \doxymbox{\hyperlink{structvideo_options_af48a7105c91b415ef158290be02f45e9}{io\+Type}}, int io\+Position\+Arg=-\/1)
+\item 
+\Hypertarget{structvideo_options_abafb7252c68d165e199597ec3cdea30b}\label{structvideo_options_abafb7252c68d165e199597ec3cdea30b} 
+bool {\bfseries Parse} (const \doxymbox{\hyperlink{classcommand_line}{command\+Line}} \&cmd\+Line, \doxymbox{\hyperlink{structvideo_options_a7f7ae50399192afba10ee226310878b8}{Io\+Type}} \doxymbox{\hyperlink{structvideo_options_af48a7105c91b415ef158290be02f45e9}{io\+Type}}, int io\+Position\+Arg=-\/1)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static const char \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{structvideo_options_a3936a1ca663e19984d1b4649077d737f}{Io\+Type\+To\+Str}} (\doxymbox{\hyperlink{structvideo_options_a7f7ae50399192afba10ee226310878b8}{Io\+Type}} type)
+\item 
+static \doxymbox{\hyperlink{structvideo_options_a7f7ae50399192afba10ee226310878b8}{Io\+Type}} \doxymbox{\hyperlink{structvideo_options_a43a55fadd51bea4403b7b3364ac8e0c1}{Io\+Type\+From\+Str}} (const char \texorpdfstring{$\ast$}{*}str)
+\item 
+static const char \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{structvideo_options_a9d646f22c1bf60e71350e86445836b61}{Device\+Type\+To\+Str}} (\doxymbox{\hyperlink{structvideo_options_a4065c77be7f3be75eddfc16b6efb36ed}{Device\+Type}} type)
+\item 
+static \doxymbox{\hyperlink{structvideo_options_a4065c77be7f3be75eddfc16b6efb36ed}{Device\+Type}} \doxymbox{\hyperlink{structvideo_options_ab667e7beec81249a4c59d070b2e83fdf}{Device\+Type\+From\+Str}} (const char \texorpdfstring{$\ast$}{*}str)
+\item 
+static const char \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{structvideo_options_ab0edaaba4185ee813d999081bdaad6d4}{Flip\+Method\+To\+Str}} (\doxymbox{\hyperlink{structvideo_options_acd8d5155cc7b38791698b4e89c6a96ee}{Flip\+Method}} flip)
+\item 
+static \doxymbox{\hyperlink{structvideo_options_acd8d5155cc7b38791698b4e89c6a96ee}{Flip\+Method}} \doxymbox{\hyperlink{structvideo_options_ab021912a5096f23dc82a3a19fd9525a6}{Flip\+Method\+From\+Str}} (const char \texorpdfstring{$\ast$}{*}str)
+\item 
+static const char \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{structvideo_options_a09f140de4647245a8f7ea7fe30d2b1ad}{Codec\+To\+Str}} (\doxymbox{\hyperlink{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8f}{Codec}} \doxymbox{\hyperlink{structvideo_options_a7570676849d4971e061170b755f7cb71}{codec}})
+\item 
+static \doxymbox{\hyperlink{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8f}{Codec}} \doxymbox{\hyperlink{structvideo_options_a12fd71efc366c62f31f6de44f218cd09}{Codec\+From\+Str}} (const char \texorpdfstring{$\ast$}{*}str)
+\item 
+static const char \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{structvideo_options_a95cb59ab93cfd2b5e2670f87fa1d8559}{Codec\+Type\+To\+Str}} (\doxymbox{\hyperlink{structvideo_options_a4e6a7e1158f7614ffdfcff4d58dcc3cc}{Codec\+Type}} \doxymbox{\hyperlink{structvideo_options_a780f3d2a953a013c031e4b54599313b6}{codec\+Type}})
+\item 
+static \doxymbox{\hyperlink{structvideo_options_a4e6a7e1158f7614ffdfcff4d58dcc3cc}{Codec\+Type}} \doxymbox{\hyperlink{structvideo_options_ab2b260cee059bdb20a690bd4bae41d9d}{Codec\+Type\+From\+Str}} (const char \texorpdfstring{$\ast$}{*}str)
+\item 
+static const char \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{structvideo_options_aa9293a2f5e432da7b0e161f7129e0f33}{Io\+Type\+To\+Str}} (\doxymbox{\hyperlink{structvideo_options_a7f7ae50399192afba10ee226310878b8}{Io\+Type}} type)
+\item 
+static \doxymbox{\hyperlink{structvideo_options_a7f7ae50399192afba10ee226310878b8}{Io\+Type}} \doxymbox{\hyperlink{structvideo_options_af15495f79afce20edd2c12343c620073}{Io\+Type\+From\+Str}} (const char \texorpdfstring{$\ast$}{*}str)
+\item 
+static const char \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{structvideo_options_a85b9801f5541183ad5e33abc7eb718f4}{Device\+Type\+To\+Str}} (\doxymbox{\hyperlink{structvideo_options_a4065c77be7f3be75eddfc16b6efb36ed}{Device\+Type}} type)
+\item 
+static \doxymbox{\hyperlink{structvideo_options_a4065c77be7f3be75eddfc16b6efb36ed}{Device\+Type}} \doxymbox{\hyperlink{structvideo_options_a339d348d2b5262987e462f1d42fa4466}{Device\+Type\+From\+Str}} (const char \texorpdfstring{$\ast$}{*}str)
+\item 
+static const char \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{structvideo_options_ac59ae381f3152b46a05ba2677cdcedec}{Flip\+Method\+To\+Str}} (\doxymbox{\hyperlink{structvideo_options_acd8d5155cc7b38791698b4e89c6a96ee}{Flip\+Method}} flip)
+\item 
+static \doxymbox{\hyperlink{structvideo_options_acd8d5155cc7b38791698b4e89c6a96ee}{Flip\+Method}} \doxymbox{\hyperlink{structvideo_options_a8611c0e59fd292f23ca555f2b5ffd0aa}{Flip\+Method\+From\+Str}} (const char \texorpdfstring{$\ast$}{*}str)
+\item 
+static const char \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{structvideo_options_a25ab44ea4d36bb7cb163e7e24db1c4d8}{Codec\+To\+Str}} (\doxymbox{\hyperlink{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8f}{Codec}} \doxymbox{\hyperlink{structvideo_options_a7570676849d4971e061170b755f7cb71}{codec}})
+\item 
+static \doxymbox{\hyperlink{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8f}{Codec}} \doxymbox{\hyperlink{structvideo_options_a9019047206c44b0bb55d120a9c8e8fc1}{Codec\+From\+Str}} (const char \texorpdfstring{$\ast$}{*}str)
+\item 
+static const char \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{structvideo_options_ab081c3d74b4077e63ec7f752c86591b6}{Codec\+Type\+To\+Str}} (\doxymbox{\hyperlink{structvideo_options_a4e6a7e1158f7614ffdfcff4d58dcc3cc}{Codec\+Type}} \doxymbox{\hyperlink{structvideo_options_a780f3d2a953a013c031e4b54599313b6}{codec\+Type}})
+\item 
+static \doxymbox{\hyperlink{structvideo_options_a4e6a7e1158f7614ffdfcff4d58dcc3cc}{Codec\+Type}} \doxymbox{\hyperlink{structvideo_options_a4a5e8f314dce5f95b65efcf712757f98}{Codec\+Type\+From\+Str}} (const char \texorpdfstring{$\ast$}{*}str)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{struct_u_r_i}{URI}} \doxymbox{\hyperlink{structvideo_options_a1e904a117abb3b703f01eaed7fa305f2}{resource}}
+\item 
+\doxymbox{\hyperlink{struct_u_r_i}{URI}} \doxymbox{\hyperlink{structvideo_options_a8f2128bc68ef2316b500da0d840e3942}{save}}
+\item 
+uint32\+\_\+t \doxymbox{\hyperlink{structvideo_options_a5c30587a874bb769d7b346ac00cff580}{width}}
+\item 
+uint32\+\_\+t \doxymbox{\hyperlink{structvideo_options_a66660b049937fd088b5ab29a0aa2187c}{height}}
+\item 
+float \doxymbox{\hyperlink{structvideo_options_a85ceaa18c31e939f92da06027de8dedd}{frame\+Rate}}
+\item 
+uint64\+\_\+t \doxymbox{\hyperlink{structvideo_options_a69d5446579b0f133a7212afb81fc1a81}{frame\+Count}}
+\item 
+uint32\+\_\+t \doxymbox{\hyperlink{structvideo_options_aec87b064f96732d6d1d8af49483673e6}{bit\+Rate}}
+\item 
+uint32\+\_\+t \doxymbox{\hyperlink{structvideo_options_a65b80ddd3f3cf0940f18e365fb58270b}{num\+Buffers}}
+\item 
+bool \doxymbox{\hyperlink{structvideo_options_afff91aa102908923622328e9f3ca3b83}{zero\+Copy}}
+\item 
+int \doxymbox{\hyperlink{structvideo_options_aa8e394eb896dd92fd39c0946c10dd1ea}{loop}}
+\item 
+int \doxymbox{\hyperlink{structvideo_options_a4fb6a10cf16e794e6025329e63f51294}{latency}}
+\item 
+\doxymbox{\hyperlink{structvideo_options_a4065c77be7f3be75eddfc16b6efb36ed}{Device\+Type}} \doxymbox{\hyperlink{structvideo_options_a63c0d583c059d4498ba885090dac062e}{device\+Type}}
+\item 
+\doxymbox{\hyperlink{structvideo_options_a7f7ae50399192afba10ee226310878b8}{Io\+Type}} \doxymbox{\hyperlink{structvideo_options_af48a7105c91b415ef158290be02f45e9}{io\+Type}}
+\item 
+\doxymbox{\hyperlink{structvideo_options_acd8d5155cc7b38791698b4e89c6a96ee}{Flip\+Method}} \doxymbox{\hyperlink{structvideo_options_a7af22e5cccd15cc2bdf14386f7f34d36}{flip\+Method}}
+\item 
+\doxymbox{\hyperlink{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8f}{Codec}} \doxymbox{\hyperlink{structvideo_options_a7570676849d4971e061170b755f7cb71}{codec}}
+\item 
+\doxymbox{\hyperlink{structvideo_options_a4e6a7e1158f7614ffdfcff4d58dcc3cc}{Codec\+Type}} \doxymbox{\hyperlink{structvideo_options_a780f3d2a953a013c031e4b54599313b6}{codec\+Type}}
+\item 
+std::\+string \doxymbox{\hyperlink{structvideo_options_a8c6f6313d185d475703557642b4f9a47}{stun\+Server}}
+\item 
+std::\+string \doxymbox{\hyperlink{structvideo_options_a236086322dc1d853b29c1fa570c8723d}{ssl\+Cert}}
+\item 
+std::\+string \doxymbox{\hyperlink{structvideo_options_abc783d9782db081aa07af5f01e5c902c}{ssl\+Key}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\doxylink{requirements_The}{The} \doxylink{structvideo_options}{video\+Options} struct contains common settings that are used to configure and query \doxylink{classvideo_source}{video\+Source} and \doxylink{classvideo_output}{video\+Output} streams. 
+
+\label{doc-enum-members}
+\Hypertarget{structvideo_options_doc-enum-members}
+\doxysubsection{Member Enumeration Documentation}
+\Hypertarget{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8f}\index{videoOptions@{videoOptions}!Codec@{Codec}}
+\index{Codec@{Codec}!videoOptions@{videoOptions}}
+\doxysubsubsection{\texorpdfstring{Codec}{Codec}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8f} 
+enum \doxymbox{\hyperlink{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8f}{video\+Options::\+\+Codec}}}
+
+Video codecs. \begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CODEC\_UNKNOWN@{CODEC\_UNKNOWN}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!CODEC\_UNKNOWN@{CODEC\_UNKNOWN}}
+}\Hypertarget{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa0a8b4a6d2262619a5dc929a6bd6a3b7f}\label{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa0a8b4a6d2262619a5dc929a6bd6a3b7f} 
+CODEC\+\_\+\+UNKNOWN&Unknown/\+unsupported codec \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CODEC\_RAW@{CODEC\_RAW}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!CODEC\_RAW@{CODEC\_RAW}}
+}\Hypertarget{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa6d4d70855081e902df81941a8405b521}\label{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa6d4d70855081e902df81941a8405b521} 
+CODEC\+\_\+\+RAW&Uncompressed (e.\+g. RGB) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CODEC\_H264@{CODEC\_H264}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!CODEC\_H264@{CODEC\_H264}}
+}\Hypertarget{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa808865a8507895d589028285d76f9385}\label{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa808865a8507895d589028285d76f9385} 
+CODEC\+\_\+\+H264&H.\+264 \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CODEC\_H265@{CODEC\_H265}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!CODEC\_H265@{CODEC\_H265}}
+}\Hypertarget{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa7ecbacdc7e7aaafec3791bc882113b94}\label{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa7ecbacdc7e7aaafec3791bc882113b94} 
+CODEC\+\_\+\+H265&H.\+265 \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CODEC\_VP8@{CODEC\_VP8}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!CODEC\_VP8@{CODEC\_VP8}}
+}\Hypertarget{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa5cb276a627b350964489b17fec18ba62}\label{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa5cb276a627b350964489b17fec18ba62} 
+CODEC\+\_\+\+VP8&VP8 \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CODEC\_VP9@{CODEC\_VP9}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!CODEC\_VP9@{CODEC\_VP9}}
+}\Hypertarget{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa7ed59d4245ba3236a3fe2c1778baf7fa}\label{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa7ed59d4245ba3236a3fe2c1778baf7fa} 
+CODEC\+\_\+\+VP9&VP9 \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CODEC\_MPEG2@{CODEC\_MPEG2}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!CODEC\_MPEG2@{CODEC\_MPEG2}}
+}\Hypertarget{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fae20d2ac6ddafb4172eeb194eaab82149}\label{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fae20d2ac6ddafb4172eeb194eaab82149} 
+CODEC\+\_\+\+MPEG2&MPEG2 (decode only) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CODEC\_MPEG4@{CODEC\_MPEG4}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!CODEC\_MPEG4@{CODEC\_MPEG4}}
+}\Hypertarget{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa4b680fc74561b8572d5fdc7e9458d753}\label{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa4b680fc74561b8572d5fdc7e9458d753} 
+CODEC\+\_\+\+MPEG4&MPEG4 (decode only) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CODEC\_MJPEG@{CODEC\_MJPEG}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!CODEC\_MJPEG@{CODEC\_MJPEG}}
+}\Hypertarget{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa757c8603f52d22f16cca42f88c6a8d34}\label{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa757c8603f52d22f16cca42f88c6a8d34} 
+CODEC\+\_\+\+MJPEG&MJPEG \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CODEC\_UNKNOWN@{CODEC\_UNKNOWN}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!CODEC\_UNKNOWN@{CODEC\_UNKNOWN}}
+}\Hypertarget{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa0a8b4a6d2262619a5dc929a6bd6a3b7f}\label{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa0a8b4a6d2262619a5dc929a6bd6a3b7f} 
+CODEC\+\_\+\+UNKNOWN&Unknown/\+unsupported codec \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CODEC\_RAW@{CODEC\_RAW}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!CODEC\_RAW@{CODEC\_RAW}}
+}\Hypertarget{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa6d4d70855081e902df81941a8405b521}\label{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa6d4d70855081e902df81941a8405b521} 
+CODEC\+\_\+\+RAW&Uncompressed (e.\+g. RGB) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CODEC\_H264@{CODEC\_H264}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!CODEC\_H264@{CODEC\_H264}}
+}\Hypertarget{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa808865a8507895d589028285d76f9385}\label{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa808865a8507895d589028285d76f9385} 
+CODEC\+\_\+\+H264&H.\+264 \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CODEC\_H265@{CODEC\_H265}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!CODEC\_H265@{CODEC\_H265}}
+}\Hypertarget{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa7ecbacdc7e7aaafec3791bc882113b94}\label{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa7ecbacdc7e7aaafec3791bc882113b94} 
+CODEC\+\_\+\+H265&H.\+265 \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CODEC\_VP8@{CODEC\_VP8}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!CODEC\_VP8@{CODEC\_VP8}}
+}\Hypertarget{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa5cb276a627b350964489b17fec18ba62}\label{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa5cb276a627b350964489b17fec18ba62} 
+CODEC\+\_\+\+VP8&VP8 \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CODEC\_VP9@{CODEC\_VP9}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!CODEC\_VP9@{CODEC\_VP9}}
+}\Hypertarget{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa7ed59d4245ba3236a3fe2c1778baf7fa}\label{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa7ed59d4245ba3236a3fe2c1778baf7fa} 
+CODEC\+\_\+\+VP9&VP9 \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CODEC\_MPEG2@{CODEC\_MPEG2}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!CODEC\_MPEG2@{CODEC\_MPEG2}}
+}\Hypertarget{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fae20d2ac6ddafb4172eeb194eaab82149}\label{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fae20d2ac6ddafb4172eeb194eaab82149} 
+CODEC\+\_\+\+MPEG2&MPEG2 (decode only) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CODEC\_MPEG4@{CODEC\_MPEG4}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!CODEC\_MPEG4@{CODEC\_MPEG4}}
+}\Hypertarget{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa4b680fc74561b8572d5fdc7e9458d753}\label{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa4b680fc74561b8572d5fdc7e9458d753} 
+CODEC\+\_\+\+MPEG4&MPEG4 (decode only) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CODEC\_MJPEG@{CODEC\_MJPEG}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!CODEC\_MJPEG@{CODEC\_MJPEG}}
+}\Hypertarget{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa757c8603f52d22f16cca42f88c6a8d34}\label{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa757c8603f52d22f16cca42f88c6a8d34} 
+CODEC\+\_\+\+MJPEG&MJPEG \\
+\hline
+
+\end{DoxyEnumFields}
+\Hypertarget{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8f}\index{videoOptions@{videoOptions}!Codec@{Codec}}
+\index{Codec@{Codec}!videoOptions@{videoOptions}}
+\doxysubsubsection{\texorpdfstring{Codec}{Codec}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8f} 
+enum \doxymbox{\hyperlink{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8f}{video\+Options::\+\+Codec}}}
+
+Video codecs. \begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CODEC\_UNKNOWN@{CODEC\_UNKNOWN}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!CODEC\_UNKNOWN@{CODEC\_UNKNOWN}}
+}\Hypertarget{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa0a8b4a6d2262619a5dc929a6bd6a3b7f}\label{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa0a8b4a6d2262619a5dc929a6bd6a3b7f} 
+CODEC\+\_\+\+UNKNOWN&Unknown/\+unsupported codec \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CODEC\_RAW@{CODEC\_RAW}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!CODEC\_RAW@{CODEC\_RAW}}
+}\Hypertarget{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa6d4d70855081e902df81941a8405b521}\label{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa6d4d70855081e902df81941a8405b521} 
+CODEC\+\_\+\+RAW&Uncompressed (e.\+g. RGB) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CODEC\_H264@{CODEC\_H264}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!CODEC\_H264@{CODEC\_H264}}
+}\Hypertarget{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa808865a8507895d589028285d76f9385}\label{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa808865a8507895d589028285d76f9385} 
+CODEC\+\_\+\+H264&H.\+264 \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CODEC\_H265@{CODEC\_H265}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!CODEC\_H265@{CODEC\_H265}}
+}\Hypertarget{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa7ecbacdc7e7aaafec3791bc882113b94}\label{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa7ecbacdc7e7aaafec3791bc882113b94} 
+CODEC\+\_\+\+H265&H.\+265 \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CODEC\_VP8@{CODEC\_VP8}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!CODEC\_VP8@{CODEC\_VP8}}
+}\Hypertarget{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa5cb276a627b350964489b17fec18ba62}\label{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa5cb276a627b350964489b17fec18ba62} 
+CODEC\+\_\+\+VP8&VP8 \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CODEC\_VP9@{CODEC\_VP9}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!CODEC\_VP9@{CODEC\_VP9}}
+}\Hypertarget{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa7ed59d4245ba3236a3fe2c1778baf7fa}\label{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa7ed59d4245ba3236a3fe2c1778baf7fa} 
+CODEC\+\_\+\+VP9&VP9 \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CODEC\_MPEG2@{CODEC\_MPEG2}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!CODEC\_MPEG2@{CODEC\_MPEG2}}
+}\Hypertarget{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fae20d2ac6ddafb4172eeb194eaab82149}\label{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fae20d2ac6ddafb4172eeb194eaab82149} 
+CODEC\+\_\+\+MPEG2&MPEG2 (decode only) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CODEC\_MPEG4@{CODEC\_MPEG4}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!CODEC\_MPEG4@{CODEC\_MPEG4}}
+}\Hypertarget{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa4b680fc74561b8572d5fdc7e9458d753}\label{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa4b680fc74561b8572d5fdc7e9458d753} 
+CODEC\+\_\+\+MPEG4&MPEG4 (decode only) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CODEC\_MJPEG@{CODEC\_MJPEG}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!CODEC\_MJPEG@{CODEC\_MJPEG}}
+}\Hypertarget{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa757c8603f52d22f16cca42f88c6a8d34}\label{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa757c8603f52d22f16cca42f88c6a8d34} 
+CODEC\+\_\+\+MJPEG&MJPEG \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CODEC\_UNKNOWN@{CODEC\_UNKNOWN}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!CODEC\_UNKNOWN@{CODEC\_UNKNOWN}}
+}\Hypertarget{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa0a8b4a6d2262619a5dc929a6bd6a3b7f}\label{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa0a8b4a6d2262619a5dc929a6bd6a3b7f} 
+CODEC\+\_\+\+UNKNOWN&Unknown/\+unsupported codec \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CODEC\_RAW@{CODEC\_RAW}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!CODEC\_RAW@{CODEC\_RAW}}
+}\Hypertarget{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa6d4d70855081e902df81941a8405b521}\label{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa6d4d70855081e902df81941a8405b521} 
+CODEC\+\_\+\+RAW&Uncompressed (e.\+g. RGB) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CODEC\_H264@{CODEC\_H264}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!CODEC\_H264@{CODEC\_H264}}
+}\Hypertarget{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa808865a8507895d589028285d76f9385}\label{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa808865a8507895d589028285d76f9385} 
+CODEC\+\_\+\+H264&H.\+264 \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CODEC\_H265@{CODEC\_H265}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!CODEC\_H265@{CODEC\_H265}}
+}\Hypertarget{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa7ecbacdc7e7aaafec3791bc882113b94}\label{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa7ecbacdc7e7aaafec3791bc882113b94} 
+CODEC\+\_\+\+H265&H.\+265 \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CODEC\_VP8@{CODEC\_VP8}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!CODEC\_VP8@{CODEC\_VP8}}
+}\Hypertarget{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa5cb276a627b350964489b17fec18ba62}\label{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa5cb276a627b350964489b17fec18ba62} 
+CODEC\+\_\+\+VP8&VP8 \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CODEC\_VP9@{CODEC\_VP9}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!CODEC\_VP9@{CODEC\_VP9}}
+}\Hypertarget{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa7ed59d4245ba3236a3fe2c1778baf7fa}\label{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa7ed59d4245ba3236a3fe2c1778baf7fa} 
+CODEC\+\_\+\+VP9&VP9 \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CODEC\_MPEG2@{CODEC\_MPEG2}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!CODEC\_MPEG2@{CODEC\_MPEG2}}
+}\Hypertarget{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fae20d2ac6ddafb4172eeb194eaab82149}\label{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fae20d2ac6ddafb4172eeb194eaab82149} 
+CODEC\+\_\+\+MPEG2&MPEG2 (decode only) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CODEC\_MPEG4@{CODEC\_MPEG4}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!CODEC\_MPEG4@{CODEC\_MPEG4}}
+}\Hypertarget{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa4b680fc74561b8572d5fdc7e9458d753}\label{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa4b680fc74561b8572d5fdc7e9458d753} 
+CODEC\+\_\+\+MPEG4&MPEG4 (decode only) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CODEC\_MJPEG@{CODEC\_MJPEG}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!CODEC\_MJPEG@{CODEC\_MJPEG}}
+}\Hypertarget{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa757c8603f52d22f16cca42f88c6a8d34}\label{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa757c8603f52d22f16cca42f88c6a8d34} 
+CODEC\+\_\+\+MJPEG&MJPEG \\
+\hline
+
+\end{DoxyEnumFields}
+\Hypertarget{structvideo_options_a4e6a7e1158f7614ffdfcff4d58dcc3cc}\index{videoOptions@{videoOptions}!CodecType@{CodecType}}
+\index{CodecType@{CodecType}!videoOptions@{videoOptions}}
+\doxysubsubsection{\texorpdfstring{CodecType}{CodecType}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{structvideo_options_a4e6a7e1158f7614ffdfcff4d58dcc3cc} 
+enum \doxymbox{\hyperlink{structvideo_options_a4e6a7e1158f7614ffdfcff4d58dcc3cc}{video\+Options::\+\+Codec\+Type}}}
+
+Video codec engines. \begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CODEC\_CPU@{CODEC\_CPU}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!CODEC\_CPU@{CODEC\_CPU}}
+}\Hypertarget{structvideo_options_a4e6a7e1158f7614ffdfcff4d58dcc3ccad0a74e957cde0131abb48cb607b02ae4}\label{structvideo_options_a4e6a7e1158f7614ffdfcff4d58dcc3ccad0a74e957cde0131abb48cb607b02ae4} 
+CODEC\+\_\+\+CPU&CPU-\/based implementation using libav (e.\+g. avdec\+\_\+h264 /\+ x264enc) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CODEC\_OMX@{CODEC\_OMX}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!CODEC\_OMX@{CODEC\_OMX}}
+}\Hypertarget{structvideo_options_a4e6a7e1158f7614ffdfcff4d58dcc3cca5e866f272b0d66286049cd34bffb666b}\label{structvideo_options_a4e6a7e1158f7614ffdfcff4d58dcc3cca5e866f272b0d66286049cd34bffb666b} 
+CODEC\+\_\+\+OMX&aarch64 \& Jet\+Pack 4 only -\/ OMX hardware plugins (e.\+g. omxh264dec/\+omxh264enc) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CODEC\_V4L2@{CODEC\_V4L2}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!CODEC\_V4L2@{CODEC\_V4L2}}
+}\Hypertarget{structvideo_options_a4e6a7e1158f7614ffdfcff4d58dcc3cca584cfa92353a07b0d764e4484e64a76c}\label{structvideo_options_a4e6a7e1158f7614ffdfcff4d58dcc3cca584cfa92353a07b0d764e4484e64a76c} 
+CODEC\+\_\+\+V4\+L2&aarch64 \& Jet\+Pack 5 only -\/ V4\+L2 hardware plugins (e.\+g. nvv4l2decoder/\+nvv4l2h264enc) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CODEC\_NVENC@{CODEC\_NVENC}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!CODEC\_NVENC@{CODEC\_NVENC}}
+}\Hypertarget{structvideo_options_a4e6a7e1158f7614ffdfcff4d58dcc3cca230dab1cdf270f29280b9382c8d40bd6}\label{structvideo_options_a4e6a7e1158f7614ffdfcff4d58dcc3cca230dab1cdf270f29280b9382c8d40bd6} 
+CODEC\+\_\+\+NVENC&x86 only -\/ NVENC hardware plugin (not currently implemented) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CODEC\_NVDEC@{CODEC\_NVDEC}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!CODEC\_NVDEC@{CODEC\_NVDEC}}
+}\Hypertarget{structvideo_options_a4e6a7e1158f7614ffdfcff4d58dcc3cca78b8e29d73c12499c3553df95ca390db}\label{structvideo_options_a4e6a7e1158f7614ffdfcff4d58dcc3cca78b8e29d73c12499c3553df95ca390db} 
+CODEC\+\_\+\+NVDEC&x86 only -\/ NVDEC hardware plugin (not currently implemented) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CODEC\_CPU@{CODEC\_CPU}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!CODEC\_CPU@{CODEC\_CPU}}
+}\Hypertarget{structvideo_options_a4e6a7e1158f7614ffdfcff4d58dcc3ccad0a74e957cde0131abb48cb607b02ae4}\label{structvideo_options_a4e6a7e1158f7614ffdfcff4d58dcc3ccad0a74e957cde0131abb48cb607b02ae4} 
+CODEC\+\_\+\+CPU&CPU-\/based implementation using libav (e.\+g. avdec\+\_\+h264 /\+ x264enc) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CODEC\_OMX@{CODEC\_OMX}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!CODEC\_OMX@{CODEC\_OMX}}
+}\Hypertarget{structvideo_options_a4e6a7e1158f7614ffdfcff4d58dcc3cca5e866f272b0d66286049cd34bffb666b}\label{structvideo_options_a4e6a7e1158f7614ffdfcff4d58dcc3cca5e866f272b0d66286049cd34bffb666b} 
+CODEC\+\_\+\+OMX&aarch64 \& Jet\+Pack 4 only -\/ OMX hardware plugins (e.\+g. omxh264dec/\+omxh264enc) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CODEC\_V4L2@{CODEC\_V4L2}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!CODEC\_V4L2@{CODEC\_V4L2}}
+}\Hypertarget{structvideo_options_a4e6a7e1158f7614ffdfcff4d58dcc3cca584cfa92353a07b0d764e4484e64a76c}\label{structvideo_options_a4e6a7e1158f7614ffdfcff4d58dcc3cca584cfa92353a07b0d764e4484e64a76c} 
+CODEC\+\_\+\+V4\+L2&aarch64 \& Jet\+Pack 5 only -\/ V4\+L2 hardware plugins (e.\+g. nvv4l2decoder/\+nvv4l2h264enc) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CODEC\_NVENC@{CODEC\_NVENC}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!CODEC\_NVENC@{CODEC\_NVENC}}
+}\Hypertarget{structvideo_options_a4e6a7e1158f7614ffdfcff4d58dcc3cca230dab1cdf270f29280b9382c8d40bd6}\label{structvideo_options_a4e6a7e1158f7614ffdfcff4d58dcc3cca230dab1cdf270f29280b9382c8d40bd6} 
+CODEC\+\_\+\+NVENC&x86 only -\/ NVENC hardware plugin (not currently implemented) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CODEC\_NVDEC@{CODEC\_NVDEC}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!CODEC\_NVDEC@{CODEC\_NVDEC}}
+}\Hypertarget{structvideo_options_a4e6a7e1158f7614ffdfcff4d58dcc3cca78b8e29d73c12499c3553df95ca390db}\label{structvideo_options_a4e6a7e1158f7614ffdfcff4d58dcc3cca78b8e29d73c12499c3553df95ca390db} 
+CODEC\+\_\+\+NVDEC&x86 only -\/ NVDEC hardware plugin (not currently implemented) \\
+\hline
+
+\end{DoxyEnumFields}
+\Hypertarget{structvideo_options_a4e6a7e1158f7614ffdfcff4d58dcc3cc}\index{videoOptions@{videoOptions}!CodecType@{CodecType}}
+\index{CodecType@{CodecType}!videoOptions@{videoOptions}}
+\doxysubsubsection{\texorpdfstring{CodecType}{CodecType}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{structvideo_options_a4e6a7e1158f7614ffdfcff4d58dcc3cc} 
+enum \doxymbox{\hyperlink{structvideo_options_a4e6a7e1158f7614ffdfcff4d58dcc3cc}{video\+Options::\+\+Codec\+Type}}}
+
+Video codec engines. \begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CODEC\_CPU@{CODEC\_CPU}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!CODEC\_CPU@{CODEC\_CPU}}
+}\Hypertarget{structvideo_options_a4e6a7e1158f7614ffdfcff4d58dcc3ccad0a74e957cde0131abb48cb607b02ae4}\label{structvideo_options_a4e6a7e1158f7614ffdfcff4d58dcc3ccad0a74e957cde0131abb48cb607b02ae4} 
+CODEC\+\_\+\+CPU&CPU-\/based implementation using libav (e.\+g. avdec\+\_\+h264 /\+ x264enc) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CODEC\_OMX@{CODEC\_OMX}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!CODEC\_OMX@{CODEC\_OMX}}
+}\Hypertarget{structvideo_options_a4e6a7e1158f7614ffdfcff4d58dcc3cca5e866f272b0d66286049cd34bffb666b}\label{structvideo_options_a4e6a7e1158f7614ffdfcff4d58dcc3cca5e866f272b0d66286049cd34bffb666b} 
+CODEC\+\_\+\+OMX&aarch64 \& Jet\+Pack 4 only -\/ OMX hardware plugins (e.\+g. omxh264dec/\+omxh264enc) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CODEC\_V4L2@{CODEC\_V4L2}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!CODEC\_V4L2@{CODEC\_V4L2}}
+}\Hypertarget{structvideo_options_a4e6a7e1158f7614ffdfcff4d58dcc3cca584cfa92353a07b0d764e4484e64a76c}\label{structvideo_options_a4e6a7e1158f7614ffdfcff4d58dcc3cca584cfa92353a07b0d764e4484e64a76c} 
+CODEC\+\_\+\+V4\+L2&aarch64 \& Jet\+Pack 5 only -\/ V4\+L2 hardware plugins (e.\+g. nvv4l2decoder/\+nvv4l2h264enc) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CODEC\_NVENC@{CODEC\_NVENC}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!CODEC\_NVENC@{CODEC\_NVENC}}
+}\Hypertarget{structvideo_options_a4e6a7e1158f7614ffdfcff4d58dcc3cca230dab1cdf270f29280b9382c8d40bd6}\label{structvideo_options_a4e6a7e1158f7614ffdfcff4d58dcc3cca230dab1cdf270f29280b9382c8d40bd6} 
+CODEC\+\_\+\+NVENC&x86 only -\/ NVENC hardware plugin (not currently implemented) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CODEC\_NVDEC@{CODEC\_NVDEC}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!CODEC\_NVDEC@{CODEC\_NVDEC}}
+}\Hypertarget{structvideo_options_a4e6a7e1158f7614ffdfcff4d58dcc3cca78b8e29d73c12499c3553df95ca390db}\label{structvideo_options_a4e6a7e1158f7614ffdfcff4d58dcc3cca78b8e29d73c12499c3553df95ca390db} 
+CODEC\+\_\+\+NVDEC&x86 only -\/ NVDEC hardware plugin (not currently implemented) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CODEC\_CPU@{CODEC\_CPU}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!CODEC\_CPU@{CODEC\_CPU}}
+}\Hypertarget{structvideo_options_a4e6a7e1158f7614ffdfcff4d58dcc3ccad0a74e957cde0131abb48cb607b02ae4}\label{structvideo_options_a4e6a7e1158f7614ffdfcff4d58dcc3ccad0a74e957cde0131abb48cb607b02ae4} 
+CODEC\+\_\+\+CPU&CPU-\/based implementation using libav (e.\+g. avdec\+\_\+h264 /\+ x264enc) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CODEC\_OMX@{CODEC\_OMX}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!CODEC\_OMX@{CODEC\_OMX}}
+}\Hypertarget{structvideo_options_a4e6a7e1158f7614ffdfcff4d58dcc3cca5e866f272b0d66286049cd34bffb666b}\label{structvideo_options_a4e6a7e1158f7614ffdfcff4d58dcc3cca5e866f272b0d66286049cd34bffb666b} 
+CODEC\+\_\+\+OMX&aarch64 \& Jet\+Pack 4 only -\/ OMX hardware plugins (e.\+g. omxh264dec/\+omxh264enc) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CODEC\_V4L2@{CODEC\_V4L2}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!CODEC\_V4L2@{CODEC\_V4L2}}
+}\Hypertarget{structvideo_options_a4e6a7e1158f7614ffdfcff4d58dcc3cca584cfa92353a07b0d764e4484e64a76c}\label{structvideo_options_a4e6a7e1158f7614ffdfcff4d58dcc3cca584cfa92353a07b0d764e4484e64a76c} 
+CODEC\+\_\+\+V4\+L2&aarch64 \& Jet\+Pack 5 only -\/ V4\+L2 hardware plugins (e.\+g. nvv4l2decoder/\+nvv4l2h264enc) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CODEC\_NVENC@{CODEC\_NVENC}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!CODEC\_NVENC@{CODEC\_NVENC}}
+}\Hypertarget{structvideo_options_a4e6a7e1158f7614ffdfcff4d58dcc3cca230dab1cdf270f29280b9382c8d40bd6}\label{structvideo_options_a4e6a7e1158f7614ffdfcff4d58dcc3cca230dab1cdf270f29280b9382c8d40bd6} 
+CODEC\+\_\+\+NVENC&x86 only -\/ NVENC hardware plugin (not currently implemented) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CODEC\_NVDEC@{CODEC\_NVDEC}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!CODEC\_NVDEC@{CODEC\_NVDEC}}
+}\Hypertarget{structvideo_options_a4e6a7e1158f7614ffdfcff4d58dcc3cca78b8e29d73c12499c3553df95ca390db}\label{structvideo_options_a4e6a7e1158f7614ffdfcff4d58dcc3cca78b8e29d73c12499c3553df95ca390db} 
+CODEC\+\_\+\+NVDEC&x86 only -\/ NVDEC hardware plugin (not currently implemented) \\
+\hline
+
+\end{DoxyEnumFields}
+\Hypertarget{structvideo_options_a4065c77be7f3be75eddfc16b6efb36ed}\index{videoOptions@{videoOptions}!DeviceType@{DeviceType}}
+\index{DeviceType@{DeviceType}!videoOptions@{videoOptions}}
+\doxysubsubsection{\texorpdfstring{DeviceType}{DeviceType}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{structvideo_options_a4065c77be7f3be75eddfc16b6efb36ed} 
+enum \doxymbox{\hyperlink{structvideo_options_a4065c77be7f3be75eddfc16b6efb36ed}{video\+Options::\+\+Device\+Type}}}
+
+Device interface types. \begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DEVICE\_DEFAULT@{DEVICE\_DEFAULT}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!DEVICE\_DEFAULT@{DEVICE\_DEFAULT}}
+}\Hypertarget{structvideo_options_a4065c77be7f3be75eddfc16b6efb36eda472ab160f2cec34c6798e70d1e4fdbfd}\label{structvideo_options_a4065c77be7f3be75eddfc16b6efb36eda472ab160f2cec34c6798e70d1e4fdbfd} 
+DEVICE\+\_\+\+DEFAULT&Unknown interface type. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DEVICE\_V4L2@{DEVICE\_V4L2}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!DEVICE\_V4L2@{DEVICE\_V4L2}}
+}\Hypertarget{structvideo_options_a4065c77be7f3be75eddfc16b6efb36eda00076d8dcfad04e4170ff92818c5b04f}\label{structvideo_options_a4065c77be7f3be75eddfc16b6efb36eda00076d8dcfad04e4170ff92818c5b04f} 
+DEVICE\+\_\+\+V4\+L2&V4\+L2 webcam (e.\+g. {\ttfamily /\+dev/\+video0}) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DEVICE\_CSI@{DEVICE\_CSI}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!DEVICE\_CSI@{DEVICE\_CSI}}
+}\Hypertarget{structvideo_options_a4065c77be7f3be75eddfc16b6efb36eda42a1da7a25ef3e190c93a43455876033}\label{structvideo_options_a4065c77be7f3be75eddfc16b6efb36eda42a1da7a25ef3e190c93a43455876033} 
+DEVICE\+\_\+\+CSI&MIPI CSI camera \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DEVICE\_IP@{DEVICE\_IP}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!DEVICE\_IP@{DEVICE\_IP}}
+}\Hypertarget{structvideo_options_a4065c77be7f3be75eddfc16b6efb36edaf3d3416e7b238e6c6dcc0adecd5a74b7}\label{structvideo_options_a4065c77be7f3be75eddfc16b6efb36edaf3d3416e7b238e6c6dcc0adecd5a74b7} 
+DEVICE\+\_\+\+IP&IP-\/based network stream (e.\+g. RTP/\+\+RTSP) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DEVICE\_FILE@{DEVICE\_FILE}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!DEVICE\_FILE@{DEVICE\_FILE}}
+}\Hypertarget{structvideo_options_a4065c77be7f3be75eddfc16b6efb36eda781ebf62044a7e1ff17f9832fb28d758}\label{structvideo_options_a4065c77be7f3be75eddfc16b6efb36eda781ebf62044a7e1ff17f9832fb28d758} 
+DEVICE\+\_\+\+FILE&Disk-\/based stream from a file or directory of files \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DEVICE\_DISPLAY@{DEVICE\_DISPLAY}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!DEVICE\_DISPLAY@{DEVICE\_DISPLAY}}
+}\Hypertarget{structvideo_options_a4065c77be7f3be75eddfc16b6efb36eda2c39fc92225489afd7851a8e874401dd}\label{structvideo_options_a4065c77be7f3be75eddfc16b6efb36eda2c39fc92225489afd7851a8e874401dd} 
+DEVICE\+\_\+\+DISPLAY&Open\+GL output stream rendered to an attached display \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DEVICE\_DEFAULT@{DEVICE\_DEFAULT}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!DEVICE\_DEFAULT@{DEVICE\_DEFAULT}}
+}\Hypertarget{structvideo_options_a4065c77be7f3be75eddfc16b6efb36eda472ab160f2cec34c6798e70d1e4fdbfd}\label{structvideo_options_a4065c77be7f3be75eddfc16b6efb36eda472ab160f2cec34c6798e70d1e4fdbfd} 
+DEVICE\+\_\+\+DEFAULT&Unknown interface type. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DEVICE\_V4L2@{DEVICE\_V4L2}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!DEVICE\_V4L2@{DEVICE\_V4L2}}
+}\Hypertarget{structvideo_options_a4065c77be7f3be75eddfc16b6efb36eda00076d8dcfad04e4170ff92818c5b04f}\label{structvideo_options_a4065c77be7f3be75eddfc16b6efb36eda00076d8dcfad04e4170ff92818c5b04f} 
+DEVICE\+\_\+\+V4\+L2&V4\+L2 webcam (e.\+g. {\ttfamily /\+dev/\+video0}) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DEVICE\_CSI@{DEVICE\_CSI}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!DEVICE\_CSI@{DEVICE\_CSI}}
+}\Hypertarget{structvideo_options_a4065c77be7f3be75eddfc16b6efb36eda42a1da7a25ef3e190c93a43455876033}\label{structvideo_options_a4065c77be7f3be75eddfc16b6efb36eda42a1da7a25ef3e190c93a43455876033} 
+DEVICE\+\_\+\+CSI&MIPI CSI camera \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DEVICE\_IP@{DEVICE\_IP}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!DEVICE\_IP@{DEVICE\_IP}}
+}\Hypertarget{structvideo_options_a4065c77be7f3be75eddfc16b6efb36edaf3d3416e7b238e6c6dcc0adecd5a74b7}\label{structvideo_options_a4065c77be7f3be75eddfc16b6efb36edaf3d3416e7b238e6c6dcc0adecd5a74b7} 
+DEVICE\+\_\+\+IP&IP-\/based network stream (e.\+g. RTP/\+\+RTSP) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DEVICE\_FILE@{DEVICE\_FILE}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!DEVICE\_FILE@{DEVICE\_FILE}}
+}\Hypertarget{structvideo_options_a4065c77be7f3be75eddfc16b6efb36eda781ebf62044a7e1ff17f9832fb28d758}\label{structvideo_options_a4065c77be7f3be75eddfc16b6efb36eda781ebf62044a7e1ff17f9832fb28d758} 
+DEVICE\+\_\+\+FILE&Disk-\/based stream from a file or directory of files \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DEVICE\_DISPLAY@{DEVICE\_DISPLAY}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!DEVICE\_DISPLAY@{DEVICE\_DISPLAY}}
+}\Hypertarget{structvideo_options_a4065c77be7f3be75eddfc16b6efb36eda2c39fc92225489afd7851a8e874401dd}\label{structvideo_options_a4065c77be7f3be75eddfc16b6efb36eda2c39fc92225489afd7851a8e874401dd} 
+DEVICE\+\_\+\+DISPLAY&Open\+GL output stream rendered to an attached display \\
+\hline
+
+\end{DoxyEnumFields}
+\Hypertarget{structvideo_options_a4065c77be7f3be75eddfc16b6efb36ed}\index{videoOptions@{videoOptions}!DeviceType@{DeviceType}}
+\index{DeviceType@{DeviceType}!videoOptions@{videoOptions}}
+\doxysubsubsection{\texorpdfstring{DeviceType}{DeviceType}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{structvideo_options_a4065c77be7f3be75eddfc16b6efb36ed} 
+enum \doxymbox{\hyperlink{structvideo_options_a4065c77be7f3be75eddfc16b6efb36ed}{video\+Options::\+\+Device\+Type}}}
+
+Device interface types. \begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DEVICE\_DEFAULT@{DEVICE\_DEFAULT}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!DEVICE\_DEFAULT@{DEVICE\_DEFAULT}}
+}\Hypertarget{structvideo_options_a4065c77be7f3be75eddfc16b6efb36eda472ab160f2cec34c6798e70d1e4fdbfd}\label{structvideo_options_a4065c77be7f3be75eddfc16b6efb36eda472ab160f2cec34c6798e70d1e4fdbfd} 
+DEVICE\+\_\+\+DEFAULT&Unknown interface type. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DEVICE\_V4L2@{DEVICE\_V4L2}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!DEVICE\_V4L2@{DEVICE\_V4L2}}
+}\Hypertarget{structvideo_options_a4065c77be7f3be75eddfc16b6efb36eda00076d8dcfad04e4170ff92818c5b04f}\label{structvideo_options_a4065c77be7f3be75eddfc16b6efb36eda00076d8dcfad04e4170ff92818c5b04f} 
+DEVICE\+\_\+\+V4\+L2&V4\+L2 webcam (e.\+g. {\ttfamily /\+dev/\+video0}) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DEVICE\_CSI@{DEVICE\_CSI}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!DEVICE\_CSI@{DEVICE\_CSI}}
+}\Hypertarget{structvideo_options_a4065c77be7f3be75eddfc16b6efb36eda42a1da7a25ef3e190c93a43455876033}\label{structvideo_options_a4065c77be7f3be75eddfc16b6efb36eda42a1da7a25ef3e190c93a43455876033} 
+DEVICE\+\_\+\+CSI&MIPI CSI camera \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DEVICE\_IP@{DEVICE\_IP}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!DEVICE\_IP@{DEVICE\_IP}}
+}\Hypertarget{structvideo_options_a4065c77be7f3be75eddfc16b6efb36edaf3d3416e7b238e6c6dcc0adecd5a74b7}\label{structvideo_options_a4065c77be7f3be75eddfc16b6efb36edaf3d3416e7b238e6c6dcc0adecd5a74b7} 
+DEVICE\+\_\+\+IP&IP-\/based network stream (e.\+g. RTP/\+\+RTSP) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DEVICE\_FILE@{DEVICE\_FILE}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!DEVICE\_FILE@{DEVICE\_FILE}}
+}\Hypertarget{structvideo_options_a4065c77be7f3be75eddfc16b6efb36eda781ebf62044a7e1ff17f9832fb28d758}\label{structvideo_options_a4065c77be7f3be75eddfc16b6efb36eda781ebf62044a7e1ff17f9832fb28d758} 
+DEVICE\+\_\+\+FILE&Disk-\/based stream from a file or directory of files \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DEVICE\_DISPLAY@{DEVICE\_DISPLAY}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!DEVICE\_DISPLAY@{DEVICE\_DISPLAY}}
+}\Hypertarget{structvideo_options_a4065c77be7f3be75eddfc16b6efb36eda2c39fc92225489afd7851a8e874401dd}\label{structvideo_options_a4065c77be7f3be75eddfc16b6efb36eda2c39fc92225489afd7851a8e874401dd} 
+DEVICE\+\_\+\+DISPLAY&Open\+GL output stream rendered to an attached display \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DEVICE\_DEFAULT@{DEVICE\_DEFAULT}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!DEVICE\_DEFAULT@{DEVICE\_DEFAULT}}
+}\Hypertarget{structvideo_options_a4065c77be7f3be75eddfc16b6efb36eda472ab160f2cec34c6798e70d1e4fdbfd}\label{structvideo_options_a4065c77be7f3be75eddfc16b6efb36eda472ab160f2cec34c6798e70d1e4fdbfd} 
+DEVICE\+\_\+\+DEFAULT&Unknown interface type. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DEVICE\_V4L2@{DEVICE\_V4L2}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!DEVICE\_V4L2@{DEVICE\_V4L2}}
+}\Hypertarget{structvideo_options_a4065c77be7f3be75eddfc16b6efb36eda00076d8dcfad04e4170ff92818c5b04f}\label{structvideo_options_a4065c77be7f3be75eddfc16b6efb36eda00076d8dcfad04e4170ff92818c5b04f} 
+DEVICE\+\_\+\+V4\+L2&V4\+L2 webcam (e.\+g. {\ttfamily /\+dev/\+video0}) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DEVICE\_CSI@{DEVICE\_CSI}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!DEVICE\_CSI@{DEVICE\_CSI}}
+}\Hypertarget{structvideo_options_a4065c77be7f3be75eddfc16b6efb36eda42a1da7a25ef3e190c93a43455876033}\label{structvideo_options_a4065c77be7f3be75eddfc16b6efb36eda42a1da7a25ef3e190c93a43455876033} 
+DEVICE\+\_\+\+CSI&MIPI CSI camera \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DEVICE\_IP@{DEVICE\_IP}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!DEVICE\_IP@{DEVICE\_IP}}
+}\Hypertarget{structvideo_options_a4065c77be7f3be75eddfc16b6efb36edaf3d3416e7b238e6c6dcc0adecd5a74b7}\label{structvideo_options_a4065c77be7f3be75eddfc16b6efb36edaf3d3416e7b238e6c6dcc0adecd5a74b7} 
+DEVICE\+\_\+\+IP&IP-\/based network stream (e.\+g. RTP/\+\+RTSP) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DEVICE\_FILE@{DEVICE\_FILE}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!DEVICE\_FILE@{DEVICE\_FILE}}
+}\Hypertarget{structvideo_options_a4065c77be7f3be75eddfc16b6efb36eda781ebf62044a7e1ff17f9832fb28d758}\label{structvideo_options_a4065c77be7f3be75eddfc16b6efb36eda781ebf62044a7e1ff17f9832fb28d758} 
+DEVICE\+\_\+\+FILE&Disk-\/based stream from a file or directory of files \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DEVICE\_DISPLAY@{DEVICE\_DISPLAY}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!DEVICE\_DISPLAY@{DEVICE\_DISPLAY}}
+}\Hypertarget{structvideo_options_a4065c77be7f3be75eddfc16b6efb36eda2c39fc92225489afd7851a8e874401dd}\label{structvideo_options_a4065c77be7f3be75eddfc16b6efb36eda2c39fc92225489afd7851a8e874401dd} 
+DEVICE\+\_\+\+DISPLAY&Open\+GL output stream rendered to an attached display \\
+\hline
+
+\end{DoxyEnumFields}
+\Hypertarget{structvideo_options_acd8d5155cc7b38791698b4e89c6a96ee}\index{videoOptions@{videoOptions}!FlipMethod@{FlipMethod}}
+\index{FlipMethod@{FlipMethod}!videoOptions@{videoOptions}}
+\doxysubsubsection{\texorpdfstring{FlipMethod}{FlipMethod}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{structvideo_options_acd8d5155cc7b38791698b4e89c6a96ee} 
+enum \doxymbox{\hyperlink{structvideo_options_acd8d5155cc7b38791698b4e89c6a96ee}{video\+Options::\+\+Flip\+Method}}}
+
+Settings of the flip method used by MIPI CSI cameras and compressed video inputs. \begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FLIP\_NONE@{FLIP\_NONE}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!FLIP\_NONE@{FLIP\_NONE}}
+}\Hypertarget{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eea1302ee053edc9aaa35619b19e17c6529}\label{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eea1302ee053edc9aaa35619b19e17c6529} 
+FLIP\+\_\+\+NONE&Identity (no rotation) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FLIP\_COUNTERCLOCKWISE@{FLIP\_COUNTERCLOCKWISE}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!FLIP\_COUNTERCLOCKWISE@{FLIP\_COUNTERCLOCKWISE}}
+}\Hypertarget{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eea792ce378541be240bdcb8b8c40e8d63d}\label{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eea792ce378541be240bdcb8b8c40e8d63d} 
+FLIP\+\_\+\+COUNTERCLOCKWISE&Rotate counter-\/clockwise 90 degrees \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FLIP\_ROTATE\_180@{FLIP\_ROTATE\_180}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!FLIP\_ROTATE\_180@{FLIP\_ROTATE\_180}}
+}\Hypertarget{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eeaf6bcea96d2852de27d10047158f25c71}\label{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eeaf6bcea96d2852de27d10047158f25c71} 
+FLIP\+\_\+\+ROTATE\+\_\+180&Rotate 180 degrees \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FLIP\_CLOCKWISE@{FLIP\_CLOCKWISE}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!FLIP\_CLOCKWISE@{FLIP\_CLOCKWISE}}
+}\Hypertarget{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eeaffa836e6587173f46110cac710942ddd}\label{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eeaffa836e6587173f46110cac710942ddd} 
+FLIP\+\_\+\+CLOCKWISE&Rotate clockwise 90 degrees \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FLIP\_HORIZONTAL@{FLIP\_HORIZONTAL}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!FLIP\_HORIZONTAL@{FLIP\_HORIZONTAL}}
+}\Hypertarget{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eea12de6ce800e456bae8c1715c4a30778f}\label{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eea12de6ce800e456bae8c1715c4a30778f} 
+FLIP\+\_\+\+HORIZONTAL&Flip horizontally \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FLIP\_UPPER\_RIGHT\_DIAGONAL@{FLIP\_UPPER\_RIGHT\_DIAGONAL}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!FLIP\_UPPER\_RIGHT\_DIAGONAL@{FLIP\_UPPER\_RIGHT\_DIAGONAL}}
+}\Hypertarget{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eeae1d1a1b2bc8a7f29abcd693d562665a4}\label{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eeae1d1a1b2bc8a7f29abcd693d562665a4} 
+FLIP\+\_\+\+UPPER\+\_\+\+RIGHT\+\_\+\+DIAGONAL&Flip across upper right/\+lower left diagonal \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FLIP\_VERTICAL@{FLIP\_VERTICAL}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!FLIP\_VERTICAL@{FLIP\_VERTICAL}}
+}\Hypertarget{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eead0bc96c4f600b7a7859dbd50f5e7b71e}\label{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eead0bc96c4f600b7a7859dbd50f5e7b71e} 
+FLIP\+\_\+\+VERTICAL&Flip vertically \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FLIP\_UPPER\_LEFT\_DIAGONAL@{FLIP\_UPPER\_LEFT\_DIAGONAL}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!FLIP\_UPPER\_LEFT\_DIAGONAL@{FLIP\_UPPER\_LEFT\_DIAGONAL}}
+}\Hypertarget{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eeac2d4b99bd4f4c40f83d10618acf4cd26}\label{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eeac2d4b99bd4f4c40f83d10618acf4cd26} 
+FLIP\+\_\+\+UPPER\+\_\+\+LEFT\+\_\+\+DIAGONAL&Flip across upper left/\+lower right diagonal \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FLIP\_DEFAULT@{FLIP\_DEFAULT}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!FLIP\_DEFAULT@{FLIP\_DEFAULT}}
+}\Hypertarget{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eea79bec6145a19215de4b522a2e6a4545e}\label{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eea79bec6145a19215de4b522a2e6a4545e} 
+FLIP\+\_\+\+DEFAULT&Default setting (none) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FLIP\_NONE@{FLIP\_NONE}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!FLIP\_NONE@{FLIP\_NONE}}
+}\Hypertarget{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eea1302ee053edc9aaa35619b19e17c6529}\label{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eea1302ee053edc9aaa35619b19e17c6529} 
+FLIP\+\_\+\+NONE&Identity (no rotation) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FLIP\_COUNTERCLOCKWISE@{FLIP\_COUNTERCLOCKWISE}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!FLIP\_COUNTERCLOCKWISE@{FLIP\_COUNTERCLOCKWISE}}
+}\Hypertarget{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eea792ce378541be240bdcb8b8c40e8d63d}\label{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eea792ce378541be240bdcb8b8c40e8d63d} 
+FLIP\+\_\+\+COUNTERCLOCKWISE&Rotate counter-\/clockwise 90 degrees \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FLIP\_ROTATE\_180@{FLIP\_ROTATE\_180}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!FLIP\_ROTATE\_180@{FLIP\_ROTATE\_180}}
+}\Hypertarget{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eeaf6bcea96d2852de27d10047158f25c71}\label{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eeaf6bcea96d2852de27d10047158f25c71} 
+FLIP\+\_\+\+ROTATE\+\_\+180&Rotate 180 degrees \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FLIP\_CLOCKWISE@{FLIP\_CLOCKWISE}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!FLIP\_CLOCKWISE@{FLIP\_CLOCKWISE}}
+}\Hypertarget{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eeaffa836e6587173f46110cac710942ddd}\label{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eeaffa836e6587173f46110cac710942ddd} 
+FLIP\+\_\+\+CLOCKWISE&Rotate clockwise 90 degrees \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FLIP\_HORIZONTAL@{FLIP\_HORIZONTAL}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!FLIP\_HORIZONTAL@{FLIP\_HORIZONTAL}}
+}\Hypertarget{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eea12de6ce800e456bae8c1715c4a30778f}\label{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eea12de6ce800e456bae8c1715c4a30778f} 
+FLIP\+\_\+\+HORIZONTAL&Flip horizontally \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FLIP\_UPPER\_RIGHT\_DIAGONAL@{FLIP\_UPPER\_RIGHT\_DIAGONAL}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!FLIP\_UPPER\_RIGHT\_DIAGONAL@{FLIP\_UPPER\_RIGHT\_DIAGONAL}}
+}\Hypertarget{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eeae1d1a1b2bc8a7f29abcd693d562665a4}\label{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eeae1d1a1b2bc8a7f29abcd693d562665a4} 
+FLIP\+\_\+\+UPPER\+\_\+\+RIGHT\+\_\+\+DIAGONAL&Flip across upper right/\+lower left diagonal \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FLIP\_VERTICAL@{FLIP\_VERTICAL}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!FLIP\_VERTICAL@{FLIP\_VERTICAL}}
+}\Hypertarget{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eead0bc96c4f600b7a7859dbd50f5e7b71e}\label{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eead0bc96c4f600b7a7859dbd50f5e7b71e} 
+FLIP\+\_\+\+VERTICAL&Flip vertically \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FLIP\_UPPER\_LEFT\_DIAGONAL@{FLIP\_UPPER\_LEFT\_DIAGONAL}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!FLIP\_UPPER\_LEFT\_DIAGONAL@{FLIP\_UPPER\_LEFT\_DIAGONAL}}
+}\Hypertarget{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eeac2d4b99bd4f4c40f83d10618acf4cd26}\label{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eeac2d4b99bd4f4c40f83d10618acf4cd26} 
+FLIP\+\_\+\+UPPER\+\_\+\+LEFT\+\_\+\+DIAGONAL&Flip across upper left/\+lower right diagonal \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FLIP\_DEFAULT@{FLIP\_DEFAULT}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!FLIP\_DEFAULT@{FLIP\_DEFAULT}}
+}\Hypertarget{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eea79bec6145a19215de4b522a2e6a4545e}\label{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eea79bec6145a19215de4b522a2e6a4545e} 
+FLIP\+\_\+\+DEFAULT&Default setting (none) \\
+\hline
+
+\end{DoxyEnumFields}
+\Hypertarget{structvideo_options_acd8d5155cc7b38791698b4e89c6a96ee}\index{videoOptions@{videoOptions}!FlipMethod@{FlipMethod}}
+\index{FlipMethod@{FlipMethod}!videoOptions@{videoOptions}}
+\doxysubsubsection{\texorpdfstring{FlipMethod}{FlipMethod}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{structvideo_options_acd8d5155cc7b38791698b4e89c6a96ee} 
+enum \doxymbox{\hyperlink{structvideo_options_acd8d5155cc7b38791698b4e89c6a96ee}{video\+Options::\+\+Flip\+Method}}}
+
+Settings of the flip method used by MIPI CSI cameras and compressed video inputs. \begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FLIP\_NONE@{FLIP\_NONE}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!FLIP\_NONE@{FLIP\_NONE}}
+}\Hypertarget{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eea1302ee053edc9aaa35619b19e17c6529}\label{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eea1302ee053edc9aaa35619b19e17c6529} 
+FLIP\+\_\+\+NONE&Identity (no rotation) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FLIP\_COUNTERCLOCKWISE@{FLIP\_COUNTERCLOCKWISE}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!FLIP\_COUNTERCLOCKWISE@{FLIP\_COUNTERCLOCKWISE}}
+}\Hypertarget{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eea792ce378541be240bdcb8b8c40e8d63d}\label{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eea792ce378541be240bdcb8b8c40e8d63d} 
+FLIP\+\_\+\+COUNTERCLOCKWISE&Rotate counter-\/clockwise 90 degrees \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FLIP\_ROTATE\_180@{FLIP\_ROTATE\_180}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!FLIP\_ROTATE\_180@{FLIP\_ROTATE\_180}}
+}\Hypertarget{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eeaf6bcea96d2852de27d10047158f25c71}\label{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eeaf6bcea96d2852de27d10047158f25c71} 
+FLIP\+\_\+\+ROTATE\+\_\+180&Rotate 180 degrees \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FLIP\_CLOCKWISE@{FLIP\_CLOCKWISE}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!FLIP\_CLOCKWISE@{FLIP\_CLOCKWISE}}
+}\Hypertarget{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eeaffa836e6587173f46110cac710942ddd}\label{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eeaffa836e6587173f46110cac710942ddd} 
+FLIP\+\_\+\+CLOCKWISE&Rotate clockwise 90 degrees \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FLIP\_HORIZONTAL@{FLIP\_HORIZONTAL}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!FLIP\_HORIZONTAL@{FLIP\_HORIZONTAL}}
+}\Hypertarget{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eea12de6ce800e456bae8c1715c4a30778f}\label{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eea12de6ce800e456bae8c1715c4a30778f} 
+FLIP\+\_\+\+HORIZONTAL&Flip horizontally \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FLIP\_UPPER\_RIGHT\_DIAGONAL@{FLIP\_UPPER\_RIGHT\_DIAGONAL}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!FLIP\_UPPER\_RIGHT\_DIAGONAL@{FLIP\_UPPER\_RIGHT\_DIAGONAL}}
+}\Hypertarget{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eeae1d1a1b2bc8a7f29abcd693d562665a4}\label{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eeae1d1a1b2bc8a7f29abcd693d562665a4} 
+FLIP\+\_\+\+UPPER\+\_\+\+RIGHT\+\_\+\+DIAGONAL&Flip across upper right/\+lower left diagonal \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FLIP\_VERTICAL@{FLIP\_VERTICAL}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!FLIP\_VERTICAL@{FLIP\_VERTICAL}}
+}\Hypertarget{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eead0bc96c4f600b7a7859dbd50f5e7b71e}\label{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eead0bc96c4f600b7a7859dbd50f5e7b71e} 
+FLIP\+\_\+\+VERTICAL&Flip vertically \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FLIP\_UPPER\_LEFT\_DIAGONAL@{FLIP\_UPPER\_LEFT\_DIAGONAL}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!FLIP\_UPPER\_LEFT\_DIAGONAL@{FLIP\_UPPER\_LEFT\_DIAGONAL}}
+}\Hypertarget{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eeac2d4b99bd4f4c40f83d10618acf4cd26}\label{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eeac2d4b99bd4f4c40f83d10618acf4cd26} 
+FLIP\+\_\+\+UPPER\+\_\+\+LEFT\+\_\+\+DIAGONAL&Flip across upper left/\+lower right diagonal \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FLIP\_DEFAULT@{FLIP\_DEFAULT}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!FLIP\_DEFAULT@{FLIP\_DEFAULT}}
+}\Hypertarget{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eea79bec6145a19215de4b522a2e6a4545e}\label{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eea79bec6145a19215de4b522a2e6a4545e} 
+FLIP\+\_\+\+DEFAULT&Default setting (none) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FLIP\_NONE@{FLIP\_NONE}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!FLIP\_NONE@{FLIP\_NONE}}
+}\Hypertarget{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eea1302ee053edc9aaa35619b19e17c6529}\label{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eea1302ee053edc9aaa35619b19e17c6529} 
+FLIP\+\_\+\+NONE&Identity (no rotation) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FLIP\_COUNTERCLOCKWISE@{FLIP\_COUNTERCLOCKWISE}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!FLIP\_COUNTERCLOCKWISE@{FLIP\_COUNTERCLOCKWISE}}
+}\Hypertarget{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eea792ce378541be240bdcb8b8c40e8d63d}\label{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eea792ce378541be240bdcb8b8c40e8d63d} 
+FLIP\+\_\+\+COUNTERCLOCKWISE&Rotate counter-\/clockwise 90 degrees \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FLIP\_ROTATE\_180@{FLIP\_ROTATE\_180}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!FLIP\_ROTATE\_180@{FLIP\_ROTATE\_180}}
+}\Hypertarget{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eeaf6bcea96d2852de27d10047158f25c71}\label{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eeaf6bcea96d2852de27d10047158f25c71} 
+FLIP\+\_\+\+ROTATE\+\_\+180&Rotate 180 degrees \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FLIP\_CLOCKWISE@{FLIP\_CLOCKWISE}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!FLIP\_CLOCKWISE@{FLIP\_CLOCKWISE}}
+}\Hypertarget{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eeaffa836e6587173f46110cac710942ddd}\label{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eeaffa836e6587173f46110cac710942ddd} 
+FLIP\+\_\+\+CLOCKWISE&Rotate clockwise 90 degrees \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FLIP\_HORIZONTAL@{FLIP\_HORIZONTAL}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!FLIP\_HORIZONTAL@{FLIP\_HORIZONTAL}}
+}\Hypertarget{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eea12de6ce800e456bae8c1715c4a30778f}\label{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eea12de6ce800e456bae8c1715c4a30778f} 
+FLIP\+\_\+\+HORIZONTAL&Flip horizontally \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FLIP\_UPPER\_RIGHT\_DIAGONAL@{FLIP\_UPPER\_RIGHT\_DIAGONAL}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!FLIP\_UPPER\_RIGHT\_DIAGONAL@{FLIP\_UPPER\_RIGHT\_DIAGONAL}}
+}\Hypertarget{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eeae1d1a1b2bc8a7f29abcd693d562665a4}\label{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eeae1d1a1b2bc8a7f29abcd693d562665a4} 
+FLIP\+\_\+\+UPPER\+\_\+\+RIGHT\+\_\+\+DIAGONAL&Flip across upper right/\+lower left diagonal \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FLIP\_VERTICAL@{FLIP\_VERTICAL}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!FLIP\_VERTICAL@{FLIP\_VERTICAL}}
+}\Hypertarget{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eead0bc96c4f600b7a7859dbd50f5e7b71e}\label{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eead0bc96c4f600b7a7859dbd50f5e7b71e} 
+FLIP\+\_\+\+VERTICAL&Flip vertically \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FLIP\_UPPER\_LEFT\_DIAGONAL@{FLIP\_UPPER\_LEFT\_DIAGONAL}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!FLIP\_UPPER\_LEFT\_DIAGONAL@{FLIP\_UPPER\_LEFT\_DIAGONAL}}
+}\Hypertarget{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eeac2d4b99bd4f4c40f83d10618acf4cd26}\label{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eeac2d4b99bd4f4c40f83d10618acf4cd26} 
+FLIP\+\_\+\+UPPER\+\_\+\+LEFT\+\_\+\+DIAGONAL&Flip across upper left/\+lower right diagonal \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FLIP\_DEFAULT@{FLIP\_DEFAULT}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!FLIP\_DEFAULT@{FLIP\_DEFAULT}}
+}\Hypertarget{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eea79bec6145a19215de4b522a2e6a4545e}\label{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eea79bec6145a19215de4b522a2e6a4545e} 
+FLIP\+\_\+\+DEFAULT&Default setting (none) \\
+\hline
+
+\end{DoxyEnumFields}
+\Hypertarget{structvideo_options_a7f7ae50399192afba10ee226310878b8}\index{videoOptions@{videoOptions}!IoType@{IoType}}
+\index{IoType@{IoType}!videoOptions@{videoOptions}}
+\doxysubsubsection{\texorpdfstring{IoType}{IoType}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{structvideo_options_a7f7ae50399192afba10ee226310878b8} 
+enum \doxymbox{\hyperlink{structvideo_options_a7f7ae50399192afba10ee226310878b8}{video\+Options::\+\+Io\+Type}}}
+
+Input/\+\+Output stream type. \begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{INPUT@{INPUT}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!INPUT@{INPUT}}
+}\Hypertarget{structvideo_options_a7f7ae50399192afba10ee226310878b8ab41fa1b7782b4e22548bd917a15ad181}\label{structvideo_options_a7f7ae50399192afba10ee226310878b8ab41fa1b7782b4e22548bd917a15ad181} 
+INPUT&Input stream (e.\+g. camera, video/\+image file, ect.) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OUTPUT@{OUTPUT}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!OUTPUT@{OUTPUT}}
+}\Hypertarget{structvideo_options_a7f7ae50399192afba10ee226310878b8af197f25ad92514078dbd28bafa1710cb}\label{structvideo_options_a7f7ae50399192afba10ee226310878b8af197f25ad92514078dbd28bafa1710cb} 
+OUTPUT&Output stream (e.\+g. display, video/\+image file, ect.) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{INPUT@{INPUT}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!INPUT@{INPUT}}
+}\Hypertarget{structvideo_options_a7f7ae50399192afba10ee226310878b8ab41fa1b7782b4e22548bd917a15ad181}\label{structvideo_options_a7f7ae50399192afba10ee226310878b8ab41fa1b7782b4e22548bd917a15ad181} 
+INPUT&Input stream (e.\+g. camera, video/\+image file, ect.) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OUTPUT@{OUTPUT}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!OUTPUT@{OUTPUT}}
+}\Hypertarget{structvideo_options_a7f7ae50399192afba10ee226310878b8af197f25ad92514078dbd28bafa1710cb}\label{structvideo_options_a7f7ae50399192afba10ee226310878b8af197f25ad92514078dbd28bafa1710cb} 
+OUTPUT&Output stream (e.\+g. display, video/\+image file, ect.) \\
+\hline
+
+\end{DoxyEnumFields}
+\Hypertarget{structvideo_options_a7f7ae50399192afba10ee226310878b8}\index{videoOptions@{videoOptions}!IoType@{IoType}}
+\index{IoType@{IoType}!videoOptions@{videoOptions}}
+\doxysubsubsection{\texorpdfstring{IoType}{IoType}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{structvideo_options_a7f7ae50399192afba10ee226310878b8} 
+enum \doxymbox{\hyperlink{structvideo_options_a7f7ae50399192afba10ee226310878b8}{video\+Options::\+\+Io\+Type}}}
+
+Input/\+\+Output stream type. \begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{INPUT@{INPUT}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!INPUT@{INPUT}}
+}\Hypertarget{structvideo_options_a7f7ae50399192afba10ee226310878b8ab41fa1b7782b4e22548bd917a15ad181}\label{structvideo_options_a7f7ae50399192afba10ee226310878b8ab41fa1b7782b4e22548bd917a15ad181} 
+INPUT&Input stream (e.\+g. camera, video/\+image file, ect.) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OUTPUT@{OUTPUT}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!OUTPUT@{OUTPUT}}
+}\Hypertarget{structvideo_options_a7f7ae50399192afba10ee226310878b8af197f25ad92514078dbd28bafa1710cb}\label{structvideo_options_a7f7ae50399192afba10ee226310878b8af197f25ad92514078dbd28bafa1710cb} 
+OUTPUT&Output stream (e.\+g. display, video/\+image file, ect.) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{INPUT@{INPUT}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!INPUT@{INPUT}}
+}\Hypertarget{structvideo_options_a7f7ae50399192afba10ee226310878b8ab41fa1b7782b4e22548bd917a15ad181}\label{structvideo_options_a7f7ae50399192afba10ee226310878b8ab41fa1b7782b4e22548bd917a15ad181} 
+INPUT&Input stream (e.\+g. camera, video/\+image file, ect.) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OUTPUT@{OUTPUT}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!OUTPUT@{OUTPUT}}
+}\Hypertarget{structvideo_options_a7f7ae50399192afba10ee226310878b8af197f25ad92514078dbd28bafa1710cb}\label{structvideo_options_a7f7ae50399192afba10ee226310878b8af197f25ad92514078dbd28bafa1710cb} 
+OUTPUT&Output stream (e.\+g. display, video/\+image file, ect.) \\
+\hline
+
+\end{DoxyEnumFields}
+
+
+\label{doc-constructors}
+\Hypertarget{structvideo_options_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{structvideo_options_afa1cc55ed3beeca6917d90607334079e}\index{videoOptions@{videoOptions}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!videoOptions@{videoOptions}}
+\doxysubsubsection{\texorpdfstring{videoOptions()}{videoOptions()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{structvideo_options_afa1cc55ed3beeca6917d90607334079e} 
+video\+Options::\+video\+Options (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Constructor using default options. \Hypertarget{structvideo_options_afa1cc55ed3beeca6917d90607334079e}\index{videoOptions@{videoOptions}!videoOptions@{videoOptions}}
+\index{videoOptions@{videoOptions}!videoOptions@{videoOptions}}
+\doxysubsubsection{\texorpdfstring{videoOptions()}{videoOptions()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{structvideo_options_afa1cc55ed3beeca6917d90607334079e} 
+video\+Options::\+video\+Options (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Constructor using default options. 
+
+\label{doc-func-members}
+\Hypertarget{structvideo_options_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{structvideo_options_a12fd71efc366c62f31f6de44f218cd09}\index{videoOptions@{videoOptions}!CodecFromStr@{CodecFromStr}}
+\index{CodecFromStr@{CodecFromStr}!videoOptions@{videoOptions}}
+\doxysubsubsection{\texorpdfstring{CodecFromStr()}{CodecFromStr()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{structvideo_options_a12fd71efc366c62f31f6de44f218cd09} 
+\doxymbox{\hyperlink{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8f}{video\+Options::\+\+Codec}} video\+Options::\+\+Codec\+From\+Str (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{str}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Parse a \doxylink{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8f}{Codec} enum from a string. \Hypertarget{structvideo_options_a9019047206c44b0bb55d120a9c8e8fc1}\index{videoOptions@{videoOptions}!CodecFromStr@{CodecFromStr}}
+\index{CodecFromStr@{CodecFromStr}!videoOptions@{videoOptions}}
+\doxysubsubsection{\texorpdfstring{CodecFromStr()}{CodecFromStr()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{structvideo_options_a9019047206c44b0bb55d120a9c8e8fc1} 
+\doxymbox{\hyperlink{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8f}{Codec}} video\+Options::\+\+Codec\+From\+Str (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{str}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Parse a \doxylink{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8f}{Codec} enum from a string. \Hypertarget{structvideo_options_a09f140de4647245a8f7ea7fe30d2b1ad}\index{videoOptions@{videoOptions}!CodecToStr@{CodecToStr}}
+\index{CodecToStr@{CodecToStr}!videoOptions@{videoOptions}}
+\doxysubsubsection{\texorpdfstring{CodecToStr()}{CodecToStr()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{structvideo_options_a09f140de4647245a8f7ea7fe30d2b1ad} 
+const char \texorpdfstring{$\ast$}{*} video\+Options::\+\+Codec\+To\+Str (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8f}{video\+Options::\+\+Codec}}}]{codec}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Convert a \doxylink{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8f}{Codec} enum to a string. \Hypertarget{structvideo_options_a25ab44ea4d36bb7cb163e7e24db1c4d8}\index{videoOptions@{videoOptions}!CodecToStr@{CodecToStr}}
+\index{CodecToStr@{CodecToStr}!videoOptions@{videoOptions}}
+\doxysubsubsection{\texorpdfstring{CodecToStr()}{CodecToStr()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{structvideo_options_a25ab44ea4d36bb7cb163e7e24db1c4d8} 
+const char \texorpdfstring{$\ast$}{*} video\+Options::\+\+Codec\+To\+Str (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8f}{Codec}}}]{codec}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Convert a \doxylink{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8f}{Codec} enum to a string. \Hypertarget{structvideo_options_ab2b260cee059bdb20a690bd4bae41d9d}\index{videoOptions@{videoOptions}!CodecTypeFromStr@{CodecTypeFromStr}}
+\index{CodecTypeFromStr@{CodecTypeFromStr}!videoOptions@{videoOptions}}
+\doxysubsubsection{\texorpdfstring{CodecTypeFromStr()}{CodecTypeFromStr()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{structvideo_options_ab2b260cee059bdb20a690bd4bae41d9d} 
+\doxymbox{\hyperlink{structvideo_options_a4e6a7e1158f7614ffdfcff4d58dcc3cc}{video\+Options::\+\+Codec\+Type}} video\+Options::\+\+Codec\+Type\+From\+Str (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{str}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Parse a \doxylink{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8f}{Codec} enum from a string. \Hypertarget{structvideo_options_a4a5e8f314dce5f95b65efcf712757f98}\index{videoOptions@{videoOptions}!CodecTypeFromStr@{CodecTypeFromStr}}
+\index{CodecTypeFromStr@{CodecTypeFromStr}!videoOptions@{videoOptions}}
+\doxysubsubsection{\texorpdfstring{CodecTypeFromStr()}{CodecTypeFromStr()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{structvideo_options_a4a5e8f314dce5f95b65efcf712757f98} 
+\doxymbox{\hyperlink{structvideo_options_a4e6a7e1158f7614ffdfcff4d58dcc3cc}{Codec\+Type}} video\+Options::\+\+Codec\+Type\+From\+Str (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{str}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Parse a \doxylink{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8f}{Codec} enum from a string. \Hypertarget{structvideo_options_a95cb59ab93cfd2b5e2670f87fa1d8559}\index{videoOptions@{videoOptions}!CodecTypeToStr@{CodecTypeToStr}}
+\index{CodecTypeToStr@{CodecTypeToStr}!videoOptions@{videoOptions}}
+\doxysubsubsection{\texorpdfstring{CodecTypeToStr()}{CodecTypeToStr()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{structvideo_options_a95cb59ab93cfd2b5e2670f87fa1d8559} 
+const char \texorpdfstring{$\ast$}{*} video\+Options::\+\+Codec\+Type\+To\+Str (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{structvideo_options_a4e6a7e1158f7614ffdfcff4d58dcc3cc}{video\+Options::\+\+Codec\+Type}}}]{codec}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Convert a \doxylink{structvideo_options_a4e6a7e1158f7614ffdfcff4d58dcc3cc}{Codec\+Type} enum to a string. \Hypertarget{structvideo_options_ab081c3d74b4077e63ec7f752c86591b6}\index{videoOptions@{videoOptions}!CodecTypeToStr@{CodecTypeToStr}}
+\index{CodecTypeToStr@{CodecTypeToStr}!videoOptions@{videoOptions}}
+\doxysubsubsection{\texorpdfstring{CodecTypeToStr()}{CodecTypeToStr()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{structvideo_options_ab081c3d74b4077e63ec7f752c86591b6} 
+const char \texorpdfstring{$\ast$}{*} video\+Options::\+\+Codec\+Type\+To\+Str (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{structvideo_options_a4e6a7e1158f7614ffdfcff4d58dcc3cc}{Codec\+Type}}}]{codec\+Type}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Convert a \doxylink{structvideo_options_a4e6a7e1158f7614ffdfcff4d58dcc3cc}{Codec\+Type} enum to a string. \Hypertarget{structvideo_options_ab667e7beec81249a4c59d070b2e83fdf}\index{videoOptions@{videoOptions}!DeviceTypeFromStr@{DeviceTypeFromStr}}
+\index{DeviceTypeFromStr@{DeviceTypeFromStr}!videoOptions@{videoOptions}}
+\doxysubsubsection{\texorpdfstring{DeviceTypeFromStr()}{DeviceTypeFromStr()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{structvideo_options_ab667e7beec81249a4c59d070b2e83fdf} 
+\doxymbox{\hyperlink{structvideo_options_a4065c77be7f3be75eddfc16b6efb36ed}{video\+Options::\+\+Device\+Type}} video\+Options::\+\+Device\+Type\+From\+Str (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{str}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Parse a \doxylink{structvideo_options_a4065c77be7f3be75eddfc16b6efb36ed}{Device\+Type} enum from a string. \Hypertarget{structvideo_options_a339d348d2b5262987e462f1d42fa4466}\index{videoOptions@{videoOptions}!DeviceTypeFromStr@{DeviceTypeFromStr}}
+\index{DeviceTypeFromStr@{DeviceTypeFromStr}!videoOptions@{videoOptions}}
+\doxysubsubsection{\texorpdfstring{DeviceTypeFromStr()}{DeviceTypeFromStr()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{structvideo_options_a339d348d2b5262987e462f1d42fa4466} 
+\doxymbox{\hyperlink{structvideo_options_a4065c77be7f3be75eddfc16b6efb36ed}{Device\+Type}} video\+Options::\+\+Device\+Type\+From\+Str (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{str}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Parse a \doxylink{structvideo_options_a4065c77be7f3be75eddfc16b6efb36ed}{Device\+Type} enum from a string. \Hypertarget{structvideo_options_a9d646f22c1bf60e71350e86445836b61}\index{videoOptions@{videoOptions}!DeviceTypeToStr@{DeviceTypeToStr}}
+\index{DeviceTypeToStr@{DeviceTypeToStr}!videoOptions@{videoOptions}}
+\doxysubsubsection{\texorpdfstring{DeviceTypeToStr()}{DeviceTypeToStr()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{structvideo_options_a9d646f22c1bf60e71350e86445836b61} 
+const char \texorpdfstring{$\ast$}{*} video\+Options::\+\+Device\+Type\+To\+Str (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{structvideo_options_a4065c77be7f3be75eddfc16b6efb36ed}{video\+Options::\+\+Device\+Type}}}]{type}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Convert a \doxylink{structvideo_options_a4065c77be7f3be75eddfc16b6efb36ed}{Device\+Type} enum to a string. \Hypertarget{structvideo_options_a85b9801f5541183ad5e33abc7eb718f4}\index{videoOptions@{videoOptions}!DeviceTypeToStr@{DeviceTypeToStr}}
+\index{DeviceTypeToStr@{DeviceTypeToStr}!videoOptions@{videoOptions}}
+\doxysubsubsection{\texorpdfstring{DeviceTypeToStr()}{DeviceTypeToStr()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{structvideo_options_a85b9801f5541183ad5e33abc7eb718f4} 
+const char \texorpdfstring{$\ast$}{*} video\+Options::\+\+Device\+Type\+To\+Str (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{structvideo_options_a4065c77be7f3be75eddfc16b6efb36ed}{Device\+Type}}}]{type}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Convert a \doxylink{structvideo_options_a4065c77be7f3be75eddfc16b6efb36ed}{Device\+Type} enum to a string. \Hypertarget{structvideo_options_ab021912a5096f23dc82a3a19fd9525a6}\index{videoOptions@{videoOptions}!FlipMethodFromStr@{FlipMethodFromStr}}
+\index{FlipMethodFromStr@{FlipMethodFromStr}!videoOptions@{videoOptions}}
+\doxysubsubsection{\texorpdfstring{FlipMethodFromStr()}{FlipMethodFromStr()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{structvideo_options_ab021912a5096f23dc82a3a19fd9525a6} 
+\doxymbox{\hyperlink{structvideo_options_acd8d5155cc7b38791698b4e89c6a96ee}{video\+Options::\+\+Flip\+Method}} video\+Options::\+\+Flip\+Method\+From\+Str (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{str}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Parse a \doxylink{structvideo_options_acd8d5155cc7b38791698b4e89c6a96ee}{Flip\+Method} enum from a string. \Hypertarget{structvideo_options_a8611c0e59fd292f23ca555f2b5ffd0aa}\index{videoOptions@{videoOptions}!FlipMethodFromStr@{FlipMethodFromStr}}
+\index{FlipMethodFromStr@{FlipMethodFromStr}!videoOptions@{videoOptions}}
+\doxysubsubsection{\texorpdfstring{FlipMethodFromStr()}{FlipMethodFromStr()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{structvideo_options_a8611c0e59fd292f23ca555f2b5ffd0aa} 
+\doxymbox{\hyperlink{structvideo_options_acd8d5155cc7b38791698b4e89c6a96ee}{Flip\+Method}} video\+Options::\+\+Flip\+Method\+From\+Str (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{str}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Parse a \doxylink{structvideo_options_acd8d5155cc7b38791698b4e89c6a96ee}{Flip\+Method} enum from a string. \Hypertarget{structvideo_options_ab0edaaba4185ee813d999081bdaad6d4}\index{videoOptions@{videoOptions}!FlipMethodToStr@{FlipMethodToStr}}
+\index{FlipMethodToStr@{FlipMethodToStr}!videoOptions@{videoOptions}}
+\doxysubsubsection{\texorpdfstring{FlipMethodToStr()}{FlipMethodToStr()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{structvideo_options_ab0edaaba4185ee813d999081bdaad6d4} 
+const char \texorpdfstring{$\ast$}{*} video\+Options::\+\+Flip\+Method\+To\+Str (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{structvideo_options_acd8d5155cc7b38791698b4e89c6a96ee}{video\+Options::\+\+Flip\+Method}}}]{flip}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Convert a \doxylink{structvideo_options_acd8d5155cc7b38791698b4e89c6a96ee}{Flip\+Method} enum to a string. \Hypertarget{structvideo_options_ac59ae381f3152b46a05ba2677cdcedec}\index{videoOptions@{videoOptions}!FlipMethodToStr@{FlipMethodToStr}}
+\index{FlipMethodToStr@{FlipMethodToStr}!videoOptions@{videoOptions}}
+\doxysubsubsection{\texorpdfstring{FlipMethodToStr()}{FlipMethodToStr()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{structvideo_options_ac59ae381f3152b46a05ba2677cdcedec} 
+const char \texorpdfstring{$\ast$}{*} video\+Options::\+\+Flip\+Method\+To\+Str (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{structvideo_options_acd8d5155cc7b38791698b4e89c6a96ee}{Flip\+Method}}}]{flip}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Convert a \doxylink{structvideo_options_acd8d5155cc7b38791698b4e89c6a96ee}{Flip\+Method} enum to a string. \Hypertarget{structvideo_options_a43a55fadd51bea4403b7b3364ac8e0c1}\index{videoOptions@{videoOptions}!IoTypeFromStr@{IoTypeFromStr}}
+\index{IoTypeFromStr@{IoTypeFromStr}!videoOptions@{videoOptions}}
+\doxysubsubsection{\texorpdfstring{IoTypeFromStr()}{IoTypeFromStr()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{structvideo_options_a43a55fadd51bea4403b7b3364ac8e0c1} 
+\doxymbox{\hyperlink{structvideo_options_a7f7ae50399192afba10ee226310878b8}{video\+Options::\+\+Io\+Type}} video\+Options::\+\+Io\+Type\+From\+Str (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{str}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Parse an \doxylink{structvideo_options_a7f7ae50399192afba10ee226310878b8}{Io\+Type} enum from a string. \Hypertarget{structvideo_options_af15495f79afce20edd2c12343c620073}\index{videoOptions@{videoOptions}!IoTypeFromStr@{IoTypeFromStr}}
+\index{IoTypeFromStr@{IoTypeFromStr}!videoOptions@{videoOptions}}
+\doxysubsubsection{\texorpdfstring{IoTypeFromStr()}{IoTypeFromStr()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{structvideo_options_af15495f79afce20edd2c12343c620073} 
+\doxymbox{\hyperlink{structvideo_options_a7f7ae50399192afba10ee226310878b8}{Io\+Type}} video\+Options::\+\+Io\+Type\+From\+Str (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{str}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Parse an \doxylink{structvideo_options_a7f7ae50399192afba10ee226310878b8}{Io\+Type} enum from a string. \Hypertarget{structvideo_options_a3936a1ca663e19984d1b4649077d737f}\index{videoOptions@{videoOptions}!IoTypeToStr@{IoTypeToStr}}
+\index{IoTypeToStr@{IoTypeToStr}!videoOptions@{videoOptions}}
+\doxysubsubsection{\texorpdfstring{IoTypeToStr()}{IoTypeToStr()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{structvideo_options_a3936a1ca663e19984d1b4649077d737f} 
+const char \texorpdfstring{$\ast$}{*} video\+Options::\+\+Io\+Type\+To\+Str (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{structvideo_options_a7f7ae50399192afba10ee226310878b8}{video\+Options::\+\+Io\+Type}}}]{type}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Convert an \doxylink{structvideo_options_a7f7ae50399192afba10ee226310878b8}{Io\+Type} enum to a string. \Hypertarget{structvideo_options_aa9293a2f5e432da7b0e161f7129e0f33}\index{videoOptions@{videoOptions}!IoTypeToStr@{IoTypeToStr}}
+\index{IoTypeToStr@{IoTypeToStr}!videoOptions@{videoOptions}}
+\doxysubsubsection{\texorpdfstring{IoTypeToStr()}{IoTypeToStr()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{structvideo_options_aa9293a2f5e432da7b0e161f7129e0f33} 
+const char \texorpdfstring{$\ast$}{*} video\+Options::\+\+Io\+Type\+To\+Str (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{structvideo_options_a7f7ae50399192afba10ee226310878b8}{Io\+Type}}}]{type}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Convert an \doxylink{structvideo_options_a7f7ae50399192afba10ee226310878b8}{Io\+Type} enum to a string. \Hypertarget{structvideo_options_aa69a63112b92c4e19a459427329ffd47}\index{videoOptions@{videoOptions}!Print@{Print}}
+\index{Print@{Print}!videoOptions@{videoOptions}}
+\doxysubsubsection{\texorpdfstring{Print()}{Print()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{structvideo_options_aa69a63112b92c4e19a459427329ffd47} 
+void video\+Options::\+\+Print (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{prefix}{ = {\ttfamily NULL}}\end{DoxyParamCaption}) const}
+
+\doxylink{class_log}{Log} the video settings, with an optional prefix label. \Hypertarget{structvideo_options_aa69a63112b92c4e19a459427329ffd47}\index{videoOptions@{videoOptions}!Print@{Print}}
+\index{Print@{Print}!videoOptions@{videoOptions}}
+\doxysubsubsection{\texorpdfstring{Print()}{Print()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{structvideo_options_aa69a63112b92c4e19a459427329ffd47} 
+void video\+Options::\+\+Print (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{prefix}{ = {\ttfamily NULL}}\end{DoxyParamCaption}) const}
+
+\doxylink{class_log}{Log} the video settings, with an optional prefix label. 
+
+\label{doc-variable-members}
+\Hypertarget{structvideo_options_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{structvideo_options_aec87b064f96732d6d1d8af49483673e6}\index{videoOptions@{videoOptions}!bitRate@{bitRate}}
+\index{bitRate@{bitRate}!videoOptions@{videoOptions}}
+\doxysubsubsection{\texorpdfstring{bitRate}{bitRate}}
+{\footnotesize\ttfamily \label{structvideo_options_aec87b064f96732d6d1d8af49483673e6} 
+uint32\+\_\+t video\+Options::\+bit\+Rate}
+
+\doxylink{requirements_The}{The} encoding bitrate for compressed streams (only applies to video codecs like H264/\+\+H265). For \doxylink{classvideo_output}{video\+Output} streams, this option can be set from the command line using {\ttfamily -\/-\/bitrate=N}. \begin{DoxyNote}{Note}
+the default bitrate for encoding output streams is 4Mbps (target VBR). 
+\end{DoxyNote}
+\Hypertarget{structvideo_options_a7570676849d4971e061170b755f7cb71}\index{videoOptions@{videoOptions}!codec@{codec}}
+\index{codec@{codec}!videoOptions@{videoOptions}}
+\doxysubsubsection{\texorpdfstring{codec}{codec}}
+{\footnotesize\ttfamily \label{structvideo_options_a7570676849d4971e061170b755f7cb71} 
+\doxymbox{\hyperlink{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8f}{Codec}} video\+Options::\+codec}
+
+Indicates the codec used by the stream. This is only really applicable to compressed streams, otherwise it will be {\ttfamily \doxylink{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa6d4d70855081e902df81941a8405b521}{CODEC\+\_\+\+RAW}}.
+
+\doxylink{classvideo_source}{video\+Source} input streams will attempt to discover the codec type (i.\+e. from video file), however RTP streams need this to be explitly set using the {\ttfamily -\/-\/input-\/codec=xyz} option (where {\ttfamily xyz} is a string like {\ttfamily h264}, {\ttfamily h265}, {\ttfamily vp8}, {\ttfamily vp9}, {\ttfamily mpeg2}, {\ttfamily mpeg4}, or {\ttfamily mjpeg}).
+
+A compressed \doxylink{classvideo_output}{video\+Output} stream will default to H.\+264 encoding, but can be set using the {\ttfamily -\/-\/output-\/codec=xyz} command line option (same values for {\ttfamily xyz} as above). \Hypertarget{structvideo_options_a780f3d2a953a013c031e4b54599313b6}\index{videoOptions@{videoOptions}!codecType@{codecType}}
+\index{codecType@{codecType}!videoOptions@{videoOptions}}
+\doxysubsubsection{\texorpdfstring{codecType}{codecType}}
+{\footnotesize\ttfamily \label{structvideo_options_a780f3d2a953a013c031e4b54599313b6} 
+\doxymbox{\hyperlink{structvideo_options_a4e6a7e1158f7614ffdfcff4d58dcc3cc}{Codec\+Type}} video\+Options::\+codec\+Type}
+
+Indicates the underlying hardware/\+software engine used by the codec. For input streams, this can be set with {\ttfamily -\/-\/decode=cpu} or {\ttfamily -\/-\/decode=v4l2} for example. For output streams, this can be set with {\ttfamily -\/-\/encode=cpu} or {\ttfamily -\/-\/encode=v4l2} for example. \doxylink{requirements_The}{The} default setting is to use hardware-\/acceleration on Jetson (aarch64) and CPU on x86. \Hypertarget{structvideo_options_a63c0d583c059d4498ba885090dac062e}\index{videoOptions@{videoOptions}!deviceType@{deviceType}}
+\index{deviceType@{deviceType}!videoOptions@{videoOptions}}
+\doxysubsubsection{\texorpdfstring{deviceType}{deviceType}}
+{\footnotesize\ttfamily \label{structvideo_options_a63c0d583c059d4498ba885090dac062e} 
+\doxymbox{\hyperlink{structvideo_options_a4065c77be7f3be75eddfc16b6efb36ed}{Device\+Type}} video\+Options::\+device\+Type}
+
+Indicates the type of device interface used by this stream. \Hypertarget{structvideo_options_a7af22e5cccd15cc2bdf14386f7f34d36}\index{videoOptions@{videoOptions}!flipMethod@{flipMethod}}
+\index{flipMethod@{flipMethod}!videoOptions@{videoOptions}}
+\doxysubsubsection{\texorpdfstring{flipMethod}{flipMethod}}
+{\footnotesize\ttfamily \label{structvideo_options_a7af22e5cccd15cc2bdf14386f7f34d36} 
+\doxymbox{\hyperlink{structvideo_options_acd8d5155cc7b38791698b4e89c6a96ee}{Flip\+Method}} video\+Options::\+flip\+Method}
+
+\doxylink{requirements_The}{The} flip method controls if and how an input frame is flipped/\+rotated in pre-\/processing from a MIPI CSI camera or compressed video input. Other types of streams will ignore this.
+
+This option can be set from the command line using {\ttfamily -\/-\/flip-\/method=xyz}, where {\ttfamily xyz} is one of the strings below:\+
+
+
+\begin{DoxyItemize}
+\item {\ttfamily none} (Identity, no rotation)
+\item {\ttfamily counterclockwise} (Rotate counter-\/clockwise 90 degrees)
+\item {\ttfamily rotate-\/180} (Rotate 180 degrees)
+\item {\ttfamily clockwise} (Rotate clockwise 90 degrees)
+\item {\ttfamily horizontal-\/flip} (Flip horizontally)
+\item {\ttfamily vertical-\/flip} (Flip vertically)
+\item {\ttfamily upper-\/right-\/diagonal} (Flip across upper right/\+lower left diagonal)
+\item {\ttfamily upper-\/left-\/diagonal} (Flip across upper left/\+lower right diagonal) 
+\end{DoxyItemize}\Hypertarget{structvideo_options_a69d5446579b0f133a7212afb81fc1a81}\index{videoOptions@{videoOptions}!frameCount@{frameCount}}
+\index{frameCount@{frameCount}!videoOptions@{videoOptions}}
+\doxysubsubsection{\texorpdfstring{frameCount}{frameCount}}
+{\footnotesize\ttfamily \label{structvideo_options_a69d5446579b0f133a7212afb81fc1a81} 
+uint64\+\_\+t video\+Options::\+frame\+Count}
+
+\doxylink{requirements_The}{The} number of frames that have been captured or output on this interface. \Hypertarget{structvideo_options_a85ceaa18c31e939f92da06027de8dedd}\index{videoOptions@{videoOptions}!frameRate@{frameRate}}
+\index{frameRate@{frameRate}!videoOptions@{videoOptions}}
+\doxysubsubsection{\texorpdfstring{frameRate}{frameRate}}
+{\footnotesize\ttfamily \label{structvideo_options_a85ceaa18c31e939f92da06027de8dedd} 
+float video\+Options::\+frame\+Rate}
+
+\doxylink{requirements_The}{The} framerate of the stream (the default is 30Hz). This option can be set from the command line using {\ttfamily -\/-\/input-\/rate=N} or {\ttfamily -\/-\/output-\/rate=N} for input and output streams, respectively. \doxylink{requirements_The}{The} {\ttfamily -\/-\/framerate=N} option sets it for both. \Hypertarget{structvideo_options_a66660b049937fd088b5ab29a0aa2187c}\index{videoOptions@{videoOptions}!height@{height}}
+\index{height@{height}!videoOptions@{videoOptions}}
+\doxysubsubsection{\texorpdfstring{height}{height}}
+{\footnotesize\ttfamily \label{structvideo_options_a66660b049937fd088b5ab29a0aa2187c} 
+uint32\+\_\+t video\+Options::\+height}
+
+\doxylink{requirements_The}{The} height of the stream (in pixels). This option can be set from the command line using {\ttfamily -\/-\/input-\/height=N} for \doxylink{classvideo_source}{video\+Source} streams, or {\ttfamily -\/-\/output-\/height=N} for \doxylink{classvideo_output}{video\+Output} streams. \Hypertarget{structvideo_options_af48a7105c91b415ef158290be02f45e9}\index{videoOptions@{videoOptions}!ioType@{ioType}}
+\index{ioType@{ioType}!videoOptions@{videoOptions}}
+\doxysubsubsection{\texorpdfstring{ioType}{ioType}}
+{\footnotesize\ttfamily \label{structvideo_options_af48a7105c91b415ef158290be02f45e9} 
+\doxymbox{\hyperlink{structvideo_options_a7f7ae50399192afba10ee226310878b8}{Io\+Type}} video\+Options::\+io\+Type}
+
+Indicates if this stream is an input or an output. \Hypertarget{structvideo_options_a4fb6a10cf16e794e6025329e63f51294}\index{videoOptions@{videoOptions}!latency@{latency}}
+\index{latency@{latency}!videoOptions@{videoOptions}}
+\doxysubsubsection{\texorpdfstring{latency}{latency}}
+{\footnotesize\ttfamily \label{structvideo_options_a4fb6a10cf16e794e6025329e63f51294} 
+int video\+Options::\+latency}
+
+Number of milliseconds of video to buffer for network RTSP or Web\+RTC streams. \doxylink{requirements_The}{The} default setting is 10ms (which is lower than GStreamer\textquotesingle{}s default settings). If you have connection/\+buffering problems, try increasing the latency setting. It can be set from the command line using {\ttfamily -\/-\/input-\/latency=N} or {\ttfamily -\/-\/output-\/latency=N} \Hypertarget{structvideo_options_aa8e394eb896dd92fd39c0946c10dd1ea}\index{videoOptions@{videoOptions}!loop@{loop}}
+\index{loop@{loop}!videoOptions@{videoOptions}}
+\doxysubsubsection{\texorpdfstring{loop}{loop}}
+{\footnotesize\ttfamily \label{structvideo_options_aa8e394eb896dd92fd39c0946c10dd1ea} 
+int video\+Options::\+loop}
+
+Control the number of loops for \doxylink{classvideo_source}{video\+Source} disk-\/based inputs (for example, the number of times that a video should loop). Other types of streams will ignore it.
+
+\doxylink{requirements_The}{The} following values are are valid:\+
+
+-\/1 = loop forever 0 = don\textquotesingle{}t loop \texorpdfstring{$>$}{>}0 = set number of loops
+
+This option can be set from the command line using {\ttfamily -\/-\/\doxylink{structvideo_options_aa8e394eb896dd92fd39c0946c10dd1ea}{loop}=N}. \begin{DoxyNote}{Note}
+by default, looping is disabled (set to {\ttfamily 0}). 
+\end{DoxyNote}
+\Hypertarget{structvideo_options_a65b80ddd3f3cf0940f18e365fb58270b}\index{videoOptions@{videoOptions}!numBuffers@{numBuffers}}
+\index{numBuffers@{numBuffers}!videoOptions@{videoOptions}}
+\doxysubsubsection{\texorpdfstring{numBuffers}{numBuffers}}
+{\footnotesize\ttfamily \label{structvideo_options_a65b80ddd3f3cf0940f18e365fb58270b} 
+uint32\+\_\+t video\+Options::\+num\+Buffers}
+
+\doxylink{requirements_The}{The} number of ring buffers used for threading. This option can be set from the command line using {\ttfamily -\/-\/num-\/buffers=N}. \begin{DoxyNote}{Note}
+the default number of ring buffers is 4. 
+\end{DoxyNote}
+\Hypertarget{structvideo_options_a1e904a117abb3b703f01eaed7fa305f2}\index{videoOptions@{videoOptions}!resource@{resource}}
+\index{resource@{resource}!videoOptions@{videoOptions}}
+\doxysubsubsection{\texorpdfstring{resource}{resource}}
+{\footnotesize\ttfamily \label{structvideo_options_a1e904a117abb3b703f01eaed7fa305f2} 
+\doxymbox{\hyperlink{struct_u_r_i}{URI}} video\+Options::\+resource}
+
+\doxylink{requirements_The}{The} resource \doxylink{struct_u_r_i}{URI} of the device, IP stream, or file/\+directory. \begin{DoxySeeAlso}{See also}
+\doxylink{struct_u_r_i}{URI} for details about accepted protocols and \doxylink{struct_u_r_i}{URI} formats. 
+\end{DoxySeeAlso}
+\Hypertarget{structvideo_options_a8f2128bc68ef2316b500da0d840e3942}\index{videoOptions@{videoOptions}!save@{save}}
+\index{save@{save}!videoOptions@{videoOptions}}
+\doxysubsubsection{\texorpdfstring{save}{save}}
+{\footnotesize\ttfamily \label{structvideo_options_a8f2128bc68ef2316b500da0d840e3942} 
+\doxymbox{\hyperlink{struct_u_r_i}{URI}} video\+Options::\+save}
+
+Optional path to save the compressed stream to a video file on disk, which is to be used in addition to the primary resource \doxylink{struct_u_r_i}{URI} above. This option can be set from the command-\/line using {\ttfamily -\/-\/input-\/save} for \doxylink{classvideo_source}{video\+Source} streams, or {\ttfamily -\/-\/output-\/save} for \doxylink{classvideo_output}{video\+Output} streams. \Hypertarget{structvideo_options_a236086322dc1d853b29c1fa570c8723d}\index{videoOptions@{videoOptions}!sslCert@{sslCert}}
+\index{sslCert@{sslCert}!videoOptions@{videoOptions}}
+\doxysubsubsection{\texorpdfstring{sslCert}{sslCert}}
+{\footnotesize\ttfamily \label{structvideo_options_a236086322dc1d853b29c1fa570c8723d} 
+std::\+string video\+Options::\+ssl\+Cert}
+
+Path to a file containing a PEM-\/encoded SSL/\+\+TLS certificate. This is used for enabling HTTPS in the Web\+RTC server. It can be set from the command-\/line using the {\ttfamily -\/-\/ssl-\/cert} or {\ttfamily -\/-\/https-\/cert} options. You can make your own self-\/signed certificate by running a command like:\+ {\ttfamily openssl req -\/x509 -\/newkey rsa:\+2048 -\/keyout key.\+pem -\/out cert.\+pem -\/days 365} \Hypertarget{structvideo_options_abc783d9782db081aa07af5f01e5c902c}\index{videoOptions@{videoOptions}!sslKey@{sslKey}}
+\index{sslKey@{sslKey}!videoOptions@{videoOptions}}
+\doxysubsubsection{\texorpdfstring{sslKey}{sslKey}}
+{\footnotesize\ttfamily \label{structvideo_options_abc783d9782db081aa07af5f01e5c902c} 
+std::\+string video\+Options::\+ssl\+Key}
+
+Path to a file containing a PEM-\/encoded private key. This is used for enabling HTTPS in the Web\+RTC server. It can be set from the command-\/line using the {\ttfamily -\/-\/ssl-\/key} or {\ttfamily -\/-\/https-\/key} options. You can make your own self-\/signed certificate by running a command like:\+ {\ttfamily openssl req -\/x509 -\/newkey rsa:\+2048 -\/keyout key.\+pem -\/out cert.\+pem -\/days 365} \Hypertarget{structvideo_options_a8c6f6313d185d475703557642b4f9a47}\index{videoOptions@{videoOptions}!stunServer@{stunServer}}
+\index{stunServer@{stunServer}!videoOptions@{videoOptions}}
+\doxysubsubsection{\texorpdfstring{stunServer}{stunServer}}
+{\footnotesize\ttfamily \label{structvideo_options_a8c6f6313d185d475703557642b4f9a47} 
+std::\+string video\+Options::\+stun\+Server}
+
+URL of STUN server used for Web\+RTC. This can be set using the {\ttfamily -\/-\/stun-\/server} command-\/line argument. STUN servers are used during ICE/\+\+NAT and allow a local device to determine its public IP address. If this is left blank and Web\+RTC is used, then a default STUN server will be assigned. \Hypertarget{structvideo_options_a5c30587a874bb769d7b346ac00cff580}\index{videoOptions@{videoOptions}!width@{width}}
+\index{width@{width}!videoOptions@{videoOptions}}
+\doxysubsubsection{\texorpdfstring{width}{width}}
+{\footnotesize\ttfamily \label{structvideo_options_a5c30587a874bb769d7b346ac00cff580} 
+uint32\+\_\+t video\+Options::\+width}
+
+\doxylink{requirements_The}{The} width of the stream (in pixels). This option can be set from the command line using {\ttfamily -\/-\/input-\/width=N} for \doxylink{classvideo_source}{video\+Source} streams, or {\ttfamily -\/-\/output-\/width=N} for \doxylink{classvideo_output}{video\+Output} streams. \Hypertarget{structvideo_options_afff91aa102908923622328e9f3ca3b83}\index{videoOptions@{videoOptions}!zeroCopy@{zeroCopy}}
+\index{zeroCopy@{zeroCopy}!videoOptions@{videoOptions}}
+\doxysubsubsection{\texorpdfstring{zeroCopy}{zeroCopy}}
+{\footnotesize\ttfamily \label{structvideo_options_afff91aa102908923622328e9f3ca3b83} 
+bool video\+Options::\+zero\+Copy}
+
+If true, indicates the buffers are allocated in zero\+Copy memory that is mapped to both the CPU and GPU. Otherwise, the buffers are only accessible from the GPU. \begin{DoxyNote}{Note}
+the default is true (zero\+Copy CPU/\+\+GPU access enabled). 
+\end{DoxyNote}
+
+
+The documentation for this struct was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+jetson-\/inference/\+build/\+aarch64/\+include/\+jetson-\/utils/\+video\+Options.\+h\item 
+jetson-\/inference/\+utils/\+video/\+video\+Options.\+h\item 
+jetson-\/inference/\+utils/\+video/\+video\+Options.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,108 @@
+\doxysection{nlohmann::\+detail::\+invalid\+\_\+iterator Class Reference}
+\hypertarget{classnlohmann_1_1detail_1_1invalid__iterator}{}\label{classnlohmann_1_1detail_1_1invalid__iterator}\index{nlohmann::detail::invalid\_iterator@{nlohmann::detail::invalid\_iterator}}
+
+
+exception indicating errors with iterators  
+
+
+
+
+{\ttfamily \+\#include $<$json.\+hpp$>$}
+
+Inheritance diagram for nlohmann::\+detail::\+invalid\+\_\+iterator:\+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.100000cm]{classnlohmann_1_1detail_1_1invalid__iterator}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classnlohmann_1_1detail_1_1invalid__iterator_a34104b98ab00564e564176b4d2ba7c3c}\label{classnlohmann_1_1detail_1_1invalid__iterator_a34104b98ab00564e564176b4d2ba7c3c} 
+{\footnotesize template$<$typename Basic\+Json\+Type$>$ }\\static invalid\+\_\+iterator {\bfseries create} (int id\+\_\+, const std::\+string \&what\+\_\+arg, const Basic\+Json\+Type \&context)
+\item 
+\Hypertarget{classnlohmann_1_1detail_1_1invalid__iterator_a34104b98ab00564e564176b4d2ba7c3c}\label{classnlohmann_1_1detail_1_1invalid__iterator_a34104b98ab00564e564176b4d2ba7c3c} 
+{\footnotesize template$<$typename Basic\+Json\+Type$>$ }\\static invalid\+\_\+iterator {\bfseries create} (int id\+\_\+, const std::\+string \&what\+\_\+arg, const Basic\+Json\+Type \&context)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Public Member Functions inherited from \doxymbox{\hyperlink{classnlohmann_1_1detail_1_1exception}{nlohmann::\+detail::\+exception}}}
+\begin{DoxyCompactItemize}
+\item 
+const char \texorpdfstring{$\ast$}{*} {\bfseries what} () const noexcept override
+\begin{DoxyCompactList}\small\item\em returns the explanatory string \end{DoxyCompactList}\item 
+const char \texorpdfstring{$\ast$}{*} {\bfseries what} () const noexcept override
+\begin{DoxyCompactList}\small\item\em returns the explanatory string \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \doxymbox{\hyperlink{classnlohmann_1_1detail_1_1exception}{nlohmann::\+detail::\+exception}}}
+\begin{DoxyCompactItemize}
+\item 
+const int {\bfseries id}
+\begin{DoxyCompactList}\small\item\em the id of the exception \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions inherited from \doxymbox{\hyperlink{classnlohmann_1_1detail_1_1exception}{nlohmann::\+detail::\+exception}}}
+\begin{DoxyCompactItemize}
+\item 
+{\bfseries exception} (int id\+\_\+, const char \texorpdfstring{$\ast$}{*}what\+\_\+arg)
+\item 
+{\bfseries exception} (int id\+\_\+, const char \texorpdfstring{$\ast$}{*}what\+\_\+arg)
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Protected Member Functions inherited from \doxymbox{\hyperlink{classnlohmann_1_1detail_1_1exception}{nlohmann::\+detail::\+exception}}}
+\begin{DoxyCompactItemize}
+\item 
+static std::\+string {\bfseries name} (const std::\+string \&ename, int id\+\_\+)
+\item 
+{\footnotesize template$<$typename Basic\+Json\+Type$>$ }\\static std::\+string {\bfseries diagnostics} (const Basic\+Json\+Type \&leaf\+\_\+element)
+\item 
+static std::\+string {\bfseries name} (const std::\+string \&ename, int id\+\_\+)
+\item 
+{\footnotesize template$<$typename Basic\+Json\+Type$>$ }\\static std::\+string {\bfseries diagnostics} (const Basic\+Json\+Type \&leaf\+\_\+element)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+exception indicating errors with iterators 
+
+This exception is thrown if iterators passed to a library function do not match the expected semantics.
+
+Exceptions have ids 2xx.
+
+
+\begin{DoxyTable}{3}{}{}{1}
+\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}name /\+ id  &\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}example message  &\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}description  \\
+json.\+exception.\+invalid\+\_\+iterator.\+201  &iterators are not compatible  &\doxylink{requirements_The}{The} iterators passed to constructor basic\+\_\+json(\+Input\+IT first, Input\+IT last) are not compatible, meaning they do not belong to the same container. Therefore, the range ({\itshape first}, {\itshape last}) is invalid.  \\
+json.\+exception.\+invalid\+\_\+iterator.\+202  &iterator does not fit current value  &In an erase or insert function, the passed iterator {\itshape pos} does not belong to the JSON value for which the function was called. It hence does not define a valid position for the deletion/\+insertion.  \\
+json.\+exception.\+invalid\+\_\+iterator.\+203  &iterators do not fit current value  &Either iterator passed to function erase(\+Iterator\+Type first, Iterator\+Type last) does not belong to the JSON value from which values shall be erased. It hence does not define a valid range to delete values from.  \\
+json.\+exception.\+invalid\+\_\+iterator.\+204  &iterators out of range  &When an iterator range for a primitive type (number, boolean, or string) is passed to a constructor or an erase function, this range has to be exactly (begin(), end()), because this is the only way the single stored value is expressed. All other ranges are invalid.  \\
+json.\+exception.\+invalid\+\_\+iterator.\+205  &iterator out of range  &When an iterator for a primitive type (number, boolean, or string) is passed to an erase function, the iterator has to be the begin() iterator, because it is the only way to address the stored value. All other iterators are invalid.  \\
+json.\+exception.\+invalid\+\_\+iterator.\+206  &cannot construct with iterators from null  &\doxylink{requirements_The}{The} iterators passed to constructor basic\+\_\+json(\+Input\+IT first, Input\+IT last) belong to a JSON null value and hence to not define a valid range.  \\
+json.\+exception.\+invalid\+\_\+iterator.\+207  &cannot use key() for non-\/object iterators  &\doxylink{requirements_The}{The} key() member function can only be used on iterators belonging to a JSON object, because other types do not have a concept of a key.  \\
+json.\+exception.\+invalid\+\_\+iterator.\+208  &cannot use operator\+[]\+ for object iterators  &\doxylink{requirements_The}{The} operator\+[]\+ to specify a concrete offset cannot be used on iterators belonging to a JSON object, because JSON objects are unordered.  \\
+json.\+exception.\+invalid\+\_\+iterator.\+209  &cannot use offsets with object iterators  &\doxylink{requirements_The}{The} offset operators (+, -\/, +=, -\/=) cannot be used on iterators belonging to a JSON object, because JSON objects are unordered.  \\
+json.\+exception.\+invalid\+\_\+iterator.\+210  &iterators do not fit  &\doxylink{requirements_The}{The} iterator range passed to the insert function are not compatible, meaning they do not belong to the same container. Therefore, the range ({\itshape first}, {\itshape last}) is invalid.  \\
+json.\+exception.\+invalid\+\_\+iterator.\+211  &passed iterators may not belong to container  &\doxylink{requirements_The}{The} iterator range passed to the insert function must not be a subrange of the container to insert to.  \\
+json.\+exception.\+invalid\+\_\+iterator.\+212  &cannot compare iterators of different containers  &When two iterators are compared, they must belong to the same container.  \\
+json.\+exception.\+invalid\+\_\+iterator.\+213  &cannot compare order of object iterators  &\doxylink{requirements_The}{The} order of object iterators cannot be compared, because JSON objects are unordered.  \\
+json.\+exception.\+invalid\+\_\+iterator.\+214  &cannot get value  &Cannot get value for iterator:\+ Either the iterator belongs to a null value or it is an iterator to a primitive type (number, boolean, or string), but the iterator is different to begin().  \\
+\end{DoxyTable}
+
+
+@liveexample\{\doxylink{requirements_The}{The} following code shows how an {\ttfamily \doxylink{classnlohmann_1_1detail_1_1invalid__iterator}{invalid\+\_\+iterator}} exception can be caught.,\doxylink{classnlohmann_1_1detail_1_1invalid__iterator}{invalid\+\_\+iterator}\}
+
+\begin{DoxySeeAlso}{See also}
+-\/ \doxylink{classnlohmann_1_1detail_1_1exception}{exception} for the base class of the library exceptions 
+
+-\/ \doxylink{classnlohmann_1_1detail_1_1parse__error}{parse\+\_\+error} for exceptions indicating a parse error 
+
+-\/ \doxylink{classnlohmann_1_1detail_1_1type__error}{type\+\_\+error} for exceptions indicating executing a member function with a wrong type 
+
+-\/ \doxylink{classnlohmann_1_1detail_1_1out__of__range}{out\+\_\+of\+\_\+range} for exceptions indicating access out of the defined range 
+
+-\/ \doxylink{classnlohmann_1_1detail_1_1other__error}{other\+\_\+error} for exceptions indicating other library errors
+\end{DoxySeeAlso}
+\begin{DoxySince}{Since}
+version 3.\+0.\+0 
+\end{DoxySince}
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+jetson-\/inference/\+build/\+aarch64/\+include/\+jetson-\/utils/\+json.\+hpp\item 
+jetson-\/inference/\+utils/\+json.\+hpp\end{DoxyCompactItemize}

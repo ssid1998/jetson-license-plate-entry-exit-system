@@ -1,0 +1,763 @@
+\doxysection{tensor\+Net Class Reference}
+\hypertarget{classtensor_net}{}\label{classtensor_net}\index{tensorNet@{tensorNet}}
+
+
+{\ttfamily \+\#include $<$tensor\+Net.\+h$>$}
+
+Inheritance diagram for tensor\+Net:\+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=1.509434cm]{classtensor_net}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \doxymbox{\hyperlink{classtensor_net_1_1_logger}{Logger}}
+\item 
+class \doxymbox{\hyperlink{classtensor_net_1_1_profiler}{Profiler}}
+\item 
+struct \doxymbox{\hyperlink{structtensor_net_1_1layer_info}{layer\+Info}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual \doxymbox{\hyperlink{classtensor_net_ad19aafbfa262f9b8ffb0bff561f4d7f7}{\texorpdfstring{$\sim$}{\string~}tensor\+Net}} ()
+\item 
+bool \doxymbox{\hyperlink{classtensor_net_a2e63d4670461814bd863ee0d9bd41526}{Load\+Network}} (const char \texorpdfstring{$\ast$}{*}prototxt, const char \texorpdfstring{$\ast$}{*}model, const char \texorpdfstring{$\ast$}{*}mean=NULL, const char \texorpdfstring{$\ast$}{*}input\+\_\+blob="{}data"{}, const char \texorpdfstring{$\ast$}{*}output\+\_\+blob="{}prob"{}, uint32\+\_\+t max\+Batch\+Size=\doxymbox{\hyperlink{group__tensor_net_ga5a46a965749d6118e01307fd4d4865c9}{DEFAULT\+\_\+\+MAX\+\_\+\+BATCH\+\_\+\+SIZE}}, \doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precision\+Type}} precision=\doxymbox{\hyperlink{group__tensor_net_ggaac6604fd52c6e5db82877390e0378623a1d325738f49e8e4c424ff671624e66f9}{TYPE\+\_\+\+FASTEST}}, \doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{device\+Type}} device=\doxymbox{\hyperlink{group__tensor_net_ggaa5d3f9981cdbd91516c1474006a80fe4adc7f3f88455afa81458863e5b3092e4b}{DEVICE\+\_\+\+GPU}}, bool allow\+GPUFallback=true, nvinfer1::\+\+IInt8\+Calibrator \texorpdfstring{$\ast$}{*}calibrator=NULL, cuda\+Stream\+\_\+t stream=NULL)
+\item 
+bool \doxymbox{\hyperlink{classtensor_net_a0a06ffd12b465f39160f4a6925cccd9f}{Load\+Network}} (const char \texorpdfstring{$\ast$}{*}prototxt, const char \texorpdfstring{$\ast$}{*}model, const char \texorpdfstring{$\ast$}{*}mean, const char \texorpdfstring{$\ast$}{*}input\+\_\+blob, const std::\+vector$<$ std::\+string $>$ \&output\+\_\+blobs, uint32\+\_\+t max\+Batch\+Size=\doxymbox{\hyperlink{group__tensor_net_ga5a46a965749d6118e01307fd4d4865c9}{DEFAULT\+\_\+\+MAX\+\_\+\+BATCH\+\_\+\+SIZE}}, \doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precision\+Type}} precision=\doxymbox{\hyperlink{group__tensor_net_ggaac6604fd52c6e5db82877390e0378623a1d325738f49e8e4c424ff671624e66f9}{TYPE\+\_\+\+FASTEST}}, \doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{device\+Type}} device=\doxymbox{\hyperlink{group__tensor_net_ggaa5d3f9981cdbd91516c1474006a80fe4adc7f3f88455afa81458863e5b3092e4b}{DEVICE\+\_\+\+GPU}}, bool allow\+GPUFallback=true, nvinfer1::\+\+IInt8\+Calibrator \texorpdfstring{$\ast$}{*}calibrator=NULL, cuda\+Stream\+\_\+t stream=NULL)
+\item 
+bool \doxymbox{\hyperlink{classtensor_net_a68a6f21680ae91bc51bea376221d1c48}{Load\+Network}} (const char \texorpdfstring{$\ast$}{*}prototxt, const char \texorpdfstring{$\ast$}{*}model, const char \texorpdfstring{$\ast$}{*}mean, const std::\+vector$<$ std::\+string $>$ \&input\+\_\+blobs, const std::\+vector$<$ std::\+string $>$ \&output\+\_\+blobs, uint32\+\_\+t max\+Batch\+Size=\doxymbox{\hyperlink{group__tensor_net_ga5a46a965749d6118e01307fd4d4865c9}{DEFAULT\+\_\+\+MAX\+\_\+\+BATCH\+\_\+\+SIZE}}, \doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precision\+Type}} precision=\doxymbox{\hyperlink{group__tensor_net_ggaac6604fd52c6e5db82877390e0378623a1d325738f49e8e4c424ff671624e66f9}{TYPE\+\_\+\+FASTEST}}, \doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{device\+Type}} device=\doxymbox{\hyperlink{group__tensor_net_ggaa5d3f9981cdbd91516c1474006a80fe4adc7f3f88455afa81458863e5b3092e4b}{DEVICE\+\_\+\+GPU}}, bool allow\+GPUFallback=true, nvinfer1::\+\+IInt8\+Calibrator \texorpdfstring{$\ast$}{*}calibrator=NULL, cuda\+Stream\+\_\+t stream=NULL)
+\item 
+bool \doxymbox{\hyperlink{classtensor_net_a168c7f75c9fd6d264afd016e144f3878}{Load\+Network}} (const char \texorpdfstring{$\ast$}{*}prototxt, const char \texorpdfstring{$\ast$}{*}model, const char \texorpdfstring{$\ast$}{*}mean, const char \texorpdfstring{$\ast$}{*}input\+\_\+blob, const Dims3 \&input\+\_\+dims, const std::\+vector$<$ std::\+string $>$ \&output\+\_\+blobs, uint32\+\_\+t max\+Batch\+Size=\doxymbox{\hyperlink{group__tensor_net_ga5a46a965749d6118e01307fd4d4865c9}{DEFAULT\+\_\+\+MAX\+\_\+\+BATCH\+\_\+\+SIZE}}, \doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precision\+Type}} precision=\doxymbox{\hyperlink{group__tensor_net_ggaac6604fd52c6e5db82877390e0378623a1d325738f49e8e4c424ff671624e66f9}{TYPE\+\_\+\+FASTEST}}, \doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{device\+Type}} device=\doxymbox{\hyperlink{group__tensor_net_ggaa5d3f9981cdbd91516c1474006a80fe4adc7f3f88455afa81458863e5b3092e4b}{DEVICE\+\_\+\+GPU}}, bool allow\+GPUFallback=true, nvinfer1::\+\+IInt8\+Calibrator \texorpdfstring{$\ast$}{*}calibrator=NULL, cuda\+Stream\+\_\+t stream=NULL)
+\item 
+bool \doxymbox{\hyperlink{classtensor_net_a8f34a6001c2da01662b85670de9246e4}{Load\+Network}} (const char \texorpdfstring{$\ast$}{*}prototxt, const char \texorpdfstring{$\ast$}{*}model, const char \texorpdfstring{$\ast$}{*}mean, const std::\+vector$<$ std::\+string $>$ \&input\+\_\+blobs, const std::\+vector$<$ Dims3 $>$ \&input\+\_\+dims, const std::\+vector$<$ std::\+string $>$ \&output\+\_\+blobs, uint32\+\_\+t max\+Batch\+Size=\doxymbox{\hyperlink{group__tensor_net_ga5a46a965749d6118e01307fd4d4865c9}{DEFAULT\+\_\+\+MAX\+\_\+\+BATCH\+\_\+\+SIZE}}, \doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precision\+Type}} precision=\doxymbox{\hyperlink{group__tensor_net_ggaac6604fd52c6e5db82877390e0378623a1d325738f49e8e4c424ff671624e66f9}{TYPE\+\_\+\+FASTEST}}, \doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{device\+Type}} device=\doxymbox{\hyperlink{group__tensor_net_ggaa5d3f9981cdbd91516c1474006a80fe4adc7f3f88455afa81458863e5b3092e4b}{DEVICE\+\_\+\+GPU}}, bool allow\+GPUFallback=true, nvinfer1::\+\+IInt8\+Calibrator \texorpdfstring{$\ast$}{*}calibrator=NULL, cuda\+Stream\+\_\+t stream=NULL)
+\item 
+bool \doxymbox{\hyperlink{classtensor_net_acb8076f6ab8d13b6507140826cf438d8}{Load\+Engine}} (const char \texorpdfstring{$\ast$}{*}engine\+\_\+filename, const std::\+vector$<$ std::\+string $>$ \&input\+\_\+blobs, const std::\+vector$<$ std::\+string $>$ \&output\+\_\+blobs, nvinfer1::\+\+IPlugin\+Factory \texorpdfstring{$\ast$}{*}plugin\+Factory=NULL, \doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{device\+Type}} device=\doxymbox{\hyperlink{group__tensor_net_ggaa5d3f9981cdbd91516c1474006a80fe4adc7f3f88455afa81458863e5b3092e4b}{DEVICE\+\_\+\+GPU}}, cuda\+Stream\+\_\+t stream=NULL)
+\item 
+bool \doxymbox{\hyperlink{classtensor_net_aaa4efe2b8d91fe914a22c87b725ac063}{Load\+Engine}} (char \texorpdfstring{$\ast$}{*}engine\+\_\+stream, size\+\_\+t engine\+\_\+size, const std::\+vector$<$ std::\+string $>$ \&input\+\_\+blobs, const std::\+vector$<$ std::\+string $>$ \&output\+\_\+blobs, nvinfer1::\+\+IPlugin\+Factory \texorpdfstring{$\ast$}{*}plugin\+Factory=NULL, \doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{device\+Type}} device=\doxymbox{\hyperlink{group__tensor_net_ggaa5d3f9981cdbd91516c1474006a80fe4adc7f3f88455afa81458863e5b3092e4b}{DEVICE\+\_\+\+GPU}}, cuda\+Stream\+\_\+t stream=NULL)
+\item 
+bool \doxymbox{\hyperlink{classtensor_net_a2d6fe13696a49d61e9abfa9729153e65}{Load\+Engine}} (nvinfer1::\+\+ICuda\+Engine \texorpdfstring{$\ast$}{*}engine, const std::\+vector$<$ std::\+string $>$ \&input\+\_\+blobs, const std::\+vector$<$ std::\+string $>$ \&output\+\_\+blobs, \doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{device\+Type}} device=\doxymbox{\hyperlink{group__tensor_net_ggaa5d3f9981cdbd91516c1474006a80fe4adc7f3f88455afa81458863e5b3092e4b}{DEVICE\+\_\+\+GPU}}, cuda\+Stream\+\_\+t stream=NULL)
+\item 
+bool \doxymbox{\hyperlink{classtensor_net_a89755f8e4b72ead7460deed394967386}{Load\+Engine}} (const char \texorpdfstring{$\ast$}{*}filename, char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}stream, size\+\_\+t \texorpdfstring{$\ast$}{*}size)
+\item 
+bool \doxymbox{\hyperlink{classtensor_net_a24831e27745d99ed9524ec25a205205a}{Load\+Binary}} (const char \texorpdfstring{$\ast$}{*}filename, char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}stream, size\+\_\+t \texorpdfstring{$\ast$}{*}size)
+\item 
+void \doxymbox{\hyperlink{classtensor_net_a3413eb0ad4f240f457f192f39e2e03e8}{Enable\+Layer\+Profiler}} ()
+\item 
+void \doxymbox{\hyperlink{classtensor_net_ae49f74ff83e46112a30318fa0576cace}{Enable\+Debug}} ()
+\item 
+bool \doxymbox{\hyperlink{classtensor_net_a7d0ec0d8504ac8b26c5ab4a6136599ca}{Allow\+GPUFallback}} () const
+\item 
+\doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{device\+Type}} \doxymbox{\hyperlink{classtensor_net_a92bb737172d26bda5f67d15346a02514}{Get\+Device}} () const
+\item 
+\doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precision\+Type}} \doxymbox{\hyperlink{classtensor_net_afb38b5f171025e987a00214cc4379ca9}{Get\+Precision}} () const
+\item 
+bool \doxymbox{\hyperlink{classtensor_net_a6b8e8dba05bc5c677027913d8c64f259}{Is\+Precision}} (\doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precision\+Type}} type) const
+\item 
+cuda\+Stream\+\_\+t \doxymbox{\hyperlink{classtensor_net_a34e350ec6185277ac09ae55a79403e62}{Get\+Stream}} () const
+\item 
+cuda\+Stream\+\_\+t \doxymbox{\hyperlink{classtensor_net_a78cecfb7505be0ea59d29041abc85cbb}{Create\+Stream}} (bool non\+Blocking=true)
+\item 
+void \doxymbox{\hyperlink{classtensor_net_a679b177784c85bfdba63dcd1008ff633}{Set\+Stream}} (cuda\+Stream\+\_\+t stream)
+\item 
+const char \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classtensor_net_acf9c21a1e031071c7fa8bacddc5901e1}{Get\+Prototxt\+Path}} () const
+\item 
+const char \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classtensor_net_ab7c42b9da47d4566e8f1dac0231638dd}{Get\+Model\+Path}} () const
+\item 
+const char \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classtensor_net_a3b64097cd334bb5af48913d58ae074b3}{Get\+Model\+Filename}} () const
+\item 
+\doxymbox{\hyperlink{group__tensor_net_ga5d4597e0e7beae7133d542e220528725}{model\+Type}} \doxymbox{\hyperlink{classtensor_net_acfa7f1f01b46f658ffc96f8a002e8d48}{Get\+Model\+Type}} () const
+\item 
+bool \doxymbox{\hyperlink{classtensor_net_a0a09d691ea080bd9734c5782c8fff6fd}{Is\+Model\+Type}} (\doxymbox{\hyperlink{group__tensor_net_ga5d4597e0e7beae7133d542e220528725}{model\+Type}} type) const
+\item 
+uint32\+\_\+t \doxymbox{\hyperlink{classtensor_net_ac583b8de1dd64b47338b4a3eb42ac166}{Get\+Input\+Layers}} () const
+\item 
+uint32\+\_\+t \doxymbox{\hyperlink{classtensor_net_a2dcc770a7215e2e76a8d520a36689e16}{Get\+Output\+Layers}} () const
+\item 
+Dims3 \doxymbox{\hyperlink{classtensor_net_adcfe61596f291e75a87d36c3771f25df}{Get\+Input\+Dims}} (uint32\+\_\+t layer=0) const
+\item 
+uint32\+\_\+t \doxymbox{\hyperlink{classtensor_net_a2d75ef6f579d1a71ff472bfafd0b7795}{Get\+Input\+Width}} (uint32\+\_\+t layer=0) const
+\item 
+uint32\+\_\+t \doxymbox{\hyperlink{classtensor_net_a214a92c41dcdcb58b3cd8496aac0857a}{Get\+Input\+Height}} (uint32\+\_\+t layer=0) const
+\item 
+uint32\+\_\+t \doxymbox{\hyperlink{classtensor_net_a2c80d46f8a01335e77e41023544102c9}{Get\+Input\+Size}} (uint32\+\_\+t layer=0) const
+\item 
+float \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classtensor_net_a3d04135aeef2b4204852ebd5b4363a68}{Get\+Input\+Ptr}} (uint32\+\_\+t layer=0) const
+\item 
+Dims3 \doxymbox{\hyperlink{classtensor_net_a77703f2a7b59f836c93ae28811e22cb0}{Get\+Output\+Dims}} (uint32\+\_\+t layer=0) const
+\item 
+uint32\+\_\+t \doxymbox{\hyperlink{classtensor_net_a09d63a8fd906c99f8158bf9460a83c02}{Get\+Output\+Width}} (uint32\+\_\+t layer=0) const
+\item 
+uint32\+\_\+t \doxymbox{\hyperlink{classtensor_net_a613679e8ee5315f3b5b16a39011ba76e}{Get\+Output\+Height}} (uint32\+\_\+t layer=0) const
+\item 
+uint32\+\_\+t \doxymbox{\hyperlink{classtensor_net_ae1486438dcdbe0d7f5e88e5336a42efa}{Get\+Output\+Size}} (uint32\+\_\+t layer=0) const
+\item 
+float \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classtensor_net_a5dd41d9c028fa562b1b8f7cb61a4e6f4}{Get\+Output\+Ptr}} (uint32\+\_\+t layer=0) const
+\item 
+float \doxymbox{\hyperlink{classtensor_net_a9dd2db089176ae6878e9ea7dd8fd80c3}{Get\+Network\+FPS}} ()
+\item 
+float \doxymbox{\hyperlink{classtensor_net_a49faef5920860345e503023b7c84423c}{Get\+Network\+Time}} ()
+\item 
+const char \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classtensor_net_a688f17acc51061a039f60cc8ab4f4e5b}{Get\+Network\+Name}} () const
+\item 
+float2 \doxymbox{\hyperlink{classtensor_net_ad266f93035a80dca80cd84d971e4f69b}{Get\+Profiler\+Time}} (\doxymbox{\hyperlink{group__tensor_net_gae34d45c0faa674ef4cc0fbfc8fae5809}{profiler\+Query}} query)
+\item 
+float \doxymbox{\hyperlink{classtensor_net_a27cf81b3fecf93d2e63a61220a54b393}{Get\+Profiler\+Time}} (\doxymbox{\hyperlink{group__tensor_net_gae34d45c0faa674ef4cc0fbfc8fae5809}{profiler\+Query}} query, \doxymbox{\hyperlink{group__tensor_net_gaaa4127ed22c7165a32d0474ebf97975e}{profiler\+Device}} device)
+\item 
+void \doxymbox{\hyperlink{classtensor_net_afc0f50abcf6ac71e96d51eba3ed53d4b}{Print\+Profiler\+Times}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static bool \doxymbox{\hyperlink{classtensor_net_a57cacfea82e9329c2cf776837dd00aef}{Load\+Class\+Labels}} (const char \texorpdfstring{$\ast$}{*}filename, std::\+vector$<$ std::\+string $>$ \&descriptions, int expected\+Classes=-\/1)
+\item 
+static bool \doxymbox{\hyperlink{classtensor_net_aa92022958d3a46655a5e2f2ed416e6b5}{Load\+Class\+Labels}} (const char \texorpdfstring{$\ast$}{*}filename, std::\+vector$<$ std::\+string $>$ \&descriptions, std::\+vector$<$ std::\+string $>$ \&synsets, int expected\+Classes=-\/1)
+\item 
+static bool \doxymbox{\hyperlink{classtensor_net_a7b87410f9133aea37b46979d543219b9}{Load\+Class\+Colors}} (const char \texorpdfstring{$\ast$}{*}filename, float4 \texorpdfstring{$\ast$}{*}colors, int expected\+Classes, float default\+Alpha=255.\+0f)
+\item 
+static bool \doxymbox{\hyperlink{classtensor_net_ae5dd58e2481f6c703abb9abbcfce805e}{Load\+Class\+Colors}} (const char \texorpdfstring{$\ast$}{*}filename, float4 \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}colors, int expected\+Classes, float default\+Alpha=255.\+0f)
+\item 
+static float4 \doxymbox{\hyperlink{classtensor_net_a4fe18908c74efda1708029ca3b04f0e8}{Generate\+Color}} (uint32\+\_\+t class\+ID, float alpha=255.\+0f)
+\item 
+static \doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precision\+Type}} \doxymbox{\hyperlink{classtensor_net_a3c0509631176be6f9e25673cb0aa12dc}{Select\+Precision}} (\doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precision\+Type}} precision, \doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{device\+Type}} device=\doxymbox{\hyperlink{group__tensor_net_ggaa5d3f9981cdbd91516c1474006a80fe4adc7f3f88455afa81458863e5b3092e4b}{DEVICE\+\_\+\+GPU}}, bool allow\+Int8=true)
+\item 
+static \doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precision\+Type}} \doxymbox{\hyperlink{classtensor_net_abe33fae5332296e2d917cb4ce435e255}{Find\+Fastest\+Precision}} (\doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{device\+Type}} device=\doxymbox{\hyperlink{group__tensor_net_ggaa5d3f9981cdbd91516c1474006a80fe4adc7f3f88455afa81458863e5b3092e4b}{DEVICE\+\_\+\+GPU}}, bool allow\+Int8=true)
+\item 
+static std::\+vector$<$ \doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precision\+Type}} $>$ \doxymbox{\hyperlink{classtensor_net_ae53b31ae407d3b1f18130c1313e4b099}{Detect\+Native\+Precisions}} (\doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{device\+Type}} device=\doxymbox{\hyperlink{group__tensor_net_ggaa5d3f9981cdbd91516c1474006a80fe4adc7f3f88455afa81458863e5b3092e4b}{DEVICE\+\_\+\+GPU}})
+\item 
+static bool \doxymbox{\hyperlink{classtensor_net_aa3bf1a3bf1fca38b39a200b4d8f727b2}{Detect\+Native\+Precision}} (const std::\+vector$<$ \doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precision\+Type}} $>$ \&native\+Types, \doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precision\+Type}} type)
+\item 
+static bool \doxymbox{\hyperlink{classtensor_net_a7d72ec8bbaf61278ce533afd60d5391c}{Detect\+Native\+Precision}} (\doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precision\+Type}} precision, \doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{device\+Type}} device=\doxymbox{\hyperlink{group__tensor_net_ggaa5d3f9981cdbd91516c1474006a80fe4adc7f3f88455afa81458863e5b3092e4b}{DEVICE\+\_\+\+GPU}})
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{classtensor_net_ab6e617d96e5542bef023ee9d4c96388a}{tensor\+Net}} ()
+\item 
+bool \doxymbox{\hyperlink{classtensor_net_a2e8dd909e797dfcfbb058dc6b351c586}{Process\+Network}} (bool sync=true)
+\item 
+bool \doxymbox{\hyperlink{classtensor_net_a2fbc013f70b52f885867302446e0dca1}{Profile\+Model}} (const std::\+string \&deploy\+File, const std::\+string \&model\+File, const std::\+vector$<$ std::\+string $>$ \&inputs, const std::\+vector$<$ Dims3 $>$ \&input\+Dims, const std::\+vector$<$ std::\+string $>$ \&outputs, uint32\+\_\+t max\+Batch\+Size, \doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precision\+Type}} precision, \doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{device\+Type}} device, bool allow\+GPUFallback, nvinfer1::\+\+IInt8\+Calibrator \texorpdfstring{$\ast$}{*}calibrator, char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}engine\+Stream, size\+\_\+t \texorpdfstring{$\ast$}{*}engine\+Size)
+\item 
+bool \doxymbox{\hyperlink{classtensor_net_a7a898dfb2553869cdc318ecb03e153f1}{Configure\+Builder}} (nvinfer1::\+\+IBuilder \texorpdfstring{$\ast$}{*}builder, uint32\+\_\+t max\+Batch\+Size, uint32\+\_\+t workspace\+Size, \doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precision\+Type}} precision, \doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{device\+Type}} device, bool allow\+GPUFallback, nvinfer1::\+\+IInt8\+Calibrator \texorpdfstring{$\ast$}{*}calibrator)
+\item 
+bool \doxymbox{\hyperlink{classtensor_net_a6e2fe0a467929d76b20940771b8f96c3}{Validate\+Engine}} (const char \texorpdfstring{$\ast$}{*}model\+\_\+path, const char \texorpdfstring{$\ast$}{*}cache\+\_\+path, const char \texorpdfstring{$\ast$}{*}checksum\+\_\+path)
+\item 
+void \doxymbox{\hyperlink{classtensor_net_a088c3bf591e45e52ec227491f6f299ad}{PROFILER\+\_\+\+BEGIN}} (\doxymbox{\hyperlink{group__tensor_net_gae34d45c0faa674ef4cc0fbfc8fae5809}{profiler\+Query}} query)
+\item 
+void \doxymbox{\hyperlink{classtensor_net_ac8582b9a6099e3265da4c3f9fdf804ea}{PROFILER\+\_\+\+END}} (\doxymbox{\hyperlink{group__tensor_net_gae34d45c0faa674ef4cc0fbfc8fae5809}{profiler\+Query}} query)
+\item 
+bool \doxymbox{\hyperlink{classtensor_net_ae2e0ae17baf6e1975aaad7a7f5c60ce9}{PROFILER\+\_\+\+QUERY}} (\doxymbox{\hyperlink{group__tensor_net_gae34d45c0faa674ef4cc0fbfc8fae5809}{profiler\+Query}} query)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classtensor_net_a0c6f7cc68ce87e0701029d40b46d1b81}\label{classtensor_net_a0c6f7cc68ce87e0701029d40b46d1b81} 
+\doxymbox{\hyperlink{classtensor_net_1_1_logger}{tensor\+Net::\+\+Logger}} {\bfseries g\+Logger}
+\item 
+\Hypertarget{classtensor_net_a70f38033952477e55e2ecdc54f908968}\label{classtensor_net_a70f38033952477e55e2ecdc54f908968} 
+\doxymbox{\hyperlink{classtensor_net_1_1_profiler}{tensor\+Net::\+\+Profiler}} {\bfseries g\+Profiler}
+\item 
+\Hypertarget{classtensor_net_a54005b86b851fa71aeb7a83d4ad32362}\label{classtensor_net_a54005b86b851fa71aeb7a83d4ad32362} 
+std::\+string {\bfseries m\+Prototxt\+Path}
+\item 
+\Hypertarget{classtensor_net_a7cb91e06b296431680d20e7e9fb0187d}\label{classtensor_net_a7cb91e06b296431680d20e7e9fb0187d} 
+std::\+string {\bfseries m\+Model\+Path}
+\item 
+\Hypertarget{classtensor_net_a338246dc13b84166ee5ea917d84379aa}\label{classtensor_net_a338246dc13b84166ee5ea917d84379aa} 
+std::\+string {\bfseries m\+Model\+File}
+\item 
+\Hypertarget{classtensor_net_a11eeaa1e454a97a5634c7fb5ea1bc23d}\label{classtensor_net_a11eeaa1e454a97a5634c7fb5ea1bc23d} 
+std::\+string {\bfseries m\+Mean\+Path}
+\item 
+\Hypertarget{classtensor_net_aaa9ac0fae88a426f1a5325886da3b009}\label{classtensor_net_aaa9ac0fae88a426f1a5325886da3b009} 
+std::\+string {\bfseries m\+Cache\+Engine\+Path}
+\item 
+\Hypertarget{classtensor_net_a64fccb1894b0926e54a18fa47a271c70}\label{classtensor_net_a64fccb1894b0926e54a18fa47a271c70} 
+std::\+string {\bfseries m\+Cache\+Calibration\+Path}
+\item 
+\Hypertarget{classtensor_net_abc88c21d81ca66f8c10d22910c995765}\label{classtensor_net_abc88c21d81ca66f8c10d22910c995765} 
+std::\+string {\bfseries m\+Checksum\+Path}
+\item 
+\Hypertarget{classtensor_net_a2f14a2f4a4dfbb51b80f80a2e47a695c}\label{classtensor_net_a2f14a2f4a4dfbb51b80f80a2e47a695c} 
+\doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{device\+Type}} {\bfseries m\+Device}
+\item 
+\Hypertarget{classtensor_net_a164c1dcf9dcbc085c1b421855eda665f}\label{classtensor_net_a164c1dcf9dcbc085c1b421855eda665f} 
+\doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precision\+Type}} {\bfseries m\+Precision}
+\item 
+\Hypertarget{classtensor_net_ab5c88cf4590b53804ebedaa292d1402c}\label{classtensor_net_ab5c88cf4590b53804ebedaa292d1402c} 
+\doxymbox{\hyperlink{group__tensor_net_ga5d4597e0e7beae7133d542e220528725}{model\+Type}} {\bfseries m\+Model\+Type}
+\item 
+\Hypertarget{classtensor_net_a1ed6e418a135650c7cf91498379727ae}\label{classtensor_net_a1ed6e418a135650c7cf91498379727ae} 
+cuda\+Stream\+\_\+t {\bfseries m\+Stream}
+\item 
+\Hypertarget{classtensor_net_aac52fdcc0579c0426e21141636349dea}\label{classtensor_net_aac52fdcc0579c0426e21141636349dea} 
+cuda\+Event\+\_\+t {\bfseries m\+Events\+GPU} \+[PROFILER\+\_\+\+TOTAL \texorpdfstring{$\ast$}{*}2]\+
+\item 
+\Hypertarget{classtensor_net_af4cb4b37a74806164257e9529cb8ed70}\label{classtensor_net_af4cb4b37a74806164257e9529cb8ed70} 
+timespec {\bfseries m\+Events\+CPU} \+[PROFILER\+\_\+\+TOTAL \texorpdfstring{$\ast$}{*}2]\+
+\item 
+\Hypertarget{classtensor_net_a275ce2318a63dcaafc1e0120a53fe606}\label{classtensor_net_a275ce2318a63dcaafc1e0120a53fe606} 
+nvinfer1::\+\+IRuntime \texorpdfstring{$\ast$}{*} {\bfseries m\+Infer}
+\item 
+\Hypertarget{classtensor_net_ad6d2272a2560bec119fa570438e3eb19}\label{classtensor_net_ad6d2272a2560bec119fa570438e3eb19} 
+nvinfer1::\+\+ICuda\+Engine \texorpdfstring{$\ast$}{*} {\bfseries m\+Engine}
+\item 
+\Hypertarget{classtensor_net_a2c745474e60145ee826b53e294e7f478}\label{classtensor_net_a2c745474e60145ee826b53e294e7f478} 
+nvinfer1::\+\+IExecution\+Context \texorpdfstring{$\ast$}{*} {\bfseries m\+Context}
+\item 
+\Hypertarget{classtensor_net_a32dbfb5b3d2cb82002ec288c237a0c9c}\label{classtensor_net_a32dbfb5b3d2cb82002ec288c237a0c9c} 
+float2 {\bfseries m\+Profiler\+Times} \+[PROFILER\+\_\+\+TOTAL+1]\+
+\item 
+\Hypertarget{classtensor_net_a545348243b65ce04047fd10d47e1716c}\label{classtensor_net_a545348243b65ce04047fd10d47e1716c} 
+uint32\+\_\+t {\bfseries m\+Profiler\+Queries\+Used}
+\item 
+\Hypertarget{classtensor_net_a3b5be95254ce71931305f4086f23f18a}\label{classtensor_net_a3b5be95254ce71931305f4086f23f18a} 
+uint32\+\_\+t {\bfseries m\+Profiler\+Queries\+Done}
+\item 
+\Hypertarget{classtensor_net_abadb712a0b45e8dc28481db3e79d1d7e}\label{classtensor_net_abadb712a0b45e8dc28481db3e79d1d7e} 
+uint32\+\_\+t {\bfseries m\+Workspace\+Size}
+\item 
+\Hypertarget{classtensor_net_a0027d8b3617cfc905465925dd6d84b0f}\label{classtensor_net_a0027d8b3617cfc905465925dd6d84b0f} 
+uint32\+\_\+t {\bfseries m\+Max\+Batch\+Size}
+\item 
+\Hypertarget{classtensor_net_aa8bbf97d979c62018f42cc44b5cb81e8}\label{classtensor_net_aa8bbf97d979c62018f42cc44b5cb81e8} 
+bool {\bfseries m\+Enable\+Profiler}
+\item 
+\Hypertarget{classtensor_net_a84ad901a2a0dc4aaf740d40307437b2b}\label{classtensor_net_a84ad901a2a0dc4aaf740d40307437b2b} 
+bool {\bfseries m\+Enable\+Debug}
+\item 
+\Hypertarget{classtensor_net_a8e7b5913f3f54d4bb0e6aa8e6071a74a}\label{classtensor_net_a8e7b5913f3f54d4bb0e6aa8e6071a74a} 
+bool {\bfseries m\+Allow\+GPUFallback}
+\item 
+\Hypertarget{classtensor_net_a75dba887061d29022b07e648770e8fb0}\label{classtensor_net_a75dba887061d29022b07e648770e8fb0} 
+void \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*} {\bfseries m\+Bindings}
+\item 
+\Hypertarget{classtensor_net_a939a5123396b35a0dbee8d094d881d62}\label{classtensor_net_a939a5123396b35a0dbee8d094d881d62} 
+std::\+vector$<$ \doxymbox{\hyperlink{structtensor_net_1_1layer_info}{layer\+Info}} $>$ {\bfseries m\+Inputs}
+\item 
+\Hypertarget{classtensor_net_afcdbdb26dc6e5117f867c83e635a0250}\label{classtensor_net_afcdbdb26dc6e5117f867c83e635a0250} 
+std::\+vector$<$ \doxymbox{\hyperlink{structtensor_net_1_1layer_info}{layer\+Info}} $>$ {\bfseries m\+Outputs}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Abstract class for loading a tensor network with Tensor\+RT. For example implementations, \begin{DoxySeeAlso}{See also}
+\doxylink{classimage_net}{image\+Net} and 
+
+\doxylink{classdetect_net}{detect\+Net} 
+\end{DoxySeeAlso}
+
+
+\label{doc-constructors}
+\Hypertarget{classtensor_net_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classtensor_net_ad19aafbfa262f9b8ffb0bff561f4d7f7}\index{tensorNet@{tensorNet}!````~tensorNet@{\texorpdfstring{$\sim$}{\string~}tensorNet}}
+\index{````~tensorNet@{\texorpdfstring{$\sim$}{\string~}tensorNet}!tensorNet@{tensorNet}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}tensorNet()}{\string~tensorNet()}}
+{\footnotesize\ttfamily \label{classtensor_net_ad19aafbfa262f9b8ffb0bff561f4d7f7} 
+virtual tensor\+Net::\+\texorpdfstring{$\sim$}{\string~}tensor\+Net (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+Destory \Hypertarget{classtensor_net_ab6e617d96e5542bef023ee9d4c96388a}\index{tensorNet@{tensorNet}!tensorNet@{tensorNet}}
+\index{tensorNet@{tensorNet}!tensorNet@{tensorNet}}
+\doxysubsubsection{\texorpdfstring{tensorNet()}{tensorNet()}}
+{\footnotesize\ttfamily \label{classtensor_net_ab6e617d96e5542bef023ee9d4c96388a} 
+tensor\+Net::\+tensor\+Net (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+Constructor. 
+
+\label{doc-func-members}
+\Hypertarget{classtensor_net_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classtensor_net_a7d0ec0d8504ac8b26c5ab4a6136599ca}\index{tensorNet@{tensorNet}!AllowGPUFallback@{AllowGPUFallback}}
+\index{AllowGPUFallback@{AllowGPUFallback}!tensorNet@{tensorNet}}
+\doxysubsubsection{\texorpdfstring{AllowGPUFallback()}{AllowGPUFallback()}}
+{\footnotesize\ttfamily \label{classtensor_net_a7d0ec0d8504ac8b26c5ab4a6136599ca} 
+bool tensor\+Net::\+\+Allow\+GPUFallback (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Return true if GPU fallback is enabled. \Hypertarget{classtensor_net_a7a898dfb2553869cdc318ecb03e153f1}\index{tensorNet@{tensorNet}!ConfigureBuilder@{ConfigureBuilder}}
+\index{ConfigureBuilder@{ConfigureBuilder}!tensorNet@{tensorNet}}
+\doxysubsubsection{\texorpdfstring{ConfigureBuilder()}{ConfigureBuilder()}}
+{\footnotesize\ttfamily \label{classtensor_net_a7a898dfb2553869cdc318ecb03e153f1} 
+bool tensor\+Net::\+\+Configure\+Builder (\begin{DoxyParamCaption}\item[{nvinfer1::\+\+IBuilder \texorpdfstring{$\ast$}{*}}]{builder}{, }\item[{uint32\+\_\+t}]{max\+Batch\+Size}{, }\item[{uint32\+\_\+t}]{workspace\+Size}{, }\item[{\doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precision\+Type}}}]{precision}{, }\item[{\doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{device\+Type}}}]{device}{, }\item[{bool}]{allow\+GPUFallback}{, }\item[{nvinfer1::\+\+IInt8\+Calibrator \texorpdfstring{$\ast$}{*}}]{calibrator}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+Configure builder options \Hypertarget{classtensor_net_a78cecfb7505be0ea59d29041abc85cbb}\index{tensorNet@{tensorNet}!CreateStream@{CreateStream}}
+\index{CreateStream@{CreateStream}!tensorNet@{tensorNet}}
+\doxysubsubsection{\texorpdfstring{CreateStream()}{CreateStream()}}
+{\footnotesize\ttfamily \label{classtensor_net_a78cecfb7505be0ea59d29041abc85cbb} 
+cuda\+Stream\+\_\+t tensor\+Net::\+\+Create\+Stream (\begin{DoxyParamCaption}\item[{bool}]{non\+Blocking}{ = {\ttfamily true}}\end{DoxyParamCaption})}
+
+Create and use a new stream for execution. \Hypertarget{classtensor_net_aa3bf1a3bf1fca38b39a200b4d8f727b2}\index{tensorNet@{tensorNet}!DetectNativePrecision@{DetectNativePrecision}}
+\index{DetectNativePrecision@{DetectNativePrecision}!tensorNet@{tensorNet}}
+\doxysubsubsection{\texorpdfstring{DetectNativePrecision()}{DetectNativePrecision()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classtensor_net_aa3bf1a3bf1fca38b39a200b4d8f727b2} 
+bool tensor\+Net::\+\+Detect\+Native\+Precision (\begin{DoxyParamCaption}\item[{const std::\+vector$<$ \doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precision\+Type}} $>$ \&}]{native\+Types}{, }\item[{\doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precision\+Type}}}]{type}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Detect if a particular precision is supported natively. \Hypertarget{classtensor_net_a7d72ec8bbaf61278ce533afd60d5391c}\index{tensorNet@{tensorNet}!DetectNativePrecision@{DetectNativePrecision}}
+\index{DetectNativePrecision@{DetectNativePrecision}!tensorNet@{tensorNet}}
+\doxysubsubsection{\texorpdfstring{DetectNativePrecision()}{DetectNativePrecision()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classtensor_net_a7d72ec8bbaf61278ce533afd60d5391c} 
+bool tensor\+Net::\+\+Detect\+Native\+Precision (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precision\+Type}}}]{precision}{, }\item[{\doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{device\+Type}}}]{device}{ = {\ttfamily \doxymbox{\hyperlink{group__tensor_net_ggaa5d3f9981cdbd91516c1474006a80fe4adc7f3f88455afa81458863e5b3092e4b}{DEVICE\+\_\+\+GPU}}}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Detect if a particular precision is supported natively. \Hypertarget{classtensor_net_ae53b31ae407d3b1f18130c1313e4b099}\index{tensorNet@{tensorNet}!DetectNativePrecisions@{DetectNativePrecisions}}
+\index{DetectNativePrecisions@{DetectNativePrecisions}!tensorNet@{tensorNet}}
+\doxysubsubsection{\texorpdfstring{DetectNativePrecisions()}{DetectNativePrecisions()}}
+{\footnotesize\ttfamily \label{classtensor_net_ae53b31ae407d3b1f18130c1313e4b099} 
+std::\+vector$<$ \doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precision\+Type}} $>$ tensor\+Net::\+\+Detect\+Native\+Precisions (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{device\+Type}}}]{device}{ = {\ttfamily \doxymbox{\hyperlink{group__tensor_net_ggaa5d3f9981cdbd91516c1474006a80fe4adc7f3f88455afa81458863e5b3092e4b}{DEVICE\+\_\+\+GPU}}}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Detect the precisions supported natively on a device. \Hypertarget{classtensor_net_ae49f74ff83e46112a30318fa0576cace}\index{tensorNet@{tensorNet}!EnableDebug@{EnableDebug}}
+\index{EnableDebug@{EnableDebug}!tensorNet@{tensorNet}}
+\doxysubsubsection{\texorpdfstring{EnableDebug()}{EnableDebug()}}
+{\footnotesize\ttfamily \label{classtensor_net_ae49f74ff83e46112a30318fa0576cace} 
+void tensor\+Net::\+\+Enable\+Debug (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Manually enable debug messages and synchronization. \Hypertarget{classtensor_net_a3413eb0ad4f240f457f192f39e2e03e8}\index{tensorNet@{tensorNet}!EnableLayerProfiler@{EnableLayerProfiler}}
+\index{EnableLayerProfiler@{EnableLayerProfiler}!tensorNet@{tensorNet}}
+\doxysubsubsection{\texorpdfstring{EnableLayerProfiler()}{EnableLayerProfiler()}}
+{\footnotesize\ttfamily \label{classtensor_net_a3413eb0ad4f240f457f192f39e2e03e8} 
+void tensor\+Net::\+\+Enable\+Layer\+Profiler (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Manually enable layer profiling times. \Hypertarget{classtensor_net_abe33fae5332296e2d917cb4ce435e255}\index{tensorNet@{tensorNet}!FindFastestPrecision@{FindFastestPrecision}}
+\index{FindFastestPrecision@{FindFastestPrecision}!tensorNet@{tensorNet}}
+\doxysubsubsection{\texorpdfstring{FindFastestPrecision()}{FindFastestPrecision()}}
+{\footnotesize\ttfamily \label{classtensor_net_abe33fae5332296e2d917cb4ce435e255} 
+\doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precision\+Type}} tensor\+Net::\+\+Find\+Fastest\+Precision (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{device\+Type}}}]{device}{ = {\ttfamily \doxymbox{\hyperlink{group__tensor_net_ggaa5d3f9981cdbd91516c1474006a80fe4adc7f3f88455afa81458863e5b3092e4b}{DEVICE\+\_\+\+GPU}}}, }\item[{bool}]{allow\+Int8}{ = {\ttfamily true}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Determine the fastest native precision on a device. \Hypertarget{classtensor_net_a4fe18908c74efda1708029ca3b04f0e8}\index{tensorNet@{tensorNet}!GenerateColor@{GenerateColor}}
+\index{GenerateColor@{GenerateColor}!tensorNet@{tensorNet}}
+\doxysubsubsection{\texorpdfstring{GenerateColor()}{GenerateColor()}}
+{\footnotesize\ttfamily \label{classtensor_net_a4fe18908c74efda1708029ca3b04f0e8} 
+float4 tensor\+Net::\+\+Generate\+Color (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{class\+ID}{, }\item[{float}]{alpha}{ = {\ttfamily 255.0f}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Procedurally generate a color for a given class index with the specified alpha value. This function can be used to generate a range of colors when a colors.\+txt file isn\textquotesingle{}t available. \Hypertarget{classtensor_net_a92bb737172d26bda5f67d15346a02514}\index{tensorNet@{tensorNet}!GetDevice@{GetDevice}}
+\index{GetDevice@{GetDevice}!tensorNet@{tensorNet}}
+\doxysubsubsection{\texorpdfstring{GetDevice()}{GetDevice()}}
+{\footnotesize\ttfamily \label{classtensor_net_a92bb737172d26bda5f67d15346a02514} 
+\doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{device\+Type}} tensor\+Net::\+\+Get\+Device (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Retrieve the device being used for execution. \Hypertarget{classtensor_net_adcfe61596f291e75a87d36c3771f25df}\index{tensorNet@{tensorNet}!GetInputDims@{GetInputDims}}
+\index{GetInputDims@{GetInputDims}!tensorNet@{tensorNet}}
+\doxysubsubsection{\texorpdfstring{GetInputDims()}{GetInputDims()}}
+{\footnotesize\ttfamily \label{classtensor_net_adcfe61596f291e75a87d36c3771f25df} 
+Dims3 tensor\+Net::\+\+Get\+Input\+Dims (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{layer}{ = {\ttfamily 0}}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Retrieve the dimensions of network input layer. \Hypertarget{classtensor_net_a214a92c41dcdcb58b3cd8496aac0857a}\index{tensorNet@{tensorNet}!GetInputHeight@{GetInputHeight}}
+\index{GetInputHeight@{GetInputHeight}!tensorNet@{tensorNet}}
+\doxysubsubsection{\texorpdfstring{GetInputHeight()}{GetInputHeight()}}
+{\footnotesize\ttfamily \label{classtensor_net_a214a92c41dcdcb58b3cd8496aac0857a} 
+uint32\+\_\+t tensor\+Net::\+\+Get\+Input\+Height (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{layer}{ = {\ttfamily 0}}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Retrieve the height of network input layer. \Hypertarget{classtensor_net_ac583b8de1dd64b47338b4a3eb42ac166}\index{tensorNet@{tensorNet}!GetInputLayers@{GetInputLayers}}
+\index{GetInputLayers@{GetInputLayers}!tensorNet@{tensorNet}}
+\doxysubsubsection{\texorpdfstring{GetInputLayers()}{GetInputLayers()}}
+{\footnotesize\ttfamily \label{classtensor_net_ac583b8de1dd64b47338b4a3eb42ac166} 
+uint32\+\_\+t tensor\+Net::\+\+Get\+Input\+Layers (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Retrieve the number of input layers to the network. \Hypertarget{classtensor_net_a3d04135aeef2b4204852ebd5b4363a68}\index{tensorNet@{tensorNet}!GetInputPtr@{GetInputPtr}}
+\index{GetInputPtr@{GetInputPtr}!tensorNet@{tensorNet}}
+\doxysubsubsection{\texorpdfstring{GetInputPtr()}{GetInputPtr()}}
+{\footnotesize\ttfamily \label{classtensor_net_a3d04135aeef2b4204852ebd5b4363a68} 
+float \texorpdfstring{$\ast$}{*} tensor\+Net::\+\+Get\+Input\+Ptr (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{layer}{ = {\ttfamily 0}}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Get the CUDA pointer to the input layer\textquotesingle{}s memory. \Hypertarget{classtensor_net_a2c80d46f8a01335e77e41023544102c9}\index{tensorNet@{tensorNet}!GetInputSize@{GetInputSize}}
+\index{GetInputSize@{GetInputSize}!tensorNet@{tensorNet}}
+\doxysubsubsection{\texorpdfstring{GetInputSize()}{GetInputSize()}}
+{\footnotesize\ttfamily \label{classtensor_net_a2c80d46f8a01335e77e41023544102c9} 
+uint32\+\_\+t tensor\+Net::\+\+Get\+Input\+Size (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{layer}{ = {\ttfamily 0}}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Retrieve the size (in bytes) of network input layer. \Hypertarget{classtensor_net_a2d75ef6f579d1a71ff472bfafd0b7795}\index{tensorNet@{tensorNet}!GetInputWidth@{GetInputWidth}}
+\index{GetInputWidth@{GetInputWidth}!tensorNet@{tensorNet}}
+\doxysubsubsection{\texorpdfstring{GetInputWidth()}{GetInputWidth()}}
+{\footnotesize\ttfamily \label{classtensor_net_a2d75ef6f579d1a71ff472bfafd0b7795} 
+uint32\+\_\+t tensor\+Net::\+\+Get\+Input\+Width (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{layer}{ = {\ttfamily 0}}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Retrieve the width of network input layer. \Hypertarget{classtensor_net_a3b64097cd334bb5af48913d58ae074b3}\index{tensorNet@{tensorNet}!GetModelFilename@{GetModelFilename}}
+\index{GetModelFilename@{GetModelFilename}!tensorNet@{tensorNet}}
+\doxysubsubsection{\texorpdfstring{GetModelFilename()}{GetModelFilename()}}
+{\footnotesize\ttfamily \label{classtensor_net_a3b64097cd334bb5af48913d58ae074b3} 
+const char \texorpdfstring{$\ast$}{*} tensor\+Net::\+\+Get\+Model\+Filename (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Retrieve the filename of the file, excluding the directory. \Hypertarget{classtensor_net_ab7c42b9da47d4566e8f1dac0231638dd}\index{tensorNet@{tensorNet}!GetModelPath@{GetModelPath}}
+\index{GetModelPath@{GetModelPath}!tensorNet@{tensorNet}}
+\doxysubsubsection{\texorpdfstring{GetModelPath()}{GetModelPath()}}
+{\footnotesize\ttfamily \label{classtensor_net_ab7c42b9da47d4566e8f1dac0231638dd} 
+const char \texorpdfstring{$\ast$}{*} tensor\+Net::\+\+Get\+Model\+Path (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Retrieve the full path to model file, including the filename. \Hypertarget{classtensor_net_acfa7f1f01b46f658ffc96f8a002e8d48}\index{tensorNet@{tensorNet}!GetModelType@{GetModelType}}
+\index{GetModelType@{GetModelType}!tensorNet@{tensorNet}}
+\doxysubsubsection{\texorpdfstring{GetModelType()}{GetModelType()}}
+{\footnotesize\ttfamily \label{classtensor_net_acfa7f1f01b46f658ffc96f8a002e8d48} 
+\doxymbox{\hyperlink{group__tensor_net_ga5d4597e0e7beae7133d542e220528725}{model\+Type}} tensor\+Net::\+\+Get\+Model\+Type (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Retrieve the format of the network model. \Hypertarget{classtensor_net_a9dd2db089176ae6878e9ea7dd8fd80c3}\index{tensorNet@{tensorNet}!GetNetworkFPS@{GetNetworkFPS}}
+\index{GetNetworkFPS@{GetNetworkFPS}!tensorNet@{tensorNet}}
+\doxysubsubsection{\texorpdfstring{GetNetworkFPS()}{GetNetworkFPS()}}
+{\footnotesize\ttfamily \label{classtensor_net_a9dd2db089176ae6878e9ea7dd8fd80c3} 
+float tensor\+Net::\+\+Get\+Network\+FPS (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Retrieve the network frames per second (FPS). \Hypertarget{classtensor_net_a688f17acc51061a039f60cc8ab4f4e5b}\index{tensorNet@{tensorNet}!GetNetworkName@{GetNetworkName}}
+\index{GetNetworkName@{GetNetworkName}!tensorNet@{tensorNet}}
+\doxysubsubsection{\texorpdfstring{GetNetworkName()}{GetNetworkName()}}
+{\footnotesize\ttfamily \label{classtensor_net_a688f17acc51061a039f60cc8ab4f4e5b} 
+const char \texorpdfstring{$\ast$}{*} tensor\+Net::\+\+Get\+Network\+Name (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Retrieve the network name (it\textquotesingle{}s filename). \Hypertarget{classtensor_net_a49faef5920860345e503023b7c84423c}\index{tensorNet@{tensorNet}!GetNetworkTime@{GetNetworkTime}}
+\index{GetNetworkTime@{GetNetworkTime}!tensorNet@{tensorNet}}
+\doxysubsubsection{\texorpdfstring{GetNetworkTime()}{GetNetworkTime()}}
+{\footnotesize\ttfamily \label{classtensor_net_a49faef5920860345e503023b7c84423c} 
+float tensor\+Net::\+\+Get\+Network\+Time (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Retrieve the network runtime (in milliseconds). \Hypertarget{classtensor_net_a77703f2a7b59f836c93ae28811e22cb0}\index{tensorNet@{tensorNet}!GetOutputDims@{GetOutputDims}}
+\index{GetOutputDims@{GetOutputDims}!tensorNet@{tensorNet}}
+\doxysubsubsection{\texorpdfstring{GetOutputDims()}{GetOutputDims()}}
+{\footnotesize\ttfamily \label{classtensor_net_a77703f2a7b59f836c93ae28811e22cb0} 
+Dims3 tensor\+Net::\+\+Get\+Output\+Dims (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{layer}{ = {\ttfamily 0}}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Retrieve the dimensions of network output layer. \Hypertarget{classtensor_net_a613679e8ee5315f3b5b16a39011ba76e}\index{tensorNet@{tensorNet}!GetOutputHeight@{GetOutputHeight}}
+\index{GetOutputHeight@{GetOutputHeight}!tensorNet@{tensorNet}}
+\doxysubsubsection{\texorpdfstring{GetOutputHeight()}{GetOutputHeight()}}
+{\footnotesize\ttfamily \label{classtensor_net_a613679e8ee5315f3b5b16a39011ba76e} 
+uint32\+\_\+t tensor\+Net::\+\+Get\+Output\+Height (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{layer}{ = {\ttfamily 0}}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Retrieve the height of network output layer. \Hypertarget{classtensor_net_a2dcc770a7215e2e76a8d520a36689e16}\index{tensorNet@{tensorNet}!GetOutputLayers@{GetOutputLayers}}
+\index{GetOutputLayers@{GetOutputLayers}!tensorNet@{tensorNet}}
+\doxysubsubsection{\texorpdfstring{GetOutputLayers()}{GetOutputLayers()}}
+{\footnotesize\ttfamily \label{classtensor_net_a2dcc770a7215e2e76a8d520a36689e16} 
+uint32\+\_\+t tensor\+Net::\+\+Get\+Output\+Layers (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Retrieve the number of output layers to the network. \Hypertarget{classtensor_net_a5dd41d9c028fa562b1b8f7cb61a4e6f4}\index{tensorNet@{tensorNet}!GetOutputPtr@{GetOutputPtr}}
+\index{GetOutputPtr@{GetOutputPtr}!tensorNet@{tensorNet}}
+\doxysubsubsection{\texorpdfstring{GetOutputPtr()}{GetOutputPtr()}}
+{\footnotesize\ttfamily \label{classtensor_net_a5dd41d9c028fa562b1b8f7cb61a4e6f4} 
+float \texorpdfstring{$\ast$}{*} tensor\+Net::\+\+Get\+Output\+Ptr (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{layer}{ = {\ttfamily 0}}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Get the CUDA pointer to the output memory. \Hypertarget{classtensor_net_ae1486438dcdbe0d7f5e88e5336a42efa}\index{tensorNet@{tensorNet}!GetOutputSize@{GetOutputSize}}
+\index{GetOutputSize@{GetOutputSize}!tensorNet@{tensorNet}}
+\doxysubsubsection{\texorpdfstring{GetOutputSize()}{GetOutputSize()}}
+{\footnotesize\ttfamily \label{classtensor_net_ae1486438dcdbe0d7f5e88e5336a42efa} 
+uint32\+\_\+t tensor\+Net::\+\+Get\+Output\+Size (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{layer}{ = {\ttfamily 0}}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Retrieve the size (in bytes) of network output layer. \Hypertarget{classtensor_net_a09d63a8fd906c99f8158bf9460a83c02}\index{tensorNet@{tensorNet}!GetOutputWidth@{GetOutputWidth}}
+\index{GetOutputWidth@{GetOutputWidth}!tensorNet@{tensorNet}}
+\doxysubsubsection{\texorpdfstring{GetOutputWidth()}{GetOutputWidth()}}
+{\footnotesize\ttfamily \label{classtensor_net_a09d63a8fd906c99f8158bf9460a83c02} 
+uint32\+\_\+t tensor\+Net::\+\+Get\+Output\+Width (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{layer}{ = {\ttfamily 0}}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Retrieve the width of network output layer. \Hypertarget{classtensor_net_afb38b5f171025e987a00214cc4379ca9}\index{tensorNet@{tensorNet}!GetPrecision@{GetPrecision}}
+\index{GetPrecision@{GetPrecision}!tensorNet@{tensorNet}}
+\doxysubsubsection{\texorpdfstring{GetPrecision()}{GetPrecision()}}
+{\footnotesize\ttfamily \label{classtensor_net_afb38b5f171025e987a00214cc4379ca9} 
+\doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precision\+Type}} tensor\+Net::\+\+Get\+Precision (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Retrieve the type of precision being used. \Hypertarget{classtensor_net_ad266f93035a80dca80cd84d971e4f69b}\index{tensorNet@{tensorNet}!GetProfilerTime@{GetProfilerTime}}
+\index{GetProfilerTime@{GetProfilerTime}!tensorNet@{tensorNet}}
+\doxysubsubsection{\texorpdfstring{GetProfilerTime()}{GetProfilerTime()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classtensor_net_ad266f93035a80dca80cd84d971e4f69b} 
+float2 tensor\+Net::\+\+Get\+Profiler\+Time (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{group__tensor_net_gae34d45c0faa674ef4cc0fbfc8fae5809}{profiler\+Query}}}]{query}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Retrieve the profiler runtime (in milliseconds). \Hypertarget{classtensor_net_a27cf81b3fecf93d2e63a61220a54b393}\index{tensorNet@{tensorNet}!GetProfilerTime@{GetProfilerTime}}
+\index{GetProfilerTime@{GetProfilerTime}!tensorNet@{tensorNet}}
+\doxysubsubsection{\texorpdfstring{GetProfilerTime()}{GetProfilerTime()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classtensor_net_a27cf81b3fecf93d2e63a61220a54b393} 
+float tensor\+Net::\+\+Get\+Profiler\+Time (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{group__tensor_net_gae34d45c0faa674ef4cc0fbfc8fae5809}{profiler\+Query}}}]{query}{, }\item[{\doxymbox{\hyperlink{group__tensor_net_gaaa4127ed22c7165a32d0474ebf97975e}{profiler\+Device}}}]{device}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Retrieve the profiler runtime (in milliseconds). \Hypertarget{classtensor_net_acf9c21a1e031071c7fa8bacddc5901e1}\index{tensorNet@{tensorNet}!GetPrototxtPath@{GetPrototxtPath}}
+\index{GetPrototxtPath@{GetPrototxtPath}!tensorNet@{tensorNet}}
+\doxysubsubsection{\texorpdfstring{GetPrototxtPath()}{GetPrototxtPath()}}
+{\footnotesize\ttfamily \label{classtensor_net_acf9c21a1e031071c7fa8bacddc5901e1} 
+const char \texorpdfstring{$\ast$}{*} tensor\+Net::\+\+Get\+Prototxt\+Path (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Retrieve the path to the network prototxt file. \Hypertarget{classtensor_net_a34e350ec6185277ac09ae55a79403e62}\index{tensorNet@{tensorNet}!GetStream@{GetStream}}
+\index{GetStream@{GetStream}!tensorNet@{tensorNet}}
+\doxysubsubsection{\texorpdfstring{GetStream()}{GetStream()}}
+{\footnotesize\ttfamily \label{classtensor_net_a34e350ec6185277ac09ae55a79403e62} 
+cuda\+Stream\+\_\+t tensor\+Net::\+\+Get\+Stream (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Retrieve the stream that the device is operating on. \Hypertarget{classtensor_net_a0a09d691ea080bd9734c5782c8fff6fd}\index{tensorNet@{tensorNet}!IsModelType@{IsModelType}}
+\index{IsModelType@{IsModelType}!tensorNet@{tensorNet}}
+\doxysubsubsection{\texorpdfstring{IsModelType()}{IsModelType()}}
+{\footnotesize\ttfamily \label{classtensor_net_a0a09d691ea080bd9734c5782c8fff6fd} 
+bool tensor\+Net::\+\+Is\+Model\+Type (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{group__tensor_net_ga5d4597e0e7beae7133d542e220528725}{model\+Type}}}]{type}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Return true if the model is of the specified format. \Hypertarget{classtensor_net_a6b8e8dba05bc5c677027913d8c64f259}\index{tensorNet@{tensorNet}!IsPrecision@{IsPrecision}}
+\index{IsPrecision@{IsPrecision}!tensorNet@{tensorNet}}
+\doxysubsubsection{\texorpdfstring{IsPrecision()}{IsPrecision()}}
+{\footnotesize\ttfamily \label{classtensor_net_a6b8e8dba05bc5c677027913d8c64f259} 
+bool tensor\+Net::\+\+Is\+Precision (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precision\+Type}}}]{type}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Check if a particular precision is being used. \Hypertarget{classtensor_net_a24831e27745d99ed9524ec25a205205a}\index{tensorNet@{tensorNet}!LoadBinary@{LoadBinary}}
+\index{LoadBinary@{LoadBinary}!tensorNet@{tensorNet}}
+\doxysubsubsection{\texorpdfstring{LoadBinary()}{LoadBinary()}}
+{\footnotesize\ttfamily \label{classtensor_net_a24831e27745d99ed9524ec25a205205a} 
+bool tensor\+Net::\+\+Load\+Binary (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{filename}{, }\item[{char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{stream}{, }\item[{size\+\_\+t \texorpdfstring{$\ast$}{*}}]{size}{}\end{DoxyParamCaption})}
+
+Load a binary file into memory. \Hypertarget{classtensor_net_ae5dd58e2481f6c703abb9abbcfce805e}\index{tensorNet@{tensorNet}!LoadClassColors@{LoadClassColors}}
+\index{LoadClassColors@{LoadClassColors}!tensorNet@{tensorNet}}
+\doxysubsubsection{\texorpdfstring{LoadClassColors()}{LoadClassColors()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classtensor_net_ae5dd58e2481f6c703abb9abbcfce805e} 
+bool tensor\+Net::\+\+Load\+Class\+Colors (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{filename}{, }\item[{float4 \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{colors}{, }\item[{int}]{expected\+Classes}{, }\item[{float}]{default\+Alpha}{ = {\ttfamily 255.0f}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Load class colors from a text file. If the number of expected colors aren\textquotesingle{}t parsed, they will be generated. \doxylink{requirements_The}{The} float4 color array will automatically be allocated in shared CPU/\+\+GPU memory by {\ttfamily \doxylink{group__cuda_memory_gaf5a659673481203780b0117f8d7782d0}{cuda\+Alloc\+Mapped()}}. If a line in the text file only has RGB, then the default\+Alpha value will be used for the alpha channel. \Hypertarget{classtensor_net_a7b87410f9133aea37b46979d543219b9}\index{tensorNet@{tensorNet}!LoadClassColors@{LoadClassColors}}
+\index{LoadClassColors@{LoadClassColors}!tensorNet@{tensorNet}}
+\doxysubsubsection{\texorpdfstring{LoadClassColors()}{LoadClassColors()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classtensor_net_a7b87410f9133aea37b46979d543219b9} 
+bool tensor\+Net::\+\+Load\+Class\+Colors (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{filename}{, }\item[{float4 \texorpdfstring{$\ast$}{*}}]{colors}{, }\item[{int}]{expected\+Classes}{, }\item[{float}]{default\+Alpha}{ = {\ttfamily 255.0f}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Load class colors from a text file. If the number of expected colors aren\textquotesingle{}t parsed, they will be generated. \doxylink{requirements_The}{The} float4 color array should be {\ttfamily expected\+Classes} long, and would typically be in shared CPU/\+\+GPU memory. If a line in the text file only has RGB, then the default\+Alpha value will be used for the alpha channel. \Hypertarget{classtensor_net_a57cacfea82e9329c2cf776837dd00aef}\index{tensorNet@{tensorNet}!LoadClassLabels@{LoadClassLabels}}
+\index{LoadClassLabels@{LoadClassLabels}!tensorNet@{tensorNet}}
+\doxysubsubsection{\texorpdfstring{LoadClassLabels()}{LoadClassLabels()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classtensor_net_a57cacfea82e9329c2cf776837dd00aef} 
+bool tensor\+Net::\+\+Load\+Class\+Labels (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{filename}{, }\item[{std::\+vector$<$ std::\+string $>$ \&}]{descriptions}{, }\item[{int}]{expected\+Classes}{ = {\ttfamily -\/1}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Load class descriptions from a label file. ~\newline
+ Each line of the text file should include one class label (and optionally a synset). If the number of expected labels aren\textquotesingle{}t parsed, they will be automatically generated. \Hypertarget{classtensor_net_aa92022958d3a46655a5e2f2ed416e6b5}\index{tensorNet@{tensorNet}!LoadClassLabels@{LoadClassLabels}}
+\index{LoadClassLabels@{LoadClassLabels}!tensorNet@{tensorNet}}
+\doxysubsubsection{\texorpdfstring{LoadClassLabels()}{LoadClassLabels()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classtensor_net_aa92022958d3a46655a5e2f2ed416e6b5} 
+bool tensor\+Net::\+\+Load\+Class\+Labels (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{filename}{, }\item[{std::\+vector$<$ std::\+string $>$ \&}]{descriptions}{, }\item[{std::\+vector$<$ std::\+string $>$ \&}]{synsets}{, }\item[{int}]{expected\+Classes}{ = {\ttfamily -\/1}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Load class descriptions and synset strings from a label file. Each line of the text file should include one class label (and optionally a synset). If the number of expected labels aren\textquotesingle{}t parsed, they will be automatically generated. \Hypertarget{classtensor_net_aaa4efe2b8d91fe914a22c87b725ac063}\index{tensorNet@{tensorNet}!LoadEngine@{LoadEngine}}
+\index{LoadEngine@{LoadEngine}!tensorNet@{tensorNet}}
+\doxysubsubsection{\texorpdfstring{LoadEngine()}{LoadEngine()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily \label{classtensor_net_aaa4efe2b8d91fe914a22c87b725ac063} 
+bool tensor\+Net::\+\+Load\+Engine (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{engine\+\_\+stream}{, }\item[{size\+\_\+t}]{engine\+\_\+size}{, }\item[{const std::\+vector$<$ std::\+string $>$ \&}]{input\+\_\+blobs}{, }\item[{const std::\+vector$<$ std::\+string $>$ \&}]{output\+\_\+blobs}{, }\item[{nvinfer1::\+\+IPlugin\+Factory \texorpdfstring{$\ast$}{*}}]{plugin\+Factory}{ = {\ttfamily NULL}, }\item[{\doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{device\+Type}}}]{device}{ = {\ttfamily \doxymbox{\hyperlink{group__tensor_net_ggaa5d3f9981cdbd91516c1474006a80fe4adc7f3f88455afa81458863e5b3092e4b}{DEVICE\+\_\+\+GPU}}}, }\item[{cuda\+Stream\+\_\+t}]{stream}{ = {\ttfamily NULL}}\end{DoxyParamCaption})}
+
+Load a network instance from a serialized engine plan file. 
+\begin{DoxyParams}{Parameters}
+{\em engine\+\_\+stream} & Memory containing the serialized engine plan file. \\
+\hline
+{\em engine\+\_\+size} & Size of the serialized engine stream (in bytes). \\
+\hline
+{\em input\+\_\+blobs} & List of names of the inputs blob data to the network. \\
+\hline
+{\em output\+\_\+blobs} & List of names of the output blobs from the network. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classtensor_net_acb8076f6ab8d13b6507140826cf438d8}\index{tensorNet@{tensorNet}!LoadEngine@{LoadEngine}}
+\index{LoadEngine@{LoadEngine}!tensorNet@{tensorNet}}
+\doxysubsubsection{\texorpdfstring{LoadEngine()}{LoadEngine()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily \label{classtensor_net_acb8076f6ab8d13b6507140826cf438d8} 
+bool tensor\+Net::\+\+Load\+Engine (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{engine\+\_\+filename}{, }\item[{const std::\+vector$<$ std::\+string $>$ \&}]{input\+\_\+blobs}{, }\item[{const std::\+vector$<$ std::\+string $>$ \&}]{output\+\_\+blobs}{, }\item[{nvinfer1::\+\+IPlugin\+Factory \texorpdfstring{$\ast$}{*}}]{plugin\+Factory}{ = {\ttfamily NULL}, }\item[{\doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{device\+Type}}}]{device}{ = {\ttfamily \doxymbox{\hyperlink{group__tensor_net_ggaa5d3f9981cdbd91516c1474006a80fe4adc7f3f88455afa81458863e5b3092e4b}{DEVICE\+\_\+\+GPU}}}, }\item[{cuda\+Stream\+\_\+t}]{stream}{ = {\ttfamily NULL}}\end{DoxyParamCaption})}
+
+Load a network instance from a serialized engine plan file. 
+\begin{DoxyParams}{Parameters}
+{\em engine\+\_\+filename} & path to the serialized engine plan file. \\
+\hline
+{\em input\+\_\+blobs} & List of names of the inputs blob data to the network. \\
+\hline
+{\em output\+\_\+blobs} & List of names of the output blobs from the network. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classtensor_net_a89755f8e4b72ead7460deed394967386}\index{tensorNet@{tensorNet}!LoadEngine@{LoadEngine}}
+\index{LoadEngine@{LoadEngine}!tensorNet@{tensorNet}}
+\doxysubsubsection{\texorpdfstring{LoadEngine()}{LoadEngine()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily \label{classtensor_net_a89755f8e4b72ead7460deed394967386} 
+bool tensor\+Net::\+\+Load\+Engine (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{filename}{, }\item[{char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{stream}{, }\item[{size\+\_\+t \texorpdfstring{$\ast$}{*}}]{size}{}\end{DoxyParamCaption})}
+
+Load a serialized engine plan file into memory. \Hypertarget{classtensor_net_a2d6fe13696a49d61e9abfa9729153e65}\index{tensorNet@{tensorNet}!LoadEngine@{LoadEngine}}
+\index{LoadEngine@{LoadEngine}!tensorNet@{tensorNet}}
+\doxysubsubsection{\texorpdfstring{LoadEngine()}{LoadEngine()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily \label{classtensor_net_a2d6fe13696a49d61e9abfa9729153e65} 
+bool tensor\+Net::\+\+Load\+Engine (\begin{DoxyParamCaption}\item[{nvinfer1::\+\+ICuda\+Engine \texorpdfstring{$\ast$}{*}}]{engine}{, }\item[{const std::\+vector$<$ std::\+string $>$ \&}]{input\+\_\+blobs}{, }\item[{const std::\+vector$<$ std::\+string $>$ \&}]{output\+\_\+blobs}{, }\item[{\doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{device\+Type}}}]{device}{ = {\ttfamily \doxymbox{\hyperlink{group__tensor_net_ggaa5d3f9981cdbd91516c1474006a80fe4adc7f3f88455afa81458863e5b3092e4b}{DEVICE\+\_\+\+GPU}}}, }\item[{cuda\+Stream\+\_\+t}]{stream}{ = {\ttfamily NULL}}\end{DoxyParamCaption})}
+
+Load network resources from an existing Tensor\+RT engine instance. 
+\begin{DoxyParams}{Parameters}
+{\em engine\+\_\+stream} & Memory containing the serialized engine plan file. \\
+\hline
+{\em engine\+\_\+size} & Size of the serialized engine stream (in bytes). \\
+\hline
+{\em input\+\_\+blobs} & List of names of the inputs blob data to the network. \\
+\hline
+{\em output\+\_\+blobs} & List of names of the output blobs from the network. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classtensor_net_a168c7f75c9fd6d264afd016e144f3878}\index{tensorNet@{tensorNet}!LoadNetwork@{LoadNetwork}}
+\index{LoadNetwork@{LoadNetwork}!tensorNet@{tensorNet}}
+\doxysubsubsection{\texorpdfstring{LoadNetwork()}{LoadNetwork()}\hspace{0.1cm}{\footnotesize\ttfamily [1/5]}}
+{\footnotesize\ttfamily \label{classtensor_net_a168c7f75c9fd6d264afd016e144f3878} 
+bool tensor\+Net::\+\+Load\+Network (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{prototxt}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{model}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{mean}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{input\+\_\+blob}{, }\item[{const Dims3 \&}]{input\+\_\+dims}{, }\item[{const std::\+vector$<$ std::\+string $>$ \&}]{output\+\_\+blobs}{, }\item[{uint32\+\_\+t}]{max\+Batch\+Size}{ = {\ttfamily \doxymbox{\hyperlink{group__tensor_net_ga5a46a965749d6118e01307fd4d4865c9}{DEFAULT\+\_\+\+MAX\+\_\+\+BATCH\+\_\+\+SIZE}}}, }\item[{\doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precision\+Type}}}]{precision}{ = {\ttfamily \doxymbox{\hyperlink{group__tensor_net_ggaac6604fd52c6e5db82877390e0378623a1d325738f49e8e4c424ff671624e66f9}{TYPE\+\_\+\+FASTEST}}}, }\item[{\doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{device\+Type}}}]{device}{ = {\ttfamily \doxymbox{\hyperlink{group__tensor_net_ggaa5d3f9981cdbd91516c1474006a80fe4adc7f3f88455afa81458863e5b3092e4b}{DEVICE\+\_\+\+GPU}}}, }\item[{bool}]{allow\+GPUFallback}{ = {\ttfamily true}, }\item[{nvinfer1::\+\+IInt8\+Calibrator \texorpdfstring{$\ast$}{*}}]{calibrator}{ = {\ttfamily NULL}, }\item[{cuda\+Stream\+\_\+t}]{stream}{ = {\ttfamily NULL}}\end{DoxyParamCaption})}
+
+Load a new network instance (this variant is used for UFF models) 
+\begin{DoxyParams}{Parameters}
+{\em prototxt} & File path to the deployable network prototxt \\
+\hline
+{\em model} & File path to the caffemodel \\
+\hline
+{\em mean} & File path to the mean value binary proto (NULL if none) \\
+\hline
+{\em input\+\_\+blob} & \doxylink{requirements_The}{The} name of the input blob data to the network. \\
+\hline
+{\em input\+\_\+dims} & \doxylink{requirements_The}{The} dimensions of the input blob (used for UFF). \\
+\hline
+{\em output\+\_\+blobs} & List of names of the output blobs from the network. \\
+\hline
+{\em max\+Batch\+Size} & \doxylink{requirements_The}{The} maximum batch size that the network will be optimized for. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classtensor_net_a0a06ffd12b465f39160f4a6925cccd9f}\index{tensorNet@{tensorNet}!LoadNetwork@{LoadNetwork}}
+\index{LoadNetwork@{LoadNetwork}!tensorNet@{tensorNet}}
+\doxysubsubsection{\texorpdfstring{LoadNetwork()}{LoadNetwork()}\hspace{0.1cm}{\footnotesize\ttfamily [2/5]}}
+{\footnotesize\ttfamily \label{classtensor_net_a0a06ffd12b465f39160f4a6925cccd9f} 
+bool tensor\+Net::\+\+Load\+Network (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{prototxt}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{model}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{mean}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{input\+\_\+blob}{, }\item[{const std::\+vector$<$ std::\+string $>$ \&}]{output\+\_\+blobs}{, }\item[{uint32\+\_\+t}]{max\+Batch\+Size}{ = {\ttfamily \doxymbox{\hyperlink{group__tensor_net_ga5a46a965749d6118e01307fd4d4865c9}{DEFAULT\+\_\+\+MAX\+\_\+\+BATCH\+\_\+\+SIZE}}}, }\item[{\doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precision\+Type}}}]{precision}{ = {\ttfamily \doxymbox{\hyperlink{group__tensor_net_ggaac6604fd52c6e5db82877390e0378623a1d325738f49e8e4c424ff671624e66f9}{TYPE\+\_\+\+FASTEST}}}, }\item[{\doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{device\+Type}}}]{device}{ = {\ttfamily \doxymbox{\hyperlink{group__tensor_net_ggaa5d3f9981cdbd91516c1474006a80fe4adc7f3f88455afa81458863e5b3092e4b}{DEVICE\+\_\+\+GPU}}}, }\item[{bool}]{allow\+GPUFallback}{ = {\ttfamily true}, }\item[{nvinfer1::\+\+IInt8\+Calibrator \texorpdfstring{$\ast$}{*}}]{calibrator}{ = {\ttfamily NULL}, }\item[{cuda\+Stream\+\_\+t}]{stream}{ = {\ttfamily NULL}}\end{DoxyParamCaption})}
+
+Load a new network instance with multiple output layers 
+\begin{DoxyParams}{Parameters}
+{\em prototxt} & File path to the deployable network prototxt \\
+\hline
+{\em model} & File path to the caffemodel \\
+\hline
+{\em mean} & File path to the mean value binary proto (NULL if none) \\
+\hline
+{\em input\+\_\+blob} & \doxylink{requirements_The}{The} name of the input blob data to the network. \\
+\hline
+{\em output\+\_\+blobs} & List of names of the output blobs from the network. \\
+\hline
+{\em max\+Batch\+Size} & \doxylink{requirements_The}{The} maximum batch size that the network will be optimized for. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classtensor_net_a8f34a6001c2da01662b85670de9246e4}\index{tensorNet@{tensorNet}!LoadNetwork@{LoadNetwork}}
+\index{LoadNetwork@{LoadNetwork}!tensorNet@{tensorNet}}
+\doxysubsubsection{\texorpdfstring{LoadNetwork()}{LoadNetwork()}\hspace{0.1cm}{\footnotesize\ttfamily [3/5]}}
+{\footnotesize\ttfamily \label{classtensor_net_a8f34a6001c2da01662b85670de9246e4} 
+bool tensor\+Net::\+\+Load\+Network (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{prototxt}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{model}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{mean}{, }\item[{const std::\+vector$<$ std::\+string $>$ \&}]{input\+\_\+blobs}{, }\item[{const std::\+vector$<$ Dims3 $>$ \&}]{input\+\_\+dims}{, }\item[{const std::\+vector$<$ std::\+string $>$ \&}]{output\+\_\+blobs}{, }\item[{uint32\+\_\+t}]{max\+Batch\+Size}{ = {\ttfamily \doxymbox{\hyperlink{group__tensor_net_ga5a46a965749d6118e01307fd4d4865c9}{DEFAULT\+\_\+\+MAX\+\_\+\+BATCH\+\_\+\+SIZE}}}, }\item[{\doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precision\+Type}}}]{precision}{ = {\ttfamily \doxymbox{\hyperlink{group__tensor_net_ggaac6604fd52c6e5db82877390e0378623a1d325738f49e8e4c424ff671624e66f9}{TYPE\+\_\+\+FASTEST}}}, }\item[{\doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{device\+Type}}}]{device}{ = {\ttfamily \doxymbox{\hyperlink{group__tensor_net_ggaa5d3f9981cdbd91516c1474006a80fe4adc7f3f88455afa81458863e5b3092e4b}{DEVICE\+\_\+\+GPU}}}, }\item[{bool}]{allow\+GPUFallback}{ = {\ttfamily true}, }\item[{nvinfer1::\+\+IInt8\+Calibrator \texorpdfstring{$\ast$}{*}}]{calibrator}{ = {\ttfamily NULL}, }\item[{cuda\+Stream\+\_\+t}]{stream}{ = {\ttfamily NULL}}\end{DoxyParamCaption})}
+
+Load a new network instance with multiple input layers (used for UFF models) 
+\begin{DoxyParams}{Parameters}
+{\em prototxt} & File path to the deployable network prototxt \\
+\hline
+{\em model} & File path to the caffemodel \\
+\hline
+{\em mean} & File path to the mean value binary proto (NULL if none) \\
+\hline
+{\em input\+\_\+blobs} & List of names of the inputs blob data to the network. \\
+\hline
+{\em input\+\_\+dims} & List of the dimensions of the input blobs (used for UFF). \\
+\hline
+{\em output\+\_\+blobs} & List of names of the output blobs from the network. \\
+\hline
+{\em max\+Batch\+Size} & \doxylink{requirements_The}{The} maximum batch size that the network will be optimized for. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classtensor_net_a68a6f21680ae91bc51bea376221d1c48}\index{tensorNet@{tensorNet}!LoadNetwork@{LoadNetwork}}
+\index{LoadNetwork@{LoadNetwork}!tensorNet@{tensorNet}}
+\doxysubsubsection{\texorpdfstring{LoadNetwork()}{LoadNetwork()}\hspace{0.1cm}{\footnotesize\ttfamily [4/5]}}
+{\footnotesize\ttfamily \label{classtensor_net_a68a6f21680ae91bc51bea376221d1c48} 
+bool tensor\+Net::\+\+Load\+Network (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{prototxt}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{model}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{mean}{, }\item[{const std::\+vector$<$ std::\+string $>$ \&}]{input\+\_\+blobs}{, }\item[{const std::\+vector$<$ std::\+string $>$ \&}]{output\+\_\+blobs}{, }\item[{uint32\+\_\+t}]{max\+Batch\+Size}{ = {\ttfamily \doxymbox{\hyperlink{group__tensor_net_ga5a46a965749d6118e01307fd4d4865c9}{DEFAULT\+\_\+\+MAX\+\_\+\+BATCH\+\_\+\+SIZE}}}, }\item[{\doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precision\+Type}}}]{precision}{ = {\ttfamily \doxymbox{\hyperlink{group__tensor_net_ggaac6604fd52c6e5db82877390e0378623a1d325738f49e8e4c424ff671624e66f9}{TYPE\+\_\+\+FASTEST}}}, }\item[{\doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{device\+Type}}}]{device}{ = {\ttfamily \doxymbox{\hyperlink{group__tensor_net_ggaa5d3f9981cdbd91516c1474006a80fe4adc7f3f88455afa81458863e5b3092e4b}{DEVICE\+\_\+\+GPU}}}, }\item[{bool}]{allow\+GPUFallback}{ = {\ttfamily true}, }\item[{nvinfer1::\+\+IInt8\+Calibrator \texorpdfstring{$\ast$}{*}}]{calibrator}{ = {\ttfamily NULL}, }\item[{cuda\+Stream\+\_\+t}]{stream}{ = {\ttfamily NULL}}\end{DoxyParamCaption})}
+
+Load a new network instance with multiple input layers. 
+\begin{DoxyParams}{Parameters}
+{\em prototxt} & File path to the deployable network prototxt \\
+\hline
+{\em model} & File path to the caffemodel \\
+\hline
+{\em mean} & File path to the mean value binary proto (NULL if none) \\
+\hline
+{\em input\+\_\+blobs} & List of names of the inputs blob data to the network. \\
+\hline
+{\em output\+\_\+blobs} & List of names of the output blobs from the network. \\
+\hline
+{\em max\+Batch\+Size} & \doxylink{requirements_The}{The} maximum batch size that the network will be optimized for. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classtensor_net_a2e63d4670461814bd863ee0d9bd41526}\index{tensorNet@{tensorNet}!LoadNetwork@{LoadNetwork}}
+\index{LoadNetwork@{LoadNetwork}!tensorNet@{tensorNet}}
+\doxysubsubsection{\texorpdfstring{LoadNetwork()}{LoadNetwork()}\hspace{0.1cm}{\footnotesize\ttfamily [5/5]}}
+{\footnotesize\ttfamily \label{classtensor_net_a2e63d4670461814bd863ee0d9bd41526} 
+bool tensor\+Net::\+\+Load\+Network (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{prototxt}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{model}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{mean}{ = {\ttfamily NULL}, }\item[{const char \texorpdfstring{$\ast$}{*}}]{input\+\_\+blob}{ = {\ttfamily "{}data"{}}, }\item[{const char \texorpdfstring{$\ast$}{*}}]{output\+\_\+blob}{ = {\ttfamily "{}prob"{}}, }\item[{uint32\+\_\+t}]{max\+Batch\+Size}{ = {\ttfamily \doxymbox{\hyperlink{group__tensor_net_ga5a46a965749d6118e01307fd4d4865c9}{DEFAULT\+\_\+\+MAX\+\_\+\+BATCH\+\_\+\+SIZE}}}, }\item[{\doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precision\+Type}}}]{precision}{ = {\ttfamily \doxymbox{\hyperlink{group__tensor_net_ggaac6604fd52c6e5db82877390e0378623a1d325738f49e8e4c424ff671624e66f9}{TYPE\+\_\+\+FASTEST}}}, }\item[{\doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{device\+Type}}}]{device}{ = {\ttfamily \doxymbox{\hyperlink{group__tensor_net_ggaa5d3f9981cdbd91516c1474006a80fe4adc7f3f88455afa81458863e5b3092e4b}{DEVICE\+\_\+\+GPU}}}, }\item[{bool}]{allow\+GPUFallback}{ = {\ttfamily true}, }\item[{nvinfer1::\+\+IInt8\+Calibrator \texorpdfstring{$\ast$}{*}}]{calibrator}{ = {\ttfamily NULL}, }\item[{cuda\+Stream\+\_\+t}]{stream}{ = {\ttfamily NULL}}\end{DoxyParamCaption})}
+
+Load a new network instance 
+\begin{DoxyParams}{Parameters}
+{\em prototxt} & File path to the deployable network prototxt \\
+\hline
+{\em model} & File path to the caffemodel \\
+\hline
+{\em mean} & File path to the mean value binary proto (NULL if none) \\
+\hline
+{\em input\+\_\+blob} & \doxylink{requirements_The}{The} name of the input blob data to the network. \\
+\hline
+{\em output\+\_\+blob} & \doxylink{requirements_The}{The} name of the output blob data from the network. \\
+\hline
+{\em max\+Batch\+Size} & \doxylink{requirements_The}{The} maximum batch size that the network will be optimized for. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classtensor_net_afc0f50abcf6ac71e96d51eba3ed53d4b}\index{tensorNet@{tensorNet}!PrintProfilerTimes@{PrintProfilerTimes}}
+\index{PrintProfilerTimes@{PrintProfilerTimes}!tensorNet@{tensorNet}}
+\doxysubsubsection{\texorpdfstring{PrintProfilerTimes()}{PrintProfilerTimes()}}
+{\footnotesize\ttfamily \label{classtensor_net_afc0f50abcf6ac71e96d51eba3ed53d4b} 
+void tensor\+Net::\+\+Print\+Profiler\+Times (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Print the profiler times (in millseconds). \Hypertarget{classtensor_net_a2e8dd909e797dfcfbb058dc6b351c586}\index{tensorNet@{tensorNet}!ProcessNetwork@{ProcessNetwork}}
+\index{ProcessNetwork@{ProcessNetwork}!tensorNet@{tensorNet}}
+\doxysubsubsection{\texorpdfstring{ProcessNetwork()}{ProcessNetwork()}}
+{\footnotesize\ttfamily \label{classtensor_net_a2e8dd909e797dfcfbb058dc6b351c586} 
+bool tensor\+Net::\+\+Process\+Network (\begin{DoxyParamCaption}\item[{bool}]{sync}{ = {\ttfamily true}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+Execute processing of the network. 
+\begin{DoxyParams}{Parameters}
+{\em sync} & if true (default), the device will be synchronized after processing and the thread/\+function will block until processing is complete. if false, the function will return immediately after the processing has been enqueued to the CUDA stream indicated by \doxylink{classtensor_net_a34e350ec6185277ac09ae55a79403e62}{Get\+Stream()}. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classtensor_net_a2fbc013f70b52f885867302446e0dca1}\index{tensorNet@{tensorNet}!ProfileModel@{ProfileModel}}
+\index{ProfileModel@{ProfileModel}!tensorNet@{tensorNet}}
+\doxysubsubsection{\texorpdfstring{ProfileModel()}{ProfileModel()}}
+{\footnotesize\ttfamily \label{classtensor_net_a2fbc013f70b52f885867302446e0dca1} 
+bool tensor\+Net::\+\+Profile\+Model (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{deploy\+File}{, }\item[{const std::\+string \&}]{model\+File}{, }\item[{const std::\+vector$<$ std::\+string $>$ \&}]{inputs}{, }\item[{const std::\+vector$<$ Dims3 $>$ \&}]{input\+Dims}{, }\item[{const std::\+vector$<$ std::\+string $>$ \&}]{outputs}{, }\item[{uint32\+\_\+t}]{max\+Batch\+Size}{, }\item[{\doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precision\+Type}}}]{precision}{, }\item[{\doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{device\+Type}}}]{device}{, }\item[{bool}]{allow\+GPUFallback}{, }\item[{nvinfer1::\+\+IInt8\+Calibrator \texorpdfstring{$\ast$}{*}}]{calibrator}{, }\item[{char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{engine\+Stream}{, }\item[{size\+\_\+t \texorpdfstring{$\ast$}{*}}]{engine\+Size}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+Create and output an optimized network model \begin{DoxyNote}{Note}
+this function is automatically used by Load\+Network, but also can be used individually to perform the network operations offline. 
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em deploy\+File} & name for network prototxt \\
+\hline
+{\em model\+File} & name for model \\
+\hline
+{\em outputs} & network outputs \\
+\hline
+{\em max\+Batch\+Size} & maximum batch size \\
+\hline
+{\em model\+Stream} & output model stream \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classtensor_net_a088c3bf591e45e52ec227491f6f299ad}\index{tensorNet@{tensorNet}!PROFILER\_BEGIN@{PROFILER\_BEGIN}}
+\index{PROFILER\_BEGIN@{PROFILER\_BEGIN}!tensorNet@{tensorNet}}
+\doxysubsubsection{\texorpdfstring{PROFILER\_BEGIN()}{PROFILER\_BEGIN()}}
+{\footnotesize\ttfamily \label{classtensor_net_a088c3bf591e45e52ec227491f6f299ad} 
+void tensor\+Net::\+\+PROFILER\+\_\+\+BEGIN (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{group__tensor_net_gae34d45c0faa674ef4cc0fbfc8fae5809}{profiler\+Query}}}]{query}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}
+
+Begin a profiling query, before network is run \Hypertarget{classtensor_net_ac8582b9a6099e3265da4c3f9fdf804ea}\index{tensorNet@{tensorNet}!PROFILER\_END@{PROFILER\_END}}
+\index{PROFILER\_END@{PROFILER\_END}!tensorNet@{tensorNet}}
+\doxysubsubsection{\texorpdfstring{PROFILER\_END()}{PROFILER\_END()}}
+{\footnotesize\ttfamily \label{classtensor_net_ac8582b9a6099e3265da4c3f9fdf804ea} 
+void tensor\+Net::\+\+PROFILER\+\_\+\+END (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{group__tensor_net_gae34d45c0faa674ef4cc0fbfc8fae5809}{profiler\+Query}}}]{query}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}
+
+End a profiling query, after the network is run \Hypertarget{classtensor_net_ae2e0ae17baf6e1975aaad7a7f5c60ce9}\index{tensorNet@{tensorNet}!PROFILER\_QUERY@{PROFILER\_QUERY}}
+\index{PROFILER\_QUERY@{PROFILER\_QUERY}!tensorNet@{tensorNet}}
+\doxysubsubsection{\texorpdfstring{PROFILER\_QUERY()}{PROFILER\_QUERY()}}
+{\footnotesize\ttfamily \label{classtensor_net_ae2e0ae17baf6e1975aaad7a7f5c60ce9} 
+bool tensor\+Net::\+\+PROFILER\+\_\+\+QUERY (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{group__tensor_net_gae34d45c0faa674ef4cc0fbfc8fae5809}{profiler\+Query}}}]{query}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}
+
+Query the CUDA part of a profiler query. \Hypertarget{classtensor_net_a3c0509631176be6f9e25673cb0aa12dc}\index{tensorNet@{tensorNet}!SelectPrecision@{SelectPrecision}}
+\index{SelectPrecision@{SelectPrecision}!tensorNet@{tensorNet}}
+\doxysubsubsection{\texorpdfstring{SelectPrecision()}{SelectPrecision()}}
+{\footnotesize\ttfamily \label{classtensor_net_a3c0509631176be6f9e25673cb0aa12dc} 
+\doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precision\+Type}} tensor\+Net::\+\+Select\+Precision (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precision\+Type}}}]{precision}{, }\item[{\doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{device\+Type}}}]{device}{ = {\ttfamily \doxymbox{\hyperlink{group__tensor_net_ggaa5d3f9981cdbd91516c1474006a80fe4adc7f3f88455afa81458863e5b3092e4b}{DEVICE\+\_\+\+GPU}}}, }\item[{bool}]{allow\+Int8}{ = {\ttfamily true}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Resolve a desired precision to a specific one that\textquotesingle{}s available. \Hypertarget{classtensor_net_a679b177784c85bfdba63dcd1008ff633}\index{tensorNet@{tensorNet}!SetStream@{SetStream}}
+\index{SetStream@{SetStream}!tensorNet@{tensorNet}}
+\doxysubsubsection{\texorpdfstring{SetStream()}{SetStream()}}
+{\footnotesize\ttfamily \label{classtensor_net_a679b177784c85bfdba63dcd1008ff633} 
+void tensor\+Net::\+\+Set\+Stream (\begin{DoxyParamCaption}\item[{cuda\+Stream\+\_\+t}]{stream}{}\end{DoxyParamCaption})}
+
+Set the stream that the device is operating on. \Hypertarget{classtensor_net_a6e2fe0a467929d76b20940771b8f96c3}\index{tensorNet@{tensorNet}!ValidateEngine@{ValidateEngine}}
+\index{ValidateEngine@{ValidateEngine}!tensorNet@{tensorNet}}
+\doxysubsubsection{\texorpdfstring{ValidateEngine()}{ValidateEngine()}}
+{\footnotesize\ttfamily \label{classtensor_net_a6e2fe0a467929d76b20940771b8f96c3} 
+bool tensor\+Net::\+\+Validate\+Engine (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{model\+\_\+path}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{cache\+\_\+path}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{checksum\+\_\+path}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+Validate that the model already has a built Tensor\+RT engine that exists and doesn\textquotesingle{}t need updating. 
+
+The documentation for this class was generated from the following file:\+\begin{DoxyCompactItemize}
+\item 
+jetson-\/inference/\+build/\+aarch64/\+include/\+jetson-\/inference/\+tensor\+Net.\+h\end{DoxyCompactItemize}

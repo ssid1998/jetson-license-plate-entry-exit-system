@@ -1,0 +1,82 @@
+\doxysection{Mutex.\+inl}
+\hypertarget{build_2aarch64_2include_2jetson-utils_2_mutex_8inl_source}{}\label{build_2aarch64_2include_2jetson-utils_2_mutex_8inl_source}\index{jetson-\/inference/build/aarch64/include/jetson-\/utils/Mutex.inl@{jetson-\/inference/build/aarch64/include/jetson-\/utils/Mutex.inl}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ *\ Copyright\ (c)\ 2018,\ NVIDIA\ CORPORATION.\ All\ rights\ reserved.}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ *\ Permission\ is\ hereby\ granted,\ free\ of\ charge,\ to\ any\ person\ obtaining\ a}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ *\ copy\ of\ this\ software\ and\ associated\ documentation\ files\ (the\ "{}Software"{}),}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ *\ to\ deal\ in\ the\ Software\ without\ restriction,\ including\ without\ limitation}}
+\DoxyCodeLine{00007\ \textcolor{comment}{\ *\ the\ rights\ to\ use,\ copy,\ modify,\ merge,\ publish,\ distribute,\ sublicense,}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ *\ and/or\ sell\ copies\ of\ the\ Software,\ and\ to\ permit\ persons\ to\ whom\ the}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ *\ Software\ is\ furnished\ to\ do\ so,\ subject\ to\ the\ following\ conditions:}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ *\ The\ above\ copyright\ notice\ and\ this\ permission\ notice\ shall\ be\ included\ in}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ *\ all\ copies\ or\ substantial\ portions\ of\ the\ Software.}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ *\ THE\ SOFTWARE\ IS\ PROVIDED\ "{}AS\ IS"{},\ WITHOUT\ WARRANTY\ OF\ ANY\ KIND,\ EXPRESS\ OR}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ *\ IMPLIED,\ INCLUDING\ BUT\ NOT\ LIMITED\ TO\ THE\ WARRANTIES\ OF\ MERCHANTABILITY,}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ *\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE\ AND\ NONINFRINGEMENT.\ \ IN\ NO\ EVENT\ SHALL}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ *\ THE\ AUTHORS\ OR\ COPYRIGHT\ HOLDERS\ BE\ LIABLE\ FOR\ ANY\ CLAIM,\ DAMAGES\ OR\ OTHER}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ *\ LIABILITY,\ WHETHER\ IN\ AN\ ACTION\ OF\ CONTRACT,\ TORT\ OR\ OTHERWISE,\ ARISING}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ *\ FROM,\ OUT\ OF\ OR\ IN\ CONNECTION\ WITH\ THE\ SOFTWARE\ OR\ THE\ USE\ OR\ OTHER}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ *\ DEALINGS\ IN\ THE\ SOFTWARE.}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \textcolor{preprocessor}{\#ifndef\ \_\_MULTITHREAD\_MUTEX\_INLINE\_H}}
+\DoxyCodeLine{00024\ \textcolor{preprocessor}{\#define\ \_\_MULTITHREAD\_MUTEX\_INLINE\_H}}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \textcolor{comment}{//\ constructor}}
+\DoxyCodeLine{00028\ \textcolor{keyword}{inline}\ \doxymbox{\hyperlink{class_mutex_a593423d868daf926c7b0d63a833ae29a}{Mutex::Mutex}}()}
+\DoxyCodeLine{00029\ \{}
+\DoxyCodeLine{00030\ \ \ \ \ pthread\_mutex\_init(\&mID,\ NULL);}
+\DoxyCodeLine{00031\ \}}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \textcolor{comment}{//\ destructor}}
+\DoxyCodeLine{00035\ \textcolor{keyword}{inline}\ \doxymbox{\hyperlink{class_mutex_ac9e9182407f5f74892318607888e9be4}{Mutex::\string~Mutex}}()}
+\DoxyCodeLine{00036\ \{}
+\DoxyCodeLine{00037\ \ \ \ \ pthread\_mutex\_destroy(\&mID);}
+\DoxyCodeLine{00038\ \}}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \textcolor{comment}{//\ AttemptLock}}
+\DoxyCodeLine{00042\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_mutex_a87f92bea41231778680c392668b4ad6f}{Mutex::AttemptLock}}()\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00043\ \{\ }
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keywordflow}{return}\ (pthread\_mutex\_trylock(\&mID)\ ==\ 0);\ }
+\DoxyCodeLine{00045\ \}}
+\DoxyCodeLine{00046\ \ \ \ \ }
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00048\ \textcolor{comment}{//\ Lock}}
+\DoxyCodeLine{00049\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_mutex_ae5cb54c9c45f90e29206d5679a3b1c7f}{Mutex::Lock}}()\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00050\ \{\ }
+\DoxyCodeLine{00051\ \ \ \ \ pthread\_mutex\_lock(\&mID);\ }
+\DoxyCodeLine{00052\ \}}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00055\ \textcolor{comment}{//\ Unlock}}
+\DoxyCodeLine{00056\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_mutex_ad5de61abafec4bbec4cd7e796e5209fd}{Mutex::Unlock}}()}
+\DoxyCodeLine{00057\ \{\ }
+\DoxyCodeLine{00058\ \ \ \ \ pthread\_mutex\_unlock(\&mID);\ }
+\DoxyCodeLine{00059\ \}\ \ \ \ \ \ \ }
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00062\ \textcolor{comment}{//\ Sync}}
+\DoxyCodeLine{00063\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_mutex_a5fce312e70fb4d09af9436d4e5912f7e}{Mutex::Sync}}()\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00064\ \{\ }
+\DoxyCodeLine{00065\ \ \ \ \ \doxymbox{\hyperlink{class_mutex_ae5cb54c9c45f90e29206d5679a3b1c7f}{Lock}}();\ }
+\DoxyCodeLine{00066\ \ \ \ \ \doxymbox{\hyperlink{class_mutex_ad5de61abafec4bbec4cd7e796e5209fd}{Unlock}}();\ }
+\DoxyCodeLine{00067\ \}}
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00069\ }
+\DoxyCodeLine{00070\ \textcolor{comment}{//\ GetID}}
+\DoxyCodeLine{00071\ \textcolor{keyword}{inline}\ pthread\_mutex\_t*\ \doxymbox{\hyperlink{class_mutex_ade0122d24f7815370caf34ddd91ddcf4}{Mutex::GetID}}()}
+\DoxyCodeLine{00072\ \{\ }
+\DoxyCodeLine{00073\ \ \ \ \ \textcolor{keywordflow}{return}\ \&mID;\ }
+\DoxyCodeLine{00074\ \}}
+\DoxyCodeLine{00075\ \ \ \ \ }
+\DoxyCodeLine{00076\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

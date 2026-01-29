@@ -1,0 +1,134 @@
+\chapter{aux-\/docker }
+\hypertarget{md_jetson-inference_2docs_2aux-docker}{}\label{md_jetson-inference_2docs_2aux-docker}\index{aux-\/docker@{aux-\/docker}}
+ 
+
+\textsuperscript{\href{jetpack-setup-2.md}{\texttt{Back}} \texorpdfstring{$\vert$}{|} \href{building-repo-2.md}{\texttt{Next}} \texorpdfstring{$\vert$}{|} }\href{../README.md\#hello-ai-world}{\texttt{\textsuperscript{Contents}}} ~\newline
+ \textsuperscript{System Setup}
+
+~\newline
+\hypertarget{md_jetson-inference_2docs_2aux-docker_autotoc_md49}{}\doxysection{\texorpdfstring{Running the Docker Container}{Running the Docker Container}}\label{md_jetson-inference_2docs_2aux-docker_autotoc_md49}
+Pre-\/built Docker container images for this project are hosted on \href{https://hub.docker.com/r/dustynv/jetson-inference/tags}{\texttt{Docker\+Hub}}. Alternatively, you can \doxysectlink{md_jetson-inference_2docs_2building-repo-2}{Build the Project }{0} from source. ~\newline
+
+
+Below are the currently available container tags:\+
+
+
+\begin{DoxyTable}{3}{}{}{1}
+\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}Container Tag  &\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}L4T version  &\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}Jet\+Pack version  \\
+\href{https://hub.docker.com/r/dustynv/jetson-inference/tags}{\texttt{{\ttfamily dustynv/\+jetson-\/inference:\+r36.\+3.\+0}}}  &\SetCell{c}L4T R36.\+3.\+0  &\SetCell{c}Jet\+Pack 6.\+0 GA  \\
+\href{https://hub.docker.com/r/dustynv/jetson-inference/tags}{\texttt{{\ttfamily dustynv/\+jetson-\/inference:\+r36.\+2.\+0}}}  &\SetCell{c}L4T R36.\+2.\+0  &\SetCell{c}Jet\+Pack 6.\+0 DP  \\
+\href{https://hub.docker.com/r/dustynv/jetson-inference/tags}{\texttt{{\ttfamily dustynv/\+jetson-\/inference:\+r35.\+3.\+1}}}  &\SetCell{c}L4T R35.\+3.\+1  &\SetCell{c}Jet\+Pack 5.\+1.\+1  \\
+\href{https://hub.docker.com/r/dustynv/jetson-inference/tags}{\texttt{{\ttfamily dustynv/\+jetson-\/inference:\+r35.\+2.\+1}}}  &\SetCell{c}L4T R35.\+2.\+1  &\SetCell{c}Jet\+Pack 5.\+1  \\
+\href{https://hub.docker.com/r/dustynv/jetson-inference/tags}{\texttt{{\ttfamily dustynv/\+jetson-\/inference:\+r35.\+1.\+0}}}  &\SetCell{c}L4T R35.\+1.\+0  &\SetCell{c}Jet\+Pack 5.\+0.\+2  \\
+\href{https://hub.docker.com/r/dustynv/jetson-inference/tags}{\texttt{{\ttfamily dustynv/\+jetson-\/inference:\+r34.\+1.\+1}}}  &\SetCell{c}L4T R34.\+1.\+1  &\SetCell{c}Jet\+Pack 5.\+0.\+1  \\
+\href{https://hub.docker.com/r/dustynv/jetson-inference/tags}{\texttt{{\ttfamily dustynv/\+jetson-\/inference:\+r32.\+7.\+1}}}  &\SetCell{c}L4T R32.\+7.\+1  &\SetCell{c}Jet\+Pack 4.\+6.\+1  \\
+\href{https://hub.docker.com/r/dustynv/jetson-inference/tags}{\texttt{{\ttfamily dustynv/\+jetson-\/inference:\+r32.\+6.\+1}}}  &\SetCell{c}L4T R32.\+6.\+1  &\SetCell{c}Jet\+Pack 4.\+6  \\
+\href{https://hub.docker.com/r/dustynv/jetson-inference/tags}{\texttt{{\ttfamily dustynv/\+jetson-\/inference:\+r32.\+5.\+0}}}  &\SetCell{c}L4T R32.\+5.\+0  &\SetCell{c}Jet\+Pack 4.\+5  \\
+\href{https://hub.docker.com/r/dustynv/jetson-inference/tags}{\texttt{{\ttfamily dustynv/\+jetson-\/inference:\+r32.\+4.\+4}}}  &\SetCell{c}L4T R32.\+4.\+4  &\SetCell{c}Jet\+Pack 4.\+4.\+1  \\
+\href{https://hub.docker.com/r/dustynv/jetson-inference/tags}{\texttt{{\ttfamily dustynv/\+jetson-\/inference:\+r32.\+4.\+3}}}  &\SetCell{c}L4T R32.\+4.\+3  &\SetCell{c}Jet\+Pack 4.\+4  \\
+\end{DoxyTable}
+
+
+\begin{quote}
+{\bfseries{note:\+}} the version of Jet\+Pack-\/\+L4T that you have installed on your Jetson needs to be compatible with one of the tags above. If you have a different version of Jet\+Pack installed, either upgrade to the latest Jet\+Pack or Build the Project from Source to compile the project directly. \end{quote}
+
+
+These containers use the \href{https://ngc.nvidia.com/catalog/containers/nvidia:l4t-pytorch}{\texttt{{\ttfamily l4t-\/pytorch}}} base container, so support for training models and transfer learning is already included.\hypertarget{md_jetson-inference_2docs_2aux-docker_autotoc_md50}{}\doxysubsection{\texorpdfstring{Launching the Container}{Launching the Container}}\label{md_jetson-inference_2docs_2aux-docker_autotoc_md50}
+Due to various mounts and devices needed to run the container, it\textquotesingle{}s recommended to use the \href{../docker/run.sh}{\texttt{{\ttfamily docker/\+run.\+sh}}} script to run the container:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$\ git\ clone\ -\/-\/recursive\ -\/-\/depth=1\ https://github.com/dusty-\/nv/jetson-\/inference}
+\DoxyCodeLine{\$\ cd\ jetson-\/inference}
+\DoxyCodeLine{\$\ docker/run.sh}
+
+\end{DoxyCode}
+
+
+\begin{quote}
+{\bfseries{note:\+}} because of the Docker scripts used and the data directory structure that gets mounted into the container, you should still clone the project on your host device (i.\+e. even if not intending to build/\+install the project natively) \end{quote}
+
+
+\href{../docker/run.sh}{\texttt{{\ttfamily docker/\+run.\+sh}}} will automatically pull the correct container tag from Docker\+Hub based on your currently-\/installed version of Jet\+Pack-\/\+L4T, and mount the appropriate data directories and devices so that you can use cameras/\+display/\+ect from within the container.\hypertarget{md_jetson-inference_2docs_2aux-docker_autotoc_md51}{}\doxysubsubsection{\texorpdfstring{ROS Support}{ROS Support}}\label{md_jetson-inference_2docs_2aux-docker_autotoc_md51}
+This project also has the \href{https://github.com/dusty-nv/ros_deep_learning}{\texttt{ros\+\_\+deep\+\_\+learning}} package available for ROS/\+\+ROS2, and by specifying the {\ttfamily -\/-\/ros=ROS\+\_\+\+DISTRO} option you can start the version of container built with ROS. Supported ROS distros include Noetic, Foxy, Galactic, Humble, and Iron:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{\$\ docker/run.sh\ -\/-\/ros=humble\ \ \ \#\ noetic,\ foxy,\ galactic,\ humble,\ iron}
+
+\end{DoxyCode}
+
+
+\doxylink{requirements_The}{The} container will source the ROS environment and packages when started. For more information, see the \href{https://github.com/dusty-nv/ros_deep_learning}{\texttt{ros\+\_\+deep\+\_\+learning}} documentation.\hypertarget{md_jetson-inference_2docs_2aux-docker_autotoc_md52}{}\doxysubsubsection{\texorpdfstring{x86 Support}{x86 Support}}\label{md_jetson-inference_2docs_2aux-docker_autotoc_md52}
+In addition to being supported on the Jetson ARM-\/based architectures, the jetson-\/inference container can be built and run on x86\+\_\+64 systems with NVIDIA GPU(s). This can be used to run the Hello AI World tutorial and accompanying apps/\+libraries from it, or for faster training on the PC/\+server. To do this, first install the \href{https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html\#pre-requisites}{\texttt{NVIDIA drivers}} and \href{https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/nvidia-docker.html}{\texttt{NVIDIA Container Runtime}} to enable GPU support in Docker. ~\newline
+
+
+To run the latest pre-\/built jetson-\/inference x86 container, use the same commands as above ({\ttfamily docker/\+run.\+sh}). If you want to use a newer/\+older version of the \href{https://catalog.ngc.nvidia.com/orgs/nvidia/containers/pytorch}{\texttt{{\ttfamily nvcr.\+io/\+nvidia/\+pytorch}}} base container, edit \href{https://github.com/dusty-nv/jetson-inference/blob/master/docker/tag.sh\#L40}{\texttt{this line}} with the desired tag and then run \`{}docker/\+build.sh\`{}
+
+Although the jetson-\/inference container is built for Linux, it can be run on Windows under WSL 2 by following the \href{https://docs.nvidia.com/cuda/wsl-user-guide/index.html\#ch02-sub03-installing-wsl2}{\texttt{CUDA on WSL User Guide}}, followed by installing Docker and the NVIDIA Container Runtime as above. If you need to use USB webcams and V4\+L2 under WSL 2, you\textquotesingle{}ll also need to recompile your WSL kernel with these \href{https://github.com/PINTO0309/wsl2_linux_kernel_usbcam_enable_conf}{\texttt{config changes}}.\hypertarget{md_jetson-inference_2docs_2aux-docker_autotoc_md53}{}\doxysubsubsection{\texorpdfstring{Mounted Data Volumes}{Mounted Data Volumes}}\label{md_jetson-inference_2docs_2aux-docker_autotoc_md53}
+For reference, the following paths automatically get mounted from your host device into the container:\+
+
+
+\begin{DoxyItemize}
+\item {\ttfamily jetson-\/inference/\+data} (stores the network models, serialized Tensor\+RT engines, and test images)
+\item {\ttfamily jetson-\/inference/\+python/\+training/\+classification/\+data} (stores classification training datasets)
+\item {\ttfamily jetson-\/inference/\+python/\+training/\+classification/\+models} (stores classification models trained by Py\+Torch)
+\item {\ttfamily jetson-\/inference/\+python/\+training/\+detection/\+ssd/\+data} (stores detection training datasets)
+\item {\ttfamily jetson-\/inference/\+python/\+training/\+detection/\+ssd/\+models} (stores detection models trained by Py\+Torch)
+\end{DoxyItemize}
+
+These mounted volumes assure that the models and datasets are stored outside the container, and aren\textquotesingle{}t lost when the container is shut down.
+
+If you wish to mount your own directory into the container, you can use the {\ttfamily -\/-\/volume HOST\+\_\+\+DIR:\+MOUNT\+\_\+\+DIR} argument to \href{../docker/run.sh}{\texttt{{\ttfamily docker/\+run.\+sh}}}:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$\ docker/run.sh\ -\/-\/volume\ /my/host/path:/my/container/path\ \ \ \ \#\ these\ should\ be\ absolute\ paths}
+
+\end{DoxyCode}
+
+
+You can specify {\ttfamily -\/-\/volume} multiple times to mount multiple directories. For more info, run or see \href{../docker/run.sh}{\texttt{{\ttfamily docker/\+run.\+sh -\/-\/help}}}\hypertarget{md_jetson-inference_2docs_2aux-docker_autotoc_md54}{}\doxysubsection{\texorpdfstring{Running Applications}{Running Applications}}\label{md_jetson-inference_2docs_2aux-docker_autotoc_md54}
+Once the container is up and running, you can then run example programs from the tutorial like normal inside the container:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$\ cd\ build/aarch64/bin}
+\DoxyCodeLine{\$\ ./video-\/viewer\ /dev/video0}
+\DoxyCodeLine{\$\ ./imagenet\ images/jellyfish.jpg\ images/test/jellyfish.jpg}
+\DoxyCodeLine{\$\ ./detectnet\ images/peds\_0.jpg\ images/test/peds\_0.jpg}
+\DoxyCodeLine{\#\ (press\ Ctrl+D\ to\ exit\ the\ container)}
+
+\end{DoxyCode}
+
+
+\begin{quote}
+{\bfseries{note:\+}} when you are saving images from one of the sample programs (like imagenet or detectnet), it\textquotesingle{}s recommended to save them to {\ttfamily images/\+test}. These images will then be easily viewable from your host device in the {\ttfamily jetson-\/inference/\+data/\+images/\+test} directory. ~\newline
+ \end{quote}
+\hypertarget{md_jetson-inference_2docs_2aux-docker_autotoc_md55}{}\doxysubsection{\texorpdfstring{Building the Container}{Building the Container}}\label{md_jetson-inference_2docs_2aux-docker_autotoc_md55}
+If you are following the Hello AI World tutorial, you can ignore this section and skip ahead to the next step. But if you wish to re-\/build the container or build your own, you can use the \href{../docker/build.sh}{\texttt{{\ttfamily docker/\+build.\+sh}}} script which builds the project\textquotesingle{}s \href{../Dockerfile}{\texttt{{\ttfamily Dockerfile}}}:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$\ docker/build.sh}
+
+\end{DoxyCode}
+
+
+\begin{quote}
+{\bfseries{note:\+}} you should first set your default {\ttfamily docker-\/runtime} to nvidia, see \href{https://github.com/dusty-nv/jetson-containers\#docker-default-runtime}{\texttt{here}} for the details. \end{quote}
+
+
+You can also base your own container on this one by using the line {\ttfamily FROM dustynv/\+jetson-\/inference:\+r\+XX.\+X.\+X} in your own Dockerfile.\hypertarget{md_jetson-inference_2docs_2aux-docker_autotoc_md56}{}\doxysubsection{\texorpdfstring{Getting Started}{Getting Started}}\label{md_jetson-inference_2docs_2aux-docker_autotoc_md56}
+If you have chosen to run the project inside the Docker container, you can proceed to \doxysectlink{md_jetson-inference_2docs_2imagenet-console-2}{Classifying Images with Image\+Net}{0}.
+
+However, if you would prefer to install the project directly on your Jetson (outside of container), go to \doxysectlink{md_jetson-inference_2docs_2building-repo-2}{Building the Project from Source}{0}.\hypertarget{md_jetson-inference_2docs_2aux-docker_autotoc_md57}{}\doxysubsection{\texorpdfstring{autotoc\+\_\+md57}{autotoc\+\_\+md57}}\label{md_jetson-inference_2docs_2aux-docker_autotoc_md57}
+Next \texorpdfstring{$\vert$}{|} {\bfseries{\href{building-repo-2.md}{\texttt{Building the Project from Source}}}} ~\newline
+ Back \texorpdfstring{$\vert$}{|} {\bfseries{\href{jetpack-setup-2.md}{\texttt{Setting up Jetson with Jet\+Pack}}}}
+
+{\bfseries{ }}
+
+{\bfseries{\textsuperscript{© 2016-\/2020 NVIDIA \texorpdfstring{$\vert$}{|} }\href{../README.md\#hello-ai-world}{\texttt{\textsuperscript{Table of Contents}}}}}
+
+{\bfseries{ }}

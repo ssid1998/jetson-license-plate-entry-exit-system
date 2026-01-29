@@ -1,0 +1,71 @@
+\doxysubsection{CUDA }
+\hypertarget{group__cuda}{}\label{group__cuda}\index{CUDA@{CUDA}}
+\doxysubsubsubsection*{Topics}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{group__colormap}{Color Mapping}}
+\item 
+\doxymbox{\hyperlink{group__colorspace}{Color Conversion}}
+\item 
+\doxymbox{\hyperlink{group__crop}{Cropping}}
+\item 
+\doxymbox{\hyperlink{group__drawing}{Drawing}}
+\item 
+\doxymbox{\hyperlink{group__cuda_error}{Error Checking}}
+\item 
+\doxymbox{\hyperlink{group__cuda_font}{Fonts}}
+\item 
+\doxymbox{\hyperlink{group__cuda_memory}{Memory Management}}
+\item 
+\doxymbox{\hyperlink{group__normalization}{Normalization}}
+\item 
+\doxymbox{\hyperlink{group__overlay}{Overlay}}
+\item 
+\doxymbox{\hyperlink{group__cuda_filter}{Pixel Filtering}}
+\item 
+\doxymbox{\hyperlink{group__point_cloud}{Point Cloud}}
+\item 
+\doxymbox{\hyperlink{group__resize}{Resize}}
+\item 
+\doxymbox{\hyperlink{group__warping}{Warping}}
+\end{DoxyCompactItemize}
+\doxysubsubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\+\_\+\+\_\+device\+\_\+\+\_\+ \+\_\+\+\_\+host\+\_\+\+\_\+ int \doxymbox{\hyperlink{group__cuda_ga46df5cd83bb2b50cd45d429154a7699b}{i\+Div\+Up}} (int a, int b)
+\end{DoxyCompactItemize}
+
+
+\doxysubsubsection{Detailed Description}
+CUDA utilities and image processing kernels. 
+
+\label{doc-func-members}
+\Hypertarget{group__cuda_doc-func-members}
+\doxysubsubsection{Function Documentation}
+\Hypertarget{group__cuda_ga46df5cd83bb2b50cd45d429154a7699b}\index{CUDA@{CUDA}!iDivUp@{iDivUp}}
+\index{iDivUp@{iDivUp}!CUDA@{CUDA}}
+\doxysubsubsubsection{\texorpdfstring{iDivUp()}{iDivUp()}}
+{\footnotesize\ttfamily \label{group__cuda_ga46df5cd83bb2b50cd45d429154a7699b} 
+\+\_\+\+\_\+device\+\_\+\+\_\+ \+\_\+\+\_\+host\+\_\+\+\_\+ int i\+Div\+Up (\begin{DoxyParamCaption}\item[{int}]{a}{, }\item[{int}]{b}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+If a /\+ b has a remainder, round up. This function is commonly using when launching CUDA kernels, to compute a grid size inclusive of the entire dataset if it\textquotesingle{}s dimensions aren\textquotesingle{}t evenly divisible by the block size.
+
+For example:\+
+
+const dim3 block\+Dim(8,8); const dim3 grid\+Dim(i\+Div\+Up(img\+Width,block\+Dim.\+x), i\+Div\+Up(img\+Height,block\+Dim.\+y));
+
+Then inside the CUDA kernel, there is typically a check that thread index is in-\/bounds.
+
+Without the use of \doxylink{group__cuda_ga46df5cd83bb2b50cd45d429154a7699b}{i\+Div\+Up()}, if the data dimensions weren\textquotesingle{}t evenly divisible by the block size, parts of the data wouldn\textquotesingle{}t be covered by the grid and not processed. \input{group__colormap}
+\input{group__colorspace}
+\input{group__crop}
+\input{group__drawing}
+\input{group__cuda_error}
+\input{group__cuda_font}
+\input{group__cuda_memory}
+\input{group__normalization}
+\input{group__overlay}
+\input{group__cuda_filter}
+\input{group__point_cloud}
+\input{group__resize}
+\input{group__warping}

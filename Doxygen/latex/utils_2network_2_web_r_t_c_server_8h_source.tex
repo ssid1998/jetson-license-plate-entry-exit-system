@@ -1,0 +1,172 @@
+\doxysection{Web\+RTCServer.\+h}
+\hypertarget{utils_2network_2_web_r_t_c_server_8h_source}{}\label{utils_2network_2_web_r_t_c_server_8h_source}\index{jetson-\/inference/utils/network/WebRTCServer.h@{jetson-\/inference/utils/network/WebRTCServer.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ *\ Copyright\ (c)\ 2022,\ NVIDIA\ CORPORATION.\ All\ rights\ reserved.}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ *\ Permission\ is\ hereby\ granted,\ free\ of\ charge,\ to\ any\ person\ obtaining\ a}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ *\ copy\ of\ this\ software\ and\ associated\ documentation\ files\ (the\ "{}Software"{}),}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ *\ to\ deal\ in\ the\ Software\ without\ restriction,\ including\ without\ limitation}}
+\DoxyCodeLine{00007\ \textcolor{comment}{\ *\ the\ rights\ to\ use,\ copy,\ modify,\ merge,\ publish,\ distribute,\ sublicense,}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ *\ and/or\ sell\ copies\ of\ the\ Software,\ and\ to\ permit\ persons\ to\ whom\ the}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ *\ Software\ is\ furnished\ to\ do\ so,\ subject\ to\ the\ following\ conditions:}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ *\ The\ above\ copyright\ notice\ and\ this\ permission\ notice\ shall\ be\ included\ in}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ *\ all\ copies\ or\ substantial\ portions\ of\ the\ Software.}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ *\ THE\ SOFTWARE\ IS\ PROVIDED\ "{}AS\ IS"{},\ WITHOUT\ WARRANTY\ OF\ ANY\ KIND,\ EXPRESS\ OR}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ *\ IMPLIED,\ INCLUDING\ BUT\ NOT\ LIMITED\ TO\ THE\ WARRANTIES\ OF\ MERCHANTABILITY,}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ *\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE\ AND\ NONINFRINGEMENT.\ \ IN\ NO\ EVENT\ SHALL}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ *\ THE\ AUTHORS\ OR\ COPYRIGHT\ HOLDERS\ BE\ LIABLE\ FOR\ ANY\ CLAIM,\ DAMAGES\ OR\ OTHER}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ *\ LIABILITY,\ WHETHER\ IN\ AN\ ACTION\ OF\ CONTRACT,\ TORT\ OR\ OTHERWISE,\ ARISING}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ *\ FROM,\ OUT\ OF\ OR\ IN\ CONNECTION\ WITH\ THE\ SOFTWARE\ OR\ THE\ USE\ OR\ OTHER}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ *\ DEALINGS\ IN\ THE\ SOFTWARE.}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \textcolor{preprocessor}{\#ifndef\ \_\_WEBRTC\_SERVER\_H\_\_}}
+\DoxyCodeLine{00024\ \textcolor{preprocessor}{\#define\ \_\_WEBRTC\_SERVER\_H\_\_}}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \textcolor{preprocessor}{\#include\ <libsoup/soup.h>}}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
+\DoxyCodeLine{00029\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00030\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \textcolor{comment}{//\ forward\ declarations}}
+\DoxyCodeLine{00034\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_web_r_t_c_server}{WebRTCServer}};}
+\DoxyCodeLine{00035\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_thread}{Thread}};}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00042\ \textcolor{preprocessor}{\#define\ WEBRTC\_DEFAULT\_PORT\ 41567}}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00049\ \textcolor{preprocessor}{\#define\ WEBRTC\_DEFAULT\_STUN\_SERVER\ "{}stun.l.google.com:19302"{}}}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00055\ \textcolor{preprocessor}{\#define\ LOG\_WEBRTC\ "{}[webrtc]\ "{}}}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00062\ \textcolor{keyword}{enum}\ \doxymbox{\hyperlink{group__network_gabfc2d28deff979bf1183220b57b78bd4}{WebRTCFlags}}}
+\DoxyCodeLine{00063\ \{}
+\DoxyCodeLine{00064\ \ \ \ \ \textcolor{comment}{//\ route/stream\ flags}}
+\DoxyCodeLine{00065\ \ \ \ \ WEBRTC\_PRIVATE\ =\ 0,\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ hidden\ (default)\ \ \ \ \ }}
+\DoxyCodeLine{00066\ \ \ \ \ WEBRTC\_PUBLIC\ \ =\ (1\ <<\ 1),\ \ \ \ \ \ \textcolor{comment}{//\ allow\ discoverability}}
+\DoxyCodeLine{00067\ \ \ \ \ WEBRTC\_AUDIO\ \ \ =\ (1\ <<\ 0),\ \ \ \ \ \ \textcolor{comment}{//\ produces/accepts\ video}}
+\DoxyCodeLine{00068\ \ \ \ \ WEBRTC\_VIDEO\ \ \ =\ (1\ <<\ 1),\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ produces/accepts\ audio}}
+\DoxyCodeLine{00069\ \ \ \ \ WEBRTC\_SEND\ \ \ \ \ =\ (1\ <<\ 2),\ \ \ \ \ \textcolor{comment}{//\ server\ sends\ to\ the\ client\ (outgoing)}}
+\DoxyCodeLine{00070\ \ \ \ \ WEBRTC\_RECEIVE\ =\ (1\ <<\ 3),\ \ \ \ \ \ \textcolor{comment}{//\ server\ receives\ from\ the\ client\ (incoming)}}
+\DoxyCodeLine{00071\ \ \ \ \ WEBRTC\_MULTI\_CLIENT\ =\ (1\ <<\ 4),\ \textcolor{comment}{//\ can\ connect\ with\ multiple\ clients\ simultaneously}}
+\DoxyCodeLine{00072\ \ \ \ \ }
+\DoxyCodeLine{00073\ \ \ \ \ \textcolor{comment}{//\ state\ flags}}
+\DoxyCodeLine{00074\ \ \ \ \ WEBRTC\_PEER\_CONNECTING\ =\ (1\ <<\ 5),\ \ \textcolor{comment}{//\ the\ peer\ is\ connecting}}
+\DoxyCodeLine{00075\ \ \ \ \ WEBRTC\_PEER\_CONNECTED\ \ =\ (1\ <<\ 6),\ \ \textcolor{comment}{//\ the\ peer\ is\ ready}}
+\DoxyCodeLine{00076\ \ \ \ \ WEBRTC\_PEER\_STREAMING\ \ =\ (1\ <<\ 7),\ \ \textcolor{comment}{//\ the\ peer\ is\ streaming}}
+\DoxyCodeLine{00077\ \ \ \ \ WEBRTC\_PEER\_CLOSED\ \ \ \ \ =\ (1\ <<\ 8),\ \ \textcolor{comment}{//\ the\ peer\ has\ closed}}
+\DoxyCodeLine{00078\ \};}
+\DoxyCodeLine{00079\ }
+\DoxyCodeLine{00080\ }
+\DoxyCodeLine{00085\ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{struct_web_r_t_c_peer}{WebRTCPeer}}}
+\DoxyCodeLine{00086\ \{}
+\DoxyCodeLine{00087\ \ \ \ \ SoupWebsocketConnection*\ connection;}
+\DoxyCodeLine{00088\ \ \ \ \ SoupClientContext*\ client\_context;}
+\DoxyCodeLine{00089\ \ \ \ \ WebRTCServer*\ server;}
+\DoxyCodeLine{00090\ }
+\DoxyCodeLine{00091\ \ \ \ \ uint32\_t\ ID;\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ unique\ ID}}
+\DoxyCodeLine{00092\ \ \ \ \ uint32\_t\ flags;\ \ \ \ \ \textcolor{comment}{//\ WebRTCFlags}}
+\DoxyCodeLine{00093\ }
+\DoxyCodeLine{00094\ \ \ \ \ std::string\ path;\ \ \ \ \ \ \ \textcolor{comment}{//\ the\ route\ the\ peer\ is\ connected\ on}}
+\DoxyCodeLine{00095\ \ \ \ \ std::string\ ip\_address;\ \textcolor{comment}{//\ IP\ address\ of\ the\ peer}}
+\DoxyCodeLine{00096\ \ \ \ \ }
+\DoxyCodeLine{00097\ \ \ \ \ \textcolor{keywordtype}{void}*\ user\_data;\ \ \ \ \ \ \ \ \textcolor{comment}{//\ private\ data\ for\ the\ route\ handler}}
+\DoxyCodeLine{00098\ \};}
+\DoxyCodeLine{00099\ }
+\DoxyCodeLine{00100\ }
+\DoxyCodeLine{00116\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_web_r_t_c_server}{WebRTCServer}}}
+\DoxyCodeLine{00117\ \{}
+\DoxyCodeLine{00118\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00123\ \ \ \ \ \textcolor{keyword}{static}\ WebRTCServer*\ \doxymbox{\hyperlink{class_web_r_t_c_server_a5668c92d08ea8bb65dd6c3dc6a9ab1d6}{Create}}(\ uint16\_t\ port=\doxymbox{\hyperlink{group__network_ga0168a2334e9e1e13b83a665c8cce0742}{WEBRTC\_DEFAULT\_PORT}},\ }
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ stun\_server=\doxymbox{\hyperlink{group__network_ga99b10c89b7c09a0c753f241f9e74c894}{WEBRTC\_DEFAULT\_STUN\_SERVER}},}
+\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ ssl\_cert=NULL,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ ssl\_key=NULL,}
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ threaded=\textcolor{keyword}{true}\ );\ \ \ }
+\DoxyCodeLine{00127\ \ \ \ \ }
+\DoxyCodeLine{00132\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_web_r_t_c_server_aeb70147a334c7f4aa526523707d316b9}{Release}}();}
+\DoxyCodeLine{00133\ \ \ \ \ }
+\DoxyCodeLine{00138\ \ \ \ \ \textcolor{keyword}{typedef}\ void\ (*\doxymbox{\hyperlink{class_web_r_t_c_server_a87c958251b5146e420439d6cd0ed2867}{WebsocketListener}})(\ \doxymbox{\hyperlink{struct_web_r_t_c_peer}{WebRTCPeer}}*\ peer,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ message,\ \textcolor{keywordtype}{size\_t}\ message\_size,\ \textcolor{keywordtype}{void}*\ user\_data\ );}
+\DoxyCodeLine{00139\ }
+\DoxyCodeLine{00144\ \ \ \ \ \textcolor{keyword}{typedef}\ SoupServerCallback\ \doxymbox{\hyperlink{class_web_r_t_c_server_a0a9229009aca73f62c363f879255bb38}{HttpListener}};}
+\DoxyCodeLine{00145\ }
+\DoxyCodeLine{00153\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_web_r_t_c_server_a5d584e6f650648aad396f1873984c621}{AddRoute}}(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ path,\ \doxymbox{\hyperlink{class_web_r_t_c_server_a0a9229009aca73f62c363f879255bb38}{HttpListener}}\ callback,\ \textcolor{keywordtype}{void}*\ user\_data=NULL,\ uint32\_t\ flags=0\ );}
+\DoxyCodeLine{00154\ }
+\DoxyCodeLine{00170\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_web_r_t_c_server_ab690301a156ea291d47c93a37d84ecb9}{AddRoute}}(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ path,\ \doxymbox{\hyperlink{class_web_r_t_c_server_a87c958251b5146e420439d6cd0ed2867}{WebsocketListener}}\ callback,\ \textcolor{keywordtype}{void}*\ user\_data=NULL,\ uint32\_t\ flags=0\ );}
+\DoxyCodeLine{00171\ }
+\DoxyCodeLine{00177\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \doxymbox{\hyperlink{class_web_r_t_c_server_aed841df92cab954ea5994076e2148ceb}{GetSTUNServer}}()\textcolor{keyword}{\ const\ \ \ \ \ \ \ \ }\{\ \textcolor{keywordflow}{return}\ mStunServer.c\_str();\ \}}
+\DoxyCodeLine{00178\ \ \ \ \ }
+\DoxyCodeLine{00183\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_web_r_t_c_server_adbcd3355338382847a31e5e49f5caf97}{HasHTTPS}}()\textcolor{keyword}{\ const\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\{\ \textcolor{keywordflow}{return}\ mHasHTTPS;\ \}}
+\DoxyCodeLine{00184\ \ \ \ \ }
+\DoxyCodeLine{00189\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_web_r_t_c_server_a32e99e59a4d0c536e7edcfbbd2dcdaee}{IsThreaded}}()\textcolor{keyword}{\ const\ \ \ \ \ \ \ \ \ \ \ \ \ \ }\{\ \textcolor{keywordflow}{return}\ (mThread\ !=\ NULL);\ \}}
+\DoxyCodeLine{00190\ \ \ \ \ }
+\DoxyCodeLine{00196\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_web_r_t_c_server_ac49ab53764ab184efe91a8c7040be7dc}{ProcessRequests}}(\ \textcolor{keywordtype}{bool}\ blocking=\textcolor{keyword}{false}\ );}
+\DoxyCodeLine{00197\ \ \ \ \ }
+\DoxyCodeLine{00198\ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00199\ }
+\DoxyCodeLine{00200\ \ \ \ \ WebRTCServer(\ uint16\_t\ port,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ stun\_server,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ ssl\_cert\_file,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ ssl\_key\_file,\ \textcolor{keywordtype}{bool}\ threaded\ );}
+\DoxyCodeLine{00201\ \ \ \ \ \string~WebRTCServer();}
+\DoxyCodeLine{00202\ \ \ \ \ }
+\DoxyCodeLine{00203\ \ \ \ \ \textcolor{keywordtype}{bool}\ init();}
+\DoxyCodeLine{00204\ }
+\DoxyCodeLine{00205\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}*\ runThread(\ \textcolor{keywordtype}{void}*\ user\_data\ );}
+\DoxyCodeLine{00206\ \ \ \ \ }
+\DoxyCodeLine{00207\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ onHttpRequest(\ SoupServer*\ soup\_server,\ SoupMessage*\ message,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ path,\ GHashTable*\ query,\ SoupClientContext*\ client\_context,\ \textcolor{keywordtype}{void}*\ user\_data\ );}
+\DoxyCodeLine{00208\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ onHttpDefault(\ SoupServer*\ soup\_server,\ SoupMessage*\ message,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ path,\ GHashTable*\ query,\ SoupClientContext*\ client\_context,\ \textcolor{keywordtype}{void}*\ user\_data\ );}
+\DoxyCodeLine{00209\ \ \ \ \ }
+\DoxyCodeLine{00210\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ onWebsocketOpened(\ SoupServer*\ server,\ SoupWebsocketConnection*\ connection,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *path,\ SoupClientContext*\ client\_context,\ \textcolor{keywordtype}{void}*\ user\_data\ );}
+\DoxyCodeLine{00211\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ onWebsocketMessage(\ SoupWebsocketConnection*\ connection,\ SoupWebsocketDataType\ data\_type,\ GBytes*\ message,\ \textcolor{keywordtype}{void}*\ user\_data\ );}
+\DoxyCodeLine{00212\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ onWebsocketClosed(\ SoupWebsocketConnection*\ connection,\ \textcolor{keywordtype}{void}*\ user\_data\ );}
+\DoxyCodeLine{00213\ \ \ \ \ }
+\DoxyCodeLine{00214\ \ \ \ \ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{struct_web_r_t_c_server_1_1_http_route}{HttpRoute}}}
+\DoxyCodeLine{00215\ \ \ \ \ \{}
+\DoxyCodeLine{00216\ \ \ \ \ \ \ \ \ std::string\ path;}
+\DoxyCodeLine{00217\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_web_r_t_c_server_a0a9229009aca73f62c363f879255bb38}{HttpListener}}\ callback;}
+\DoxyCodeLine{00218\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}*\ user\_data;}
+\DoxyCodeLine{00219\ \ \ \ \ \ \ \ \ uint32\_t\ flags;}
+\DoxyCodeLine{00220\ \ \ \ \ \};}
+\DoxyCodeLine{00221\ \ \ \ \ }
+\DoxyCodeLine{00222\ \ \ \ \ \textcolor{keyword}{struct\ }WebsocketRoute}
+\DoxyCodeLine{00223\ \ \ \ \ \{}
+\DoxyCodeLine{00224\ \ \ \ \ \ \ \ \ std::string\ path;}
+\DoxyCodeLine{00225\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_web_r_t_c_server_a87c958251b5146e420439d6cd0ed2867}{WebsocketListener}}\ callback;}
+\DoxyCodeLine{00226\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}*\ user\_data;}
+\DoxyCodeLine{00227\ \ \ \ \ \ \ \ \ uint32\_t\ flags;}
+\DoxyCodeLine{00228\ \ \ \ \ \ \ \ \ std::vector<WebRTCPeer*>\ peers;}
+\DoxyCodeLine{00229\ \ \ \ \ \};}
+\DoxyCodeLine{00230\ }
+\DoxyCodeLine{00231\ \ \ \ \ \doxymbox{\hyperlink{struct_web_r_t_c_server_1_1_http_route}{HttpRoute}}*\ findHttpRoute(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ path\ )\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00232\ \ \ \ \ \doxymbox{\hyperlink{struct_web_r_t_c_server_1_1_websocket_route}{WebsocketRoute}}*\ findWebsocketRoute(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ path\ )\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00233\ \ \ \ \ }
+\DoxyCodeLine{00234\ \ \ \ \ \textcolor{keywordtype}{void}\ freeRoute(\ \doxymbox{\hyperlink{struct_web_r_t_c_server_1_1_http_route}{HttpRoute}}*\ route\ );}
+\DoxyCodeLine{00235\ \ \ \ \ \textcolor{keywordtype}{void}\ freeRoute(\ \doxymbox{\hyperlink{struct_web_r_t_c_server_1_1_websocket_route}{WebsocketRoute}}*\ route\ );}
+\DoxyCodeLine{00236\ \ \ \ \ }
+\DoxyCodeLine{00237\ \ \ \ \ std::string\ printRouteInfo(\ \doxymbox{\hyperlink{struct_web_r_t_c_server_1_1_websocket_route}{WebsocketRoute}}*\ route\ )\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00238\ \ \ \ \ \textcolor{comment}{//std::string\ printRouteList();}}
+\DoxyCodeLine{00239\ \ \ \ \ }
+\DoxyCodeLine{00240\ \ \ \ \ std::vector<HttpRoute*>\ mHttpRoutes;}
+\DoxyCodeLine{00241\ \ \ \ \ std::vector<WebsocketRoute*>\ mWebsocketRoutes;}
+\DoxyCodeLine{00242\ \ \ \ \ }
+\DoxyCodeLine{00243\ \ \ \ \ SoupServer*\ mSoupServer;}
+\DoxyCodeLine{00244\ \ \ \ \ std::string\ mStunServer;}
+\DoxyCodeLine{00245\ \ \ \ \ }
+\DoxyCodeLine{00246\ \ \ \ \ std::string\ mSSLCertFile;}
+\DoxyCodeLine{00247\ \ \ \ \ std::string\ mSSLKeyFile;}
+\DoxyCodeLine{00248\ \ \ \ \ }
+\DoxyCodeLine{00249\ \ \ \ \ \textcolor{keywordtype}{bool}\ mHasHTTPS;}
+\DoxyCodeLine{00250\ \ \ \ \ }
+\DoxyCodeLine{00251\ \ \ \ \ uint16\_t\ mPort;}
+\DoxyCodeLine{00252\ \ \ \ \ uint32\_t\ mRefCount;}
+\DoxyCodeLine{00253\ \ \ \ \ uint32\_t\ mPeerCount;}
+\DoxyCodeLine{00254\ \ \ \ \ }
+\DoxyCodeLine{00255\ \ \ \ \ Thread*\ mThread;}
+\DoxyCodeLine{00256\ \};}
+\DoxyCodeLine{00257\ }
+\DoxyCodeLine{00258\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

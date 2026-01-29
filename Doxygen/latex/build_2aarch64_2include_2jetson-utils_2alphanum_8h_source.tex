@@ -1,0 +1,407 @@
+\doxysection{alphanum.\+h}
+\hypertarget{build_2aarch64_2include_2jetson-utils_2alphanum_8h_source}{}\label{build_2aarch64_2include_2jetson-utils_2alphanum_8h_source}\index{jetson-\/inference/build/aarch64/include/jetson-\/utils/alphanum.h@{jetson-\/inference/build/aarch64/include/jetson-\/utils/alphanum.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ ALPHANUM\_\_HPP}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ ALPHANUM\_\_HPP}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ Released\ under\ the\ MIT\ License\ -\/\ https://opensource.org/licenses/MIT}}
+\DoxyCodeLine{00006\ \textcolor{comment}{}}
+\DoxyCodeLine{00007\ \textcolor{comment}{\ Permission\ is\ hereby\ granted,\ free\ of\ charge,\ to\ any\ person\ obtaining}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ a\ copy\ of\ this\ software\ and\ associated\ documentation\ files\ (the\ "{}Software"{}),}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ to\ deal\ in\ the\ Software\ without\ restriction,\ including\ without\ limitation}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ the\ rights\ to\ use,\ copy,\ modify,\ merge,\ publish,\ distribute,\ sublicense,}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ and/or\ sell\ copies\ of\ the\ Software,\ and\ to\ permit\ persons\ to\ whom\ the}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ Software\ is\ furnished\ to\ do\ so,\ subject\ to\ the\ following\ conditions:}}
+\DoxyCodeLine{00013\ \textcolor{comment}{}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ The\ above\ copyright\ notice\ and\ this\ permission\ notice\ shall\ be\ included}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ in\ all\ copies\ or\ substantial\ portions\ of\ the\ Software.}}
+\DoxyCodeLine{00016\ \textcolor{comment}{}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ THE\ SOFTWARE\ IS\ PROVIDED\ "{}AS\ IS"{},\ WITHOUT\ WARRANTY\ OF\ ANY\ KIND,}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ EXPRESS\ OR\ IMPLIED,\ INCLUDING\ BUT\ NOT\ LIMITED\ TO\ THE\ WARRANTIES\ OF}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ MERCHANTABILITY,\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE\ AND\ NONINFRINGEMENT.}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ IN\ NO\ EVENT\ SHALL\ THE\ AUTHORS\ OR\ COPYRIGHT\ HOLDERS\ BE\ LIABLE\ FOR\ ANY\ CLAIM,}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ DAMAGES\ OR\ OTHER\ LIABILITY,\ WHETHER\ IN\ AN\ ACTION\ OF\ CONTRACT,\ TORT\ OR}}
+\DoxyCodeLine{00022\ \textcolor{comment}{\ OTHERWISE,\ ARISING\ FROM,\ OUT\ OF\ OR\ IN\ CONNECTION\ WITH\ THE\ SOFTWARE\ OR\ THE}}
+\DoxyCodeLine{00023\ \textcolor{comment}{\ USE\ OR\ OTHER\ DEALINGS\ IN\ THE\ SOFTWARE.}}
+\DoxyCodeLine{00024\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \textcolor{comment}{/*\ \$Header:\ /code/doj/alphanum.hpp,v\ 1.3\ 2008/01/28\ 23:06:47\ doj\ Exp\ \$\ */}}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \textcolor{preprocessor}{\#include\ <cassert>}}
+\DoxyCodeLine{00029\ \textcolor{preprocessor}{\#include\ <functional>}}
+\DoxyCodeLine{00030\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00031\ \textcolor{preprocessor}{\#include\ <sstream>}}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \textcolor{preprocessor}{\#ifdef\ ALPHANUM\_LOCALE}}
+\DoxyCodeLine{00034\ \textcolor{preprocessor}{\#include\ <cctype>}}
+\DoxyCodeLine{00035\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ \textcolor{preprocessor}{\#ifdef\ DOJDEBUG}}
+\DoxyCodeLine{00038\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{00039\ \textcolor{preprocessor}{\#include\ <typeinfo>}}
+\DoxyCodeLine{00040\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ \textcolor{comment}{//\ TODO:\ make\ comparison\ with\ hexadecimal\ numbers.\ Extend\ the\ alphanum\_comp()\ function\ by\ traits\ to\ choose\ between\ decimal\ and\ hexadecimal.}}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ \textcolor{keyword}{namespace\ }doj}
+\DoxyCodeLine{00045\ \{}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ \ \ \textcolor{comment}{//\ anonymous\ namespace\ for\ functions\ we\ use\ internally.\ But\ if\ you}}
+\DoxyCodeLine{00048\ \ \ \textcolor{comment}{//\ are\ coding\ in\ C,\ you\ can\ use\ alphanum\_impl()\ directly,\ since\ it}}
+\DoxyCodeLine{00049\ \ \ \textcolor{comment}{//\ uses\ not\ C++\ features.}}
+\DoxyCodeLine{00050\ \ \ \textcolor{keyword}{namespace\ }\{}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{comment}{//\ if\ you\ want\ to\ honour\ the\ locale\ settings\ for\ detecting\ digit}}
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{comment}{//\ characters,\ you\ should\ define\ ALPHANUM\_LOCALE}}
+\DoxyCodeLine{00054\ \textcolor{preprocessor}{\#ifdef\ ALPHANUM\_LOCALE}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{keywordtype}{bool}\ alphanum\_isdigit(\textcolor{keywordtype}{int}\ c)}
+\DoxyCodeLine{00057\ \ \ \ \ \{}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ isdigit(c);}
+\DoxyCodeLine{00059\ \ \ \ \ \}}
+\DoxyCodeLine{00060\ \textcolor{preprocessor}{\#else}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00065\ \ \ \ \ \textcolor{keywordtype}{bool}\ alphanum\_isdigit(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ c)}
+\DoxyCodeLine{00066\ \ \ \ \ \{}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ c>=\textcolor{charliteral}{'0'}\ \&\&\ c<=\textcolor{charliteral}{'9'};}
+\DoxyCodeLine{00068\ \ \ \ \ \}}
+\DoxyCodeLine{00069\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00070\ }
+\DoxyCodeLine{00086\ \ \ \ \ \textcolor{keywordtype}{int}\ alphanum\_impl(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *l,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *r)}
+\DoxyCodeLine{00087\ \ \ \ \ \{}
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \textcolor{keyword}{enum}\ mode\_t\ \{\ STRING,\ NUMBER\ \}\ mode=STRING;}
+\DoxyCodeLine{00089\ }
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \textcolor{keywordflow}{while}(*l\ \&\&\ *r)}
+\DoxyCodeLine{00091\ \ \ \ \ \{}
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \textcolor{keywordflow}{if}(mode\ ==\ STRING)}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{char}\ l\_char,\ r\_char;}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}((l\_char=*l)\ \&\&\ (r\_char=*r))}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ check\ if\ this\ are\ digit\ characters}}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ l\_digit=alphanum\_isdigit(l\_char),\ r\_digit=alphanum\_isdigit(r\_char);}
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ if\ both\ characters\ are\ digits,\ we\ continue\ in\ NUMBER\ mode}}
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(l\_digit\ \&\&\ r\_digit)}
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mode=NUMBER;}
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ if\ only\ the\ left\ character\ is\ a\ digit,\ we\ have\ a\ result}}
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(l\_digit)\ \textcolor{keywordflow}{return}\ -\/1;}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ if\ only\ the\ right\ character\ is\ a\ digit,\ we\ have\ a\ result}}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(r\_digit)\ \textcolor{keywordflow}{return}\ +1;}
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ compute\ the\ difference\ of\ both\ characters}}
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ diff=l\_char\ -\/\ r\_char;}
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ if\ they\ differ\ we\ have\ a\ result}}
+\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(diff\ !=\ 0)\ \textcolor{keywordflow}{return}\ diff;}
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ otherwise\ process\ the\ next\ characters}}
+\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ \ \ ++l;}
+\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ \ \ ++r;}
+\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{comment}{//\ mode==NUMBER}}
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00120\ \textcolor{preprocessor}{\#ifdef\ ALPHANUM\_LOCALE}}
+\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ get\ the\ left\ number}}
+\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{char}\ *end;}
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}\ l\_int=strtoul(l,\ \&end,\ 0);}
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ \ \ l=end;}
+\DoxyCodeLine{00125\ }
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ get\ the\ right\ number}}
+\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}\ r\_int=strtoul(r,\ \&end,\ 0);}
+\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ \ \ r=end;}
+\DoxyCodeLine{00129\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ get\ the\ left\ number}}
+\DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}\ l\_int=0;}
+\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}(*l\ \&\&\ alphanum\_isdigit(*l))}
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ TODO:\ this\ can\ overflow}}
+\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ \ \ l\_int=l\_int*10\ +\ *l-\/\textcolor{charliteral}{'0'};}
+\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ \ \ ++l;}
+\DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00138\ }
+\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ get\ the\ right\ number}}
+\DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}\ r\_int=0;}
+\DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}(*r\ \&\&\ alphanum\_isdigit(*r))}
+\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ TODO:\ this\ can\ overflow}}
+\DoxyCodeLine{00144\ \ \ \ \ \ \ \ \ \ \ r\_int=r\_int*10\ +\ *r-\/\textcolor{charliteral}{'0'};}
+\DoxyCodeLine{00145\ \ \ \ \ \ \ \ \ \ \ ++r;}
+\DoxyCodeLine{00146\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00147\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00148\ }
+\DoxyCodeLine{00149\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ if\ the\ difference\ is\ not\ equal\ to\ zero,\ we\ have\ a\ comparison\ result}}
+\DoxyCodeLine{00150\ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{long}\ diff=l\_int-\/r\_int;}
+\DoxyCodeLine{00151\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(diff\ !=\ 0)}
+\DoxyCodeLine{00152\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ diff;}
+\DoxyCodeLine{00153\ }
+\DoxyCodeLine{00154\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ otherwise\ we\ process\ the\ next\ substring\ in\ STRING\ mode}}
+\DoxyCodeLine{00155\ \ \ \ \ \ \ \ \ \ \ mode=STRING;}
+\DoxyCodeLine{00156\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00157\ \ \ \ \ \}}
+\DoxyCodeLine{00158\ }
+\DoxyCodeLine{00159\ \ \ \ \ \ \ \textcolor{keywordflow}{if}(*r)\ \textcolor{keywordflow}{return}\ -\/1;}
+\DoxyCodeLine{00160\ \ \ \ \ \ \ \textcolor{keywordflow}{if}(*l)\ \textcolor{keywordflow}{return}\ +1;}
+\DoxyCodeLine{00161\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{00162\ \ \ \ \ \}}
+\DoxyCodeLine{00163\ }
+\DoxyCodeLine{00164\ \ \ \}}
+\DoxyCodeLine{00165\ }
+\DoxyCodeLine{00174\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ lT,\ \textcolor{keyword}{typename}\ rT>}
+\DoxyCodeLine{00175\ \ \ \textcolor{keywordtype}{int}\ alphanum\_comp(\textcolor{keyword}{const}\ lT\&\ left,\ \textcolor{keyword}{const}\ rT\&\ right)}
+\DoxyCodeLine{00176\ \ \ \{}
+\DoxyCodeLine{00177\ \textcolor{preprocessor}{\#ifdef\ DOJDEBUG}}
+\DoxyCodeLine{00178\ \ \ \ \ std::clog\ <<\ \textcolor{stringliteral}{"{}alphanum\_comp<"{}}\ <<\ \textcolor{keyword}{typeid}(left).name()\ <<\ \textcolor{stringliteral}{"{},"{}}\ <<\ \textcolor{keyword}{typeid}(right).name()\ <<\ \textcolor{stringliteral}{"{}>\ "{}}\ <<\ left\ <<\ \textcolor{stringliteral}{"{},"{}}\ <<\ right\ <<\ std::endl;}
+\DoxyCodeLine{00179\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00180\ \ \ \ \ std::ostringstream\ l;\ l\ <<\ left;}
+\DoxyCodeLine{00181\ \ \ \ \ std::ostringstream\ r;\ r\ <<\ right;}
+\DoxyCodeLine{00182\ \ \ \ \ \textcolor{keywordflow}{return}\ alphanum\_impl(l.str().c\_str(),\ r.str().c\_str());}
+\DoxyCodeLine{00183\ \ \ \}}
+\DoxyCodeLine{00184\ }
+\DoxyCodeLine{00192\ \ \ \textcolor{keyword}{template}\ <>}
+\DoxyCodeLine{00193\ \ \ \textcolor{keywordtype}{int}\ alphanum\_comp<std::string>(\textcolor{keyword}{const}\ std::string\&\ l,\ \textcolor{keyword}{const}\ std::string\&\ r)}
+\DoxyCodeLine{00194\ \ \ \{}
+\DoxyCodeLine{00195\ \textcolor{preprocessor}{\#ifdef\ DOJDEBUG}}
+\DoxyCodeLine{00196\ \ \ \ \ std::clog\ <<\ \textcolor{stringliteral}{"{}alphanum\_comp<std::string,std::string>\ "{}}\ <<\ l\ <<\ \textcolor{stringliteral}{"{},"{}}\ <<\ r\ <<\ std::endl;}
+\DoxyCodeLine{00197\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00198\ \ \ \ \ \textcolor{keywordflow}{return}\ alphanum\_impl(l.c\_str(),\ r.c\_str());}
+\DoxyCodeLine{00199\ \ \ \}}
+\DoxyCodeLine{00200\ }
+\DoxyCodeLine{00202\ }
+\DoxyCodeLine{00203\ \ \ \textcolor{comment}{//\ now\ follow\ a\ lot\ of\ overloaded\ alphanum\_comp()\ functions\ to\ get\ a}}
+\DoxyCodeLine{00204\ \ \ \textcolor{comment}{//\ direct\ call\ to\ alphanum\_impl()\ upon\ the\ various\ combinations\ of\ c}}
+\DoxyCodeLine{00205\ \ \ \textcolor{comment}{//\ and\ c++\ strings.}}
+\DoxyCodeLine{00206\ }
+\DoxyCodeLine{00214\ \ \ \textcolor{keywordtype}{int}\ alphanum\_comp(\textcolor{keywordtype}{char}*\ l,\ \textcolor{keywordtype}{char}*\ r)}
+\DoxyCodeLine{00215\ \ \ \{}
+\DoxyCodeLine{00216\ \ \ \ \ assert(l);}
+\DoxyCodeLine{00217\ \ \ \ \ assert(r);}
+\DoxyCodeLine{00218\ \textcolor{preprocessor}{\#ifdef\ DOJDEBUG}}
+\DoxyCodeLine{00219\ \ \ \ \ std::clog\ <<\ \textcolor{stringliteral}{"{}alphanum\_comp<char*,char*>\ "{}}\ <<\ l\ <<\ \textcolor{stringliteral}{"{},"{}}\ <<\ r\ <<\ std::endl;}
+\DoxyCodeLine{00220\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00221\ \ \ \ \ \textcolor{keywordflow}{return}\ alphanum\_impl(l,\ r);}
+\DoxyCodeLine{00222\ \ \ \}}
+\DoxyCodeLine{00223\ }
+\DoxyCodeLine{00224\ \ \ \textcolor{keywordtype}{int}\ alphanum\_comp(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ l,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ r)}
+\DoxyCodeLine{00225\ \ \ \{}
+\DoxyCodeLine{00226\ \ \ \ \ assert(l);}
+\DoxyCodeLine{00227\ \ \ \ \ assert(r);}
+\DoxyCodeLine{00228\ \textcolor{preprocessor}{\#ifdef\ DOJDEBUG}}
+\DoxyCodeLine{00229\ \ \ \ \ std::clog\ <<\ \textcolor{stringliteral}{"{}alphanum\_comp<const\ char*,const\ char*>\ "{}}\ <<\ l\ <<\ \textcolor{stringliteral}{"{},"{}}\ <<\ r\ <<\ std::endl;}
+\DoxyCodeLine{00230\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00231\ \ \ \ \ \textcolor{keywordflow}{return}\ alphanum\_impl(l,\ r);}
+\DoxyCodeLine{00232\ \ \ \}}
+\DoxyCodeLine{00233\ }
+\DoxyCodeLine{00234\ \ \ \textcolor{keywordtype}{int}\ alphanum\_comp(\textcolor{keywordtype}{char}*\ l,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ r)}
+\DoxyCodeLine{00235\ \ \ \{}
+\DoxyCodeLine{00236\ \ \ \ \ assert(l);}
+\DoxyCodeLine{00237\ \ \ \ \ assert(r);}
+\DoxyCodeLine{00238\ \textcolor{preprocessor}{\#ifdef\ DOJDEBUG}}
+\DoxyCodeLine{00239\ \ \ \ \ std::clog\ <<\ \textcolor{stringliteral}{"{}alphanum\_comp<char*,const\ char*>\ "{}}\ <<\ l\ <<\ \textcolor{stringliteral}{"{},"{}}\ <<\ r\ <<\ std::endl;}
+\DoxyCodeLine{00240\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00241\ \ \ \ \ \textcolor{keywordflow}{return}\ alphanum\_impl(l,\ r);}
+\DoxyCodeLine{00242\ \ \ \}}
+\DoxyCodeLine{00243\ }
+\DoxyCodeLine{00244\ \ \ \textcolor{keywordtype}{int}\ alphanum\_comp(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ l,\ \textcolor{keywordtype}{char}*\ r)}
+\DoxyCodeLine{00245\ \ \ \{}
+\DoxyCodeLine{00246\ \ \ \ \ assert(l);}
+\DoxyCodeLine{00247\ \ \ \ \ assert(r);}
+\DoxyCodeLine{00248\ \textcolor{preprocessor}{\#ifdef\ DOJDEBUG}}
+\DoxyCodeLine{00249\ \ \ \ \ std::clog\ <<\ \textcolor{stringliteral}{"{}alphanum\_comp<const\ char*,char*>\ "{}}\ <<\ l\ <<\ \textcolor{stringliteral}{"{},"{}}\ <<\ r\ <<\ std::endl;}
+\DoxyCodeLine{00250\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00251\ \ \ \ \ \textcolor{keywordflow}{return}\ alphanum\_impl(l,\ r);}
+\DoxyCodeLine{00252\ \ \ \}}
+\DoxyCodeLine{00253\ }
+\DoxyCodeLine{00254\ \ \ \textcolor{keywordtype}{int}\ alphanum\_comp(\textcolor{keyword}{const}\ std::string\&\ l,\ \textcolor{keywordtype}{char}*\ r)}
+\DoxyCodeLine{00255\ \ \ \{}
+\DoxyCodeLine{00256\ \ \ \ \ assert(r);}
+\DoxyCodeLine{00257\ \textcolor{preprocessor}{\#ifdef\ DOJDEBUG}}
+\DoxyCodeLine{00258\ \ \ \ \ std::clog\ <<\ \textcolor{stringliteral}{"{}alphanum\_comp<std::string,char*>\ "{}}\ <<\ l\ <<\ \textcolor{stringliteral}{"{},"{}}\ <<\ r\ <<\ std::endl;}
+\DoxyCodeLine{00259\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00260\ \ \ \ \ \textcolor{keywordflow}{return}\ alphanum\_impl(l.c\_str(),\ r);}
+\DoxyCodeLine{00261\ \ \ \}}
+\DoxyCodeLine{00262\ }
+\DoxyCodeLine{00263\ \ \ \textcolor{keywordtype}{int}\ alphanum\_comp(\textcolor{keywordtype}{char}*\ l,\ \textcolor{keyword}{const}\ std::string\&\ r)}
+\DoxyCodeLine{00264\ \ \ \{}
+\DoxyCodeLine{00265\ \ \ \ \ assert(l);}
+\DoxyCodeLine{00266\ \textcolor{preprocessor}{\#ifdef\ DOJDEBUG}}
+\DoxyCodeLine{00267\ \ \ \ \ std::clog\ <<\ \textcolor{stringliteral}{"{}alphanum\_comp<char*,std::string>\ "{}}\ <<\ l\ <<\ \textcolor{stringliteral}{"{},"{}}\ <<\ r\ <<\ std::endl;}
+\DoxyCodeLine{00268\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00269\ \ \ \ \ \textcolor{keywordflow}{return}\ alphanum\_impl(l,\ r.c\_str());}
+\DoxyCodeLine{00270\ \ \ \}}
+\DoxyCodeLine{00271\ }
+\DoxyCodeLine{00272\ \ \ \textcolor{keywordtype}{int}\ alphanum\_comp(\textcolor{keyword}{const}\ std::string\&\ l,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ r)}
+\DoxyCodeLine{00273\ \ \ \{}
+\DoxyCodeLine{00274\ \ \ \ \ assert(r);}
+\DoxyCodeLine{00275\ \textcolor{preprocessor}{\#ifdef\ DOJDEBUG}}
+\DoxyCodeLine{00276\ \ \ \ \ std::clog\ <<\ \textcolor{stringliteral}{"{}alphanum\_comp<std::string,const\ char*>\ "{}}\ <<\ l\ <<\ \textcolor{stringliteral}{"{},"{}}\ <<\ r\ <<\ std::endl;}
+\DoxyCodeLine{00277\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00278\ \ \ \ \ \textcolor{keywordflow}{return}\ alphanum\_impl(l.c\_str(),\ r);}
+\DoxyCodeLine{00279\ \ \ \}}
+\DoxyCodeLine{00280\ }
+\DoxyCodeLine{00281\ \ \ \textcolor{keywordtype}{int}\ alphanum\_comp(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ l,\ \textcolor{keyword}{const}\ std::string\&\ r)}
+\DoxyCodeLine{00282\ \ \ \{}
+\DoxyCodeLine{00283\ \ \ \ \ assert(l);}
+\DoxyCodeLine{00284\ \textcolor{preprocessor}{\#ifdef\ DOJDEBUG}}
+\DoxyCodeLine{00285\ \ \ \ \ std::clog\ <<\ \textcolor{stringliteral}{"{}alphanum\_comp<const\ char*,std::string>\ "{}}\ <<\ l\ <<\ \textcolor{stringliteral}{"{},"{}}\ <<\ r\ <<\ std::endl;}
+\DoxyCodeLine{00286\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00287\ \ \ \ \ \textcolor{keywordflow}{return}\ alphanum\_impl(l,\ r.c\_str());}
+\DoxyCodeLine{00288\ \ \ \}}
+\DoxyCodeLine{00289\ }
+\DoxyCodeLine{00291\ }
+\DoxyCodeLine{00297\ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Ty>}
+\DoxyCodeLine{00298\ \ \ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{structdoj_1_1alphanum__less}{alphanum\_less}}\ :\ \textcolor{keyword}{public}\ std::binary\_function<Ty,\ Ty,\ bool>}
+\DoxyCodeLine{00299\ \ \ \{}
+\DoxyCodeLine{00300\ \ \ \ \ \textcolor{keywordtype}{bool}\ operator()(\textcolor{keyword}{const}\ Ty\&\ left,\ \textcolor{keyword}{const}\ Ty\&\ right)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00301\ \textcolor{keyword}{\ \ \ \ }\{}
+\DoxyCodeLine{00302\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ alphanum\_comp(left,\ right)\ <\ 0;}
+\DoxyCodeLine{00303\ \ \ \ \ \}}
+\DoxyCodeLine{00304\ \ \ \};}
+\DoxyCodeLine{00305\ }
+\DoxyCodeLine{00306\ \}}
+\DoxyCodeLine{00307\ }
+\DoxyCodeLine{00308\ \textcolor{preprocessor}{\#ifdef\ TESTMAIN}}
+\DoxyCodeLine{00309\ \textcolor{preprocessor}{\#include\ <algorithm>}}
+\DoxyCodeLine{00310\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{00311\ \textcolor{preprocessor}{\#include\ <iterator>}}
+\DoxyCodeLine{00312\ \textcolor{preprocessor}{\#include\ <map>}}
+\DoxyCodeLine{00313\ \textcolor{preprocessor}{\#include\ <set>}}
+\DoxyCodeLine{00314\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00315\ \textcolor{keywordtype}{int}\ main()}
+\DoxyCodeLine{00316\ \{}
+\DoxyCodeLine{00317\ \ \ \textcolor{comment}{//\ testcases\ for\ the\ algorithm}}
+\DoxyCodeLine{00318\ \ \ assert(doj::alphanum\_comp(\textcolor{stringliteral}{"{}"{}},\textcolor{stringliteral}{"{}"{}})\ ==\ 0);}
+\DoxyCodeLine{00319\ \ \ assert(doj::alphanum\_comp(\textcolor{stringliteral}{"{}"{}},\textcolor{stringliteral}{"{}a"{}})\ <\ 0);}
+\DoxyCodeLine{00320\ \ \ assert(doj::alphanum\_comp(\textcolor{stringliteral}{"{}a"{}},\textcolor{stringliteral}{"{}"{}})\ >\ 0);}
+\DoxyCodeLine{00321\ \ \ assert(doj::alphanum\_comp(\textcolor{stringliteral}{"{}a"{}},\textcolor{stringliteral}{"{}a"{}})\ ==\ 0);}
+\DoxyCodeLine{00322\ \ \ assert(doj::alphanum\_comp(\textcolor{stringliteral}{"{}"{}},\textcolor{stringliteral}{"{}9"{}})\ <\ 0);}
+\DoxyCodeLine{00323\ \ \ assert(doj::alphanum\_comp(\textcolor{stringliteral}{"{}9"{}},\textcolor{stringliteral}{"{}"{}})\ >\ 0);}
+\DoxyCodeLine{00324\ \ \ assert(doj::alphanum\_comp(\textcolor{stringliteral}{"{}1"{}},\textcolor{stringliteral}{"{}1"{}})\ ==\ 0);}
+\DoxyCodeLine{00325\ \ \ assert(doj::alphanum\_comp(\textcolor{stringliteral}{"{}1"{}},\textcolor{stringliteral}{"{}2"{}})\ <\ 0);}
+\DoxyCodeLine{00326\ \ \ assert(doj::alphanum\_comp(\textcolor{stringliteral}{"{}3"{}},\textcolor{stringliteral}{"{}2"{}})\ >\ 0);}
+\DoxyCodeLine{00327\ \ \ assert(doj::alphanum\_comp(\textcolor{stringliteral}{"{}a1"{}},\textcolor{stringliteral}{"{}a1"{}})\ ==\ 0);}
+\DoxyCodeLine{00328\ \ \ assert(doj::alphanum\_comp(\textcolor{stringliteral}{"{}a1"{}},\textcolor{stringliteral}{"{}a2"{}})\ <\ 0);}
+\DoxyCodeLine{00329\ \ \ assert(doj::alphanum\_comp(\textcolor{stringliteral}{"{}a2"{}},\textcolor{stringliteral}{"{}a1"{}})\ >\ 0);}
+\DoxyCodeLine{00330\ \ \ assert(doj::alphanum\_comp(\textcolor{stringliteral}{"{}a1a2"{}},\textcolor{stringliteral}{"{}a1a3"{}})\ <\ 0);}
+\DoxyCodeLine{00331\ \ \ assert(doj::alphanum\_comp(\textcolor{stringliteral}{"{}a1a2"{}},\textcolor{stringliteral}{"{}a1a0"{}})\ >\ 0);}
+\DoxyCodeLine{00332\ \ \ assert(doj::alphanum\_comp(\textcolor{stringliteral}{"{}134"{}},\textcolor{stringliteral}{"{}122"{}})\ >\ 0);}
+\DoxyCodeLine{00333\ \ \ assert(doj::alphanum\_comp(\textcolor{stringliteral}{"{}12a3"{}},\textcolor{stringliteral}{"{}12a3"{}})\ ==\ 0);}
+\DoxyCodeLine{00334\ \ \ assert(doj::alphanum\_comp(\textcolor{stringliteral}{"{}12a1"{}},\textcolor{stringliteral}{"{}12a0"{}})\ >\ 0);}
+\DoxyCodeLine{00335\ \ \ assert(doj::alphanum\_comp(\textcolor{stringliteral}{"{}12a1"{}},\textcolor{stringliteral}{"{}12a2"{}})\ <\ 0);}
+\DoxyCodeLine{00336\ \ \ assert(doj::alphanum\_comp(\textcolor{stringliteral}{"{}a"{}},\textcolor{stringliteral}{"{}aa"{}})\ <\ 0);}
+\DoxyCodeLine{00337\ \ \ assert(doj::alphanum\_comp(\textcolor{stringliteral}{"{}aaa"{}},\textcolor{stringliteral}{"{}aa"{}})\ >\ 0);}
+\DoxyCodeLine{00338\ \ \ assert(doj::alphanum\_comp(\textcolor{stringliteral}{"{}Alpha\ 2"{}},\textcolor{stringliteral}{"{}Alpha\ 2"{}})\ ==\ 0);}
+\DoxyCodeLine{00339\ \ \ assert(doj::alphanum\_comp(\textcolor{stringliteral}{"{}Alpha\ 2"{}},\textcolor{stringliteral}{"{}Alpha\ 2A"{}})\ <\ 0);}
+\DoxyCodeLine{00340\ \ \ assert(doj::alphanum\_comp(\textcolor{stringliteral}{"{}Alpha\ 2\ B"{}},\textcolor{stringliteral}{"{}Alpha\ 2"{}})\ >\ 0);}
+\DoxyCodeLine{00341\ }
+\DoxyCodeLine{00342\ \ \ assert(doj::alphanum\_comp(1,1)\ ==\ 0);}
+\DoxyCodeLine{00343\ \ \ assert(doj::alphanum\_comp(1,2)\ <\ 0);}
+\DoxyCodeLine{00344\ \ \ assert(doj::alphanum\_comp(2,1)\ >\ 0);}
+\DoxyCodeLine{00345\ \ \ assert(doj::alphanum\_comp(1.2,3.14)\ <\ 0);}
+\DoxyCodeLine{00346\ \ \ assert(doj::alphanum\_comp(3.14,2.71)\ >\ 0);}
+\DoxyCodeLine{00347\ \ \ assert(doj::alphanum\_comp(\textcolor{keyword}{true},\textcolor{keyword}{true})\ ==\ 0);}
+\DoxyCodeLine{00348\ \ \ assert(doj::alphanum\_comp(\textcolor{keyword}{true},\textcolor{keyword}{false})\ >\ 0);}
+\DoxyCodeLine{00349\ \ \ assert(doj::alphanum\_comp(\textcolor{keyword}{false},\textcolor{keyword}{true})\ <\ 0);}
+\DoxyCodeLine{00350\ }
+\DoxyCodeLine{00351\ \ \ std::string\ str(\textcolor{stringliteral}{"{}Alpha\ 2"{}});}
+\DoxyCodeLine{00352\ \ \ assert(doj::alphanum\_comp(str,\textcolor{stringliteral}{"{}Alpha\ 2"{}})\ ==\ 0);}
+\DoxyCodeLine{00353\ \ \ assert(doj::alphanum\_comp(str,\textcolor{stringliteral}{"{}Alpha\ 2A"{}})\ <\ 0);}
+\DoxyCodeLine{00354\ \ \ assert(doj::alphanum\_comp(\textcolor{stringliteral}{"{}Alpha\ 2\ B"{}},str)\ >\ 0);}
+\DoxyCodeLine{00355\ }
+\DoxyCodeLine{00356\ \ \ assert(doj::alphanum\_comp(str,strdup(\textcolor{stringliteral}{"{}Alpha\ 2"{}}))\ ==\ 0);}
+\DoxyCodeLine{00357\ \ \ assert(doj::alphanum\_comp(str,strdup(\textcolor{stringliteral}{"{}Alpha\ 2A"{}}))\ <\ 0);}
+\DoxyCodeLine{00358\ \ \ assert(doj::alphanum\_comp(strdup(\textcolor{stringliteral}{"{}Alpha\ 2\ B"{}}),str)\ >\ 0);}
+\DoxyCodeLine{00359\ }
+\DoxyCodeLine{00360\ \textcolor{preprocessor}{\#if\ 1}}
+\DoxyCodeLine{00361\ \ \ \textcolor{comment}{//\ show\ usage\ of\ the\ comparison\ functor\ with\ a\ set}}
+\DoxyCodeLine{00362\ \ \ std::set<std::string,\ doj::alphanum\_less<std::string>\ >\ s;}
+\DoxyCodeLine{00363\ \ \ s.insert(\textcolor{stringliteral}{"{}Xiph\ Xlater\ 58"{}});}
+\DoxyCodeLine{00364\ \ \ s.insert(\textcolor{stringliteral}{"{}Xiph\ Xlater\ 5000"{}});}
+\DoxyCodeLine{00365\ \ \ s.insert(\textcolor{stringliteral}{"{}Xiph\ Xlater\ 500"{}});}
+\DoxyCodeLine{00366\ \ \ s.insert(\textcolor{stringliteral}{"{}Xiph\ Xlater\ 50"{}});}
+\DoxyCodeLine{00367\ \ \ s.insert(\textcolor{stringliteral}{"{}Xiph\ Xlater\ 5"{}});}
+\DoxyCodeLine{00368\ \ \ s.insert(\textcolor{stringliteral}{"{}Xiph\ Xlater\ 40"{}});}
+\DoxyCodeLine{00369\ \ \ s.insert(\textcolor{stringliteral}{"{}Xiph\ Xlater\ 300"{}});}
+\DoxyCodeLine{00370\ \ \ s.insert(\textcolor{stringliteral}{"{}Xiph\ Xlater\ 2000"{}});}
+\DoxyCodeLine{00371\ \ \ s.insert(\textcolor{stringliteral}{"{}Xiph\ Xlater\ 10000"{}});}
+\DoxyCodeLine{00372\ \ \ s.insert(\textcolor{stringliteral}{"{}QRS-\/62F\ Intrinsia\ Machine"{}});}
+\DoxyCodeLine{00373\ \ \ s.insert(\textcolor{stringliteral}{"{}QRS-\/62\ Intrinsia\ Machine"{}});}
+\DoxyCodeLine{00374\ \ \ s.insert(\textcolor{stringliteral}{"{}QRS-\/60F\ Intrinsia\ Machine"{}});}
+\DoxyCodeLine{00375\ \ \ s.insert(\textcolor{stringliteral}{"{}QRS-\/60\ Intrinsia\ Machine"{}});}
+\DoxyCodeLine{00376\ \ \ s.insert(\textcolor{stringliteral}{"{}Callisto\ Morphamax\ 7000\ SE2"{}});}
+\DoxyCodeLine{00377\ \ \ s.insert(\textcolor{stringliteral}{"{}Callisto\ Morphamax\ 7000\ SE"{}});}
+\DoxyCodeLine{00378\ \ \ s.insert(\textcolor{stringliteral}{"{}Callisto\ Morphamax\ 7000"{}});}
+\DoxyCodeLine{00379\ \ \ s.insert(\textcolor{stringliteral}{"{}Callisto\ Morphamax\ 700"{}});}
+\DoxyCodeLine{00380\ \ \ s.insert(\textcolor{stringliteral}{"{}Callisto\ Morphamax\ 600"{}});}
+\DoxyCodeLine{00381\ \ \ s.insert(\textcolor{stringliteral}{"{}Callisto\ Morphamax\ 5000"{}});}
+\DoxyCodeLine{00382\ \ \ s.insert(\textcolor{stringliteral}{"{}Callisto\ Morphamax\ 500"{}});}
+\DoxyCodeLine{00383\ \ \ s.insert(\textcolor{stringliteral}{"{}Callisto\ Morphamax"{}});}
+\DoxyCodeLine{00384\ \ \ s.insert(\textcolor{stringliteral}{"{}Alpha\ 2A-\/900"{}});}
+\DoxyCodeLine{00385\ \ \ s.insert(\textcolor{stringliteral}{"{}Alpha\ 2A-\/8000"{}});}
+\DoxyCodeLine{00386\ \ \ s.insert(\textcolor{stringliteral}{"{}Alpha\ 2A"{}});}
+\DoxyCodeLine{00387\ \ \ s.insert(\textcolor{stringliteral}{"{}Alpha\ 200"{}});}
+\DoxyCodeLine{00388\ \ \ s.insert(\textcolor{stringliteral}{"{}Alpha\ 2"{}});}
+\DoxyCodeLine{00389\ \ \ s.insert(\textcolor{stringliteral}{"{}Alpha\ 100"{}});}
+\DoxyCodeLine{00390\ \ \ s.insert(\textcolor{stringliteral}{"{}Allegia\ 60\ Clasteron"{}});}
+\DoxyCodeLine{00391\ \ \ s.insert(\textcolor{stringliteral}{"{}Allegia\ 52\ Clasteron"{}});}
+\DoxyCodeLine{00392\ \ \ s.insert(\textcolor{stringliteral}{"{}Allegia\ 51B\ Clasteron"{}});}
+\DoxyCodeLine{00393\ \ \ s.insert(\textcolor{stringliteral}{"{}Allegia\ 51\ Clasteron"{}});}
+\DoxyCodeLine{00394\ \ \ s.insert(\textcolor{stringliteral}{"{}Allegia\ 500\ Clasteron"{}});}
+\DoxyCodeLine{00395\ \ \ s.insert(\textcolor{stringliteral}{"{}Allegia\ 50\ Clasteron"{}});}
+\DoxyCodeLine{00396\ \ \ s.insert(\textcolor{stringliteral}{"{}40X\ Radonius"{}});}
+\DoxyCodeLine{00397\ \ \ s.insert(\textcolor{stringliteral}{"{}30X\ Radonius"{}});}
+\DoxyCodeLine{00398\ \ \ s.insert(\textcolor{stringliteral}{"{}20X\ Radonius\ Prime"{}});}
+\DoxyCodeLine{00399\ \ \ s.insert(\textcolor{stringliteral}{"{}20X\ Radonius"{}});}
+\DoxyCodeLine{00400\ \ \ s.insert(\textcolor{stringliteral}{"{}200X\ Radonius"{}});}
+\DoxyCodeLine{00401\ \ \ s.insert(\textcolor{stringliteral}{"{}10X\ Radonius"{}});}
+\DoxyCodeLine{00402\ \ \ s.insert(\textcolor{stringliteral}{"{}1000X\ Radonius\ Maximus"{}});}
+\DoxyCodeLine{00403\ \ \ \textcolor{comment}{//\ print\ sorted\ set\ to\ cout}}
+\DoxyCodeLine{00404\ \ \ std::copy(s.begin(),\ s.end(),\ std::ostream\_iterator<std::string>(std::cout,\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}}));}
+\DoxyCodeLine{00405\ }
+\DoxyCodeLine{00406\ \ \ \textcolor{comment}{//\ show\ usage\ of\ comparision\ functor\ with\ a\ map}}
+\DoxyCodeLine{00407\ \ \ \textcolor{keyword}{typedef}\ std::map<std::string,\ int,\ doj::alphanum\_less<std::string>\ >\ m\_t;}
+\DoxyCodeLine{00408\ \ \ m\_t\ m;}
+\DoxyCodeLine{00409\ \ \ m[\textcolor{stringliteral}{"{}z1.doc"{}}]=1;}
+\DoxyCodeLine{00410\ \ \ m[\textcolor{stringliteral}{"{}z10.doc"{}}]=2;}
+\DoxyCodeLine{00411\ \ \ m[\textcolor{stringliteral}{"{}z100.doc"{}}]=3;}
+\DoxyCodeLine{00412\ \ \ m[\textcolor{stringliteral}{"{}z101.doc"{}}]=4;}
+\DoxyCodeLine{00413\ \ \ m[\textcolor{stringliteral}{"{}z102.doc"{}}]=5;}
+\DoxyCodeLine{00414\ \ \ m[\textcolor{stringliteral}{"{}z11.doc"{}}]=6;}
+\DoxyCodeLine{00415\ \ \ m[\textcolor{stringliteral}{"{}z12.doc"{}}]=7;}
+\DoxyCodeLine{00416\ \ \ m[\textcolor{stringliteral}{"{}z13.doc"{}}]=8;}
+\DoxyCodeLine{00417\ \ \ m[\textcolor{stringliteral}{"{}z14.doc"{}}]=9;}
+\DoxyCodeLine{00418\ \ \ m[\textcolor{stringliteral}{"{}z15.doc"{}}]=10;}
+\DoxyCodeLine{00419\ \ \ m[\textcolor{stringliteral}{"{}z16.doc"{}}]=11;}
+\DoxyCodeLine{00420\ \ \ m[\textcolor{stringliteral}{"{}z17.doc"{}}]=12;}
+\DoxyCodeLine{00421\ \ \ m[\textcolor{stringliteral}{"{}z18.doc"{}}]=13;}
+\DoxyCodeLine{00422\ \ \ m[\textcolor{stringliteral}{"{}z19.doc"{}}]=14;}
+\DoxyCodeLine{00423\ \ \ m[\textcolor{stringliteral}{"{}z2.doc"{}}]=15;}
+\DoxyCodeLine{00424\ \ \ m[\textcolor{stringliteral}{"{}z20.doc"{}}]=16;}
+\DoxyCodeLine{00425\ \ \ m[\textcolor{stringliteral}{"{}z3.doc"{}}]=17;}
+\DoxyCodeLine{00426\ \ \ m[\textcolor{stringliteral}{"{}z4.doc"{}}]=18;}
+\DoxyCodeLine{00427\ \ \ m[\textcolor{stringliteral}{"{}z5.doc"{}}]=19;}
+\DoxyCodeLine{00428\ \ \ m[\textcolor{stringliteral}{"{}z6.doc"{}}]=20;}
+\DoxyCodeLine{00429\ \ \ m[\textcolor{stringliteral}{"{}z7.doc"{}}]=21;}
+\DoxyCodeLine{00430\ \ \ m[\textcolor{stringliteral}{"{}z8.doc"{}}]=22;}
+\DoxyCodeLine{00431\ \ \ m[\textcolor{stringliteral}{"{}z9.doc"{}}]=23;}
+\DoxyCodeLine{00432\ \ \ \textcolor{comment}{//\ print\ sorted\ map\ to\ cout}}
+\DoxyCodeLine{00433\ \ \ \textcolor{keywordflow}{for}(m\_t::iterator\ i=m.begin();\ i!=m.end();\ ++i)}
+\DoxyCodeLine{00434\ \ \ \ \ std::cout\ <<\ i-\/>first\ <<\ \textcolor{charliteral}{'\(\backslash\)t'}\ <<\ i-\/>second\ <<\ std::endl;}
+\DoxyCodeLine{00435\ }
+\DoxyCodeLine{00436\ \ \ \textcolor{comment}{//\ show\ usage\ of\ comparison\ functor\ with\ an\ STL\ algorithm\ on\ a\ vector}}
+\DoxyCodeLine{00437\ \ \ std::vector<std::string>\ v;}
+\DoxyCodeLine{00438\ \ \ \textcolor{comment}{//\ vector\ contents\ are\ reversed\ sorted\ contents\ of\ the\ old\ set}}
+\DoxyCodeLine{00439\ \ \ std::copy(s.rbegin(),\ s.rend(),\ std::back\_inserter(v));}
+\DoxyCodeLine{00440\ \ \ \textcolor{comment}{//\ now\ sort\ the\ vector\ with\ the\ algorithm}}
+\DoxyCodeLine{00441\ \ \ std::sort(v.begin(),\ v.end(),\ \doxymbox{\hyperlink{structdoj_1_1alphanum__less}{doj::alphanum\_less<std::string>}}());}
+\DoxyCodeLine{00442\ \ \ \textcolor{comment}{//\ and\ print\ the\ vector\ to\ cout}}
+\DoxyCodeLine{00443\ \ \ std::copy(v.begin(),\ v.end(),\ std::ostream\_iterator<std::string>(std::cout,\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}}));}
+\DoxyCodeLine{00444\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00445\ }
+\DoxyCodeLine{00446\ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{00447\ \}}
+\DoxyCodeLine{00448\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00449\ }
+\DoxyCodeLine{00450\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

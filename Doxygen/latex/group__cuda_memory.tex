@@ -1,0 +1,221 @@
+\doxysubsubsection{Memory Management }
+\hypertarget{group__cuda_memory}{}\label{group__cuda_memory}\index{Memory Management@{Memory Management}}
+\doxysubsubsubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+cuda\+Error\+\_\+t \doxymbox{\hyperlink{group__cuda_memory_gacd510d3fc076c255410fbcc4fa15e514}{cuda\+Malloc\+Mapped}} (void \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}ptr, size\+\_\+t size, bool clear=true)
+\item 
+bool \doxymbox{\hyperlink{group__cuda_memory_gaf5a659673481203780b0117f8d7782d0}{cuda\+Alloc\+Mapped}} (void \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}ptr, size\+\_\+t size, bool clear=true)
+\item 
+bool \doxymbox{\hyperlink{group__cuda_memory_gad11dc9354e08a12732575b976a7f8591}{cuda\+Alloc\+Mapped}} (void \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}ptr, size\+\_\+t width, size\+\_\+t height, \doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{image\+Format}} format, bool clear=true)
+\item 
+bool \doxymbox{\hyperlink{group__cuda_memory_ga135cfecd9388ca0556f5bde26ce300ff}{cuda\+Alloc\+Mapped}} (void \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}ptr, const int2 \&dims, \doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{image\+Format}} format, bool clear=true)
+\item 
+{\footnotesize template$<$typename T$>$ }\\bool \doxymbox{\hyperlink{group__cuda_memory_gad6feba6532cb9e91cea006b0891db1d3}{cuda\+Alloc\+Mapped}} (T \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}ptr, size\+\_\+t width, size\+\_\+t height, bool clear=true)
+\item 
+{\footnotesize template$<$typename T$>$ }\\bool \doxymbox{\hyperlink{group__cuda_memory_ga3c276455fba50c025093d5616b7adcab}{cuda\+Alloc\+Mapped}} (T \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}ptr, const int2 \&dims, bool clear=true)
+\item 
+{\footnotesize template$<$typename T$>$ }\\bool \doxymbox{\hyperlink{group__cuda_memory_ga0686d741f9940f4b50349d77e579cbb6}{cuda\+Alloc\+Mapped}} (T \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}ptr, size\+\_\+t size, bool clear=true)
+\item 
+bool \doxymbox{\hyperlink{group__cuda_memory_ga4ad545ae036ad106a5d1bc21c519bed8}{cuda\+Alloc\+Mapped}} (void \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}cpu\+Ptr, void \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}gpu\+Ptr, size\+\_\+t size, bool clear=true)
+\end{DoxyCompactItemize}
+
+
+\doxysubsubsubsection{Detailed Description}
+Allocation of CUDA mapped zero-\/copy memory. 
+
+\label{doc-func-members}
+\Hypertarget{group__cuda_memory_doc-func-members}
+\doxysubsubsubsection{Function Documentation}
+\Hypertarget{group__cuda_memory_ga3c276455fba50c025093d5616b7adcab}\index{Memory Management@{Memory Management}!cudaAllocMapped@{cudaAllocMapped}}
+\index{cudaAllocMapped@{cudaAllocMapped}!Memory Management@{Memory Management}}
+\doxysubsubsubsubsection{\texorpdfstring{cudaAllocMapped()}{cudaAllocMapped()}\hspace{0.1cm}{\footnotesize\ttfamily [1/7]}}
+{\footnotesize\ttfamily \label{group__cuda_memory_ga3c276455fba50c025093d5616b7adcab} 
+template$<$typename T$>$ \\
+bool cuda\+Alloc\+Mapped (\begin{DoxyParamCaption}\item[{T \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{ptr}{, }\item[{const int2 \&}]{dims}{, }\item[{bool}]{clear}{ = {\ttfamily true}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Allocate Zero\+Copy mapped memory, shared between CUDA and CPU.
+
+This is a templated version for allocating images from vector types like uchar3, uchar4, float3, float4, ect. \doxylink{requirements_The}{The} overall size of the allocation will be calculated as {\ttfamily dims.\+x \texorpdfstring{$\ast$}{*} dims.\+y \texorpdfstring{$\ast$}{*} sizeof(\+T)}.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\doxymbox{\texttt{out}}  & {\em ptr} & Returned pointer to the shared CPU/\+\+GPU memory. \\
+\hline
+\doxymbox{\texttt{in}}  & {\em dims} & {\ttfamily int2} vector where {\ttfamily width=dims.\+x} and {\ttfamily height=dims.\+y} \\
+\hline
+\doxymbox{\texttt{in}}  & {\em clear} & If {\ttfamily true} (default), the memory contents will be filled with zeros.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+{\ttfamily true} if the allocation succeeded, {\ttfamily false} otherwise. 
+\end{DoxyReturn}
+\Hypertarget{group__cuda_memory_ga0686d741f9940f4b50349d77e579cbb6}\index{Memory Management@{Memory Management}!cudaAllocMapped@{cudaAllocMapped}}
+\index{cudaAllocMapped@{cudaAllocMapped}!Memory Management@{Memory Management}}
+\doxysubsubsubsubsection{\texorpdfstring{cudaAllocMapped()}{cudaAllocMapped()}\hspace{0.1cm}{\footnotesize\ttfamily [2/7]}}
+{\footnotesize\ttfamily \label{group__cuda_memory_ga0686d741f9940f4b50349d77e579cbb6} 
+template$<$typename T$>$ \\
+bool cuda\+Alloc\+Mapped (\begin{DoxyParamCaption}\item[{T \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{ptr}{, }\item[{size\+\_\+t}]{size}{, }\item[{bool}]{clear}{ = {\ttfamily true}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Allocate Zero\+Copy mapped memory, shared between CUDA and CPU.
+
+This is a templated version for allocating images from vector types like uchar3, uchar4, float3, float4, ect. \doxylink{requirements_The}{The} overall size of the allocation is specified by the size parameter.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\doxymbox{\texttt{out}}  & {\em ptr} & Returned pointer to the shared CPU/\+\+GPU memory. \\
+\hline
+\doxymbox{\texttt{in}}  & {\em size} & size of the allocation, in bytes. \\
+\hline
+\doxymbox{\texttt{in}}  & {\em clear} & If {\ttfamily true} (default), the memory contents will be filled with zeros.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+{\ttfamily true} if the allocation succeeded, {\ttfamily false} otherwise. 
+\end{DoxyReturn}
+\Hypertarget{group__cuda_memory_gad6feba6532cb9e91cea006b0891db1d3}\index{Memory Management@{Memory Management}!cudaAllocMapped@{cudaAllocMapped}}
+\index{cudaAllocMapped@{cudaAllocMapped}!Memory Management@{Memory Management}}
+\doxysubsubsubsubsection{\texorpdfstring{cudaAllocMapped()}{cudaAllocMapped()}\hspace{0.1cm}{\footnotesize\ttfamily [3/7]}}
+{\footnotesize\ttfamily \label{group__cuda_memory_gad6feba6532cb9e91cea006b0891db1d3} 
+template$<$typename T$>$ \\
+bool cuda\+Alloc\+Mapped (\begin{DoxyParamCaption}\item[{T \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{ptr}{, }\item[{size\+\_\+t}]{width}{, }\item[{size\+\_\+t}]{height}{, }\item[{bool}]{clear}{ = {\ttfamily true}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Allocate Zero\+Copy mapped memory, shared between CUDA and CPU.
+
+This is a templated version for allocating images from vector types like uchar3, uchar4, float3, float4, ect. \doxylink{requirements_The}{The} overall size of the allocation will be calculated as {\ttfamily width \texorpdfstring{$\ast$}{*} height \texorpdfstring{$\ast$}{*} sizeof(\+T)}.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\doxymbox{\texttt{out}}  & {\em ptr} & Returned pointer to the shared CPU/\+\+GPU memory. \\
+\hline
+\doxymbox{\texttt{in}}  & {\em width} & Width (in pixels) to allocate. \\
+\hline
+\doxymbox{\texttt{in}}  & {\em height} & Height (in pixels) to allocate. \\
+\hline
+\doxymbox{\texttt{in}}  & {\em clear} & If {\ttfamily true} (default), the memory contents will be filled with zeros.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+{\ttfamily true} if the allocation succeeded, {\ttfamily false} otherwise. 
+\end{DoxyReturn}
+\Hypertarget{group__cuda_memory_ga4ad545ae036ad106a5d1bc21c519bed8}\index{Memory Management@{Memory Management}!cudaAllocMapped@{cudaAllocMapped}}
+\index{cudaAllocMapped@{cudaAllocMapped}!Memory Management@{Memory Management}}
+\doxysubsubsubsubsection{\texorpdfstring{cudaAllocMapped()}{cudaAllocMapped()}\hspace{0.1cm}{\footnotesize\ttfamily [4/7]}}
+{\footnotesize\ttfamily \label{group__cuda_memory_ga4ad545ae036ad106a5d1bc21c519bed8} 
+bool cuda\+Alloc\+Mapped (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{cpu\+Ptr}{, }\item[{void \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{gpu\+Ptr}{, }\item[{size\+\_\+t}]{size}{, }\item[{bool}]{clear}{ = {\ttfamily true}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Allocate Zero\+Copy mapped memory, shared between CUDA and CPU.
+
+\begin{DoxyNote}{Note}
+although two pointers are returned, one for CPU and GPU, they both resolve to the same physical memory.
+\end{DoxyNote}
+
+\begin{DoxyParams}[1]{Parameters}
+\doxymbox{\texttt{out}}  & {\em cpu\+Ptr} & Returned CPU pointer to the shared memory. \\
+\hline
+\doxymbox{\texttt{out}}  & {\em gpu\+Ptr} & Returned GPU pointer to the shared memory. \\
+\hline
+\doxymbox{\texttt{in}}  & {\em size} & Size (in bytes) of the shared memory to allocate. \\
+\hline
+\doxymbox{\texttt{in}}  & {\em clear} & If {\ttfamily true} (the default), the memory contents will be filled with zeros.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+{\ttfamily true} if the allocation succeeded, {\ttfamily false} otherwise. 
+\end{DoxyReturn}
+\Hypertarget{group__cuda_memory_ga135cfecd9388ca0556f5bde26ce300ff}\index{Memory Management@{Memory Management}!cudaAllocMapped@{cudaAllocMapped}}
+\index{cudaAllocMapped@{cudaAllocMapped}!Memory Management@{Memory Management}}
+\doxysubsubsubsubsection{\texorpdfstring{cudaAllocMapped()}{cudaAllocMapped()}\hspace{0.1cm}{\footnotesize\ttfamily [5/7]}}
+{\footnotesize\ttfamily \label{group__cuda_memory_ga135cfecd9388ca0556f5bde26ce300ff} 
+bool cuda\+Alloc\+Mapped (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{ptr}{, }\item[{const int2 \&}]{dims}{, }\item[{\doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{image\+Format}}}]{format}{, }\item[{bool}]{clear}{ = {\ttfamily true}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Allocate Zero\+Copy mapped memory, shared between CUDA and CPU.
+
+This overload is for allocating images from an \doxylink{group__image_format_ga931c48e08f361637d093355d64583406}{image\+Format} type and the image dimensions. \doxylink{requirements_The}{The} overall size of the allocation will be calculated with the \doxylink{group__image_format_gae8779cdbde4c4543a26a736ef7222fae}{image\+Format\+Size()} function.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\doxymbox{\texttt{out}}  & {\em ptr} & Returned pointer to the shared CPU/\+\+GPU memory. \\
+\hline
+\doxymbox{\texttt{in}}  & {\em dims} & {\ttfamily int2} vector where {\ttfamily width=dims.\+x} and {\ttfamily height=dims.\+y} \\
+\hline
+\doxymbox{\texttt{in}}  & {\em format} & Format of the image. \\
+\hline
+\doxymbox{\texttt{in}}  & {\em clear} & If {\ttfamily true} (default), the memory contents will be filled with zeros.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+{\ttfamily true} if the allocation succeeded, {\ttfamily false} otherwise. 
+\end{DoxyReturn}
+\Hypertarget{group__cuda_memory_gaf5a659673481203780b0117f8d7782d0}\index{Memory Management@{Memory Management}!cudaAllocMapped@{cudaAllocMapped}}
+\index{cudaAllocMapped@{cudaAllocMapped}!Memory Management@{Memory Management}}
+\doxysubsubsubsubsection{\texorpdfstring{cudaAllocMapped()}{cudaAllocMapped()}\hspace{0.1cm}{\footnotesize\ttfamily [6/7]}}
+{\footnotesize\ttfamily \label{group__cuda_memory_gaf5a659673481203780b0117f8d7782d0} 
+bool cuda\+Alloc\+Mapped (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{ptr}{, }\item[{size\+\_\+t}]{size}{, }\item[{bool}]{clear}{ = {\ttfamily true}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Allocate Zero\+Copy mapped memory, shared between CUDA and CPU.
+
+\begin{DoxyNote}{Note}
+this overload of cuda\+Alloc\+Mapped returns one pointer, assumes that the CPU and GPU addresses will match (as is the case with any recent CUDA version).
+\end{DoxyNote}
+
+\begin{DoxyParams}[1]{Parameters}
+\doxymbox{\texttt{out}}  & {\em ptr} & Returned pointer to the shared CPU/\+\+GPU memory. \\
+\hline
+\doxymbox{\texttt{in}}  & {\em size} & Size (in bytes) of the shared memory to allocate. \\
+\hline
+\doxymbox{\texttt{in}}  & {\em clear} & If {\ttfamily true} (default), the memory contents will be filled with zeros.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+{\ttfamily true} if the allocation succeeded, {\ttfamily false} otherwise. 
+\end{DoxyReturn}
+\Hypertarget{group__cuda_memory_gad11dc9354e08a12732575b976a7f8591}\index{Memory Management@{Memory Management}!cudaAllocMapped@{cudaAllocMapped}}
+\index{cudaAllocMapped@{cudaAllocMapped}!Memory Management@{Memory Management}}
+\doxysubsubsubsubsection{\texorpdfstring{cudaAllocMapped()}{cudaAllocMapped()}\hspace{0.1cm}{\footnotesize\ttfamily [7/7]}}
+{\footnotesize\ttfamily \label{group__cuda_memory_gad11dc9354e08a12732575b976a7f8591} 
+bool cuda\+Alloc\+Mapped (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{ptr}{, }\item[{size\+\_\+t}]{width}{, }\item[{size\+\_\+t}]{height}{, }\item[{\doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{image\+Format}}}]{format}{, }\item[{bool}]{clear}{ = {\ttfamily true}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Allocate Zero\+Copy mapped memory, shared between CUDA and CPU.
+
+This overload is for allocating images from an \doxylink{group__image_format_ga931c48e08f361637d093355d64583406}{image\+Format} type and the image dimensions. \doxylink{requirements_The}{The} overall size of the allocation will be calculated with the \doxylink{group__image_format_gae8779cdbde4c4543a26a736ef7222fae}{image\+Format\+Size()} function.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\doxymbox{\texttt{out}}  & {\em ptr} & Returned pointer to the shared CPU/\+\+GPU memory. \\
+\hline
+\doxymbox{\texttt{in}}  & {\em width} & Width (in pixels) to allocate. \\
+\hline
+\doxymbox{\texttt{in}}  & {\em height} & Height (in pixels) to allocate. \\
+\hline
+\doxymbox{\texttt{in}}  & {\em format} & Format of the image. \\
+\hline
+\doxymbox{\texttt{in}}  & {\em clear} & If {\ttfamily true} (default), the memory contents will be filled with zeros.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+{\ttfamily true} if the allocation succeeded, {\ttfamily false} otherwise. 
+\end{DoxyReturn}
+\Hypertarget{group__cuda_memory_gacd510d3fc076c255410fbcc4fa15e514}\index{Memory Management@{Memory Management}!cudaMallocMapped@{cudaMallocMapped}}
+\index{cudaMallocMapped@{cudaMallocMapped}!Memory Management@{Memory Management}}
+\doxysubsubsubsubsection{\texorpdfstring{cudaMallocMapped()}{cudaMallocMapped()}}
+{\footnotesize\ttfamily \label{group__cuda_memory_gacd510d3fc076c255410fbcc4fa15e514} 
+cuda\+Error\+\_\+t cuda\+Malloc\+Mapped (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{ptr}{, }\item[{size\+\_\+t}]{size}{, }\item[{bool}]{clear}{ = {\ttfamily true}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Allocate mapped memory that shares the same physical memory between CPU and GPU, as is the case on Jetson devices with unified memory. This eliminates the need for memory copies (Zero Copy), although synchronization is still required so that both processors are not accessing the same memory simultaneously.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\doxymbox{\texttt{out}}  & {\em ptr} & Returned pointer to the shared memory, can be accessed from both the CPU and in CUDA kernels This memory should be released with cuda\+Free\+Host() \\
+\hline
+\doxymbox{\texttt{in}}  & {\em size} & Size (in bytes) of the shared memory to allocate. \\
+\hline
+\doxymbox{\texttt{in}}  & {\em clear} & If {\ttfamily true} (the default), the memory contents will be filled with zeros.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+This function is the same as \doxylink{group__cuda_memory_gaf5a659673481203780b0117f8d7782d0}{cuda\+Alloc\+Mapped()}, but returns cuda\+Error\+\_\+t instead of bool. 
+\end{DoxyNote}
+\begin{DoxyReturn}{Returns}
+cuda\+Success on success, cuda\+Error\+\_\+t on failure. 
+\end{DoxyReturn}

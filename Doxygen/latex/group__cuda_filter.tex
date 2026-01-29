@@ -1,0 +1,145 @@
+\doxysubsubsection{Pixel Filtering }
+\hypertarget{group__cuda_filter}{}\label{group__cuda_filter}\index{Pixel Filtering@{Pixel Filtering}}
+\doxysubsubsubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \doxymbox{\hyperlink{group__cuda_filter_ga25d4283643163befe99948d24cc53311}{cuda\+Filter\+Mode}} \{ \doxymbox{\hyperlink{group__cuda_filter_gga25d4283643163befe99948d24cc53311a8928ed98915affb5c7514632a038daa6}{FILTER\+\_\+\+POINT}}
+, \doxymbox{\hyperlink{group__cuda_filter_gga25d4283643163befe99948d24cc53311ad8e5de74ec16a7e07145b7c18c885094}{FILTER\+\_\+\+LINEAR}}
+ \}
+\item 
+enum \doxymbox{\hyperlink{group__cuda_filter_ga66fe4a27e9fb59cd675d5deb12287195}{cuda\+Data\+Format}} \{ \doxymbox{\hyperlink{group__cuda_filter_gga66fe4a27e9fb59cd675d5deb12287195a4130db7b40bd34c9b4e91df46d37fc6a}{FORMAT\+\_\+\+HWC}}
+, \doxymbox{\hyperlink{group__cuda_filter_gga66fe4a27e9fb59cd675d5deb12287195a4ccf6f5b6af6f76d13ef2aefd17ea51a}{FORMAT\+\_\+\+CHW}}
+, {\bfseries FORMAT\+\_\+\+DEFAULT} = FORMAT\+\_\+\+HWC
+ \}
+\item 
+enum \doxymbox{\hyperlink{group__cuda_filter_ga25d4283643163befe99948d24cc53311}{cuda\+Filter\+Mode}} \{ \doxymbox{\hyperlink{group__cuda_filter_gga25d4283643163befe99948d24cc53311a8928ed98915affb5c7514632a038daa6}{FILTER\+\_\+\+POINT}}
+, \doxymbox{\hyperlink{group__cuda_filter_gga25d4283643163befe99948d24cc53311ad8e5de74ec16a7e07145b7c18c885094}{FILTER\+\_\+\+LINEAR}}
+ \}
+\item 
+enum \doxymbox{\hyperlink{group__cuda_filter_ga66fe4a27e9fb59cd675d5deb12287195}{cuda\+Data\+Format}} \{ \doxymbox{\hyperlink{group__cuda_filter_gga66fe4a27e9fb59cd675d5deb12287195a4130db7b40bd34c9b4e91df46d37fc6a}{FORMAT\+\_\+\+HWC}}
+, \doxymbox{\hyperlink{group__cuda_filter_gga66fe4a27e9fb59cd675d5deb12287195a4ccf6f5b6af6f76d13ef2aefd17ea51a}{FORMAT\+\_\+\+CHW}}
+, {\bfseries FORMAT\+\_\+\+DEFAULT} = FORMAT\+\_\+\+HWC
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{group__cuda_filter_ga25d4283643163befe99948d24cc53311}{cuda\+Filter\+Mode}} \doxymbox{\hyperlink{group__cuda_filter_ga6a34c93022b23a55a5ae440a8ff7a247}{cuda\+Filter\+Mode\+From\+Str}} (const char \texorpdfstring{$\ast$}{*}filter, \doxymbox{\hyperlink{group__cuda_filter_ga25d4283643163befe99948d24cc53311}{cuda\+Filter\+Mode}} default\+\_\+value=\doxymbox{\hyperlink{group__cuda_filter_gga25d4283643163befe99948d24cc53311ad8e5de74ec16a7e07145b7c18c885094}{FILTER\+\_\+\+LINEAR}})
+\item 
+const char \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{group__cuda_filter_ga66287ee3fd53c25dc2785a4f2ba795a0}{cuda\+Filter\+Mode\+To\+Str}} (\doxymbox{\hyperlink{group__cuda_filter_ga25d4283643163befe99948d24cc53311}{cuda\+Filter\+Mode}} filter)
+\end{DoxyCompactItemize}
+
+
+\doxysubsubsubsection{Detailed Description}
+CUDA device functions for sampling pixels with bilinear filtering. 
+
+\label{doc-enum-members}
+\Hypertarget{group__cuda_filter_doc-enum-members}
+\doxysubsubsubsection{Enumeration Type Documentation}
+\Hypertarget{group__cuda_filter_ga66fe4a27e9fb59cd675d5deb12287195}\index{Pixel Filtering@{Pixel Filtering}!cudaDataFormat@{cudaDataFormat}}
+\index{cudaDataFormat@{cudaDataFormat}!Pixel Filtering@{Pixel Filtering}}
+\doxysubsubsubsubsection{\texorpdfstring{cudaDataFormat}{cudaDataFormat}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{group__cuda_filter_ga66fe4a27e9fb59cd675d5deb12287195} 
+enum \doxymbox{\hyperlink{group__cuda_filter_ga66fe4a27e9fb59cd675d5deb12287195}{cuda\+Data\+Format}}}
+
+Enumeration of image layout formats. \begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FORMAT\_HWC@{FORMAT\_HWC}!Pixel Filtering@{Pixel Filtering}}
+\index{Pixel Filtering@{Pixel Filtering}!FORMAT\_HWC@{FORMAT\_HWC}}
+}\Hypertarget{group__cuda_filter_gga66fe4a27e9fb59cd675d5deb12287195a4130db7b40bd34c9b4e91df46d37fc6a}\label{group__cuda_filter_gga66fe4a27e9fb59cd675d5deb12287195a4130db7b40bd34c9b4e91df46d37fc6a} 
+FORMAT\+\_\+\+HWC&Height \texorpdfstring{$\ast$}{*} Width \texorpdfstring{$\ast$}{*} Channels (packed format) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FORMAT\_CHW@{FORMAT\_CHW}!Pixel Filtering@{Pixel Filtering}}
+\index{Pixel Filtering@{Pixel Filtering}!FORMAT\_CHW@{FORMAT\_CHW}}
+}\Hypertarget{group__cuda_filter_gga66fe4a27e9fb59cd675d5deb12287195a4ccf6f5b6af6f76d13ef2aefd17ea51a}\label{group__cuda_filter_gga66fe4a27e9fb59cd675d5deb12287195a4ccf6f5b6af6f76d13ef2aefd17ea51a} 
+FORMAT\+\_\+\+CHW&Channels \texorpdfstring{$\ast$}{*} Width \texorpdfstring{$\ast$}{*} Height (DNN format) Default format (HWC) \\
+\hline
+
+\end{DoxyEnumFields}
+\Hypertarget{group__cuda_filter_ga66fe4a27e9fb59cd675d5deb12287195}\index{Pixel Filtering@{Pixel Filtering}!cudaDataFormat@{cudaDataFormat}}
+\index{cudaDataFormat@{cudaDataFormat}!Pixel Filtering@{Pixel Filtering}}
+\doxysubsubsubsubsection{\texorpdfstring{cudaDataFormat}{cudaDataFormat}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{group__cuda_filter_ga66fe4a27e9fb59cd675d5deb12287195} 
+enum \doxymbox{\hyperlink{group__cuda_filter_ga66fe4a27e9fb59cd675d5deb12287195}{cuda\+Data\+Format}}}
+
+Enumeration of image layout formats. \begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FORMAT\_HWC@{FORMAT\_HWC}!Pixel Filtering@{Pixel Filtering}}
+\index{Pixel Filtering@{Pixel Filtering}!FORMAT\_HWC@{FORMAT\_HWC}}
+}\Hypertarget{group__cuda_filter_gga66fe4a27e9fb59cd675d5deb12287195a4130db7b40bd34c9b4e91df46d37fc6a}\label{group__cuda_filter_gga66fe4a27e9fb59cd675d5deb12287195a4130db7b40bd34c9b4e91df46d37fc6a} 
+FORMAT\+\_\+\+HWC&Height \texorpdfstring{$\ast$}{*} Width \texorpdfstring{$\ast$}{*} Channels (packed format) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FORMAT\_CHW@{FORMAT\_CHW}!Pixel Filtering@{Pixel Filtering}}
+\index{Pixel Filtering@{Pixel Filtering}!FORMAT\_CHW@{FORMAT\_CHW}}
+}\Hypertarget{group__cuda_filter_gga66fe4a27e9fb59cd675d5deb12287195a4ccf6f5b6af6f76d13ef2aefd17ea51a}\label{group__cuda_filter_gga66fe4a27e9fb59cd675d5deb12287195a4ccf6f5b6af6f76d13ef2aefd17ea51a} 
+FORMAT\+\_\+\+CHW&Channels \texorpdfstring{$\ast$}{*} Width \texorpdfstring{$\ast$}{*} Height (DNN format) Default format (HWC) \\
+\hline
+
+\end{DoxyEnumFields}
+\Hypertarget{group__cuda_filter_ga25d4283643163befe99948d24cc53311}\index{Pixel Filtering@{Pixel Filtering}!cudaFilterMode@{cudaFilterMode}}
+\index{cudaFilterMode@{cudaFilterMode}!Pixel Filtering@{Pixel Filtering}}
+\doxysubsubsubsubsection{\texorpdfstring{cudaFilterMode}{cudaFilterMode}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{group__cuda_filter_ga25d4283643163befe99948d24cc53311} 
+enum \doxymbox{\hyperlink{group__cuda_filter_ga25d4283643163befe99948d24cc53311}{cuda\+Filter\+Mode}}}
+
+Enumeration of interpolation filtering modes. \begin{DoxySeeAlso}{See also}
+\doxylink{group__cuda_filter_ga6a34c93022b23a55a5ae440a8ff7a247}{cuda\+Filter\+Mode\+From\+Str()} and \doxylink{group__cuda_filter_ga66287ee3fd53c25dc2785a4f2ba795a0}{cuda\+Filter\+Mode\+To\+Str()} 
+\end{DoxySeeAlso}
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FILTER\_POINT@{FILTER\_POINT}!Pixel Filtering@{Pixel Filtering}}
+\index{Pixel Filtering@{Pixel Filtering}!FILTER\_POINT@{FILTER\_POINT}}
+}\Hypertarget{group__cuda_filter_gga25d4283643163befe99948d24cc53311a8928ed98915affb5c7514632a038daa6}\label{group__cuda_filter_gga25d4283643163befe99948d24cc53311a8928ed98915affb5c7514632a038daa6} 
+FILTER\+\_\+\+POINT&Nearest-\/neighbor sampling \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FILTER\_LINEAR@{FILTER\_LINEAR}!Pixel Filtering@{Pixel Filtering}}
+\index{Pixel Filtering@{Pixel Filtering}!FILTER\_LINEAR@{FILTER\_LINEAR}}
+}\Hypertarget{group__cuda_filter_gga25d4283643163befe99948d24cc53311ad8e5de74ec16a7e07145b7c18c885094}\label{group__cuda_filter_gga25d4283643163befe99948d24cc53311ad8e5de74ec16a7e07145b7c18c885094} 
+FILTER\+\_\+\+LINEAR&Bilinear filtering \\
+\hline
+
+\end{DoxyEnumFields}
+\Hypertarget{group__cuda_filter_ga25d4283643163befe99948d24cc53311}\index{Pixel Filtering@{Pixel Filtering}!cudaFilterMode@{cudaFilterMode}}
+\index{cudaFilterMode@{cudaFilterMode}!Pixel Filtering@{Pixel Filtering}}
+\doxysubsubsubsubsection{\texorpdfstring{cudaFilterMode}{cudaFilterMode}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{group__cuda_filter_ga25d4283643163befe99948d24cc53311} 
+enum \doxymbox{\hyperlink{group__cuda_filter_ga25d4283643163befe99948d24cc53311}{cuda\+Filter\+Mode}}}
+
+Enumeration of interpolation filtering modes. \begin{DoxySeeAlso}{See also}
+\doxylink{group__cuda_filter_ga6a34c93022b23a55a5ae440a8ff7a247}{cuda\+Filter\+Mode\+From\+Str()} and \doxylink{group__cuda_filter_ga66287ee3fd53c25dc2785a4f2ba795a0}{cuda\+Filter\+Mode\+To\+Str()} 
+\end{DoxySeeAlso}
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FILTER\_POINT@{FILTER\_POINT}!Pixel Filtering@{Pixel Filtering}}
+\index{Pixel Filtering@{Pixel Filtering}!FILTER\_POINT@{FILTER\_POINT}}
+}\Hypertarget{group__cuda_filter_gga25d4283643163befe99948d24cc53311a8928ed98915affb5c7514632a038daa6}\label{group__cuda_filter_gga25d4283643163befe99948d24cc53311a8928ed98915affb5c7514632a038daa6} 
+FILTER\+\_\+\+POINT&Nearest-\/neighbor sampling \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FILTER\_LINEAR@{FILTER\_LINEAR}!Pixel Filtering@{Pixel Filtering}}
+\index{Pixel Filtering@{Pixel Filtering}!FILTER\_LINEAR@{FILTER\_LINEAR}}
+}\Hypertarget{group__cuda_filter_gga25d4283643163befe99948d24cc53311ad8e5de74ec16a7e07145b7c18c885094}\label{group__cuda_filter_gga25d4283643163befe99948d24cc53311ad8e5de74ec16a7e07145b7c18c885094} 
+FILTER\+\_\+\+LINEAR&Bilinear filtering \\
+\hline
+
+\end{DoxyEnumFields}
+
+
+\label{doc-func-members}
+\Hypertarget{group__cuda_filter_doc-func-members}
+\doxysubsubsubsection{Function Documentation}
+\Hypertarget{group__cuda_filter_ga6a34c93022b23a55a5ae440a8ff7a247}\index{Pixel Filtering@{Pixel Filtering}!cudaFilterModeFromStr@{cudaFilterModeFromStr}}
+\index{cudaFilterModeFromStr@{cudaFilterModeFromStr}!Pixel Filtering@{Pixel Filtering}}
+\doxysubsubsubsubsection{\texorpdfstring{cudaFilterModeFromStr()}{cudaFilterModeFromStr()}}
+{\footnotesize\ttfamily \label{group__cuda_filter_ga6a34c93022b23a55a5ae440a8ff7a247} 
+\doxymbox{\hyperlink{group__cuda_filter_ga25d4283643163befe99948d24cc53311}{cuda\+Filter\+Mode}} cuda\+Filter\+Mode\+From\+Str (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{filter}{, }\item[{\doxymbox{\hyperlink{group__cuda_filter_ga25d4283643163befe99948d24cc53311}{cuda\+Filter\+Mode}}}]{default\+\_\+value}{ = {\ttfamily \doxymbox{\hyperlink{group__cuda_filter_gga25d4283643163befe99948d24cc53311ad8e5de74ec16a7e07145b7c18c885094}{FILTER\+\_\+\+LINEAR}}}}\end{DoxyParamCaption})}
+
+Parse a \doxylink{group__cuda_filter_ga25d4283643163befe99948d24cc53311}{cuda\+Filter\+Mode} enum from a string. \begin{DoxyReturn}{Returns}
+\doxylink{requirements_The}{The} parsed \doxylink{group__cuda_filter_ga25d4283643163befe99948d24cc53311}{cuda\+Filter\+Mode}, or default\+\_\+value on error. 
+\end{DoxyReturn}
+\Hypertarget{group__cuda_filter_ga66287ee3fd53c25dc2785a4f2ba795a0}\index{Pixel Filtering@{Pixel Filtering}!cudaFilterModeToStr@{cudaFilterModeToStr}}
+\index{cudaFilterModeToStr@{cudaFilterModeToStr}!Pixel Filtering@{Pixel Filtering}}
+\doxysubsubsubsubsection{\texorpdfstring{cudaFilterModeToStr()}{cudaFilterModeToStr()}}
+{\footnotesize\ttfamily \label{group__cuda_filter_ga66287ee3fd53c25dc2785a4f2ba795a0} 
+const char \texorpdfstring{$\ast$}{*} cuda\+Filter\+Mode\+To\+Str (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{group__cuda_filter_ga25d4283643163befe99948d24cc53311}{cuda\+Filter\+Mode}}}]{filter}{}\end{DoxyParamCaption})}
+
+Convert a \doxylink{group__cuda_filter_ga25d4283643163befe99948d24cc53311}{cuda\+Filter\+Mode} enum to a string. 

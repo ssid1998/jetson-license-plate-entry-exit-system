@@ -1,0 +1,152 @@
+\doxysection{Event.\+inl}
+\hypertarget{build_2aarch64_2include_2jetson-utils_2_event_8inl_source}{}\label{build_2aarch64_2include_2jetson-utils_2_event_8inl_source}\index{jetson-\/inference/build/aarch64/include/jetson-\/utils/Event.inl@{jetson-\/inference/build/aarch64/include/jetson-\/utils/Event.inl}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ *\ Copyright\ (c)\ 2018,\ NVIDIA\ CORPORATION.\ All\ rights\ reserved.}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ *\ Permission\ is\ hereby\ granted,\ free\ of\ charge,\ to\ any\ person\ obtaining\ a}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ *\ copy\ of\ this\ software\ and\ associated\ documentation\ files\ (the\ "{}Software"{}),}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ *\ to\ deal\ in\ the\ Software\ without\ restriction,\ including\ without\ limitation}}
+\DoxyCodeLine{00007\ \textcolor{comment}{\ *\ the\ rights\ to\ use,\ copy,\ modify,\ merge,\ publish,\ distribute,\ sublicense,}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ *\ and/or\ sell\ copies\ of\ the\ Software,\ and\ to\ permit\ persons\ to\ whom\ the}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ *\ Software\ is\ furnished\ to\ do\ so,\ subject\ to\ the\ following\ conditions:}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ *\ The\ above\ copyright\ notice\ and\ this\ permission\ notice\ shall\ be\ included\ in}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ *\ all\ copies\ or\ substantial\ portions\ of\ the\ Software.}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ *\ THE\ SOFTWARE\ IS\ PROVIDED\ "{}AS\ IS"{},\ WITHOUT\ WARRANTY\ OF\ ANY\ KIND,\ EXPRESS\ OR}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ *\ IMPLIED,\ INCLUDING\ BUT\ NOT\ LIMITED\ TO\ THE\ WARRANTIES\ OF\ MERCHANTABILITY,}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ *\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE\ AND\ NONINFRINGEMENT.\ \ IN\ NO\ EVENT\ SHALL}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ *\ THE\ AUTHORS\ OR\ COPYRIGHT\ HOLDERS\ BE\ LIABLE\ FOR\ ANY\ CLAIM,\ DAMAGES\ OR\ OTHER}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ *\ LIABILITY,\ WHETHER\ IN\ AN\ ACTION\ OF\ CONTRACT,\ TORT\ OR\ OTHERWISE,\ ARISING}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ *\ FROM,\ OUT\ OF\ OR\ IN\ CONNECTION\ WITH\ THE\ SOFTWARE\ OR\ THE\ USE\ OR\ OTHER}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ *\ DEALINGS\ IN\ THE\ SOFTWARE.}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00022\ \ }
+\DoxyCodeLine{00023\ \textcolor{preprocessor}{\#ifndef\ \_\_MULTITHREAD\_EVENT\_INLINE\_H}}
+\DoxyCodeLine{00024\ \textcolor{preprocessor}{\#define\ \_\_MULTITHREAD\_EVENT\_INLINE\_H}}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \textcolor{preprocessor}{\#include\ <errno.h>}}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \textcolor{comment}{//\ constructor}}
+\DoxyCodeLine{00030\ \textcolor{keyword}{inline}\ \doxymbox{\hyperlink{class_event_a44841bb41f204f03100a2759e7097389}{Event::Event}}(\ \textcolor{keywordtype}{bool}\ autoReset\ )}
+\DoxyCodeLine{00031\ \{}
+\DoxyCodeLine{00032\ \ \ \ \ mAutoReset\ =\ autoReset;}
+\DoxyCodeLine{00033\ \ \ \ \ mQuery\ \ \ \ \ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00034\ \ \ \ \ }
+\DoxyCodeLine{00035\ \ \ \ \ pthread\_cond\_init(\&mID,\ NULL);}
+\DoxyCodeLine{00036\ \}}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \textcolor{comment}{//\ destructor}}
+\DoxyCodeLine{00040\ \textcolor{keyword}{inline}\ \doxymbox{\hyperlink{class_event_a7704ec01ce91e673885792054214b3d2}{Event::\string~Event}}()}
+\DoxyCodeLine{00041\ \{}
+\DoxyCodeLine{00042\ \ \ \ \ pthread\_cond\_destroy(\&mID);}
+\DoxyCodeLine{00043\ \}}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ \textcolor{comment}{//\ Query}}
+\DoxyCodeLine{00047\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_event_a188ebb92f80c6fae559051b084524fcd}{Event::Query}}()}
+\DoxyCodeLine{00048\ \{}
+\DoxyCodeLine{00049\ \ \ \ \ \textcolor{keywordtype}{bool}\ r\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00050\ \ \ \ \ mQueryMutex.Lock();}
+\DoxyCodeLine{00051\ \ \ \ \ r\ =\ mQuery;}
+\DoxyCodeLine{00052\ \ \ \ \ mQueryMutex.Unlock();}
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keywordflow}{return}\ r;}
+\DoxyCodeLine{00054\ \}}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00057\ \textcolor{comment}{//\ Wake}}
+\DoxyCodeLine{00058\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_event_a86507f584eb0bff8eb7bdb2c280d0c23}{Event::Wake}}()}
+\DoxyCodeLine{00059\ \{}
+\DoxyCodeLine{00060\ \ \ \ \ mQueryMutex.Lock();}
+\DoxyCodeLine{00061\ \ \ \ \ mQuery\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00062\ \ \ \ \ pthread\_cond\_signal(\&mID);}
+\DoxyCodeLine{00063\ \ \ \ \ mQueryMutex.Unlock();}
+\DoxyCodeLine{00064\ \}}
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00066\ }
+\DoxyCodeLine{00067\ \textcolor{comment}{//\ Reset}}
+\DoxyCodeLine{00068\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_event_afed31be0b4f98fb83163a4d725886e81}{Event::Reset}}()}
+\DoxyCodeLine{00069\ \{\ }
+\DoxyCodeLine{00070\ \ \ \ \ mQueryMutex.Lock();\ }
+\DoxyCodeLine{00071\ \ \ \ \ mQuery\ =\ \textcolor{keyword}{false};\ }
+\DoxyCodeLine{00072\ \ \ \ \ mQueryMutex.Unlock();\ }
+\DoxyCodeLine{00073\ \}}
+\DoxyCodeLine{00074\ }
+\DoxyCodeLine{00075\ }
+\DoxyCodeLine{00076\ \textcolor{comment}{//\ Wait}}
+\DoxyCodeLine{00077\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_event_a55398e16a006f6a0ec00de1e75ff6162}{Event::Wait}}()}
+\DoxyCodeLine{00078\ \{}
+\DoxyCodeLine{00079\ \ \ \ \ mQueryMutex.Lock();}
+\DoxyCodeLine{00080\ }
+\DoxyCodeLine{00081\ \ \ \ \ \textcolor{keywordflow}{while}(!mQuery)}
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ pthread\_cond\_wait(\&mID,\ mQueryMutex.GetID());}
+\DoxyCodeLine{00083\ }
+\DoxyCodeLine{00084\ \ \ \ \ \textcolor{keywordflow}{if}(\ mAutoReset\ )}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ mQuery\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00086\ }
+\DoxyCodeLine{00087\ \ \ \ \ mQueryMutex.Unlock();}
+\DoxyCodeLine{00088\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00089\ \}}
+\DoxyCodeLine{00090\ }
+\DoxyCodeLine{00091\ }
+\DoxyCodeLine{00092\ \textcolor{comment}{//\ Wait}}
+\DoxyCodeLine{00093\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_event_a55398e16a006f6a0ec00de1e75ff6162}{Event::Wait}}(\ \textcolor{keyword}{const}\ timespec\&\ timeout\ )}
+\DoxyCodeLine{00094\ \{}
+\DoxyCodeLine{00095\ \ \ \ \ mQueryMutex.Lock();}
+\DoxyCodeLine{00096\ }
+\DoxyCodeLine{00097\ \ \ \ \ \textcolor{keyword}{const}\ timespec\ abs\_time\ =\ \doxymbox{\hyperlink{group__time_gaf087d50741339d18a1c4101985b30a8a}{timeAdd}}(\ \doxymbox{\hyperlink{group__time_ga43627a5af271e9abfd46b467d2e309a8}{timestamp}}(),\ timeout\ );}
+\DoxyCodeLine{00098\ }
+\DoxyCodeLine{00099\ \ \ \ \ \textcolor{keywordflow}{while}(!mQuery)}
+\DoxyCodeLine{00100\ \ \ \ \ \{}
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ ret\ =\ pthread\_cond\_timedwait(\&mID,\ mQueryMutex.GetID(),\ \&abs\_time);}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\ ret\ ==\ ETIMEDOUT\ )}
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \ \ \ \ mQueryMutex.Unlock();}
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00108\ \ \ \ \ \}}
+\DoxyCodeLine{00109\ \ \ \ \ }
+\DoxyCodeLine{00110\ \ \ \ \ \textcolor{keywordflow}{if}(\ mAutoReset\ )}
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ mQuery\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00112\ }
+\DoxyCodeLine{00113\ \ \ \ \ mQueryMutex.Unlock();}
+\DoxyCodeLine{00114\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00115\ \}}
+\DoxyCodeLine{00116\ }
+\DoxyCodeLine{00117\ }
+\DoxyCodeLine{00118\ \textcolor{comment}{//\ Wait}}
+\DoxyCodeLine{00119\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_event_a55398e16a006f6a0ec00de1e75ff6162}{Event::Wait}}(\ uint64\_t\ timeout\ )\ \ \ \ \ }
+\DoxyCodeLine{00120\ \{\ }
+\DoxyCodeLine{00121\ \ \ \ \ \textcolor{keywordflow}{return}\ (timeout\ ==\ UINT64\_MAX)\ ?\ \doxymbox{\hyperlink{class_event_a55398e16a006f6a0ec00de1e75ff6162}{Wait}}()\ :\ \doxymbox{\hyperlink{class_event_a55398e16a006f6a0ec00de1e75ff6162}{Wait}}(\doxymbox{\hyperlink{group__time_gaccb3fcd271afec70d82b9914834a3936}{timeNew}}(timeout*1000*1000));}
+\DoxyCodeLine{00122\ \}}
+\DoxyCodeLine{00123\ }
+\DoxyCodeLine{00124\ }
+\DoxyCodeLine{00125\ \textcolor{comment}{//\ WaitNs}}
+\DoxyCodeLine{00126\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_event_a7c5e80c726452ce485d9baa7cdd8c148}{Event::WaitNs}}(\ uint64\_t\ timeout\ )\ \ \ \ \ \ \ }
+\DoxyCodeLine{00127\ \{\ }
+\DoxyCodeLine{00128\ \ \ \ \ \textcolor{keywordflow}{return}\ (timeout\ ==\ UINT64\_MAX)\ ?\ \doxymbox{\hyperlink{class_event_a55398e16a006f6a0ec00de1e75ff6162}{Wait}}()\ :\ \doxymbox{\hyperlink{class_event_a55398e16a006f6a0ec00de1e75ff6162}{Wait}}(\doxymbox{\hyperlink{group__time_gaccb3fcd271afec70d82b9914834a3936}{timeNew}}(timeout));\ }
+\DoxyCodeLine{00129\ \}}
+\DoxyCodeLine{00130\ \ \ \ \ }
+\DoxyCodeLine{00131\ }
+\DoxyCodeLine{00132\ \textcolor{comment}{//\ WaitUs}}
+\DoxyCodeLine{00133\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_event_a515f66ad3126b7c3b456a10604a40c39}{Event::WaitUs}}(\ uint64\_t\ timeout\ )\ \ \ \ \ \ \ }
+\DoxyCodeLine{00134\ \{\ }
+\DoxyCodeLine{00135\ \ \ \ \ \textcolor{keywordflow}{return}\ (timeout\ ==\ UINT64\_MAX)\ ?\ \doxymbox{\hyperlink{class_event_a55398e16a006f6a0ec00de1e75ff6162}{Wait}}()\ :\ \doxymbox{\hyperlink{class_event_a55398e16a006f6a0ec00de1e75ff6162}{Wait}}(\doxymbox{\hyperlink{group__time_gaccb3fcd271afec70d82b9914834a3936}{timeNew}}(timeout*1000));\ }
+\DoxyCodeLine{00136\ \}}
+\DoxyCodeLine{00137\ }
+\DoxyCodeLine{00138\ }
+\DoxyCodeLine{00139\ \textcolor{comment}{//\ GetID}}
+\DoxyCodeLine{00140\ \textcolor{keyword}{inline}\ pthread\_cond\_t*\ \doxymbox{\hyperlink{class_event_a5d1d8894bb8994116c0e781639117738}{Event::GetID}}()\ \ \ }
+\DoxyCodeLine{00141\ \{\ }
+\DoxyCodeLine{00142\ \ \ \ \ \textcolor{keywordflow}{return}\ \&mID;\ }
+\DoxyCodeLine{00143\ \}}
+\DoxyCodeLine{00144\ }
+\DoxyCodeLine{00145\ \ \ \ \ }
+\DoxyCodeLine{00146\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

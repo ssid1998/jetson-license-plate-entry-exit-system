@@ -1,0 +1,98 @@
+\doxysection{voc.\+VOCDataset Class Reference}
+\hypertarget{classvoc_1_1_v_o_c_dataset}{}\label{classvoc_1_1_v_o_c_dataset}\index{voc.VOCDataset@{voc.VOCDataset}}
+Inheritance diagram for voc.\+VOCDataset:\+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classvoc_1_1_v_o_c_dataset}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{classvoc_1_1_v_o_c_dataset_aae637a23354d0e8fb9cac9827416bc82}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self, root, set, transform=None, target\+\_\+transform=None, use\+\_\+difficult=False)
+\item 
+\Hypertarget{classvoc_1_1_v_o_c_dataset_acb978d5ab2599645c762b4fa0eef5d2b}\label{classvoc_1_1_v_o_c_dataset_acb978d5ab2599645c762b4fa0eef5d2b} 
+{\bfseries \+\_\+\+\_\+getitem\+\_\+\+\_\+} (self, index)
+\item 
+\Hypertarget{classvoc_1_1_v_o_c_dataset_a6f8b6b56c7f2b6914fa0092d6001434c}\label{classvoc_1_1_v_o_c_dataset_a6f8b6b56c7f2b6914fa0092d6001434c} 
+{\bfseries \+\_\+\+\_\+len\+\_\+\+\_\+} (self)
+\item 
+\Hypertarget{classvoc_1_1_v_o_c_dataset_a6adf067abf8ebd56c8e70f913266253f}\label{classvoc_1_1_v_o_c_dataset_a6adf067abf8ebd56c8e70f913266253f} 
+{\bfseries get\+\_\+class\+\_\+distribution} (self)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classvoc_1_1_v_o_c_dataset_a58e0c359ac6db5e6c8ceb3834eb1835d}\label{classvoc_1_1_v_o_c_dataset_a58e0c359ac6db5e6c8ceb3834eb1835d} 
+{\bfseries root} = root
+\item 
+\Hypertarget{classvoc_1_1_v_o_c_dataset_ac4025d97aa0d25e9c93bbc509817b9fa}\label{classvoc_1_1_v_o_c_dataset_ac4025d97aa0d25e9c93bbc509817b9fa} 
+{\bfseries set} = set
+\item 
+\Hypertarget{classvoc_1_1_v_o_c_dataset_a70f952028052c361ec854e4404b7f11a}\label{classvoc_1_1_v_o_c_dataset_a70f952028052c361ec854e4404b7f11a} 
+{\bfseries transform} = transform
+\item 
+\Hypertarget{classvoc_1_1_v_o_c_dataset_ab888536b9ff40e7b70369101324c6fe2}\label{classvoc_1_1_v_o_c_dataset_ab888536b9ff40e7b70369101324c6fe2} 
+{\bfseries target\+\_\+transform} = target\+\_\+transform
+\item 
+list \doxymbox{\hyperlink{classvoc_1_1_v_o_c_dataset_aa4fdabef8323ed19fe185c3b0fae4821}{classes}}
+\item 
+\Hypertarget{classvoc_1_1_v_o_c_dataset_a6d8bbf9250f6bf4562774562198d6779}\label{classvoc_1_1_v_o_c_dataset_a6d8bbf9250f6bf4562774562198d6779} 
+{\bfseries id\+\_\+list} = file.\+read().splitlines()
+\item 
+\Hypertarget{classvoc_1_1_v_o_c_dataset_a7a0f1adc1270c3560dff9754f9c2e2f6}\label{classvoc_1_1_v_o_c_dataset_a7a0f1adc1270c3560dff9754f9c2e2f6} 
+list {\bfseries labels} = \+[$\,$]\+
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyVerb}Multi-label classification dataset for Pascal VOC (http://host.robots.ox.ac.uk/pascal/VOC/)
+This extracts objects (from the object detection benchmark) and uses them as image tags.
+\end{DoxyVerb}
+ 
+
+\label{doc-constructors}
+\Hypertarget{classvoc_1_1_v_o_c_dataset_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classvoc_1_1_v_o_c_dataset_aae637a23354d0e8fb9cac9827416bc82}\index{voc.VOCDataset@{voc.VOCDataset}!\_\_init\_\_@{\_\_init\_\_}}
+\index{\_\_init\_\_@{\_\_init\_\_}!voc.VOCDataset@{voc.VOCDataset}}
+\doxysubsubsection{\texorpdfstring{\_\_init\_\_()}{\_\_init\_\_()}}
+{\footnotesize\ttfamily \label{classvoc_1_1_v_o_c_dataset_aae637a23354d0e8fb9cac9827416bc82} 
+voc.\+VOCDataset.\+\_\+\+\_\+init\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{root}{, }\item[{}]{set}{, }\item[{}]{transform}{ = {\ttfamily None}, }\item[{}]{target\+\_\+transform}{ = {\ttfamily None}, }\item[{}]{use\+\_\+difficult}{ = {\ttfamily False}}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Load the dataset (tested on VOC2012)
+
+Parameters
+    root (string) -- path to the VOC2007 or VOC2012 dataset, containing the following sub-directories:
+                     Annotations, ImageSets, JPEGImages, SegmentationClass, SegmentationObject
+                     
+    set (string) -- the data subset, which corresponds to one of the files under ImageSets/Main/
+                    like 'train', 'trainval', 'test', 'val', ect.
+\end{DoxyVerb}
+ 
+
+\label{doc-variable-members}
+\Hypertarget{classvoc_1_1_v_o_c_dataset_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classvoc_1_1_v_o_c_dataset_aa4fdabef8323ed19fe185c3b0fae4821}\index{voc.VOCDataset@{voc.VOCDataset}!classes@{classes}}
+\index{classes@{classes}!voc.VOCDataset@{voc.VOCDataset}}
+\doxysubsubsection{\texorpdfstring{classes}{classes}}
+{\footnotesize\ttfamily \label{classvoc_1_1_v_o_c_dataset_aa4fdabef8323ed19fe185c3b0fae4821} 
+list voc.\+VOCDataset.\+classes}
+
+{\bfseries Initial value:\+}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=\ \ [}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'aeroplane'},\ \textcolor{stringliteral}{'bicycle'},\ \textcolor{stringliteral}{'bird'},\ \textcolor{stringliteral}{'boat'},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'bottle'},\ \textcolor{stringliteral}{'bus'},\ \textcolor{stringliteral}{'car'},\ \textcolor{stringliteral}{'cat'},\ \textcolor{stringliteral}{'chair'},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'cow'},\ \textcolor{stringliteral}{'diningtable'},\ \textcolor{stringliteral}{'dog'},\ \textcolor{stringliteral}{'horse'},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'motorbike'},\ \textcolor{stringliteral}{'person'},\ \textcolor{stringliteral}{'pottedplant'},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'sheep'},\ \textcolor{stringliteral}{'sofa'},\ \textcolor{stringliteral}{'train'},\ \textcolor{stringliteral}{'tvmonitor'}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ ]}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file:\+\begin{DoxyCompactItemize}
+\item 
+jetson-\/inference/\+python/\+training/\+classification/\+voc.\+py\end{DoxyCompactItemize}

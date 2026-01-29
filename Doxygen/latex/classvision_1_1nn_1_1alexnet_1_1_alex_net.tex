@@ -1,0 +1,78 @@
+\doxysection{vision.\+nn.\+alexnet.\+Alex\+Net Class Reference}
+\hypertarget{classvision_1_1nn_1_1alexnet_1_1_alex_net}{}\label{classvision_1_1nn_1_1alexnet_1_1_alex_net}\index{vision.nn.alexnet.AlexNet@{vision.nn.alexnet.AlexNet}}
+Inheritance diagram for vision.\+nn.\+alexnet.\+Alex\+Net:\+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classvision_1_1nn_1_1alexnet_1_1_alex_net}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classvision_1_1nn_1_1alexnet_1_1_alex_net_a9af2233045ceaa75affddc081460267a}\label{classvision_1_1nn_1_1alexnet_1_1_alex_net_a9af2233045ceaa75affddc081460267a} 
+{\bfseries \+\_\+\+\_\+init\+\_\+\+\_\+} (self, num\+\_\+classes=1000)
+\item 
+\Hypertarget{classvision_1_1nn_1_1alexnet_1_1_alex_net_a489cc95ec14ed756155f2d951c6c13dc}\label{classvision_1_1nn_1_1alexnet_1_1_alex_net_a489cc95ec14ed756155f2d951c6c13dc} 
+{\bfseries forward} (self, x)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{classvision_1_1nn_1_1alexnet_1_1_alex_net_a6506b2c634a3a2a92c1b1aefc727174d}{features}}
+\item 
+\doxymbox{\hyperlink{classvision_1_1nn_1_1alexnet_1_1_alex_net_a5a350fb5c60fce93c2908a60fbb5cb1f}{classifier}}
+\end{DoxyCompactItemize}
+
+
+\label{doc-variable-members}
+\Hypertarget{classvision_1_1nn_1_1alexnet_1_1_alex_net_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classvision_1_1nn_1_1alexnet_1_1_alex_net_a5a350fb5c60fce93c2908a60fbb5cb1f}\index{vision.nn.alexnet.AlexNet@{vision.nn.alexnet.AlexNet}!classifier@{classifier}}
+\index{classifier@{classifier}!vision.nn.alexnet.AlexNet@{vision.nn.alexnet.AlexNet}}
+\doxysubsubsection{\texorpdfstring{classifier}{classifier}}
+{\footnotesize\ttfamily \label{classvision_1_1nn_1_1alexnet_1_1_alex_net_a5a350fb5c60fce93c2908a60fbb5cb1f} 
+vision.\+nn.\+alexnet.\+Alex\+Net.\+classifier}
+
+{\bfseries Initial value:\+}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=\ \ nn.Sequential(}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ nn.Dropout(),}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ nn.Linear(256\ *\ 6\ *\ 6,\ 4096),}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ nn.ReLU(inplace=\textcolor{keyword}{True}),}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ nn.Dropout(),}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ nn.Linear(4096,\ 4096),}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ nn.ReLU(inplace=\textcolor{keyword}{True}),}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ nn.Linear(4096,\ num\_classes),}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ )}
+
+\end{DoxyCode}
+\Hypertarget{classvision_1_1nn_1_1alexnet_1_1_alex_net_a6506b2c634a3a2a92c1b1aefc727174d}\index{vision.nn.alexnet.AlexNet@{vision.nn.alexnet.AlexNet}!features@{features}}
+\index{features@{features}!vision.nn.alexnet.AlexNet@{vision.nn.alexnet.AlexNet}}
+\doxysubsubsection{\texorpdfstring{features}{features}}
+{\footnotesize\ttfamily \label{classvision_1_1nn_1_1alexnet_1_1_alex_net_a6506b2c634a3a2a92c1b1aefc727174d} 
+vision.\+nn.\+alexnet.\+Alex\+Net.\+features}
+
+{\bfseries Initial value:\+}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=\ \ nn.Sequential(}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ nn.Conv2d(3,\ 64,\ kernel\_size=11,\ stride=4,\ padding=2),}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ nn.ReLU(inplace=\textcolor{keyword}{True}),}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ nn.MaxPool2d(kernel\_size=3,\ stride=2),}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ nn.Conv2d(64,\ 192,\ kernel\_size=5,\ padding=2),}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ nn.ReLU(inplace=\textcolor{keyword}{True}),}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ nn.MaxPool2d(kernel\_size=3,\ stride=2),}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ nn.Conv2d(192,\ 384,\ kernel\_size=3,\ padding=1),}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ nn.ReLU(inplace=\textcolor{keyword}{True}),}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ nn.Conv2d(384,\ 256,\ kernel\_size=3,\ padding=1),}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ nn.ReLU(inplace=\textcolor{keyword}{True}),}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ nn.Conv2d(256,\ 256,\ kernel\_size=3,\ padding=1),}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ nn.ReLU(inplace=\textcolor{keyword}{True}),}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ nn.MaxPool2d(kernel\_size=3,\ stride=2),}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ )}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file:\+\begin{DoxyCompactItemize}
+\item 
+jetson-\/inference/\+python/\+training/\+detection/\+ssd/\+vision/\+nn/\+alexnet.\+py\end{DoxyCompactItemize}

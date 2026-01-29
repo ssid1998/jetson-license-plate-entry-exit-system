@@ -1,0 +1,60 @@
+\doxysection{gst\+Web\+RTC.\+h}
+\hypertarget{utils_2codec_2gst_web_r_t_c_8h_source}{}\label{utils_2codec_2gst_web_r_t_c_8h_source}\index{jetson-\/inference/utils/codec/gstWebRTC.h@{jetson-\/inference/utils/codec/gstWebRTC.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ *\ Copyright\ (c)\ 2022,\ NVIDIA\ CORPORATION.\ All\ rights\ reserved.}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ *\ Permission\ is\ hereby\ granted,\ free\ of\ charge,\ to\ any\ person\ obtaining\ a}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ *\ copy\ of\ this\ software\ and\ associated\ documentation\ files\ (the\ "{}Software"{}),}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ *\ to\ deal\ in\ the\ Software\ without\ restriction,\ including\ without\ limitation}}
+\DoxyCodeLine{00007\ \textcolor{comment}{\ *\ the\ rights\ to\ use,\ copy,\ modify,\ merge,\ publish,\ distribute,\ sublicense,}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ *\ and/or\ sell\ copies\ of\ the\ Software,\ and\ to\ permit\ persons\ to\ whom\ the}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ *\ Software\ is\ furnished\ to\ do\ so,\ subject\ to\ the\ following\ conditions:}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ *\ The\ above\ copyright\ notice\ and\ this\ permission\ notice\ shall\ be\ included\ in}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ *\ all\ copies\ or\ substantial\ portions\ of\ the\ Software.}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ *\ THE\ SOFTWARE\ IS\ PROVIDED\ "{}AS\ IS"{},\ WITHOUT\ WARRANTY\ OF\ ANY\ KIND,\ EXPRESS\ OR}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ *\ IMPLIED,\ INCLUDING\ BUT\ NOT\ LIMITED\ TO\ THE\ WARRANTIES\ OF\ MERCHANTABILITY,}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ *\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE\ AND\ NONINFRINGEMENT.\ \ IN\ NO\ EVENT\ SHALL}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ *\ THE\ AUTHORS\ OR\ COPYRIGHT\ HOLDERS\ BE\ LIABLE\ FOR\ ANY\ CLAIM,\ DAMAGES\ OR\ OTHER}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ *\ LIABILITY,\ WHETHER\ IN\ AN\ ACTION\ OF\ CONTRACT,\ TORT\ OR\ OTHERWISE,\ ARISING}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ *\ FROM,\ OUT\ OF\ OR\ IN\ CONNECTION\ WITH\ THE\ SOFTWARE\ OR\ THE\ USE\ OR\ OTHER}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ *\ DEALINGS\ IN\ THE\ SOFTWARE.}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \textcolor{preprocessor}{\#ifndef\ \_\_GSTREAMER\_WEBRTC\_H\_\_}}
+\DoxyCodeLine{00024\ \textcolor{preprocessor}{\#define\ \_\_GSTREAMER\_WEBRTC\_H\_\_}}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \textcolor{preprocessor}{\#include\ "{}WebRTCServer.h"{}}}
+\DoxyCodeLine{00027\ \textcolor{preprocessor}{\#include\ "{}gstUtility.h"{}}}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \textcolor{preprocessor}{\#define\ GST\_USE\_UNSTABLE\_API}}
+\DoxyCodeLine{00030\ \textcolor{preprocessor}{\#include\ <gst/webrtc/webrtc.h>}}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00038\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{classgst_web_r_t_c}{gstWebRTC}}}
+\DoxyCodeLine{00039\ \{}
+\DoxyCodeLine{00040\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{structgst_web_r_t_c_1_1_peer_context}{PeerContext}}}
+\DoxyCodeLine{00045\ \ \ \ \ \{}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ PeerContext()\ \ \ \{\ webrtcbin\ =\ NULL;\ queue\ =\ NULL;\ \}}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ GstElement*\ webrtcbin;\ \ \textcolor{comment}{//\ used\ by\ gstEncoder\ +\ gstDecoder}}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ GstElement*\ queue;\ \ \ \ \ \ \textcolor{comment}{//\ used\ by\ gstEncoder\ only}}
+\DoxyCodeLine{00050\ \ \ \ \ \};}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{classgst_web_r_t_c_ad0274bdc609541a95ea16865016ed37a}{onNegotiationNeeded}}(\ GstElement*\ webrtcbin,\ \textcolor{keywordtype}{void}*\ user\_data\ );}
+\DoxyCodeLine{00057\ \ \ \ \ }
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{classgst_web_r_t_c_a2490576accc969fd6172ae5804923edc}{onCreateOffer}}(\ GstPromise*\ promise,\ \textcolor{keywordtype}{void}*\ user\_data\ );}
+\DoxyCodeLine{00063\ \ \ \ \ }
+\DoxyCodeLine{00068\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{classgst_web_r_t_c_a40afef4f7e0133472a9dd02760bdc1ac}{onIceCandidate}}(\ GstElement*\ webrtcbin,\ uint32\_t\ mline\_index,\ \textcolor{keywordtype}{char}*\ candidate,\ \textcolor{keywordtype}{void}*\ user\_data\ );}
+\DoxyCodeLine{00069\ }
+\DoxyCodeLine{00075\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{classgst_web_r_t_c_a729875349e8e813298ea15ceef173a10}{onWebsocketMessage}}(\ \doxymbox{\hyperlink{struct_web_r_t_c_peer}{WebRTCPeer}}*\ peer,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ message,\ \textcolor{keywordtype}{size\_t}\ message\_size,\ \textcolor{keywordtype}{void}*\ user\_data\ );\ \ }
+\DoxyCodeLine{00076\ \};}
+\DoxyCodeLine{00077\ }
+\DoxyCodeLine{00078\ }
+\DoxyCodeLine{00079\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

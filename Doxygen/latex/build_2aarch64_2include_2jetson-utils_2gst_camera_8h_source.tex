@@ -1,0 +1,103 @@
+\doxysection{gst\+Camera.\+h}
+\hypertarget{build_2aarch64_2include_2jetson-utils_2gst_camera_8h_source}{}\label{build_2aarch64_2include_2jetson-utils_2gst_camera_8h_source}\index{jetson-\/inference/build/aarch64/include/jetson-\/utils/gstCamera.h@{jetson-\/inference/build/aarch64/include/jetson-\/utils/gstCamera.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ *\ Copyright\ (c)\ 2017,\ NVIDIA\ CORPORATION.\ All\ rights\ reserved.}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ *\ Permission\ is\ hereby\ granted,\ free\ of\ charge,\ to\ any\ person\ obtaining\ a}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ *\ copy\ of\ this\ software\ and\ associated\ documentation\ files\ (the\ "{}Software"{}),}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ *\ to\ deal\ in\ the\ Software\ without\ restriction,\ including\ without\ limitation}}
+\DoxyCodeLine{00007\ \textcolor{comment}{\ *\ the\ rights\ to\ use,\ copy,\ modify,\ merge,\ publish,\ distribute,\ sublicense,}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ *\ and/or\ sell\ copies\ of\ the\ Software,\ and\ to\ permit\ persons\ to\ whom\ the}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ *\ Software\ is\ furnished\ to\ do\ so,\ subject\ to\ the\ following\ conditions:}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ *\ The\ above\ copyright\ notice\ and\ this\ permission\ notice\ shall\ be\ included\ in}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ *\ all\ copies\ or\ substantial\ portions\ of\ the\ Software.}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ *\ THE\ SOFTWARE\ IS\ PROVIDED\ "{}AS\ IS"{},\ WITHOUT\ WARRANTY\ OF\ ANY\ KIND,\ EXPRESS\ OR}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ *\ IMPLIED,\ INCLUDING\ BUT\ NOT\ LIMITED\ TO\ THE\ WARRANTIES\ OF\ MERCHANTABILITY,}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ *\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE\ AND\ NONINFRINGEMENT.\ \ IN\ NO\ EVENT\ SHALL}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ *\ THE\ AUTHORS\ OR\ COPYRIGHT\ HOLDERS\ BE\ LIABLE\ FOR\ ANY\ CLAIM,\ DAMAGES\ OR\ OTHER}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ *\ LIABILITY,\ WHETHER\ IN\ AN\ ACTION\ OF\ CONTRACT,\ TORT\ OR\ OTHERWISE,\ ARISING}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ *\ FROM,\ OUT\ OF\ OR\ IN\ CONNECTION\ WITH\ THE\ SOFTWARE\ OR\ THE\ USE\ OR\ OTHER}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ *\ DEALINGS\ IN\ THE\ SOFTWARE.}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \textcolor{preprocessor}{\#ifndef\ \_\_GSTREAMER\_CAMERA\_H\_\_}}
+\DoxyCodeLine{00024\ \textcolor{preprocessor}{\#define\ \_\_GSTREAMER\_CAMERA\_H\_\_}}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \textcolor{preprocessor}{\#include\ "{}videoSource.h"{}}}
+\DoxyCodeLine{00027\ \textcolor{preprocessor}{\#include\ "{}gstBufferManager.h"{}}}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00030\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \textcolor{comment}{//\ Forward\ declarations}}
+\DoxyCodeLine{00034\ \textcolor{keyword}{struct\ }\_GstAppSink;}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00057\ \textcolor{keyword}{class\ }gstCamera\ :\ \textcolor{keyword}{public}\ videoSource}
+\DoxyCodeLine{00058\ \{}
+\DoxyCodeLine{00059\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keyword}{static}\ gstCamera*\ \doxymbox{\hyperlink{classgst_camera_ace7a13b1a102bab25c91200773bf4d32}{Create}}(\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{structvideo_options}{videoOptions}}\&\ options\ );}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00083\ \ \ \ \ \textcolor{keyword}{static}\ gstCamera*\ \doxymbox{\hyperlink{classgst_camera_ace7a13b1a102bab25c91200773bf4d32}{Create}}(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ camera=NULL\ );\ \textcolor{comment}{//\ use\ MIPI\ CSI\ camera\ by\ default}}
+\DoxyCodeLine{00084\ }
+\DoxyCodeLine{00106\ \ \ \ \ \textcolor{keyword}{static}\ gstCamera*\ \doxymbox{\hyperlink{classgst_camera_ace7a13b1a102bab25c91200773bf4d32}{Create}}(\ uint32\_t\ width,\ uint32\_t\ height,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ camera=NULL\ );}
+\DoxyCodeLine{00107\ \ \ \ \ }
+\DoxyCodeLine{00112\ \ \ \ \ \doxymbox{\hyperlink{classgst_camera_a1df842937128e70d8f140c65e88e783c}{\string~gstCamera}}();}
+\DoxyCodeLine{00113\ }
+\DoxyCodeLine{00124\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{classgst_camera_a075aa94acb72f577f7c385e37a8c15b0}{Open}}();}
+\DoxyCodeLine{00125\ }
+\DoxyCodeLine{00132\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{classgst_camera_af8043c610d01bcde93f212f5f5bb0fe1}{Close}}();}
+\DoxyCodeLine{00133\ }
+\DoxyCodeLine{00138\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{classgst_camera_a19b60020ce6025d0a429a72bddef5209}{Capture}}(\ \textcolor{keywordtype}{void}**\ image,\ \doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{imageFormat}}\ format,\ uint64\_t\ timeout=\doxymbox{\hyperlink{classvideo_source_a3e144d758672a9d304ae6518cbe57508}{DEFAULT\_TIMEOUT}},\ \textcolor{keywordtype}{int}*\ status=NULL,\ cudaStream\_t\ stream=0\ );}
+\DoxyCodeLine{00139\ }
+\DoxyCodeLine{00173\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{classgst_camera_ac38d20c60df0494e5d4074489d81e508}{CaptureRGBA}}(\ \textcolor{keywordtype}{float}**\ image,\ uint64\_t\ timeout=\doxymbox{\hyperlink{classvideo_source_a3e144d758672a9d304ae6518cbe57508}{DEFAULT\_TIMEOUT}},\ \textcolor{keywordtype}{bool}\ zeroCopy=\textcolor{keyword}{false},\ cudaStream\_t\ stream=0\ );}
+\DoxyCodeLine{00174\ }
+\DoxyCodeLine{00179\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{classgst_camera_ad30c9e11ceda99507816e0715f34dd8a}{SetZeroCopy}}(\textcolor{keywordtype}{bool}\ zeroCopy)\ \ \ \ \ \{\ mOptions.zeroCopy\ =\ zeroCopy;\ \}}
+\DoxyCodeLine{00180\ }
+\DoxyCodeLine{00184\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keyword}{inline}\ uint32\_t\ \doxymbox{\hyperlink{classgst_camera_a40bdf4c4b7675e33bf670df07918e9c6}{GetType}}()\textcolor{keyword}{\ const\ \ \ \ \ }\{\ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{classgst_camera_a0aabc26866f8ea803951754a82683976}{Type}};\ \}}
+\DoxyCodeLine{00185\ }
+\DoxyCodeLine{00189\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ uint32\_t\ \doxymbox{\hyperlink{classgst_camera_a0aabc26866f8ea803951754a82683976}{Type}}\ =\ (1\ <<\ 0);}
+\DoxyCodeLine{00190\ }
+\DoxyCodeLine{00194\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ uint32\_t\ \doxymbox{\hyperlink{classgst_camera_a8944760a1c9bba178241705b2dd9937d}{DefaultWidth}}\ \ =\ 1280;}
+\DoxyCodeLine{00195\ }
+\DoxyCodeLine{00199\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ uint32\_t\ \doxymbox{\hyperlink{classgst_camera_a537930911ae095df0d6291bc179ec681}{DefaultHeight}}\ =\ 720;}
+\DoxyCodeLine{00200\ \ \ \ \ }
+\DoxyCodeLine{00201\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00202\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ onEOS(\_GstAppSink*\ sink,\ \textcolor{keywordtype}{void}*\ user\_data);}
+\DoxyCodeLine{00203\ \ \ \ \ \textcolor{keyword}{static}\ GstFlowReturn\ onPreroll(\_GstAppSink*\ sink,\ \textcolor{keywordtype}{void}*\ user\_data);}
+\DoxyCodeLine{00204\ \ \ \ \ \textcolor{keyword}{static}\ GstFlowReturn\ onBuffer(\_GstAppSink*\ sink,\ \textcolor{keywordtype}{void}*\ user\_data);}
+\DoxyCodeLine{00205\ }
+\DoxyCodeLine{00206\ \ \ \ \ gstCamera(\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{structvideo_options}{videoOptions}}\&\ options\ );}
+\DoxyCodeLine{00207\ }
+\DoxyCodeLine{00208\ \ \ \ \ \textcolor{keywordtype}{bool}\ init();}
+\DoxyCodeLine{00209\ \ \ \ \ \textcolor{keywordtype}{bool}\ discover();}
+\DoxyCodeLine{00210\ \ \ \ \ \textcolor{keywordtype}{bool}\ buildLaunchStr();}
+\DoxyCodeLine{00211\ }
+\DoxyCodeLine{00212\ \ \ \ \ \textcolor{keywordtype}{void}\ checkMsgBus();}
+\DoxyCodeLine{00213\ \ \ \ \ \textcolor{keywordtype}{void}\ checkBuffer();}
+\DoxyCodeLine{00214\ \ \ \ \ }
+\DoxyCodeLine{00215\ \ \ \ \ \textcolor{keywordtype}{bool}\ matchCaps(\ GstCaps*\ caps\ );}
+\DoxyCodeLine{00216\ \ \ \ \ \textcolor{keywordtype}{bool}\ printCaps(\ GstCaps*\ caps\ )\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00217\ \ \ \ \ \textcolor{keywordtype}{bool}\ parseCaps(\ GstStructure*\ caps,\ \doxymbox{\hyperlink{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8f}{videoOptions::Codec}}*\ codec,\ \doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{imageFormat}}*\ format,\ uint32\_t*\ width,\ uint32\_t*\ height,\ \textcolor{keywordtype}{float}*\ frameRate\ )\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00218\ \ \ \ \ \textcolor{keywordtype}{bool}\ parseCaps(\ GstStructure*\ caps,\ \doxymbox{\hyperlink{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8f}{videoOptions::Codec}}*\ codec,\ \doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{imageFormat}}*\ format,\ uint32\_t*\ width,\ uint32\_t*\ height,\ std::vector<float>\&\ frameRates\ )\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00219\ \ \ \ \ }
+\DoxyCodeLine{00220\ \ \ \ \ \textcolor{keywordtype}{float}\ findFramerate(\ \textcolor{keyword}{const}\ std::vector<float>\&\ frameRates,\ \textcolor{keywordtype}{float}\ frameRate\ )\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00221\ \ \ \ \ }
+\DoxyCodeLine{00222\ \ \ \ \ \_GstBus*\ \ \ \ \ mBus;}
+\DoxyCodeLine{00223\ \ \ \ \ \_GstAppSink*\ mAppSink;}
+\DoxyCodeLine{00224\ \ \ \ \ \_GstElement*\ mPipeline;}
+\DoxyCodeLine{00225\ }
+\DoxyCodeLine{00226\ \ \ \ \ std::string\ \ mLaunchStr;}
+\DoxyCodeLine{00227\ \ \ \ \ \doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{imageFormat}}\ \ mFormatYUV;}
+\DoxyCodeLine{00228\ \ \ \ \ }
+\DoxyCodeLine{00229\ \ \ \ \ \doxymbox{\hyperlink{classgst_buffer_manager}{gstBufferManager}}*\ mBufferManager;}
+\DoxyCodeLine{00230\ \};}
+\DoxyCodeLine{00231\ }
+\DoxyCodeLine{00232\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

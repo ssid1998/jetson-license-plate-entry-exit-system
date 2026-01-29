@@ -1,0 +1,42 @@
+\doxysection{vision.\+ssd.\+data\+\_\+preprocessing.\+Prediction\+Transform Class Reference}
+\hypertarget{classvision_1_1ssd_1_1data__preprocessing_1_1_prediction_transform}{}\label{classvision_1_1ssd_1_1data__preprocessing_1_1_prediction_transform}\index{vision.ssd.data\_preprocessing.PredictionTransform@{vision.ssd.data\_preprocessing.PredictionTransform}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classvision_1_1ssd_1_1data__preprocessing_1_1_prediction_transform_a2e6f47e714f6f1a4b7565d45cb2ee626}\label{classvision_1_1ssd_1_1data__preprocessing_1_1_prediction_transform_a2e6f47e714f6f1a4b7565d45cb2ee626} 
+{\bfseries \+\_\+\+\_\+init\+\_\+\+\_\+} (self, size, mean=0.\+0, std=1.\+0)
+\item 
+\Hypertarget{classvision_1_1ssd_1_1data__preprocessing_1_1_prediction_transform_ab2dcaa2570efd2c4822758aa498542cf}\label{classvision_1_1ssd_1_1data__preprocessing_1_1_prediction_transform_ab2dcaa2570efd2c4822758aa498542cf} 
+{\bfseries \+\_\+\+\_\+call\+\_\+\+\_\+} (self, image)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{classvision_1_1ssd_1_1data__preprocessing_1_1_prediction_transform_a0e8c2f34b7e7be0b24e5e685786bca1b}{transform}}
+\end{DoxyCompactItemize}
+
+
+\label{doc-variable-members}
+\Hypertarget{classvision_1_1ssd_1_1data__preprocessing_1_1_prediction_transform_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classvision_1_1ssd_1_1data__preprocessing_1_1_prediction_transform_a0e8c2f34b7e7be0b24e5e685786bca1b}\index{vision.ssd.data\_preprocessing.PredictionTransform@{vision.ssd.data\_preprocessing.PredictionTransform}!transform@{transform}}
+\index{transform@{transform}!vision.ssd.data\_preprocessing.PredictionTransform@{vision.ssd.data\_preprocessing.PredictionTransform}}
+\doxysubsubsection{\texorpdfstring{transform}{transform}}
+{\footnotesize\ttfamily \label{classvision_1_1ssd_1_1data__preprocessing_1_1_prediction_transform_a0e8c2f34b7e7be0b24e5e685786bca1b} 
+vision.\+ssd.\+data\+\_\+preprocessing.\+Prediction\+Transform.\+transform}
+
+{\bfseries Initial value:\+}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=\ \ Compose([}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ Resize(size),}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ SubtractMeans(mean),}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{lambda}\ img,\ boxes=\textcolor{keywordtype}{None},\ labels=\textcolor{keywordtype}{None}:\ (img\ /\ std,\ boxes,\ labels),}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ ToTensor()}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ ])}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file:\+\begin{DoxyCompactItemize}
+\item 
+jetson-\/inference/\+python/\+training/\+detection/\+ssd/\+vision/\+ssd/\+data\+\_\+preprocessing.\+py\end{DoxyCompactItemize}

@@ -1,0 +1,154 @@
+\doxysection{logging.\+h}
+\hypertarget{utils_2logging_8h_source}{}\label{utils_2logging_8h_source}\index{jetson-\/inference/utils/logging.h@{jetson-\/inference/utils/logging.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ *\ Copyright\ (c)\ 2020,\ NVIDIA\ CORPORATION.\ All\ rights\ reserved.}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ *\ Permission\ is\ hereby\ granted,\ free\ of\ charge,\ to\ any\ person\ obtaining\ a}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ *\ copy\ of\ this\ software\ and\ associated\ documentation\ files\ (the\ "{}Software"{}),}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ *\ to\ deal\ in\ the\ Software\ without\ restriction,\ including\ without\ limitation}}
+\DoxyCodeLine{00007\ \textcolor{comment}{\ *\ the\ rights\ to\ use,\ copy,\ modify,\ merge,\ publish,\ distribute,\ sublicense,}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ *\ and/or\ sell\ copies\ of\ the\ Software,\ and\ to\ permit\ persons\ to\ whom\ the}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ *\ Software\ is\ furnished\ to\ do\ so,\ subject\ to\ the\ following\ conditions:}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ *\ The\ above\ copyright\ notice\ and\ this\ permission\ notice\ shall\ be\ included\ in}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ *\ all\ copies\ or\ substantial\ portions\ of\ the\ Software.}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ *\ THE\ SOFTWARE\ IS\ PROVIDED\ "{}AS\ IS"{},\ WITHOUT\ WARRANTY\ OF\ ANY\ KIND,\ EXPRESS\ OR}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ *\ IMPLIED,\ INCLUDING\ BUT\ NOT\ LIMITED\ TO\ THE\ WARRANTIES\ OF\ MERCHANTABILITY,}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ *\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE\ AND\ NONINFRINGEMENT.\ \ IN\ NO\ EVENT\ SHALL}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ *\ THE\ AUTHORS\ OR\ COPYRIGHT\ HOLDERS\ BE\ LIABLE\ FOR\ ANY\ CLAIM,\ DAMAGES\ OR\ OTHER}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ *\ LIABILITY,\ WHETHER\ IN\ AN\ ACTION\ OF\ CONTRACT,\ TORT\ OR\ OTHERWISE,\ ARISING}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ *\ FROM,\ OUT\ OF\ OR\ IN\ CONNECTION\ WITH\ THE\ SOFTWARE\ OR\ THE\ USE\ OR\ OTHER}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ *\ DEALINGS\ IN\ THE\ SOFTWARE.}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00022\ \ }
+\DoxyCodeLine{00023\ \textcolor{preprocessor}{\#ifndef\ \_\_LOGGING\_UTILS\_H\_}}
+\DoxyCodeLine{00024\ \textcolor{preprocessor}{\#define\ \_\_LOGGING\_UTILS\_H\_}}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \textcolor{preprocessor}{\#include\ "{}commandLine.h"{}}}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \textcolor{preprocessor}{\#include\ <stdio.h>}}
+\DoxyCodeLine{00029\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00036\ \textcolor{preprocessor}{\#define\ LOG\_USAGE\_STRING\ \ "{}logging\ arguments:\ \(\backslash\)n"{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00037\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ "{}\ \ -\/-\/log-\/file=FILE\ \ \ \ \ \ \ \ output\ destination\ file\ (default\ is\ stdout)\(\backslash\)n"{}\ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00038\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ "{}\ \ -\/-\/log-\/level=LEVEL\ \ \ \ \ \ message\ output\ threshold,\ one\ of\ the\ following:\(\backslash\)n"{}\ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00039\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ "{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ silent\(\backslash\)n"{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00040\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ "{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ error\(\backslash\)n"{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00041\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ "{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ warning\(\backslash\)n"{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00042\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ "{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ success\(\backslash\)n"{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00043\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ "{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ info\(\backslash\)n"{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00044\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ "{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ verbose\ (default)\(\backslash\)n"{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00045\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ "{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ debug\(\backslash\)n"{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00046\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ "{}\ \ -\/-\/verbose\ \ \ \ \ \ \ \ \ \ \ \ \ \ enable\ verbose\ logging\ (same\ as\ -\/-\/log-\/level=verbose)\(\backslash\)n"{}\ \ \(\backslash\)}}
+\DoxyCodeLine{00047\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ "{}\ \ -\/-\/debug\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ enable\ debug\ logging\ \ \ (same\ as\ -\/-\/log-\/level=debug)\(\backslash\)n\(\backslash\)n"{}}}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00054\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_log}{Log}}}
+\DoxyCodeLine{00055\ \{}
+\DoxyCodeLine{00056\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{keyword}{enum}\ \doxymbox{\hyperlink{class_log_afb5d4c945d835d194a295461d752531e}{Level}}}
+\DoxyCodeLine{00062\ \ \ \ \ \{}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_log_afb5d4c945d835d194a295461d752531ea7e0cafe044fd7a31faf12a0364d5a402}{SILENT}}=0,\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_log_afb5d4c945d835d194a295461d752531ea0927168ab389bf66b122a805394aa854}{ERROR}},\ \ \ \ \ \ \ }
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_log_afb5d4c945d835d194a295461d752531ea565a0cec39126554ce952cab7dc07da5}{WARNING}},\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_log_afb5d4c945d835d194a295461d752531eaf2dd3c75e50038c0321219bb08e58cb5}{SUCCESS}},\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_log_afb5d4c945d835d194a295461d752531ea06806d3ba82df9878ec6d8bfb94de490}{INFO}},\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_log_afb5d4c945d835d194a295461d752531ea0f979b238a57fd3813e4dfff978da027}{VERBOSE}},\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_log_afb5d4c945d835d194a295461d752531eaebc8d74612fd39367faf40dc03d89f77}{DEBUG}},\ \ \ \ \ \ \ }
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_log_afb5d4c945d835d194a295461d752531eadd4347e35ba271488d46d1298aa02904}{DEFAULT}}=\doxymbox{\hyperlink{class_log_afb5d4c945d835d194a295461d752531ea0f979b238a57fd3813e4dfff978da027}{VERBOSE}}\ }
+\DoxyCodeLine{00071\ \ \ \ \ \};}
+\DoxyCodeLine{00072\ }
+\DoxyCodeLine{00076\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \doxymbox{\hyperlink{class_log_afb5d4c945d835d194a295461d752531e}{Level}}\ \doxymbox{\hyperlink{class_log_a1e0dae8692350761b8809693789f31ce}{GetLevel}}()\ \ \ \ \ \ \ \ \ \ \{\ \textcolor{keywordflow}{return}\ mLevel;\ \}}
+\DoxyCodeLine{00077\ }
+\DoxyCodeLine{00081\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_log_a8dad02e089ddac13fb2f711143c2fc0d}{SetLevel}}(\ \doxymbox{\hyperlink{class_log_afb5d4c945d835d194a295461d752531e}{Level}}\ level\ )\ \ \{\ mLevel\ =\ level;\ \}}
+\DoxyCodeLine{00082\ }
+\DoxyCodeLine{00086\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ FILE*\ \doxymbox{\hyperlink{class_log_afc9d0d8baac5958a1f55b90b88a5e905}{GetFile}}()\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{\ \textcolor{keywordflow}{return}\ mFile;\ \}}
+\DoxyCodeLine{00087\ }
+\DoxyCodeLine{00092\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \doxymbox{\hyperlink{class_log_a93decab4e33d28935eda5997ceca1e0c}{GetFilename}}()\ \ \ \ \ \{\ \textcolor{keywordflow}{return}\ mFilename.c\_str();\ \}}
+\DoxyCodeLine{00093\ }
+\DoxyCodeLine{00099\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_log_a5f77b78fa8f1f8a0ce240fcec82d6ba1}{SetFile}}(\ FILE*\ file\ );}
+\DoxyCodeLine{00100\ }
+\DoxyCodeLine{00105\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_log_aa21844620716ba51851da7c701c47706}{SetFile}}(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ filename\ );}
+\DoxyCodeLine{00106\ }
+\DoxyCodeLine{00110\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \doxymbox{\hyperlink{class_log_a08c96125560f02faeadedbaf91c2fa61}{Usage}}()\ \ \ \ \ \ \ \ \ \ \ \{\ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{group__log_ga28f8a04ffc482319c4b5256655b650b5}{LOG\_USAGE\_STRING}};\ \}}
+\DoxyCodeLine{00111\ \ \ \ \ }
+\DoxyCodeLine{00115\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_log_a3a81af53022c6d286a9341676ad778cd}{ParseCmdLine}}(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ argc,\ \textcolor{keywordtype}{char}**\ argv\ );}
+\DoxyCodeLine{00116\ }
+\DoxyCodeLine{00120\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_log_a9db7e596ef6b8d634c64cec0bda1d377}{ParseCmdLine}}(\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{classcommand_line}{commandLine}}\&\ cmdLine\ );}
+\DoxyCodeLine{00121\ }
+\DoxyCodeLine{00125\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \doxymbox{\hyperlink{class_log_a35f945854e1bdaf36ce7555c67a2a7a0}{LevelToStr}}(\ \doxymbox{\hyperlink{class_log_afb5d4c945d835d194a295461d752531e}{Level}}\ level\ );}
+\DoxyCodeLine{00126\ }
+\DoxyCodeLine{00130\ \ \ \ \ \textcolor{keyword}{static}\ \doxymbox{\hyperlink{class_log_afb5d4c945d835d194a295461d752531e}{Level}}\ \doxymbox{\hyperlink{class_log_ad4cfaba5c57f7ae9bb549326ce4842f4}{LevelFromStr}}(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ str\ );}
+\DoxyCodeLine{00131\ }
+\DoxyCodeLine{00132\ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00133\ \ \ \ \ \textcolor{keyword}{static}\ \doxymbox{\hyperlink{class_log_afb5d4c945d835d194a295461d752531e}{Level}}\ \ \ \ \ \ \ \ mLevel;}
+\DoxyCodeLine{00134\ \ \ \ \ \textcolor{keyword}{static}\ FILE*\ \ \ \ \ \ \ \ mFile;}
+\DoxyCodeLine{00135\ \ \ \ \ \textcolor{keyword}{static}\ std::string\ mFilename;}
+\DoxyCodeLine{00136\ \};}
+\DoxyCodeLine{00137\ }
+\DoxyCodeLine{00138\ }
+\DoxyCodeLine{00144\ \textcolor{preprocessor}{\#define\ GenericLogMessage(level,\ format,\ args...)\ if(\ level\ <=\ Log::GetLevel()\ )\ fprintf(Log::GetFile(),\ format,\ \#\#\ args)}}
+\DoxyCodeLine{00145\ }
+\DoxyCodeLine{00150\ \textcolor{preprocessor}{\#define\ LogError(format,\ args...)\ \ \ \ \ \ \ GenericLogMessage(Log::ERROR,\ LOG\_COLOR\_RED\ LOG\_LEVEL\_PREFIX\_ERROR\ format\ LOG\_COLOR\_RESET,\ \#\#\ args)}}
+\DoxyCodeLine{00151\ }
+\DoxyCodeLine{00156\ \textcolor{preprocessor}{\#define\ LogWarning(format,\ args...)\ GenericLogMessage(Log::WARNING,\ LOG\_COLOR\_YELLOW\ LOG\_LEVEL\_PREFIX\_WARNING\ format\ LOG\_COLOR\_RESET,\ \#\#\ args)}}
+\DoxyCodeLine{00157\ }
+\DoxyCodeLine{00162\ \textcolor{preprocessor}{\#define\ LogSuccess(format,\ args...)\ GenericLogMessage(Log::SUCCESS,\ LOG\_COLOR\_GREEN\ LOG\_LEVEL\_PREFIX\_SUCCESS\ format\ LOG\_COLOR\_RESET,\ \#\#\ args)}}
+\DoxyCodeLine{00163\ }
+\DoxyCodeLine{00168\ \textcolor{preprocessor}{\#define\ LogInfo(format,\ args...)\ \ \ \ \ \ \ \ GenericLogMessage(Log::INFO,\ LOG\_LEVEL\_PREFIX\_INFO\ format,\ \#\#\ args)}}
+\DoxyCodeLine{00169\ }
+\DoxyCodeLine{00174\ \textcolor{preprocessor}{\#define\ LogVerbose(format,\ args...)\ GenericLogMessage(Log::VERBOSE,\ LOG\_LEVEL\_PREFIX\_VERBOSE\ format,\ \#\#\ args)}}
+\DoxyCodeLine{00175\ }
+\DoxyCodeLine{00180\ \textcolor{preprocessor}{\#define\ LogDebug(format,\ args...)\ \ \ \ \ \ \ GenericLogMessage(Log::DEBUG,\ LOG\_LEVEL\_PREFIX\_DEBUG\ format,\ \#\#\ args)}}
+\DoxyCodeLine{00181\ }
+\DoxyCodeLine{00182\ }
+\DoxyCodeLine{00188\ }
+\DoxyCodeLine{00190\ }
+\DoxyCodeLine{00191\ \textcolor{preprocessor}{\#ifdef\ LOG\_DISABLE\_COLORS}}
+\DoxyCodeLine{00192\ \textcolor{preprocessor}{\ \ \ \ \#define\ LOG\_COLOR\_RESET\ \ \ \ \ \ "{}"{}}}
+\DoxyCodeLine{00193\ \textcolor{preprocessor}{\ \ \ \ \#define\ LOG\_COLOR\_RED\ \ \ \ \ \ \ \ "{}"{}}}
+\DoxyCodeLine{00194\ \textcolor{preprocessor}{\ \ \ \ \#define\ LOG\_COLOR\_GREEN\ \ \ \ \ \ "{}"{}}}
+\DoxyCodeLine{00195\ \textcolor{preprocessor}{\ \ \ \ \#define\ LOG\_COLOR\_YELLOW\ \ \ \ \ "{}"{}}}
+\DoxyCodeLine{00196\ \textcolor{preprocessor}{\ \ \ \ \#define\ LOG\_COLOR\_BLUE\ \ \ \ \ \ \ "{}"{}}}
+\DoxyCodeLine{00197\ \textcolor{preprocessor}{\ \ \ \ \#define\ LOG\_COLOR\_MAGENTA\ \ \ \ "{}"{}}}
+\DoxyCodeLine{00198\ \textcolor{preprocessor}{\ \ \ \ \#define\ LOG\_COLOR\_CYAN\ \ \ \ \ \ \ "{}"{}}}
+\DoxyCodeLine{00199\ \textcolor{preprocessor}{\ \ \ \ \#define\ LOG\_COLOR\_LIGHT\_GRAY\ "{}"{}}}
+\DoxyCodeLine{00200\ \textcolor{preprocessor}{\ \ \ \ \#define\ LOG\_COLOR\_DARK\_GRAY\ \ "{}"{}}}
+\DoxyCodeLine{00201\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00202\ \ \ \ \ \textcolor{comment}{//\ https://misc.flogisoft.com/bash/tip\_colors\_and\_formatting}}
+\DoxyCodeLine{00203\ \textcolor{preprocessor}{\ \ \ \ \#define\ LOG\_COLOR\_RESET\ \ \ \ \ \ "{}\(\backslash\)033[0m"{}}}
+\DoxyCodeLine{00204\ \textcolor{preprocessor}{\ \ \ \ \#define\ LOG\_COLOR\_RED\ \ \ \ \ \ \ \ "{}\(\backslash\)033[0;31m"{}}}
+\DoxyCodeLine{00205\ \textcolor{preprocessor}{\ \ \ \ \#define\ LOG\_COLOR\_GREEN\ \ \ \ \ \ "{}\(\backslash\)033[0;32m"{}}}
+\DoxyCodeLine{00206\ \textcolor{preprocessor}{\ \ \ \ \#define\ LOG\_COLOR\_YELLOW\ \ \ \ \ "{}\(\backslash\)033[0;33m"{}}}
+\DoxyCodeLine{00207\ \textcolor{preprocessor}{\ \ \ \ \#define\ LOG\_COLOR\_BLUE\ \ \ \ \ \ \ "{}\(\backslash\)033[0;34m"{}}}
+\DoxyCodeLine{00208\ \textcolor{preprocessor}{\ \ \ \ \#define\ LOG\_COLOR\_MAGENTA\ \ \ \ "{}\(\backslash\)033[0;35m"{}}}
+\DoxyCodeLine{00209\ \textcolor{preprocessor}{\ \ \ \ \#define\ LOG\_COLOR\_CYAN\ \ \ \ \ \ \ "{}\(\backslash\)033[0;36m"{}}}
+\DoxyCodeLine{00210\ \textcolor{preprocessor}{\ \ \ \ \#define\ LOG\_COLOR\_LIGHT\_GRAY\ "{}\(\backslash\)033[0;37m"{}}}
+\DoxyCodeLine{00211\ \textcolor{preprocessor}{\ \ \ \ \#define\ LOG\_COLOR\_DARK\_GRAY\ \ "{}\(\backslash\)033[0;90m"{}}}
+\DoxyCodeLine{00212\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00213\ }
+\DoxyCodeLine{00214\ \textcolor{preprocessor}{\#ifdef\ LOG\_ENABLE\_LEVEL\_PREFIX}}
+\DoxyCodeLine{00215\ \textcolor{preprocessor}{\ \ \ \ \#define\ LOG\_LEVEL\_PREFIX\_ERROR\ \ "{}[E]"{}}}
+\DoxyCodeLine{00216\ \textcolor{preprocessor}{\ \ \ \ \#define\ LOG\_LEVEL\_PREFIX\_WARNING\ \ \ \ "{}[W]"{}}}
+\DoxyCodeLine{00217\ \textcolor{preprocessor}{\ \ \ \ \#define\ LOG\_LEVEL\_PREFIX\_SUCCESS\ \ \ \ "{}[S]"{}}}
+\DoxyCodeLine{00218\ \textcolor{preprocessor}{\ \ \ \ \#define\ LOG\_LEVEL\_PREFIX\_INFO\ \ \ \ \ \ \ "{}[I]"{}}}
+\DoxyCodeLine{00219\ \textcolor{preprocessor}{\ \ \ \ \#define\ LOG\_LEVEL\_PREFIX\_VERBOSE\ \ \ \ "{}[V]"{}}}
+\DoxyCodeLine{00220\ \textcolor{preprocessor}{\ \ \ \ \#define\ LOG\_LEVEL\_PREFIX\_DEBUG\ \ "{}[D]"{}}}
+\DoxyCodeLine{00221\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00222\ \textcolor{preprocessor}{\ \ \ \ \#define\ LOG\_LEVEL\_PREFIX\_ERROR\ \ "{}"{}}}
+\DoxyCodeLine{00223\ \textcolor{preprocessor}{\ \ \ \ \#define\ LOG\_LEVEL\_PREFIX\_WARNING\ \ \ \ "{}"{}}}
+\DoxyCodeLine{00224\ \textcolor{preprocessor}{\ \ \ \ \#define\ LOG\_LEVEL\_PREFIX\_SUCCESS\ \ \ \ "{}"{}}}
+\DoxyCodeLine{00225\ \textcolor{preprocessor}{\ \ \ \ \#define\ LOG\_LEVEL\_PREFIX\_INFO\ \ \ \ \ \ \ "{}"{}}}
+\DoxyCodeLine{00226\ \textcolor{preprocessor}{\ \ \ \ \#define\ LOG\_LEVEL\_PREFIX\_VERBOSE\ \ \ \ "{}"{}}}
+\DoxyCodeLine{00227\ \textcolor{preprocessor}{\ \ \ \ \#define\ LOG\_LEVEL\_PREFIX\_DEBUG\ \ "{}"{}}}
+\DoxyCodeLine{00228\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00229\ }
+\DoxyCodeLine{00231\ }
+\DoxyCodeLine{00232\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00233\ }
+
+\end{DoxyCode}

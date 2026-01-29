@@ -1,0 +1,1014 @@
+\doxysection{gl\+Widget Class Reference}
+\hypertarget{classgl_widget}{}\label{classgl_widget}\index{glWidget@{glWidget}}
+
+
+{\ttfamily \+\#include $<$gl\+Widget.\+h$>$}
+
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \doxymbox{\hyperlink{structgl_widget_1_1event_handler}{event\+Handler}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \doxymbox{\hyperlink{classgl_widget_a34532b25a0465161a8f4e591ffc3ad3c}{Shape}} \{ \newline
+{\bfseries Rect}
+, {\bfseries Line}
+, {\bfseries Ellipse}
+, {\bfseries Rect}
+, \newline
+{\bfseries Line}
+, {\bfseries Ellipse}
+ \}
+\item 
+enum \doxymbox{\hyperlink{classgl_widget_a34532b25a0465161a8f4e591ffc3ad3c}{Shape}} \{ \newline
+{\bfseries Rect}
+, {\bfseries Line}
+, {\bfseries Ellipse}
+, {\bfseries Rect}
+, \newline
+{\bfseries Line}
+, {\bfseries Ellipse}
+ \}
+\item 
+typedef bool(\texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classgl_widget_a205213b643ddc9475c7a40da4711cda3}{gl\+Widget\+Event\+Handler}}) (\doxymbox{\hyperlink{classgl_widget}{gl\+Widget}} \texorpdfstring{$\ast$}{*}widget, uint16\+\_\+t event, int a, int b, void \texorpdfstring{$\ast$}{*}user)
+\item 
+typedef bool(\texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classgl_widget_a205213b643ddc9475c7a40da4711cda3}{gl\+Widget\+Event\+Handler}}) (\doxymbox{\hyperlink{classgl_widget}{gl\+Widget}} \texorpdfstring{$\ast$}{*}widget, uint16\+\_\+t event, int a, int b, void \texorpdfstring{$\ast$}{*}user)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{classgl_widget_a5f7240a0283bf7aec96f2e0c7b58b9e1}{gl\+Widget}} (\doxymbox{\hyperlink{classgl_widget_a34532b25a0465161a8f4e591ffc3ad3c}{Shape}} shape=Rect)
+\item 
+\doxymbox{\hyperlink{classgl_widget_a7f688d56ef49185cfa92d69e87e3da00}{gl\+Widget}} (float x, float y, float width, float height, \doxymbox{\hyperlink{classgl_widget_a34532b25a0465161a8f4e591ffc3ad3c}{Shape}} shape=Rect)
+\item 
+virtual \doxymbox{\hyperlink{classgl_widget_af08d2600f70883ddca1853ab37dca947}{\texorpdfstring{$\sim$}{\string~}gl\+Widget}} ()
+\item 
+bool \doxymbox{\hyperlink{classgl_widget_aed8d19970d2ab09e7dc7fc45de30f12b}{Contains}} (float x, float y) const
+\item 
+void \doxymbox{\hyperlink{classgl_widget_a3ef9c4e97e7998b6e150e7edfcce140c}{Move}} (float x, float y)
+\item 
+float \doxymbox{\hyperlink{classgl_widget_a4b0b580a068e05f6a4f96292e24a63b6}{X}} () const
+\item 
+float \doxymbox{\hyperlink{classgl_widget_a634e82aa95f40ca76c2beec834769717}{Y}} () const
+\item 
+void \doxymbox{\hyperlink{classgl_widget_a3670b74a4763abbcd4d21500f4ac626c}{SetX}} (float x)
+\item 
+void \doxymbox{\hyperlink{classgl_widget_a9d55a8dcab6721a154b2e4f5ed53d586}{SetY}} (float y)
+\item 
+float \doxymbox{\hyperlink{classgl_widget_aeded50b8cb9112b874013be651299674}{Width}} () const
+\item 
+float \doxymbox{\hyperlink{classgl_widget_a410c337398dd9fc5aa79c19539750642}{Height}} () const
+\item 
+void \doxymbox{\hyperlink{classgl_widget_af55b147cc0621a07b85490cb6d7c1824}{Set\+Width}} (float width)
+\item 
+void \doxymbox{\hyperlink{classgl_widget_ac835bf8ff0f03d34634aaff9b2e4e80e}{Set\+Height}} (float height)
+\item 
+void \doxymbox{\hyperlink{classgl_widget_afc49dde308a61b86ee18f9fec63de1a1}{Get\+Position}} (float \texorpdfstring{$\ast$}{*}x, float \texorpdfstring{$\ast$}{*}y) const
+\item 
+void \doxymbox{\hyperlink{classgl_widget_abc85ba15d783f8693783321d474b61b2}{Set\+Position}} (float x, float y)
+\item 
+void \doxymbox{\hyperlink{classgl_widget_ae82ec5754f965f37ce5ed99681d8eff4}{Get\+Coords}} (float \texorpdfstring{$\ast$}{*}x1, float \texorpdfstring{$\ast$}{*}y1, float \texorpdfstring{$\ast$}{*}x2, float \texorpdfstring{$\ast$}{*}y2) const
+\item 
+void \doxymbox{\hyperlink{classgl_widget_a6bd07231a3e27058e2576faf800337e8}{Set\+Coords}} (float x1, float y1, float x2, float y2)
+\item 
+void \doxymbox{\hyperlink{classgl_widget_aecc3f788b33837162593b54565056d2f}{Get\+Size}} (float \texorpdfstring{$\ast$}{*}width, float \texorpdfstring{$\ast$}{*}height) const
+\item 
+void \doxymbox{\hyperlink{classgl_widget_ae5c7bf0eb812a4f935e0ba8738828c97}{Set\+Size}} (float width, float height)
+\item 
+\doxymbox{\hyperlink{classgl_widget_a34532b25a0465161a8f4e591ffc3ad3c}{Shape}} \doxymbox{\hyperlink{classgl_widget_a10e33fe5484d5411e7ce118c70e680b1}{Get\+Shape}} () const
+\item 
+void \doxymbox{\hyperlink{classgl_widget_a3610f2dfa2ae4af84c492c49a9e780d0}{Set\+Shape}} (\doxymbox{\hyperlink{classgl_widget_a34532b25a0465161a8f4e591ffc3ad3c}{Shape}} shape)
+\item 
+void \doxymbox{\hyperlink{classgl_widget_a8abbff6976a842be844a62c81e5b71e8}{Set\+Fill\+Alpha}} (float a)
+\item 
+void \doxymbox{\hyperlink{classgl_widget_a1f00e8ad61269abc413a52adddf42044}{Set\+Line\+Alpha}} (float a)
+\item 
+void \doxymbox{\hyperlink{classgl_widget_a64d351dab596aa07f1d8ef5c0628364b}{Set\+Line\+Width}} (float width)
+\item 
+void \doxymbox{\hyperlink{classgl_widget_a67543e3cef0771c57b317f6ad44ba9bc}{Set\+Fill\+Color}} (float r, float g, float b, float a=1.\+0f)
+\item 
+void \doxymbox{\hyperlink{classgl_widget_ac94ab886da5e37d1cbe9d32000c01700}{Set\+Line\+Color}} (float r, float g, float b, float a=1.\+0f)
+\item 
+void \doxymbox{\hyperlink{classgl_widget_a67e0fdf6cc515e0349c77c29a35f9e0b}{Set\+Selected\+Fill\+Color}} (float r, float g, float b, float a=1.\+0f)
+\item 
+void \doxymbox{\hyperlink{classgl_widget_a7e43a63d48c50cf89e874927980c8baf}{Set\+Selected\+Line\+Color}} (float r, float g, float b, float a=1.\+0f)
+\item 
+bool \doxymbox{\hyperlink{classgl_widget_a6016740b9bfcf7c849dddf7f0fff98fc}{Is\+Moveable}} () const
+\item 
+void \doxymbox{\hyperlink{classgl_widget_a2a93b1a07f8fbd0ef4bb9beddea1ee2f}{Set\+Moveable}} (bool moveable)
+\item 
+bool \doxymbox{\hyperlink{classgl_widget_af8be5c9bb96f9dd97833a628352360c1}{Is\+Resizeable}} () const
+\item 
+void \doxymbox{\hyperlink{classgl_widget_a76ce29371050c947e4edabfcd00d2ba5}{Set\+Resizeable}} (bool resizeable)
+\item 
+bool \doxymbox{\hyperlink{classgl_widget_aa9a1474827c54f17307b38fd0bdfc7ca}{Is\+Selected}} () const
+\item 
+void \doxymbox{\hyperlink{classgl_widget_a137efa9e4be163b8ed78cc8579199986}{Set\+Selected}} (bool selected)
+\item 
+bool \doxymbox{\hyperlink{classgl_widget_ad1ce1a241774d63cc1a0b2a07930fb92}{Is\+Visible}} () const
+\item 
+void \doxymbox{\hyperlink{classgl_widget_a0710d5b99bb86794ee0117e2cb910ec1}{Set\+Visible}} (bool visible)
+\item 
+void \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classgl_widget_a41405fed12cea8a3edc969dea7a0b138}{Get\+User\+Data}} () const
+\item 
+void \doxymbox{\hyperlink{classgl_widget_a6769b290a1d646f111abdea3b0de78c1}{Set\+User\+Data}} (void \texorpdfstring{$\ast$}{*}user)
+\item 
+\doxymbox{\hyperlink{classgl_display}{gl\+Display}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classgl_widget_ab4e106c7b3ddc347fdd0e69a0d227db5}{Get\+Display}} () const
+\item 
+int \doxymbox{\hyperlink{classgl_widget_a8099ad0207c2450231ab8b0ad4a5bd53}{Get\+Index}} () const
+\item 
+void \doxymbox{\hyperlink{classgl_widget_ac8934c3e32deaf2d86e806f48c667b94}{Render}} ()
+\item 
+void \doxymbox{\hyperlink{classgl_widget_abad602c978f8ca73f197df4f690f1280}{Global\+To\+Local}} (float x, float y, float \texorpdfstring{$\ast$}{*}x\+\_\+out, float \texorpdfstring{$\ast$}{*}y\+\_\+out) const
+\item 
+void \doxymbox{\hyperlink{classgl_widget_a5d0f4c643dc9382bc3463f7178dcaeeb}{Local\+To\+Global}} (float x, float y, float \texorpdfstring{$\ast$}{*}x\+\_\+out, float \texorpdfstring{$\ast$}{*}y\+\_\+out) const
+\item 
+void \doxymbox{\hyperlink{classgl_widget_abd9f8f577749f268f8ae973a84333520}{Add\+Event\+Handler}} (\doxymbox{\hyperlink{classgl_widget_a205213b643ddc9475c7a40da4711cda3}{gl\+Widget\+Event\+Handler}} callback, void \texorpdfstring{$\ast$}{*}user=NULL)
+\item 
+void \doxymbox{\hyperlink{classgl_widget_ab3cf5ffa3a98154149740b5ec95d62f0}{Remove\+Event\+Handler}} (\doxymbox{\hyperlink{classgl_widget_a205213b643ddc9475c7a40da4711cda3}{gl\+Widget\+Event\+Handler}} callback, void \texorpdfstring{$\ast$}{*}user=NULL)
+\item 
+\Hypertarget{classgl_widget_aadbd752016bf572f5e4c72888ca2a56a}\label{classgl_widget_aadbd752016bf572f5e4c72888ca2a56a} 
+bool {\bfseries On\+Event} (uint16\+\_\+t event, int a, int b, void \texorpdfstring{$\ast$}{*}user)
+\item 
+\doxymbox{\hyperlink{classgl_widget_a5f7240a0283bf7aec96f2e0c7b58b9e1}{gl\+Widget}} (\doxymbox{\hyperlink{classgl_widget_a34532b25a0465161a8f4e591ffc3ad3c}{Shape}} shape=Rect)
+\item 
+\doxymbox{\hyperlink{classgl_widget_a7f688d56ef49185cfa92d69e87e3da00}{gl\+Widget}} (float x, float y, float width, float height, \doxymbox{\hyperlink{classgl_widget_a34532b25a0465161a8f4e591ffc3ad3c}{Shape}} shape=Rect)
+\item 
+virtual \doxymbox{\hyperlink{classgl_widget_a938b3d84be4081d4f6828df2f391cd46}{\texorpdfstring{$\sim$}{\string~}gl\+Widget}} ()
+\item 
+bool \doxymbox{\hyperlink{classgl_widget_aed8d19970d2ab09e7dc7fc45de30f12b}{Contains}} (float x, float y) const
+\item 
+void \doxymbox{\hyperlink{classgl_widget_a3ef9c4e97e7998b6e150e7edfcce140c}{Move}} (float x, float y)
+\item 
+float \doxymbox{\hyperlink{classgl_widget_a4b0b580a068e05f6a4f96292e24a63b6}{X}} () const
+\item 
+float \doxymbox{\hyperlink{classgl_widget_a634e82aa95f40ca76c2beec834769717}{Y}} () const
+\item 
+void \doxymbox{\hyperlink{classgl_widget_a3670b74a4763abbcd4d21500f4ac626c}{SetX}} (float x)
+\item 
+void \doxymbox{\hyperlink{classgl_widget_a9d55a8dcab6721a154b2e4f5ed53d586}{SetY}} (float y)
+\item 
+float \doxymbox{\hyperlink{classgl_widget_aeded50b8cb9112b874013be651299674}{Width}} () const
+\item 
+float \doxymbox{\hyperlink{classgl_widget_a410c337398dd9fc5aa79c19539750642}{Height}} () const
+\item 
+void \doxymbox{\hyperlink{classgl_widget_af55b147cc0621a07b85490cb6d7c1824}{Set\+Width}} (float width)
+\item 
+void \doxymbox{\hyperlink{classgl_widget_ac835bf8ff0f03d34634aaff9b2e4e80e}{Set\+Height}} (float height)
+\item 
+void \doxymbox{\hyperlink{classgl_widget_afc49dde308a61b86ee18f9fec63de1a1}{Get\+Position}} (float \texorpdfstring{$\ast$}{*}x, float \texorpdfstring{$\ast$}{*}y) const
+\item 
+void \doxymbox{\hyperlink{classgl_widget_abc85ba15d783f8693783321d474b61b2}{Set\+Position}} (float x, float y)
+\item 
+void \doxymbox{\hyperlink{classgl_widget_ae82ec5754f965f37ce5ed99681d8eff4}{Get\+Coords}} (float \texorpdfstring{$\ast$}{*}x1, float \texorpdfstring{$\ast$}{*}y1, float \texorpdfstring{$\ast$}{*}x2, float \texorpdfstring{$\ast$}{*}y2) const
+\item 
+void \doxymbox{\hyperlink{classgl_widget_a6bd07231a3e27058e2576faf800337e8}{Set\+Coords}} (float x1, float y1, float x2, float y2)
+\item 
+void \doxymbox{\hyperlink{classgl_widget_aecc3f788b33837162593b54565056d2f}{Get\+Size}} (float \texorpdfstring{$\ast$}{*}width, float \texorpdfstring{$\ast$}{*}height) const
+\item 
+void \doxymbox{\hyperlink{classgl_widget_ae5c7bf0eb812a4f935e0ba8738828c97}{Set\+Size}} (float width, float height)
+\item 
+\doxymbox{\hyperlink{classgl_widget_a34532b25a0465161a8f4e591ffc3ad3c}{Shape}} \doxymbox{\hyperlink{classgl_widget_a10e33fe5484d5411e7ce118c70e680b1}{Get\+Shape}} () const
+\item 
+void \doxymbox{\hyperlink{classgl_widget_a3610f2dfa2ae4af84c492c49a9e780d0}{Set\+Shape}} (\doxymbox{\hyperlink{classgl_widget_a34532b25a0465161a8f4e591ffc3ad3c}{Shape}} shape)
+\item 
+void \doxymbox{\hyperlink{classgl_widget_a8abbff6976a842be844a62c81e5b71e8}{Set\+Fill\+Alpha}} (float a)
+\item 
+void \doxymbox{\hyperlink{classgl_widget_a1f00e8ad61269abc413a52adddf42044}{Set\+Line\+Alpha}} (float a)
+\item 
+void \doxymbox{\hyperlink{classgl_widget_a64d351dab596aa07f1d8ef5c0628364b}{Set\+Line\+Width}} (float width)
+\item 
+void \doxymbox{\hyperlink{classgl_widget_a67543e3cef0771c57b317f6ad44ba9bc}{Set\+Fill\+Color}} (float r, float g, float b, float a=1.\+0f)
+\item 
+void \doxymbox{\hyperlink{classgl_widget_ac94ab886da5e37d1cbe9d32000c01700}{Set\+Line\+Color}} (float r, float g, float b, float a=1.\+0f)
+\item 
+void \doxymbox{\hyperlink{classgl_widget_a67e0fdf6cc515e0349c77c29a35f9e0b}{Set\+Selected\+Fill\+Color}} (float r, float g, float b, float a=1.\+0f)
+\item 
+void \doxymbox{\hyperlink{classgl_widget_a7e43a63d48c50cf89e874927980c8baf}{Set\+Selected\+Line\+Color}} (float r, float g, float b, float a=1.\+0f)
+\item 
+bool \doxymbox{\hyperlink{classgl_widget_a6016740b9bfcf7c849dddf7f0fff98fc}{Is\+Moveable}} () const
+\item 
+void \doxymbox{\hyperlink{classgl_widget_a2a93b1a07f8fbd0ef4bb9beddea1ee2f}{Set\+Moveable}} (bool moveable)
+\item 
+bool \doxymbox{\hyperlink{classgl_widget_af8be5c9bb96f9dd97833a628352360c1}{Is\+Resizeable}} () const
+\item 
+void \doxymbox{\hyperlink{classgl_widget_a76ce29371050c947e4edabfcd00d2ba5}{Set\+Resizeable}} (bool resizeable)
+\item 
+bool \doxymbox{\hyperlink{classgl_widget_aa9a1474827c54f17307b38fd0bdfc7ca}{Is\+Selected}} () const
+\item 
+void \doxymbox{\hyperlink{classgl_widget_a137efa9e4be163b8ed78cc8579199986}{Set\+Selected}} (bool selected)
+\item 
+bool \doxymbox{\hyperlink{classgl_widget_ad1ce1a241774d63cc1a0b2a07930fb92}{Is\+Visible}} () const
+\item 
+void \doxymbox{\hyperlink{classgl_widget_a0710d5b99bb86794ee0117e2cb910ec1}{Set\+Visible}} (bool visible)
+\item 
+void \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classgl_widget_a41405fed12cea8a3edc969dea7a0b138}{Get\+User\+Data}} () const
+\item 
+void \doxymbox{\hyperlink{classgl_widget_a6769b290a1d646f111abdea3b0de78c1}{Set\+User\+Data}} (void \texorpdfstring{$\ast$}{*}user)
+\item 
+\doxymbox{\hyperlink{classgl_display}{gl\+Display}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classgl_widget_ab4e106c7b3ddc347fdd0e69a0d227db5}{Get\+Display}} () const
+\item 
+int \doxymbox{\hyperlink{classgl_widget_a8099ad0207c2450231ab8b0ad4a5bd53}{Get\+Index}} () const
+\item 
+void \doxymbox{\hyperlink{classgl_widget_ac8934c3e32deaf2d86e806f48c667b94}{Render}} ()
+\item 
+void \doxymbox{\hyperlink{classgl_widget_abad602c978f8ca73f197df4f690f1280}{Global\+To\+Local}} (float x, float y, float \texorpdfstring{$\ast$}{*}x\+\_\+out, float \texorpdfstring{$\ast$}{*}y\+\_\+out) const
+\item 
+void \doxymbox{\hyperlink{classgl_widget_a5d0f4c643dc9382bc3463f7178dcaeeb}{Local\+To\+Global}} (float x, float y, float \texorpdfstring{$\ast$}{*}x\+\_\+out, float \texorpdfstring{$\ast$}{*}y\+\_\+out) const
+\item 
+void \doxymbox{\hyperlink{classgl_widget_abd9f8f577749f268f8ae973a84333520}{Add\+Event\+Handler}} (\doxymbox{\hyperlink{classgl_widget_a205213b643ddc9475c7a40da4711cda3}{gl\+Widget\+Event\+Handler}} callback, void \texorpdfstring{$\ast$}{*}user=NULL)
+\item 
+void \doxymbox{\hyperlink{classgl_widget_ab3cf5ffa3a98154149740b5ec95d62f0}{Remove\+Event\+Handler}} (\doxymbox{\hyperlink{classgl_widget_a205213b643ddc9475c7a40da4711cda3}{gl\+Widget\+Event\+Handler}} callback, void \texorpdfstring{$\ast$}{*}user=NULL)
+\item 
+\Hypertarget{classgl_widget_aadbd752016bf572f5e4c72888ca2a56a}\label{classgl_widget_aadbd752016bf572f5e4c72888ca2a56a} 
+bool {\bfseries On\+Event} (uint16\+\_\+t event, int a, int b, void \texorpdfstring{$\ast$}{*}user)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Types}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classgl_widget_ac9f39ca9d55807649bad14a53e02514e}\label{classgl_widget_ac9f39ca9d55807649bad14a53e02514e} 
+enum {\bfseries Drag\+State} \{ \newline
+{\bfseries Drag\+None}
+, {\bfseries Drag\+Move}
+, {\bfseries Drag\+ResizeN}
+, {\bfseries Drag\+Resize\+NW}
+, \newline
+{\bfseries Drag\+Resize\+NE}
+, {\bfseries Drag\+ResizeS}
+, {\bfseries Drag\+Resize\+SW}
+, {\bfseries Drag\+Resize\+SE}
+, \newline
+{\bfseries Drag\+ResizeW}
+, {\bfseries Drag\+ResizeE}
+, {\bfseries Drag\+None}
+, {\bfseries Drag\+Move}
+, \newline
+{\bfseries Drag\+ResizeN}
+, {\bfseries Drag\+Resize\+NW}
+, {\bfseries Drag\+Resize\+NE}
+, {\bfseries Drag\+ResizeS}
+, \newline
+{\bfseries Drag\+Resize\+SW}
+, {\bfseries Drag\+Resize\+SE}
+, {\bfseries Drag\+ResizeW}
+, {\bfseries Drag\+ResizeE}
+ \}
+\item 
+\Hypertarget{classgl_widget_ac9f39ca9d55807649bad14a53e02514e}\label{classgl_widget_ac9f39ca9d55807649bad14a53e02514e} 
+enum {\bfseries Drag\+State} \{ \newline
+{\bfseries Drag\+None}
+, {\bfseries Drag\+Move}
+, {\bfseries Drag\+ResizeN}
+, {\bfseries Drag\+Resize\+NW}
+, \newline
+{\bfseries Drag\+Resize\+NE}
+, {\bfseries Drag\+ResizeS}
+, {\bfseries Drag\+Resize\+SW}
+, {\bfseries Drag\+Resize\+SE}
+, \newline
+{\bfseries Drag\+ResizeW}
+, {\bfseries Drag\+ResizeE}
+, {\bfseries Drag\+None}
+, {\bfseries Drag\+Move}
+, \newline
+{\bfseries Drag\+ResizeN}
+, {\bfseries Drag\+Resize\+NW}
+, {\bfseries Drag\+Resize\+NE}
+, {\bfseries Drag\+ResizeS}
+, \newline
+{\bfseries Drag\+Resize\+SW}
+, {\bfseries Drag\+Resize\+SE}
+, {\bfseries Drag\+ResizeW}
+, {\bfseries Drag\+ResizeE}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classgl_widget_a795838e304f675e161a920fba097f5ae}\label{classgl_widget_a795838e304f675e161a920fba097f5ae} 
+void {\bfseries init\+Defaults} ()
+\item 
+\Hypertarget{classgl_widget_a4dc742d642246e0a52902baa9a628bb5}\label{classgl_widget_a4dc742d642246e0a52902baa9a628bb5} 
+void {\bfseries set\+Cursor} (Drag\+State cursor)
+\item 
+\Hypertarget{classgl_widget_a886ee453d0b0d2c79438ff3db520f617}\label{classgl_widget_a886ee453d0b0d2c79438ff3db520f617} 
+void {\bfseries set\+Display} (\doxymbox{\hyperlink{classgl_display}{gl\+Display}} \texorpdfstring{$\ast$}{*}display)
+\item 
+\Hypertarget{classgl_widget_a583557bb83aad6e5c42169c0b41a0dd4}\label{classgl_widget_a583557bb83aad6e5c42169c0b41a0dd4} 
+void {\bfseries dispatch\+Event} (uint16\+\_\+t msg, int a, int b)
+\item 
+\Hypertarget{classgl_widget_a3da272d038e5b434151993033cde3577}\label{classgl_widget_a3da272d038e5b434151993033cde3577} 
+Drag\+State {\bfseries coord\+To\+Border} (float x, float y, float max\+\_\+distance=10.\+0f)
+\item 
+\Hypertarget{classgl_widget_a795838e304f675e161a920fba097f5ae}\label{classgl_widget_a795838e304f675e161a920fba097f5ae} 
+void {\bfseries init\+Defaults} ()
+\item 
+\Hypertarget{classgl_widget_a4dc742d642246e0a52902baa9a628bb5}\label{classgl_widget_a4dc742d642246e0a52902baa9a628bb5} 
+void {\bfseries set\+Cursor} (Drag\+State cursor)
+\item 
+\Hypertarget{classgl_widget_a886ee453d0b0d2c79438ff3db520f617}\label{classgl_widget_a886ee453d0b0d2c79438ff3db520f617} 
+void {\bfseries set\+Display} (\doxymbox{\hyperlink{classgl_display}{gl\+Display}} \texorpdfstring{$\ast$}{*}display)
+\item 
+\Hypertarget{classgl_widget_a583557bb83aad6e5c42169c0b41a0dd4}\label{classgl_widget_a583557bb83aad6e5c42169c0b41a0dd4} 
+void {\bfseries dispatch\+Event} (uint16\+\_\+t msg, int a, int b)
+\item 
+\Hypertarget{classgl_widget_ac4783b98aae002ce1bd5696396bd9070}\label{classgl_widget_ac4783b98aae002ce1bd5696396bd9070} 
+Drag\+State {\bfseries coord\+To\+Border} (float x, float y, float max\+\_\+distance=10.\+0f)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classgl_widget_a14e536803cdf07f1186b5a1be256e2bb}\label{classgl_widget_a14e536803cdf07f1186b5a1be256e2bb} 
+float {\bfseries mX}
+\item 
+\Hypertarget{classgl_widget_a3439736a22408fcc1fce45e642485530}\label{classgl_widget_a3439736a22408fcc1fce45e642485530} 
+float {\bfseries mY}
+\item 
+\Hypertarget{classgl_widget_a0cb5fcc7ea63cd0e03390ed5d8a12d60}\label{classgl_widget_a0cb5fcc7ea63cd0e03390ed5d8a12d60} 
+float {\bfseries m\+Width}
+\item 
+\Hypertarget{classgl_widget_afbfbfe9388ac30a99fa3c6ce422e89f8}\label{classgl_widget_afbfbfe9388ac30a99fa3c6ce422e89f8} 
+float {\bfseries m\+Height}
+\item 
+\Hypertarget{classgl_widget_a143ee3ab2d17b0c88ebdca7c98cdb641}\label{classgl_widget_a143ee3ab2d17b0c88ebdca7c98cdb641} 
+float {\bfseries m\+Selected\+Fill\+Color} \+[4]\+
+\item 
+\Hypertarget{classgl_widget_aaa558ba15d280052aa8b36230e87408d}\label{classgl_widget_aaa558ba15d280052aa8b36230e87408d} 
+float {\bfseries m\+Selected\+Line\+Color} \+[4]\+
+\item 
+\Hypertarget{classgl_widget_a0267a8b7950a38c0aa062618824485b2}\label{classgl_widget_a0267a8b7950a38c0aa062618824485b2} 
+float {\bfseries m\+Fill\+Color} \+[4]\+
+\item 
+\Hypertarget{classgl_widget_ac6456d58fbc70b9372f13282ed1ccf8c}\label{classgl_widget_ac6456d58fbc70b9372f13282ed1ccf8c} 
+float {\bfseries m\+Line\+Color} \+[4]\+
+\item 
+\Hypertarget{classgl_widget_a547aadefb60d6851d67921d97915fb24}\label{classgl_widget_a547aadefb60d6851d67921d97915fb24} 
+float {\bfseries m\+Line\+Width}
+\item 
+\Hypertarget{classgl_widget_a95538a31f4d57c466a36f40dbd8562cf}\label{classgl_widget_a95538a31f4d57c466a36f40dbd8562cf} 
+bool {\bfseries m\+Moveable}
+\item 
+\Hypertarget{classgl_widget_a98e3826fac04535c03dc0858cdfb1304}\label{classgl_widget_a98e3826fac04535c03dc0858cdfb1304} 
+bool {\bfseries m\+Resizeable}
+\item 
+\Hypertarget{classgl_widget_a48a4c2aa384316ec39cc10707e945821}\label{classgl_widget_a48a4c2aa384316ec39cc10707e945821} 
+bool {\bfseries m\+Selected}
+\item 
+\Hypertarget{classgl_widget_ac9bbb7e6994a717426e166fa52fbf390}\label{classgl_widget_ac9bbb7e6994a717426e166fa52fbf390} 
+bool {\bfseries m\+Visible}
+\item 
+\Hypertarget{classgl_widget_ad9102c8fbb5f691bd0ca077bd6dc7391}\label{classgl_widget_ad9102c8fbb5f691bd0ca077bd6dc7391} 
+\doxymbox{\hyperlink{classgl_widget_a34532b25a0465161a8f4e591ffc3ad3c}{Shape}} {\bfseries m\+Shape}
+\item 
+\Hypertarget{classgl_widget_a547a6689c1e376e82c49e8b3d04456ca}\label{classgl_widget_a547a6689c1e376e82c49e8b3d04456ca} 
+void \texorpdfstring{$\ast$}{*} {\bfseries m\+User\+Data}
+\item 
+\Hypertarget{classgl_widget_a876b8f1510ccdad8ed194cce989d7303}\label{classgl_widget_a876b8f1510ccdad8ed194cce989d7303} 
+\doxymbox{\hyperlink{classgl_display}{gl\+Display}} \texorpdfstring{$\ast$}{*} {\bfseries m\+Display}
+\item 
+\Hypertarget{classgl_widget_ac8828581618930321f0ddb589b956744}\label{classgl_widget_ac8828581618930321f0ddb589b956744} 
+Drag\+State {\bfseries m\+Drag\+State}
+\item 
+\Hypertarget{classgl_widget_a742406c1a497ca3fa7e572dfb0820bb9}\label{classgl_widget_a742406c1a497ca3fa7e572dfb0820bb9} 
+std::\+vector$<$ \doxymbox{\hyperlink{structgl_widget_1_1event_handler}{event\+Handler}} $>$ {\bfseries m\+Event\+Handlers}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classgl_widget_ae8a157d52263bff8e718e14914916b40}\label{classgl_widget_ae8a157d52263bff8e718e14914916b40} 
+class {\bfseries gl\+Display}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Open\+GL graphics widget for rendering moveable/\+resizable shapes. 
+
+\label{doc-typedef-members}
+\Hypertarget{classgl_widget_doc-typedef-members}
+\doxysubsection{Member Typedef Documentation}
+\Hypertarget{classgl_widget_a205213b643ddc9475c7a40da4711cda3}\index{glWidget@{glWidget}!glWidgetEventHandler@{glWidgetEventHandler}}
+\index{glWidgetEventHandler@{glWidgetEventHandler}!glWidget@{glWidget}}
+\doxysubsubsection{\texorpdfstring{glWidgetEventHandler}{glWidgetEventHandler}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgl_widget_a205213b643ddc9475c7a40da4711cda3} 
+typedef bool(\texorpdfstring{$\ast$}{*} gl\+Widget::\+gl\+Widget\+Event\+Handler) (\doxymbox{\hyperlink{classgl_widget}{gl\+Widget}} \texorpdfstring{$\ast$}{*}widget, uint16\+\_\+t event, int a, int b, void \texorpdfstring{$\ast$}{*}user)}
+
+\doxylink{class_event}{Event} message handler callback for recieving UI messages from widgets.
+
+Recieves 4 parameters -\/ the widget that sent the event, the event type, a \& b message values (\begin{DoxySeeAlso}{See also}
+\doxylink{group___open_g_l_gadad47fc5cdbc7af41eee1991038749fe}{gl\+Event\+Type} from gl\+Events.\+h), and a user-\/specified pointer from registration.
+\end{DoxySeeAlso}
+\doxylink{class_event}{Event} message handlers should return {\ttfamily true} if the message was handled, or {\ttfamily false} if the message was skipped or not handled.
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{classgl_widget_abd9f8f577749f268f8ae973a84333520}{Add\+Event\+Handler} 
+
+\doxylink{classgl_widget_ab3cf5ffa3a98154149740b5ec95d62f0}{Remove\+Event\+Handler} 
+\end{DoxySeeAlso}
+\Hypertarget{classgl_widget_a205213b643ddc9475c7a40da4711cda3}\index{glWidget@{glWidget}!glWidgetEventHandler@{glWidgetEventHandler}}
+\index{glWidgetEventHandler@{glWidgetEventHandler}!glWidget@{glWidget}}
+\doxysubsubsection{\texorpdfstring{glWidgetEventHandler}{glWidgetEventHandler}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgl_widget_a205213b643ddc9475c7a40da4711cda3} 
+typedef bool(\texorpdfstring{$\ast$}{*} gl\+Widget::\+gl\+Widget\+Event\+Handler) (\doxymbox{\hyperlink{classgl_widget}{gl\+Widget}} \texorpdfstring{$\ast$}{*}widget, uint16\+\_\+t event, int a, int b, void \texorpdfstring{$\ast$}{*}user)}
+
+\doxylink{class_event}{Event} message handler callback for recieving UI messages from widgets.
+
+Recieves 4 parameters -\/ the widget that sent the event, the event type, a \& b message values (\begin{DoxySeeAlso}{See also}
+\doxylink{group___open_g_l_gadad47fc5cdbc7af41eee1991038749fe}{gl\+Event\+Type} from gl\+Events.\+h), and a user-\/specified pointer from registration.
+\end{DoxySeeAlso}
+\doxylink{class_event}{Event} message handlers should return {\ttfamily true} if the message was handled, or {\ttfamily false} if the message was skipped or not handled.
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{classgl_widget_abd9f8f577749f268f8ae973a84333520}{Add\+Event\+Handler} 
+
+\doxylink{classgl_widget_ab3cf5ffa3a98154149740b5ec95d62f0}{Remove\+Event\+Handler} 
+\end{DoxySeeAlso}
+
+
+\label{doc-enum-members}
+\Hypertarget{classgl_widget_doc-enum-members}
+\doxysubsection{Member Enumeration Documentation}
+\Hypertarget{classgl_widget_a34532b25a0465161a8f4e591ffc3ad3c}\index{glWidget@{glWidget}!Shape@{Shape}}
+\index{Shape@{Shape}!glWidget@{glWidget}}
+\doxysubsubsection{\texorpdfstring{Shape}{Shape}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgl_widget_a34532b25a0465161a8f4e591ffc3ad3c} 
+enum \doxymbox{\hyperlink{classgl_widget_a34532b25a0465161a8f4e591ffc3ad3c}{gl\+Widget::\+\+Shape}}}
+
+\doxylink{classgl_widget_a34532b25a0465161a8f4e591ffc3ad3c}{Shape} enum \Hypertarget{classgl_widget_a34532b25a0465161a8f4e591ffc3ad3c}\index{glWidget@{glWidget}!Shape@{Shape}}
+\index{Shape@{Shape}!glWidget@{glWidget}}
+\doxysubsubsection{\texorpdfstring{Shape}{Shape}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgl_widget_a34532b25a0465161a8f4e591ffc3ad3c} 
+enum \doxymbox{\hyperlink{classgl_widget_a34532b25a0465161a8f4e591ffc3ad3c}{gl\+Widget::\+\+Shape}}}
+
+\doxylink{classgl_widget_a34532b25a0465161a8f4e591ffc3ad3c}{Shape} enum 
+
+\label{doc-constructors}
+\Hypertarget{classgl_widget_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classgl_widget_a5f7240a0283bf7aec96f2e0c7b58b9e1}\index{glWidget@{glWidget}!glWidget@{glWidget}}
+\index{glWidget@{glWidget}!glWidget@{glWidget}}
+\doxysubsubsection{\texorpdfstring{glWidget()}{glWidget()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily \label{classgl_widget_a5f7240a0283bf7aec96f2e0c7b58b9e1} 
+gl\+Widget::\+gl\+Widget (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{classgl_widget_a34532b25a0465161a8f4e591ffc3ad3c}{Shape}}}]{shape}{ = {\ttfamily Rect}}\end{DoxyParamCaption})}
+
+Constructor \Hypertarget{classgl_widget_a7f688d56ef49185cfa92d69e87e3da00}\index{glWidget@{glWidget}!glWidget@{glWidget}}
+\index{glWidget@{glWidget}!glWidget@{glWidget}}
+\doxysubsubsection{\texorpdfstring{glWidget()}{glWidget()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily \label{classgl_widget_a7f688d56ef49185cfa92d69e87e3da00} 
+gl\+Widget::\+gl\+Widget (\begin{DoxyParamCaption}\item[{float}]{x}{, }\item[{float}]{y}{, }\item[{float}]{width}{, }\item[{float}]{height}{, }\item[{\doxymbox{\hyperlink{classgl_widget_a34532b25a0465161a8f4e591ffc3ad3c}{Shape}}}]{shape}{ = {\ttfamily Rect}}\end{DoxyParamCaption})}
+
+Constructor \Hypertarget{classgl_widget_af08d2600f70883ddca1853ab37dca947}\index{glWidget@{glWidget}!````~glWidget@{\texorpdfstring{$\sim$}{\string~}glWidget}}
+\index{````~glWidget@{\texorpdfstring{$\sim$}{\string~}glWidget}!glWidget@{glWidget}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}glWidget()}{\string~glWidget()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgl_widget_af08d2600f70883ddca1853ab37dca947} 
+gl\+Widget::\+\texorpdfstring{$\sim$}{\string~}gl\+Widget (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+Destructor \Hypertarget{classgl_widget_a5f7240a0283bf7aec96f2e0c7b58b9e1}\index{glWidget@{glWidget}!glWidget@{glWidget}}
+\index{glWidget@{glWidget}!glWidget@{glWidget}}
+\doxysubsubsection{\texorpdfstring{glWidget()}{glWidget()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily \label{classgl_widget_a5f7240a0283bf7aec96f2e0c7b58b9e1} 
+gl\+Widget::\+gl\+Widget (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{classgl_widget_a34532b25a0465161a8f4e591ffc3ad3c}{Shape}}}]{shape}{ = {\ttfamily Rect}}\end{DoxyParamCaption})}
+
+Constructor \Hypertarget{classgl_widget_a7f688d56ef49185cfa92d69e87e3da00}\index{glWidget@{glWidget}!glWidget@{glWidget}}
+\index{glWidget@{glWidget}!glWidget@{glWidget}}
+\doxysubsubsection{\texorpdfstring{glWidget()}{glWidget()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily \label{classgl_widget_a7f688d56ef49185cfa92d69e87e3da00} 
+gl\+Widget::\+gl\+Widget (\begin{DoxyParamCaption}\item[{float}]{x}{, }\item[{float}]{y}{, }\item[{float}]{width}{, }\item[{float}]{height}{, }\item[{\doxymbox{\hyperlink{classgl_widget_a34532b25a0465161a8f4e591ffc3ad3c}{Shape}}}]{shape}{ = {\ttfamily Rect}}\end{DoxyParamCaption})}
+
+Constructor \Hypertarget{classgl_widget_a938b3d84be4081d4f6828df2f391cd46}\index{glWidget@{glWidget}!````~glWidget@{\texorpdfstring{$\sim$}{\string~}glWidget}}
+\index{````~glWidget@{\texorpdfstring{$\sim$}{\string~}glWidget}!glWidget@{glWidget}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}glWidget()}{\string~glWidget()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgl_widget_a938b3d84be4081d4f6828df2f391cd46} 
+virtual gl\+Widget::\+\texorpdfstring{$\sim$}{\string~}gl\+Widget (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+Destructor 
+
+\label{doc-func-members}
+\Hypertarget{classgl_widget_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classgl_widget_abd9f8f577749f268f8ae973a84333520}\index{glWidget@{glWidget}!AddEventHandler@{AddEventHandler}}
+\index{AddEventHandler@{AddEventHandler}!glWidget@{glWidget}}
+\doxysubsubsection{\texorpdfstring{AddEventHandler()}{AddEventHandler()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgl_widget_abd9f8f577749f268f8ae973a84333520} 
+void gl\+Widget::\+\+Add\+Event\+Handler (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{classgl_widget_a205213b643ddc9475c7a40da4711cda3}{gl\+Widget\+Event\+Handler}}}]{callback}{, }\item[{void \texorpdfstring{$\ast$}{*}}]{user}{ = {\ttfamily NULL}}\end{DoxyParamCaption})}
+
+Register an event message handler the widget will send events to. 
+\begin{DoxyParams}{Parameters}
+{\em callback} & function pointer to the event message handler callback \\
+\hline
+{\em user} & optional user-\/specified pointer that will be passed to all invocations of this event handler (typically an object) \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classgl_widget_abd9f8f577749f268f8ae973a84333520}\index{glWidget@{glWidget}!AddEventHandler@{AddEventHandler}}
+\index{AddEventHandler@{AddEventHandler}!glWidget@{glWidget}}
+\doxysubsubsection{\texorpdfstring{AddEventHandler()}{AddEventHandler()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgl_widget_abd9f8f577749f268f8ae973a84333520} 
+void gl\+Widget::\+\+Add\+Event\+Handler (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{classgl_widget_a205213b643ddc9475c7a40da4711cda3}{gl\+Widget\+Event\+Handler}}}]{callback}{, }\item[{void \texorpdfstring{$\ast$}{*}}]{user}{ = {\ttfamily NULL}}\end{DoxyParamCaption})}
+
+Register an event message handler the widget will send events to. 
+\begin{DoxyParams}{Parameters}
+{\em callback} & function pointer to the event message handler callback \\
+\hline
+{\em user} & optional user-\/specified pointer that will be passed to all invocations of this event handler (typically an object) \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classgl_widget_aed8d19970d2ab09e7dc7fc45de30f12b}\index{glWidget@{glWidget}!Contains@{Contains}}
+\index{Contains@{Contains}!glWidget@{glWidget}}
+\doxysubsubsection{\texorpdfstring{Contains()}{Contains()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgl_widget_aed8d19970d2ab09e7dc7fc45de30f12b} 
+bool gl\+Widget::\+\+Contains (\begin{DoxyParamCaption}\item[{float}]{x}{, }\item[{float}]{y}{}\end{DoxyParamCaption}) const}
+
+Test if the point is inside the widget \Hypertarget{classgl_widget_aed8d19970d2ab09e7dc7fc45de30f12b}\index{glWidget@{glWidget}!Contains@{Contains}}
+\index{Contains@{Contains}!glWidget@{glWidget}}
+\doxysubsubsection{\texorpdfstring{Contains()}{Contains()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgl_widget_aed8d19970d2ab09e7dc7fc45de30f12b} 
+bool gl\+Widget::\+\+Contains (\begin{DoxyParamCaption}\item[{float}]{x}{, }\item[{float}]{y}{}\end{DoxyParamCaption}) const}
+
+Test if the point is inside the widget \Hypertarget{classgl_widget_ae82ec5754f965f37ce5ed99681d8eff4}\index{glWidget@{glWidget}!GetCoords@{GetCoords}}
+\index{GetCoords@{GetCoords}!glWidget@{glWidget}}
+\doxysubsubsection{\texorpdfstring{GetCoords()}{GetCoords()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgl_widget_ae82ec5754f965f37ce5ed99681d8eff4} 
+void gl\+Widget::\+\+Get\+Coords (\begin{DoxyParamCaption}\item[{float \texorpdfstring{$\ast$}{*}}]{x1}{, }\item[{float \texorpdfstring{$\ast$}{*}}]{y1}{, }\item[{float \texorpdfstring{$\ast$}{*}}]{x2}{, }\item[{float \texorpdfstring{$\ast$}{*}}]{y2}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Get the bounding coordinates of the widget \Hypertarget{classgl_widget_ae82ec5754f965f37ce5ed99681d8eff4}\index{glWidget@{glWidget}!GetCoords@{GetCoords}}
+\index{GetCoords@{GetCoords}!glWidget@{glWidget}}
+\doxysubsubsection{\texorpdfstring{GetCoords()}{GetCoords()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgl_widget_ae82ec5754f965f37ce5ed99681d8eff4} 
+void gl\+Widget::\+\+Get\+Coords (\begin{DoxyParamCaption}\item[{float \texorpdfstring{$\ast$}{*}}]{x1}{, }\item[{float \texorpdfstring{$\ast$}{*}}]{y1}{, }\item[{float \texorpdfstring{$\ast$}{*}}]{x2}{, }\item[{float \texorpdfstring{$\ast$}{*}}]{y2}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Get the bounding coordinates of the widget \Hypertarget{classgl_widget_ab4e106c7b3ddc347fdd0e69a0d227db5}\index{glWidget@{glWidget}!GetDisplay@{GetDisplay}}
+\index{GetDisplay@{GetDisplay}!glWidget@{glWidget}}
+\doxysubsubsection{\texorpdfstring{GetDisplay()}{GetDisplay()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgl_widget_ab4e106c7b3ddc347fdd0e69a0d227db5} 
+\doxymbox{\hyperlink{classgl_display}{gl\+Display}} \texorpdfstring{$\ast$}{*} gl\+Widget::\+\+Get\+Display (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Get the root window of the widget \Hypertarget{classgl_widget_ab4e106c7b3ddc347fdd0e69a0d227db5}\index{glWidget@{glWidget}!GetDisplay@{GetDisplay}}
+\index{GetDisplay@{GetDisplay}!glWidget@{glWidget}}
+\doxysubsubsection{\texorpdfstring{GetDisplay()}{GetDisplay()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgl_widget_ab4e106c7b3ddc347fdd0e69a0d227db5} 
+\doxymbox{\hyperlink{classgl_display}{gl\+Display}} \texorpdfstring{$\ast$}{*} gl\+Widget::\+\+Get\+Display (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Get the root window of the widget \Hypertarget{classgl_widget_a8099ad0207c2450231ab8b0ad4a5bd53}\index{glWidget@{glWidget}!GetIndex@{GetIndex}}
+\index{GetIndex@{GetIndex}!glWidget@{glWidget}}
+\doxysubsubsection{\texorpdfstring{GetIndex()}{GetIndex()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgl_widget_a8099ad0207c2450231ab8b0ad4a5bd53} 
+int gl\+Widget::\+\+Get\+Index (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+Get the index of the widget in the window (or -\/1 if none) \Hypertarget{classgl_widget_a8099ad0207c2450231ab8b0ad4a5bd53}\index{glWidget@{glWidget}!GetIndex@{GetIndex}}
+\index{GetIndex@{GetIndex}!glWidget@{glWidget}}
+\doxysubsubsection{\texorpdfstring{GetIndex()}{GetIndex()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgl_widget_a8099ad0207c2450231ab8b0ad4a5bd53} 
+int gl\+Widget::\+\+Get\+Index (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+Get the index of the widget in the window (or -\/1 if none) \Hypertarget{classgl_widget_afc49dde308a61b86ee18f9fec63de1a1}\index{glWidget@{glWidget}!GetPosition@{GetPosition}}
+\index{GetPosition@{GetPosition}!glWidget@{glWidget}}
+\doxysubsubsection{\texorpdfstring{GetPosition()}{GetPosition()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgl_widget_afc49dde308a61b86ee18f9fec63de1a1} 
+void gl\+Widget::\+\+Get\+Position (\begin{DoxyParamCaption}\item[{float \texorpdfstring{$\ast$}{*}}]{x}{, }\item[{float \texorpdfstring{$\ast$}{*}}]{y}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Get position of widget in global window coordinates \Hypertarget{classgl_widget_afc49dde308a61b86ee18f9fec63de1a1}\index{glWidget@{glWidget}!GetPosition@{GetPosition}}
+\index{GetPosition@{GetPosition}!glWidget@{glWidget}}
+\doxysubsubsection{\texorpdfstring{GetPosition()}{GetPosition()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgl_widget_afc49dde308a61b86ee18f9fec63de1a1} 
+void gl\+Widget::\+\+Get\+Position (\begin{DoxyParamCaption}\item[{float \texorpdfstring{$\ast$}{*}}]{x}{, }\item[{float \texorpdfstring{$\ast$}{*}}]{y}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Get position of widget in global window coordinates \Hypertarget{classgl_widget_a10e33fe5484d5411e7ce118c70e680b1}\index{glWidget@{glWidget}!GetShape@{GetShape}}
+\index{GetShape@{GetShape}!glWidget@{glWidget}}
+\doxysubsubsection{\texorpdfstring{GetShape()}{GetShape()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgl_widget_a10e33fe5484d5411e7ce118c70e680b1} 
+\doxymbox{\hyperlink{classgl_widget_a34532b25a0465161a8f4e591ffc3ad3c}{Shape}} gl\+Widget::\+\+Get\+Shape (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Get the shape \Hypertarget{classgl_widget_a10e33fe5484d5411e7ce118c70e680b1}\index{glWidget@{glWidget}!GetShape@{GetShape}}
+\index{GetShape@{GetShape}!glWidget@{glWidget}}
+\doxysubsubsection{\texorpdfstring{GetShape()}{GetShape()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgl_widget_a10e33fe5484d5411e7ce118c70e680b1} 
+\doxymbox{\hyperlink{classgl_widget_a34532b25a0465161a8f4e591ffc3ad3c}{Shape}} gl\+Widget::\+\+Get\+Shape (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Get the shape \Hypertarget{classgl_widget_aecc3f788b33837162593b54565056d2f}\index{glWidget@{glWidget}!GetSize@{GetSize}}
+\index{GetSize@{GetSize}!glWidget@{glWidget}}
+\doxysubsubsection{\texorpdfstring{GetSize()}{GetSize()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgl_widget_aecc3f788b33837162593b54565056d2f} 
+void gl\+Widget::\+\+Get\+Size (\begin{DoxyParamCaption}\item[{float \texorpdfstring{$\ast$}{*}}]{width}{, }\item[{float \texorpdfstring{$\ast$}{*}}]{height}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Get the widget\textquotesingle{}s size \Hypertarget{classgl_widget_aecc3f788b33837162593b54565056d2f}\index{glWidget@{glWidget}!GetSize@{GetSize}}
+\index{GetSize@{GetSize}!glWidget@{glWidget}}
+\doxysubsubsection{\texorpdfstring{GetSize()}{GetSize()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgl_widget_aecc3f788b33837162593b54565056d2f} 
+void gl\+Widget::\+\+Get\+Size (\begin{DoxyParamCaption}\item[{float \texorpdfstring{$\ast$}{*}}]{width}{, }\item[{float \texorpdfstring{$\ast$}{*}}]{height}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Get the widget\textquotesingle{}s size \Hypertarget{classgl_widget_a41405fed12cea8a3edc969dea7a0b138}\index{glWidget@{glWidget}!GetUserData@{GetUserData}}
+\index{GetUserData@{GetUserData}!glWidget@{glWidget}}
+\doxysubsubsection{\texorpdfstring{GetUserData()}{GetUserData()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgl_widget_a41405fed12cea8a3edc969dea7a0b138} 
+void \texorpdfstring{$\ast$}{*} gl\+Widget::\+\+Get\+User\+Data (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Retrieve user data \Hypertarget{classgl_widget_a41405fed12cea8a3edc969dea7a0b138}\index{glWidget@{glWidget}!GetUserData@{GetUserData}}
+\index{GetUserData@{GetUserData}!glWidget@{glWidget}}
+\doxysubsubsection{\texorpdfstring{GetUserData()}{GetUserData()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgl_widget_a41405fed12cea8a3edc969dea7a0b138} 
+void \texorpdfstring{$\ast$}{*} gl\+Widget::\+\+Get\+User\+Data (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Retrieve user data \Hypertarget{classgl_widget_abad602c978f8ca73f197df4f690f1280}\index{glWidget@{glWidget}!GlobalToLocal@{GlobalToLocal}}
+\index{GlobalToLocal@{GlobalToLocal}!glWidget@{glWidget}}
+\doxysubsubsection{\texorpdfstring{GlobalToLocal()}{GlobalToLocal()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgl_widget_abad602c978f8ca73f197df4f690f1280} 
+void gl\+Widget::\+\+Global\+To\+Local (\begin{DoxyParamCaption}\item[{float}]{x}{, }\item[{float}]{y}{, }\item[{float \texorpdfstring{$\ast$}{*}}]{x\+\_\+out}{, }\item[{float \texorpdfstring{$\ast$}{*}}]{y\+\_\+out}{}\end{DoxyParamCaption}) const}
+
+Convert from global window coordinates to local widget offset \Hypertarget{classgl_widget_abad602c978f8ca73f197df4f690f1280}\index{glWidget@{glWidget}!GlobalToLocal@{GlobalToLocal}}
+\index{GlobalToLocal@{GlobalToLocal}!glWidget@{glWidget}}
+\doxysubsubsection{\texorpdfstring{GlobalToLocal()}{GlobalToLocal()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgl_widget_abad602c978f8ca73f197df4f690f1280} 
+void gl\+Widget::\+\+Global\+To\+Local (\begin{DoxyParamCaption}\item[{float}]{x}{, }\item[{float}]{y}{, }\item[{float \texorpdfstring{$\ast$}{*}}]{x\+\_\+out}{, }\item[{float \texorpdfstring{$\ast$}{*}}]{y\+\_\+out}{}\end{DoxyParamCaption}) const}
+
+Convert from global window coordinates to local widget offset \Hypertarget{classgl_widget_a410c337398dd9fc5aa79c19539750642}\index{glWidget@{glWidget}!Height@{Height}}
+\index{Height@{Height}!glWidget@{glWidget}}
+\doxysubsubsection{\texorpdfstring{Height()}{Height()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgl_widget_a410c337398dd9fc5aa79c19539750642} 
+float gl\+Widget::\+\+Height (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Get the widget\textquotesingle{}s height \Hypertarget{classgl_widget_a410c337398dd9fc5aa79c19539750642}\index{glWidget@{glWidget}!Height@{Height}}
+\index{Height@{Height}!glWidget@{glWidget}}
+\doxysubsubsection{\texorpdfstring{Height()}{Height()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgl_widget_a410c337398dd9fc5aa79c19539750642} 
+float gl\+Widget::\+\+Height (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Get the widget\textquotesingle{}s height \Hypertarget{classgl_widget_a6016740b9bfcf7c849dddf7f0fff98fc}\index{glWidget@{glWidget}!IsMoveable@{IsMoveable}}
+\index{IsMoveable@{IsMoveable}!glWidget@{glWidget}}
+\doxysubsubsection{\texorpdfstring{IsMoveable()}{IsMoveable()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgl_widget_a6016740b9bfcf7c849dddf7f0fff98fc} 
+bool gl\+Widget::\+\+Is\+Moveable (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Is the widget moveable/\+draggable by the user? \Hypertarget{classgl_widget_a6016740b9bfcf7c849dddf7f0fff98fc}\index{glWidget@{glWidget}!IsMoveable@{IsMoveable}}
+\index{IsMoveable@{IsMoveable}!glWidget@{glWidget}}
+\doxysubsubsection{\texorpdfstring{IsMoveable()}{IsMoveable()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgl_widget_a6016740b9bfcf7c849dddf7f0fff98fc} 
+bool gl\+Widget::\+\+Is\+Moveable (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Is the widget moveable/\+draggable by the user? \Hypertarget{classgl_widget_af8be5c9bb96f9dd97833a628352360c1}\index{glWidget@{glWidget}!IsResizeable@{IsResizeable}}
+\index{IsResizeable@{IsResizeable}!glWidget@{glWidget}}
+\doxysubsubsection{\texorpdfstring{IsResizeable()}{IsResizeable()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgl_widget_af8be5c9bb96f9dd97833a628352360c1} 
+bool gl\+Widget::\+\+Is\+Resizeable (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Is the widget resizeable by the user? \Hypertarget{classgl_widget_af8be5c9bb96f9dd97833a628352360c1}\index{glWidget@{glWidget}!IsResizeable@{IsResizeable}}
+\index{IsResizeable@{IsResizeable}!glWidget@{glWidget}}
+\doxysubsubsection{\texorpdfstring{IsResizeable()}{IsResizeable()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgl_widget_af8be5c9bb96f9dd97833a628352360c1} 
+bool gl\+Widget::\+\+Is\+Resizeable (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Is the widget resizeable by the user? \Hypertarget{classgl_widget_aa9a1474827c54f17307b38fd0bdfc7ca}\index{glWidget@{glWidget}!IsSelected@{IsSelected}}
+\index{IsSelected@{IsSelected}!glWidget@{glWidget}}
+\doxysubsubsection{\texorpdfstring{IsSelected()}{IsSelected()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgl_widget_aa9a1474827c54f17307b38fd0bdfc7ca} 
+bool gl\+Widget::\+\+Is\+Selected (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Is the widget selected? \Hypertarget{classgl_widget_aa9a1474827c54f17307b38fd0bdfc7ca}\index{glWidget@{glWidget}!IsSelected@{IsSelected}}
+\index{IsSelected@{IsSelected}!glWidget@{glWidget}}
+\doxysubsubsection{\texorpdfstring{IsSelected()}{IsSelected()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgl_widget_aa9a1474827c54f17307b38fd0bdfc7ca} 
+bool gl\+Widget::\+\+Is\+Selected (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Is the widget selected? \Hypertarget{classgl_widget_ad1ce1a241774d63cc1a0b2a07930fb92}\index{glWidget@{glWidget}!IsVisible@{IsVisible}}
+\index{IsVisible@{IsVisible}!glWidget@{glWidget}}
+\doxysubsubsection{\texorpdfstring{IsVisible()}{IsVisible()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgl_widget_ad1ce1a241774d63cc1a0b2a07930fb92} 
+bool gl\+Widget::\+\+Is\+Visible (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Is the widget visible \Hypertarget{classgl_widget_ad1ce1a241774d63cc1a0b2a07930fb92}\index{glWidget@{glWidget}!IsVisible@{IsVisible}}
+\index{IsVisible@{IsVisible}!glWidget@{glWidget}}
+\doxysubsubsection{\texorpdfstring{IsVisible()}{IsVisible()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgl_widget_ad1ce1a241774d63cc1a0b2a07930fb92} 
+bool gl\+Widget::\+\+Is\+Visible (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Is the widget visible \Hypertarget{classgl_widget_a5d0f4c643dc9382bc3463f7178dcaeeb}\index{glWidget@{glWidget}!LocalToGlobal@{LocalToGlobal}}
+\index{LocalToGlobal@{LocalToGlobal}!glWidget@{glWidget}}
+\doxysubsubsection{\texorpdfstring{LocalToGlobal()}{LocalToGlobal()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgl_widget_a5d0f4c643dc9382bc3463f7178dcaeeb} 
+void gl\+Widget::\+\+Local\+To\+Global (\begin{DoxyParamCaption}\item[{float}]{x}{, }\item[{float}]{y}{, }\item[{float \texorpdfstring{$\ast$}{*}}]{x\+\_\+out}{, }\item[{float \texorpdfstring{$\ast$}{*}}]{y\+\_\+out}{}\end{DoxyParamCaption}) const}
+
+Convert from local widget offset to global window coordinates \Hypertarget{classgl_widget_a5d0f4c643dc9382bc3463f7178dcaeeb}\index{glWidget@{glWidget}!LocalToGlobal@{LocalToGlobal}}
+\index{LocalToGlobal@{LocalToGlobal}!glWidget@{glWidget}}
+\doxysubsubsection{\texorpdfstring{LocalToGlobal()}{LocalToGlobal()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgl_widget_a5d0f4c643dc9382bc3463f7178dcaeeb} 
+void gl\+Widget::\+\+Local\+To\+Global (\begin{DoxyParamCaption}\item[{float}]{x}{, }\item[{float}]{y}{, }\item[{float \texorpdfstring{$\ast$}{*}}]{x\+\_\+out}{, }\item[{float \texorpdfstring{$\ast$}{*}}]{y\+\_\+out}{}\end{DoxyParamCaption}) const}
+
+Convert from local widget offset to global window coordinates \Hypertarget{classgl_widget_a3ef9c4e97e7998b6e150e7edfcce140c}\index{glWidget@{glWidget}!Move@{Move}}
+\index{Move@{Move}!glWidget@{glWidget}}
+\doxysubsubsection{\texorpdfstring{Move()}{Move()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgl_widget_a3ef9c4e97e7998b6e150e7edfcce140c} 
+void gl\+Widget::\+\+Move (\begin{DoxyParamCaption}\item[{float}]{x}{, }\item[{float}]{y}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Move the widget\textquotesingle{}s position by the specified offset \Hypertarget{classgl_widget_a3ef9c4e97e7998b6e150e7edfcce140c}\index{glWidget@{glWidget}!Move@{Move}}
+\index{Move@{Move}!glWidget@{glWidget}}
+\doxysubsubsection{\texorpdfstring{Move()}{Move()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgl_widget_a3ef9c4e97e7998b6e150e7edfcce140c} 
+void gl\+Widget::\+\+Move (\begin{DoxyParamCaption}\item[{float}]{x}{, }\item[{float}]{y}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Move the widget\textquotesingle{}s position by the specified offset \Hypertarget{classgl_widget_ab3cf5ffa3a98154149740b5ec95d62f0}\index{glWidget@{glWidget}!RemoveEventHandler@{RemoveEventHandler}}
+\index{RemoveEventHandler@{RemoveEventHandler}!glWidget@{glWidget}}
+\doxysubsubsection{\texorpdfstring{RemoveEventHandler()}{RemoveEventHandler()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgl_widget_ab3cf5ffa3a98154149740b5ec95d62f0} 
+void gl\+Widget::\+\+Remove\+Event\+Handler (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{classgl_widget_a205213b643ddc9475c7a40da4711cda3}{gl\+Widget\+Event\+Handler}}}]{callback}{, }\item[{void \texorpdfstring{$\ast$}{*}}]{user}{ = {\ttfamily NULL}}\end{DoxyParamCaption})}
+
+Remove an event message handler from being called by the widget. \doxylink{classgl_widget_ab3cf5ffa3a98154149740b5ec95d62f0}{Remove\+Event\+Handler()} will search for previously registered event handlers that have the same function pointer and/\+or user pointer, and remove them for being called again in the future. \Hypertarget{classgl_widget_ab3cf5ffa3a98154149740b5ec95d62f0}\index{glWidget@{glWidget}!RemoveEventHandler@{RemoveEventHandler}}
+\index{RemoveEventHandler@{RemoveEventHandler}!glWidget@{glWidget}}
+\doxysubsubsection{\texorpdfstring{RemoveEventHandler()}{RemoveEventHandler()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgl_widget_ab3cf5ffa3a98154149740b5ec95d62f0} 
+void gl\+Widget::\+\+Remove\+Event\+Handler (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{classgl_widget_a205213b643ddc9475c7a40da4711cda3}{gl\+Widget\+Event\+Handler}}}]{callback}{, }\item[{void \texorpdfstring{$\ast$}{*}}]{user}{ = {\ttfamily NULL}}\end{DoxyParamCaption})}
+
+Remove an event message handler from being called by the widget. \doxylink{classgl_widget_ab3cf5ffa3a98154149740b5ec95d62f0}{Remove\+Event\+Handler()} will search for previously registered event handlers that have the same function pointer and/\+or user pointer, and remove them for being called again in the future. \Hypertarget{classgl_widget_ac8934c3e32deaf2d86e806f48c667b94}\index{glWidget@{glWidget}!Render@{Render}}
+\index{Render@{Render}!glWidget@{glWidget}}
+\doxysubsubsection{\texorpdfstring{Render()}{Render()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgl_widget_ac8934c3e32deaf2d86e806f48c667b94} 
+void gl\+Widget::\+\+Render (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Render (automatically called by parent) \Hypertarget{classgl_widget_ac8934c3e32deaf2d86e806f48c667b94}\index{glWidget@{glWidget}!Render@{Render}}
+\index{Render@{Render}!glWidget@{glWidget}}
+\doxysubsubsection{\texorpdfstring{Render()}{Render()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgl_widget_ac8934c3e32deaf2d86e806f48c667b94} 
+void gl\+Widget::\+\+Render (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Render (automatically called by parent) \Hypertarget{classgl_widget_a6bd07231a3e27058e2576faf800337e8}\index{glWidget@{glWidget}!SetCoords@{SetCoords}}
+\index{SetCoords@{SetCoords}!glWidget@{glWidget}}
+\doxysubsubsection{\texorpdfstring{SetCoords()}{SetCoords()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgl_widget_a6bd07231a3e27058e2576faf800337e8} 
+void gl\+Widget::\+\+Set\+Coords (\begin{DoxyParamCaption}\item[{float}]{x1}{, }\item[{float}]{y1}{, }\item[{float}]{x2}{, }\item[{float}]{y2}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Set the bounding coordinates of the widget \Hypertarget{classgl_widget_a6bd07231a3e27058e2576faf800337e8}\index{glWidget@{glWidget}!SetCoords@{SetCoords}}
+\index{SetCoords@{SetCoords}!glWidget@{glWidget}}
+\doxysubsubsection{\texorpdfstring{SetCoords()}{SetCoords()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgl_widget_a6bd07231a3e27058e2576faf800337e8} 
+void gl\+Widget::\+\+Set\+Coords (\begin{DoxyParamCaption}\item[{float}]{x1}{, }\item[{float}]{y1}{, }\item[{float}]{x2}{, }\item[{float}]{y2}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Set the bounding coordinates of the widget \Hypertarget{classgl_widget_a8abbff6976a842be844a62c81e5b71e8}\index{glWidget@{glWidget}!SetFillAlpha@{SetFillAlpha}}
+\index{SetFillAlpha@{SetFillAlpha}!glWidget@{glWidget}}
+\doxysubsubsection{\texorpdfstring{SetFillAlpha()}{SetFillAlpha()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgl_widget_a8abbff6976a842be844a62c81e5b71e8} 
+void gl\+Widget::\+\+Set\+Fill\+Alpha (\begin{DoxyParamCaption}\item[{float}]{a}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Set fill alpha \Hypertarget{classgl_widget_a8abbff6976a842be844a62c81e5b71e8}\index{glWidget@{glWidget}!SetFillAlpha@{SetFillAlpha}}
+\index{SetFillAlpha@{SetFillAlpha}!glWidget@{glWidget}}
+\doxysubsubsection{\texorpdfstring{SetFillAlpha()}{SetFillAlpha()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgl_widget_a8abbff6976a842be844a62c81e5b71e8} 
+void gl\+Widget::\+\+Set\+Fill\+Alpha (\begin{DoxyParamCaption}\item[{float}]{a}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Set fill alpha \Hypertarget{classgl_widget_a67543e3cef0771c57b317f6ad44ba9bc}\index{glWidget@{glWidget}!SetFillColor@{SetFillColor}}
+\index{SetFillColor@{SetFillColor}!glWidget@{glWidget}}
+\doxysubsubsection{\texorpdfstring{SetFillColor()}{SetFillColor()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgl_widget_a67543e3cef0771c57b317f6ad44ba9bc} 
+void gl\+Widget::\+\+Set\+Fill\+Color (\begin{DoxyParamCaption}\item[{float}]{r}{, }\item[{float}]{g}{, }\item[{float}]{b}{, }\item[{float}]{a}{ = {\ttfamily 1.0f}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Set fill color \Hypertarget{classgl_widget_a67543e3cef0771c57b317f6ad44ba9bc}\index{glWidget@{glWidget}!SetFillColor@{SetFillColor}}
+\index{SetFillColor@{SetFillColor}!glWidget@{glWidget}}
+\doxysubsubsection{\texorpdfstring{SetFillColor()}{SetFillColor()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgl_widget_a67543e3cef0771c57b317f6ad44ba9bc} 
+void gl\+Widget::\+\+Set\+Fill\+Color (\begin{DoxyParamCaption}\item[{float}]{r}{, }\item[{float}]{g}{, }\item[{float}]{b}{, }\item[{float}]{a}{ = {\ttfamily 1.0f}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Set fill color \Hypertarget{classgl_widget_ac835bf8ff0f03d34634aaff9b2e4e80e}\index{glWidget@{glWidget}!SetHeight@{SetHeight}}
+\index{SetHeight@{SetHeight}!glWidget@{glWidget}}
+\doxysubsubsection{\texorpdfstring{SetHeight()}{SetHeight()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgl_widget_ac835bf8ff0f03d34634aaff9b2e4e80e} 
+void gl\+Widget::\+\+Set\+Height (\begin{DoxyParamCaption}\item[{float}]{height}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Set the widget\textquotesingle{}s height \Hypertarget{classgl_widget_ac835bf8ff0f03d34634aaff9b2e4e80e}\index{glWidget@{glWidget}!SetHeight@{SetHeight}}
+\index{SetHeight@{SetHeight}!glWidget@{glWidget}}
+\doxysubsubsection{\texorpdfstring{SetHeight()}{SetHeight()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgl_widget_ac835bf8ff0f03d34634aaff9b2e4e80e} 
+void gl\+Widget::\+\+Set\+Height (\begin{DoxyParamCaption}\item[{float}]{height}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Set the widget\textquotesingle{}s height \Hypertarget{classgl_widget_a1f00e8ad61269abc413a52adddf42044}\index{glWidget@{glWidget}!SetLineAlpha@{SetLineAlpha}}
+\index{SetLineAlpha@{SetLineAlpha}!glWidget@{glWidget}}
+\doxysubsubsection{\texorpdfstring{SetLineAlpha()}{SetLineAlpha()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgl_widget_a1f00e8ad61269abc413a52adddf42044} 
+void gl\+Widget::\+\+Set\+Line\+Alpha (\begin{DoxyParamCaption}\item[{float}]{a}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Set outline alpha \Hypertarget{classgl_widget_a1f00e8ad61269abc413a52adddf42044}\index{glWidget@{glWidget}!SetLineAlpha@{SetLineAlpha}}
+\index{SetLineAlpha@{SetLineAlpha}!glWidget@{glWidget}}
+\doxysubsubsection{\texorpdfstring{SetLineAlpha()}{SetLineAlpha()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgl_widget_a1f00e8ad61269abc413a52adddf42044} 
+void gl\+Widget::\+\+Set\+Line\+Alpha (\begin{DoxyParamCaption}\item[{float}]{a}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Set outline alpha \Hypertarget{classgl_widget_ac94ab886da5e37d1cbe9d32000c01700}\index{glWidget@{glWidget}!SetLineColor@{SetLineColor}}
+\index{SetLineColor@{SetLineColor}!glWidget@{glWidget}}
+\doxysubsubsection{\texorpdfstring{SetLineColor()}{SetLineColor()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgl_widget_ac94ab886da5e37d1cbe9d32000c01700} 
+void gl\+Widget::\+\+Set\+Line\+Color (\begin{DoxyParamCaption}\item[{float}]{r}{, }\item[{float}]{g}{, }\item[{float}]{b}{, }\item[{float}]{a}{ = {\ttfamily 1.0f}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Set outline color \Hypertarget{classgl_widget_ac94ab886da5e37d1cbe9d32000c01700}\index{glWidget@{glWidget}!SetLineColor@{SetLineColor}}
+\index{SetLineColor@{SetLineColor}!glWidget@{glWidget}}
+\doxysubsubsection{\texorpdfstring{SetLineColor()}{SetLineColor()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgl_widget_ac94ab886da5e37d1cbe9d32000c01700} 
+void gl\+Widget::\+\+Set\+Line\+Color (\begin{DoxyParamCaption}\item[{float}]{r}{, }\item[{float}]{g}{, }\item[{float}]{b}{, }\item[{float}]{a}{ = {\ttfamily 1.0f}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Set outline color \Hypertarget{classgl_widget_a64d351dab596aa07f1d8ef5c0628364b}\index{glWidget@{glWidget}!SetLineWidth@{SetLineWidth}}
+\index{SetLineWidth@{SetLineWidth}!glWidget@{glWidget}}
+\doxysubsubsection{\texorpdfstring{SetLineWidth()}{SetLineWidth()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgl_widget_a64d351dab596aa07f1d8ef5c0628364b} 
+void gl\+Widget::\+\+Set\+Line\+Width (\begin{DoxyParamCaption}\item[{float}]{width}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Set outline width \Hypertarget{classgl_widget_a64d351dab596aa07f1d8ef5c0628364b}\index{glWidget@{glWidget}!SetLineWidth@{SetLineWidth}}
+\index{SetLineWidth@{SetLineWidth}!glWidget@{glWidget}}
+\doxysubsubsection{\texorpdfstring{SetLineWidth()}{SetLineWidth()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgl_widget_a64d351dab596aa07f1d8ef5c0628364b} 
+void gl\+Widget::\+\+Set\+Line\+Width (\begin{DoxyParamCaption}\item[{float}]{width}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Set outline width \Hypertarget{classgl_widget_a2a93b1a07f8fbd0ef4bb9beddea1ee2f}\index{glWidget@{glWidget}!SetMoveable@{SetMoveable}}
+\index{SetMoveable@{SetMoveable}!glWidget@{glWidget}}
+\doxysubsubsection{\texorpdfstring{SetMoveable()}{SetMoveable()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgl_widget_a2a93b1a07f8fbd0ef4bb9beddea1ee2f} 
+void gl\+Widget::\+\+Set\+Moveable (\begin{DoxyParamCaption}\item[{bool}]{moveable}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Toggle if the user can move/\+drag the widget \Hypertarget{classgl_widget_a2a93b1a07f8fbd0ef4bb9beddea1ee2f}\index{glWidget@{glWidget}!SetMoveable@{SetMoveable}}
+\index{SetMoveable@{SetMoveable}!glWidget@{glWidget}}
+\doxysubsubsection{\texorpdfstring{SetMoveable()}{SetMoveable()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgl_widget_a2a93b1a07f8fbd0ef4bb9beddea1ee2f} 
+void gl\+Widget::\+\+Set\+Moveable (\begin{DoxyParamCaption}\item[{bool}]{moveable}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Toggle if the user can move/\+drag the widget \Hypertarget{classgl_widget_abc85ba15d783f8693783321d474b61b2}\index{glWidget@{glWidget}!SetPosition@{SetPosition}}
+\index{SetPosition@{SetPosition}!glWidget@{glWidget}}
+\doxysubsubsection{\texorpdfstring{SetPosition()}{SetPosition()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgl_widget_abc85ba15d783f8693783321d474b61b2} 
+void gl\+Widget::\+\+Set\+Position (\begin{DoxyParamCaption}\item[{float}]{x}{, }\item[{float}]{y}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Set position of widget in global window coordinates \Hypertarget{classgl_widget_abc85ba15d783f8693783321d474b61b2}\index{glWidget@{glWidget}!SetPosition@{SetPosition}}
+\index{SetPosition@{SetPosition}!glWidget@{glWidget}}
+\doxysubsubsection{\texorpdfstring{SetPosition()}{SetPosition()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgl_widget_abc85ba15d783f8693783321d474b61b2} 
+void gl\+Widget::\+\+Set\+Position (\begin{DoxyParamCaption}\item[{float}]{x}{, }\item[{float}]{y}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Set position of widget in global window coordinates \Hypertarget{classgl_widget_a76ce29371050c947e4edabfcd00d2ba5}\index{glWidget@{glWidget}!SetResizeable@{SetResizeable}}
+\index{SetResizeable@{SetResizeable}!glWidget@{glWidget}}
+\doxysubsubsection{\texorpdfstring{SetResizeable()}{SetResizeable()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgl_widget_a76ce29371050c947e4edabfcd00d2ba5} 
+void gl\+Widget::\+\+Set\+Resizeable (\begin{DoxyParamCaption}\item[{bool}]{resizeable}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Toggle if the user can resize the widget \Hypertarget{classgl_widget_a76ce29371050c947e4edabfcd00d2ba5}\index{glWidget@{glWidget}!SetResizeable@{SetResizeable}}
+\index{SetResizeable@{SetResizeable}!glWidget@{glWidget}}
+\doxysubsubsection{\texorpdfstring{SetResizeable()}{SetResizeable()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgl_widget_a76ce29371050c947e4edabfcd00d2ba5} 
+void gl\+Widget::\+\+Set\+Resizeable (\begin{DoxyParamCaption}\item[{bool}]{resizeable}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Toggle if the user can resize the widget \Hypertarget{classgl_widget_a137efa9e4be163b8ed78cc8579199986}\index{glWidget@{glWidget}!SetSelected@{SetSelected}}
+\index{SetSelected@{SetSelected}!glWidget@{glWidget}}
+\doxysubsubsection{\texorpdfstring{SetSelected()}{SetSelected()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgl_widget_a137efa9e4be163b8ed78cc8579199986} 
+void gl\+Widget::\+\+Set\+Selected (\begin{DoxyParamCaption}\item[{bool}]{selected}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Select/\+de-\/select the widget \Hypertarget{classgl_widget_a137efa9e4be163b8ed78cc8579199986}\index{glWidget@{glWidget}!SetSelected@{SetSelected}}
+\index{SetSelected@{SetSelected}!glWidget@{glWidget}}
+\doxysubsubsection{\texorpdfstring{SetSelected()}{SetSelected()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgl_widget_a137efa9e4be163b8ed78cc8579199986} 
+void gl\+Widget::\+\+Set\+Selected (\begin{DoxyParamCaption}\item[{bool}]{selected}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Select/\+de-\/select the widget \Hypertarget{classgl_widget_a67e0fdf6cc515e0349c77c29a35f9e0b}\index{glWidget@{glWidget}!SetSelectedFillColor@{SetSelectedFillColor}}
+\index{SetSelectedFillColor@{SetSelectedFillColor}!glWidget@{glWidget}}
+\doxysubsubsection{\texorpdfstring{SetSelectedFillColor()}{SetSelectedFillColor()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgl_widget_a67e0fdf6cc515e0349c77c29a35f9e0b} 
+void gl\+Widget::\+\+Set\+Selected\+Fill\+Color (\begin{DoxyParamCaption}\item[{float}]{r}{, }\item[{float}]{g}{, }\item[{float}]{b}{, }\item[{float}]{a}{ = {\ttfamily 1.0f}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Set selected fill color \Hypertarget{classgl_widget_a67e0fdf6cc515e0349c77c29a35f9e0b}\index{glWidget@{glWidget}!SetSelectedFillColor@{SetSelectedFillColor}}
+\index{SetSelectedFillColor@{SetSelectedFillColor}!glWidget@{glWidget}}
+\doxysubsubsection{\texorpdfstring{SetSelectedFillColor()}{SetSelectedFillColor()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgl_widget_a67e0fdf6cc515e0349c77c29a35f9e0b} 
+void gl\+Widget::\+\+Set\+Selected\+Fill\+Color (\begin{DoxyParamCaption}\item[{float}]{r}{, }\item[{float}]{g}{, }\item[{float}]{b}{, }\item[{float}]{a}{ = {\ttfamily 1.0f}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Set selected fill color \Hypertarget{classgl_widget_a7e43a63d48c50cf89e874927980c8baf}\index{glWidget@{glWidget}!SetSelectedLineColor@{SetSelectedLineColor}}
+\index{SetSelectedLineColor@{SetSelectedLineColor}!glWidget@{glWidget}}
+\doxysubsubsection{\texorpdfstring{SetSelectedLineColor()}{SetSelectedLineColor()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgl_widget_a7e43a63d48c50cf89e874927980c8baf} 
+void gl\+Widget::\+\+Set\+Selected\+Line\+Color (\begin{DoxyParamCaption}\item[{float}]{r}{, }\item[{float}]{g}{, }\item[{float}]{b}{, }\item[{float}]{a}{ = {\ttfamily 1.0f}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Set selected outline color \Hypertarget{classgl_widget_a7e43a63d48c50cf89e874927980c8baf}\index{glWidget@{glWidget}!SetSelectedLineColor@{SetSelectedLineColor}}
+\index{SetSelectedLineColor@{SetSelectedLineColor}!glWidget@{glWidget}}
+\doxysubsubsection{\texorpdfstring{SetSelectedLineColor()}{SetSelectedLineColor()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgl_widget_a7e43a63d48c50cf89e874927980c8baf} 
+void gl\+Widget::\+\+Set\+Selected\+Line\+Color (\begin{DoxyParamCaption}\item[{float}]{r}{, }\item[{float}]{g}{, }\item[{float}]{b}{, }\item[{float}]{a}{ = {\ttfamily 1.0f}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Set selected outline color \Hypertarget{classgl_widget_a3610f2dfa2ae4af84c492c49a9e780d0}\index{glWidget@{glWidget}!SetShape@{SetShape}}
+\index{SetShape@{SetShape}!glWidget@{glWidget}}
+\doxysubsubsection{\texorpdfstring{SetShape()}{SetShape()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgl_widget_a3610f2dfa2ae4af84c492c49a9e780d0} 
+void gl\+Widget::\+\+Set\+Shape (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{classgl_widget_a34532b25a0465161a8f4e591ffc3ad3c}{Shape}}}]{shape}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Set the shape \Hypertarget{classgl_widget_a3610f2dfa2ae4af84c492c49a9e780d0}\index{glWidget@{glWidget}!SetShape@{SetShape}}
+\index{SetShape@{SetShape}!glWidget@{glWidget}}
+\doxysubsubsection{\texorpdfstring{SetShape()}{SetShape()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgl_widget_a3610f2dfa2ae4af84c492c49a9e780d0} 
+void gl\+Widget::\+\+Set\+Shape (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{classgl_widget_a34532b25a0465161a8f4e591ffc3ad3c}{Shape}}}]{shape}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Set the shape \Hypertarget{classgl_widget_ae5c7bf0eb812a4f935e0ba8738828c97}\index{glWidget@{glWidget}!SetSize@{SetSize}}
+\index{SetSize@{SetSize}!glWidget@{glWidget}}
+\doxysubsubsection{\texorpdfstring{SetSize()}{SetSize()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgl_widget_ae5c7bf0eb812a4f935e0ba8738828c97} 
+void gl\+Widget::\+\+Set\+Size (\begin{DoxyParamCaption}\item[{float}]{width}{, }\item[{float}]{height}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Set the widget\textquotesingle{}s size \Hypertarget{classgl_widget_ae5c7bf0eb812a4f935e0ba8738828c97}\index{glWidget@{glWidget}!SetSize@{SetSize}}
+\index{SetSize@{SetSize}!glWidget@{glWidget}}
+\doxysubsubsection{\texorpdfstring{SetSize()}{SetSize()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgl_widget_ae5c7bf0eb812a4f935e0ba8738828c97} 
+void gl\+Widget::\+\+Set\+Size (\begin{DoxyParamCaption}\item[{float}]{width}{, }\item[{float}]{height}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Set the widget\textquotesingle{}s size \Hypertarget{classgl_widget_a6769b290a1d646f111abdea3b0de78c1}\index{glWidget@{glWidget}!SetUserData@{SetUserData}}
+\index{SetUserData@{SetUserData}!glWidget@{glWidget}}
+\doxysubsubsection{\texorpdfstring{SetUserData()}{SetUserData()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgl_widget_a6769b290a1d646f111abdea3b0de78c1} 
+void gl\+Widget::\+\+Set\+User\+Data (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}}]{user}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Set user-\/defined data \Hypertarget{classgl_widget_a6769b290a1d646f111abdea3b0de78c1}\index{glWidget@{glWidget}!SetUserData@{SetUserData}}
+\index{SetUserData@{SetUserData}!glWidget@{glWidget}}
+\doxysubsubsection{\texorpdfstring{SetUserData()}{SetUserData()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgl_widget_a6769b290a1d646f111abdea3b0de78c1} 
+void gl\+Widget::\+\+Set\+User\+Data (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}}]{user}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Set user-\/defined data \Hypertarget{classgl_widget_a0710d5b99bb86794ee0117e2cb910ec1}\index{glWidget@{glWidget}!SetVisible@{SetVisible}}
+\index{SetVisible@{SetVisible}!glWidget@{glWidget}}
+\doxysubsubsection{\texorpdfstring{SetVisible()}{SetVisible()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgl_widget_a0710d5b99bb86794ee0117e2cb910ec1} 
+void gl\+Widget::\+\+Set\+Visible (\begin{DoxyParamCaption}\item[{bool}]{visible}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Show/\+hide the widget \Hypertarget{classgl_widget_a0710d5b99bb86794ee0117e2cb910ec1}\index{glWidget@{glWidget}!SetVisible@{SetVisible}}
+\index{SetVisible@{SetVisible}!glWidget@{glWidget}}
+\doxysubsubsection{\texorpdfstring{SetVisible()}{SetVisible()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgl_widget_a0710d5b99bb86794ee0117e2cb910ec1} 
+void gl\+Widget::\+\+Set\+Visible (\begin{DoxyParamCaption}\item[{bool}]{visible}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Show/\+hide the widget \Hypertarget{classgl_widget_af55b147cc0621a07b85490cb6d7c1824}\index{glWidget@{glWidget}!SetWidth@{SetWidth}}
+\index{SetWidth@{SetWidth}!glWidget@{glWidget}}
+\doxysubsubsection{\texorpdfstring{SetWidth()}{SetWidth()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgl_widget_af55b147cc0621a07b85490cb6d7c1824} 
+void gl\+Widget::\+\+Set\+Width (\begin{DoxyParamCaption}\item[{float}]{width}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Set the widget\textquotesingle{}s width \Hypertarget{classgl_widget_af55b147cc0621a07b85490cb6d7c1824}\index{glWidget@{glWidget}!SetWidth@{SetWidth}}
+\index{SetWidth@{SetWidth}!glWidget@{glWidget}}
+\doxysubsubsection{\texorpdfstring{SetWidth()}{SetWidth()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgl_widget_af55b147cc0621a07b85490cb6d7c1824} 
+void gl\+Widget::\+\+Set\+Width (\begin{DoxyParamCaption}\item[{float}]{width}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Set the widget\textquotesingle{}s width \Hypertarget{classgl_widget_a3670b74a4763abbcd4d21500f4ac626c}\index{glWidget@{glWidget}!SetX@{SetX}}
+\index{SetX@{SetX}!glWidget@{glWidget}}
+\doxysubsubsection{\texorpdfstring{SetX()}{SetX()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgl_widget_a3670b74a4763abbcd4d21500f4ac626c} 
+void gl\+Widget::\+\+SetX (\begin{DoxyParamCaption}\item[{float}]{x}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Set the widget\textquotesingle{}s X coordinate \Hypertarget{classgl_widget_a3670b74a4763abbcd4d21500f4ac626c}\index{glWidget@{glWidget}!SetX@{SetX}}
+\index{SetX@{SetX}!glWidget@{glWidget}}
+\doxysubsubsection{\texorpdfstring{SetX()}{SetX()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgl_widget_a3670b74a4763abbcd4d21500f4ac626c} 
+void gl\+Widget::\+\+SetX (\begin{DoxyParamCaption}\item[{float}]{x}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Set the widget\textquotesingle{}s X coordinate \Hypertarget{classgl_widget_a9d55a8dcab6721a154b2e4f5ed53d586}\index{glWidget@{glWidget}!SetY@{SetY}}
+\index{SetY@{SetY}!glWidget@{glWidget}}
+\doxysubsubsection{\texorpdfstring{SetY()}{SetY()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgl_widget_a9d55a8dcab6721a154b2e4f5ed53d586} 
+void gl\+Widget::\+\+SetY (\begin{DoxyParamCaption}\item[{float}]{y}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Set the widget\textquotesingle{}s Y coordinate \Hypertarget{classgl_widget_a9d55a8dcab6721a154b2e4f5ed53d586}\index{glWidget@{glWidget}!SetY@{SetY}}
+\index{SetY@{SetY}!glWidget@{glWidget}}
+\doxysubsubsection{\texorpdfstring{SetY()}{SetY()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgl_widget_a9d55a8dcab6721a154b2e4f5ed53d586} 
+void gl\+Widget::\+\+SetY (\begin{DoxyParamCaption}\item[{float}]{y}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Set the widget\textquotesingle{}s Y coordinate \Hypertarget{classgl_widget_aeded50b8cb9112b874013be651299674}\index{glWidget@{glWidget}!Width@{Width}}
+\index{Width@{Width}!glWidget@{glWidget}}
+\doxysubsubsection{\texorpdfstring{Width()}{Width()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgl_widget_aeded50b8cb9112b874013be651299674} 
+float gl\+Widget::\+\+Width (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Get the widget\textquotesingle{}s width \Hypertarget{classgl_widget_aeded50b8cb9112b874013be651299674}\index{glWidget@{glWidget}!Width@{Width}}
+\index{Width@{Width}!glWidget@{glWidget}}
+\doxysubsubsection{\texorpdfstring{Width()}{Width()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgl_widget_aeded50b8cb9112b874013be651299674} 
+float gl\+Widget::\+\+Width (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Get the widget\textquotesingle{}s width \Hypertarget{classgl_widget_a4b0b580a068e05f6a4f96292e24a63b6}\index{glWidget@{glWidget}!X@{X}}
+\index{X@{X}!glWidget@{glWidget}}
+\doxysubsubsection{\texorpdfstring{X()}{X()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgl_widget_a4b0b580a068e05f6a4f96292e24a63b6} 
+float gl\+Widget::\+X (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Get the widget\textquotesingle{}s X coordinate \Hypertarget{classgl_widget_a4b0b580a068e05f6a4f96292e24a63b6}\index{glWidget@{glWidget}!X@{X}}
+\index{X@{X}!glWidget@{glWidget}}
+\doxysubsubsection{\texorpdfstring{X()}{X()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgl_widget_a4b0b580a068e05f6a4f96292e24a63b6} 
+float gl\+Widget::\+X (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Get the widget\textquotesingle{}s X coordinate \Hypertarget{classgl_widget_a634e82aa95f40ca76c2beec834769717}\index{glWidget@{glWidget}!Y@{Y}}
+\index{Y@{Y}!glWidget@{glWidget}}
+\doxysubsubsection{\texorpdfstring{Y()}{Y()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgl_widget_a634e82aa95f40ca76c2beec834769717} 
+float gl\+Widget::\+Y (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Get the widget\textquotesingle{}s Y coordinate \Hypertarget{classgl_widget_a634e82aa95f40ca76c2beec834769717}\index{glWidget@{glWidget}!Y@{Y}}
+\index{Y@{Y}!glWidget@{glWidget}}
+\doxysubsubsection{\texorpdfstring{Y()}{Y()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgl_widget_a634e82aa95f40ca76c2beec834769717} 
+float gl\+Widget::\+Y (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Get the widget\textquotesingle{}s Y coordinate 
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+jetson-\/inference/\+build/\+aarch64/\+include/\+jetson-\/utils/\+gl\+Widget.\+h\item 
+jetson-\/inference/\+utils/\+display/\+gl\+Widget.\+h\item 
+jetson-\/inference/\+utils/\+display/\+gl\+Widget.\+cpp\end{DoxyCompactItemize}

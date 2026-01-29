@@ -1,0 +1,144 @@
+\chapter{digits-\/native }
+\hypertarget{md_jetson-inference_2docs_2digits-native}{}\label{md_jetson-inference_2docs_2digits-native}\index{digits-\/native@{digits-\/native}}
+ 
+
+\textsuperscript{\href{digits-workflow.md}{\texttt{Back}} \texorpdfstring{$\vert$}{|} \href{jetpack-setup.md}{\texttt{Next}} \texorpdfstring{$\vert$}{|} }\href{../README.md\#two-days-to-a-demo-digits}{\texttt{\textsuperscript{Contents}}} ~\newline
+ \textsuperscript{System Setup}
+
+~\newline
+\hypertarget{md_jetson-inference_2docs_2digits-native_autotoc_md232}{}\doxysection{\texorpdfstring{Natively setting up DIGITS on the Host}{Natively setting up DIGITS on the Host}}\label{md_jetson-inference_2docs_2digits-native_autotoc_md232}
+\begin{quote}
+{\bfseries{note}}:\+ it is recommended for beginners to setup DIGITS with \doxysectlink{md_jetson-inference_2docs_2digits-setup}{NVIDIA GPU Cloud (NGC)}{0} \end{quote}
+
+
+If you chose not to use NGC container for DIGITS, you need to natively set up your CUDA development environment on your PC and build DIGITS.\hypertarget{md_jetson-inference_2docs_2digits-native_autotoc_md233}{}\doxysubsubsubsection{\texorpdfstring{Installing NVIDIA Driver on the Host}{Installing NVIDIA Driver on the Host}}\label{md_jetson-inference_2docs_2digits-native_autotoc_md233}
+At this point, Jet\+Pack will have flashed the Jetson with the latest L4T BSP, and installed CUDA toolkits to both the Jetson and host PC. However, the NVIDIA PCIe driver will still need to be installed on the host PC to enable GPU-\/accelerated training. Run the following commands from the host PC to install the NVIDIA driver from the Ubuntu repo:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{\$\ sudo\ apt-\/get\ install\ nvidia-\/384\ \ \ \#\ use\ nvidia-\/375\ for\ alternate\ version}
+\DoxyCodeLine{\$\ sudo\ reboot}
+
+\end{DoxyCode}
+
+
+Afer rebooting, the NVIDIA driver should be listed under {\ttfamily lsmod}:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{\$\ lsmod\ |\ grep\ nvidia}
+\DoxyCodeLine{nvidia\_uvm\ \ \ \ \ \ \ \ \ \ \ \ 647168\ \ 0}
+\DoxyCodeLine{nvidia\_drm\ \ \ \ \ \ \ \ \ \ \ \ \ 49152\ \ 1}
+\DoxyCodeLine{nvidia\_modeset\ \ \ \ \ \ \ \ 790528\ \ 4\ nvidia\_drm}
+\DoxyCodeLine{nvidia\ \ \ \ \ \ \ \ \ \ \ \ \ \ 12144640\ \ 60\ nvidia\_modeset,nvidia\_uvm}
+\DoxyCodeLine{drm\_kms\_helper\ \ \ \ \ \ \ \ 167936\ \ 1\ nvidia\_drm}
+\DoxyCodeLine{drm\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 368640\ \ 4\ nvidia\_drm,drm\_kms\_helper}
+
+\end{DoxyCode}
+
+
+To verify the CUDA toolkit and NVIDIA driver are working, run some tests that come with the CUDA samples:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{\$\ cd\ /usr/local/cuda/samples}
+\DoxyCodeLine{\$\ sudo\ make}
+\DoxyCodeLine{\$\ cd\ bin/x86\_64/linux/release/}
+\DoxyCodeLine{\$\ ./deviceQuery}
+\DoxyCodeLine{\$\ ./bandwidthTest\ -\/-\/memory=pinned}
+
+\end{DoxyCode}
+\hypertarget{md_jetson-inference_2docs_2digits-native_autotoc_md234}{}\doxysubsubsubsection{\texorpdfstring{Installing cu\+DNN on the Host}{Installing cu\+DNN on the Host}}\label{md_jetson-inference_2docs_2digits-native_autotoc_md234}
+\doxylink{requirements_The}{The} next step is to install NVIDIA {\bfseries{\href{https://developer.nvidia.com/cudnn}{\texttt{cu\+DNN}}}} libraries on the host PC. Download the libcudnn and libcudnn packages from the NVIDIA cu\+DNN webpage:\+
+
+\href{https://developer.nvidia.com/cudnn}{\texttt{{\ttfamily https:\+/\+/\+developer.\+nvidia.\+com/\+cudnn}}}
+
+Then install the packages with the following commands:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{\$\ sudo\ dpkg\ -\/i\ libcudnn<version>\_amd64.deb}
+\DoxyCodeLine{\$\ sudo\ dpkg\ -\/i\ libcudnn-\/dev\_<version>\_amd64.deb}
+
+\end{DoxyCode}
+\hypertarget{md_jetson-inference_2docs_2digits-native_autotoc_md235}{}\doxysubsubsubsection{\texorpdfstring{Installing NVcaffe on the Host}{Installing NVcaffe on the Host}}\label{md_jetson-inference_2docs_2digits-native_autotoc_md235}
+\href{https://github.com/nvidia/caffe/tree/caffe-0.15}{\texttt{NVcaffe}} is the NVIDIA branch of Caffe with optimizations for GPU. NVcaffe requires cu\+DNN and is used by DIGITS for training DNNs. To install it, clone the NVcaffe repo from Git\+Hub, and compile from source, using the caffe-\/0.\+15 branch.
+
+\begin{quote}
+{\bfseries{note}}:\+ for this tutorial, NVcaffe is only required on the host (for training). During inferencing phase Tensor\+RT is used on the Jetson and doesn\textquotesingle{}t require caffe. \end{quote}
+
+
+First clone the caffe-\/0.\+15 branch from \href{https://github.com/NVIDIA/caffe}{\texttt{https:\+/\+/\+github.\+com/\+\+NVIDIA/\+caffe}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{\$\ git\ clone\ -\/b\ caffe-\/0.15\ https://github.com/NVIDIA/caffe}
+
+\end{DoxyCode}
+
+
+Build caffe with the \href{http://caffe.berkeleyvision.org/installation.html\#compilation}{\texttt{instructions}} from here:\+
+
+\href{http://caffe.berkeleyvision.org/installation.html\#compilation}{\texttt{{\ttfamily http:\+/\+/\+caffe.\+berkeleyvision.\+org/\+installation.\+html\#compilation}}}
+
+Caffe should now be configured and built. Now edit your user\textquotesingle{}s \texorpdfstring{$\sim$}{\string~}/\+.bashrc to include the path to your Caffe tree (replace the paths below to reflect your own):\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{export\ CAFFE\_ROOT=/home/dusty/workspace/caffe}
+\DoxyCodeLine{export\ PYTHONPATH=/home/dusty/workspace/caffe/python:\$PYTHONPATH}
+
+\end{DoxyCode}
+
+
+Close and re-\/open the terminal for the changes to take effect.\hypertarget{md_jetson-inference_2docs_2digits-native_autotoc_md236}{}\doxysubsubsubsection{\texorpdfstring{Installing DIGITS on the Host}{Installing DIGITS on the Host}}\label{md_jetson-inference_2docs_2digits-native_autotoc_md236}
+NVIDIA {\bfseries{\href{https://developer.nvidia.com/digits}{\texttt{DIGITS}}}} is a Python-\/based web service which interactively trains DNNs and manages datasets. As highlighed in the DIGITS workflow, it runs on the host PC to create the network model during the training phase. \doxylink{requirements_The}{The} trained model is then copied from the host PC to the Jetson for the runtime inference phase with Tensor\+RT.
+
+For automated installation, it\textquotesingle{}s recommended to use DIGITS through \href{https://www.nvidia.com/en-us/gpu-cloud/}{\texttt{NVIDIA GPU Cloud}}, which comes with a DIGITS Docker image that can run on a GPU attached to a local PC or cloud instance. Alternatively, to install DIGITS from source, first clone the DIGITS repo from Git\+Hub:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{\$\ git\ clone\ https://github.com/nvidia/DIGITS}
+
+\end{DoxyCode}
+
+
+Then complete the steps under the {\bfseries{\href{https://github.com/NVIDIA/DIGITS/blob/digits-6.0/docs/BuildDigits.md}{\texttt{Building DIGITS}}}} documentation.
+
+\href{https://github.com/NVIDIA/DIGITS/blob/digits-6.0/docs/BuildDigits.md}{\texttt{{\ttfamily https:\+/\+/\+github.\+com/\+\+NVIDIA/\+\+DIGITS/\+blob/\+digits-\/6.\+0/\+docs/\+\+Build\+Digits.\+md}}}\hypertarget{md_jetson-inference_2docs_2digits-native_autotoc_md237}{}\doxysubsubsubsection{\texorpdfstring{Starting the DIGITS Server}{Starting the DIGITS Server}}\label{md_jetson-inference_2docs_2digits-native_autotoc_md237}
+Assuming that your terminal is still in the DIGITS directory, the webserver can be started by running the {\ttfamily digits-\/devserver} Python script:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{\$\ ./digits-\/devserver\ }
+\DoxyCodeLine{\ \ \_\_\_\ \_\_\_\ \_\_\_\ \_\_\_\ \_\_\_\_\_\ \_\_\_}
+\DoxyCodeLine{\ |\ \ \ \(\backslash\)\_\ \_/\ \_\_|\_\ \_|\_\ \ \ \_/\ \_\_|}
+\DoxyCodeLine{\ |\ |)\ |\ |\ (\_\ ||\ |\ \ |\ |\ \(\backslash\)\_\_\ \(\backslash\)}
+\DoxyCodeLine{\ |\_\_\_/\_\_\_\(\backslash\)\_\_\_|\_\_\_|\ |\_|\ |\_\_\_/\ 5.1-\/dev}
+\DoxyCodeLine{}
+\DoxyCodeLine{2017-\/04-\/17\ 13:19:02\ [INFO\ ]\ Loaded\ 0\ jobs.`}
+
+\end{DoxyCode}
+
+
+DIGITS will store user jobs (training datasets and model snapshots) under the {\ttfamily digits/\+jobs} directory.
+
+To access the interactive DIGITS session, open your web browser and navigate to {\ttfamily 0.\+0.\+0.\+0:\+5000}.
+
+\begin{quote}
+{\bfseries{note}}:\+ by default the DIGITS server will start on port 5000, but the port can be specified by passing the {\ttfamily -\/-\/port} argument to the {\ttfamily digits-\/devserver} script. \end{quote}
+\hypertarget{md_jetson-inference_2docs_2digits-native_autotoc_md238}{}\doxysubsection{\texorpdfstring{autotoc\+\_\+md238}{autotoc\+\_\+md238}}\label{md_jetson-inference_2docs_2digits-native_autotoc_md238}
+Next \texorpdfstring{$\vert$}{|} {\bfseries{\href{jetpack-setup.md}{\texttt{Setting up Jetson with Jet\+Pack}}}} ~\newline
+ Back \texorpdfstring{$\vert$}{|} {\bfseries{\href{digits-workflow.md}{\texttt{DIGITS Workflow}}}}
+
+{\bfseries{ }}
+
+\textsuperscript{© 2016-\/2019 NVIDIA \texorpdfstring{$\vert$}{|} }\href{../README.md\#two-days-to-a-demo-digits}{\texttt{\textsuperscript{Table of Contents}}}

@@ -1,0 +1,171 @@
+\chapter{digits-\/setup }
+\hypertarget{md_jetson-inference_2docs_2digits-setup}{}\label{md_jetson-inference_2docs_2digits-setup}\index{digits-\/setup@{digits-\/setup}}
+ 
+
+\textsuperscript{\href{digits-workflow.md}{\texttt{Back}} \texorpdfstring{$\vert$}{|} \href{jetpack-setup.md}{\texttt{Next}} \texorpdfstring{$\vert$}{|} }\href{../README.md\#two-days-to-a-demo-digits}{\texttt{\textsuperscript{Contents}}} ~\newline
+ \textsuperscript{System Setup}
+
+~\newline
+\hypertarget{md_jetson-inference_2docs_2digits-setup_autotoc_md239}{}\doxysection{\texorpdfstring{DIGITS System Setup}{DIGITS System Setup}}\label{md_jetson-inference_2docs_2digits-setup_autotoc_md239}
+During this tutorial, we\textquotesingle{}ll use a host PC (or cloud instance) for training DNNs, alongside a Jetson for inference. ~\newline
+
+
+Due to the number of dependencies required for training, it\textquotesingle{}s recommended for beginners to setup their host training PC with {\bfseries{\href{https://www.nvidia.com/en-us/gpu-cloud/}{\texttt{NVIDIA GPU Cloud (NGC)}}}} or \href{https://github.com/NVIDIA/nvidia-docker}{\texttt{nvidia-\/docker}}. These methods automate the install of the drivers and machine learning frameworks on the host. NGC can be used to deploy Docker images locally, or remotely to cloud providers like AWS or Azure N-\/series.
+
+A host PC will also serve to flash the Jetson with the latest Jet\+Pack. First, we\textquotesingle{}ll setup and configure the host training PC with the required OS and tools.\hypertarget{md_jetson-inference_2docs_2digits-setup_autotoc_md240}{}\doxysubsubsection{\texorpdfstring{Installing Ubuntu on the Host}{Installing Ubuntu on the Host}}\label{md_jetson-inference_2docs_2digits-setup_autotoc_md240}
+If you don\textquotesingle{}t already have Ubuntu installed on your host PC, download and install Ubuntu 16.\+04 x86\+\_\+64 from one of the following locations:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{http://releases.ubuntu.com/16.04/ubuntu-\/16.04.2-\/desktop-\/amd64.iso}
+\DoxyCodeLine{http://releases.ubuntu.com/16.04/ubuntu-\/16.04.2-\/desktop-\/amd64.iso.torrent}
+
+\end{DoxyCode}
+
+
+Ubuntu 14.\+04 x86\+\_\+64 or Ubuntu 18.\+04 x86\+\_\+64 may also be acceptable with minor modifications later while installing some packages with apt-\/get.\hypertarget{md_jetson-inference_2docs_2digits-setup_autotoc_md241}{}\doxysubsubsection{\texorpdfstring{Setting up host training PC with NGC container}{Setting up host training PC with NGC container}}\label{md_jetson-inference_2docs_2digits-setup_autotoc_md241}
+\begin{quote}
+{\bfseries{note}}:\+ to setup DIGITS natively on your host PC, you should go to \doxysectlink{md_jetson-inference_2docs_2digits-native}{{\ttfamily Natively setting up DIGITS on the Host}}{0} (advanced) ~\newline
+ \end{quote}
+
+
+NVIDIA hosts NVIDIA® GPU Cloud (NGC) container registry for AI developers worldwide. You can download a containerized software stack for a wide range of deep learning frameworks, optimized and verified with NVIDIA libraries and CUDA runtime version.
+
+
+
+If you have a recent generation GPU (Pascal or newer) on your PC, the use of NGC registry container is probably the easiest way to setup DIGITS. To use a NGC registry container on your local host machine (as opposed to cloud), you can follow this detailed \href{https://docs.nvidia.com/ngc/ngc-titan-setup-guide/index.html}{\texttt{setup guide}}.\hypertarget{md_jetson-inference_2docs_2digits-setup_autotoc_md242}{}\doxysubsubsubsection{\texorpdfstring{Installing the NVIDIA driver}{Installing the NVIDIA driver}}\label{md_jetson-inference_2docs_2digits-setup_autotoc_md242}
+Add the NVIDIA Developer repository and install the NVIDIA driver.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{\$\ sudo\ apt-\/get\ install\ -\/y\ apt-\/transport-\/https\ curl}
+\DoxyCodeLine{\$\ cat\ <<EOF\ |\ sudo\ tee\ /etc/apt/sources.list.d/cuda.list\ >\ /dev/null}
+\DoxyCodeLine{deb\ https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1604/x86\_64\ /}
+\DoxyCodeLine{EOF}
+\DoxyCodeLine{\$\ curl\ -\/s\ \(\backslash\)}
+\DoxyCodeLine{\ https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1604/x86\_64/7fa2af80.pub\ \(\backslash\)}
+\DoxyCodeLine{\ |\ sudo\ apt-\/key\ add\ -\/}
+\DoxyCodeLine{\$\ cat\ <<EOF\ |\ sudo\ tee\ /etc/apt/preferences.d/cuda\ >\ /dev/null}
+\DoxyCodeLine{Package:\ *}
+\DoxyCodeLine{Pin:\ origin\ developer.download.nvidia.com}
+\DoxyCodeLine{Pin-\/Priority:\ 600}
+\DoxyCodeLine{EOF}
+\DoxyCodeLine{\$\ sudo\ apt-\/get\ update\ \&\&\ sudo\ apt-\/get\ install\ -\/y\ -\/-\/no-\/install-\/recommends\ cuda-\/drivers}
+\DoxyCodeLine{\$\ sudo\ reboot}
+
+\end{DoxyCode}
+
+
+After reboot, check if you can run {\ttfamily nvidia-\/smi} and see if your GPU shows up.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{\$\ nvidia-\/smi}
+\DoxyCodeLine{Thu\ May\ 31\ 11:56:44\ 2018}
+\DoxyCodeLine{+-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/+}
+\DoxyCodeLine{|\ NVIDIA-\/SMI\ 390.30\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Driver\ Version:\ 390.30\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}
+\DoxyCodeLine{|-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/+-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/+-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/+}
+\DoxyCodeLine{|\ GPU\ \ Name\ \ \ \ \ \ \ \ Persistence-\/M|\ Bus-\/Id\ \ \ \ \ \ \ \ Disp.A\ |\ Volatile\ Uncorr.\ ECC\ |}
+\DoxyCodeLine{|\ Fan\ \ Temp\ \ Perf\ \ Pwr:Usage/Cap|\ \ \ \ \ \ \ \ \ Memory-\/Usage\ |\ GPU-\/Util\ \ Compute\ M.\ |}
+\DoxyCodeLine{|===============================+======================+======================|}
+\DoxyCodeLine{|\ \ \ 0\ \ Quadro\ GV100\ \ \ \ \ \ \ \ Off\ \ |\ 00000000:01:00.0\ \ On\ |\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Off\ |}
+\DoxyCodeLine{|\ 29\%\ \ \ 41C\ \ \ \ P2\ \ \ \ 27W\ /\ 250W\ |\ \ \ 1968MiB\ /\ 32506MiB\ |\ \ \ \ \ 22\%\ \ \ \ \ \ Default\ |}
+\DoxyCodeLine{+-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/+-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/+-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/+}
+
+\end{DoxyCode}
+\hypertarget{md_jetson-inference_2docs_2digits-setup_autotoc_md243}{}\doxysubsubsubsection{\texorpdfstring{Installing Docker}{Installing Docker}}\label{md_jetson-inference_2docs_2digits-setup_autotoc_md243}
+Install prerequisites, install the GPG key, and add the Docker repository.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{\$\ sudo\ apt-\/get\ install\ -\/y\ ca-\/certificates\ curl\ software-\/properties-\/common}
+\DoxyCodeLine{\$\ curl\ -\/fsSL\ https://download.docker.com/linux/ubuntu/gpg\ |\ sudo\ apt-\/key\ add\ -\/}
+\DoxyCodeLine{\$\ sudo\ add-\/apt-\/repository\ \(\backslash\)}
+\DoxyCodeLine{\ "{}deb\ [arch=amd64]\ https://download.docker.com/linux/ubuntu\ \$(lsb\_release\ -\/cs)\ stable"{}}
+
+\end{DoxyCode}
+
+
+Add the Docker Engine Utility (nvidia-\/docker2) repository, install nvidia-\/docker2, set up permissions to use Docker without sudo each time, and then reboot the system.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{\$\ curl\ -\/s\ -\/L\ https://nvidia.github.io/nvidia-\/docker/gpgkey\ |\ \(\backslash\)}
+\DoxyCodeLine{\ \ sudo\ apt-\/key\ add\ -\/}
+\DoxyCodeLine{\$\ ccurl\ -\/s\ -\/L\ https://nvidia.github.io/nvidia-\/docker/ubuntu16.04/amd64/nvidia-\/docker.list\ |\ \(\backslash\)}
+\DoxyCodeLine{\ \ sudo\ tee\ /etc/apt/sources.list.d/nvidia-\/docker.list}
+\DoxyCodeLine{\$\ csudo\ apt-\/get\ update}
+\DoxyCodeLine{\$\ csudo\ apt-\/get\ install\ -\/y\ nvidia-\/docker2}
+\DoxyCodeLine{\$\ csudo\ usermod\ -\/aG\ docker\ \$USER}
+\DoxyCodeLine{\$\ sudo\ reboot}
+
+\end{DoxyCode}
+\hypertarget{md_jetson-inference_2docs_2digits-setup_autotoc_md244}{}\doxysubsubsubsection{\texorpdfstring{NGC Sign-\/up}{NGC Sign-\/up}}\label{md_jetson-inference_2docs_2digits-setup_autotoc_md244}
+Sign up to NGC if you have not.
+
+\href{https://ngc.nvidia.com/signup/register}{\texttt{https:\+/\+/\+ngc.\+nvidia.\+com/\+signup/\+register}}
+
+Generate your API key, and save it somewhere safe. You will use this soon later.
+
+\hypertarget{md_jetson-inference_2docs_2digits-setup_autotoc_md245}{}\doxysubsubsubsection{\texorpdfstring{Setting up data and job directory for DIGITS}{Setting up data and job directory for DIGITS}}\label{md_jetson-inference_2docs_2digits-setup_autotoc_md245}
+Back on you PC (after reboot), log in to the NGC container registry
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{\$\ docker\ login\ nvcr.io}
+
+\end{DoxyCode}
+
+
+You will be prompted to enter Username and Password
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{Username:\ \$oauthtoken}
+\DoxyCodeLine{Password:\ <Your\ NGC\ API\ Key>}
+
+\end{DoxyCode}
+
+
+For a test, use CUDA container to see if the nvidia-\/smi shows your GPU.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{docker\ run\ -\/-\/runtime=nvidia\ -\/-\/rm\ nvcr.io/nvidia/cuda:9.0-\/cudnn7-\/devel-\/ubuntu16.04\ nvidia-\/smi}
+
+\end{DoxyCode}
+\hypertarget{md_jetson-inference_2docs_2digits-setup_autotoc_md246}{}\doxysubsubsubsection{\texorpdfstring{Setting up data and job directories}{Setting up data and job directories}}\label{md_jetson-inference_2docs_2digits-setup_autotoc_md246}
+Create data and job directories on your host PC, to be mounted by DIGITS container.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{\$\ mkdir\ /home/username/data}
+\DoxyCodeLine{\$\ mkdir\ /home/username/digits-\/jobs}
+
+\end{DoxyCode}
+\hypertarget{md_jetson-inference_2docs_2digits-setup_autotoc_md247}{}\doxysubsubsubsection{\texorpdfstring{Starting DIGITS container}{Starting DIGITS container}}\label{md_jetson-inference_2docs_2digits-setup_autotoc_md247}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{\$\ nvidia-\/docker\ run\ -\/-\/name\ digits\ -\/d\ -\/p\ 8888:5000\ \(\backslash\)}
+\DoxyCodeLine{\ -\/v\ /home/username/data:/data:ro}
+\DoxyCodeLine{\ -\/v\ /home/username/digits-\/jobs:/workspace/jobs\ nvcr.io/nvidia/digits:18.05}
+
+\end{DoxyCode}
+
+
+Open up a web browser and access \href{http://localhost:8888}{\texttt{http:\+/\+/\+localhost:\+8888}}\hypertarget{md_jetson-inference_2docs_2digits-setup_autotoc_md248}{}\doxysubsection{\texorpdfstring{autotoc\+\_\+md248}{autotoc\+\_\+md248}}\label{md_jetson-inference_2docs_2digits-setup_autotoc_md248}
+Next \texorpdfstring{$\vert$}{|} {\bfseries{\href{jetpack-setup.md}{\texttt{Setting up Jetson with Jet\+Pack}}}} ~\newline
+ Back \texorpdfstring{$\vert$}{|} {\bfseries{\href{digits-workflow.md}{\texttt{DIGITS Workflow}}}}
+
+{\bfseries{ }}
+
+\textsuperscript{© 2016-\/2019 NVIDIA \texorpdfstring{$\vert$}{|} }\href{../README.md\#two-days-to-a-demo-digits}{\texttt{\textsuperscript{Table of Contents}}}

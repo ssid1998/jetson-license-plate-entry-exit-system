@@ -1,0 +1,69 @@
+\chapter{actionnet }
+\hypertarget{md_jetson-inference_2docs_2actionnet}{}\label{md_jetson-inference_2docs_2actionnet}\index{actionnet@{actionnet}}
+ 
+
+\textsuperscript{\href{posenet.md}{\texttt{Back}} \texorpdfstring{$\vert$}{|} \href{backgroundnet.md}{\texttt{Next}} \texorpdfstring{$\vert$}{|} }\href{../README.md\#hello-ai-world}{\texttt{\textsuperscript{Contents}}} ~\newline
+ \textsuperscript{Action Recognition}\hypertarget{md_jetson-inference_2docs_2actionnet_autotoc_md42}{}\doxysection{\texorpdfstring{Action Recognition}{Action Recognition}}\label{md_jetson-inference_2docs_2actionnet_autotoc_md42}
+Action recognition classifies the activity, behavior, or gesture occuring over a sequence of video frames. \doxylink{requirements_The}{The} DNNs typically use image classification backbones with an added temporal dimension. For example, the Res\+Net18-\/based pre-\/trained models use a window of 16 frames. You can also skip frames to lengthen the window of time over which the model classifies actions.
+
+
+
+\doxylink{requirements_The}{The} \href{../c/actionNet.h}{\texttt{{\ttfamily action\+Net}}} object takes in one video frame at a time, buffers them as input to the model, and outputs the class with the highest confidence. \href{../c/actionNet.h}{\texttt{{\ttfamily action\+Net}}} can be used from \href{https://rawgit.com/dusty-nv/jetson-inference/master/docs/html/python/jetson.inference.html\#actionNet}{\texttt{Python}} and \href{../c/actionNet.h}{\texttt{C++}}.
+
+As examples of using the {\ttfamily \doxylink{classaction_net}{action\+Net}} class, there are sample programs for C++ and Python:\+
+
+
+\begin{DoxyItemize}
+\item \href{../examples/actionnet/actionnet.cpp}{\texttt{{\ttfamily actionnet.\+cpp}}} (C++)
+\item \href{../python/examples/actionnet.py}{\texttt{{\ttfamily actionnet.\+py}}} (Python)
+\end{DoxyItemize}\hypertarget{md_jetson-inference_2docs_2actionnet_autotoc_md43}{}\doxysubsection{\texorpdfstring{Running the Example}{Running the Example}}\label{md_jetson-inference_2docs_2actionnet_autotoc_md43}
+To run action recognition on a live camera stream or video, pass in a device or file path from the \doxysectlink{md_jetson-inference_2docs_2aux-streaming}{Camera Streaming and Multimedia}{0} page.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{\#\ C++}
+\DoxyCodeLine{\$\ ./actionnet\ /dev/video0\ \ \ \ \ \ \ \ \ \ \ \#\ V4L2\ camera\ input,\ display\ output\ (default)\ }
+\DoxyCodeLine{\$\ ./actionnet\ input.mp4\ output.mp4\ \ \#\ video\ file\ input/output\ (mp4,\ mkv,\ avi,\ flv)}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#\ Python}
+\DoxyCodeLine{\$\ ./actionnet.py\ /dev/video0\ \ \ \ \ \ \ \ \ \ \ \#\ V4L2\ camera\ input,\ display\ output\ (default)\ }
+\DoxyCodeLine{\$\ ./actionnet.py\ input.mp4\ output.mp4\ \ \#\ video\ file\ input/output\ (mp4,\ mkv,\ avi,\ flv)}
+
+\end{DoxyCode}
+\hypertarget{md_jetson-inference_2docs_2actionnet_autotoc_md44}{}\doxysubsubsection{\texorpdfstring{Command-\/\+Line Arguments}{Command-\/\+Line Arguments}}\label{md_jetson-inference_2docs_2actionnet_autotoc_md44}
+These optional command-\/line arguments can be used with actionnet/\+actionnet.\+py:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{-\/-\/network=NETWORK\ \ \ \ pre-\/trained\ model\ to\ load,\ one\ of\ the\ following:}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ resnet-\/18\ (default)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ resnet-\/34}
+\DoxyCodeLine{-\/-\/model=MODEL\ \ \ \ \ \ \ \ path\ to\ custom\ model\ to\ load\ (.onnx)}
+\DoxyCodeLine{-\/-\/labels=LABELS\ \ \ \ \ \ path\ to\ text\ file\ containing\ the\ labels\ for\ each\ class}
+\DoxyCodeLine{-\/-\/input-\/blob=INPUT\ \ \ name\ of\ the\ input\ layer\ (default\ is\ 'input')}
+\DoxyCodeLine{-\/-\/output-\/blob=OUTPUT\ name\ of\ the\ output\ layer\ (default\ is\ 'output')}
+\DoxyCodeLine{-\/-\/threshold=CONF\ \ \ \ \ minimum\ confidence\ threshold\ for\ classification\ (default\ is\ 0.01)}
+\DoxyCodeLine{-\/-\/skip-\/frames=SKIP\ \ \ how\ many\ frames\ to\ skip\ between\ classifications\ (default\ is\ 1)}
+
+\end{DoxyCode}
+
+
+By default, the model will process every-\/other frame to lengthen the window of time for classifying actions over. You can change this with the {\ttfamily -\/-\/skip-\/frames} parameter (using {\ttfamily -\/-\/skip-\/frames=0} will process every frame).\hypertarget{md_jetson-inference_2docs_2actionnet_autotoc_md45}{}\doxysubsubsection{\texorpdfstring{Pre-\/trained Action Recognition Models}{Pre-\/trained Action Recognition Models}}\label{md_jetson-inference_2docs_2actionnet_autotoc_md45}
+Below are the pre-\/trained action recognition model available, and the associated {\ttfamily -\/-\/\doxylink{group__network}{Networking}} argument to {\ttfamily actionnet} used for loading them:\+
+
+
+\begin{DoxyTable}{3}{}{}{1}
+\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}Model  &\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}CLI argument  &\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}Classes  \\
+Action-\/\+Res\+Net18-\/\+Kinetics  &{\ttfamily resnet18}  &1040  \\
+Action-\/\+Res\+Net34-\/\+Kinetics  &{\ttfamily resnet34}  &1040  \\
+\end{DoxyTable}
+
+
+\doxylink{requirements_The}{The} default is {\ttfamily resnet18}. These models were trained on the \href{https://www.deepmind.com/open-source/kinetics}{\texttt{Kinetics 700}} and \href{http://moments.csail.mit.edu/}{\texttt{Moments in Time}} datasets (see \href{https://gist.github.com/dusty-nv/3aaa2494f7be212391cca1927ef7c74e}{\texttt{here}} for the list of class labels).\hypertarget{md_jetson-inference_2docs_2actionnet_autotoc_md46}{}\doxysubsection{\texorpdfstring{autotoc\+\_\+md46}{autotoc\+\_\+md46}}\label{md_jetson-inference_2docs_2actionnet_autotoc_md46}
+Next \texorpdfstring{$\vert$}{|} {\bfseries{\href{backgroundnet.md}{\texttt{Background Removal}}}} ~\newline
+ Back \texorpdfstring{$\vert$}{|} {\bfseries{\href{posenet.md}{\texttt{Pose Estimation with Pose\+Net}}}}
+
+{\bfseries{ }}
+
+\textsuperscript{© 2016-\/2021 NVIDIA \texorpdfstring{$\vert$}{|} }\href{../README.md\#hello-ai-world}{\texttt{\textsuperscript{Table of Contents}}}

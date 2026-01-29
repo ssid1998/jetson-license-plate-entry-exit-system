@@ -1,0 +1,100 @@
+\chapter{other-\/examples }
+\hypertarget{md_jetson-inference_2docs_2other-examples}{}\label{md_jetson-inference_2docs_2other-examples}\index{other-\/examples@{other-\/examples}}
+\hypertarget{md_jetson-inference_2docs_2other-examples_autotoc_md335}{}\doxysection{\texorpdfstring{Other Examples}{Other Examples}}\label{md_jetson-inference_2docs_2other-examples_autotoc_md335}
+This area lists other deep-\/learning resources on inference that are available for Jetson TX1~\newline
+\hypertarget{md_jetson-inference_2docs_2other-examples_autotoc_md336}{}\doxysubsection{\texorpdfstring{GPU Inference Engine (GIE) samples}{GPU Inference Engine (GIE) samples}}\label{md_jetson-inference_2docs_2other-examples_autotoc_md336}
+\hypertarget{md_jetson-inference_2docs_2other-examples_autotoc_md337}{}\doxysubsubsection{\texorpdfstring{Installing GPU Inference Engine}{Installing GPU Inference Engine}}\label{md_jetson-inference_2docs_2other-examples_autotoc_md337}
+NVIDIA\textquotesingle{}s \href{https://developer.nvidia.com/gie}{\texttt{GPU Inference Engine}} (GIE) is an optimized backend for evaluating deep inference networks in prototxt format.\hypertarget{md_jetson-inference_2docs_2other-examples_autotoc_md338}{}\doxysubsubsubsection{\texorpdfstring{1. Package contents}{1. Package contents}}\label{md_jetson-inference_2docs_2other-examples_autotoc_md338}
+First, unzip the archive:\+ 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$\ tar\ -\/zxvf\ gie.aarch64-\/cuda7.0-\/1.0-\/ea.tar.gz}
+
+\end{DoxyCode}
+
+
+\doxylink{requirements_The}{The} directory structure is as follows:\+ 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{|-\/GIE}
+\DoxyCodeLine{|\ \ \(\backslash\)bin\ \ where\ the\ samples\ are\ built\ to}
+\DoxyCodeLine{|\ \ \(\backslash\)data\ sample\ network\ model\ /\ prototxt's}
+\DoxyCodeLine{|\ \ \(\backslash\)doc\ \ API\ documentation\ and\ User\ Guide}
+\DoxyCodeLine{|\ \ \(\backslash\)include}
+\DoxyCodeLine{|\ \ \(\backslash\)lib\ }
+\DoxyCodeLine{|\ \ \(\backslash\)samples\ }
+
+\end{DoxyCode}
+\hypertarget{md_jetson-inference_2docs_2other-examples_autotoc_md339}{}\doxysubsubsubsection{\texorpdfstring{2. Remove packaged cu\+DNN}{2. Remove packaged cu\+DNN}}\label{md_jetson-inference_2docs_2other-examples_autotoc_md339}
+If you flashed your Jetson TX1 with Jet\+Pack or already have cu\+DNN installed, remove the version of cu\+DNN that comes with GIE:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$\ cd\ GIE/lib}
+\DoxyCodeLine{\$\ rm\ libcudnn*}
+\DoxyCodeLine{\$\ cd\ ../../}
+
+\end{DoxyCode}
+\hypertarget{md_jetson-inference_2docs_2other-examples_autotoc_md340}{}\doxysubsubsubsection{\texorpdfstring{3. Build samples}{3. Build samples}}\label{md_jetson-inference_2docs_2other-examples_autotoc_md340}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$\ cd\ GIE/samples/sampleMNIST}
+\DoxyCodeLine{\$\ make\ TARGET=tx1}
+\DoxyCodeLine{Compiling:\ sampleMNIST.cpp}
+\DoxyCodeLine{Linking:\ ../../bin/sample\_mnist\_debug}
+\DoxyCodeLine{Compiling:\ sampleMNIST.cpp}
+\DoxyCodeLine{Linking:\ ../../bin/sample\_mnist}
+\DoxyCodeLine{\$\ cd\ ../sampleGoogleNet}
+\DoxyCodeLine{\$\ make\ TARGET=tx1}
+\DoxyCodeLine{Compiling:\ sampleGoogleNet.cpp}
+\DoxyCodeLine{Linking:\ ../../bin/sample\_googlenet\_debug}
+\DoxyCodeLine{Compiling:\ sampleGoogleNet.cpp}
+\DoxyCodeLine{Linking:\ ../../bin/sample\_googlenet}
+\DoxyCodeLine{\$\ cd\ ../../../}
+
+\end{DoxyCode}
+\hypertarget{md_jetson-inference_2docs_2other-examples_autotoc_md341}{}\doxysubsubsubsection{\texorpdfstring{4. Running samples}{4. Running samples}}\label{md_jetson-inference_2docs_2other-examples_autotoc_md341}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$\ cd\ GIE/bin}
+\DoxyCodeLine{\$\ ./sample\_mnist}
+\DoxyCodeLine{@@@@@@@@@@@@@@@@@@@@@@@@@@@@}
+\DoxyCodeLine{@@@@@@@@@@@@@@@@@@@@@@@@@@@@}
+\DoxyCodeLine{@@@@@@@@@@@@@@@@@@@@@@@@@@@@}
+\DoxyCodeLine{@@@@@@@@@@@@@@@@@@@@@@@@@@@@}
+\DoxyCodeLine{@@@@@@@@@@@@@@@@@@@@@@@@@@@@}
+\DoxyCodeLine{@@@@@@@@@@@@@@@@@@@@@@@@@@@@}
+\DoxyCodeLine{@@@@@@@@@\%+-\/:\ \ =@@@@@@@@@@@@}
+\DoxyCodeLine{@@@@@@@\%=\ \ \ \ \ \ -\/@@@**@@@@@@@}
+\DoxyCodeLine{@@@@@@@\ \ \ :\%\#@-\/\#@@@.\ \#@@@@@@}
+\DoxyCodeLine{@@@@@@*\ \ +@@@@:*@@@\ \ *@@@@@@}
+\DoxyCodeLine{@@@@@@\#\ \ +@@@@\ @@@\%\ \ @@@@@@@}
+\DoxyCodeLine{@@@@@@@.\ \ :\%@@.@@@.\ *@@@@@@@}
+\DoxyCodeLine{@@@@@@@@-\/\ \ \ =@@@@.\ -\/@@@@@@@@}
+\DoxyCodeLine{@@@@@@@@@\%:\ \ \ +@-\/\ :@@@@@@@@@}
+\DoxyCodeLine{@@@@@@@@@@@\%.\ \ :\ -\/@@@@@@@@@@}
+\DoxyCodeLine{@@@@@@@@@@@@@+\ \ \ \#@@@@@@@@@@}
+\DoxyCodeLine{@@@@@@@@@@@@@@+\ \ :@@@@@@@@@@}
+\DoxyCodeLine{@@@@@@@@@@@@@@+\ \ \ *@@@@@@@@@}
+\DoxyCodeLine{@@@@@@@@@@@@@@:\ =\ \ @@@@@@@@@}
+\DoxyCodeLine{@@@@@@@@@@@@@@\ :@\ \ @@@@@@@@@}
+\DoxyCodeLine{@@@@@@@@@@@@@@\ -\/@\ \ @@@@@@@@@}
+\DoxyCodeLine{@@@@@@@@@@@@@\#\ +@\ \ @@@@@@@@@}
+\DoxyCodeLine{@@@@@@@@@@@@@*\ ++\ \ @@@@@@@@@}
+\DoxyCodeLine{@@@@@@@@@@@@@*\ \ \ \ *@@@@@@@@@}
+\DoxyCodeLine{@@@@@@@@@@@@@\#\ \ \ =@@@@@@@@@@}
+\DoxyCodeLine{@@@@@@@@@@@@@@.\ +@@@@@@@@@@@}
+\DoxyCodeLine{@@@@@@@@@@@@@@@@@@@@@@@@@@@@}
+\DoxyCodeLine{@@@@@@@@@@@@@@@@@@@@@@@@@@@@}
+\DoxyCodeLine{}
+\DoxyCodeLine{0:}
+\DoxyCodeLine{1:}
+\DoxyCodeLine{2:}
+\DoxyCodeLine{3:}
+\DoxyCodeLine{4:}
+\DoxyCodeLine{5:}
+\DoxyCodeLine{6:}
+\DoxyCodeLine{7:}
+\DoxyCodeLine{8:\ **********}
+\DoxyCodeLine{9:}
+
+\end{DoxyCode}
+ \doxylink{requirements_The}{The} MNIST sample randomly selects an image of a numeral 0-\/9, which is then classified with the MNIST network using GIE. In this example, the network correctly recognized the image as \#8. 

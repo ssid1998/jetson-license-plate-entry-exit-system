@@ -1,0 +1,141 @@
+\chapter{posenet }
+\hypertarget{md_jetson-inference_2docs_2posenet}{}\label{md_jetson-inference_2docs_2posenet}\index{posenet@{posenet}}
+ 
+
+\textsuperscript{\href{segnet-camera-2.md}{\texttt{Back}} \texorpdfstring{$\vert$}{|} \href{actionnet.md}{\texttt{Next}} \texorpdfstring{$\vert$}{|} }\href{../README.md\#hello-ai-world}{\texttt{\textsuperscript{Contents}}} ~\newline
+ \textsuperscript{Pose Estimation}\hypertarget{md_jetson-inference_2docs_2posenet_autotoc_md342}{}\doxysection{\texorpdfstring{Pose Estimation}{Pose Estimation}}\label{md_jetson-inference_2docs_2posenet_autotoc_md342}
+Pose estimation consists of locating various body parts (aka keypoints) that form a skeletal topology (aka links). Pose estimation has a variety of applications including gestures, AR/\+\+VR, HMI (human/\+machine interface), and posture/\+gait correction. Pre-\/trained models are provided for human body and hand pose estimation that are capable of detecting multiple people per frame. ~\newline
+
+
+
+
+\doxylink{requirements_The}{The} \href{../c/poseNet.h}{\texttt{{\ttfamily pose\+Net}}} object accepts an image as input, and outputs a list of object poses. Each object pose contains a list of detected keypoints, along with their locations and links between keypoints. You can query these to find particular features. \href{../c/poseNet.h}{\texttt{{\ttfamily pose\+Net}}} can be used from \href{https://rawgit.com/dusty-nv/jetson-inference/master/docs/html/python/jetson.inference.html\#poseNet}{\texttt{Python}} and \href{../c/poseNet.h}{\texttt{C++}}.
+
+As examples of using the {\ttfamily \doxylink{classpose_net}{pose\+Net}} class, there are sample programs for C++ and Python:\+
+
+
+\begin{DoxyItemize}
+\item \href{../examples/posenet/posenet.cpp}{\texttt{{\ttfamily posenet.\+cpp}}} (C++)
+\item \href{../python/examples/posenet.py}{\texttt{{\ttfamily posenet.\+py}}} (Python)
+\end{DoxyItemize}
+
+These samples are able to detect the poses of multiple humans in images, videos, and camera feeds. For more info about the various types of input/\+output streams supported, see the \doxysectlink{md_jetson-inference_2docs_2aux-streaming}{Camera Streaming and Multimedia}{0} page.\hypertarget{md_jetson-inference_2docs_2posenet_autotoc_md343}{}\doxysubsection{\texorpdfstring{Pose Estimation on Images}{Pose Estimation on Images}}\label{md_jetson-inference_2docs_2posenet_autotoc_md343}
+First, let\textquotesingle{}s try running the {\ttfamily posenet} sample on some examples images. In addition to the input/\+output paths, there are some additional command-\/line options that are optional:\+
+
+
+\begin{DoxyItemize}
+\item optional {\ttfamily -\/-\/\doxylink{group__network}{Networking}} flag which changes the pose model being used (the default is {\ttfamily resnet18-\/body}).
+\item optional {\ttfamily -\/-\/\doxylink{group__overlay}{Overlay}} flag which can be comma-\/separated combinations of {\ttfamily box}, {\ttfamily links}, {\ttfamily keypoints}, and {\ttfamily none}
+\begin{DoxyItemize}
+\item \doxylink{requirements_The}{The} default is {\ttfamily -\/-\/\doxylink{group__overlay}{Overlay}=links,keypoints} which displays circles over they keypoints and lines over the links
+\end{DoxyItemize}
+\item optional {\ttfamily -\/-\/keypoint-\/scale} value which controls the radius of the keypoint circles in the overlay (the default is {\ttfamily 0.\+0052})
+\item optional {\ttfamily -\/-\/link-\/scale} value which controls the line width of the link lines in the overlay (the default is {\ttfamily 0.\+0013})
+\item optional {\ttfamily -\/-\/threshold} value which sets the minimum threshold for detection (the default is {\ttfamily 0.\+15}). ~\newline
+
+\end{DoxyItemize}
+
+If you\textquotesingle{}re using the \doxysectlink{md_jetson-inference_2docs_2aux-docker}{Docker container}{0}, it\textquotesingle{}s recommended to save the output images to the {\ttfamily images/\+test} mounted directory. These images will then be easily viewable from your host device under {\ttfamily jetson-\/inference/\+data/\+images/\+test} (for more info, see \href{aux-docker.md\#mounted-data-volumes}{\texttt{Mounted Data Volumes}}).
+
+Here are some examples of human pose estimation using the default Pose-\/\+Res\+Net18-\/\+Body model:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{\#\ C++}
+\DoxyCodeLine{\$\ ./posenet\ "{}images/humans\_*.jpg"{}\ images/test/pose\_humans\_\%i.jpg}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#\ Python}
+\DoxyCodeLine{\$\ ./posenet.py\ "{}images/humans\_*.jpg"{}\ images/test/pose\_humans\_\%i.jpg}
+
+\end{DoxyCode}
+
+
+
+
+\begin{quote}
+{\bfseries{note}}:\+ the first time you run each model, Tensor\+RT will take a few minutes to optimize the network. ~\newline
+ ~~~~~~~~~~this optimized network file is then cached to disk, so future runs using the model will load faster. \end{quote}
+
+
+There are also test images of people under {\ttfamily "{}images/\+peds\+\_\+\texorpdfstring{$\ast$}{*}.jpg"{}} that you can try as well.\hypertarget{md_jetson-inference_2docs_2posenet_autotoc_md344}{}\doxysubsection{\texorpdfstring{Pose Estimation from Video}{Pose Estimation from Video}}\label{md_jetson-inference_2docs_2posenet_autotoc_md344}
+To run pose estimation on a live camera stream or video, pass in a device or file path from the \doxysectlink{md_jetson-inference_2docs_2aux-streaming}{Camera Streaming and Multimedia}{0} page.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{\#\ C++}
+\DoxyCodeLine{\$\ ./posenet\ /dev/video0\ \ \ \ \ \#\ csi://0\ if\ using\ MIPI\ CSI\ camera}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#\ Python}
+\DoxyCodeLine{\$\ ./posenet.py\ /dev/video0\ \ \#\ csi://0\ if\ using\ MIPI\ CSI\ camera}
+
+\end{DoxyCode}
+
+
+\href{https://www.youtube.com/watch?v=hwFtWYR986Q}{\texttt{}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{\#\ C++}
+\DoxyCodeLine{\$\ ./posenet\ -\/-\/network=resnet18-\/hand\ /dev/video0}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#\ Python}
+\DoxyCodeLine{\$\ ./posenet.py\ -\/-\/network=resnet18-\/hand\ /dev/video0}
+
+\end{DoxyCode}
+
+
+\href{https://www.youtube.com/watch?v=6NL_IE44vRE}{\texttt{}}\hypertarget{md_jetson-inference_2docs_2posenet_autotoc_md345}{}\doxysubsection{\texorpdfstring{Pre-\/trained Pose Estimation Models}{Pre-\/trained Pose Estimation Models}}\label{md_jetson-inference_2docs_2posenet_autotoc_md345}
+Below are the pre-\/trained pose estimation networks available to use, and the associated {\ttfamily -\/-\/\doxylink{group__network}{Networking}} argument to {\ttfamily posenet} used for loading the pre-\/trained models:\+
+
+
+\begin{DoxyTable}{4}{}{}{1}
+\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}Model  &\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}CLI argument  &\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}Network\+Type enum  &\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}Keypoints  \\
+Pose-\/\+Res\+Net18-\/\+Body  &{\ttfamily resnet18-\/body}  &{\ttfamily RESNET18\+\_\+\+BODY}  &18  \\
+Pose-\/\+Res\+Net18-\/\+Hand  &{\ttfamily resnet18-\/hand}  &{\ttfamily RESNET18\+\_\+\+HAND}  &21  \\
+Pose-\/\+Dense\+Net121-\/\+Body  &{\ttfamily densenet121-\/body}  &{\ttfamily DENSENET121\+\_\+\+BODY}  &18  \\
+\end{DoxyTable}
+
+
+You can specify which model to load by setting the {\ttfamily -\/-\/\doxylink{group__network}{Networking}} flag on the command line to one of the corresponding CLI arguments from the table above. By default, Pose-\/\+Res\+Net18-\/\+Body is used if the optional {\ttfamily -\/-\/\doxylink{group__network}{Networking}} flag isn\textquotesingle{}t specified.\hypertarget{md_jetson-inference_2docs_2posenet_autotoc_md346}{}\doxysubsection{\texorpdfstring{Working with Object Poses}{Working with Object Poses}}\label{md_jetson-inference_2docs_2posenet_autotoc_md346}
+If you want to access the pose keypoint locations, the {\ttfamily \doxylink{classpose_net_ac429431dc3b83dcd5a5f3fcffe446047}{pose\+Net.\+Process()}} function returns a list of {\ttfamily \doxylink{structpose_net_1_1_object_pose}{pose\+Net.\+Object\+Pose}} structures. Each object pose represents one object (i.\+e. one person) and contains a list of detected keypoints and links -\/ see the \href{https://rawgit.com/dusty-nv/jetson-inference/master/docs/html/python/jetson.inference.html\#poseNet}{\texttt{Python}} and \href{../c/poseNet.h}{\texttt{C++}} docs for more info. ~\newline
+
+
+Below is Python pseudocode for finding the 2D direction (in image space) that a person is pointing, by forming a vector between the {\ttfamily left\+\_\+shoulder} and {\ttfamily left\+\_\+wrist} keypoints:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ python}
+\DoxyCodeLine{poses\ =\ net.Process(img)}
+\DoxyCodeLine{}
+\DoxyCodeLine{for\ pose\ in\ poses:}
+\DoxyCodeLine{\ \ \ \ \#\ find\ the\ keypoint\ index\ from\ the\ list\ of\ detected\ keypoints}
+\DoxyCodeLine{\ \ \ \ \#\ you\ can\ find\ these\ keypoint\ names\ in\ the\ model's\ JSON\ file,\ }
+\DoxyCodeLine{\ \ \ \ \#\ or\ with\ net.GetKeypointName()\ /\ net.GetNumKeypoints()}
+\DoxyCodeLine{\ \ \ \ left\_wrist\_idx\ =\ pose.FindKeypoint('left\_wrist')}
+\DoxyCodeLine{\ \ \ \ left\_shoulder\_idx\ =\ pose.FindKeypoint('left\_shoulder')}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \#\ if\ the\ keypoint\ index\ is\ <\ 0,\ it\ means\ it\ wasn't\ found\ in\ the\ image}
+\DoxyCodeLine{\ \ \ \ if\ left\_wrist\_idx\ <\ 0\ or\ left\_shoulder\_idx\ <\ 0:}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ continue}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ left\_wrist\ =\ pose.Keypoints[left\_wrist\_idx]}
+\DoxyCodeLine{\ \ \ \ left\_shoulder\ =\ pose.Keypoints[left\_shoulder\_idx]}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ point\_x\ =\ left\_shoulder.x\ -\/\ left\_wrist.x}
+\DoxyCodeLine{\ \ \ \ point\_y\ =\ left\_shoulder.y\ -\/\ left\_wrist.y}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ print(f"{}person\ \{pose.ID\}\ is\ pointing\ towards\ (\{point\_x\},\ \{point\_y\})"{})}
+
+\end{DoxyCode}
+
+
+This was a simple example, but you can make it more useful with further manipulation of the vectors and by looking up more keypoints. There are also more advanced techniques that use machine learning on the pose results for gesture classification, like in the \href{https://github.com/NVIDIA-AI-IOT/trt_pose_hand}{\texttt{{\ttfamily trt\+\_\+hand\+\_\+pose}}} project.\hypertarget{md_jetson-inference_2docs_2posenet_autotoc_md347}{}\doxysubsection{\texorpdfstring{autotoc\+\_\+md347}{autotoc\+\_\+md347}}\label{md_jetson-inference_2docs_2posenet_autotoc_md347}
+Next \texorpdfstring{$\vert$}{|} {\bfseries{\href{actionnet.md}{\texttt{Action Recognition}}}} ~\newline
+ Back \texorpdfstring{$\vert$}{|} {\bfseries{\href{segnet-camera-2.md}{\texttt{Running the Live Camera Segmentation Demo}}}}
+
+{\bfseries{ }}
+
+\textsuperscript{© 2016-\/2021 NVIDIA \texorpdfstring{$\vert$}{|} }\href{../README.md\#hello-ai-world}{\texttt{\textsuperscript{Table of Contents}}}

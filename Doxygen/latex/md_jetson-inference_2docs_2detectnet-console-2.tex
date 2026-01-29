@@ -1,0 +1,255 @@
+\chapter{detectnet-\/console-\/2 }
+\hypertarget{md_jetson-inference_2docs_2detectnet-console-2}{}\label{md_jetson-inference_2docs_2detectnet-console-2}\index{detectnet-\/console-\/2@{detectnet-\/console-\/2}}
+ 
+
+\textsuperscript{\href{imagenet-tagging.md}{\texttt{Back}} \texorpdfstring{$\vert$}{|} \href{detectnet-camera-2.md}{\texttt{Next}} \texorpdfstring{$\vert$}{|} }\href{../README.md\#hello-ai-world}{\texttt{\textsuperscript{Contents}}} ~\newline
+ \textsuperscript{Object Detection}\hypertarget{md_jetson-inference_2docs_2detectnet-console-2_autotoc_md182}{}\doxysection{\texorpdfstring{Locating Objects with Detect\+Net}{Locating Objects with Detect\+Net}}\label{md_jetson-inference_2docs_2detectnet-console-2_autotoc_md182}
+\doxylink{requirements_The}{The} previous recognition examples output class probabilities representing the entire input image. Next we\textquotesingle{}re going to focus on {\bfseries{object detection}}, and finding where in the frame various objects are located by extracting their bounding boxes. Unlike image classification, object detection networks are capable of detecting many different objects per frame.
+
+
+
+\doxylink{requirements_The}{The} \href{../c/detectNet.h}{\texttt{{\ttfamily detect\+Net}}} object accepts an image as input, and outputs a list of coordinates of the detected bounding boxes along with their classes and confidence values. \href{../c/detectNet.h}{\texttt{{\ttfamily detect\+Net}}} is available to use from \href{https://rawgit.com/dusty-nv/jetson-inference/master/docs/html/python/jetson.inference.html\#detectNet}{\texttt{Python}} and \href{../c/detectNet.h}{\texttt{C++}}. See below for various pre-\/trained detection models available for download. \doxylink{requirements_The}{The} default model used is a \href{../data/networks/ssd_coco_labels.txt}{\texttt{91-\/class}} SSD-\/\+Mobilenet-\/v2 model trained on the MS COCO dataset, which achieves realtime inferencing performance on Jetson with Tensor\+RT.
+
+As examples of using the {\ttfamily \doxylink{classdetect_net}{detect\+Net}} class, we provide sample programs for C++ and Python:\+
+
+
+\begin{DoxyItemize}
+\item \href{../examples/detectnet/detectnet.cpp}{\texttt{{\ttfamily detectnet.\+cpp}}} (C++)
+\item \href{../python/examples/detectnet.py}{\texttt{{\ttfamily detectnet.\+py}}} (Python)
+\end{DoxyItemize}
+
+These samples are able to detect objects in images, videos, and camera feeds. For more info about the various types of input/\+output streams supported, see the \doxysectlink{md_jetson-inference_2docs_2aux-streaming}{Camera Streaming and Multimedia}{0} page.\hypertarget{md_jetson-inference_2docs_2detectnet-console-2_autotoc_md183}{}\doxysubsubsection{\texorpdfstring{Detecting Objects from Images}{Detecting Objects from Images}}\label{md_jetson-inference_2docs_2detectnet-console-2_autotoc_md183}
+First, let\textquotesingle{}s try using the {\ttfamily detectnet} program to locates objects in static images. In addition to the input/\+output paths, there are some additional command-\/line options:\+
+
+
+\begin{DoxyItemize}
+\item optional {\ttfamily -\/-\/\doxylink{group__network}{Networking}} flag which changes the \href{detectnet-console-2.md\#pre-trained-detection-models-available}{\texttt{detection model}} being used (the default is SSD-\/\+Mobilenet-\/v2).
+\item optional {\ttfamily -\/-\/\doxylink{group__overlay}{Overlay}} flag which can be comma-\/separated combinations of {\ttfamily box}, {\ttfamily lines}, {\ttfamily labels}, {\ttfamily conf}, and {\ttfamily none}
+\begin{DoxyItemize}
+\item \doxylink{requirements_The}{The} default is {\ttfamily -\/-\/\doxylink{group__overlay}{Overlay}=box,labels,conf} which displays boxes, labels, and confidence values
+\item \doxylink{requirements_The}{The} {\ttfamily box} option draws filled bounding boxes, while {\ttfamily lines} draws just the unfilled outlines
+\end{DoxyItemize}
+\item optional {\ttfamily -\/-\/alpha} value which sets the alpha blending value used during overlay (the default is {\ttfamily 120}).
+\item optional {\ttfamily -\/-\/threshold} value which sets the minimum threshold for detection (the default is {\ttfamily 0.\+5}). ~\newline
+
+\end{DoxyItemize}
+
+If you\textquotesingle{}re using the \doxysectlink{md_jetson-inference_2docs_2aux-docker}{Docker container}{0}, it\textquotesingle{}s recommended to save the output images to the {\ttfamily images/\+test} mounted directory. These images will then be easily viewable from your host device under {\ttfamily jetson-\/inference/\+data/\+images/\+test} (for more info, see \href{aux-docker.md\#mounted-data-volumes}{\texttt{Mounted Data Volumes}}).
+
+Here are some examples of detecting pedestrians in images with the default SSD-\/\+Mobilenet-\/v2 model:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{\#\ C++}
+\DoxyCodeLine{\$\ ./detectnet\ -\/-\/network=ssd-\/mobilenet-\/v2\ images/peds\_0.jpg\ images/test/output.jpg\ \ \ \ \ \#\ -\/-\/network\ flag\ is\ optional}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#\ Python}
+\DoxyCodeLine{\$\ ./detectnet.py\ -\/-\/network=ssd-\/mobilenet-\/v2\ images/peds\_0.jpg\ images/test/output.jpg\ \ \#\ -\/-\/network\ flag\ is\ optional}
+
+\end{DoxyCode}
+
+
+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{\#\ C++}
+\DoxyCodeLine{\$\ ./detectnet\ images/peds\_1.jpg\ images/test/output.jpg}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#\ Python}
+\DoxyCodeLine{\$\ ./detectnet.py\ images/peds\_1.jpg\ images/test/output.jpg}
+
+\end{DoxyCode}
+
+
+
+
+\begin{quote}
+{\bfseries{note}}:\+ the first time you run each model, Tensor\+RT will take a few minutes to optimize the network. ~\newline
+ ~~~~~~~~~~this optimized network file is then cached to disk, so future runs using the model will load faster. \end{quote}
+
+
+Below are more detection examples output from the console programs. \doxylink{requirements_The}{The} \href{../data/networks/ssd_coco_labels.txt}{\texttt{91-\/class}} MS COCO dataset that the SSD-\/based models were trained on include people, vehicles, animals, and assorted types of household objects to detect.
+
+
+
+Various images are found under {\ttfamily images/\+} for testing, such as {\ttfamily cat\+\_\+\texorpdfstring{$\ast$}{*}.jpg}, {\ttfamily dog\+\_\+\texorpdfstring{$\ast$}{*}.jpg}, {\ttfamily horse\+\_\+\texorpdfstring{$\ast$}{*}.jpg}, {\ttfamily peds\+\_\+\texorpdfstring{$\ast$}{*}.jpg}, ect.\hypertarget{md_jetson-inference_2docs_2detectnet-console-2_autotoc_md184}{}\doxysubsubsection{\texorpdfstring{Processing a Directory or Sequence of Images}{Processing a Directory or Sequence of Images}}\label{md_jetson-inference_2docs_2detectnet-console-2_autotoc_md184}
+If you have multiple images that you\textquotesingle{}d like to process at one time, you can launch the {\ttfamily detectnet} program with the path to a directory that contains images or a wildcard sequence:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\#\ C++}
+\DoxyCodeLine{./detectnet\ "{}images/peds\_*.jpg"{}\ images/test/peds\_output\_\%i.jpg}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#\ Python}
+\DoxyCodeLine{./detectnet.py\ "{}images/peds\_*.jpg"{}\ images/test/peds\_output\_\%i.jpg}
+
+\end{DoxyCode}
+
+
+\begin{quote}
+{\bfseries{note:\+}} when using wildcards, always enclose it in quotes ({\ttfamily "{}\texorpdfstring{$\ast$}{*}.jpg"{}}). Otherwise, the OS will auto-\/expand the sequence and modify the order of arguments on the command-\/line, which may result in one of the input images being overwritten by the output. \end{quote}
+
+
+For more info about loading/\+saving sequences of images, see the \href{aux-streaming.md\#sequences}{\texttt{Camera Streaming and Multimedia}} page.\hypertarget{md_jetson-inference_2docs_2detectnet-console-2_autotoc_md185}{}\doxysubsubsection{\texorpdfstring{Processing Video Files}{Processing Video Files}}\label{md_jetson-inference_2docs_2detectnet-console-2_autotoc_md185}
+You can also process videos from disk. For more info about loading/\+saving videos, see \href{aux-streaming.md\#video-files}{\texttt{here}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{\#\ Download\ test\ video}
+\DoxyCodeLine{wget\ https://nvidia.box.com/shared/static/veuuimq6pwvd62p9fresqhrrmfqz0e2f.mp4\ -\/O\ pedestrians.mp4}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#\ C++}
+\DoxyCodeLine{./detectnet\ pedestrians.mp4\ images/test/pedestrians\_ssd.mp4}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#\ Python}
+\DoxyCodeLine{./detectnet.py\ pedestrians.mp4\ images/test/pedestrians\_ssd.mp4}
+
+\end{DoxyCode}
+
+
+\href{https://www.youtube.com/watch?v=EbTyTJS9jOQ}{\texttt{}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{\#\ Download\ test\ video}
+\DoxyCodeLine{wget\ https://nvidia.box.com/shared/static/i5i81mkd9wdh4j7wx04th961zks0lfh9.avi\ -\/O\ parking.avi}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#\ C++}
+\DoxyCodeLine{./detectnet\ parking.avi\ images/test/parking\_ssd.avi}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#\ Python}
+\DoxyCodeLine{./detectnet.py\ parking.avi\ images/test/parking\_ssd.avi}
+
+\end{DoxyCode}
+
+
+\href{https://www.youtube.com/watch?v=iB86W-kloPE}{\texttt{}}
+
+Remember that you can use the {\ttfamily -\/-\/threshold} setting to change the detection sensitivity up or down (the default is 0.\+5).\hypertarget{md_jetson-inference_2docs_2detectnet-console-2_autotoc_md186}{}\doxysubsubsection{\texorpdfstring{Pre-\/trained Detection Models Available}{Pre-\/trained Detection Models Available}}\label{md_jetson-inference_2docs_2detectnet-console-2_autotoc_md186}
+Below is a table of the pre-\/trained object detection networks available to use, and the associated {\ttfamily -\/-\/\doxylink{group__network}{Networking}} argument to {\ttfamily detectnet} used for loading the pre-\/trained models:\+
+
+
+\begin{DoxyTable}{4}{}{}{1}
+\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}Model  &\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}CLI argument  &\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}Network\+Type enum  &\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}Object classes  \\
+SSD-\/\+Mobilenet-\/v1  &{\ttfamily ssd-\/mobilenet-\/v1}  &{\ttfamily SSD\+\_\+\+MOBILENET\+\_\+\+V1}  &91 (\href{../data/networks/ssd_coco_labels.txt}{\texttt{COCO classes}})  \\
+SSD-\/\+Mobilenet-\/v2  &{\ttfamily ssd-\/mobilenet-\/v2}  &{\ttfamily SSD\+\_\+\+MOBILENET\+\_\+\+V2}  &91 (\href{../data/networks/ssd_coco_labels.txt}{\texttt{COCO classes}})  \\
+SSD-\/\+Inception-\/v2  &{\ttfamily ssd-\/inception-\/v2}  &{\ttfamily SSD\+\_\+\+INCEPTION\+\_\+\+V2}  &91 (\href{../data/networks/ssd_coco_labels.txt}{\texttt{COCO classes}})  \\
+TAO People\+Net  &{\ttfamily peoplenet}  &{\ttfamily PEOPLENET}  &person, bag, face  \\
+TAO People\+Net (pruned)  &{\ttfamily peoplenet-\/pruned}  &{\ttfamily PEOPLENET\+\_\+\+PRUNED}  &person, bag, face  \\
+TAO Dash\+Cam\+Net  &{\ttfamily dashcamnet}  &{\ttfamily DASHCAMNET}  &person, car, bike, sign  \\
+TAO Traffic\+Cam\+Net  &{\ttfamily trafficcamnet}  &{\ttfamily TRAFFICCAMNET}  &person, car, bike, sign  \\
+TAO Face\+Detect  &{\ttfamily facedetect}  &{\ttfamily FACEDETECT}  &face  \\
+\end{DoxyTable}
+
+
+
+
+{\bfseries{Legacy Detection Models}}\begin{adjustwidth}{1em}{0em}
+
+
+
+\begin{DoxyTable}{4}{}{}{1}
+\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}Model  &\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}CLI argument  &\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}Network\+Type enum  &\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}Object classes  \\
+Detect\+Net-\/\+COCO-\/\+Dog  &{\ttfamily coco-\/dog}  &{\ttfamily COCO\+\_\+\+DOG}  &dogs  \\
+Detect\+Net-\/\+COCO-\/\+Bottle  &{\ttfamily coco-\/bottle}  &{\ttfamily COCO\+\_\+\+BOTTLE}  &bottles  \\
+Detect\+Net-\/\+COCO-\/\+Chair  &{\ttfamily coco-\/chair}  &{\ttfamily COCO\+\_\+\+CHAIR}  &chairs  \\
+Detect\+Net-\/\+COCO-\/\+Airplane  &{\ttfamily coco-\/airplane}  &{\ttfamily COCO\+\_\+\+AIRPLANE}  &airplanes  \\
+ped-\/100  &{\ttfamily pednet}  &{\ttfamily PEDNET}  &pedestrians  \\
+multiped-\/500  &{\ttfamily multiped}  &{\ttfamily PEDNET\+\_\+\+MULTI}  &pedestrians, luggage  \\
+facenet-\/120  &{\ttfamily facenet}  &{\ttfamily FACENET}  &faces  \\
+\end{DoxyTable}
+
+
+\end{adjustwidth}
+\hypertarget{md_jetson-inference_2docs_2detectnet-console-2_autotoc_md187}{}\doxysubsubsection{\texorpdfstring{Running Different Detection Models}{Running Different Detection Models}}\label{md_jetson-inference_2docs_2detectnet-console-2_autotoc_md187}
+You can specify which model to load by setting the {\ttfamily -\/-\/\doxylink{group__network}{Networking}} flag on the command line to one of the corresponding CLI arguments from the table above. By default, SSD-\/\+Mobilenet-\/v2 if the optional {\ttfamily -\/-\/\doxylink{group__network}{Networking}} flag isn\textquotesingle{}t specified.
+
+For example, if you chose to download SSD-\/\+Inception-\/v2 with the \href{building-repo-2.md\#downloading-models}{\texttt{Model Downloader}} tool, you can use it like so:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{\#\ C++}
+\DoxyCodeLine{\$\ ./detectnet\ -\/-\/network=ssd-\/inception-\/v2\ input.jpg\ output.jpg}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#\ Python}
+\DoxyCodeLine{\$\ ./detectnet.py\ -\/-\/network=ssd-\/inception-\/v2\ input.jpg\ output.jpg}
+
+\end{DoxyCode}
+\hypertarget{md_jetson-inference_2docs_2detectnet-console-2_autotoc_md188}{}\doxysubsubsection{\texorpdfstring{Source Code}{Source Code}}\label{md_jetson-inference_2docs_2detectnet-console-2_autotoc_md188}
+For reference, below is the source code to \href{../python/examples/detectnet.py}{\texttt{{\ttfamily detectnet.\+py}}}:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ python}
+\DoxyCodeLine{import\ jetson.inference}
+\DoxyCodeLine{import\ jetson.utils}
+\DoxyCodeLine{}
+\DoxyCodeLine{import\ argparse}
+\DoxyCodeLine{import\ sys}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#\ parse\ the\ command\ line}
+\DoxyCodeLine{parser\ =\ argparse.ArgumentParser(description="{}Locate\ objects\ in\ a\ live\ camera\ stream\ using\ an\ object\ detection\ DNN."{})}
+\DoxyCodeLine{}
+\DoxyCodeLine{parser.add\_argument("{}input\_URI"{},\ type=str,\ default="{}"{},\ nargs='?',\ help="{}URI\ of\ the\ input\ stream"{})}
+\DoxyCodeLine{parser.add\_argument("{}output\_URI"{},\ type=str,\ default="{}"{},\ nargs='?',\ help="{}URI\ of\ the\ output\ stream"{})}
+\DoxyCodeLine{parser.add\_argument("{}-\/-\/network"{},\ type=str,\ default="{}ssd-\/mobilenet-\/v2"{},\ help="{}pre-\/trained\ model\ to\ load\ (see\ below\ for\ options)"{})}
+\DoxyCodeLine{parser.add\_argument("{}-\/-\/overlay"{},\ type=str,\ default="{}box,labels,conf"{},\ help="{}detection\ overlay\ flags\ (e.g.\ -\/-\/overlay=box,labels,conf)\(\backslash\)nvalid\ combinations\ are:\ \ 'box',\ 'labels',\ 'conf',\ 'none'"{})}
+\DoxyCodeLine{parser.add\_argument("{}-\/-\/threshold"{},\ type=float,\ default=0.5,\ help="{}minimum\ detection\ threshold\ to\ use"{})\ }
+\DoxyCodeLine{}
+\DoxyCodeLine{try:}
+\DoxyCodeLine{\ \ \ \ opt\ =\ parser.parse\_known\_args()[0]}
+\DoxyCodeLine{except:}
+\DoxyCodeLine{\ \ \ \ print("{}"{})}
+\DoxyCodeLine{\ \ \ \ parser.print\_help()}
+\DoxyCodeLine{\ \ \ \ sys.exit(0)}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#\ load\ the\ object\ detection\ network}
+\DoxyCodeLine{net\ =\ jetson.inference.detectNet(opt.network,\ sys.argv,\ opt.threshold)}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#\ create\ video\ sources\ \&\ outputs}
+\DoxyCodeLine{input\ =\ jetson.utils.videoSource(opt.input\_URI,\ argv=sys.argv)}
+\DoxyCodeLine{output\ =\ jetson.utils.videoOutput(opt.output\_URI,\ argv=sys.argv)}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#\ process\ frames\ until\ the\ user\ exits}
+\DoxyCodeLine{while\ True:}
+\DoxyCodeLine{\ \ \ \ \#\ capture\ the\ next\ image}
+\DoxyCodeLine{\ \ \ \ img\ =\ input.Capture()}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \#\ detect\ objects\ in\ the\ image\ (with\ overlay)}
+\DoxyCodeLine{\ \ \ \ detections\ =\ net.Detect(img,\ overlay=opt.overlay)}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \#\ print\ the\ detections}
+\DoxyCodeLine{\ \ \ \ print("{}detected\ \{:d\}\ objects\ in\ image"{}.format(len(detections)))}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ for\ detection\ in\ detections:}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ print(detection)}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \#\ render\ the\ image}
+\DoxyCodeLine{\ \ \ \ output.Render(img)}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \#\ update\ the\ title\ bar}
+\DoxyCodeLine{\ \ \ \ output.SetStatus("{}\{:s\}\ |\ Network\ \{:.0f\}\ FPS"{}.format(opt.network,\ net.GetNetworkFPS()))}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \#\ print\ out\ performance\ info}
+\DoxyCodeLine{\ \ \ \ net.PrintProfilerTimes()}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \#\ exit\ on\ input/output\ EOS}
+\DoxyCodeLine{\ \ \ \ if\ not\ input.IsStreaming()\ or\ not\ output.IsStreaming():}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ break}
+
+\end{DoxyCode}
+
+
+Next, we\textquotesingle{}ll run object detection on a live camera stream.\hypertarget{md_jetson-inference_2docs_2detectnet-console-2_autotoc_md189}{}\doxysubsection{\texorpdfstring{autotoc\+\_\+md189}{autotoc\+\_\+md189}}\label{md_jetson-inference_2docs_2detectnet-console-2_autotoc_md189}
+Next \texorpdfstring{$\vert$}{|} {\bfseries{\href{detectnet-camera-2.md}{\texttt{Running the Live Camera Detection Demo}}}} ~\newline
+ Back \texorpdfstring{$\vert$}{|} {\bfseries{\href{imagenet-tagging.md}{\texttt{Multi-\/\+Label Classification for Image Tagging}}}}
+
+{\bfseries{ }}
+
+\textsuperscript{© 2016-\/2019 NVIDIA \texorpdfstring{$\vert$}{|} }\href{../README.md\#hello-ai-world}{\texttt{\textsuperscript{Table of Contents}}}

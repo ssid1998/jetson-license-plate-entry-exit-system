@@ -1,0 +1,133 @@
+\doxysection{dashboard.\+Parking\+Dashboard Class Reference}
+\hypertarget{classdashboard_1_1_parking_dashboard}{}\label{classdashboard_1_1_parking_dashboard}\index{dashboard.ParkingDashboard@{dashboard.ParkingDashboard}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classdashboard_1_1_parking_dashboard_aafce50df7138ac514d69e093910d2b0f}\label{classdashboard_1_1_parking_dashboard_aafce50df7138ac514d69e093910d2b0f} 
+{\bfseries \+\_\+\+\_\+init\+\_\+\+\_\+} (self)
+\item 
+\Hypertarget{classdashboard_1_1_parking_dashboard_a16b6ba88491b8feef7b6023c420435ef}\label{classdashboard_1_1_parking_dashboard_a16b6ba88491b8feef7b6023c420435ef} 
+{\bfseries init\+\_\+ai} (self)
+\item 
+\Hypertarget{classdashboard_1_1_parking_dashboard_a712529a55739cd1cdd54c69cff4e3cc8}\label{classdashboard_1_1_parking_dashboard_a712529a55739cd1cdd54c69cff4e3cc8} 
+{\bfseries process\+\_\+camera} (self, ft.\+Page page, ft.\+Image img\+\_\+control)
+\item 
+\Hypertarget{classdashboard_1_1_parking_dashboard_ae5e02c1ef82b96ed427207b73ac9cbff}\label{classdashboard_1_1_parking_dashboard_ae5e02c1ef82b96ed427207b73ac9cbff} 
+{\bfseries run\+\_\+detection} (self, frame)
+\item 
+\Hypertarget{classdashboard_1_1_parking_dashboard_a066efc93afeafbb4e59cfcb66c01cff1}\label{classdashboard_1_1_parking_dashboard_a066efc93afeafbb4e59cfcb66c01cff1} 
+{\bfseries handle\+\_\+plate\+\_\+logic} (self, plate\+\_\+text, confidence, frame)
+\item 
+\Hypertarget{classdashboard_1_1_parking_dashboard_a5e4e90bb55a015f568ad6c92f9db9ec6}\label{classdashboard_1_1_parking_dashboard_a5e4e90bb55a015f568ad6c92f9db9ec6} 
+{\bfseries update\+\_\+ui} (self, page, img\+\_\+control, frame)
+\item 
+\Hypertarget{classdashboard_1_1_parking_dashboard_ae9537d5bd5974d3a06045b1c0fca3099}\label{classdashboard_1_1_parking_dashboard_ae9537d5bd5974d3a06045b1c0fca3099} 
+{\bfseries on\+\_\+manual\+\_\+submit} (self, e)
+\item 
+\Hypertarget{classdashboard_1_1_parking_dashboard_a59053a4a39c46a23b38f69130d4205b9}\label{classdashboard_1_1_parking_dashboard_a59053a4a39c46a23b38f69130d4205b9} 
+{\bfseries build} (self, ft.\+Page page)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classdashboard_1_1_parking_dashboard_a82b9d02832c3d26f8d3e59c203641357}\label{classdashboard_1_1_parking_dashboard_a82b9d02832c3d26f8d3e59c203641357} 
+bool {\bfseries running} = True
+\item 
+\Hypertarget{classdashboard_1_1_parking_dashboard_a727236968b7134e114d4a77bf6a362f7}\label{classdashboard_1_1_parking_dashboard_a727236968b7134e114d4a77bf6a362f7} 
+{\bfseries latest\+\_\+frame\+\_\+b64} = None
+\item 
+\Hypertarget{classdashboard_1_1_parking_dashboard_a8cde446eefe5d2586f1b3e5d82085fbe}\label{classdashboard_1_1_parking_dashboard_a8cde446eefe5d2586f1b3e5d82085fbe} 
+{\bfseries latest\+\_\+plate\+\_\+crop\+\_\+b64} = None
+\item 
+\Hypertarget{classdashboard_1_1_parking_dashboard_a234f57831fc7a0a953ebb3ef5a0584d7}\label{classdashboard_1_1_parking_dashboard_a234f57831fc7a0a953ebb3ef5a0584d7} 
+int {\bfseries last\+\_\+plate\+\_\+time} = 0
+\item 
+\Hypertarget{classdashboard_1_1_parking_dashboard_a33fd3cdc449a5ee32b815eb505b5b6fc}\label{classdashboard_1_1_parking_dashboard_a33fd3cdc449a5ee32b815eb505b5b6fc} 
+dict {\bfseries plate\+\_\+cooldowns} = \{\}
+\item 
+\Hypertarget{classdashboard_1_1_parking_dashboard_ad8444cbb039b1c77c0c971cc539ebe31}\label{classdashboard_1_1_parking_dashboard_ad8444cbb039b1c77c0c971cc539ebe31} 
+list {\bfseries plate\+\_\+buffer} = \+[$\,$]\+
+\item 
+\Hypertarget{classdashboard_1_1_parking_dashboard_aee11f8d9505b8d38cc6f289173b6a38b}\label{classdashboard_1_1_parking_dashboard_aee11f8d9505b8d38cc6f289173b6a38b} 
+int {\bfseries last\+\_\+capture\+\_\+time} = 0
+\item 
+\Hypertarget{classdashboard_1_1_parking_dashboard_aa242366e4058131db7e0212f88a4dbb1}\label{classdashboard_1_1_parking_dashboard_aa242366e4058131db7e0212f88a4dbb1} 
+str {\bfseries detected\+\_\+plate} = "{}Waiting..."{}
+\item 
+\Hypertarget{classdashboard_1_1_parking_dashboard_ab9f7bd61da159c339905aa84bb5f7a29}\label{classdashboard_1_1_parking_dashboard_ab9f7bd61da159c339905aa84bb5f7a29} 
+str {\bfseries status\+\_\+message} = "{}Ready"{}
+\item 
+\Hypertarget{classdashboard_1_1_parking_dashboard_a16afac6269337168cbaa1e98ee47c6d0}\label{classdashboard_1_1_parking_dashboard_a16afac6269337168cbaa1e98ee47c6d0} 
+str {\bfseries price\+\_\+display} = "{}€ 0.\+00"{}
+\item 
+\Hypertarget{classdashboard_1_1_parking_dashboard_a1384a0fa713c22f722a86f8e366a4fec}\label{classdashboard_1_1_parking_dashboard_a1384a0fa713c22f722a86f8e366a4fec} 
+str {\bfseries duration\+\_\+display} = "{}0 min"{}
+\item 
+\Hypertarget{classdashboard_1_1_parking_dashboard_a3420f7aa3a28e93ed209cb9c29100acb}\label{classdashboard_1_1_parking_dashboard_a3420f7aa3a28e93ed209cb9c29100acb} 
+{\bfseries status\+\_\+color} = ft.\+Colors.\+BLUE
+\item 
+\Hypertarget{classdashboard_1_1_parking_dashboard_a29712769989e2b728798f9267b421217}\label{classdashboard_1_1_parking_dashboard_a29712769989e2b728798f9267b421217} 
+{\bfseries db} = \doxymbox{\hyperlink{classdb_1_1_database_manager}{Database\+Manager}}()
+\item 
+\Hypertarget{classdashboard_1_1_parking_dashboard_aeda3edfb66d0bf7d9c8db99c75c422e4}\label{classdashboard_1_1_parking_dashboard_aeda3edfb66d0bf7d9c8db99c75c422e4} 
+{\bfseries yolo\+Model} = torch.\+hub.\+load(yolo\+\_\+repo, \textquotesingle{}custom\textquotesingle{}, path=weights\+\_\+path, source=\textquotesingle{}local\textquotesingle{})
+\item 
+\doxymbox{\hyperlink{classdashboard_1_1_parking_dashboard_a02ac0fc733ec59ac78e5fb0b1268715b}{ocr\+Pipeline}}
+\item 
+\Hypertarget{classdashboard_1_1_parking_dashboard_a4a9a552c0544191719b1692b6d0f0430}\label{classdashboard_1_1_parking_dashboard_a4a9a552c0544191719b1692b6d0f0430} 
+{\bfseries device} = device
+\item 
+\Hypertarget{classdashboard_1_1_parking_dashboard_a9c8761f004dd2dab1960481ec94377bb}\label{classdashboard_1_1_parking_dashboard_a9c8761f004dd2dab1960481ec94377bb} 
+{\bfseries txt\+\_\+time} = ft.\+Text(value="{}-\/-\/:\+-\/-\/:\+-\/-\/"{}, size=20, weight=ft.\+Font\+Weight.\+BOLD)
+\item 
+\Hypertarget{classdashboard_1_1_parking_dashboard_ac64f108d4f6cb754c09d701c82d03a95}\label{classdashboard_1_1_parking_dashboard_ac64f108d4f6cb754c09d701c82d03a95} 
+{\bfseries txt\+\_\+plate} = ft.\+Text(value="{}-\/-\/-\/"{}, size=50, weight=ft.\+Font\+Weight.\+BOLD)
+\item 
+\Hypertarget{classdashboard_1_1_parking_dashboard_a057469ef37d686da284dd1e66be2432b}\label{classdashboard_1_1_parking_dashboard_a057469ef37d686da284dd1e66be2432b} 
+{\bfseries txt\+\_\+status} = ft.\+Text(value="{}Ready"{}, size=30, weight=ft.\+Font\+Weight.\+BOLD, color=ft.\+Colors.\+BLUE)
+\item 
+\Hypertarget{classdashboard_1_1_parking_dashboard_aa272a48af947221fe5c5947e16793236}\label{classdashboard_1_1_parking_dashboard_aa272a48af947221fe5c5947e16793236} 
+{\bfseries txt\+\_\+price} = ft.\+Text(value="{}€ 0.\+00"{}, size=40, weight=ft.\+Font\+Weight.\+BOLD, color=ft.\+Colors.\+AMBER)
+\item 
+\Hypertarget{classdashboard_1_1_parking_dashboard_a815ff617a2cddb165148054408d96bd9}\label{classdashboard_1_1_parking_dashboard_a815ff617a2cddb165148054408d96bd9} 
+{\bfseries txt\+\_\+duration} = ft.\+Text(value="{}0 min"{}, size=20)
+\item 
+\Hypertarget{classdashboard_1_1_parking_dashboard_a2f6088c0143afd67d085410e6c3ce684}\label{classdashboard_1_1_parking_dashboard_a2f6088c0143afd67d085410e6c3ce684} 
+{\bfseries img\+\_\+plate\+\_\+crop} = ft.\+Image(src\+\_\+base64="{}"{}, width=200, height=80, fit=ft.\+Image\+Fit.\+CONTAIN)
+\item 
+\Hypertarget{classdashboard_1_1_parking_dashboard_aa5026127729fbd9cbca24b46711bac3f}\label{classdashboard_1_1_parking_dashboard_aa5026127729fbd9cbca24b46711bac3f} 
+{\bfseries txt\+\_\+manual\+\_\+input} = ft.\+Text\+Field(label="{}Manual Override"{}, width=200, text\+\_\+size=16)
+\item 
+\Hypertarget{classdashboard_1_1_parking_dashboard_a0ad515ceffc49fbc7a7f16e1c66e55d5}\label{classdashboard_1_1_parking_dashboard_a0ad515ceffc49fbc7a7f16e1c66e55d5} 
+{\bfseries btn\+\_\+manual\+\_\+submit} = ft.\+Elevated\+Button("{}Submit"{}, on\+\_\+click=self.\+on\+\_\+manual\+\_\+submit)
+\item 
+\Hypertarget{classdashboard_1_1_parking_dashboard_aabbabe068f24f359d3830043a329650a}\label{classdashboard_1_1_parking_dashboard_aabbabe068f24f359d3830043a329650a} 
+{\bfseries page} = page
+\end{DoxyCompactItemize}
+
+
+\label{doc-variable-members}
+\Hypertarget{classdashboard_1_1_parking_dashboard_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classdashboard_1_1_parking_dashboard_a02ac0fc733ec59ac78e5fb0b1268715b}\index{dashboard.ParkingDashboard@{dashboard.ParkingDashboard}!ocrPipeline@{ocrPipeline}}
+\index{ocrPipeline@{ocrPipeline}!dashboard.ParkingDashboard@{dashboard.ParkingDashboard}}
+\doxysubsubsection{\texorpdfstring{ocrPipeline}{ocrPipeline}}
+{\footnotesize\ttfamily \label{classdashboard_1_1_parking_dashboard_a02ac0fc733ec59ac78e5fb0b1268715b} 
+dashboard.\+Parking\+Dashboard.\+ocr\+Pipeline}
+
+{\bfseries Initial value:\+}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=\ \ PlateOcrPipeline(}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ allowlist=\textcolor{stringliteral}{"{}ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-\/\ "{}},\ \textcolor{comment}{\#\ Added\ hyphen\ and\ space}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ confThreshold=0.4,\ \ \ \textcolor{comment}{\#\ Lowered\ slightly\ more\ to\ ensure\ we\ get\ a\ reading}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ euMaskRatio=0.15,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ debug=\textcolor{keyword}{False},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ useGpu=torch.cuda.is\_available()}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ )}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file:\+\begin{DoxyCompactItemize}
+\item 
+jetson\+\_\+app/\+dashboard.\+py\end{DoxyCompactItemize}

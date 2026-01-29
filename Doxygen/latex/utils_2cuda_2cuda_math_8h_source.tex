@@ -1,0 +1,1680 @@
+\doxysection{cuda\+Math.\+h}
+\hypertarget{utils_2cuda_2cuda_math_8h_source}{}\label{utils_2cuda_2cuda_math_8h_source}\index{jetson-\/inference/utils/cuda/cudaMath.h@{jetson-\/inference/utils/cuda/cudaMath.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ *\ \ This\ file\ implements\ common\ mathematical\ operations\ on\ vector\ types}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ *\ \ (float3,\ float4\ etc.)\ since\ these\ are\ not\ provided\ as\ standard\ by\ CUDA.}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ *\ \ The\ syntax\ is\ modeled\ on\ the\ Cg\ standard\ library.}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ *\ \ This\ is\ part\ of\ the\ Helper\ library\ includes}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ *\ \ \ \ Thanks\ to\ Linh\ Hah\ for\ additions\ and\ fixes.}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \textcolor{preprocessor}{\#ifndef\ \_\_CUDA\_HELPER\_MATH\_H\_}}
+\DoxyCodeLine{00024\ \textcolor{preprocessor}{\#define\ \_\_CUDA\_HELPER\_MATH\_H\_}}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \textcolor{preprocessor}{\#include\ "{}cuda\_runtime.h"{}}}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \textcolor{keyword}{typedef}\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ uint;}
+\DoxyCodeLine{00037\ \textcolor{keyword}{typedef}\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ uchar;}
+\DoxyCodeLine{00038\ \textcolor{keyword}{typedef}\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{short}\ ushort;}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \textcolor{preprocessor}{\#ifndef\ EXIT\_WAIVED}}
+\DoxyCodeLine{00041\ \textcolor{preprocessor}{\#define\ EXIT\_WAIVED\ 2}}
+\DoxyCodeLine{00042\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ \textcolor{preprocessor}{\#ifndef\ \_\_CUDACC\_\_}}
+\DoxyCodeLine{00045\ \textcolor{preprocessor}{\#include\ <math.h>}}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00048\ \textcolor{comment}{//\ host\ implementations\ of\ CUDA\ functions}}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00051\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{float}\ fminf(\textcolor{keywordtype}{float}\ a,\ \textcolor{keywordtype}{float}\ b)}
+\DoxyCodeLine{00052\ \{}
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keywordflow}{return}\ a\ <\ b\ ?\ a\ :\ b;}
+\DoxyCodeLine{00054\ \}}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{float}\ fmaxf(\textcolor{keywordtype}{float}\ a,\ \textcolor{keywordtype}{float}\ b)}
+\DoxyCodeLine{00057\ \{}
+\DoxyCodeLine{00058\ \ \ \ \ \textcolor{keywordflow}{return}\ a\ >\ b\ ?\ a\ :\ b;}
+\DoxyCodeLine{00059\ \}}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00061\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{int}\ max(\textcolor{keywordtype}{int}\ a,\ \textcolor{keywordtype}{int}\ b)}
+\DoxyCodeLine{00062\ \{}
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keywordflow}{return}\ a\ >\ b\ ?\ a\ :\ b;}
+\DoxyCodeLine{00064\ \}}
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00066\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{int}\ min(\textcolor{keywordtype}{int}\ a,\ \textcolor{keywordtype}{int}\ b)}
+\DoxyCodeLine{00067\ \{}
+\DoxyCodeLine{00068\ \ \ \ \ \textcolor{keywordflow}{return}\ a\ <\ b\ ?\ a\ :\ b;}
+\DoxyCodeLine{00069\ \}}
+\DoxyCodeLine{00070\ }
+\DoxyCodeLine{00071\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{float}\ rsqrtf(\textcolor{keywordtype}{float}\ x)}
+\DoxyCodeLine{00072\ \{}
+\DoxyCodeLine{00073\ \ \ \ \ \textcolor{keywordflow}{return}\ 1.0f\ /\ sqrtf(x);}
+\DoxyCodeLine{00074\ \}}
+\DoxyCodeLine{00075\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00076\ }
+\DoxyCodeLine{00078\ \textcolor{comment}{//\ constructors}}
+\DoxyCodeLine{00080\ }
+\DoxyCodeLine{00081\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ float2\ make\_float2(\textcolor{keywordtype}{float}\ s)}
+\DoxyCodeLine{00082\ \{}
+\DoxyCodeLine{00083\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_float2(s,\ s);}
+\DoxyCodeLine{00084\ \}}
+\DoxyCodeLine{00085\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ float2\ make\_float2(float3\ a)}
+\DoxyCodeLine{00086\ \{}
+\DoxyCodeLine{00087\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_float2(a.x,\ a.y);}
+\DoxyCodeLine{00088\ \}}
+\DoxyCodeLine{00089\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ float2\ make\_float2(int2\ a)}
+\DoxyCodeLine{00090\ \{}
+\DoxyCodeLine{00091\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_float2(\textcolor{keywordtype}{float}(a.x),\ \textcolor{keywordtype}{float}(a.y));}
+\DoxyCodeLine{00092\ \}}
+\DoxyCodeLine{00093\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ float2\ make\_float2(uint2\ a)}
+\DoxyCodeLine{00094\ \{}
+\DoxyCodeLine{00095\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_float2(\textcolor{keywordtype}{float}(a.x),\ \textcolor{keywordtype}{float}(a.y));}
+\DoxyCodeLine{00096\ \}}
+\DoxyCodeLine{00097\ }
+\DoxyCodeLine{00098\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ int2\ make\_int2(\textcolor{keywordtype}{int}\ s)}
+\DoxyCodeLine{00099\ \{}
+\DoxyCodeLine{00100\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_int2(s,\ s);}
+\DoxyCodeLine{00101\ \}}
+\DoxyCodeLine{00102\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ int2\ make\_int2(int3\ a)}
+\DoxyCodeLine{00103\ \{}
+\DoxyCodeLine{00104\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_int2(a.x,\ a.y);}
+\DoxyCodeLine{00105\ \}}
+\DoxyCodeLine{00106\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ int2\ make\_int2(uint2\ a)}
+\DoxyCodeLine{00107\ \{}
+\DoxyCodeLine{00108\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_int2(\textcolor{keywordtype}{int}(a.x),\ \textcolor{keywordtype}{int}(a.y));}
+\DoxyCodeLine{00109\ \}}
+\DoxyCodeLine{00110\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ int2\ make\_int2(float2\ a)}
+\DoxyCodeLine{00111\ \{}
+\DoxyCodeLine{00112\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_int2(\textcolor{keywordtype}{int}(a.x),\ \textcolor{keywordtype}{int}(a.y));}
+\DoxyCodeLine{00113\ \}}
+\DoxyCodeLine{00114\ }
+\DoxyCodeLine{00115\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ uint2\ make\_uint2(uint\ s)}
+\DoxyCodeLine{00116\ \{}
+\DoxyCodeLine{00117\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_uint2(s,\ s);}
+\DoxyCodeLine{00118\ \}}
+\DoxyCodeLine{00119\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ uint2\ make\_uint2(uint3\ a)}
+\DoxyCodeLine{00120\ \{}
+\DoxyCodeLine{00121\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_uint2(a.x,\ a.y);}
+\DoxyCodeLine{00122\ \}}
+\DoxyCodeLine{00123\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ uint2\ make\_uint2(int2\ a)}
+\DoxyCodeLine{00124\ \{}
+\DoxyCodeLine{00125\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_uint2(uint(a.x),\ uint(a.y));}
+\DoxyCodeLine{00126\ \}}
+\DoxyCodeLine{00127\ }
+\DoxyCodeLine{00128\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ float3\ make\_float3(\textcolor{keywordtype}{float}\ s)}
+\DoxyCodeLine{00129\ \{}
+\DoxyCodeLine{00130\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_float3(s,\ s,\ s);}
+\DoxyCodeLine{00131\ \}}
+\DoxyCodeLine{00132\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ float3\ make\_float3(float2\ a)}
+\DoxyCodeLine{00133\ \{}
+\DoxyCodeLine{00134\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_float3(a.x,\ a.y,\ 0.0f);}
+\DoxyCodeLine{00135\ \}}
+\DoxyCodeLine{00136\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ float3\ make\_float3(float2\ a,\ \textcolor{keywordtype}{float}\ s)}
+\DoxyCodeLine{00137\ \{}
+\DoxyCodeLine{00138\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_float3(a.x,\ a.y,\ s);}
+\DoxyCodeLine{00139\ \}}
+\DoxyCodeLine{00140\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ float3\ make\_float3(float3\ a)}
+\DoxyCodeLine{00141\ \{}
+\DoxyCodeLine{00142\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_float3(a.x,\ a.y,\ a.z);}
+\DoxyCodeLine{00143\ \}}
+\DoxyCodeLine{00144\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ float3\ make\_float3(float4\ a)}
+\DoxyCodeLine{00145\ \{}
+\DoxyCodeLine{00146\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_float3(a.x,\ a.y,\ a.z);}
+\DoxyCodeLine{00147\ \}}
+\DoxyCodeLine{00148\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ float3\ make\_float3(int3\ a)}
+\DoxyCodeLine{00149\ \{}
+\DoxyCodeLine{00150\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_float3(\textcolor{keywordtype}{float}(a.x),\ \textcolor{keywordtype}{float}(a.y),\ \textcolor{keywordtype}{float}(a.z));}
+\DoxyCodeLine{00151\ \}}
+\DoxyCodeLine{00152\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ float3\ make\_float3(uint3\ a)}
+\DoxyCodeLine{00153\ \{}
+\DoxyCodeLine{00154\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_float3(\textcolor{keywordtype}{float}(a.x),\ \textcolor{keywordtype}{float}(a.y),\ \textcolor{keywordtype}{float}(a.z));}
+\DoxyCodeLine{00155\ \}}
+\DoxyCodeLine{00156\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ float3\ make\_float3(uchar3\ a)}
+\DoxyCodeLine{00157\ \{}
+\DoxyCodeLine{00158\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_float3(\textcolor{keywordtype}{float}(a.x),\ \textcolor{keywordtype}{float}(a.y),\ \textcolor{keywordtype}{float}(a.z));}
+\DoxyCodeLine{00159\ \}}
+\DoxyCodeLine{00160\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ float3\ make\_float3(uchar4\ a)}
+\DoxyCodeLine{00161\ \{}
+\DoxyCodeLine{00162\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_float3(\textcolor{keywordtype}{float}(a.x),\ \textcolor{keywordtype}{float}(a.y),\ \textcolor{keywordtype}{float}(a.z));}
+\DoxyCodeLine{00163\ \}}
+\DoxyCodeLine{00164\ }
+\DoxyCodeLine{00165\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ int3\ make\_int3(\textcolor{keywordtype}{int}\ s)}
+\DoxyCodeLine{00166\ \{}
+\DoxyCodeLine{00167\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_int3(s,\ s,\ s);}
+\DoxyCodeLine{00168\ \}}
+\DoxyCodeLine{00169\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ int3\ make\_int3(int2\ a)}
+\DoxyCodeLine{00170\ \{}
+\DoxyCodeLine{00171\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_int3(a.x,\ a.y,\ 0);}
+\DoxyCodeLine{00172\ \}}
+\DoxyCodeLine{00173\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ int3\ make\_int3(int2\ a,\ \textcolor{keywordtype}{int}\ s)}
+\DoxyCodeLine{00174\ \{}
+\DoxyCodeLine{00175\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_int3(a.x,\ a.y,\ s);}
+\DoxyCodeLine{00176\ \}}
+\DoxyCodeLine{00177\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ int3\ make\_int3(uint3\ a)}
+\DoxyCodeLine{00178\ \{}
+\DoxyCodeLine{00179\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_int3(\textcolor{keywordtype}{int}(a.x),\ \textcolor{keywordtype}{int}(a.y),\ \textcolor{keywordtype}{int}(a.z));}
+\DoxyCodeLine{00180\ \}}
+\DoxyCodeLine{00181\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ int3\ make\_int3(float3\ a)}
+\DoxyCodeLine{00182\ \{}
+\DoxyCodeLine{00183\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_int3(\textcolor{keywordtype}{int}(a.x),\ \textcolor{keywordtype}{int}(a.y),\ \textcolor{keywordtype}{int}(a.z));}
+\DoxyCodeLine{00184\ \}}
+\DoxyCodeLine{00185\ }
+\DoxyCodeLine{00186\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ uint3\ make\_uint3(uint\ s)}
+\DoxyCodeLine{00187\ \{}
+\DoxyCodeLine{00188\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_uint3(s,\ s,\ s);}
+\DoxyCodeLine{00189\ \}}
+\DoxyCodeLine{00190\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ uint3\ make\_uint3(uint2\ a)}
+\DoxyCodeLine{00191\ \{}
+\DoxyCodeLine{00192\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_uint3(a.x,\ a.y,\ 0);}
+\DoxyCodeLine{00193\ \}}
+\DoxyCodeLine{00194\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ uint3\ make\_uint3(uint2\ a,\ uint\ s)}
+\DoxyCodeLine{00195\ \{}
+\DoxyCodeLine{00196\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_uint3(a.x,\ a.y,\ s);}
+\DoxyCodeLine{00197\ \}}
+\DoxyCodeLine{00198\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ uint3\ make\_uint3(uint4\ a)}
+\DoxyCodeLine{00199\ \{}
+\DoxyCodeLine{00200\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_uint3(a.x,\ a.y,\ a.z);}
+\DoxyCodeLine{00201\ \}}
+\DoxyCodeLine{00202\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ uint3\ make\_uint3(int3\ a)}
+\DoxyCodeLine{00203\ \{}
+\DoxyCodeLine{00204\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_uint3(uint(a.x),\ uint(a.y),\ uint(a.z));}
+\DoxyCodeLine{00205\ \}}
+\DoxyCodeLine{00206\ }
+\DoxyCodeLine{00207\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ uchar3\ make\_uchar3(uchar\ s)}
+\DoxyCodeLine{00208\ \{}
+\DoxyCodeLine{00209\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_uchar3(s,\ s,\ s);}
+\DoxyCodeLine{00210\ \}}
+\DoxyCodeLine{00211\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ uchar3\ make\_uchar3(uint\ s)}
+\DoxyCodeLine{00212\ \{}
+\DoxyCodeLine{00213\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_uchar3(s,\ s,\ s);}
+\DoxyCodeLine{00214\ \}}
+\DoxyCodeLine{00215\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ uchar3\ make\_uchar3(uint2\ a)}
+\DoxyCodeLine{00216\ \{}
+\DoxyCodeLine{00217\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_uchar3(a.x,\ a.y,\ 0);}
+\DoxyCodeLine{00218\ \}}
+\DoxyCodeLine{00219\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ uchar3\ make\_uchar3(uint2\ a,\ uint\ s)}
+\DoxyCodeLine{00220\ \{}
+\DoxyCodeLine{00221\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_uchar3(a.x,\ a.y,\ s);}
+\DoxyCodeLine{00222\ \}}
+\DoxyCodeLine{00223\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ uchar3\ make\_uchar3(uint4\ a)}
+\DoxyCodeLine{00224\ \{}
+\DoxyCodeLine{00225\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_uchar3(a.x,\ a.y,\ a.z);}
+\DoxyCodeLine{00226\ \}}
+\DoxyCodeLine{00227\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ uchar3\ make\_uchar3(uchar3\ a)}
+\DoxyCodeLine{00228\ \{}
+\DoxyCodeLine{00229\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_uchar3(a.x,\ a.y,\ a.z);}
+\DoxyCodeLine{00230\ \}}
+\DoxyCodeLine{00231\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ uchar3\ make\_uchar3(uchar4\ a)}
+\DoxyCodeLine{00232\ \{}
+\DoxyCodeLine{00233\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_uchar3(a.x,\ a.y,\ a.z);}
+\DoxyCodeLine{00234\ \}}
+\DoxyCodeLine{00235\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ uchar3\ make\_uchar3(int3\ a)}
+\DoxyCodeLine{00236\ \{}
+\DoxyCodeLine{00237\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_uchar3(uchar(a.x),\ uchar(a.y),\ uchar(a.z));}
+\DoxyCodeLine{00238\ \}}
+\DoxyCodeLine{00239\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ uchar3\ make\_uchar3(float3\ a)}
+\DoxyCodeLine{00240\ \{}
+\DoxyCodeLine{00241\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_uchar3(a.x,\ a.y,\ a.z);}
+\DoxyCodeLine{00242\ \}}
+\DoxyCodeLine{00243\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ uchar3\ make\_uchar3(float4\ a)}
+\DoxyCodeLine{00244\ \{}
+\DoxyCodeLine{00245\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_uchar3(a.x,\ a.y,\ a.z);}
+\DoxyCodeLine{00246\ \}}
+\DoxyCodeLine{00247\ }
+\DoxyCodeLine{00248\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ float4\ make\_float4(\textcolor{keywordtype}{float}\ s)}
+\DoxyCodeLine{00249\ \{}
+\DoxyCodeLine{00250\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_float4(s,\ s,\ s,\ s);}
+\DoxyCodeLine{00251\ \}}
+\DoxyCodeLine{00252\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ float4\ make\_float4(float3\ a)}
+\DoxyCodeLine{00253\ \{}
+\DoxyCodeLine{00254\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_float4(a.x,\ a.y,\ a.z,\ 0.0f);}
+\DoxyCodeLine{00255\ \}}
+\DoxyCodeLine{00256\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ float4\ make\_float4(float4\ a)}
+\DoxyCodeLine{00257\ \{}
+\DoxyCodeLine{00258\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_float4(a.x,\ a.y,\ a.z,\ a.w);}
+\DoxyCodeLine{00259\ \}}
+\DoxyCodeLine{00260\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ float4\ make\_float4(float3\ a,\ \textcolor{keywordtype}{float}\ w)}
+\DoxyCodeLine{00261\ \{}
+\DoxyCodeLine{00262\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_float4(a.x,\ a.y,\ a.z,\ w);}
+\DoxyCodeLine{00263\ \}}
+\DoxyCodeLine{00264\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ float4\ make\_float4(int4\ a)}
+\DoxyCodeLine{00265\ \{}
+\DoxyCodeLine{00266\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_float4(\textcolor{keywordtype}{float}(a.x),\ \textcolor{keywordtype}{float}(a.y),\ \textcolor{keywordtype}{float}(a.z),\ \textcolor{keywordtype}{float}(a.w));}
+\DoxyCodeLine{00267\ \}}
+\DoxyCodeLine{00268\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ float4\ make\_float4(uint4\ a)}
+\DoxyCodeLine{00269\ \{}
+\DoxyCodeLine{00270\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_float4(\textcolor{keywordtype}{float}(a.x),\ \textcolor{keywordtype}{float}(a.y),\ \textcolor{keywordtype}{float}(a.z),\ \textcolor{keywordtype}{float}(a.w));}
+\DoxyCodeLine{00271\ \}}
+\DoxyCodeLine{00272\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ float4\ make\_float4(uchar3\ a)}
+\DoxyCodeLine{00273\ \{}
+\DoxyCodeLine{00274\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_float4(\textcolor{keywordtype}{float}(a.x),\ \textcolor{keywordtype}{float}(a.y),\ \textcolor{keywordtype}{float}(a.z),\ 0.0f);}
+\DoxyCodeLine{00275\ \}}
+\DoxyCodeLine{00276\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ float4\ make\_float4(uchar4\ a)}
+\DoxyCodeLine{00277\ \{}
+\DoxyCodeLine{00278\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_float4(\textcolor{keywordtype}{float}(a.x),\ \textcolor{keywordtype}{float}(a.y),\ \textcolor{keywordtype}{float}(a.z),\ \textcolor{keywordtype}{float}(a.w));}
+\DoxyCodeLine{00279\ \}}
+\DoxyCodeLine{00280\ }
+\DoxyCodeLine{00281\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ int4\ make\_int4(\textcolor{keywordtype}{int}\ s)}
+\DoxyCodeLine{00282\ \{}
+\DoxyCodeLine{00283\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_int4(s,\ s,\ s,\ s);}
+\DoxyCodeLine{00284\ \}}
+\DoxyCodeLine{00285\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ int4\ make\_int4(int3\ a)}
+\DoxyCodeLine{00286\ \{}
+\DoxyCodeLine{00287\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_int4(a.x,\ a.y,\ a.z,\ 0);}
+\DoxyCodeLine{00288\ \}}
+\DoxyCodeLine{00289\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ int4\ make\_int4(int3\ a,\ \textcolor{keywordtype}{int}\ w)}
+\DoxyCodeLine{00290\ \{}
+\DoxyCodeLine{00291\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_int4(a.x,\ a.y,\ a.z,\ w);}
+\DoxyCodeLine{00292\ \}}
+\DoxyCodeLine{00293\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ int4\ make\_int4(uint4\ a)}
+\DoxyCodeLine{00294\ \{}
+\DoxyCodeLine{00295\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_int4(\textcolor{keywordtype}{int}(a.x),\ \textcolor{keywordtype}{int}(a.y),\ \textcolor{keywordtype}{int}(a.z),\ \textcolor{keywordtype}{int}(a.w));}
+\DoxyCodeLine{00296\ \}}
+\DoxyCodeLine{00297\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ int4\ make\_int4(float4\ a)}
+\DoxyCodeLine{00298\ \{}
+\DoxyCodeLine{00299\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_int4(\textcolor{keywordtype}{int}(a.x),\ \textcolor{keywordtype}{int}(a.y),\ \textcolor{keywordtype}{int}(a.z),\ \textcolor{keywordtype}{int}(a.w));}
+\DoxyCodeLine{00300\ \}}
+\DoxyCodeLine{00301\ }
+\DoxyCodeLine{00302\ }
+\DoxyCodeLine{00303\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ uint4\ make\_uint4(uint\ s)}
+\DoxyCodeLine{00304\ \{}
+\DoxyCodeLine{00305\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_uint4(s,\ s,\ s,\ s);}
+\DoxyCodeLine{00306\ \}}
+\DoxyCodeLine{00307\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ uint4\ make\_uint4(uint3\ a)}
+\DoxyCodeLine{00308\ \{}
+\DoxyCodeLine{00309\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_uint4(a.x,\ a.y,\ a.z,\ 0);}
+\DoxyCodeLine{00310\ \}}
+\DoxyCodeLine{00311\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ uint4\ make\_uint4(uint3\ a,\ uint\ w)}
+\DoxyCodeLine{00312\ \{}
+\DoxyCodeLine{00313\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_uint4(a.x,\ a.y,\ a.z,\ w);}
+\DoxyCodeLine{00314\ \}}
+\DoxyCodeLine{00315\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ uint4\ make\_uint4(int4\ a)}
+\DoxyCodeLine{00316\ \{}
+\DoxyCodeLine{00317\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_uint4(uint(a.x),\ uint(a.y),\ uint(a.z),\ uint(a.w));}
+\DoxyCodeLine{00318\ \}}
+\DoxyCodeLine{00319\ }
+\DoxyCodeLine{00320\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ uchar4\ make\_uchar4(uchar\ s)}
+\DoxyCodeLine{00321\ \{}
+\DoxyCodeLine{00322\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_uchar4(s,\ s,\ s,\ s);}
+\DoxyCodeLine{00323\ \}}
+\DoxyCodeLine{00324\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ uchar4\ make\_uchar4(uint\ s)}
+\DoxyCodeLine{00325\ \{}
+\DoxyCodeLine{00326\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_uchar4(s,\ s,\ s,\ s);}
+\DoxyCodeLine{00327\ \}}
+\DoxyCodeLine{00328\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ uchar4\ make\_uchar4(uint3\ a)}
+\DoxyCodeLine{00329\ \{}
+\DoxyCodeLine{00330\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_uchar4(a.x,\ a.y,\ a.z,\ 0);}
+\DoxyCodeLine{00331\ \}}
+\DoxyCodeLine{00332\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ uchar4\ make\_uchar4(uchar3\ a)}
+\DoxyCodeLine{00333\ \{}
+\DoxyCodeLine{00334\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_uchar4(a.x,\ a.y,\ a.z,\ 0);}
+\DoxyCodeLine{00335\ \}}
+\DoxyCodeLine{00336\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ uchar4\ make\_uchar4(uchar4\ a)}
+\DoxyCodeLine{00337\ \{}
+\DoxyCodeLine{00338\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_uchar4(a.x,\ a.y,\ a.z,\ a.w);}
+\DoxyCodeLine{00339\ \}}
+\DoxyCodeLine{00340\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ uchar4\ make\_uchar4(uint3\ a,\ uint\ w)}
+\DoxyCodeLine{00341\ \{}
+\DoxyCodeLine{00342\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_uchar4(a.x,\ a.y,\ a.z,\ w);}
+\DoxyCodeLine{00343\ \}}
+\DoxyCodeLine{00344\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ uchar4\ make\_uchar4(int4\ a)}
+\DoxyCodeLine{00345\ \{}
+\DoxyCodeLine{00346\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_uchar4(uchar(a.x),\ uchar(a.y),\ uchar(a.z),\ uchar(a.w));}
+\DoxyCodeLine{00347\ \}}
+\DoxyCodeLine{00348\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ uchar4\ make\_uchar4(float3\ a)}
+\DoxyCodeLine{00349\ \{}
+\DoxyCodeLine{00350\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_uchar4(a.x,\ a.y,\ a.z,\ 0);}
+\DoxyCodeLine{00351\ \}}
+\DoxyCodeLine{00352\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ uchar4\ make\_uchar4(float4\ a)}
+\DoxyCodeLine{00353\ \{}
+\DoxyCodeLine{00354\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_uchar4(a.x,\ a.y,\ a.z,\ a.w);}
+\DoxyCodeLine{00355\ \}}
+\DoxyCodeLine{00356\ }
+\DoxyCodeLine{00358\ \textcolor{comment}{//\ negate}}
+\DoxyCodeLine{00360\ }
+\DoxyCodeLine{00361\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ float2\ operator-\/(float2\ \&a)}
+\DoxyCodeLine{00362\ \{}
+\DoxyCodeLine{00363\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_float2(-\/a.x,\ -\/a.y);}
+\DoxyCodeLine{00364\ \}}
+\DoxyCodeLine{00365\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ int2\ operator-\/(int2\ \&a)}
+\DoxyCodeLine{00366\ \{}
+\DoxyCodeLine{00367\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_int2(-\/a.x,\ -\/a.y);}
+\DoxyCodeLine{00368\ \}}
+\DoxyCodeLine{00369\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ float3\ operator-\/(float3\ \&a)}
+\DoxyCodeLine{00370\ \{}
+\DoxyCodeLine{00371\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_float3(-\/a.x,\ -\/a.y,\ -\/a.z);}
+\DoxyCodeLine{00372\ \}}
+\DoxyCodeLine{00373\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ int3\ operator-\/(int3\ \&a)}
+\DoxyCodeLine{00374\ \{}
+\DoxyCodeLine{00375\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_int3(-\/a.x,\ -\/a.y,\ -\/a.z);}
+\DoxyCodeLine{00376\ \}}
+\DoxyCodeLine{00377\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ float4\ operator-\/(float4\ \&a)}
+\DoxyCodeLine{00378\ \{}
+\DoxyCodeLine{00379\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_float4(-\/a.x,\ -\/a.y,\ -\/a.z,\ -\/a.w);}
+\DoxyCodeLine{00380\ \}}
+\DoxyCodeLine{00381\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ int4\ operator-\/(int4\ \&a)}
+\DoxyCodeLine{00382\ \{}
+\DoxyCodeLine{00383\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_int4(-\/a.x,\ -\/a.y,\ -\/a.z,\ -\/a.w);}
+\DoxyCodeLine{00384\ \}}
+\DoxyCodeLine{00385\ }
+\DoxyCodeLine{00387\ \textcolor{comment}{//\ addition}}
+\DoxyCodeLine{00389\ }
+\DoxyCodeLine{00390\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ float2\ operator+(float2\ a,\ float2\ b)}
+\DoxyCodeLine{00391\ \{}
+\DoxyCodeLine{00392\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_float2(a.x\ +\ b.x,\ a.y\ +\ b.y);}
+\DoxyCodeLine{00393\ \}}
+\DoxyCodeLine{00394\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ \textcolor{keywordtype}{void}\ operator+=(float2\ \&a,\ float2\ b)}
+\DoxyCodeLine{00395\ \{}
+\DoxyCodeLine{00396\ \ \ \ \ a.x\ +=\ b.x;}
+\DoxyCodeLine{00397\ \ \ \ \ a.y\ +=\ b.y;}
+\DoxyCodeLine{00398\ \}}
+\DoxyCodeLine{00399\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ float2\ operator+(float2\ a,\ \textcolor{keywordtype}{float}\ b)}
+\DoxyCodeLine{00400\ \{}
+\DoxyCodeLine{00401\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_float2(a.x\ +\ b,\ a.y\ +\ b);}
+\DoxyCodeLine{00402\ \}}
+\DoxyCodeLine{00403\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ float2\ operator+(\textcolor{keywordtype}{float}\ b,\ float2\ a)}
+\DoxyCodeLine{00404\ \{}
+\DoxyCodeLine{00405\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_float2(a.x\ +\ b,\ a.y\ +\ b);}
+\DoxyCodeLine{00406\ \}}
+\DoxyCodeLine{00407\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ \textcolor{keywordtype}{void}\ operator+=(float2\ \&a,\ \textcolor{keywordtype}{float}\ b)}
+\DoxyCodeLine{00408\ \{}
+\DoxyCodeLine{00409\ \ \ \ \ a.x\ +=\ b;}
+\DoxyCodeLine{00410\ \ \ \ \ a.y\ +=\ b;}
+\DoxyCodeLine{00411\ \}}
+\DoxyCodeLine{00412\ }
+\DoxyCodeLine{00413\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ int2\ operator+(int2\ a,\ int2\ b)}
+\DoxyCodeLine{00414\ \{}
+\DoxyCodeLine{00415\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_int2(a.x\ +\ b.x,\ a.y\ +\ b.y);}
+\DoxyCodeLine{00416\ \}}
+\DoxyCodeLine{00417\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ \textcolor{keywordtype}{void}\ operator+=(int2\ \&a,\ int2\ b)}
+\DoxyCodeLine{00418\ \{}
+\DoxyCodeLine{00419\ \ \ \ \ a.x\ +=\ b.x;}
+\DoxyCodeLine{00420\ \ \ \ \ a.y\ +=\ b.y;}
+\DoxyCodeLine{00421\ \}}
+\DoxyCodeLine{00422\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ int2\ operator+(int2\ a,\ \textcolor{keywordtype}{int}\ b)}
+\DoxyCodeLine{00423\ \{}
+\DoxyCodeLine{00424\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_int2(a.x\ +\ b,\ a.y\ +\ b);}
+\DoxyCodeLine{00425\ \}}
+\DoxyCodeLine{00426\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ int2\ operator+(\textcolor{keywordtype}{int}\ b,\ int2\ a)}
+\DoxyCodeLine{00427\ \{}
+\DoxyCodeLine{00428\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_int2(a.x\ +\ b,\ a.y\ +\ b);}
+\DoxyCodeLine{00429\ \}}
+\DoxyCodeLine{00430\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ \textcolor{keywordtype}{void}\ operator+=(int2\ \&a,\ \textcolor{keywordtype}{int}\ b)}
+\DoxyCodeLine{00431\ \{}
+\DoxyCodeLine{00432\ \ \ \ \ a.x\ +=\ b;}
+\DoxyCodeLine{00433\ \ \ \ \ a.y\ +=\ b;}
+\DoxyCodeLine{00434\ \}}
+\DoxyCodeLine{00435\ }
+\DoxyCodeLine{00436\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ uint2\ operator+(uint2\ a,\ uint2\ b)}
+\DoxyCodeLine{00437\ \{}
+\DoxyCodeLine{00438\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_uint2(a.x\ +\ b.x,\ a.y\ +\ b.y);}
+\DoxyCodeLine{00439\ \}}
+\DoxyCodeLine{00440\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ \textcolor{keywordtype}{void}\ operator+=(uint2\ \&a,\ uint2\ b)}
+\DoxyCodeLine{00441\ \{}
+\DoxyCodeLine{00442\ \ \ \ \ a.x\ +=\ b.x;}
+\DoxyCodeLine{00443\ \ \ \ \ a.y\ +=\ b.y;}
+\DoxyCodeLine{00444\ \}}
+\DoxyCodeLine{00445\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ uint2\ operator+(uint2\ a,\ uint\ b)}
+\DoxyCodeLine{00446\ \{}
+\DoxyCodeLine{00447\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_uint2(a.x\ +\ b,\ a.y\ +\ b);}
+\DoxyCodeLine{00448\ \}}
+\DoxyCodeLine{00449\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ uint2\ operator+(uint\ b,\ uint2\ a)}
+\DoxyCodeLine{00450\ \{}
+\DoxyCodeLine{00451\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_uint2(a.x\ +\ b,\ a.y\ +\ b);}
+\DoxyCodeLine{00452\ \}}
+\DoxyCodeLine{00453\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ \textcolor{keywordtype}{void}\ operator+=(uint2\ \&a,\ uint\ b)}
+\DoxyCodeLine{00454\ \{}
+\DoxyCodeLine{00455\ \ \ \ \ a.x\ +=\ b;}
+\DoxyCodeLine{00456\ \ \ \ \ a.y\ +=\ b;}
+\DoxyCodeLine{00457\ \}}
+\DoxyCodeLine{00458\ }
+\DoxyCodeLine{00459\ }
+\DoxyCodeLine{00460\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ float3\ operator+(float3\ a,\ float3\ b)}
+\DoxyCodeLine{00461\ \{}
+\DoxyCodeLine{00462\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_float3(a.x\ +\ b.x,\ a.y\ +\ b.y,\ a.z\ +\ b.z);}
+\DoxyCodeLine{00463\ \}}
+\DoxyCodeLine{00464\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ \textcolor{keywordtype}{void}\ operator+=(float3\ \&a,\ float3\ b)}
+\DoxyCodeLine{00465\ \{}
+\DoxyCodeLine{00466\ \ \ \ \ a.x\ +=\ b.x;}
+\DoxyCodeLine{00467\ \ \ \ \ a.y\ +=\ b.y;}
+\DoxyCodeLine{00468\ \ \ \ \ a.z\ +=\ b.z;}
+\DoxyCodeLine{00469\ \}}
+\DoxyCodeLine{00470\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ float3\ operator+(float3\ a,\ \textcolor{keywordtype}{float}\ b)}
+\DoxyCodeLine{00471\ \{}
+\DoxyCodeLine{00472\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_float3(a.x\ +\ b,\ a.y\ +\ b,\ a.z\ +\ b);}
+\DoxyCodeLine{00473\ \}}
+\DoxyCodeLine{00474\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ \textcolor{keywordtype}{void}\ operator+=(float3\ \&a,\ \textcolor{keywordtype}{float}\ b)}
+\DoxyCodeLine{00475\ \{}
+\DoxyCodeLine{00476\ \ \ \ \ a.x\ +=\ b;}
+\DoxyCodeLine{00477\ \ \ \ \ a.y\ +=\ b;}
+\DoxyCodeLine{00478\ \ \ \ \ a.z\ +=\ b;}
+\DoxyCodeLine{00479\ \}}
+\DoxyCodeLine{00480\ }
+\DoxyCodeLine{00481\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ int3\ operator+(int3\ a,\ int3\ b)}
+\DoxyCodeLine{00482\ \{}
+\DoxyCodeLine{00483\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_int3(a.x\ +\ b.x,\ a.y\ +\ b.y,\ a.z\ +\ b.z);}
+\DoxyCodeLine{00484\ \}}
+\DoxyCodeLine{00485\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ \textcolor{keywordtype}{void}\ operator+=(int3\ \&a,\ int3\ b)}
+\DoxyCodeLine{00486\ \{}
+\DoxyCodeLine{00487\ \ \ \ \ a.x\ +=\ b.x;}
+\DoxyCodeLine{00488\ \ \ \ \ a.y\ +=\ b.y;}
+\DoxyCodeLine{00489\ \ \ \ \ a.z\ +=\ b.z;}
+\DoxyCodeLine{00490\ \}}
+\DoxyCodeLine{00491\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ int3\ operator+(int3\ a,\ \textcolor{keywordtype}{int}\ b)}
+\DoxyCodeLine{00492\ \{}
+\DoxyCodeLine{00493\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_int3(a.x\ +\ b,\ a.y\ +\ b,\ a.z\ +\ b);}
+\DoxyCodeLine{00494\ \}}
+\DoxyCodeLine{00495\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ \textcolor{keywordtype}{void}\ operator+=(int3\ \&a,\ \textcolor{keywordtype}{int}\ b)}
+\DoxyCodeLine{00496\ \{}
+\DoxyCodeLine{00497\ \ \ \ \ a.x\ +=\ b;}
+\DoxyCodeLine{00498\ \ \ \ \ a.y\ +=\ b;}
+\DoxyCodeLine{00499\ \ \ \ \ a.z\ +=\ b;}
+\DoxyCodeLine{00500\ \}}
+\DoxyCodeLine{00501\ }
+\DoxyCodeLine{00502\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ uint3\ operator+(uint3\ a,\ uint3\ b)}
+\DoxyCodeLine{00503\ \{}
+\DoxyCodeLine{00504\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_uint3(a.x\ +\ b.x,\ a.y\ +\ b.y,\ a.z\ +\ b.z);}
+\DoxyCodeLine{00505\ \}}
+\DoxyCodeLine{00506\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ \textcolor{keywordtype}{void}\ operator+=(uint3\ \&a,\ uint3\ b)}
+\DoxyCodeLine{00507\ \{}
+\DoxyCodeLine{00508\ \ \ \ \ a.x\ +=\ b.x;}
+\DoxyCodeLine{00509\ \ \ \ \ a.y\ +=\ b.y;}
+\DoxyCodeLine{00510\ \ \ \ \ a.z\ +=\ b.z;}
+\DoxyCodeLine{00511\ \}}
+\DoxyCodeLine{00512\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ uint3\ operator+(uint3\ a,\ uint\ b)}
+\DoxyCodeLine{00513\ \{}
+\DoxyCodeLine{00514\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_uint3(a.x\ +\ b,\ a.y\ +\ b,\ a.z\ +\ b);}
+\DoxyCodeLine{00515\ \}}
+\DoxyCodeLine{00516\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ \textcolor{keywordtype}{void}\ operator+=(uint3\ \&a,\ uint\ b)}
+\DoxyCodeLine{00517\ \{}
+\DoxyCodeLine{00518\ \ \ \ \ a.x\ +=\ b;}
+\DoxyCodeLine{00519\ \ \ \ \ a.y\ +=\ b;}
+\DoxyCodeLine{00520\ \ \ \ \ a.z\ +=\ b;}
+\DoxyCodeLine{00521\ \}}
+\DoxyCodeLine{00522\ }
+\DoxyCodeLine{00523\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ uchar3\ operator+(uchar3\ a,\ uchar3\ b)}
+\DoxyCodeLine{00524\ \{}
+\DoxyCodeLine{00525\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_uchar3(a.x\ +\ b.x,\ a.y\ +\ b.y,\ a.z\ +\ b.z);}
+\DoxyCodeLine{00526\ \}}
+\DoxyCodeLine{00527\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ \textcolor{keywordtype}{void}\ operator+=(uchar3\ \&a,\ uchar3\ b)}
+\DoxyCodeLine{00528\ \{}
+\DoxyCodeLine{00529\ \ \ \ \ a.x\ +=\ b.x;}
+\DoxyCodeLine{00530\ \ \ \ \ a.y\ +=\ b.y;}
+\DoxyCodeLine{00531\ \ \ \ \ a.z\ +=\ b.z;}
+\DoxyCodeLine{00532\ \}}
+\DoxyCodeLine{00533\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ uchar3\ operator+(uchar3\ a,\ uchar\ b)}
+\DoxyCodeLine{00534\ \{}
+\DoxyCodeLine{00535\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_uchar3(a.x\ +\ b,\ a.y\ +\ b,\ a.z\ +\ b);}
+\DoxyCodeLine{00536\ \}}
+\DoxyCodeLine{00537\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ \textcolor{keywordtype}{void}\ operator+=(uchar3\ \&a,\ uchar\ b)}
+\DoxyCodeLine{00538\ \{}
+\DoxyCodeLine{00539\ \ \ \ \ a.x\ +=\ b;}
+\DoxyCodeLine{00540\ \ \ \ \ a.y\ +=\ b;}
+\DoxyCodeLine{00541\ \ \ \ \ a.z\ +=\ b;}
+\DoxyCodeLine{00542\ \}}
+\DoxyCodeLine{00543\ }
+\DoxyCodeLine{00544\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ int3\ operator+(\textcolor{keywordtype}{int}\ b,\ int3\ a)}
+\DoxyCodeLine{00545\ \{}
+\DoxyCodeLine{00546\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_int3(a.x\ +\ b,\ a.y\ +\ b,\ a.z\ +\ b);}
+\DoxyCodeLine{00547\ \}}
+\DoxyCodeLine{00548\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ uint3\ operator+(uint\ b,\ uint3\ a)}
+\DoxyCodeLine{00549\ \{}
+\DoxyCodeLine{00550\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_uint3(a.x\ +\ b,\ a.y\ +\ b,\ a.z\ +\ b);}
+\DoxyCodeLine{00551\ \}}
+\DoxyCodeLine{00552\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ float3\ operator+(\textcolor{keywordtype}{float}\ b,\ float3\ a)}
+\DoxyCodeLine{00553\ \{}
+\DoxyCodeLine{00554\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_float3(a.x\ +\ b,\ a.y\ +\ b,\ a.z\ +\ b);}
+\DoxyCodeLine{00555\ \}}
+\DoxyCodeLine{00556\ }
+\DoxyCodeLine{00557\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ float4\ operator+(float4\ a,\ float4\ b)}
+\DoxyCodeLine{00558\ \{}
+\DoxyCodeLine{00559\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_float4(a.x\ +\ b.x,\ a.y\ +\ b.y,\ a.z\ +\ b.z,\ \ a.w\ +\ b.w);}
+\DoxyCodeLine{00560\ \}}
+\DoxyCodeLine{00561\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ \textcolor{keywordtype}{void}\ operator+=(float4\ \&a,\ float4\ b)}
+\DoxyCodeLine{00562\ \{}
+\DoxyCodeLine{00563\ \ \ \ \ a.x\ +=\ b.x;}
+\DoxyCodeLine{00564\ \ \ \ \ a.y\ +=\ b.y;}
+\DoxyCodeLine{00565\ \ \ \ \ a.z\ +=\ b.z;}
+\DoxyCodeLine{00566\ \ \ \ \ a.w\ +=\ b.w;}
+\DoxyCodeLine{00567\ \}}
+\DoxyCodeLine{00568\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ float4\ operator+(float4\ a,\ \textcolor{keywordtype}{float}\ b)}
+\DoxyCodeLine{00569\ \{}
+\DoxyCodeLine{00570\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_float4(a.x\ +\ b,\ a.y\ +\ b,\ a.z\ +\ b,\ a.w\ +\ b);}
+\DoxyCodeLine{00571\ \}}
+\DoxyCodeLine{00572\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ float4\ operator+(\textcolor{keywordtype}{float}\ b,\ float4\ a)}
+\DoxyCodeLine{00573\ \{}
+\DoxyCodeLine{00574\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_float4(a.x\ +\ b,\ a.y\ +\ b,\ a.z\ +\ b,\ a.w\ +\ b);}
+\DoxyCodeLine{00575\ \}}
+\DoxyCodeLine{00576\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ \textcolor{keywordtype}{void}\ operator+=(float4\ \&a,\ \textcolor{keywordtype}{float}\ b)}
+\DoxyCodeLine{00577\ \{}
+\DoxyCodeLine{00578\ \ \ \ \ a.x\ +=\ b;}
+\DoxyCodeLine{00579\ \ \ \ \ a.y\ +=\ b;}
+\DoxyCodeLine{00580\ \ \ \ \ a.z\ +=\ b;}
+\DoxyCodeLine{00581\ \ \ \ \ a.w\ +=\ b;}
+\DoxyCodeLine{00582\ \}}
+\DoxyCodeLine{00583\ }
+\DoxyCodeLine{00584\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ int4\ operator+(int4\ a,\ int4\ b)}
+\DoxyCodeLine{00585\ \{}
+\DoxyCodeLine{00586\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_int4(a.x\ +\ b.x,\ a.y\ +\ b.y,\ a.z\ +\ b.z,\ \ a.w\ +\ b.w);}
+\DoxyCodeLine{00587\ \}}
+\DoxyCodeLine{00588\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ \textcolor{keywordtype}{void}\ operator+=(int4\ \&a,\ int4\ b)}
+\DoxyCodeLine{00589\ \{}
+\DoxyCodeLine{00590\ \ \ \ \ a.x\ +=\ b.x;}
+\DoxyCodeLine{00591\ \ \ \ \ a.y\ +=\ b.y;}
+\DoxyCodeLine{00592\ \ \ \ \ a.z\ +=\ b.z;}
+\DoxyCodeLine{00593\ \ \ \ \ a.w\ +=\ b.w;}
+\DoxyCodeLine{00594\ \}}
+\DoxyCodeLine{00595\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ int4\ operator+(int4\ a,\ \textcolor{keywordtype}{int}\ b)}
+\DoxyCodeLine{00596\ \{}
+\DoxyCodeLine{00597\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_int4(a.x\ +\ b,\ a.y\ +\ b,\ a.z\ +\ b,\ \ a.w\ +\ b);}
+\DoxyCodeLine{00598\ \}}
+\DoxyCodeLine{00599\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ int4\ operator+(\textcolor{keywordtype}{int}\ b,\ int4\ a)}
+\DoxyCodeLine{00600\ \{}
+\DoxyCodeLine{00601\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_int4(a.x\ +\ b,\ a.y\ +\ b,\ a.z\ +\ b,\ \ a.w\ +\ b);}
+\DoxyCodeLine{00602\ \}}
+\DoxyCodeLine{00603\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ \textcolor{keywordtype}{void}\ operator+=(int4\ \&a,\ \textcolor{keywordtype}{int}\ b)}
+\DoxyCodeLine{00604\ \{}
+\DoxyCodeLine{00605\ \ \ \ \ a.x\ +=\ b;}
+\DoxyCodeLine{00606\ \ \ \ \ a.y\ +=\ b;}
+\DoxyCodeLine{00607\ \ \ \ \ a.z\ +=\ b;}
+\DoxyCodeLine{00608\ \ \ \ \ a.w\ +=\ b;}
+\DoxyCodeLine{00609\ \}}
+\DoxyCodeLine{00610\ }
+\DoxyCodeLine{00611\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ uint4\ operator+(uint4\ a,\ uint4\ b)}
+\DoxyCodeLine{00612\ \{}
+\DoxyCodeLine{00613\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_uint4(a.x\ +\ b.x,\ a.y\ +\ b.y,\ a.z\ +\ b.z,\ \ a.w\ +\ b.w);}
+\DoxyCodeLine{00614\ \}}
+\DoxyCodeLine{00615\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ \textcolor{keywordtype}{void}\ operator+=(uint4\ \&a,\ uint4\ b)}
+\DoxyCodeLine{00616\ \{}
+\DoxyCodeLine{00617\ \ \ \ \ a.x\ +=\ b.x;}
+\DoxyCodeLine{00618\ \ \ \ \ a.y\ +=\ b.y;}
+\DoxyCodeLine{00619\ \ \ \ \ a.z\ +=\ b.z;}
+\DoxyCodeLine{00620\ \ \ \ \ a.w\ +=\ b.w;}
+\DoxyCodeLine{00621\ \}}
+\DoxyCodeLine{00622\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ uint4\ operator+(uint4\ a,\ uint\ b)}
+\DoxyCodeLine{00623\ \{}
+\DoxyCodeLine{00624\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_uint4(a.x\ +\ b,\ a.y\ +\ b,\ a.z\ +\ b,\ \ a.w\ +\ b);}
+\DoxyCodeLine{00625\ \}}
+\DoxyCodeLine{00626\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ uint4\ operator+(uint\ b,\ uint4\ a)}
+\DoxyCodeLine{00627\ \{}
+\DoxyCodeLine{00628\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_uint4(a.x\ +\ b,\ a.y\ +\ b,\ a.z\ +\ b,\ \ a.w\ +\ b);}
+\DoxyCodeLine{00629\ \}}
+\DoxyCodeLine{00630\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ \textcolor{keywordtype}{void}\ operator+=(uint4\ \&a,\ uint\ b)}
+\DoxyCodeLine{00631\ \{}
+\DoxyCodeLine{00632\ \ \ \ \ a.x\ +=\ b;}
+\DoxyCodeLine{00633\ \ \ \ \ a.y\ +=\ b;}
+\DoxyCodeLine{00634\ \ \ \ \ a.z\ +=\ b;}
+\DoxyCodeLine{00635\ \ \ \ \ a.w\ +=\ b;}
+\DoxyCodeLine{00636\ \}}
+\DoxyCodeLine{00637\ }
+\DoxyCodeLine{00638\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ uchar4\ operator+(uchar4\ a,\ uchar4\ b)}
+\DoxyCodeLine{00639\ \{}
+\DoxyCodeLine{00640\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_uchar4(a.x\ +\ b.x,\ a.y\ +\ b.y,\ a.z\ +\ b.z,\ \ a.w\ +\ b.w);}
+\DoxyCodeLine{00641\ \}}
+\DoxyCodeLine{00642\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ \textcolor{keywordtype}{void}\ operator+=(uchar4\ \&a,\ uchar4\ b)}
+\DoxyCodeLine{00643\ \{}
+\DoxyCodeLine{00644\ \ \ \ \ a.x\ +=\ b.x;}
+\DoxyCodeLine{00645\ \ \ \ \ a.y\ +=\ b.y;}
+\DoxyCodeLine{00646\ \ \ \ \ a.z\ +=\ b.z;}
+\DoxyCodeLine{00647\ \ \ \ \ a.w\ +=\ b.w;}
+\DoxyCodeLine{00648\ \}}
+\DoxyCodeLine{00649\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ uchar4\ operator+(uchar4\ a,\ uchar\ b)}
+\DoxyCodeLine{00650\ \{}
+\DoxyCodeLine{00651\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_uchar4(a.x\ +\ b,\ a.y\ +\ b,\ a.z\ +\ b,\ \ a.w\ +\ b);}
+\DoxyCodeLine{00652\ \}}
+\DoxyCodeLine{00653\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ uchar4\ operator+(uchar\ b,\ uchar4\ a)}
+\DoxyCodeLine{00654\ \{}
+\DoxyCodeLine{00655\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_uchar4(a.x\ +\ b,\ a.y\ +\ b,\ a.z\ +\ b,\ \ a.w\ +\ b);}
+\DoxyCodeLine{00656\ \}}
+\DoxyCodeLine{00657\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ \textcolor{keywordtype}{void}\ operator+=(uchar4\ \&a,\ uchar\ b)}
+\DoxyCodeLine{00658\ \{}
+\DoxyCodeLine{00659\ \ \ \ \ a.x\ +=\ b;}
+\DoxyCodeLine{00660\ \ \ \ \ a.y\ +=\ b;}
+\DoxyCodeLine{00661\ \ \ \ \ a.z\ +=\ b;}
+\DoxyCodeLine{00662\ \ \ \ \ a.w\ +=\ b;}
+\DoxyCodeLine{00663\ \}}
+\DoxyCodeLine{00664\ }
+\DoxyCodeLine{00666\ \textcolor{comment}{//\ subtract}}
+\DoxyCodeLine{00668\ }
+\DoxyCodeLine{00669\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ float2\ operator-\/(float2\ a,\ float2\ b)}
+\DoxyCodeLine{00670\ \{}
+\DoxyCodeLine{00671\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_float2(a.x\ -\/\ b.x,\ a.y\ -\/\ b.y);}
+\DoxyCodeLine{00672\ \}}
+\DoxyCodeLine{00673\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ \textcolor{keywordtype}{void}\ operator-\/=(float2\ \&a,\ float2\ b)}
+\DoxyCodeLine{00674\ \{}
+\DoxyCodeLine{00675\ \ \ \ \ a.x\ -\/=\ b.x;}
+\DoxyCodeLine{00676\ \ \ \ \ a.y\ -\/=\ b.y;}
+\DoxyCodeLine{00677\ \}}
+\DoxyCodeLine{00678\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ float2\ operator-\/(float2\ a,\ \textcolor{keywordtype}{float}\ b)}
+\DoxyCodeLine{00679\ \{}
+\DoxyCodeLine{00680\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_float2(a.x\ -\/\ b,\ a.y\ -\/\ b);}
+\DoxyCodeLine{00681\ \}}
+\DoxyCodeLine{00682\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ float2\ operator-\/(\textcolor{keywordtype}{float}\ b,\ float2\ a)}
+\DoxyCodeLine{00683\ \{}
+\DoxyCodeLine{00684\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_float2(b\ -\/\ a.x,\ b\ -\/\ a.y);}
+\DoxyCodeLine{00685\ \}}
+\DoxyCodeLine{00686\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ \textcolor{keywordtype}{void}\ operator-\/=(float2\ \&a,\ \textcolor{keywordtype}{float}\ b)}
+\DoxyCodeLine{00687\ \{}
+\DoxyCodeLine{00688\ \ \ \ \ a.x\ -\/=\ b;}
+\DoxyCodeLine{00689\ \ \ \ \ a.y\ -\/=\ b;}
+\DoxyCodeLine{00690\ \}}
+\DoxyCodeLine{00691\ }
+\DoxyCodeLine{00692\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ int2\ operator-\/(int2\ a,\ int2\ b)}
+\DoxyCodeLine{00693\ \{}
+\DoxyCodeLine{00694\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_int2(a.x\ -\/\ b.x,\ a.y\ -\/\ b.y);}
+\DoxyCodeLine{00695\ \}}
+\DoxyCodeLine{00696\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ \textcolor{keywordtype}{void}\ operator-\/=(int2\ \&a,\ int2\ b)}
+\DoxyCodeLine{00697\ \{}
+\DoxyCodeLine{00698\ \ \ \ \ a.x\ -\/=\ b.x;}
+\DoxyCodeLine{00699\ \ \ \ \ a.y\ -\/=\ b.y;}
+\DoxyCodeLine{00700\ \}}
+\DoxyCodeLine{00701\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ int2\ operator-\/(int2\ a,\ \textcolor{keywordtype}{int}\ b)}
+\DoxyCodeLine{00702\ \{}
+\DoxyCodeLine{00703\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_int2(a.x\ -\/\ b,\ a.y\ -\/\ b);}
+\DoxyCodeLine{00704\ \}}
+\DoxyCodeLine{00705\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ int2\ operator-\/(\textcolor{keywordtype}{int}\ b,\ int2\ a)}
+\DoxyCodeLine{00706\ \{}
+\DoxyCodeLine{00707\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_int2(b\ -\/\ a.x,\ b\ -\/\ a.y);}
+\DoxyCodeLine{00708\ \}}
+\DoxyCodeLine{00709\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ \textcolor{keywordtype}{void}\ operator-\/=(int2\ \&a,\ \textcolor{keywordtype}{int}\ b)}
+\DoxyCodeLine{00710\ \{}
+\DoxyCodeLine{00711\ \ \ \ \ a.x\ -\/=\ b;}
+\DoxyCodeLine{00712\ \ \ \ \ a.y\ -\/=\ b;}
+\DoxyCodeLine{00713\ \}}
+\DoxyCodeLine{00714\ }
+\DoxyCodeLine{00715\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ uint2\ operator-\/(uint2\ a,\ uint2\ b)}
+\DoxyCodeLine{00716\ \{}
+\DoxyCodeLine{00717\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_uint2(a.x\ -\/\ b.x,\ a.y\ -\/\ b.y);}
+\DoxyCodeLine{00718\ \}}
+\DoxyCodeLine{00719\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ \textcolor{keywordtype}{void}\ operator-\/=(uint2\ \&a,\ uint2\ b)}
+\DoxyCodeLine{00720\ \{}
+\DoxyCodeLine{00721\ \ \ \ \ a.x\ -\/=\ b.x;}
+\DoxyCodeLine{00722\ \ \ \ \ a.y\ -\/=\ b.y;}
+\DoxyCodeLine{00723\ \}}
+\DoxyCodeLine{00724\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ uint2\ operator-\/(uint2\ a,\ uint\ b)}
+\DoxyCodeLine{00725\ \{}
+\DoxyCodeLine{00726\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_uint2(a.x\ -\/\ b,\ a.y\ -\/\ b);}
+\DoxyCodeLine{00727\ \}}
+\DoxyCodeLine{00728\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ uint2\ operator-\/(uint\ b,\ uint2\ a)}
+\DoxyCodeLine{00729\ \{}
+\DoxyCodeLine{00730\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_uint2(b\ -\/\ a.x,\ b\ -\/\ a.y);}
+\DoxyCodeLine{00731\ \}}
+\DoxyCodeLine{00732\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ \textcolor{keywordtype}{void}\ operator-\/=(uint2\ \&a,\ uint\ b)}
+\DoxyCodeLine{00733\ \{}
+\DoxyCodeLine{00734\ \ \ \ \ a.x\ -\/=\ b;}
+\DoxyCodeLine{00735\ \ \ \ \ a.y\ -\/=\ b;}
+\DoxyCodeLine{00736\ \}}
+\DoxyCodeLine{00737\ }
+\DoxyCodeLine{00738\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ float3\ operator-\/(float3\ a,\ float3\ b)}
+\DoxyCodeLine{00739\ \{}
+\DoxyCodeLine{00740\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_float3(a.x\ -\/\ b.x,\ a.y\ -\/\ b.y,\ a.z\ -\/\ b.z);}
+\DoxyCodeLine{00741\ \}}
+\DoxyCodeLine{00742\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ \textcolor{keywordtype}{void}\ operator-\/=(float3\ \&a,\ float3\ b)}
+\DoxyCodeLine{00743\ \{}
+\DoxyCodeLine{00744\ \ \ \ \ a.x\ -\/=\ b.x;}
+\DoxyCodeLine{00745\ \ \ \ \ a.y\ -\/=\ b.y;}
+\DoxyCodeLine{00746\ \ \ \ \ a.z\ -\/=\ b.z;}
+\DoxyCodeLine{00747\ \}}
+\DoxyCodeLine{00748\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ float3\ operator-\/(float3\ a,\ \textcolor{keywordtype}{float}\ b)}
+\DoxyCodeLine{00749\ \{}
+\DoxyCodeLine{00750\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_float3(a.x\ -\/\ b,\ a.y\ -\/\ b,\ a.z\ -\/\ b);}
+\DoxyCodeLine{00751\ \}}
+\DoxyCodeLine{00752\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ float3\ operator-\/(\textcolor{keywordtype}{float}\ b,\ float3\ a)}
+\DoxyCodeLine{00753\ \{}
+\DoxyCodeLine{00754\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_float3(b\ -\/\ a.x,\ b\ -\/\ a.y,\ b\ -\/\ a.z);}
+\DoxyCodeLine{00755\ \}}
+\DoxyCodeLine{00756\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ \textcolor{keywordtype}{void}\ operator-\/=(float3\ \&a,\ \textcolor{keywordtype}{float}\ b)}
+\DoxyCodeLine{00757\ \{}
+\DoxyCodeLine{00758\ \ \ \ \ a.x\ -\/=\ b;}
+\DoxyCodeLine{00759\ \ \ \ \ a.y\ -\/=\ b;}
+\DoxyCodeLine{00760\ \ \ \ \ a.z\ -\/=\ b;}
+\DoxyCodeLine{00761\ \}}
+\DoxyCodeLine{00762\ }
+\DoxyCodeLine{00763\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ int3\ operator-\/(int3\ a,\ int3\ b)}
+\DoxyCodeLine{00764\ \{}
+\DoxyCodeLine{00765\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_int3(a.x\ -\/\ b.x,\ a.y\ -\/\ b.y,\ a.z\ -\/\ b.z);}
+\DoxyCodeLine{00766\ \}}
+\DoxyCodeLine{00767\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ \textcolor{keywordtype}{void}\ operator-\/=(int3\ \&a,\ int3\ b)}
+\DoxyCodeLine{00768\ \{}
+\DoxyCodeLine{00769\ \ \ \ \ a.x\ -\/=\ b.x;}
+\DoxyCodeLine{00770\ \ \ \ \ a.y\ -\/=\ b.y;}
+\DoxyCodeLine{00771\ \ \ \ \ a.z\ -\/=\ b.z;}
+\DoxyCodeLine{00772\ \}}
+\DoxyCodeLine{00773\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ int3\ operator-\/(int3\ a,\ \textcolor{keywordtype}{int}\ b)}
+\DoxyCodeLine{00774\ \{}
+\DoxyCodeLine{00775\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_int3(a.x\ -\/\ b,\ a.y\ -\/\ b,\ a.z\ -\/\ b);}
+\DoxyCodeLine{00776\ \}}
+\DoxyCodeLine{00777\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ int3\ operator-\/(\textcolor{keywordtype}{int}\ b,\ int3\ a)}
+\DoxyCodeLine{00778\ \{}
+\DoxyCodeLine{00779\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_int3(b\ -\/\ a.x,\ b\ -\/\ a.y,\ b\ -\/\ a.z);}
+\DoxyCodeLine{00780\ \}}
+\DoxyCodeLine{00781\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ \textcolor{keywordtype}{void}\ operator-\/=(int3\ \&a,\ \textcolor{keywordtype}{int}\ b)}
+\DoxyCodeLine{00782\ \{}
+\DoxyCodeLine{00783\ \ \ \ \ a.x\ -\/=\ b;}
+\DoxyCodeLine{00784\ \ \ \ \ a.y\ -\/=\ b;}
+\DoxyCodeLine{00785\ \ \ \ \ a.z\ -\/=\ b;}
+\DoxyCodeLine{00786\ \}}
+\DoxyCodeLine{00787\ }
+\DoxyCodeLine{00788\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ uint3\ operator-\/(uint3\ a,\ uint3\ b)}
+\DoxyCodeLine{00789\ \{}
+\DoxyCodeLine{00790\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_uint3(a.x\ -\/\ b.x,\ a.y\ -\/\ b.y,\ a.z\ -\/\ b.z);}
+\DoxyCodeLine{00791\ \}}
+\DoxyCodeLine{00792\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ \textcolor{keywordtype}{void}\ operator-\/=(uint3\ \&a,\ uint3\ b)}
+\DoxyCodeLine{00793\ \{}
+\DoxyCodeLine{00794\ \ \ \ \ a.x\ -\/=\ b.x;}
+\DoxyCodeLine{00795\ \ \ \ \ a.y\ -\/=\ b.y;}
+\DoxyCodeLine{00796\ \ \ \ \ a.z\ -\/=\ b.z;}
+\DoxyCodeLine{00797\ \}}
+\DoxyCodeLine{00798\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ uint3\ operator-\/(uint3\ a,\ uint\ b)}
+\DoxyCodeLine{00799\ \{}
+\DoxyCodeLine{00800\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_uint3(a.x\ -\/\ b,\ a.y\ -\/\ b,\ a.z\ -\/\ b);}
+\DoxyCodeLine{00801\ \}}
+\DoxyCodeLine{00802\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ uint3\ operator-\/(uint\ b,\ uint3\ a)}
+\DoxyCodeLine{00803\ \{}
+\DoxyCodeLine{00804\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_uint3(b\ -\/\ a.x,\ b\ -\/\ a.y,\ b\ -\/\ a.z);}
+\DoxyCodeLine{00805\ \}}
+\DoxyCodeLine{00806\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ \textcolor{keywordtype}{void}\ operator-\/=(uint3\ \&a,\ uint\ b)}
+\DoxyCodeLine{00807\ \{}
+\DoxyCodeLine{00808\ \ \ \ \ a.x\ -\/=\ b;}
+\DoxyCodeLine{00809\ \ \ \ \ a.y\ -\/=\ b;}
+\DoxyCodeLine{00810\ \ \ \ \ a.z\ -\/=\ b;}
+\DoxyCodeLine{00811\ \}}
+\DoxyCodeLine{00812\ }
+\DoxyCodeLine{00813\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ float4\ operator-\/(float4\ a,\ float4\ b)}
+\DoxyCodeLine{00814\ \{}
+\DoxyCodeLine{00815\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_float4(a.x\ -\/\ b.x,\ a.y\ -\/\ b.y,\ a.z\ -\/\ b.z,\ \ a.w\ -\/\ b.w);}
+\DoxyCodeLine{00816\ \}}
+\DoxyCodeLine{00817\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ \textcolor{keywordtype}{void}\ operator-\/=(float4\ \&a,\ float4\ b)}
+\DoxyCodeLine{00818\ \{}
+\DoxyCodeLine{00819\ \ \ \ \ a.x\ -\/=\ b.x;}
+\DoxyCodeLine{00820\ \ \ \ \ a.y\ -\/=\ b.y;}
+\DoxyCodeLine{00821\ \ \ \ \ a.z\ -\/=\ b.z;}
+\DoxyCodeLine{00822\ \ \ \ \ a.w\ -\/=\ b.w;}
+\DoxyCodeLine{00823\ \}}
+\DoxyCodeLine{00824\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ float4\ operator-\/(float4\ a,\ \textcolor{keywordtype}{float}\ b)}
+\DoxyCodeLine{00825\ \{}
+\DoxyCodeLine{00826\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_float4(a.x\ -\/\ b,\ a.y\ -\/\ b,\ a.z\ -\/\ b,\ \ a.w\ -\/\ b);}
+\DoxyCodeLine{00827\ \}}
+\DoxyCodeLine{00828\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ \textcolor{keywordtype}{void}\ operator-\/=(float4\ \&a,\ \textcolor{keywordtype}{float}\ b)}
+\DoxyCodeLine{00829\ \{}
+\DoxyCodeLine{00830\ \ \ \ \ a.x\ -\/=\ b;}
+\DoxyCodeLine{00831\ \ \ \ \ a.y\ -\/=\ b;}
+\DoxyCodeLine{00832\ \ \ \ \ a.z\ -\/=\ b;}
+\DoxyCodeLine{00833\ \ \ \ \ a.w\ -\/=\ b;}
+\DoxyCodeLine{00834\ \}}
+\DoxyCodeLine{00835\ }
+\DoxyCodeLine{00836\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ int4\ operator-\/(int4\ a,\ int4\ b)}
+\DoxyCodeLine{00837\ \{}
+\DoxyCodeLine{00838\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_int4(a.x\ -\/\ b.x,\ a.y\ -\/\ b.y,\ a.z\ -\/\ b.z,\ \ a.w\ -\/\ b.w);}
+\DoxyCodeLine{00839\ \}}
+\DoxyCodeLine{00840\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ \textcolor{keywordtype}{void}\ operator-\/=(int4\ \&a,\ int4\ b)}
+\DoxyCodeLine{00841\ \{}
+\DoxyCodeLine{00842\ \ \ \ \ a.x\ -\/=\ b.x;}
+\DoxyCodeLine{00843\ \ \ \ \ a.y\ -\/=\ b.y;}
+\DoxyCodeLine{00844\ \ \ \ \ a.z\ -\/=\ b.z;}
+\DoxyCodeLine{00845\ \ \ \ \ a.w\ -\/=\ b.w;}
+\DoxyCodeLine{00846\ \}}
+\DoxyCodeLine{00847\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ int4\ operator-\/(int4\ a,\ \textcolor{keywordtype}{int}\ b)}
+\DoxyCodeLine{00848\ \{}
+\DoxyCodeLine{00849\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_int4(a.x\ -\/\ b,\ a.y\ -\/\ b,\ a.z\ -\/\ b,\ \ a.w\ -\/\ b);}
+\DoxyCodeLine{00850\ \}}
+\DoxyCodeLine{00851\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ int4\ operator-\/(\textcolor{keywordtype}{int}\ b,\ int4\ a)}
+\DoxyCodeLine{00852\ \{}
+\DoxyCodeLine{00853\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_int4(b\ -\/\ a.x,\ b\ -\/\ a.y,\ b\ -\/\ a.z,\ b\ -\/\ a.w);}
+\DoxyCodeLine{00854\ \}}
+\DoxyCodeLine{00855\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ \textcolor{keywordtype}{void}\ operator-\/=(int4\ \&a,\ \textcolor{keywordtype}{int}\ b)}
+\DoxyCodeLine{00856\ \{}
+\DoxyCodeLine{00857\ \ \ \ \ a.x\ -\/=\ b;}
+\DoxyCodeLine{00858\ \ \ \ \ a.y\ -\/=\ b;}
+\DoxyCodeLine{00859\ \ \ \ \ a.z\ -\/=\ b;}
+\DoxyCodeLine{00860\ \ \ \ \ a.w\ -\/=\ b;}
+\DoxyCodeLine{00861\ \}}
+\DoxyCodeLine{00862\ }
+\DoxyCodeLine{00863\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ uint4\ operator-\/(uint4\ a,\ uint4\ b)}
+\DoxyCodeLine{00864\ \{}
+\DoxyCodeLine{00865\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_uint4(a.x\ -\/\ b.x,\ a.y\ -\/\ b.y,\ a.z\ -\/\ b.z,\ \ a.w\ -\/\ b.w);}
+\DoxyCodeLine{00866\ \}}
+\DoxyCodeLine{00867\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ \textcolor{keywordtype}{void}\ operator-\/=(uint4\ \&a,\ uint4\ b)}
+\DoxyCodeLine{00868\ \{}
+\DoxyCodeLine{00869\ \ \ \ \ a.x\ -\/=\ b.x;}
+\DoxyCodeLine{00870\ \ \ \ \ a.y\ -\/=\ b.y;}
+\DoxyCodeLine{00871\ \ \ \ \ a.z\ -\/=\ b.z;}
+\DoxyCodeLine{00872\ \ \ \ \ a.w\ -\/=\ b.w;}
+\DoxyCodeLine{00873\ \}}
+\DoxyCodeLine{00874\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ uint4\ operator-\/(uint4\ a,\ uint\ b)}
+\DoxyCodeLine{00875\ \{}
+\DoxyCodeLine{00876\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_uint4(a.x\ -\/\ b,\ a.y\ -\/\ b,\ a.z\ -\/\ b,\ \ a.w\ -\/\ b);}
+\DoxyCodeLine{00877\ \}}
+\DoxyCodeLine{00878\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ uint4\ operator-\/(uint\ b,\ uint4\ a)}
+\DoxyCodeLine{00879\ \{}
+\DoxyCodeLine{00880\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_uint4(b\ -\/\ a.x,\ b\ -\/\ a.y,\ b\ -\/\ a.z,\ b\ -\/\ a.w);}
+\DoxyCodeLine{00881\ \}}
+\DoxyCodeLine{00882\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ \textcolor{keywordtype}{void}\ operator-\/=(uint4\ \&a,\ uint\ b)}
+\DoxyCodeLine{00883\ \{}
+\DoxyCodeLine{00884\ \ \ \ \ a.x\ -\/=\ b;}
+\DoxyCodeLine{00885\ \ \ \ \ a.y\ -\/=\ b;}
+\DoxyCodeLine{00886\ \ \ \ \ a.z\ -\/=\ b;}
+\DoxyCodeLine{00887\ \ \ \ \ a.w\ -\/=\ b;}
+\DoxyCodeLine{00888\ \}}
+\DoxyCodeLine{00889\ }
+\DoxyCodeLine{00891\ \textcolor{comment}{//\ multiply}}
+\DoxyCodeLine{00893\ }
+\DoxyCodeLine{00894\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ float2\ operator*(float2\ a,\ float2\ b)}
+\DoxyCodeLine{00895\ \{}
+\DoxyCodeLine{00896\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_float2(a.x\ *\ b.x,\ a.y\ *\ b.y);}
+\DoxyCodeLine{00897\ \}}
+\DoxyCodeLine{00898\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ \textcolor{keywordtype}{void}\ operator*=(float2\ \&a,\ float2\ b)}
+\DoxyCodeLine{00899\ \{}
+\DoxyCodeLine{00900\ \ \ \ \ a.x\ *=\ b.x;}
+\DoxyCodeLine{00901\ \ \ \ \ a.y\ *=\ b.y;}
+\DoxyCodeLine{00902\ \}}
+\DoxyCodeLine{00903\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ float2\ operator*(float2\ a,\ \textcolor{keywordtype}{float}\ b)}
+\DoxyCodeLine{00904\ \{}
+\DoxyCodeLine{00905\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_float2(a.x\ *\ b,\ a.y\ *\ b);}
+\DoxyCodeLine{00906\ \}}
+\DoxyCodeLine{00907\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ float2\ operator*(\textcolor{keywordtype}{float}\ b,\ float2\ a)}
+\DoxyCodeLine{00908\ \{}
+\DoxyCodeLine{00909\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_float2(b\ *\ a.x,\ b\ *\ a.y);}
+\DoxyCodeLine{00910\ \}}
+\DoxyCodeLine{00911\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ \textcolor{keywordtype}{void}\ operator*=(float2\ \&a,\ \textcolor{keywordtype}{float}\ b)}
+\DoxyCodeLine{00912\ \{}
+\DoxyCodeLine{00913\ \ \ \ \ a.x\ *=\ b;}
+\DoxyCodeLine{00914\ \ \ \ \ a.y\ *=\ b;}
+\DoxyCodeLine{00915\ \}}
+\DoxyCodeLine{00916\ }
+\DoxyCodeLine{00917\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ int2\ operator*(int2\ a,\ int2\ b)}
+\DoxyCodeLine{00918\ \{}
+\DoxyCodeLine{00919\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_int2(a.x\ *\ b.x,\ a.y\ *\ b.y);}
+\DoxyCodeLine{00920\ \}}
+\DoxyCodeLine{00921\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ \textcolor{keywordtype}{void}\ operator*=(int2\ \&a,\ int2\ b)}
+\DoxyCodeLine{00922\ \{}
+\DoxyCodeLine{00923\ \ \ \ \ a.x\ *=\ b.x;}
+\DoxyCodeLine{00924\ \ \ \ \ a.y\ *=\ b.y;}
+\DoxyCodeLine{00925\ \}}
+\DoxyCodeLine{00926\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ int2\ operator*(int2\ a,\ \textcolor{keywordtype}{int}\ b)}
+\DoxyCodeLine{00927\ \{}
+\DoxyCodeLine{00928\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_int2(a.x\ *\ b,\ a.y\ *\ b);}
+\DoxyCodeLine{00929\ \}}
+\DoxyCodeLine{00930\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ int2\ operator*(\textcolor{keywordtype}{int}\ b,\ int2\ a)}
+\DoxyCodeLine{00931\ \{}
+\DoxyCodeLine{00932\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_int2(b\ *\ a.x,\ b\ *\ a.y);}
+\DoxyCodeLine{00933\ \}}
+\DoxyCodeLine{00934\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ \textcolor{keywordtype}{void}\ operator*=(int2\ \&a,\ \textcolor{keywordtype}{int}\ b)}
+\DoxyCodeLine{00935\ \{}
+\DoxyCodeLine{00936\ \ \ \ \ a.x\ *=\ b;}
+\DoxyCodeLine{00937\ \ \ \ \ a.y\ *=\ b;}
+\DoxyCodeLine{00938\ \}}
+\DoxyCodeLine{00939\ }
+\DoxyCodeLine{00940\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ uint2\ operator*(uint2\ a,\ uint2\ b)}
+\DoxyCodeLine{00941\ \{}
+\DoxyCodeLine{00942\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_uint2(a.x\ *\ b.x,\ a.y\ *\ b.y);}
+\DoxyCodeLine{00943\ \}}
+\DoxyCodeLine{00944\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ \textcolor{keywordtype}{void}\ operator*=(uint2\ \&a,\ uint2\ b)}
+\DoxyCodeLine{00945\ \{}
+\DoxyCodeLine{00946\ \ \ \ \ a.x\ *=\ b.x;}
+\DoxyCodeLine{00947\ \ \ \ \ a.y\ *=\ b.y;}
+\DoxyCodeLine{00948\ \}}
+\DoxyCodeLine{00949\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ uint2\ operator*(uint2\ a,\ uint\ b)}
+\DoxyCodeLine{00950\ \{}
+\DoxyCodeLine{00951\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_uint2(a.x\ *\ b,\ a.y\ *\ b);}
+\DoxyCodeLine{00952\ \}}
+\DoxyCodeLine{00953\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ uint2\ operator*(uint\ b,\ uint2\ a)}
+\DoxyCodeLine{00954\ \{}
+\DoxyCodeLine{00955\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_uint2(b\ *\ a.x,\ b\ *\ a.y);}
+\DoxyCodeLine{00956\ \}}
+\DoxyCodeLine{00957\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ \textcolor{keywordtype}{void}\ operator*=(uint2\ \&a,\ uint\ b)}
+\DoxyCodeLine{00958\ \{}
+\DoxyCodeLine{00959\ \ \ \ \ a.x\ *=\ b;}
+\DoxyCodeLine{00960\ \ \ \ \ a.y\ *=\ b;}
+\DoxyCodeLine{00961\ \}}
+\DoxyCodeLine{00962\ }
+\DoxyCodeLine{00963\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ uchar2\ operator*(uchar2\ a,\ uchar2\ b)}
+\DoxyCodeLine{00964\ \{}
+\DoxyCodeLine{00965\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_uchar2(a.x\ *\ b.x,\ a.y\ *\ b.y);}
+\DoxyCodeLine{00966\ \}}
+\DoxyCodeLine{00967\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ \textcolor{keywordtype}{void}\ operator*=(uchar2\ \&a,\ uchar2\ b)}
+\DoxyCodeLine{00968\ \{}
+\DoxyCodeLine{00969\ \ \ \ \ a.x\ *=\ b.x;}
+\DoxyCodeLine{00970\ \ \ \ \ a.y\ *=\ b.y;}
+\DoxyCodeLine{00971\ \}}
+\DoxyCodeLine{00972\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ uchar2\ operator*(uchar2\ a,\ uchar\ b)}
+\DoxyCodeLine{00973\ \{}
+\DoxyCodeLine{00974\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_uchar2(a.x\ *\ b,\ a.y\ *\ b);}
+\DoxyCodeLine{00975\ \}}
+\DoxyCodeLine{00976\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ uchar2\ operator*(uchar\ b,\ uchar2\ a)}
+\DoxyCodeLine{00977\ \{}
+\DoxyCodeLine{00978\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_uchar2(b\ *\ a.x,\ b\ *\ a.y);}
+\DoxyCodeLine{00979\ \}}
+\DoxyCodeLine{00980\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ uchar2\ operator*(uchar2\ a,\ \textcolor{keywordtype}{float}\ b)}
+\DoxyCodeLine{00981\ \{}
+\DoxyCodeLine{00982\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_uchar2(a.x\ *\ b,\ a.y\ *\ b);}
+\DoxyCodeLine{00983\ \}}
+\DoxyCodeLine{00984\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ uchar2\ operator*(\textcolor{keywordtype}{float}\ b,\ uchar2\ a)}
+\DoxyCodeLine{00985\ \{}
+\DoxyCodeLine{00986\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_uchar2(b\ *\ a.x,\ b\ *\ a.y);}
+\DoxyCodeLine{00987\ \}}
+\DoxyCodeLine{00988\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ \textcolor{keywordtype}{void}\ operator*=(uchar2\ \&a,\ uchar\ b)}
+\DoxyCodeLine{00989\ \{}
+\DoxyCodeLine{00990\ \ \ \ \ a.x\ *=\ b;}
+\DoxyCodeLine{00991\ \ \ \ \ a.y\ *=\ b;}
+\DoxyCodeLine{00992\ \}}
+\DoxyCodeLine{00993\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ \textcolor{keywordtype}{void}\ operator*=(uchar2\ \&a,\ \textcolor{keywordtype}{float}\ b)}
+\DoxyCodeLine{00994\ \{}
+\DoxyCodeLine{00995\ \ \ \ \ a.x\ *=\ b;}
+\DoxyCodeLine{00996\ \ \ \ \ a.y\ *=\ b;}
+\DoxyCodeLine{00997\ \}}
+\DoxyCodeLine{00998\ }
+\DoxyCodeLine{00999\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ float3\ operator*(float3\ a,\ float3\ b)}
+\DoxyCodeLine{01000\ \{}
+\DoxyCodeLine{01001\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_float3(a.x\ *\ b.x,\ a.y\ *\ b.y,\ a.z\ *\ b.z);}
+\DoxyCodeLine{01002\ \}}
+\DoxyCodeLine{01003\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ \textcolor{keywordtype}{void}\ operator*=(float3\ \&a,\ float3\ b)}
+\DoxyCodeLine{01004\ \{}
+\DoxyCodeLine{01005\ \ \ \ \ a.x\ *=\ b.x;}
+\DoxyCodeLine{01006\ \ \ \ \ a.y\ *=\ b.y;}
+\DoxyCodeLine{01007\ \ \ \ \ a.z\ *=\ b.z;}
+\DoxyCodeLine{01008\ \}}
+\DoxyCodeLine{01009\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ float3\ operator*(float3\ a,\ \textcolor{keywordtype}{float}\ b)}
+\DoxyCodeLine{01010\ \{}
+\DoxyCodeLine{01011\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_float3(a.x\ *\ b,\ a.y\ *\ b,\ a.z\ *\ b);}
+\DoxyCodeLine{01012\ \}}
+\DoxyCodeLine{01013\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ float3\ operator*(\textcolor{keywordtype}{float}\ b,\ float3\ a)}
+\DoxyCodeLine{01014\ \{}
+\DoxyCodeLine{01015\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_float3(b\ *\ a.x,\ b\ *\ a.y,\ b\ *\ a.z);}
+\DoxyCodeLine{01016\ \}}
+\DoxyCodeLine{01017\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ \textcolor{keywordtype}{void}\ operator*=(float3\ \&a,\ \textcolor{keywordtype}{float}\ b)}
+\DoxyCodeLine{01018\ \{}
+\DoxyCodeLine{01019\ \ \ \ \ a.x\ *=\ b;}
+\DoxyCodeLine{01020\ \ \ \ \ a.y\ *=\ b;}
+\DoxyCodeLine{01021\ \ \ \ \ a.z\ *=\ b;}
+\DoxyCodeLine{01022\ \}}
+\DoxyCodeLine{01023\ }
+\DoxyCodeLine{01024\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ int3\ operator*(int3\ a,\ int3\ b)}
+\DoxyCodeLine{01025\ \{}
+\DoxyCodeLine{01026\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_int3(a.x\ *\ b.x,\ a.y\ *\ b.y,\ a.z\ *\ b.z);}
+\DoxyCodeLine{01027\ \}}
+\DoxyCodeLine{01028\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ \textcolor{keywordtype}{void}\ operator*=(int3\ \&a,\ int3\ b)}
+\DoxyCodeLine{01029\ \{}
+\DoxyCodeLine{01030\ \ \ \ \ a.x\ *=\ b.x;}
+\DoxyCodeLine{01031\ \ \ \ \ a.y\ *=\ b.y;}
+\DoxyCodeLine{01032\ \ \ \ \ a.z\ *=\ b.z;}
+\DoxyCodeLine{01033\ \}}
+\DoxyCodeLine{01034\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ int3\ operator*(int3\ a,\ \textcolor{keywordtype}{int}\ b)}
+\DoxyCodeLine{01035\ \{}
+\DoxyCodeLine{01036\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_int3(a.x\ *\ b,\ a.y\ *\ b,\ a.z\ *\ b);}
+\DoxyCodeLine{01037\ \}}
+\DoxyCodeLine{01038\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ int3\ operator*(\textcolor{keywordtype}{int}\ b,\ int3\ a)}
+\DoxyCodeLine{01039\ \{}
+\DoxyCodeLine{01040\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_int3(b\ *\ a.x,\ b\ *\ a.y,\ b\ *\ a.z);}
+\DoxyCodeLine{01041\ \}}
+\DoxyCodeLine{01042\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ \textcolor{keywordtype}{void}\ operator*=(int3\ \&a,\ \textcolor{keywordtype}{int}\ b)}
+\DoxyCodeLine{01043\ \{}
+\DoxyCodeLine{01044\ \ \ \ \ a.x\ *=\ b;}
+\DoxyCodeLine{01045\ \ \ \ \ a.y\ *=\ b;}
+\DoxyCodeLine{01046\ \ \ \ \ a.z\ *=\ b;}
+\DoxyCodeLine{01047\ \}}
+\DoxyCodeLine{01048\ }
+\DoxyCodeLine{01049\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ uint3\ operator*(uint3\ a,\ uint3\ b)}
+\DoxyCodeLine{01050\ \{}
+\DoxyCodeLine{01051\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_uint3(a.x\ *\ b.x,\ a.y\ *\ b.y,\ a.z\ *\ b.z);}
+\DoxyCodeLine{01052\ \}}
+\DoxyCodeLine{01053\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ \textcolor{keywordtype}{void}\ operator*=(uint3\ \&a,\ uint3\ b)}
+\DoxyCodeLine{01054\ \{}
+\DoxyCodeLine{01055\ \ \ \ \ a.x\ *=\ b.x;}
+\DoxyCodeLine{01056\ \ \ \ \ a.y\ *=\ b.y;}
+\DoxyCodeLine{01057\ \ \ \ \ a.z\ *=\ b.z;}
+\DoxyCodeLine{01058\ \}}
+\DoxyCodeLine{01059\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ uint3\ operator*(uint3\ a,\ uint\ b)}
+\DoxyCodeLine{01060\ \{}
+\DoxyCodeLine{01061\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_uint3(a.x\ *\ b,\ a.y\ *\ b,\ a.z\ *\ b);}
+\DoxyCodeLine{01062\ \}}
+\DoxyCodeLine{01063\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ uint3\ operator*(uint\ b,\ uint3\ a)}
+\DoxyCodeLine{01064\ \{}
+\DoxyCodeLine{01065\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_uint3(b\ *\ a.x,\ b\ *\ a.y,\ b\ *\ a.z);}
+\DoxyCodeLine{01066\ \}}
+\DoxyCodeLine{01067\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ \textcolor{keywordtype}{void}\ operator*=(uint3\ \&a,\ uint\ b)}
+\DoxyCodeLine{01068\ \{}
+\DoxyCodeLine{01069\ \ \ \ \ a.x\ *=\ b;}
+\DoxyCodeLine{01070\ \ \ \ \ a.y\ *=\ b;}
+\DoxyCodeLine{01071\ \ \ \ \ a.z\ *=\ b;}
+\DoxyCodeLine{01072\ \}}
+\DoxyCodeLine{01073\ }
+\DoxyCodeLine{01074\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ uchar3\ operator*(uchar3\ a,\ uchar3\ b)}
+\DoxyCodeLine{01075\ \{}
+\DoxyCodeLine{01076\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_uchar3(a.x\ *\ b.x,\ a.y\ *\ b.y,\ a.z\ *\ b.z);}
+\DoxyCodeLine{01077\ \}}
+\DoxyCodeLine{01078\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ \textcolor{keywordtype}{void}\ operator*=(uchar3\ \&a,\ uchar3\ b)}
+\DoxyCodeLine{01079\ \{}
+\DoxyCodeLine{01080\ \ \ \ \ a.x\ *=\ b.x;}
+\DoxyCodeLine{01081\ \ \ \ \ a.y\ *=\ b.y;}
+\DoxyCodeLine{01082\ \ \ \ \ a.z\ *=\ b.z;}
+\DoxyCodeLine{01083\ \}}
+\DoxyCodeLine{01084\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ uchar3\ operator*(uchar3\ a,\ uchar\ b)}
+\DoxyCodeLine{01085\ \{}
+\DoxyCodeLine{01086\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_uchar3(a.x\ *\ b,\ a.y\ *\ b,\ a.z\ *\ b);}
+\DoxyCodeLine{01087\ \}}
+\DoxyCodeLine{01088\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ uchar3\ operator*(uchar\ b,\ uchar3\ a)}
+\DoxyCodeLine{01089\ \{}
+\DoxyCodeLine{01090\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_uchar3(b\ *\ a.x,\ b\ *\ a.y,\ b\ *\ a.z);}
+\DoxyCodeLine{01091\ \}}
+\DoxyCodeLine{01092\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ uchar3\ operator*(uchar3\ a,\ \textcolor{keywordtype}{float}\ b)}
+\DoxyCodeLine{01093\ \{}
+\DoxyCodeLine{01094\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_uchar3(a.x\ *\ b,\ a.y\ *\ b,\ a.z\ *\ b);}
+\DoxyCodeLine{01095\ \}}
+\DoxyCodeLine{01096\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ uchar3\ operator*(\textcolor{keywordtype}{float}\ b,\ uchar3\ a)}
+\DoxyCodeLine{01097\ \{}
+\DoxyCodeLine{01098\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_uchar3(b\ *\ a.x,\ b\ *\ a.y,\ b\ *\ a.z);}
+\DoxyCodeLine{01099\ \}}
+\DoxyCodeLine{01100\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ \textcolor{keywordtype}{void}\ operator*=(uchar3\ \&a,\ uchar\ b)}
+\DoxyCodeLine{01101\ \{}
+\DoxyCodeLine{01102\ \ \ \ \ a.x\ *=\ b;}
+\DoxyCodeLine{01103\ \ \ \ \ a.y\ *=\ b;}
+\DoxyCodeLine{01104\ \ \ \ \ a.z\ *=\ b;}
+\DoxyCodeLine{01105\ \}}
+\DoxyCodeLine{01106\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ \textcolor{keywordtype}{void}\ operator*=(uchar3\ \&a,\ \textcolor{keywordtype}{float}\ b)}
+\DoxyCodeLine{01107\ \{}
+\DoxyCodeLine{01108\ \ \ \ \ a.x\ *=\ b;}
+\DoxyCodeLine{01109\ \ \ \ \ a.y\ *=\ b;}
+\DoxyCodeLine{01110\ \ \ \ \ a.z\ *=\ b;}
+\DoxyCodeLine{01111\ \}}
+\DoxyCodeLine{01112\ }
+\DoxyCodeLine{01113\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ float4\ operator*(float4\ a,\ float4\ b)}
+\DoxyCodeLine{01114\ \{}
+\DoxyCodeLine{01115\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_float4(a.x\ *\ b.x,\ a.y\ *\ b.y,\ a.z\ *\ b.z,\ \ a.w\ *\ b.w);}
+\DoxyCodeLine{01116\ \}}
+\DoxyCodeLine{01117\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ \textcolor{keywordtype}{void}\ operator*=(float4\ \&a,\ float4\ b)}
+\DoxyCodeLine{01118\ \{}
+\DoxyCodeLine{01119\ \ \ \ \ a.x\ *=\ b.x;}
+\DoxyCodeLine{01120\ \ \ \ \ a.y\ *=\ b.y;}
+\DoxyCodeLine{01121\ \ \ \ \ a.z\ *=\ b.z;}
+\DoxyCodeLine{01122\ \ \ \ \ a.w\ *=\ b.w;}
+\DoxyCodeLine{01123\ \}}
+\DoxyCodeLine{01124\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ float4\ operator*(float4\ a,\ \textcolor{keywordtype}{float}\ b)}
+\DoxyCodeLine{01125\ \{}
+\DoxyCodeLine{01126\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_float4(a.x\ *\ b,\ a.y\ *\ b,\ a.z\ *\ b,\ \ a.w\ *\ b);}
+\DoxyCodeLine{01127\ \}}
+\DoxyCodeLine{01128\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ float4\ operator*(\textcolor{keywordtype}{float}\ b,\ float4\ a)}
+\DoxyCodeLine{01129\ \{}
+\DoxyCodeLine{01130\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_float4(b\ *\ a.x,\ b\ *\ a.y,\ b\ *\ a.z,\ b\ *\ a.w);}
+\DoxyCodeLine{01131\ \}}
+\DoxyCodeLine{01132\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ \textcolor{keywordtype}{void}\ operator*=(float4\ \&a,\ \textcolor{keywordtype}{float}\ b)}
+\DoxyCodeLine{01133\ \{}
+\DoxyCodeLine{01134\ \ \ \ \ a.x\ *=\ b;}
+\DoxyCodeLine{01135\ \ \ \ \ a.y\ *=\ b;}
+\DoxyCodeLine{01136\ \ \ \ \ a.z\ *=\ b;}
+\DoxyCodeLine{01137\ \ \ \ \ a.w\ *=\ b;}
+\DoxyCodeLine{01138\ \}}
+\DoxyCodeLine{01139\ }
+\DoxyCodeLine{01140\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ int4\ operator*(int4\ a,\ int4\ b)}
+\DoxyCodeLine{01141\ \{}
+\DoxyCodeLine{01142\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_int4(a.x\ *\ b.x,\ a.y\ *\ b.y,\ a.z\ *\ b.z,\ \ a.w\ *\ b.w);}
+\DoxyCodeLine{01143\ \}}
+\DoxyCodeLine{01144\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ \textcolor{keywordtype}{void}\ operator*=(int4\ \&a,\ int4\ b)}
+\DoxyCodeLine{01145\ \{}
+\DoxyCodeLine{01146\ \ \ \ \ a.x\ *=\ b.x;}
+\DoxyCodeLine{01147\ \ \ \ \ a.y\ *=\ b.y;}
+\DoxyCodeLine{01148\ \ \ \ \ a.z\ *=\ b.z;}
+\DoxyCodeLine{01149\ \ \ \ \ a.w\ *=\ b.w;}
+\DoxyCodeLine{01150\ \}}
+\DoxyCodeLine{01151\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ int4\ operator*(int4\ a,\ \textcolor{keywordtype}{int}\ b)}
+\DoxyCodeLine{01152\ \{}
+\DoxyCodeLine{01153\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_int4(a.x\ *\ b,\ a.y\ *\ b,\ a.z\ *\ b,\ \ a.w\ *\ b);}
+\DoxyCodeLine{01154\ \}}
+\DoxyCodeLine{01155\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ int4\ operator*(\textcolor{keywordtype}{int}\ b,\ int4\ a)}
+\DoxyCodeLine{01156\ \{}
+\DoxyCodeLine{01157\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_int4(b\ *\ a.x,\ b\ *\ a.y,\ b\ *\ a.z,\ b\ *\ a.w);}
+\DoxyCodeLine{01158\ \}}
+\DoxyCodeLine{01159\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ \textcolor{keywordtype}{void}\ operator*=(int4\ \&a,\ \textcolor{keywordtype}{int}\ b)}
+\DoxyCodeLine{01160\ \{}
+\DoxyCodeLine{01161\ \ \ \ \ a.x\ *=\ b;}
+\DoxyCodeLine{01162\ \ \ \ \ a.y\ *=\ b;}
+\DoxyCodeLine{01163\ \ \ \ \ a.z\ *=\ b;}
+\DoxyCodeLine{01164\ \ \ \ \ a.w\ *=\ b;}
+\DoxyCodeLine{01165\ \}}
+\DoxyCodeLine{01166\ }
+\DoxyCodeLine{01167\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ uint4\ operator*(uint4\ a,\ uint4\ b)}
+\DoxyCodeLine{01168\ \{}
+\DoxyCodeLine{01169\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_uint4(a.x\ *\ b.x,\ a.y\ *\ b.y,\ a.z\ *\ b.z,\ \ a.w\ *\ b.w);}
+\DoxyCodeLine{01170\ \}}
+\DoxyCodeLine{01171\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ \textcolor{keywordtype}{void}\ operator*=(uint4\ \&a,\ uint4\ b)}
+\DoxyCodeLine{01172\ \{}
+\DoxyCodeLine{01173\ \ \ \ \ a.x\ *=\ b.x;}
+\DoxyCodeLine{01174\ \ \ \ \ a.y\ *=\ b.y;}
+\DoxyCodeLine{01175\ \ \ \ \ a.z\ *=\ b.z;}
+\DoxyCodeLine{01176\ \ \ \ \ a.w\ *=\ b.w;}
+\DoxyCodeLine{01177\ \}}
+\DoxyCodeLine{01178\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ uint4\ operator*(uint4\ a,\ uint\ b)}
+\DoxyCodeLine{01179\ \{}
+\DoxyCodeLine{01180\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_uint4(a.x\ *\ b,\ a.y\ *\ b,\ a.z\ *\ b,\ \ a.w\ *\ b);}
+\DoxyCodeLine{01181\ \}}
+\DoxyCodeLine{01182\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ uint4\ operator*(uint\ b,\ uint4\ a)}
+\DoxyCodeLine{01183\ \{}
+\DoxyCodeLine{01184\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_uint4(b\ *\ a.x,\ b\ *\ a.y,\ b\ *\ a.z,\ b\ *\ a.w);}
+\DoxyCodeLine{01185\ \}}
+\DoxyCodeLine{01186\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ \textcolor{keywordtype}{void}\ operator*=(uint4\ \&a,\ uint\ b)}
+\DoxyCodeLine{01187\ \{}
+\DoxyCodeLine{01188\ \ \ \ \ a.x\ *=\ b;}
+\DoxyCodeLine{01189\ \ \ \ \ a.y\ *=\ b;}
+\DoxyCodeLine{01190\ \ \ \ \ a.z\ *=\ b;}
+\DoxyCodeLine{01191\ \ \ \ \ a.w\ *=\ b;}
+\DoxyCodeLine{01192\ \}}
+\DoxyCodeLine{01193\ }
+\DoxyCodeLine{01194\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ uchar4\ operator*(uchar4\ a,\ uchar4\ b)}
+\DoxyCodeLine{01195\ \{}
+\DoxyCodeLine{01196\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_uchar4(a.x\ *\ b.x,\ a.y\ *\ b.y,\ a.z\ *\ b.z,\ \ a.w\ *\ b.w);}
+\DoxyCodeLine{01197\ \}}
+\DoxyCodeLine{01198\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ \textcolor{keywordtype}{void}\ operator*=(uchar4\ \&a,\ uchar4\ b)}
+\DoxyCodeLine{01199\ \{}
+\DoxyCodeLine{01200\ \ \ \ \ a.x\ *=\ b.x;}
+\DoxyCodeLine{01201\ \ \ \ \ a.y\ *=\ b.y;}
+\DoxyCodeLine{01202\ \ \ \ \ a.z\ *=\ b.z;}
+\DoxyCodeLine{01203\ \ \ \ \ a.w\ *=\ b.w;}
+\DoxyCodeLine{01204\ \}}
+\DoxyCodeLine{01205\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ uchar4\ operator*(uchar4\ a,\ uchar\ b)}
+\DoxyCodeLine{01206\ \{}
+\DoxyCodeLine{01207\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_uchar4(a.x\ *\ b,\ a.y\ *\ b,\ a.z\ *\ b,\ \ a.w\ *\ b);}
+\DoxyCodeLine{01208\ \}}
+\DoxyCodeLine{01209\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ uchar4\ operator*(uchar\ b,\ uchar4\ a)}
+\DoxyCodeLine{01210\ \{}
+\DoxyCodeLine{01211\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_uchar4(b\ *\ a.x,\ b\ *\ a.y,\ b\ *\ a.z,\ b\ *\ a.w);}
+\DoxyCodeLine{01212\ \}}
+\DoxyCodeLine{01213\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ uchar4\ operator*(uchar4\ a,\ \textcolor{keywordtype}{float}\ b)}
+\DoxyCodeLine{01214\ \{}
+\DoxyCodeLine{01215\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_uchar4(a.x\ *\ b,\ a.y\ *\ b,\ a.z\ *\ b,\ \ a.w\ *\ b);}
+\DoxyCodeLine{01216\ \}}
+\DoxyCodeLine{01217\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ uchar4\ operator*(\textcolor{keywordtype}{float}\ b,\ uchar4\ a)}
+\DoxyCodeLine{01218\ \{}
+\DoxyCodeLine{01219\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_uchar4(b\ *\ a.x,\ b\ *\ a.y,\ b\ *\ a.z,\ b\ *\ a.w);}
+\DoxyCodeLine{01220\ \}}
+\DoxyCodeLine{01221\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ \textcolor{keywordtype}{void}\ operator*=(uchar4\ \&a,\ uchar\ b)}
+\DoxyCodeLine{01222\ \{}
+\DoxyCodeLine{01223\ \ \ \ \ a.x\ *=\ b;}
+\DoxyCodeLine{01224\ \ \ \ \ a.y\ *=\ b;}
+\DoxyCodeLine{01225\ \ \ \ \ a.z\ *=\ b;}
+\DoxyCodeLine{01226\ \ \ \ \ a.w\ *=\ b;}
+\DoxyCodeLine{01227\ \}}
+\DoxyCodeLine{01228\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ \textcolor{keywordtype}{void}\ operator*=(uchar4\ \&a,\ \textcolor{keywordtype}{float}\ b)}
+\DoxyCodeLine{01229\ \{}
+\DoxyCodeLine{01230\ \ \ \ \ a.x\ *=\ b;}
+\DoxyCodeLine{01231\ \ \ \ \ a.y\ *=\ b;}
+\DoxyCodeLine{01232\ \ \ \ \ a.z\ *=\ b;}
+\DoxyCodeLine{01233\ \ \ \ \ a.w\ *=\ b;}
+\DoxyCodeLine{01234\ \}}
+\DoxyCodeLine{01235\ }
+\DoxyCodeLine{01237\ \textcolor{comment}{//\ divide}}
+\DoxyCodeLine{01239\ }
+\DoxyCodeLine{01240\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ float2\ operator/(float2\ a,\ float2\ b)}
+\DoxyCodeLine{01241\ \{}
+\DoxyCodeLine{01242\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_float2(a.x\ /\ b.x,\ a.y\ /\ b.y);}
+\DoxyCodeLine{01243\ \}}
+\DoxyCodeLine{01244\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ \textcolor{keywordtype}{void}\ operator/=(float2\ \&a,\ float2\ b)}
+\DoxyCodeLine{01245\ \{}
+\DoxyCodeLine{01246\ \ \ \ \ a.x\ /=\ b.x;}
+\DoxyCodeLine{01247\ \ \ \ \ a.y\ /=\ b.y;}
+\DoxyCodeLine{01248\ \}}
+\DoxyCodeLine{01249\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ float2\ operator/(float2\ a,\ \textcolor{keywordtype}{float}\ b)}
+\DoxyCodeLine{01250\ \{}
+\DoxyCodeLine{01251\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_float2(a.x\ /\ b,\ a.y\ /\ b);}
+\DoxyCodeLine{01252\ \}}
+\DoxyCodeLine{01253\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ \textcolor{keywordtype}{void}\ operator/=(float2\ \&a,\ \textcolor{keywordtype}{float}\ b)}
+\DoxyCodeLine{01254\ \{}
+\DoxyCodeLine{01255\ \ \ \ \ a.x\ /=\ b;}
+\DoxyCodeLine{01256\ \ \ \ \ a.y\ /=\ b;}
+\DoxyCodeLine{01257\ \}}
+\DoxyCodeLine{01258\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ float2\ operator/(\textcolor{keywordtype}{float}\ b,\ float2\ a)}
+\DoxyCodeLine{01259\ \{}
+\DoxyCodeLine{01260\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_float2(b\ /\ a.x,\ b\ /\ a.y);}
+\DoxyCodeLine{01261\ \}}
+\DoxyCodeLine{01262\ }
+\DoxyCodeLine{01263\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ float3\ operator/(float3\ a,\ float3\ b)}
+\DoxyCodeLine{01264\ \{}
+\DoxyCodeLine{01265\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_float3(a.x\ /\ b.x,\ a.y\ /\ b.y,\ a.z\ /\ b.z);}
+\DoxyCodeLine{01266\ \}}
+\DoxyCodeLine{01267\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ \textcolor{keywordtype}{void}\ operator/=(float3\ \&a,\ float3\ b)}
+\DoxyCodeLine{01268\ \{}
+\DoxyCodeLine{01269\ \ \ \ \ a.x\ /=\ b.x;}
+\DoxyCodeLine{01270\ \ \ \ \ a.y\ /=\ b.y;}
+\DoxyCodeLine{01271\ \ \ \ \ a.z\ /=\ b.z;}
+\DoxyCodeLine{01272\ \}}
+\DoxyCodeLine{01273\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ float3\ operator/(float3\ a,\ \textcolor{keywordtype}{float}\ b)}
+\DoxyCodeLine{01274\ \{}
+\DoxyCodeLine{01275\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_float3(a.x\ /\ b,\ a.y\ /\ b,\ a.z\ /\ b);}
+\DoxyCodeLine{01276\ \}}
+\DoxyCodeLine{01277\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ \textcolor{keywordtype}{void}\ operator/=(float3\ \&a,\ \textcolor{keywordtype}{float}\ b)}
+\DoxyCodeLine{01278\ \{}
+\DoxyCodeLine{01279\ \ \ \ \ a.x\ /=\ b;}
+\DoxyCodeLine{01280\ \ \ \ \ a.y\ /=\ b;}
+\DoxyCodeLine{01281\ \ \ \ \ a.z\ /=\ b;}
+\DoxyCodeLine{01282\ \}}
+\DoxyCodeLine{01283\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ float3\ operator/(\textcolor{keywordtype}{float}\ b,\ float3\ a)}
+\DoxyCodeLine{01284\ \{}
+\DoxyCodeLine{01285\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_float3(b\ /\ a.x,\ b\ /\ a.y,\ b\ /\ a.z);}
+\DoxyCodeLine{01286\ \}}
+\DoxyCodeLine{01287\ }
+\DoxyCodeLine{01288\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ float4\ operator/(float4\ a,\ float4\ b)}
+\DoxyCodeLine{01289\ \{}
+\DoxyCodeLine{01290\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_float4(a.x\ /\ b.x,\ a.y\ /\ b.y,\ a.z\ /\ b.z,\ \ a.w\ /\ b.w);}
+\DoxyCodeLine{01291\ \}}
+\DoxyCodeLine{01292\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ \textcolor{keywordtype}{void}\ operator/=(float4\ \&a,\ float4\ b)}
+\DoxyCodeLine{01293\ \{}
+\DoxyCodeLine{01294\ \ \ \ \ a.x\ /=\ b.x;}
+\DoxyCodeLine{01295\ \ \ \ \ a.y\ /=\ b.y;}
+\DoxyCodeLine{01296\ \ \ \ \ a.z\ /=\ b.z;}
+\DoxyCodeLine{01297\ \ \ \ \ a.w\ /=\ b.w;}
+\DoxyCodeLine{01298\ \}}
+\DoxyCodeLine{01299\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ float4\ operator/(float4\ a,\ \textcolor{keywordtype}{float}\ b)}
+\DoxyCodeLine{01300\ \{}
+\DoxyCodeLine{01301\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_float4(a.x\ /\ b,\ a.y\ /\ b,\ a.z\ /\ b,\ \ a.w\ /\ b);}
+\DoxyCodeLine{01302\ \}}
+\DoxyCodeLine{01303\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ \textcolor{keywordtype}{void}\ operator/=(float4\ \&a,\ \textcolor{keywordtype}{float}\ b)}
+\DoxyCodeLine{01304\ \{}
+\DoxyCodeLine{01305\ \ \ \ \ a.x\ /=\ b;}
+\DoxyCodeLine{01306\ \ \ \ \ a.y\ /=\ b;}
+\DoxyCodeLine{01307\ \ \ \ \ a.z\ /=\ b;}
+\DoxyCodeLine{01308\ \ \ \ \ a.w\ /=\ b;}
+\DoxyCodeLine{01309\ \}}
+\DoxyCodeLine{01310\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ float4\ operator/(\textcolor{keywordtype}{float}\ b,\ float4\ a)}
+\DoxyCodeLine{01311\ \{}
+\DoxyCodeLine{01312\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_float4(b\ /\ a.x,\ b\ /\ a.y,\ b\ /\ a.z,\ b\ /\ a.w);}
+\DoxyCodeLine{01313\ \}}
+\DoxyCodeLine{01314\ }
+\DoxyCodeLine{01316\ \textcolor{comment}{//\ min}}
+\DoxyCodeLine{01318\ }
+\DoxyCodeLine{01319\ \textcolor{keyword}{inline}\ \ \_\_host\_\_\ \_\_device\_\_\ float2\ fminf(float2\ a,\ float2\ b)}
+\DoxyCodeLine{01320\ \{}
+\DoxyCodeLine{01321\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_float2(fminf(a.x,b.x),\ fminf(a.y,b.y));}
+\DoxyCodeLine{01322\ \}}
+\DoxyCodeLine{01323\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ float3\ fminf(float3\ a,\ float3\ b)}
+\DoxyCodeLine{01324\ \{}
+\DoxyCodeLine{01325\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_float3(fminf(a.x,b.x),\ fminf(a.y,b.y),\ fminf(a.z,b.z));}
+\DoxyCodeLine{01326\ \}}
+\DoxyCodeLine{01327\ \textcolor{keyword}{inline}\ \ \_\_host\_\_\ \_\_device\_\_\ float4\ fminf(float4\ a,\ float4\ b)}
+\DoxyCodeLine{01328\ \{}
+\DoxyCodeLine{01329\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_float4(fminf(a.x,b.x),\ fminf(a.y,b.y),\ fminf(a.z,b.z),\ fminf(a.w,b.w));}
+\DoxyCodeLine{01330\ \}}
+\DoxyCodeLine{01331\ }
+\DoxyCodeLine{01332\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ int2\ min(int2\ a,\ int2\ b)}
+\DoxyCodeLine{01333\ \{}
+\DoxyCodeLine{01334\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_int2(min(a.x,b.x),\ min(a.y,b.y));}
+\DoxyCodeLine{01335\ \}}
+\DoxyCodeLine{01336\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ int3\ min(int3\ a,\ int3\ b)}
+\DoxyCodeLine{01337\ \{}
+\DoxyCodeLine{01338\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_int3(min(a.x,b.x),\ min(a.y,b.y),\ min(a.z,b.z));}
+\DoxyCodeLine{01339\ \}}
+\DoxyCodeLine{01340\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ int4\ min(int4\ a,\ int4\ b)}
+\DoxyCodeLine{01341\ \{}
+\DoxyCodeLine{01342\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_int4(min(a.x,b.x),\ min(a.y,b.y),\ min(a.z,b.z),\ min(a.w,b.w));}
+\DoxyCodeLine{01343\ \}}
+\DoxyCodeLine{01344\ }
+\DoxyCodeLine{01345\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ uint2\ min(uint2\ a,\ uint2\ b)}
+\DoxyCodeLine{01346\ \{}
+\DoxyCodeLine{01347\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_uint2(min(a.x,b.x),\ min(a.y,b.y));}
+\DoxyCodeLine{01348\ \}}
+\DoxyCodeLine{01349\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ uint3\ min(uint3\ a,\ uint3\ b)}
+\DoxyCodeLine{01350\ \{}
+\DoxyCodeLine{01351\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_uint3(min(a.x,b.x),\ min(a.y,b.y),\ min(a.z,b.z));}
+\DoxyCodeLine{01352\ \}}
+\DoxyCodeLine{01353\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ uint4\ min(uint4\ a,\ uint4\ b)}
+\DoxyCodeLine{01354\ \{}
+\DoxyCodeLine{01355\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_uint4(min(a.x,b.x),\ min(a.y,b.y),\ min(a.z,b.z),\ min(a.w,b.w));}
+\DoxyCodeLine{01356\ \}}
+\DoxyCodeLine{01357\ }
+\DoxyCodeLine{01359\ \textcolor{comment}{//\ max}}
+\DoxyCodeLine{01361\ }
+\DoxyCodeLine{01362\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ float2\ fmaxf(float2\ a,\ float2\ b)}
+\DoxyCodeLine{01363\ \{}
+\DoxyCodeLine{01364\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_float2(fmaxf(a.x,b.x),\ fmaxf(a.y,b.y));}
+\DoxyCodeLine{01365\ \}}
+\DoxyCodeLine{01366\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ float3\ fmaxf(float3\ a,\ float3\ b)}
+\DoxyCodeLine{01367\ \{}
+\DoxyCodeLine{01368\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_float3(fmaxf(a.x,b.x),\ fmaxf(a.y,b.y),\ fmaxf(a.z,b.z));}
+\DoxyCodeLine{01369\ \}}
+\DoxyCodeLine{01370\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ float4\ fmaxf(float4\ a,\ float4\ b)}
+\DoxyCodeLine{01371\ \{}
+\DoxyCodeLine{01372\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_float4(fmaxf(a.x,b.x),\ fmaxf(a.y,b.y),\ fmaxf(a.z,b.z),\ fmaxf(a.w,b.w));}
+\DoxyCodeLine{01373\ \}}
+\DoxyCodeLine{01374\ }
+\DoxyCodeLine{01375\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ int2\ max(int2\ a,\ int2\ b)}
+\DoxyCodeLine{01376\ \{}
+\DoxyCodeLine{01377\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_int2(max(a.x,b.x),\ max(a.y,b.y));}
+\DoxyCodeLine{01378\ \}}
+\DoxyCodeLine{01379\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ int3\ max(int3\ a,\ int3\ b)}
+\DoxyCodeLine{01380\ \{}
+\DoxyCodeLine{01381\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_int3(max(a.x,b.x),\ max(a.y,b.y),\ max(a.z,b.z));}
+\DoxyCodeLine{01382\ \}}
+\DoxyCodeLine{01383\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ int4\ max(int4\ a,\ int4\ b)}
+\DoxyCodeLine{01384\ \{}
+\DoxyCodeLine{01385\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_int4(max(a.x,b.x),\ max(a.y,b.y),\ max(a.z,b.z),\ max(a.w,b.w));}
+\DoxyCodeLine{01386\ \}}
+\DoxyCodeLine{01387\ }
+\DoxyCodeLine{01388\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ uint2\ max(uint2\ a,\ uint2\ b)}
+\DoxyCodeLine{01389\ \{}
+\DoxyCodeLine{01390\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_uint2(max(a.x,b.x),\ max(a.y,b.y));}
+\DoxyCodeLine{01391\ \}}
+\DoxyCodeLine{01392\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ uint3\ max(uint3\ a,\ uint3\ b)}
+\DoxyCodeLine{01393\ \{}
+\DoxyCodeLine{01394\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_uint3(max(a.x,b.x),\ max(a.y,b.y),\ max(a.z,b.z));}
+\DoxyCodeLine{01395\ \}}
+\DoxyCodeLine{01396\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ uint4\ max(uint4\ a,\ uint4\ b)}
+\DoxyCodeLine{01397\ \{}
+\DoxyCodeLine{01398\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_uint4(max(a.x,b.x),\ max(a.y,b.y),\ max(a.z,b.z),\ max(a.w,b.w));}
+\DoxyCodeLine{01399\ \}}
+\DoxyCodeLine{01400\ }
+\DoxyCodeLine{01402\ \textcolor{comment}{//\ lerp}}
+\DoxyCodeLine{01403\ \textcolor{comment}{//\ -\/\ linear\ interpolation\ between\ a\ and\ b,\ based\ on\ value\ t\ in\ [0,\ 1]\ range}}
+\DoxyCodeLine{01405\ }
+\DoxyCodeLine{01406\ \textcolor{keyword}{inline}\ \_\_device\_\_\ \_\_host\_\_\ \textcolor{keywordtype}{float}\ lerp(\textcolor{keywordtype}{float}\ a,\ \textcolor{keywordtype}{float}\ b,\ \textcolor{keywordtype}{float}\ t)}
+\DoxyCodeLine{01407\ \{}
+\DoxyCodeLine{01408\ \ \ \ \ \textcolor{keywordflow}{return}\ a\ +\ t*(b-\/a);}
+\DoxyCodeLine{01409\ \}}
+\DoxyCodeLine{01410\ \textcolor{keyword}{inline}\ \_\_device\_\_\ \_\_host\_\_\ float2\ lerp(float2\ a,\ float2\ b,\ \textcolor{keywordtype}{float}\ t)}
+\DoxyCodeLine{01411\ \{}
+\DoxyCodeLine{01412\ \ \ \ \ \textcolor{keywordflow}{return}\ a\ +\ t*(b-\/a);}
+\DoxyCodeLine{01413\ \}}
+\DoxyCodeLine{01414\ \textcolor{keyword}{inline}\ \_\_device\_\_\ \_\_host\_\_\ float3\ lerp(float3\ a,\ float3\ b,\ \textcolor{keywordtype}{float}\ t)}
+\DoxyCodeLine{01415\ \{}
+\DoxyCodeLine{01416\ \ \ \ \ \textcolor{keywordflow}{return}\ a\ +\ t*(b-\/a);}
+\DoxyCodeLine{01417\ \}}
+\DoxyCodeLine{01418\ \textcolor{keyword}{inline}\ \_\_device\_\_\ \_\_host\_\_\ float4\ lerp(float4\ a,\ float4\ b,\ \textcolor{keywordtype}{float}\ t)}
+\DoxyCodeLine{01419\ \{}
+\DoxyCodeLine{01420\ \ \ \ \ \textcolor{keywordflow}{return}\ a\ +\ t*(b-\/a);}
+\DoxyCodeLine{01421\ \}}
+\DoxyCodeLine{01422\ }
+\DoxyCodeLine{01424\ \textcolor{comment}{//\ clamp}}
+\DoxyCodeLine{01425\ \textcolor{comment}{//\ -\/\ clamp\ the\ value\ v\ to\ be\ in\ the\ range\ [a,\ b]}}
+\DoxyCodeLine{01427\ }
+\DoxyCodeLine{01428\ \textcolor{keyword}{inline}\ \_\_device\_\_\ \_\_host\_\_\ \textcolor{keywordtype}{float}\ clamp(\textcolor{keywordtype}{float}\ f,\ \textcolor{keywordtype}{float}\ a,\ \textcolor{keywordtype}{float}\ b)}
+\DoxyCodeLine{01429\ \{}
+\DoxyCodeLine{01430\ \ \ \ \ \textcolor{keywordflow}{return}\ fmaxf(a,\ fminf(f,\ b));}
+\DoxyCodeLine{01431\ \}}
+\DoxyCodeLine{01432\ \textcolor{keyword}{inline}\ \_\_device\_\_\ \_\_host\_\_\ \textcolor{keywordtype}{int}\ clamp(\textcolor{keywordtype}{int}\ f,\ \textcolor{keywordtype}{int}\ a,\ \textcolor{keywordtype}{int}\ b)}
+\DoxyCodeLine{01433\ \{}
+\DoxyCodeLine{01434\ \ \ \ \ \textcolor{keywordflow}{return}\ max(a,\ min(f,\ b));}
+\DoxyCodeLine{01435\ \}}
+\DoxyCodeLine{01436\ \textcolor{keyword}{inline}\ \_\_device\_\_\ \_\_host\_\_\ uint\ clamp(uint\ f,\ uint\ a,\ uint\ b)}
+\DoxyCodeLine{01437\ \{}
+\DoxyCodeLine{01438\ \ \ \ \ \textcolor{keywordflow}{return}\ max(a,\ min(f,\ b));}
+\DoxyCodeLine{01439\ \}}
+\DoxyCodeLine{01440\ }
+\DoxyCodeLine{01441\ \textcolor{keyword}{inline}\ \_\_device\_\_\ \_\_host\_\_\ float2\ clamp(float2\ v,\ \textcolor{keywordtype}{float}\ a,\ \textcolor{keywordtype}{float}\ b)}
+\DoxyCodeLine{01442\ \{}
+\DoxyCodeLine{01443\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_float2(clamp(v.x,\ a,\ b),\ clamp(v.y,\ a,\ b));}
+\DoxyCodeLine{01444\ \}}
+\DoxyCodeLine{01445\ \textcolor{keyword}{inline}\ \_\_device\_\_\ \_\_host\_\_\ float2\ clamp(float2\ v,\ float2\ a,\ float2\ b)}
+\DoxyCodeLine{01446\ \{}
+\DoxyCodeLine{01447\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_float2(clamp(v.x,\ a.x,\ b.x),\ clamp(v.y,\ a.y,\ b.y));}
+\DoxyCodeLine{01448\ \}}
+\DoxyCodeLine{01449\ \textcolor{keyword}{inline}\ \_\_device\_\_\ \_\_host\_\_\ float3\ clamp(float3\ v,\ \textcolor{keywordtype}{float}\ a,\ \textcolor{keywordtype}{float}\ b)}
+\DoxyCodeLine{01450\ \{}
+\DoxyCodeLine{01451\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_float3(clamp(v.x,\ a,\ b),\ clamp(v.y,\ a,\ b),\ clamp(v.z,\ a,\ b));}
+\DoxyCodeLine{01452\ \}}
+\DoxyCodeLine{01453\ \textcolor{keyword}{inline}\ \_\_device\_\_\ \_\_host\_\_\ float3\ clamp(float3\ v,\ float3\ a,\ float3\ b)}
+\DoxyCodeLine{01454\ \{}
+\DoxyCodeLine{01455\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_float3(clamp(v.x,\ a.x,\ b.x),\ clamp(v.y,\ a.y,\ b.y),\ clamp(v.z,\ a.z,\ b.z));}
+\DoxyCodeLine{01456\ \}}
+\DoxyCodeLine{01457\ \textcolor{keyword}{inline}\ \_\_device\_\_\ \_\_host\_\_\ float4\ clamp(float4\ v,\ \textcolor{keywordtype}{float}\ a,\ \textcolor{keywordtype}{float}\ b)}
+\DoxyCodeLine{01458\ \{}
+\DoxyCodeLine{01459\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_float4(clamp(v.x,\ a,\ b),\ clamp(v.y,\ a,\ b),\ clamp(v.z,\ a,\ b),\ clamp(v.w,\ a,\ b));}
+\DoxyCodeLine{01460\ \}}
+\DoxyCodeLine{01461\ \textcolor{keyword}{inline}\ \_\_device\_\_\ \_\_host\_\_\ float4\ clamp(float4\ v,\ float4\ a,\ float4\ b)}
+\DoxyCodeLine{01462\ \{}
+\DoxyCodeLine{01463\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_float4(clamp(v.x,\ a.x,\ b.x),\ clamp(v.y,\ a.y,\ b.y),\ clamp(v.z,\ a.z,\ b.z),\ clamp(v.w,\ a.w,\ b.w));}
+\DoxyCodeLine{01464\ \}}
+\DoxyCodeLine{01465\ }
+\DoxyCodeLine{01466\ \textcolor{keyword}{inline}\ \_\_device\_\_\ \_\_host\_\_\ int2\ clamp(int2\ v,\ \textcolor{keywordtype}{int}\ a,\ \textcolor{keywordtype}{int}\ b)}
+\DoxyCodeLine{01467\ \{}
+\DoxyCodeLine{01468\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_int2(clamp(v.x,\ a,\ b),\ clamp(v.y,\ a,\ b));}
+\DoxyCodeLine{01469\ \}}
+\DoxyCodeLine{01470\ \textcolor{keyword}{inline}\ \_\_device\_\_\ \_\_host\_\_\ int2\ clamp(int2\ v,\ int2\ a,\ int2\ b)}
+\DoxyCodeLine{01471\ \{}
+\DoxyCodeLine{01472\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_int2(clamp(v.x,\ a.x,\ b.x),\ clamp(v.y,\ a.y,\ b.y));}
+\DoxyCodeLine{01473\ \}}
+\DoxyCodeLine{01474\ \textcolor{keyword}{inline}\ \_\_device\_\_\ \_\_host\_\_\ int3\ clamp(int3\ v,\ \textcolor{keywordtype}{int}\ a,\ \textcolor{keywordtype}{int}\ b)}
+\DoxyCodeLine{01475\ \{}
+\DoxyCodeLine{01476\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_int3(clamp(v.x,\ a,\ b),\ clamp(v.y,\ a,\ b),\ clamp(v.z,\ a,\ b));}
+\DoxyCodeLine{01477\ \}}
+\DoxyCodeLine{01478\ \textcolor{keyword}{inline}\ \_\_device\_\_\ \_\_host\_\_\ int3\ clamp(int3\ v,\ int3\ a,\ int3\ b)}
+\DoxyCodeLine{01479\ \{}
+\DoxyCodeLine{01480\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_int3(clamp(v.x,\ a.x,\ b.x),\ clamp(v.y,\ a.y,\ b.y),\ clamp(v.z,\ a.z,\ b.z));}
+\DoxyCodeLine{01481\ \}}
+\DoxyCodeLine{01482\ \textcolor{keyword}{inline}\ \_\_device\_\_\ \_\_host\_\_\ int4\ clamp(int4\ v,\ \textcolor{keywordtype}{int}\ a,\ \textcolor{keywordtype}{int}\ b)}
+\DoxyCodeLine{01483\ \{}
+\DoxyCodeLine{01484\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_int4(clamp(v.x,\ a,\ b),\ clamp(v.y,\ a,\ b),\ clamp(v.z,\ a,\ b),\ clamp(v.w,\ a,\ b));}
+\DoxyCodeLine{01485\ \}}
+\DoxyCodeLine{01486\ \textcolor{keyword}{inline}\ \_\_device\_\_\ \_\_host\_\_\ int4\ clamp(int4\ v,\ int4\ a,\ int4\ b)}
+\DoxyCodeLine{01487\ \{}
+\DoxyCodeLine{01488\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_int4(clamp(v.x,\ a.x,\ b.x),\ clamp(v.y,\ a.y,\ b.y),\ clamp(v.z,\ a.z,\ b.z),\ clamp(v.w,\ a.w,\ b.w));}
+\DoxyCodeLine{01489\ \}}
+\DoxyCodeLine{01490\ }
+\DoxyCodeLine{01491\ \textcolor{keyword}{inline}\ \_\_device\_\_\ \_\_host\_\_\ uint2\ clamp(uint2\ v,\ uint\ a,\ uint\ b)}
+\DoxyCodeLine{01492\ \{}
+\DoxyCodeLine{01493\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_uint2(clamp(v.x,\ a,\ b),\ clamp(v.y,\ a,\ b));}
+\DoxyCodeLine{01494\ \}}
+\DoxyCodeLine{01495\ \textcolor{keyword}{inline}\ \_\_device\_\_\ \_\_host\_\_\ uint2\ clamp(uint2\ v,\ uint2\ a,\ uint2\ b)}
+\DoxyCodeLine{01496\ \{}
+\DoxyCodeLine{01497\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_uint2(clamp(v.x,\ a.x,\ b.x),\ clamp(v.y,\ a.y,\ b.y));}
+\DoxyCodeLine{01498\ \}}
+\DoxyCodeLine{01499\ \textcolor{keyword}{inline}\ \_\_device\_\_\ \_\_host\_\_\ uint3\ clamp(uint3\ v,\ uint\ a,\ uint\ b)}
+\DoxyCodeLine{01500\ \{}
+\DoxyCodeLine{01501\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_uint3(clamp(v.x,\ a,\ b),\ clamp(v.y,\ a,\ b),\ clamp(v.z,\ a,\ b));}
+\DoxyCodeLine{01502\ \}}
+\DoxyCodeLine{01503\ \textcolor{keyword}{inline}\ \_\_device\_\_\ \_\_host\_\_\ uint3\ clamp(uint3\ v,\ uint3\ a,\ uint3\ b)}
+\DoxyCodeLine{01504\ \{}
+\DoxyCodeLine{01505\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_uint3(clamp(v.x,\ a.x,\ b.x),\ clamp(v.y,\ a.y,\ b.y),\ clamp(v.z,\ a.z,\ b.z));}
+\DoxyCodeLine{01506\ \}}
+\DoxyCodeLine{01507\ \textcolor{keyword}{inline}\ \_\_device\_\_\ \_\_host\_\_\ uint4\ clamp(uint4\ v,\ uint\ a,\ uint\ b)}
+\DoxyCodeLine{01508\ \{}
+\DoxyCodeLine{01509\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_uint4(clamp(v.x,\ a,\ b),\ clamp(v.y,\ a,\ b),\ clamp(v.z,\ a,\ b),\ clamp(v.w,\ a,\ b));}
+\DoxyCodeLine{01510\ \}}
+\DoxyCodeLine{01511\ \textcolor{keyword}{inline}\ \_\_device\_\_\ \_\_host\_\_\ uint4\ clamp(uint4\ v,\ uint4\ a,\ uint4\ b)}
+\DoxyCodeLine{01512\ \{}
+\DoxyCodeLine{01513\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_uint4(clamp(v.x,\ a.x,\ b.x),\ clamp(v.y,\ a.y,\ b.y),\ clamp(v.z,\ a.z,\ b.z),\ clamp(v.w,\ a.w,\ b.w));}
+\DoxyCodeLine{01514\ \}}
+\DoxyCodeLine{01515\ }
+\DoxyCodeLine{01517\ \textcolor{comment}{//\ dot\ product}}
+\DoxyCodeLine{01519\ }
+\DoxyCodeLine{01520\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ \textcolor{keywordtype}{float}\ dot(float2\ a,\ float2\ b)}
+\DoxyCodeLine{01521\ \{}
+\DoxyCodeLine{01522\ \ \ \ \ \textcolor{keywordflow}{return}\ a.x\ *\ b.x\ +\ a.y\ *\ b.y;}
+\DoxyCodeLine{01523\ \}}
+\DoxyCodeLine{01524\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ \textcolor{keywordtype}{float}\ dot(float3\ a,\ float3\ b)}
+\DoxyCodeLine{01525\ \{}
+\DoxyCodeLine{01526\ \ \ \ \ \textcolor{keywordflow}{return}\ a.x\ *\ b.x\ +\ a.y\ *\ b.y\ +\ a.z\ *\ b.z;}
+\DoxyCodeLine{01527\ \}}
+\DoxyCodeLine{01528\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ \textcolor{keywordtype}{float}\ dot(float4\ a,\ float4\ b)}
+\DoxyCodeLine{01529\ \{}
+\DoxyCodeLine{01530\ \ \ \ \ \textcolor{keywordflow}{return}\ a.x\ *\ b.x\ +\ a.y\ *\ b.y\ +\ a.z\ *\ b.z\ +\ a.w\ *\ b.w;}
+\DoxyCodeLine{01531\ \}}
+\DoxyCodeLine{01532\ }
+\DoxyCodeLine{01533\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ \textcolor{keywordtype}{int}\ dot(int2\ a,\ int2\ b)}
+\DoxyCodeLine{01534\ \{}
+\DoxyCodeLine{01535\ \ \ \ \ \textcolor{keywordflow}{return}\ a.x\ *\ b.x\ +\ a.y\ *\ b.y;}
+\DoxyCodeLine{01536\ \}}
+\DoxyCodeLine{01537\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ \textcolor{keywordtype}{int}\ dot(int3\ a,\ int3\ b)}
+\DoxyCodeLine{01538\ \{}
+\DoxyCodeLine{01539\ \ \ \ \ \textcolor{keywordflow}{return}\ a.x\ *\ b.x\ +\ a.y\ *\ b.y\ +\ a.z\ *\ b.z;}
+\DoxyCodeLine{01540\ \}}
+\DoxyCodeLine{01541\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ \textcolor{keywordtype}{int}\ dot(int4\ a,\ int4\ b)}
+\DoxyCodeLine{01542\ \{}
+\DoxyCodeLine{01543\ \ \ \ \ \textcolor{keywordflow}{return}\ a.x\ *\ b.x\ +\ a.y\ *\ b.y\ +\ a.z\ *\ b.z\ +\ a.w\ *\ b.w;}
+\DoxyCodeLine{01544\ \}}
+\DoxyCodeLine{01545\ }
+\DoxyCodeLine{01546\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ uint\ dot(uint2\ a,\ uint2\ b)}
+\DoxyCodeLine{01547\ \{}
+\DoxyCodeLine{01548\ \ \ \ \ \textcolor{keywordflow}{return}\ a.x\ *\ b.x\ +\ a.y\ *\ b.y;}
+\DoxyCodeLine{01549\ \}}
+\DoxyCodeLine{01550\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ uint\ dot(uint3\ a,\ uint3\ b)}
+\DoxyCodeLine{01551\ \{}
+\DoxyCodeLine{01552\ \ \ \ \ \textcolor{keywordflow}{return}\ a.x\ *\ b.x\ +\ a.y\ *\ b.y\ +\ a.z\ *\ b.z;}
+\DoxyCodeLine{01553\ \}}
+\DoxyCodeLine{01554\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ uint\ dot(uint4\ a,\ uint4\ b)}
+\DoxyCodeLine{01555\ \{}
+\DoxyCodeLine{01556\ \ \ \ \ \textcolor{keywordflow}{return}\ a.x\ *\ b.x\ +\ a.y\ *\ b.y\ +\ a.z\ *\ b.z\ +\ a.w\ *\ b.w;}
+\DoxyCodeLine{01557\ \}}
+\DoxyCodeLine{01558\ }
+\DoxyCodeLine{01560\ \textcolor{comment}{//\ length}}
+\DoxyCodeLine{01562\ }
+\DoxyCodeLine{01563\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ \textcolor{keywordtype}{float}\ length(float2\ v)}
+\DoxyCodeLine{01564\ \{}
+\DoxyCodeLine{01565\ \ \ \ \ \textcolor{keywordflow}{return}\ sqrtf(dot(v,\ v));}
+\DoxyCodeLine{01566\ \}}
+\DoxyCodeLine{01567\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ \textcolor{keywordtype}{float}\ length(float3\ v)}
+\DoxyCodeLine{01568\ \{}
+\DoxyCodeLine{01569\ \ \ \ \ \textcolor{keywordflow}{return}\ sqrtf(dot(v,\ v));}
+\DoxyCodeLine{01570\ \}}
+\DoxyCodeLine{01571\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ \textcolor{keywordtype}{float}\ length(float4\ v)}
+\DoxyCodeLine{01572\ \{}
+\DoxyCodeLine{01573\ \ \ \ \ \textcolor{keywordflow}{return}\ sqrtf(dot(v,\ v));}
+\DoxyCodeLine{01574\ \}}
+\DoxyCodeLine{01575\ }
+\DoxyCodeLine{01577\ \textcolor{comment}{//\ normalize}}
+\DoxyCodeLine{01579\ }
+\DoxyCodeLine{01580\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ float2\ normalize(float2\ v)}
+\DoxyCodeLine{01581\ \{}
+\DoxyCodeLine{01582\ \ \ \ \ \textcolor{keywordtype}{float}\ invLen\ =\ rsqrtf(dot(v,\ v));}
+\DoxyCodeLine{01583\ \ \ \ \ \textcolor{keywordflow}{return}\ v\ *\ invLen;}
+\DoxyCodeLine{01584\ \}}
+\DoxyCodeLine{01585\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ float3\ normalize(float3\ v)}
+\DoxyCodeLine{01586\ \{}
+\DoxyCodeLine{01587\ \ \ \ \ \textcolor{keywordtype}{float}\ invLen\ =\ rsqrtf(dot(v,\ v));}
+\DoxyCodeLine{01588\ \ \ \ \ \textcolor{keywordflow}{return}\ v\ *\ invLen;}
+\DoxyCodeLine{01589\ \}}
+\DoxyCodeLine{01590\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ float4\ normalize(float4\ v)}
+\DoxyCodeLine{01591\ \{}
+\DoxyCodeLine{01592\ \ \ \ \ \textcolor{keywordtype}{float}\ invLen\ =\ rsqrtf(dot(v,\ v));}
+\DoxyCodeLine{01593\ \ \ \ \ \textcolor{keywordflow}{return}\ v\ *\ invLen;}
+\DoxyCodeLine{01594\ \}}
+\DoxyCodeLine{01595\ }
+\DoxyCodeLine{01597\ \textcolor{comment}{//\ floor}}
+\DoxyCodeLine{01599\ }
+\DoxyCodeLine{01600\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ float2\ floorf(float2\ v)}
+\DoxyCodeLine{01601\ \{}
+\DoxyCodeLine{01602\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_float2(floorf(v.x),\ floorf(v.y));}
+\DoxyCodeLine{01603\ \}}
+\DoxyCodeLine{01604\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ float3\ floorf(float3\ v)}
+\DoxyCodeLine{01605\ \{}
+\DoxyCodeLine{01606\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_float3(floorf(v.x),\ floorf(v.y),\ floorf(v.z));}
+\DoxyCodeLine{01607\ \}}
+\DoxyCodeLine{01608\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ float4\ floorf(float4\ v)}
+\DoxyCodeLine{01609\ \{}
+\DoxyCodeLine{01610\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_float4(floorf(v.x),\ floorf(v.y),\ floorf(v.z),\ floorf(v.w));}
+\DoxyCodeLine{01611\ \}}
+\DoxyCodeLine{01612\ }
+\DoxyCodeLine{01614\ \textcolor{comment}{//\ frac\ -\/\ returns\ the\ fractional\ portion\ of\ a\ scalar\ or\ each\ vector\ component}}
+\DoxyCodeLine{01616\ }
+\DoxyCodeLine{01617\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ \textcolor{keywordtype}{float}\ fracf(\textcolor{keywordtype}{float}\ v)}
+\DoxyCodeLine{01618\ \{}
+\DoxyCodeLine{01619\ \ \ \ \ \textcolor{keywordflow}{return}\ v\ -\/\ floorf(v);}
+\DoxyCodeLine{01620\ \}}
+\DoxyCodeLine{01621\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ float2\ fracf(float2\ v)}
+\DoxyCodeLine{01622\ \{}
+\DoxyCodeLine{01623\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_float2(fracf(v.x),\ fracf(v.y));}
+\DoxyCodeLine{01624\ \}}
+\DoxyCodeLine{01625\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ float3\ fracf(float3\ v)}
+\DoxyCodeLine{01626\ \{}
+\DoxyCodeLine{01627\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_float3(fracf(v.x),\ fracf(v.y),\ fracf(v.z));}
+\DoxyCodeLine{01628\ \}}
+\DoxyCodeLine{01629\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ float4\ fracf(float4\ v)}
+\DoxyCodeLine{01630\ \{}
+\DoxyCodeLine{01631\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_float4(fracf(v.x),\ fracf(v.y),\ fracf(v.z),\ fracf(v.w));}
+\DoxyCodeLine{01632\ \}}
+\DoxyCodeLine{01633\ }
+\DoxyCodeLine{01635\ \textcolor{comment}{//\ fmod}}
+\DoxyCodeLine{01637\ }
+\DoxyCodeLine{01638\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ float2\ fmodf(float2\ a,\ float2\ b)}
+\DoxyCodeLine{01639\ \{}
+\DoxyCodeLine{01640\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_float2(fmodf(a.x,\ b.x),\ fmodf(a.y,\ b.y));}
+\DoxyCodeLine{01641\ \}}
+\DoxyCodeLine{01642\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ float3\ fmodf(float3\ a,\ float3\ b)}
+\DoxyCodeLine{01643\ \{}
+\DoxyCodeLine{01644\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_float3(fmodf(a.x,\ b.x),\ fmodf(a.y,\ b.y),\ fmodf(a.z,\ b.z));}
+\DoxyCodeLine{01645\ \}}
+\DoxyCodeLine{01646\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ float4\ fmodf(float4\ a,\ float4\ b)}
+\DoxyCodeLine{01647\ \{}
+\DoxyCodeLine{01648\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_float4(fmodf(a.x,\ b.x),\ fmodf(a.y,\ b.y),\ fmodf(a.z,\ b.z),\ fmodf(a.w,\ b.w));}
+\DoxyCodeLine{01649\ \}}
+\DoxyCodeLine{01650\ }
+\DoxyCodeLine{01652\ \textcolor{comment}{//\ absolute\ value}}
+\DoxyCodeLine{01654\ }
+\DoxyCodeLine{01655\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ float2\ fabs(float2\ v)}
+\DoxyCodeLine{01656\ \{}
+\DoxyCodeLine{01657\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_float2(fabs(v.x),\ fabs(v.y));}
+\DoxyCodeLine{01658\ \}}
+\DoxyCodeLine{01659\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ float3\ fabs(float3\ v)}
+\DoxyCodeLine{01660\ \{}
+\DoxyCodeLine{01661\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_float3(fabs(v.x),\ fabs(v.y),\ fabs(v.z));}
+\DoxyCodeLine{01662\ \}}
+\DoxyCodeLine{01663\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ float4\ fabs(float4\ v)}
+\DoxyCodeLine{01664\ \{}
+\DoxyCodeLine{01665\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_float4(fabs(v.x),\ fabs(v.y),\ fabs(v.z),\ fabs(v.w));}
+\DoxyCodeLine{01666\ \}}
+\DoxyCodeLine{01667\ }
+\DoxyCodeLine{01668\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ int2\ abs(int2\ v)}
+\DoxyCodeLine{01669\ \{}
+\DoxyCodeLine{01670\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_int2(abs(v.x),\ abs(v.y));}
+\DoxyCodeLine{01671\ \}}
+\DoxyCodeLine{01672\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ int3\ abs(int3\ v)}
+\DoxyCodeLine{01673\ \{}
+\DoxyCodeLine{01674\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_int3(abs(v.x),\ abs(v.y),\ abs(v.z));}
+\DoxyCodeLine{01675\ \}}
+\DoxyCodeLine{01676\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ int4\ abs(int4\ v)}
+\DoxyCodeLine{01677\ \{}
+\DoxyCodeLine{01678\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_int4(abs(v.x),\ abs(v.y),\ abs(v.z),\ abs(v.w));}
+\DoxyCodeLine{01679\ \}}
+\DoxyCodeLine{01680\ }
+\DoxyCodeLine{01682\ \textcolor{comment}{//\ reflect}}
+\DoxyCodeLine{01683\ \textcolor{comment}{//\ -\/\ returns\ reflection\ of\ incident\ ray\ I\ around\ surface\ normal\ N}}
+\DoxyCodeLine{01684\ \textcolor{comment}{//\ -\/\ N\ should\ be\ normalized,\ reflected\ vector's\ length\ is\ equal\ to\ length\ of\ I}}
+\DoxyCodeLine{01686\ }
+\DoxyCodeLine{01687\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ float3\ reflect(float3\ i,\ float3\ n)}
+\DoxyCodeLine{01688\ \{}
+\DoxyCodeLine{01689\ \ \ \ \ \textcolor{keywordflow}{return}\ i\ -\/\ 2.0f\ *\ n\ *\ dot(n,i);}
+\DoxyCodeLine{01690\ \}}
+\DoxyCodeLine{01691\ }
+\DoxyCodeLine{01693\ \textcolor{comment}{//\ cross\ product}}
+\DoxyCodeLine{01695\ }
+\DoxyCodeLine{01696\ \textcolor{keyword}{inline}\ \_\_host\_\_\ \_\_device\_\_\ float3\ cross(float3\ a,\ float3\ b)}
+\DoxyCodeLine{01697\ \{}
+\DoxyCodeLine{01698\ \ \ \ \ \textcolor{keywordflow}{return}\ make\_float3(a.y*b.z\ -\/\ a.z*b.y,\ a.z*b.x\ -\/\ a.x*b.z,\ a.x*b.y\ -\/\ a.y*b.x);}
+\DoxyCodeLine{01699\ \}}
+\DoxyCodeLine{01700\ }
+\DoxyCodeLine{01702\ \textcolor{comment}{//\ smoothstep}}
+\DoxyCodeLine{01703\ \textcolor{comment}{//\ -\/\ returns\ 0\ if\ x\ <\ a}}
+\DoxyCodeLine{01704\ \textcolor{comment}{//\ -\/\ returns\ 1\ if\ x\ >\ b}}
+\DoxyCodeLine{01705\ \textcolor{comment}{//\ -\/\ otherwise\ returns\ smooth\ interpolation\ between\ 0\ and\ 1\ based\ on\ x}}
+\DoxyCodeLine{01707\ }
+\DoxyCodeLine{01708\ \textcolor{keyword}{inline}\ \_\_device\_\_\ \_\_host\_\_\ \textcolor{keywordtype}{float}\ smoothstep(\textcolor{keywordtype}{float}\ a,\ \textcolor{keywordtype}{float}\ b,\ \textcolor{keywordtype}{float}\ x)}
+\DoxyCodeLine{01709\ \{}
+\DoxyCodeLine{01710\ \ \ \ \ \textcolor{keywordtype}{float}\ y\ =\ clamp((x\ -\/\ a)\ /\ (b\ -\/\ a),\ 0.0f,\ 1.0f);}
+\DoxyCodeLine{01711\ \ \ \ \ \textcolor{keywordflow}{return}\ (y*y*(3.0f\ -\/\ (2.0f*y)));}
+\DoxyCodeLine{01712\ \}}
+\DoxyCodeLine{01713\ \textcolor{keyword}{inline}\ \_\_device\_\_\ \_\_host\_\_\ float2\ smoothstep(float2\ a,\ float2\ b,\ float2\ x)}
+\DoxyCodeLine{01714\ \{}
+\DoxyCodeLine{01715\ \ \ \ \ float2\ y\ =\ clamp((x\ -\/\ a)\ /\ (b\ -\/\ a),\ 0.0f,\ 1.0f);}
+\DoxyCodeLine{01716\ \ \ \ \ \textcolor{keywordflow}{return}\ (y*y*(make\_float2(3.0f)\ -\/\ (make\_float2(2.0f)*y)));}
+\DoxyCodeLine{01717\ \}}
+\DoxyCodeLine{01718\ \textcolor{keyword}{inline}\ \_\_device\_\_\ \_\_host\_\_\ float3\ smoothstep(float3\ a,\ float3\ b,\ float3\ x)}
+\DoxyCodeLine{01719\ \{}
+\DoxyCodeLine{01720\ \ \ \ \ float3\ y\ =\ clamp((x\ -\/\ a)\ /\ (b\ -\/\ a),\ 0.0f,\ 1.0f);}
+\DoxyCodeLine{01721\ \ \ \ \ \textcolor{keywordflow}{return}\ (y*y*(make\_float3(3.0f)\ -\/\ (make\_float3(2.0f)*y)));}
+\DoxyCodeLine{01722\ \}}
+\DoxyCodeLine{01723\ \textcolor{keyword}{inline}\ \_\_device\_\_\ \_\_host\_\_\ float4\ smoothstep(float4\ a,\ float4\ b,\ float4\ x)}
+\DoxyCodeLine{01724\ \{}
+\DoxyCodeLine{01725\ \ \ \ \ float4\ y\ =\ clamp((x\ -\/\ a)\ /\ (b\ -\/\ a),\ 0.0f,\ 1.0f);}
+\DoxyCodeLine{01726\ \ \ \ \ \textcolor{keywordflow}{return}\ (y*y*(make\_float4(3.0f)\ -\/\ (make\_float4(2.0f)*y)));}
+\DoxyCodeLine{01727\ \}}
+\DoxyCodeLine{01728\ }
+\DoxyCodeLine{01730\ }
+\DoxyCodeLine{01731\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{01732\ }
+
+\end{DoxyCode}

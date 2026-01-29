@@ -1,0 +1,145 @@
+\chapter{imagenet-\/training }
+\hypertarget{md_jetson-inference_2docs_2imagenet-training}{}\label{md_jetson-inference_2docs_2imagenet-training}\index{imagenet-\/training@{imagenet-\/training}}
+ 
+
+\textsuperscript{\href{imagenet-camera.md}{\texttt{Back}} \texorpdfstring{$\vert$}{|} \href{imagenet-snapshot.md}{\texttt{Next}} \texorpdfstring{$\vert$}{|} }\href{../README.md\#two-days-to-a-demo-digits}{\texttt{\textsuperscript{Contents}}} ~\newline
+ \textsuperscript{Image Recognition}\hypertarget{md_jetson-inference_2docs_2imagenet-training_autotoc_md321}{}\doxysection{\texorpdfstring{Re-\/\+Training the Recognition Network}{Re-\/\+Training the Recognition Network}}\label{md_jetson-inference_2docs_2imagenet-training_autotoc_md321}
+\doxylink{requirements_The}{The} existing Google\+Net and Alex\+Net models that are downloaded by the repo are pre-\/trained on \href{../data/networks/ilsvrc12_synset_words.txt}{\texttt{1000 classes of objects}} from the Image\+Net ILSVRC12 benchmark.
+
+To recognize a new object class, you can use DIGITS to re-\/train the network on new data. You can also organize the existing classes differently, including group multiple subclasses into one. For example in this tutorial we\textquotesingle{}ll take 230 of the 1000 classes, group those into 12 classes and retrain the network.
+
+Let\textquotesingle{}s start by downloading the ILSVRC12 images to work with, or you can substitute your own dataset in an {\bfseries{\href{https://github.com/NVIDIA/DIGITS/blob/master/docs/ImageFolderFormat.md}{\texttt{Image Folder}}}}.\hypertarget{md_jetson-inference_2docs_2imagenet-training_autotoc_md322}{}\doxysubsubsection{\texorpdfstring{Downloading Image Recognition Dataset}{Downloading Image Recognition Dataset}}\label{md_jetson-inference_2docs_2imagenet-training_autotoc_md322}
+An image recognition dataset consists of a large number of images sorted by their classification type (typically by directory). \doxylink{requirements_The}{The} ILSVRC12 dataset was used in the training of the default Google\+Net and Alex\+Net models. It\textquotesingle{}s roughly 100GB in size and includes 1 million images over 1000 different classes. \doxylink{requirements_The}{The} dataset is downloaded to the DIGITS server using the \href{../tools/imagenet-download.py}{\texttt{{\ttfamily imagenet-\/download.\+py}}} image crawler.
+
+To download the dataset, first make sure you have enough disk space on your DIGITS server (120GB recommended), then run the following commands from a directory on that machine where you want the dataset stored:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{\$\ wget\ -\/-\/no-\/check-\/certificate\ https://nvidia.box.com/shared/static/gzr5iewf5aouhc5exhp3higw6lzhcysj.gz\ -\/O\ ilsvrc12\_urls.tar.gz}
+\DoxyCodeLine{\$\ tar\ -\/xzvf\ ilsvrc12\_urls.tar.gz}
+\DoxyCodeLine{\$\ wget\ https://rawgit.com/dusty-\/nv/jetson-\/inference/master/tools/imagenet-\/download.py}
+\DoxyCodeLine{\$\ python\ imagenet-\/download.py\ ilsvrc12\_urls.txt\ .\ -\/-\/jobs\ 100\ -\/-\/retry\ 3\ -\/-\/sleep\ 0}
+
+\end{DoxyCode}
+
+
+In the commands above the list of image URLs along with the scripts are downloaded before launching the crawler.
+
+\begin{quote}
+{\bfseries{note}}:\+ be considerate running the image crawler from a corporate network, IT may flag the activity. It will probably take overnight on a decent connection to download the 1000 ILSVRC12 classes (100GB). \end{quote}
+
+
+\doxylink{requirements_The}{The} crawler will download images to subdirectories that correspond to it\textquotesingle{}s classification. Each image class is stored in it\textquotesingle{}s own directory, with 1000 directories in total (one for each class in ILSVRC12). \doxylink{requirements_The}{The} folders are organized with a naming scheme similar to:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{n01440764/}
+\DoxyCodeLine{n01443537/}
+\DoxyCodeLine{n01484850/}
+\DoxyCodeLine{n01491361/}
+\DoxyCodeLine{n01494475/}
+\DoxyCodeLine{...}
+
+\end{DoxyCode}
+
+
+These 8-\/digit ID\textquotesingle{}s prefixed wth N are referred to as the {\bfseries{synset ID}} of the class. \doxylink{requirements_The}{The} name string of the class can be looked up in \href{../data/networks/ilsvrc12_synset_words.txt}{\texttt{{\ttfamily ilsvrc12\+\_\+synset\+\_\+words.\+txt}}}. For example, synset {\ttfamily n01484850 great white shark}.\hypertarget{md_jetson-inference_2docs_2imagenet-training_autotoc_md323}{}\doxysubsubsection{\texorpdfstring{Customizing the Object Classes}{Customizing the Object Classes}}\label{md_jetson-inference_2docs_2imagenet-training_autotoc_md323}
+\doxylink{requirements_The}{The} dataset that we downloaded in the previous step was used to train the default Alex\+Net and Google\+Net models with 1000 object classes from several core groups, including different species of birds, plants, fruit, and fish, dog and cat breeds, types of vehicles, ect. For practicle purposes lets consider a companion to the Google\+Net model which recognizes a dozen core groups made up of the original 1000 classes (for example, instead of detecting 122 individual breeds of dogs, combining them all into one common {\ttfamily dog} class). These 12 core groups may be more practical to use than 1000 individual synsets and combining across classes results in more training data and stronger classification for the group.
+
+DIGITS expects the data in a hierarchy of folders, so we can create directories for the groups and then symbolically link to the synsets from ILSVRC12 downloaded above. DIGITS will automatically combine images from all folders under the top-\/level groups. \doxylink{requirements_The}{The} directory structure resembles the following, with the value in parenthesis indicates the number of classes used to make up the group and the value next to the arrows indicating the synset ID linked to.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{‣\ ball/\ \ (7)}
+\DoxyCodeLine{\ \ \ \ •\ baseball\ \ \ \ \ (→n02799071)}
+\DoxyCodeLine{\ \ \ \ •\ basketball\ \ \ (→n02802426)}
+\DoxyCodeLine{\ \ \ \ •\ soccer\ ball\ \ (→n04254680)}
+\DoxyCodeLine{\ \ \ \ •\ tennis\ ball\ \ (→n04409515)}
+\DoxyCodeLine{\ \ \ \ •\ ...}
+\DoxyCodeLine{‣\ bear/\ \ (4)}
+\DoxyCodeLine{\ \ \ \ •\ brown\ bear\ \ \ (→n02132136)}
+\DoxyCodeLine{\ \ \ \ •\ black\ bear\ \ \ (→n02133161)}
+\DoxyCodeLine{\ \ \ \ •\ polar\ bear\ \ \ (→n02134084)}
+\DoxyCodeLine{\ \ \ \ •\ sloth\ bear\ \ \ (→n02134418)}
+\DoxyCodeLine{•\ bike/\ \ (3)}
+\DoxyCodeLine{•\ bird/\ \ (17)}
+\DoxyCodeLine{•\ bottle/\ (7)}
+\DoxyCodeLine{•\ cat/\ \ (13)}
+\DoxyCodeLine{•\ dog/\ \ (122)}
+\DoxyCodeLine{•\ fish/\ \ \ (5)}
+\DoxyCodeLine{•\ fruit/\ \ (12)}
+\DoxyCodeLine{•\ turtle/\ \ (5)}
+\DoxyCodeLine{•\ vehicle/\ (14)}
+\DoxyCodeLine{•\ sign/\ \ (2)}
+
+\end{DoxyCode}
+
+
+Since there are actually a lot of synsets linked to from ILSVRC12, we provide the {\bfseries{\href{../tools/imagenet-subset.sh}{\texttt{{\ttfamily imagenet-\/subset.\+sh}}}}} script to generate the directory structure and links given the path to the dataset. Run the folowing commands from the DIGITS server:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{\$\ wget\ https://rawgit.com/dusty-\/nv/jetson-\/inference/master/tools/imagenet-\/subset.sh}
+\DoxyCodeLine{\$\ chmod\ +x\ imagenet-\/subset.sh}
+\DoxyCodeLine{\$\ mkdir\ 12\_classes}
+\DoxyCodeLine{\$\ ./imagenet-\/subset.sh\ /opt/datasets/imagenet/ilsvrc12\ 12\_classes}
+
+\end{DoxyCode}
+
+
+In this example the links are created in the {\ttfamily 12\+\_\+classes} folder, with the first argument to the script being the path to ILSVRC12 downloaded in the previous step.\hypertarget{md_jetson-inference_2docs_2imagenet-training_autotoc_md324}{}\doxysubsubsection{\texorpdfstring{Importing Classification Dataset into DIGITS}{Importing Classification Dataset into DIGITS}}\label{md_jetson-inference_2docs_2imagenet-training_autotoc_md324}
+Navigate your browser to your DIGITS server instance and choose to create a new {\ttfamily Classification Dataset} from the drop-\/down under the Datasets tab:\+
+
+
+
+Set the {\ttfamily Training Images} path to the {\ttfamily 12\+\_\+classes} folder from the previous step and make the following
+
+
+\begin{DoxyItemize}
+\item \% for validation:\+ {\ttfamily 10}
+\item Group Name:\+ {\ttfamily Image\+Net}
+\item Dataset Name:\+ {\ttfamily Image\+Net-\/\+ILSVRC12-\/subset}
+\end{DoxyItemize}
+
+
+
+Use the {\ttfamily Create} button at the bottom of the page to launch the dataset import job. \doxylink{requirements_The}{The} size of the data subset is around 20GB, so depending on server I/\+O performance it takes 10-\/15 minutes. Next we\textquotesingle{}ll create the new model and begin training it.\hypertarget{md_jetson-inference_2docs_2imagenet-training_autotoc_md325}{}\doxysubsubsection{\texorpdfstring{Creating Image Classification Model with DIGITS}{Creating Image Classification Model with DIGITS}}\label{md_jetson-inference_2docs_2imagenet-training_autotoc_md325}
+When the previous data import job is complete, return to the DIGITS home screen. Select the {\ttfamily Models} tab and choose to create a new {\ttfamily Classification Model} from the drop-\/down:\+
+
+
+
+Make the following settings in the form:\+
+
+
+\begin{DoxyItemize}
+\item Select Dataset:\+ {\ttfamily Image\+Net-\/\+ILSVRC12-\/subset}
+\item Subtract Mean:\+ {\ttfamily Pixel}
+\item Standard Networks:\+ {\ttfamily Google\+Net}
+\item Group Name:\+ {\ttfamily Image\+Net}
+\item Model Name:\+ {\ttfamily Google\+Net-\/\+ILSVRC12-\/subset}
+\end{DoxyItemize}
+
+After selecting a GPU to train on, click the {\ttfamily Create} button at the bottom to begin training.
+
+\hypertarget{md_jetson-inference_2docs_2imagenet-training_autotoc_md326}{}\doxysubsubsection{\texorpdfstring{Testing Classification Model in DIGITS}{Testing Classification Model in DIGITS}}\label{md_jetson-inference_2docs_2imagenet-training_autotoc_md326}
+After the training job completes 30 epochs, the trained model should appear like so:\+
+
+
+
+At this point, we can try testing our new model\textquotesingle{}s inference on some example images in DIGITS. On the same page as the plot above, scroll down under the {\ttfamily Trained Models} section. Under {\ttfamily Test a Single Image}, select an image to try (for example, {\ttfamily /\+ilsvrc12/\+n02127052/\+n02127052\+\_\+1203.jpg}):\+
+
+
+
+Press the {\ttfamily Classify One} button and you should see a page similar to:\+
+
+
+
+\doxylink{requirements_The}{The} image is classified as the new Google\+Net-\/12 model as {\ttfamily cat}, while in the original Google\+Net-\/1000 it was under {\ttfamily Lynx}. This indicates the new model is working ok, because the Lynx category was included in Google\+Net-\/12\textquotesingle{}s training of cat.\hypertarget{md_jetson-inference_2docs_2imagenet-training_autotoc_md327}{}\doxysubsection{\texorpdfstring{autotoc\+\_\+md327}{autotoc\+\_\+md327}}\label{md_jetson-inference_2docs_2imagenet-training_autotoc_md327}
+Next \texorpdfstring{$\vert$}{|} {\bfseries{\href{imagenet-snapshot.md}{\texttt{Downloading Model Snapshots to Jetson}}}} ~\newline
+ Back \texorpdfstring{$\vert$}{|} {\bfseries{\href{imagenet-camera.md}{\texttt{Running the Live Camera Recognition Demo}}}}
+
+{\bfseries{ }}
+
+\textsuperscript{© 2016-\/2019 NVIDIA \texorpdfstring{$\vert$}{|} }\href{../README.md\#two-days-to-a-demo-digits}{\texttt{\textsuperscript{Table of Contents}}}

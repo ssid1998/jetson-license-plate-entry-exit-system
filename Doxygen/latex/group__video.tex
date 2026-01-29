@@ -1,0 +1,119 @@
+\doxysubsection{Video Streaming }
+\hypertarget{group__video}{}\label{group__video}\index{Video Streaming@{Video Streaming}}
+\doxysubsubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \doxymbox{\hyperlink{struct_u_r_i}{URI}}
+\item 
+struct \doxymbox{\hyperlink{structvideo_options}{video\+Options}}
+\item 
+class \doxymbox{\hyperlink{classvideo_output}{video\+Output}}
+\item 
+class \doxymbox{\hyperlink{classvideo_source}{video\+Source}}
+\end{DoxyCompactItemize}
+\doxysubsubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{group__video_gaf0923737dee5ff7a8f1a17c4b9c1f2fe}\label{group__video_gaf0923737dee5ff7a8f1a17c4b9c1f2fe} 
+\+\#define {\bfseries LOG\+\_\+\+VIDEO}~"{}\+[video]\+  "{}
+\item 
+\+\#define \doxymbox{\hyperlink{group__video_ga408346b18d1f4c711279010d2351f7ce}{VIDEO\+\_\+\+OUTPUT\+\_\+\+USAGE\+\_\+\+STRING}}
+\item 
+\+\#define \doxymbox{\hyperlink{group__video_ga2f89bd1b25834e27c1be213ee862d5ae}{VIDEO\+\_\+\+SOURCE\+\_\+\+USAGE\+\_\+\+STRING}}
+\item 
+\Hypertarget{group__video_gaf0923737dee5ff7a8f1a17c4b9c1f2fe}\label{group__video_gaf0923737dee5ff7a8f1a17c4b9c1f2fe} 
+\+\#define {\bfseries LOG\+\_\+\+VIDEO}~"{}\+[video]\+  "{}
+\item 
+\+\#define \doxymbox{\hyperlink{group__video_ga408346b18d1f4c711279010d2351f7ce}{VIDEO\+\_\+\+OUTPUT\+\_\+\+USAGE\+\_\+\+STRING}}
+\item 
+\+\#define \doxymbox{\hyperlink{group__video_ga2f89bd1b25834e27c1be213ee862d5ae}{VIDEO\+\_\+\+SOURCE\+\_\+\+USAGE\+\_\+\+STRING}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsubsection{Detailed Description}
+\doxylink{classvideo_source}{video\+Source} and \doxylink{classvideo_output}{video\+Output} APIs for input and output video streams. 
+
+\label{doc-define-members}
+\Hypertarget{group__video_doc-define-members}
+\doxysubsubsection{Macro Definition Documentation}
+\Hypertarget{group__video_ga408346b18d1f4c711279010d2351f7ce}\index{Video Streaming@{Video Streaming}!VIDEO\_OUTPUT\_USAGE\_STRING@{VIDEO\_OUTPUT\_USAGE\_STRING}}
+\index{VIDEO\_OUTPUT\_USAGE\_STRING@{VIDEO\_OUTPUT\_USAGE\_STRING}!Video Streaming@{Video Streaming}}
+\doxysubsubsubsection{\texorpdfstring{VIDEO\_OUTPUT\_USAGE\_STRING}{VIDEO\_OUTPUT\_USAGE\_STRING}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{group__video_ga408346b18d1f4c711279010d2351f7ce} 
+\+\#define VIDEO\+\_\+\+OUTPUT\+\_\+\+USAGE\+\_\+\+STRING}
+
+{\bfseries Value:\+}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{stringliteral}{"{}videoOutput\ arguments:\ \(\backslash\)n"{}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\textcolor{stringliteral}{"{}\ \ \ \ output\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ resource\ URI\ of\ the\ output\ stream,\ for\ example:\(\backslash\)n"{}}\ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ file://my\_image.jpg\ \ \ \ \ \ \ (image\ file)\(\backslash\)n"{}}\ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ file://my\_video.mp4\ \ \ \ \ \ \ (video\ file)\(\backslash\)n"{}}\ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ file://my\_directory/\ \ \ \ \ \ (directory\ of\ images)\(\backslash\)n"{}}\ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ rtp://<remote-\/ip>:1234\ \ \ \ (RTP\ stream)\(\backslash\)n"{}}\ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ rtsp://@:8554/my\_stream\ \ \ (RTSP\ stream)\(\backslash\)n"{}}\ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ webrtc://@:1234/my\_stream\ (WebRTC\ stream)\(\backslash\)n"{}}\ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ display://0\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (OpenGL\ window)\(\backslash\)n"{}}\ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\textcolor{stringliteral}{"{}\ \ -\/-\/output-\/codec=CODEC\ \ \ desired\ codec\ for\ compressed\ output\ streams:\(\backslash\)n"{}}\ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ h264\ (default),\ h265\(\backslash\)n"{}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ vp8,\ vp9\(\backslash\)n"{}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ mpeg2,\ mpeg4\(\backslash\)n"{}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ mjpeg\(\backslash\)n"{}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\textcolor{stringliteral}{"{}\ \ -\/-\/output-\/encoder=TYPE\ \ the\ encoder\ engine\ to\ use,\ one\ of\ these:\(\backslash\)n"{}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ cpu\(\backslash\)n"{}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ omx\ \ (aarch64/JetPack4\ only)\(\backslash\)n"{}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ v4l2\ (aarch64/JetPack5\ only)\(\backslash\)n"{}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\textcolor{stringliteral}{"{}\ \ -\/-\/output-\/save=FILE\ \ \ \ \ path\ to\ a\ video\ file\ for\ saving\ the\ compressed\ stream\(\backslash\)n"{}}\ \(\backslash\)}
+\DoxyCodeLine{\textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ to\ disk,\ in\ addition\ to\ the\ primary\ output\ above\(\backslash\)n"{}}\ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\textcolor{stringliteral}{"{}\ \ -\/-\/bitrate=BITRATE\ \ \ \ \ \ desired\ target\ VBR\ bitrate\ for\ compressed\ streams,\(\backslash\)n"{}}\ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ in\ bits\ per\ second.\ The\ default\ is\ 4000000\ (4\ Mbps)\(\backslash\)n"{}}\ \ \(\backslash\)}
+\DoxyCodeLine{\textcolor{stringliteral}{"{}\ \ -\/-\/stun-\/server=URL\ \ \ \ \ \ WebRTC\ connection\ STUN\ server\ (set\ to\ 'disabled'\ for\ LAN)\(\backslash\)n"{}}\ \(\backslash\)}
+\DoxyCodeLine{\textcolor{stringliteral}{"{}\ \ -\/-\/headless\ \ \ \ \ \ \ \ \ \ \ \ \ don't\ create\ a\ default\ OpenGL\ GUI\ window\(\backslash\)n\(\backslash\)n"{}}}
+
+\end{DoxyCode}
+Standard command-\/line options able to be passed to \doxylink{classvideo_output_acedbc7ebeb4f736471098dac4369f65a}{video\+Output::\+\+Create()} \Hypertarget{group__video_ga408346b18d1f4c711279010d2351f7ce}\index{Video Streaming@{Video Streaming}!VIDEO\_OUTPUT\_USAGE\_STRING@{VIDEO\_OUTPUT\_USAGE\_STRING}}
+\index{VIDEO\_OUTPUT\_USAGE\_STRING@{VIDEO\_OUTPUT\_USAGE\_STRING}!Video Streaming@{Video Streaming}}
+\doxysubsubsubsection{\texorpdfstring{VIDEO\_OUTPUT\_USAGE\_STRING}{VIDEO\_OUTPUT\_USAGE\_STRING}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{group__video_ga408346b18d1f4c711279010d2351f7ce} 
+\+\#define VIDEO\+\_\+\+OUTPUT\+\_\+\+USAGE\+\_\+\+STRING}
+
+{\bfseries Value:\+}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{stringliteral}{"{}videoOutput\ arguments:\ \(\backslash\)n"{}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\textcolor{stringliteral}{"{}\ \ \ \ output\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ resource\ URI\ of\ the\ output\ stream,\ for\ example:\(\backslash\)n"{}}\ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ file://my\_image.jpg\ \ \ \ \ \ \ (image\ file)\(\backslash\)n"{}}\ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ file://my\_video.mp4\ \ \ \ \ \ \ (video\ file)\(\backslash\)n"{}}\ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ file://my\_directory/\ \ \ \ \ \ (directory\ of\ images)\(\backslash\)n"{}}\ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ rtp://<remote-\/ip>:1234\ \ \ \ (RTP\ stream)\(\backslash\)n"{}}\ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ rtsp://@:8554/my\_stream\ \ \ (RTSP\ stream)\(\backslash\)n"{}}\ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ webrtc://@:1234/my\_stream\ (WebRTC\ stream)\(\backslash\)n"{}}\ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ display://0\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (OpenGL\ window)\(\backslash\)n"{}}\ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\textcolor{stringliteral}{"{}\ \ -\/-\/output-\/codec=CODEC\ \ \ desired\ codec\ for\ compressed\ output\ streams:\(\backslash\)n"{}}\ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ h264\ (default),\ h265\(\backslash\)n"{}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ vp8,\ vp9\(\backslash\)n"{}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ mpeg2,\ mpeg4\(\backslash\)n"{}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ mjpeg\(\backslash\)n"{}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\textcolor{stringliteral}{"{}\ \ -\/-\/output-\/encoder=TYPE\ \ the\ encoder\ engine\ to\ use,\ one\ of\ these:\(\backslash\)n"{}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ cpu\(\backslash\)n"{}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ omx\ \ (aarch64/JetPack4\ only)\(\backslash\)n"{}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ v4l2\ (aarch64/JetPack5\ only)\(\backslash\)n"{}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\textcolor{stringliteral}{"{}\ \ -\/-\/output-\/save=FILE\ \ \ \ \ path\ to\ a\ video\ file\ for\ saving\ the\ compressed\ stream\(\backslash\)n"{}}\ \(\backslash\)}
+\DoxyCodeLine{\textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ to\ disk,\ in\ addition\ to\ the\ primary\ output\ above\(\backslash\)n"{}}\ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\textcolor{stringliteral}{"{}\ \ -\/-\/bitrate=BITRATE\ \ \ \ \ \ desired\ target\ VBR\ bitrate\ for\ compressed\ streams,\(\backslash\)n"{}}\ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ in\ bits\ per\ second.\ The\ default\ is\ 4000000\ (4\ Mbps)\(\backslash\)n"{}}\ \ \(\backslash\)}
+\DoxyCodeLine{\textcolor{stringliteral}{"{}\ \ -\/-\/stun-\/server=URL\ \ \ \ \ \ WebRTC\ connection\ STUN\ server\ (set\ to\ 'disabled'\ for\ LAN)\(\backslash\)n"{}}\ \(\backslash\)}
+\DoxyCodeLine{\textcolor{stringliteral}{"{}\ \ -\/-\/headless\ \ \ \ \ \ \ \ \ \ \ \ \ don't\ create\ a\ default\ OpenGL\ GUI\ window\(\backslash\)n\(\backslash\)n"{}}}
+
+\end{DoxyCode}
+Standard command-\/line options able to be passed to \doxylink{classvideo_output_acedbc7ebeb4f736471098dac4369f65a}{video\+Output::\+\+Create()} \Hypertarget{group__video_ga2f89bd1b25834e27c1be213ee862d5ae}\index{Video Streaming@{Video Streaming}!VIDEO\_SOURCE\_USAGE\_STRING@{VIDEO\_SOURCE\_USAGE\_STRING}}
+\index{VIDEO\_SOURCE\_USAGE\_STRING@{VIDEO\_SOURCE\_USAGE\_STRING}!Video Streaming@{Video Streaming}}
+\doxysubsubsubsection{\texorpdfstring{VIDEO\_SOURCE\_USAGE\_STRING}{VIDEO\_SOURCE\_USAGE\_STRING}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{group__video_ga2f89bd1b25834e27c1be213ee862d5ae} 
+\+\#define VIDEO\+\_\+\+SOURCE\+\_\+\+USAGE\+\_\+\+STRING}
+
+Standard command-\/line options able to be passed to \doxylink{classvideo_source_a971493dd39e0706bf53779d47621565e}{video\+Source::\+\+Create()} \Hypertarget{group__video_ga2f89bd1b25834e27c1be213ee862d5ae}\index{Video Streaming@{Video Streaming}!VIDEO\_SOURCE\_USAGE\_STRING@{VIDEO\_SOURCE\_USAGE\_STRING}}
+\index{VIDEO\_SOURCE\_USAGE\_STRING@{VIDEO\_SOURCE\_USAGE\_STRING}!Video Streaming@{Video Streaming}}
+\doxysubsubsubsection{\texorpdfstring{VIDEO\_SOURCE\_USAGE\_STRING}{VIDEO\_SOURCE\_USAGE\_STRING}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{group__video_ga2f89bd1b25834e27c1be213ee862d5ae} 
+\+\#define VIDEO\+\_\+\+SOURCE\+\_\+\+USAGE\+\_\+\+STRING}
+
+Standard command-\/line options able to be passed to \doxylink{classvideo_source_a971493dd39e0706bf53779d47621565e}{video\+Source::\+\+Create()} 

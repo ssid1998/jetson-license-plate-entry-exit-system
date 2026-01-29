@@ -1,0 +1,182 @@
+\doxysection{gl\+Utility.\+h}
+\hypertarget{build_2aarch64_2include_2jetson-utils_2gl_utility_8h_source}{}\label{build_2aarch64_2include_2jetson-utils_2gl_utility_8h_source}\index{jetson-\/inference/build/aarch64/include/jetson-\/utils/glUtility.h@{jetson-\/inference/build/aarch64/include/jetson-\/utils/glUtility.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ *\ Copyright\ (c)\ 2017,\ NVIDIA\ CORPORATION.\ All\ rights\ reserved.}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ *\ Permission\ is\ hereby\ granted,\ free\ of\ charge,\ to\ any\ person\ obtaining\ a}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ *\ copy\ of\ this\ software\ and\ associated\ documentation\ files\ (the\ "{}Software"{}),}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ *\ to\ deal\ in\ the\ Software\ without\ restriction,\ including\ without\ limitation}}
+\DoxyCodeLine{00007\ \textcolor{comment}{\ *\ the\ rights\ to\ use,\ copy,\ modify,\ merge,\ publish,\ distribute,\ sublicense,}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ *\ and/or\ sell\ copies\ of\ the\ Software,\ and\ to\ permit\ persons\ to\ whom\ the}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ *\ Software\ is\ furnished\ to\ do\ so,\ subject\ to\ the\ following\ conditions:}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ *\ The\ above\ copyright\ notice\ and\ this\ permission\ notice\ shall\ be\ included\ in}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ *\ all\ copies\ or\ substantial\ portions\ of\ the\ Software.}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ *\ THE\ SOFTWARE\ IS\ PROVIDED\ "{}AS\ IS"{},\ WITHOUT\ WARRANTY\ OF\ ANY\ KIND,\ EXPRESS\ OR}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ *\ IMPLIED,\ INCLUDING\ BUT\ NOT\ LIMITED\ TO\ THE\ WARRANTIES\ OF\ MERCHANTABILITY,}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ *\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE\ AND\ NONINFRINGEMENT.\ \ IN\ NO\ EVENT\ SHALL}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ *\ THE\ AUTHORS\ OR\ COPYRIGHT\ HOLDERS\ BE\ LIABLE\ FOR\ ANY\ CLAIM,\ DAMAGES\ OR\ OTHER}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ *\ LIABILITY,\ WHETHER\ IN\ AN\ ACTION\ OF\ CONTRACT,\ TORT\ OR\ OTHERWISE,\ ARISING}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ *\ FROM,\ OUT\ OF\ OR\ IN\ CONNECTION\ WITH\ THE\ SOFTWARE\ OR\ THE\ USE\ OR\ OTHER}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ *\ DEALINGS\ IN\ THE\ SOFTWARE.}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \textcolor{preprocessor}{\#ifndef\ \_\_OPENGL\_UTILITY\_H}}
+\DoxyCodeLine{00024\ \textcolor{preprocessor}{\#define\ \_\_OPENGL\_UTILITY\_H}}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \textcolor{preprocessor}{\#include\ <GL/glew.h>}}
+\DoxyCodeLine{00028\ \textcolor{preprocessor}{\#include\ <GL/glx.h>}}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \textcolor{preprocessor}{\#include\ <stdio.h>}}
+\DoxyCodeLine{00031\ \textcolor{preprocessor}{\#include\ "{}logging.h"{}}}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00038\ \textcolor{preprocessor}{\#define\ LOG\_GL\ \ \ \ \ \ \ \ \ \ \ \ \ \ "{}[OpenGL]\ "{}}}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00044\ \textcolor{preprocessor}{\#define\ GL(x)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{\ x;\ glCheckError(\ \#x,\ \_\_FILE\_\_,\ \_\_LINE\_\_\ );\ \}}}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00050\ \textcolor{preprocessor}{\#define\ GL\_VERIFY(x)\ \ \ \ \ \ \ \ \{\ x;\ if(glCheckError(\ \#x,\ \_\_FILE\_\_,\ \_\_LINE\_\_\ ))\ return\ false;\ \}}}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00056\ \textcolor{preprocessor}{\#define\ GL\_VERIFYN(x)\ \ \ \ \ \ \ \{\ x;\ if(glCheckError(\ \#x,\ \_\_FILE\_\_,\ \_\_LINE\_\_\ ))\ return\ NULL;\ \}}}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00062\ \textcolor{preprocessor}{\#define\ GL\_CHECK(msg)\ \ \ \ \ \ \ \{\ glCheckError(msg,\ \_\_FILE\_\_,\ \_\_LINE\_\_);\ \}}}
+\DoxyCodeLine{00063\ }
+\DoxyCodeLine{00068\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{group___open_g_l_gaa1e51833a1b003db2359ea965e501806}{glCheckError}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ msg,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ file,\ \textcolor{keywordtype}{int}\ line)}
+\DoxyCodeLine{00069\ \{}
+\DoxyCodeLine{00070\ \ \ \ \ GLenum\ err\ =\ glGetError();}
+\DoxyCodeLine{00071\ }
+\DoxyCodeLine{00072\ \ \ \ \ \textcolor{keywordflow}{if}(\ err\ ==\ GL\_NO\_ERROR\ )}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00074\ }
+\DoxyCodeLine{00075\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ e\ =\ NULL;}
+\DoxyCodeLine{00076\ }
+\DoxyCodeLine{00077\ \ \ \ \ \textcolor{keywordflow}{switch}(err)}
+\DoxyCodeLine{00078\ \ \ \ \ \{}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ GL\_INVALID\_ENUM:\ \ \ \ \ \ \ \ \ \ e\ =\ \textcolor{stringliteral}{"{}invalid\ enum"{}};\ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ GL\_INVALID\_VALUE:\ \ \ \ \ \ \ \ \ e\ =\ \textcolor{stringliteral}{"{}invalid\ value"{}};\ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ GL\_INVALID\_OPERATION:\ \ \ \ \ e\ =\ \textcolor{stringliteral}{"{}invalid\ operation"{}};\ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ GL\_STACK\_OVERFLOW:\ \ \ \ \ \ \ \ e\ =\ \textcolor{stringliteral}{"{}stack\ overflow"{}};\ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ GL\_STACK\_UNDERFLOW:\ \ \ \ \ \ \ e\ =\ \textcolor{stringliteral}{"{}stack\ underflow"{}};\ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ GL\_OUT\_OF\_MEMORY:\ \ \ \ \ \ \ \ \ e\ =\ \textcolor{stringliteral}{"{}out\ of\ memory"{}};\ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00085\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \#ifdef\ GL\_TABLE\_TOO\_LARGE\_EXT}}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ GL\_TABLE\_TOO\_LARGE\_EXT:\ \ \ e\ =\ \textcolor{stringliteral}{"{}table\ too\ large"{}};\ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00087\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \#endif}}
+\DoxyCodeLine{00088\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \#ifdef\ GL\_TEXTURE\_TOO\_LARGE\_EXT}}
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ GL\_TEXTURE\_TOO\_LARGE\_EXT:\ e\ =\ \textcolor{stringliteral}{"{}texture\ too\ large"{}};\ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00090\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \#endif}}
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{default}:\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ e\ =\ \textcolor{stringliteral}{"{}unknown\ error"{}};}
+\DoxyCodeLine{00092\ \ \ \ \ \}}
+\DoxyCodeLine{00093\ }
+\DoxyCodeLine{00094\ \ \ \ \ \doxymbox{\hyperlink{group__log_ga0f3919667d0ac0b001e44edb569d22fe}{LogError}}(\doxymbox{\hyperlink{group___open_g_l_gabe9ef8f3c57b226efaf58ab3059bceab}{LOG\_GL}}\ \textcolor{stringliteral}{"{}Error\ \%i\ -\/\ '\%s'\(\backslash\)n"{}},\ (uint)err,\ e);}
+\DoxyCodeLine{00095\ \ \ \ \ \doxymbox{\hyperlink{group__log_ga0f3919667d0ac0b001e44edb569d22fe}{LogError}}(\doxymbox{\hyperlink{group___open_g_l_gabe9ef8f3c57b226efaf58ab3059bceab}{LOG\_GL}}\ \textcolor{stringliteral}{"{}\ \ \ \%s::\%i\(\backslash\)n"{}},\ file,\ line\ );}
+\DoxyCodeLine{00096\ \ \ \ \ \doxymbox{\hyperlink{group__log_ga0f3919667d0ac0b001e44edb569d22fe}{LogError}}(\doxymbox{\hyperlink{group___open_g_l_gabe9ef8f3c57b226efaf58ab3059bceab}{LOG\_GL}}\ \textcolor{stringliteral}{"{}\ \ \ \%s\(\backslash\)n"{}},\ msg\ );}
+\DoxyCodeLine{00097\ \ \ \ \ }
+\DoxyCodeLine{00098\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00099\ \}}
+\DoxyCodeLine{00100\ }
+\DoxyCodeLine{00101\ }
+\DoxyCodeLine{00106\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{group___open_g_l_gaa1e51833a1b003db2359ea965e501806}{glCheckError}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ msg)}
+\DoxyCodeLine{00107\ \{}
+\DoxyCodeLine{00108\ \ \ \ \ GLenum\ err\ =\ glGetError();}
+\DoxyCodeLine{00109\ }
+\DoxyCodeLine{00110\ \ \ \ \ \textcolor{keywordflow}{if}(\ err\ ==\ GL\_NO\_ERROR\ )}
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00112\ }
+\DoxyCodeLine{00113\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ e\ =\ NULL;}
+\DoxyCodeLine{00114\ }
+\DoxyCodeLine{00115\ \ \ \ \ \textcolor{keywordflow}{switch}(err)}
+\DoxyCodeLine{00116\ \ \ \ \ \{}
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ GL\_INVALID\_ENUM:\ \ \ \ \ \ \ \ \ \ e\ =\ \textcolor{stringliteral}{"{}invalid\ enum"{}};\ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ GL\_INVALID\_VALUE:\ \ \ \ \ \ \ \ \ e\ =\ \textcolor{stringliteral}{"{}invalid\ value"{}};\ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ GL\_INVALID\_OPERATION:\ \ \ \ \ e\ =\ \textcolor{stringliteral}{"{}invalid\ operation"{}};\ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ GL\_STACK\_OVERFLOW:\ \ \ \ \ \ \ \ e\ =\ \textcolor{stringliteral}{"{}stack\ overflow"{}};\ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ GL\_STACK\_UNDERFLOW:\ \ \ \ \ \ \ e\ =\ \textcolor{stringliteral}{"{}stack\ underflow"{}};\ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ GL\_OUT\_OF\_MEMORY:\ \ \ \ \ \ \ \ \ e\ =\ \textcolor{stringliteral}{"{}out\ of\ memory"{}};\ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00123\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \#ifdef\ GL\_TABLE\_TOO\_LARGE\_EXT}}
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ GL\_TABLE\_TOO\_LARGE\_EXT:\ \ \ e\ =\ \textcolor{stringliteral}{"{}table\ too\ large"{}};\ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00125\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \#endif}}
+\DoxyCodeLine{00126\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \#ifdef\ GL\_TEXTURE\_TOO\_LARGE\_EXT}}
+\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ GL\_TEXTURE\_TOO\_LARGE\_EXT:\ e\ =\ \textcolor{stringliteral}{"{}texture\ too\ large"{}};\ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00128\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \#endif}}
+\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{default}:\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ e\ =\ \textcolor{stringliteral}{"{}unknown\ error"{}};}
+\DoxyCodeLine{00130\ \ \ \ \ \}}
+\DoxyCodeLine{00131\ }
+\DoxyCodeLine{00132\ \ \ \ \ \doxymbox{\hyperlink{group__log_ga0f3919667d0ac0b001e44edb569d22fe}{LogError}}(\doxymbox{\hyperlink{group___open_g_l_gabe9ef8f3c57b226efaf58ab3059bceab}{LOG\_GL}}\ \textcolor{stringliteral}{"{}\%s\ \ \ \ (error\ \%i\ -\/\ \%s)\(\backslash\)n"{}},\ msg,\ (uint)err,\ e);}
+\DoxyCodeLine{00133\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00134\ \}}
+\DoxyCodeLine{00135\ }
+\DoxyCodeLine{00136\ }
+\DoxyCodeLine{00141\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{group___open_g_l_gae70530a98d9a14c84fffea7e3f3083ab}{glPrintFreeMem}}()}
+\DoxyCodeLine{00142\ \{}
+\DoxyCodeLine{00143\ \ \ \ \ GLint\ total\_mem\_kb\ =\ 0;}
+\DoxyCodeLine{00144\ \ \ \ \ GLint\ cur\_avail\_mem\_kb\ =\ 0;}
+\DoxyCodeLine{00145\ }
+\DoxyCodeLine{00146\ \ \ \ \ \textcolor{keyword}{const}\ GLenum\ GL\_GPU\_MEM\_INFO\_TOTAL\_AVAILABLE\_MEM\_NVX\ =\ 0x9048;}
+\DoxyCodeLine{00147\ \ \ \ \ \textcolor{keyword}{const}\ GLenum\ GL\_GPU\_MEM\_INFO\_CURRENT\_AVAILABLE\_MEM\_NVX\ =\ 0x9049;}
+\DoxyCodeLine{00148\ }
+\DoxyCodeLine{00149\ \ \ \ \ glGetIntegerv(GL\_GPU\_MEM\_INFO\_TOTAL\_AVAILABLE\_MEM\_NVX,\ \&total\_mem\_kb);}
+\DoxyCodeLine{00150\ \ \ \ \ glGetIntegerv(GL\_GPU\_MEM\_INFO\_CURRENT\_AVAILABLE\_MEM\_NVX,\&cur\_avail\_mem\_kb);}
+\DoxyCodeLine{00151\ }
+\DoxyCodeLine{00152\ \ \ \ \ \doxymbox{\hyperlink{group__log_ga228a21f91213b15d7fdce08182d825e8}{LogInfo}}(\doxymbox{\hyperlink{group___open_g_l_gabe9ef8f3c57b226efaf58ab3059bceab}{LOG\_GL}}\ \textcolor{stringliteral}{"{}GPU\ memory\ free\ \ \ \ \%i\ /\ \%i\ kb\(\backslash\)n"{}},\ cur\_avail\_mem\_kb,\ total\_mem\_kb);}
+\DoxyCodeLine{00153\ \}}
+\DoxyCodeLine{00154\ }
+\DoxyCodeLine{00155\ }
+\DoxyCodeLine{00161\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{group___open_g_l_gae1351087d1392a2515441ba778e05259}{glDrawLine}}(\ \textcolor{keywordtype}{float}\ x1,\ \textcolor{keywordtype}{float}\ y1,\ \textcolor{keywordtype}{float}\ x2,\ \textcolor{keywordtype}{float}\ y2,\ \textcolor{keywordtype}{float}\ r,\ \textcolor{keywordtype}{float}\ g,\ \textcolor{keywordtype}{float}\ b,\ \textcolor{keywordtype}{float}\ a=1.0f,\ \textcolor{keywordtype}{float}\ thickness=2.0f\ )}
+\DoxyCodeLine{00162\ \{}
+\DoxyCodeLine{00163\ \ \ \ \ glLineWidth(thickness);}
+\DoxyCodeLine{00164\ \ \ \ \ glBegin(GL\_LINES);}
+\DoxyCodeLine{00165\ }
+\DoxyCodeLine{00166\ \ \ \ \ \ \ \ \ glColor4f(r,\ g,\ b,\ a);}
+\DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ glVertex2f(x1,\ y1);}
+\DoxyCodeLine{00169\ \ \ \ \ \ \ \ \ glVertex2f(x2,\ y2);}
+\DoxyCodeLine{00170\ }
+\DoxyCodeLine{00171\ \ \ \ \ glEnd();}
+\DoxyCodeLine{00172\ \}}
+\DoxyCodeLine{00173\ }
+\DoxyCodeLine{00174\ }
+\DoxyCodeLine{00180\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{group___open_g_l_ga660ba418bd80bc2d03f4074f96b36b95}{glDrawOutline}}(\ \textcolor{keywordtype}{float}\ x,\ \textcolor{keywordtype}{float}\ y,\ \textcolor{keywordtype}{float}\ width,\ \textcolor{keywordtype}{float}\ height,\ \textcolor{keywordtype}{float}\ r,\ \textcolor{keywordtype}{float}\ g,\ \textcolor{keywordtype}{float}\ b,\ \textcolor{keywordtype}{float}\ a=1.0f,\ \textcolor{keywordtype}{float}\ thickness=2.0f\ )}
+\DoxyCodeLine{00181\ \{}
+\DoxyCodeLine{00182\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ right\ =\ x\ +\ width;}
+\DoxyCodeLine{00183\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ bottom\ =\ y\ +\ height;}
+\DoxyCodeLine{00184\ }
+\DoxyCodeLine{00185\ \ \ \ \ glLineWidth(thickness);}
+\DoxyCodeLine{00186\ \ \ \ \ glBegin(GL\_LINE\_LOOP);}
+\DoxyCodeLine{00187\ }
+\DoxyCodeLine{00188\ \ \ \ \ \ \ \ \ glColor4f(r,\ g,\ b,\ a);}
+\DoxyCodeLine{00189\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00190\ \ \ \ \ \ \ \ \ glVertex2f(x,\ y);}
+\DoxyCodeLine{00191\ \ \ \ \ \ \ \ \ glVertex2f(right,\ y);}
+\DoxyCodeLine{00192\ \ \ \ \ \ \ \ \ glVertex2f(right,\ bottom);}
+\DoxyCodeLine{00193\ \ \ \ \ \ \ \ \ glVertex2f(x,\ bottom);}
+\DoxyCodeLine{00194\ }
+\DoxyCodeLine{00195\ \ \ \ \ glEnd();}
+\DoxyCodeLine{00196\ \}}
+\DoxyCodeLine{00197\ }
+\DoxyCodeLine{00198\ }
+\DoxyCodeLine{00204\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{group___open_g_l_ga3b01504c8fc6cf9553989916a471ce23}{glDrawRect}}(\ \textcolor{keywordtype}{float}\ x,\ \textcolor{keywordtype}{float}\ y,\ \textcolor{keywordtype}{float}\ width,\ \textcolor{keywordtype}{float}\ height,\ \textcolor{keywordtype}{float}\ r,\ \textcolor{keywordtype}{float}\ g,\ \textcolor{keywordtype}{float}\ b,\ \textcolor{keywordtype}{float}\ a=1.0f\ )}
+\DoxyCodeLine{00205\ \{}
+\DoxyCodeLine{00206\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ right\ =\ x\ +\ width;}
+\DoxyCodeLine{00207\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ bottom\ =\ y\ +\ height;}
+\DoxyCodeLine{00208\ }
+\DoxyCodeLine{00209\ \ \ \ \ glBegin(GL\_QUADS);}
+\DoxyCodeLine{00210\ }
+\DoxyCodeLine{00211\ \ \ \ \ \ \ \ \ glColor4f(r,\ g,\ b,\ a);}
+\DoxyCodeLine{00212\ }
+\DoxyCodeLine{00213\ \ \ \ \ \ \ \ \ glVertex2f(x,\ y);}
+\DoxyCodeLine{00214\ \ \ \ \ \ \ \ \ glVertex2f(right,\ y);\ \ \ }
+\DoxyCodeLine{00215\ \ \ \ \ \ \ \ \ glVertex2f(right,\ bottom);}
+\DoxyCodeLine{00216\ \ \ \ \ \ \ \ \ glVertex2f(x,\ bottom);}
+\DoxyCodeLine{00217\ }
+\DoxyCodeLine{00218\ \ \ \ \ glEnd();}
+\DoxyCodeLine{00219\ \}}
+\DoxyCodeLine{00220\ }
+\DoxyCodeLine{00221\ }
+\DoxyCodeLine{00222\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00223\ }
+
+\end{DoxyCode}

@@ -1,0 +1,78 @@
+\doxysection{vision.\+nn.\+squeezenet.\+Squeeze\+Net Class Reference}
+\hypertarget{classvision_1_1nn_1_1squeezenet_1_1_squeeze_net}{}\label{classvision_1_1nn_1_1squeezenet_1_1_squeeze_net}\index{vision.nn.squeezenet.SqueezeNet@{vision.nn.squeezenet.SqueezeNet}}
+Inheritance diagram for vision.\+nn.\+squeezenet.\+Squeeze\+Net:\+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classvision_1_1nn_1_1squeezenet_1_1_squeeze_net}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classvision_1_1nn_1_1squeezenet_1_1_squeeze_net_aef9f65d0a185860e49e2b816f811aa81}\label{classvision_1_1nn_1_1squeezenet_1_1_squeeze_net_aef9f65d0a185860e49e2b816f811aa81} 
+{\bfseries \+\_\+\+\_\+init\+\_\+\+\_\+} (self, version=1.\+0, num\+\_\+classes=1000)
+\item 
+\Hypertarget{classvision_1_1nn_1_1squeezenet_1_1_squeeze_net_a4eb0132c009f6fcd34bfa2c24412fa47}\label{classvision_1_1nn_1_1squeezenet_1_1_squeeze_net_a4eb0132c009f6fcd34bfa2c24412fa47} 
+{\bfseries forward} (self, x)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classvision_1_1nn_1_1squeezenet_1_1_squeeze_net_a290ef51c4e8811089aa1167e5e79176c}\label{classvision_1_1nn_1_1squeezenet_1_1_squeeze_net_a290ef51c4e8811089aa1167e5e79176c} 
+{\bfseries num\+\_\+classes} = num\+\_\+classes
+\item 
+\doxymbox{\hyperlink{classvision_1_1nn_1_1squeezenet_1_1_squeeze_net_aceb9f8b7885c08385d86fced5e231445}{features}}
+\item 
+\doxymbox{\hyperlink{classvision_1_1nn_1_1squeezenet_1_1_squeeze_net_a75c3e4911198c556f8ef7c987faa3a48}{classifier}}
+\end{DoxyCompactItemize}
+
+
+\label{doc-variable-members}
+\Hypertarget{classvision_1_1nn_1_1squeezenet_1_1_squeeze_net_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classvision_1_1nn_1_1squeezenet_1_1_squeeze_net_a75c3e4911198c556f8ef7c987faa3a48}\index{vision.nn.squeezenet.SqueezeNet@{vision.nn.squeezenet.SqueezeNet}!classifier@{classifier}}
+\index{classifier@{classifier}!vision.nn.squeezenet.SqueezeNet@{vision.nn.squeezenet.SqueezeNet}}
+\doxysubsubsection{\texorpdfstring{classifier}{classifier}}
+{\footnotesize\ttfamily \label{classvision_1_1nn_1_1squeezenet_1_1_squeeze_net_a75c3e4911198c556f8ef7c987faa3a48} 
+vision.\+nn.\+squeezenet.\+Squeeze\+Net.\+classifier}
+
+{\bfseries Initial value:\+}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=\ \ nn.Sequential(}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ nn.Dropout(p=0.5),}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ final\_conv,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ nn.ReLU(inplace=\textcolor{keyword}{True}),}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ nn.AvgPool2d(13,\ stride=1)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ )}
+
+\end{DoxyCode}
+\Hypertarget{classvision_1_1nn_1_1squeezenet_1_1_squeeze_net_aceb9f8b7885c08385d86fced5e231445}\index{vision.nn.squeezenet.SqueezeNet@{vision.nn.squeezenet.SqueezeNet}!features@{features}}
+\index{features@{features}!vision.nn.squeezenet.SqueezeNet@{vision.nn.squeezenet.SqueezeNet}}
+\doxysubsubsection{\texorpdfstring{features}{features}}
+{\footnotesize\ttfamily \label{classvision_1_1nn_1_1squeezenet_1_1_squeeze_net_aceb9f8b7885c08385d86fced5e231445} 
+vision.\+nn.\+squeezenet.\+Squeeze\+Net.\+features}
+
+{\bfseries Initial value:\+}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=\ \ nn.Sequential(}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ nn.Conv2d(3,\ 96,\ kernel\_size=7,\ stride=2),}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ nn.ReLU(inplace=\textcolor{keyword}{True}),}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ nn.MaxPool2d(kernel\_size=3,\ stride=2,\ ceil\_mode=\textcolor{keyword}{True}),}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Fire(96,\ 16,\ 64,\ 64),}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Fire(128,\ 16,\ 64,\ 64),}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Fire(128,\ 32,\ 128,\ 128),}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ nn.MaxPool2d(kernel\_size=3,\ stride=2,\ ceil\_mode=\textcolor{keyword}{True}),}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Fire(256,\ 32,\ 128,\ 128),}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Fire(256,\ 48,\ 192,\ 192),}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Fire(384,\ 48,\ 192,\ 192),}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Fire(384,\ 64,\ 256,\ 256),}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ nn.MaxPool2d(kernel\_size=3,\ stride=2,\ ceil\_mode=\textcolor{keyword}{True}),}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Fire(512,\ 64,\ 256,\ 256),}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ )}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file:\+\begin{DoxyCompactItemize}
+\item 
+jetson-\/inference/\+python/\+training/\+detection/\+ssd/\+vision/\+nn/\+squeezenet.\+py\end{DoxyCompactItemize}

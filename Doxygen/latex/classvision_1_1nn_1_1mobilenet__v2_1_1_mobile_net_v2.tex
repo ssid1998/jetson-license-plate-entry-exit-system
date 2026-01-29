@@ -1,0 +1,58 @@
+\doxysection{vision.\+nn.\+mobilenet\+\_\+v2.\+Mobile\+Net\+V2 Class Reference}
+\hypertarget{classvision_1_1nn_1_1mobilenet__v2_1_1_mobile_net_v2}{}\label{classvision_1_1nn_1_1mobilenet__v2_1_1_mobile_net_v2}\index{vision.nn.mobilenet\_v2.MobileNetV2@{vision.nn.mobilenet\_v2.MobileNetV2}}
+Inheritance diagram for vision.\+nn.\+mobilenet\+\_\+v2.\+Mobile\+Net\+V2:\+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classvision_1_1nn_1_1mobilenet__v2_1_1_mobile_net_v2}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classvision_1_1nn_1_1mobilenet__v2_1_1_mobile_net_v2_a350a89a9e23d1ea3763416ac681cc452}\label{classvision_1_1nn_1_1mobilenet__v2_1_1_mobile_net_v2_a350a89a9e23d1ea3763416ac681cc452} 
+{\bfseries \+\_\+\+\_\+init\+\_\+\+\_\+} (self, n\+\_\+class=1000, input\+\_\+size=224, width\+\_\+mult=1., dropout\+\_\+ratio=0.\+2, use\+\_\+batch\+\_\+norm=True, onnx\+\_\+compatible=False)
+\item 
+\Hypertarget{classvision_1_1nn_1_1mobilenet__v2_1_1_mobile_net_v2_a1d116273c67920f7ae0e65b012fcdb5c}\label{classvision_1_1nn_1_1mobilenet__v2_1_1_mobile_net_v2_a1d116273c67920f7ae0e65b012fcdb5c} 
+{\bfseries forward} (self, x)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classvision_1_1nn_1_1mobilenet__v2_1_1_mobile_net_v2_a4d327ce38ec6e33cb171ccaf44ef1677}\label{classvision_1_1nn_1_1mobilenet__v2_1_1_mobile_net_v2_a4d327ce38ec6e33cb171ccaf44ef1677} 
+float {\bfseries last\+\_\+channel} = int(last\+\_\+channel \texorpdfstring{$\ast$}{*} width\+\_\+mult) if width\+\_\+mult $>$ 1.\+0 else last\+\_\+channel
+\item 
+\Hypertarget{classvision_1_1nn_1_1mobilenet__v2_1_1_mobile_net_v2_a4a2bacad426b4772a0d6e85bf2117cc3}\label{classvision_1_1nn_1_1mobilenet__v2_1_1_mobile_net_v2_a4a2bacad426b4772a0d6e85bf2117cc3} 
+list {\bfseries features} = \+[conv\+\_\+bn(3, input\+\_\+channel, 2, onnx\+\_\+compatible=onnx\+\_\+compatible)]\+
+\item 
+\doxymbox{\hyperlink{classvision_1_1nn_1_1mobilenet__v2_1_1_mobile_net_v2_ab07092bb1069bfe3ece5f426e6e9658a}{classifier}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classvision_1_1nn_1_1mobilenet__v2_1_1_mobile_net_v2_a79b8cfc42e3fe647ecf426d3c7c49898}\label{classvision_1_1nn_1_1mobilenet__v2_1_1_mobile_net_v2_a79b8cfc42e3fe647ecf426d3c7c49898} 
+{\bfseries \+\_\+initialize\+\_\+weights} (self)
+\end{DoxyCompactItemize}
+
+
+\label{doc-variable-members}
+\Hypertarget{classvision_1_1nn_1_1mobilenet__v2_1_1_mobile_net_v2_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classvision_1_1nn_1_1mobilenet__v2_1_1_mobile_net_v2_ab07092bb1069bfe3ece5f426e6e9658a}\index{vision.nn.mobilenet\_v2.MobileNetV2@{vision.nn.mobilenet\_v2.MobileNetV2}!classifier@{classifier}}
+\index{classifier@{classifier}!vision.nn.mobilenet\_v2.MobileNetV2@{vision.nn.mobilenet\_v2.MobileNetV2}}
+\doxysubsubsection{\texorpdfstring{classifier}{classifier}}
+{\footnotesize\ttfamily \label{classvision_1_1nn_1_1mobilenet__v2_1_1_mobile_net_v2_ab07092bb1069bfe3ece5f426e6e9658a} 
+vision.\+nn.\+mobilenet\+\_\+v2.\+Mobile\+Net\+V2.\+classifier}
+
+{\bfseries Initial value:\+}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=\ \ nn.Sequential(}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ nn.Dropout(dropout\_ratio),}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ nn.Linear(self.last\_channel,\ n\_class),}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ )}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file:\+\begin{DoxyCompactItemize}
+\item 
+jetson-\/inference/\+python/\+training/\+detection/\+ssd/\+vision/\+nn/\+mobilenet\+\_\+v2.\+py\end{DoxyCompactItemize}

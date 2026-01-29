@@ -1,0 +1,106 @@
+\chapter{segnet-\/camera-\/2 }
+\hypertarget{md_jetson-inference_2docs_2segnet-camera-2}{}\label{md_jetson-inference_2docs_2segnet-camera-2}\index{segnet-\/camera-\/2@{segnet-\/camera-\/2}}
+ 
+
+\textsuperscript{\href{segnet-console-2.md}{\texttt{Back}} \texorpdfstring{$\vert$}{|} \href{posenet.md}{\texttt{Next}} \texorpdfstring{$\vert$}{|} }\href{../README.md\#hello-ai-world}{\texttt{\textsuperscript{Contents}}} ~\newline
+ \textsuperscript{Semantic Segmentation}\hypertarget{md_jetson-inference_2docs_2segnet-camera-2_autotoc_md391}{}\doxysection{\texorpdfstring{Running the Live Camera Segmentation Demo}{Running the Live Camera Segmentation Demo}}\label{md_jetson-inference_2docs_2segnet-camera-2_autotoc_md391}
+\doxylink{requirements_The}{The} \href{../examples/segnet/segnet.cpp}{\texttt{{\ttfamily segnet.\+cpp}}} /\+ \href{../python/examples/segnet.py}{\texttt{{\ttfamily segnet.\+py}}} sample that we used previously can also be used for realtime camera streaming. \doxylink{requirements_The}{The} types of supported cameras include:\+
+
+
+\begin{DoxyItemize}
+\item MIPI CSI cameras ({\ttfamily csi:\+/\+/\+0})
+\item V4\+L2 cameras ({\ttfamily /\+dev/\+video0})
+\item RTP/\+\+RTSP streams ({\ttfamily rtsp:\+/\+/\+username:\+password@ip:\+port})
+\end{DoxyItemize}
+
+For more information about video streams and protocols, please see the \doxysectlink{md_jetson-inference_2docs_2aux-streaming}{Camera Streaming and Multimedia}{0} page.
+
+Run the program with {\ttfamily -\/-\/help} to see a full list of options -\/ some of them specific to \doxylink{classseg_net}{seg\+Net} include:\+
+
+
+\begin{DoxyItemize}
+\item optional {\ttfamily -\/-\/\doxylink{group__network}{Networking}} flag changes the segmentation model being used (see \href{segnet-console-2.md\#pre-trained-segmentation-models-available}{\texttt{available networks}})
+\item optional {\ttfamily -\/-\/visualize} flag accepts {\ttfamily mask} and/\+or {\ttfamily \doxylink{group__overlay}{Overlay}} modes (default is {\ttfamily \doxylink{group__overlay}{Overlay}})
+\item optional {\ttfamily -\/-\/alpha} flag sets the alpha blending value for the overlay (default is {\ttfamily 120})
+\item optional {\ttfamily -\/-\/filter-\/mode} flag accepts {\ttfamily point} or {\ttfamily linear} sampling (default is {\ttfamily linear})
+\end{DoxyItemize}
+
+Below are some typical scenarios for launching the program -\/ see \href{segnet-console-2.md\#pre-trained-segmentation-models-available}{\texttt{this table}} for the models available to use.\hypertarget{md_jetson-inference_2docs_2segnet-camera-2_autotoc_md392}{}\doxysubsubsubsection{\texorpdfstring{C++}{C++}}\label{md_jetson-inference_2docs_2segnet-camera-2_autotoc_md392}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{\$\ ./segnet\ -\/-\/network=<model>\ csi://0\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \#\ MIPI\ CSI\ camera}
+\DoxyCodeLine{\$\ ./segnet\ -\/-\/network=<model>\ /dev/video0\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \#\ V4L2\ camera}
+\DoxyCodeLine{\$\ ./segnet\ -\/-\/network=<model>\ /dev/video0\ output.mp4\ \ \ \ \ \#\ save\ to\ video\ file}
+
+\end{DoxyCode}
+\hypertarget{md_jetson-inference_2docs_2segnet-camera-2_autotoc_md393}{}\doxysubsubsubsection{\texorpdfstring{Python}{Python}}\label{md_jetson-inference_2docs_2segnet-camera-2_autotoc_md393}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{\$\ ./segnet.py\ -\/-\/network=<model>\ csi://0\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \#\ MIPI\ CSI\ camera}
+\DoxyCodeLine{\$\ ./segnet.py\ -\/-\/network=<model>\ /dev/video0\ \ \ \ \ \ \ \ \ \ \ \ \ \#\ V4L2\ camera}
+\DoxyCodeLine{\$\ ./segnet.py\ -\/-\/network=<model>\ /dev/video0\ output.mp4\ \ \#\ save\ to\ video\ file}
+
+\end{DoxyCode}
+
+
+\begin{quote}
+{\bfseries{note}}:\+ for example cameras to use, see these sections of the Jetson Wiki:\+ ~\newline
+ ~~~~~~~~~~~~~-\/ Nano:\+~~\href{https://elinux.org/Jetson_Nano\#Cameras}{\texttt{{\ttfamily https:\+/\+/\+e\+Linux.\+org/\+\+Jetson\+\_\+\+Nano\#Cameras}}} ~\newline
+ ~~~~~~~~~~~~~-\/ Xavier:\+ \href{https://elinux.org/Jetson_AGX_Xavier\#Ecosystem_Products_.26_Cameras}{\texttt{{\ttfamily https:\+/\+/\+e\+Linux.\+org/\+\+Jetson\+\_\+\+AGX\+\_\+\+Xavier\#Ecosystem\+\_\+\+Products\+\_\+.\+26\+\_\+\+Cameras}}} ~\newline
+ ~~~~~~~~~~~~~-\/ TX1/\+\+TX2:\+ developer kits include an onboard MIPI CSI sensor module (0V5693)~\newline
+ \end{quote}
+\hypertarget{md_jetson-inference_2docs_2segnet-camera-2_autotoc_md394}{}\doxysubsubsubsection{\texorpdfstring{Visualization}{Visualization}}\label{md_jetson-inference_2docs_2segnet-camera-2_autotoc_md394}
+Displayed in the Open\+GL window are the live camera stream overlayed with the segmentation output, alongside the solid segmentation mask for clarity. Here are some examples of it being used with \href{segnet-console-2.md\#pre-trained-segmentation-models-available}{\texttt{different models}} that are available to try:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{\#\ C++}
+\DoxyCodeLine{\$\ ./segnet\ -\/-\/network=fcn-\/resnet18-\/mhp\ csi://0}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#\ Python}
+\DoxyCodeLine{\$\ ./segnet.py\ -\/-\/network=fcn-\/resnet18-\/mhp\ csi://0}
+
+\end{DoxyCode}
+
+
+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{\#\ C++}
+\DoxyCodeLine{\$\ ./segnet\ -\/-\/network=fcn-\/resnet18-\/sun\ csi://0}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#\ Python}
+\DoxyCodeLine{\$\ ./segnet.py\ -\/-\/network=fcn-\/resnet18-\/sun\ csi://0}
+
+\end{DoxyCode}
+
+
+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{\#\ C++}
+\DoxyCodeLine{\$\ ./segnet\ -\/-\/network=fcn-\/resnet18-\/deepscene\ csi://0}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#\ Python}
+\DoxyCodeLine{\$\ ./segnet.py\ -\/-\/network=fcn-\/resnet18-\/deepscene\ csi://0}
+
+\end{DoxyCode}
+
+
+
+
+Feel free to experiment with the different models and resolutions for indoor and outdoor environments. ~\newline
+\hypertarget{md_jetson-inference_2docs_2segnet-camera-2_autotoc_md395}{}\doxysubsection{\texorpdfstring{autotoc\+\_\+md395}{autotoc\+\_\+md395}}\label{md_jetson-inference_2docs_2segnet-camera-2_autotoc_md395}
+Next \texorpdfstring{$\vert$}{|} {\bfseries{\href{posenet.md}{\texttt{Pose Estimation with Pose\+Net}}}} ~\newline
+ Back \texorpdfstring{$\vert$}{|} {\bfseries{\href{segnet-console-2.md}{\texttt{Segmenting Images from the Command Line}}}}
+
+{\bfseries{ }}
+
+\textsuperscript{© 2016-\/2019 NVIDIA \texorpdfstring{$\vert$}{|} }\href{../README.md\#hello-ai-world}{\texttt{\textsuperscript{Table of Contents}}}

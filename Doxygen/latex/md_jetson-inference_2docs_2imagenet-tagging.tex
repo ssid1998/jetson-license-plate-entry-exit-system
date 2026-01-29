@@ -1,0 +1,67 @@
+\chapter{imagenet-\/tagging }
+\hypertarget{md_jetson-inference_2docs_2imagenet-tagging}{}\label{md_jetson-inference_2docs_2imagenet-tagging}\index{imagenet-\/tagging@{imagenet-\/tagging}}
+ 
+
+\textsuperscript{\href{imagenet-camera-2.md}{\texttt{Back}} \texorpdfstring{$\vert$}{|} \href{detectnet-console-2.md}{\texttt{Next}} \texorpdfstring{$\vert$}{|} }\href{../README.md\#hello-ai-world}{\texttt{\textsuperscript{Contents}}} ~\newline
+ \textsuperscript{Image Classification}\hypertarget{md_jetson-inference_2docs_2imagenet-tagging_autotoc_md317}{}\doxysection{\texorpdfstring{Multi-\/\+Label Classification for Image Tagging}{Multi-\/\+Label Classification for Image Tagging}}\label{md_jetson-inference_2docs_2imagenet-tagging_autotoc_md317}
+Multi-\/label classification models are able to recognize multiple object classes simultaneously for performing tasks like image tagging. \doxylink{requirements_The}{The} multi-\/label DNNs are almost identical in topology to ordinary single-\/class models, except they use a sigmoid activation layer as opposed to softmax. There\textquotesingle{}s a pre-\/trained {\ttfamily resnet18-\/tagging-\/voc} multi-\/label model available that was trained on the Pascal VOC dataset:\+ ~\newline
+
+
+
+
+To enable image tagging, you\textquotesingle{}ll want to run imagenet/\+imagenet.\+py with {\ttfamily -\/-\/topK=0} and a {\ttfamily -\/-\/threshold} of your choosing:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{\#\ C++}
+\DoxyCodeLine{\$\ imagenet\ -\/-\/model=resnet18-\/tagging-\/voc\ -\/-\/topK=0\ -\/-\/threshold=0.25\ "{}images/object\_*.jpg"{}\ images/test/tagging\_\%i.jpg}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#\ Python}
+\DoxyCodeLine{\$\ imagenet.py\ -\/-\/model=resnet18-\/tagging-\/voc\ -\/-\/topK=0\ -\/-\/threshold=0.25\ "{}images/object\_*.jpg"{}\ images/test/tagging\_\%i.jpg}
+
+\end{DoxyCode}
+
+
+Using {\ttfamily -\/-\/topK=0} means that all the classes with a confidence score exceeding the threshold will be returned by the classifier.\hypertarget{md_jetson-inference_2docs_2imagenet-tagging_autotoc_md318}{}\doxysubsubsection{\texorpdfstring{Retrieving Multiple Image Tags from Code}{Retrieving Multiple Image Tags from Code}}\label{md_jetson-inference_2docs_2imagenet-tagging_autotoc_md318}
+\doxylink{requirements_The}{The} \doxylink{classimage_net_a0023fb5bcd45dcefdac6a7df4bf9bab5}{image\+Net.\+Classify()} function will return {\ttfamily (class\+ID, confidence)} tuples when the topK argument is specified. See \href{../examples/imagenet/imagenet.cpp}{\texttt{{\ttfamily imagenet.\+cpp}}} or \href{../python/examples/imagenet.py}{\texttt{{\ttfamily imagenet.\+py}}} for code examples of using multiple classification results:\+\hypertarget{md_jetson-inference_2docs_2imagenet-tagging_autotoc_md319}{}\doxysubsubsubsection{\texorpdfstring{C++}{C++}}\label{md_jetson-inference_2docs_2imagenet-tagging_autotoc_md319}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ cpp}
+\DoxyCodeLine{imageNet::Classifications\ classifications;\ \ //\ std::vector<std::pair<uint32\_t,\ float>>\ \ (classID,\ confidence)}
+\DoxyCodeLine{}
+\DoxyCodeLine{if(\ net-\/>Classify(image,\ input-\/>GetWidth(),\ input-\/>GetHeight(),\ classifications,\ topK)\ <\ 0\ )}
+\DoxyCodeLine{\ \ \ \ continue;}
+\DoxyCodeLine{}
+\DoxyCodeLine{for(\ uint32\_t\ n=0;\ n\ <\ classifications.size();\ n++\ )}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \ \ const\ uint32\_t\ classID\ =\ classifications[n].first;}
+\DoxyCodeLine{\ \ \ \ const\ char*\ classLabel\ =\ net-\/>GetClassLabel(classID);}
+\DoxyCodeLine{\ \ \ \ const\ float\ confidence\ =\ classifications[n].second\ *\ 100.0f;}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ printf("{}imagenet:\ \ \%2.5f\%\%\ class\ \#\%i\ (\%s)\(\backslash\)n"{},\ confidence,\ classID,\ classLabel);\ }
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+\hypertarget{md_jetson-inference_2docs_2imagenet-tagging_autotoc_md320}{}\doxysubsubsubsection{\texorpdfstring{Python}{Python}}\label{md_jetson-inference_2docs_2imagenet-tagging_autotoc_md320}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ python}
+\DoxyCodeLine{predictions\ =\ net.Classify(img,\ topK=args.topK)}
+\DoxyCodeLine{}
+\DoxyCodeLine{for\ n,\ (classID,\ confidence)\ in\ enumerate(predictions):}
+\DoxyCodeLine{\ \ \ classLabel\ =\ net.GetClassLabel(classID)}
+\DoxyCodeLine{\ \ \ confidence\ *=\ 100.0}
+\DoxyCodeLine{\ \ \ print(f"{}imagenet:\ \ \{confidence:05.2f\}\%\ class\ \#\{classID\}\ (\{classLabel\})"{})}
+
+\end{DoxyCode}
+
+
+Note that topK can also be used in single-\/class classification to get the top N results, although those models weren\textquotesingle{}t trained for image tagging.
+
+Next \texorpdfstring{$\vert$}{|} {\bfseries{\href{detectnet-console-2.md}{\texttt{Detecting Objects from Images}}}} ~\newline
+ Back \texorpdfstring{$\vert$}{|} {\bfseries{\href{imagenet-camera-2.md}{\texttt{Running the Live Camera Recognition Demo}}}}
+
+{\bfseries{ }}
+
+\textsuperscript{© 2016-\/2023 NVIDIA \texorpdfstring{$\vert$}{|} }\href{../README.md\#hello-ai-world}{\texttt{\textsuperscript{Table of Contents}}}

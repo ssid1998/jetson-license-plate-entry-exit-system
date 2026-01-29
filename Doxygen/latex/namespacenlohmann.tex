@@ -1,0 +1,195 @@
+\doxysection{nlohmann Namespace Reference}
+\hypertarget{namespacenlohmann}{}\label{namespacenlohmann}\index{nlohmann@{nlohmann}}
+
+
+namespace for Niels Lohmann  
+
+
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \doxymbox{\hyperlink{namespacenlohmann_1_1detail}{detail}}
+\begin{DoxyCompactList}\small\item\em detail namespace with internal helper functions \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \doxymbox{\hyperlink{structnlohmann_1_1adl__serializer}{adl\+\_\+serializer}}
+\begin{DoxyCompactList}\small\item\em default JSONSerializer template argument \end{DoxyCompactList}\item 
+class \doxymbox{\hyperlink{classnlohmann_1_1basic__json}{basic\+\_\+json}}
+\item 
+class \doxymbox{\hyperlink{classnlohmann_1_1json__pointer}{json\+\_\+pointer}}
+\begin{DoxyCompactList}\small\item\em JSON Pointer. \end{DoxyCompactList}\item 
+struct \doxymbox{\hyperlink{structnlohmann_1_1ordered__map}{ordered\+\_\+map}}
+\item 
+class \doxymbox{\hyperlink{classnlohmann_1_1byte__container__with__subtype}{byte\+\_\+container\+\_\+with\+\_\+subtype}}
+\begin{DoxyCompactList}\small\item\em an internal type for a backed binary type \end{DoxyCompactList}\item 
+struct \doxymbox{\hyperlink{structnlohmann_1_1json__sax}{json\+\_\+sax}}
+\begin{DoxyCompactList}\small\item\em SAX interface. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+using \doxymbox{\hyperlink{namespacenlohmann_a8ba8c5483f73a36e716558571ff97d57}{json}} = \doxymbox{\hyperlink{classnlohmann_1_1basic__json}{basic\+\_\+json}}$<$$>$
+\begin{DoxyCompactList}\small\item\em default JSON class \end{DoxyCompactList}\item 
+using \doxymbox{\hyperlink{namespacenlohmann_a478f0689cf22dd7983f14f8842d28434}{ordered\+\_\+json}} = \doxymbox{\hyperlink{classnlohmann_1_1basic__json}{basic\+\_\+json}}$<$\doxymbox{\hyperlink{structnlohmann_1_1ordered__map}{nlohmann::\+ordered\+\_\+map}}$>$
+\begin{DoxyCompactList}\small\item\em ordered JSON class \end{DoxyCompactList}\item 
+\Hypertarget{namespacenlohmann_a2e2472ad5e1f030c27a9f3a7aff5be4c}\label{namespacenlohmann_a2e2472ad5e1f030c27a9f3a7aff5be4c} 
+using {\bfseries mapped\+\_\+type} = T
+\item 
+\Hypertarget{namespacenlohmann_a98481bd24651bc992daad4adcfc14172}\label{namespacenlohmann_a98481bd24651bc992daad4adcfc14172} 
+using {\bfseries Container} = std::\+vector$<$std::\+pair$<$const Key, T$>$, Allocator$>$
+\item 
+{\footnotesize template$<$typename Input\+It$>$ }\\using \doxymbox{\hyperlink{namespacenlohmann_abb384fc102c1ff184a113489b763173c}{require\+\_\+input\+\_\+iter}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{namespacenlohmann_a897bb5503d387ba0adaa48b5c04d4942}\label{namespacenlohmann_a897bb5503d387ba0adaa48b5c04d4942} 
+{\bfseries ordered\+\_\+map} (const Allocator \&alloc=Allocator())
+\item 
+\Hypertarget{namespacenlohmann_a29c7d1db0ce5d092247272ab9b78e206}\label{namespacenlohmann_a29c7d1db0ce5d092247272ab9b78e206} 
+{\footnotesize template$<$class It$>$ }\\{\bfseries ordered\+\_\+map} (It first, It last, const Allocator \&alloc=Allocator())
+\item 
+\Hypertarget{namespacenlohmann_abb2d61e87e4668b73bcee2f863f6ea0c}\label{namespacenlohmann_abb2d61e87e4668b73bcee2f863f6ea0c} 
+{\bfseries ordered\+\_\+map} (std::\+initializer\+\_\+list$<$ T $>$ init, const Allocator \&alloc=Allocator())
+\item 
+\Hypertarget{namespacenlohmann_abd13321b93417380c0f1beded27b9124}\label{namespacenlohmann_abd13321b93417380c0f1beded27b9124} 
+std::\+pair$<$ iterator, bool $>$ {\bfseries emplace} (const key\+\_\+type \&key, T \&\&t)
+\item 
+\Hypertarget{namespacenlohmann_af48a465ff5715a67315c3554b1645ec3}\label{namespacenlohmann_af48a465ff5715a67315c3554b1645ec3} 
+T \& {\bfseries operator\+[$\,$]\+} (const Key \&key)
+\item 
+\Hypertarget{namespacenlohmann_a75984f94d1699d0084eca3357b5b3043}\label{namespacenlohmann_a75984f94d1699d0084eca3357b5b3043} 
+T \& {\bfseries at} (const Key \&key)
+\item 
+\Hypertarget{namespacenlohmann_aa59933b9c550a7e82f17db8739008179}\label{namespacenlohmann_aa59933b9c550a7e82f17db8739008179} 
+size\+\_\+type {\bfseries erase} (const Key \&key)
+\item 
+\Hypertarget{namespacenlohmann_a71bb2843bc8d9553b6f7ae8807fb0ad8}\label{namespacenlohmann_a71bb2843bc8d9553b6f7ae8807fb0ad8} 
+iterator {\bfseries erase} (iterator pos)
+\item 
+\Hypertarget{namespacenlohmann_a60492c8d9bdeb0a9ab3c77fd62225840}\label{namespacenlohmann_a60492c8d9bdeb0a9ab3c77fd62225840} 
+size\+\_\+type {\bfseries count} (const Key \&key) const
+\item 
+\Hypertarget{namespacenlohmann_a370f11c9de06e26d7dc9c1abb612ba93}\label{namespacenlohmann_a370f11c9de06e26d7dc9c1abb612ba93} 
+iterator {\bfseries find} (const Key \&key)
+\item 
+\Hypertarget{namespacenlohmann_aeb06c55d76b7d9c8ad540f5c0942b083}\label{namespacenlohmann_aeb06c55d76b7d9c8ad540f5c0942b083} 
+std::\+pair$<$ iterator, bool $>$ {\bfseries insert} (value\+\_\+type \&\&value)
+\item 
+\Hypertarget{namespacenlohmann_af2da59e6918e8e68eae2fb9e95b88845}\label{namespacenlohmann_af2da59e6918e8e68eae2fb9e95b88845} 
+std::\+pair$<$ iterator, bool $>$ {\bfseries insert} (const value\+\_\+type \&value)
+\item 
+\Hypertarget{namespacenlohmann_a60abd93ab06e22111539b3d2ed037a61}\label{namespacenlohmann_a60abd93ab06e22111539b3d2ed037a61} 
+{\footnotesize template$<$typename Input\+It, typename = require\+\_\+input\+\_\+iter$<$\+Input\+It$>$$>$ }\\void {\bfseries insert} (Input\+It first, Input\+It last)
+\item 
+NLOHMANN\+\_\+\+BASIC\+\_\+\+JSON\+\_\+\+TPL\+\_\+\+DECLARATION std::\+string \doxymbox{\hyperlink{namespacenlohmann_a6ce645a0b8717757e096a5b5773b7a16}{to\+\_\+string}} (const NLOHMANN\+\_\+\+BASIC\+\_\+\+JSON\+\_\+\+TPL \&j)
+\begin{DoxyCompactList}\small\item\em user-\/defined to\+\_\+string function for JSON values \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{namespacenlohmann_a8e6f4a8ff480ccf39b5bc76521937d80}\label{namespacenlohmann_a8e6f4a8ff480ccf39b5bc76521937d80} 
+\texorpdfstring{$\ast$}{*} {\bfseries ordered\+\_\+map}
+\item 
+class class \doxymbox{\hyperlink{namespacenlohmann_a9003b807eb4355e9e4d739f8edbb6f0c}{Allocator}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+namespace for Niels Lohmann 
+
+\begin{DoxySeeAlso}{See also}
+\href{https://github.com/nlohmann}{\texttt{https:\+/\+/\+github.\+com/\+nlohmann}} 
+\end{DoxySeeAlso}
+\begin{DoxySince}{Since}
+version 1.\+0.\+0
+\end{DoxySince}
+namespace to hold default {\ttfamily to\+\_\+json} function to see why this is required:\+ \href{http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2015/n4381.html}{\texttt{http:\+/\+/\+www.\+open-\/std.\+org/\+jtc1/\+sc22/\+wg21/\+docs/\+papers/\+2015/\+n4381.\+html}} 
+
+\label{doc-typedef-members}
+\Hypertarget{namespacenlohmann_doc-typedef-members}
+\doxysubsection{Typedef Documentation}
+\Hypertarget{namespacenlohmann_a8ba8c5483f73a36e716558571ff97d57}\index{nlohmann@{nlohmann}!json@{json}}
+\index{json@{json}!nlohmann@{nlohmann}}
+\doxysubsubsection{\texorpdfstring{json}{json}}
+{\footnotesize\ttfamily \label{namespacenlohmann_a8ba8c5483f73a36e716558571ff97d57} 
+using \doxymbox{\hyperlink{namespacenlohmann_a8ba8c5483f73a36e716558571ff97d57}{nlohmann::\+json}} = \doxymbox{\hyperlink{classnlohmann_1_1basic__json}{basic\+\_\+json}}$<$$>$}
+
+
+
+default JSON class 
+
+This type is the default specialization of the \doxylink{classnlohmann_1_1basic__json}{basic\+\_\+json} class which uses the standard template types.
+
+\begin{DoxySince}{Since}
+version 1.\+0.\+0 
+\end{DoxySince}
+\Hypertarget{namespacenlohmann_a478f0689cf22dd7983f14f8842d28434}\index{nlohmann@{nlohmann}!ordered\_json@{ordered\_json}}
+\index{ordered\_json@{ordered\_json}!nlohmann@{nlohmann}}
+\doxysubsubsection{\texorpdfstring{ordered\_json}{ordered\_json}}
+{\footnotesize\ttfamily \label{namespacenlohmann_a478f0689cf22dd7983f14f8842d28434} 
+typedef \doxymbox{\hyperlink{classnlohmann_1_1basic__json}{basic\+\_\+json}}$<$ \doxymbox{\hyperlink{structnlohmann_1_1ordered__map}{nlohmann::\+ordered\+\_\+map}} $>$ \doxymbox{\hyperlink{namespacenlohmann_a478f0689cf22dd7983f14f8842d28434}{nlohmann::\+ordered\+\_\+json}} = \doxymbox{\hyperlink{classnlohmann_1_1basic__json}{basic\+\_\+json}}$<$\doxymbox{\hyperlink{structnlohmann_1_1ordered__map}{nlohmann::\+ordered\+\_\+map}}$>$}
+
+
+
+ordered JSON class 
+
+This type preserves the insertion order of object keys.
+
+\begin{DoxySince}{Since}
+version 3.\+9.\+0 
+\end{DoxySince}
+\Hypertarget{namespacenlohmann_abb384fc102c1ff184a113489b763173c}\index{nlohmann@{nlohmann}!require\_input\_iter@{require\_input\_iter}}
+\index{require\_input\_iter@{require\_input\_iter}!nlohmann@{nlohmann}}
+\doxysubsubsection{\texorpdfstring{require\_input\_iter}{require\_input\_iter}}
+{\footnotesize\ttfamily \label{namespacenlohmann_abb384fc102c1ff184a113489b763173c} 
+template$<$typename Input\+It$>$ \\
+using nlohmann::\+require\+\_\+input\+\_\+iter}
+
+{\bfseries Initial value:\+}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{typename}\ std::enable\_if<std::is\_convertible<typename\ std::iterator\_traits<InputIt>::iterator\_category,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ std::input\_iterator\_tag>::value>::type}
+
+\end{DoxyCode}
+
+
+\label{doc-func-members}
+\Hypertarget{namespacenlohmann_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{namespacenlohmann_a6ce645a0b8717757e096a5b5773b7a16}\index{nlohmann@{nlohmann}!to\_string@{to\_string}}
+\index{to\_string@{to\_string}!nlohmann@{nlohmann}}
+\doxysubsubsection{\texorpdfstring{to\_string()}{to\_string()}}
+{\footnotesize\ttfamily \label{namespacenlohmann_a6ce645a0b8717757e096a5b5773b7a16} 
+NLOHMANN\+\_\+\+BASIC\+\_\+\+JSON\+\_\+\+TPL\+\_\+\+DECLARATION std::\+string nlohmann::\+to\+\_\+string (\begin{DoxyParamCaption}\item[{const NLOHMANN\+\_\+\+BASIC\+\_\+\+JSON\+\_\+\+TPL \&}]{j}{}\end{DoxyParamCaption})}
+
+
+
+user-\/defined to\+\_\+string function for JSON values 
+
+This function implements a user-\/defined to\+\_\+string for JSON objects.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\doxymbox{\texttt{in}}  & {\em j} & a JSON object \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+a std::\+string object 
+\end{DoxyReturn}
+
+
+\label{doc-var-members}
+\Hypertarget{namespacenlohmann_doc-var-members}
+\doxysubsection{Variable Documentation}
+\Hypertarget{namespacenlohmann_a9003b807eb4355e9e4d739f8edbb6f0c}\index{nlohmann@{nlohmann}!Allocator@{Allocator}}
+\index{Allocator@{Allocator}!nlohmann@{nlohmann}}
+\doxysubsubsection{\texorpdfstring{Allocator}{Allocator}}
+{\footnotesize\ttfamily \label{namespacenlohmann_a9003b807eb4355e9e4d739f8edbb6f0c} 
+class class nlohmann::\+\+Allocator}
+
+{\bfseries Initial value:\+}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \ \ \ =\ std::allocator<std::pair<const\ Key,\ T>>>}
+\DoxyCodeLine{\textcolor{keyword}{struct\ }\doxymbox{\hyperlink{structnlohmann_1_1ordered__map}{ordered\_map}}\ :\ std::vector<std::pair<const\ Key,\ T>}
+
+\end{DoxyCode}

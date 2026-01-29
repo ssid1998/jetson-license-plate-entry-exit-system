@@ -1,0 +1,65 @@
+var group__codec =
+[
+    [ "gstBufferManager", "classgst_buffer_manager.html", [
+      [ "gstBufferManager", "classgst_buffer_manager.html#a8d0c7f6ad4fad98bca732caa255eb94c", null ],
+      [ "~gstBufferManager", "classgst_buffer_manager.html#a12abb8d449269f24ade36c787fab1bd3", null ],
+      [ "gstBufferManager", "classgst_buffer_manager.html#a8d0c7f6ad4fad98bca732caa255eb94c", null ],
+      [ "~gstBufferManager", "classgst_buffer_manager.html#a12abb8d449269f24ade36c787fab1bd3", null ],
+      [ "Dequeue", "classgst_buffer_manager.html#a451091897b267ffbce465df96118b4b3", null ],
+      [ "Dequeue", "classgst_buffer_manager.html#a451091897b267ffbce465df96118b4b3", null ],
+      [ "Enqueue", "classgst_buffer_manager.html#a8cd180e308002d209ec400f5c9966ebe", null ],
+      [ "Enqueue", "classgst_buffer_manager.html#a8cd180e308002d209ec400f5c9966ebe", null ],
+      [ "GetFrameCount", "classgst_buffer_manager.html#ac8653af78fcfd69dd452c01b10ba3277", null ],
+      [ "GetFrameCount", "classgst_buffer_manager.html#ac8653af78fcfd69dd452c01b10ba3277", null ],
+      [ "GetLastTimestamp", "classgst_buffer_manager.html#a9416f0ffbcd3bee21e909fbd174c3436", null ],
+      [ "GetLastTimestamp", "classgst_buffer_manager.html#a9416f0ffbcd3bee21e909fbd174c3436", null ],
+      [ "GetRawFormat", "classgst_buffer_manager.html#a850ecaaeb9a220bd42e718f93ecb8ae4", null ],
+      [ "GetRawFormat", "classgst_buffer_manager.html#a850ecaaeb9a220bd42e718f93ecb8ae4", null ],
+      [ "mBufferRGB", "classgst_buffer_manager.html#ab07dfcccd8fa8e9e5f0c80ba969bd953", null ],
+      [ "mBufferYUV", "classgst_buffer_manager.html#a9bf6538dcf98e4773b6fe2ea28ee8944", null ],
+      [ "mFormatYUV", "classgst_buffer_manager.html#a648c0f76e9eedc9d3483c36b118b2e0d", null ],
+      [ "mFrameCount", "classgst_buffer_manager.html#aac53eb50db281d89d9142576b5adf6d3", null ],
+      [ "mLastTimestamp", "classgst_buffer_manager.html#abe9df1a58cf2e4ae57c0239a12cc4aa4", null ],
+      [ "mNvmmUsed", "classgst_buffer_manager.html#abd5bf5577fd3a1bb129419243dc91d1a", null ],
+      [ "mOptions", "classgst_buffer_manager.html#a742e929409e877a0e8e2b8c56f0d58a3", null ],
+      [ "mTimestamps", "classgst_buffer_manager.html#aea126364b147dd2c7946ba66f64fd3a4", null ],
+      [ "mWaitEvent", "classgst_buffer_manager.html#a9f62a8198853fdab6da3775b9b879280", null ]
+    ] ],
+    [ "gstDecoder", "classgst_decoder.html", [
+      [ "~gstDecoder", "classgst_decoder.html#a0e13e2625f959c1e612cb90e3d5720d0", null ],
+      [ "~gstDecoder", "classgst_decoder.html#a0e13e2625f959c1e612cb90e3d5720d0", null ],
+      [ "Capture", "classgst_decoder.html#ac9c236a817311af434313b1bb09f9ebc", null ],
+      [ "Capture", "classgst_decoder.html#adaf0107e88665f5434dc2440296d4ace", null ],
+      [ "Close", "classgst_decoder.html#a72b091d525c9bdfd63c6f5da84fa6fcb", null ],
+      [ "Close", "classgst_decoder.html#a88ba5cb4519d8d50aaa3e28c9bf2c8f1", null ],
+      [ "GetType", "classgst_decoder.html#ad9c4a4b64c50f8ae8712e3061e8a18df", null ],
+      [ "GetType", "classgst_decoder.html#ad9c4a4b64c50f8ae8712e3061e8a18df", null ],
+      [ "IsEOS", "classgst_decoder.html#a4ce4a72e8d0303f15adee8d0bff2f9d2", null ],
+      [ "IsEOS", "classgst_decoder.html#a4ce4a72e8d0303f15adee8d0bff2f9d2", null ],
+      [ "Open", "classgst_decoder.html#affaac0729dc378cfadacf330c32995b5", null ],
+      [ "Open", "classgst_decoder.html#aab54dc71e937ed3e8ecd6fd129e16179", null ]
+    ] ],
+    [ "gstEncoder", "classgst_encoder.html", [
+      [ "~gstEncoder", "classgst_encoder.html#a5a56a6a5c4a3ea887fa71a63f9c3bcc3", null ],
+      [ "~gstEncoder", "classgst_encoder.html#a5a56a6a5c4a3ea887fa71a63f9c3bcc3", null ],
+      [ "Close", "classgst_encoder.html#a16d1b1ae7e04382a1970465ec21ffc9c", null ],
+      [ "Close", "classgst_encoder.html#a12c9bf5d87ef25783763a221bf66fa8e", null ],
+      [ "GetPipeline", "classgst_encoder.html#ab35e399cb5ffa2b1c09eda8f74a51e62", null ],
+      [ "GetPipeline", "classgst_encoder.html#ab35e399cb5ffa2b1c09eda8f74a51e62", null ],
+      [ "GetType", "classgst_encoder.html#ab1fd934813f47039bc30aac6238c5bc7", null ],
+      [ "GetType", "classgst_encoder.html#ab1fd934813f47039bc30aac6238c5bc7", null ],
+      [ "GetWebRTCServer", "classgst_encoder.html#a4dbac0f8da525feaf806a95e3b704ece", null ],
+      [ "GetWebRTCServer", "classgst_encoder.html#a4dbac0f8da525feaf806a95e3b704ece", null ],
+      [ "Open", "classgst_encoder.html#a20e1b5f1a2f09a623b2ef184ff2916e5", null ],
+      [ "Open", "classgst_encoder.html#a39bac88df0521b855a01aeb58953815e", null ],
+      [ "Render", "classgst_encoder.html#af4ccc8043690cae6566c9301a1c7619a", null ],
+      [ "Render", "classgst_encoder.html#af4ccc8043690cae6566c9301a1c7619a", null ],
+      [ "Render", "classgst_encoder.html#a8cd23f5ae99dea76ed20b13a8c6610b5", null ],
+      [ "Render", "classgst_encoder.html#ac22ba91d40761d9813b04eb4f2c673e3", null ]
+    ] ],
+    [ "gstWebRTC", "classgst_web_r_t_c.html", [
+      [ "PeerContext", "structgst_web_r_t_c_1_1_peer_context.html", null ]
+    ] ],
+    [ "LOG_GSTREAMER", "group__codec.html#ga7d4bea04aad22460cc3c9c8152c6e3ed", null ],
+    [ "LOG_GSTREAMER", "group__codec.html#ga7d4bea04aad22460cc3c9c8152c6e3ed", null ]
+];

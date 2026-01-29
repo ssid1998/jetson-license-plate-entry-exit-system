@@ -1,0 +1,50 @@
+\doxysection{rand.\+h}
+\hypertarget{build_2aarch64_2include_2jetson-utils_2rand_8h_source}{}\label{build_2aarch64_2include_2jetson-utils_2rand_8h_source}\index{jetson-\/inference/build/aarch64/include/jetson-\/utils/rand.h@{jetson-\/inference/build/aarch64/include/jetson-\/utils/rand.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ *\ Copyright\ (c)\ 2017,\ NVIDIA\ CORPORATION.\ All\ rights\ reserved.}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ *\ Permission\ is\ hereby\ granted,\ free\ of\ charge,\ to\ any\ person\ obtaining\ a}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ *\ copy\ of\ this\ software\ and\ associated\ documentation\ files\ (the\ "{}Software"{}),}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ *\ to\ deal\ in\ the\ Software\ without\ restriction,\ including\ without\ limitation}}
+\DoxyCodeLine{00007\ \textcolor{comment}{\ *\ the\ rights\ to\ use,\ copy,\ modify,\ merge,\ publish,\ distribute,\ sublicense,}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ *\ and/or\ sell\ copies\ of\ the\ Software,\ and\ to\ permit\ persons\ to\ whom\ the}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ *\ Software\ is\ furnished\ to\ do\ so,\ subject\ to\ the\ following\ conditions:}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ *\ The\ above\ copyright\ notice\ and\ this\ permission\ notice\ shall\ be\ included\ in}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ *\ all\ copies\ or\ substantial\ portions\ of\ the\ Software.}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ *\ THE\ SOFTWARE\ IS\ PROVIDED\ "{}AS\ IS"{},\ WITHOUT\ WARRANTY\ OF\ ANY\ KIND,\ EXPRESS\ OR}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ *\ IMPLIED,\ INCLUDING\ BUT\ NOT\ LIMITED\ TO\ THE\ WARRANTIES\ OF\ MERCHANTABILITY,}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ *\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE\ AND\ NONINFRINGEMENT.\ \ IN\ NO\ EVENT\ SHALL}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ *\ THE\ AUTHORS\ OR\ COPYRIGHT\ HOLDERS\ BE\ LIABLE\ FOR\ ANY\ CLAIM,\ DAMAGES\ OR\ OTHER}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ *\ LIABILITY,\ WHETHER\ IN\ AN\ ACTION\ OF\ CONTRACT,\ TORT\ OR\ OTHERWISE,\ ARISING}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ *\ FROM,\ OUT\ OF\ OR\ IN\ CONNECTION\ WITH\ THE\ SOFTWARE\ OR\ THE\ USE\ OR\ OTHER}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ *\ DEALINGS\ IN\ THE\ SOFTWARE.}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00022\ \ }
+\DoxyCodeLine{00023\ \textcolor{preprocessor}{\#ifndef\ \_\_RANDOM\_UTILS\_H\_}}
+\DoxyCodeLine{00024\ \textcolor{preprocessor}{\#define\ \_\_RANDOM\_UTILS\_H\_}}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \textcolor{preprocessor}{\#include\ <stdlib.h>}\ }
+\DoxyCodeLine{00028\ \textcolor{preprocessor}{\#include\ <time.h>}}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00035\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{group__util_gafee76bb8d269f1ccb369264fd28540f6}{randf}}(\ \textcolor{keywordtype}{float}\ range\_min=0.0f,\ \textcolor{keywordtype}{float}\ range\_max=1.0f\ )\ \ \ \ \ \ \ \ \{\ \textcolor{keywordflow}{return}\ ((\textcolor{keywordtype}{float}(\doxymbox{\hyperlink{group__util_ga38e36f1fb5c8d8bc2dd5b502f17d9be4}{rand}}())\ /\ RAND\_MAX)\ *\ (range\_max\ -\/\ range\_min))\ +\ range\_min;\ \}}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00042\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{group__util_ga38e36f1fb5c8d8bc2dd5b502f17d9be4}{rand}}(\ \textcolor{keywordtype}{int}\ range\_min,\ \textcolor{keywordtype}{int}\ range\_max\ )\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ r\ =\ (\doxymbox{\hyperlink{group__util_gafee76bb8d269f1ccb369264fd28540f6}{randf}}()\ *\ (range\_max\ -\/\ range\_min))\ +\ range\_min;\ \textcolor{keywordflow}{return}\ int(r);\ \}}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00049\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{group__util_ga37406669812e75c559cfa401d0c2f623}{srand\_time}}()\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{\ srand(time(NULL));\ \}}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00057\ \textcolor{comment}{//void\ srand(\ unsigned\ int\ seed\ );}}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00060\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00061\ }
+
+\end{DoxyCode}

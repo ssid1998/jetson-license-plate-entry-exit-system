@@ -1,0 +1,158 @@
+\chapter{detectnet-\/training }
+\hypertarget{md_jetson-inference_2docs_2detectnet-training}{}\label{md_jetson-inference_2docs_2detectnet-training}\index{detectnet-\/training@{detectnet-\/training}}
+ 
+
+\textsuperscript{\href{imagenet-custom.md}{\texttt{Back}} \texorpdfstring{$\vert$}{|} \href{detectnet-snapshot.md}{\texttt{Next}} \texorpdfstring{$\vert$}{|} }\href{../README.md\#two-days-to-a-demo-digits}{\texttt{\textsuperscript{Contents}}} ~\newline
+ \textsuperscript{Object Detection}\hypertarget{md_jetson-inference_2docs_2detectnet-training_autotoc_md222}{}\doxysection{\texorpdfstring{Locating Objects with Detect\+Net}{Locating Objects with Detect\+Net}}\label{md_jetson-inference_2docs_2detectnet-training_autotoc_md222}
+\doxylink{requirements_The}{The} previous image recognition examples output class probabilities representing the entire input image. \doxylink{requirements_The}{The} second deep learning capability we\textquotesingle{}re highlighting in this tutorial is detecting objects, and finding where in the video those objects are located (i.\+e. extracting their bounding boxes). This is performed using a \textquotesingle{}\doxylink{classdetect_net}{detect\+Net}\textquotesingle{} -\/ or object detection /\+ localization network.
+
+\doxylink{requirements_The}{The} \href{../c/detectNet.h}{\texttt{{\ttfamily detect\+Net}}} object accepts as input the 2D image, and outputs a list of coordinates of the detected bounding boxes. To train the object detection model, first a pretrained Image\+Net recognition model (like Googlenet) is used with bounding coordinate labels included in the training dataset in addition to the source imagery.
+
+\doxylink{requirements_The}{The} following pretrained Detect\+Net models are included with the tutorial:\+
+
+
+\begin{DoxyEnumerate}
+\item {\bfseries{ped-\/100}} (single-\/class pedestrian detector)
+\item {\bfseries{multiped-\/500}} (multi-\/class pedestrian + baggage detector)
+\item {\bfseries{facenet-\/120}} (single-\/class facial recognition detector)
+\item {\bfseries{coco-\/airplane}} (MS COCO airplane class)
+\item {\bfseries{coco-\/bottle}} (MS COCO bottle class)
+\item {\bfseries{coco-\/chair}} (MS COCO chair class)
+\item {\bfseries{coco-\/dog}} (MS COCO dog class)
+\end{DoxyEnumerate}
+
+As with the previous examples, provided are a console program and a camera streaming program for using \doxylink{classdetect_net}{detect\+Net}.\hypertarget{md_jetson-inference_2docs_2detectnet-training_autotoc_md223}{}\doxysubsubsection{\texorpdfstring{Detection Data Formatting in DIGITS}{Detection Data Formatting in DIGITS}}\label{md_jetson-inference_2docs_2detectnet-training_autotoc_md223}
+Example object detection datasets with include \href{http://www.cvlibs.net/datasets/kitti/eval_object.php}{\texttt{KITTI}}, \href{http://mscoco.org/}{\texttt{MS-\/\+COCO}}, and others. To use the KITTI dataset follow this \href{https://github.com/NVIDIA/DIGITS/blob/digits-4.0/digits/extensions/data/objectDetection/README.md}{\texttt{DIGITS object detection tutorial with KITTI}}.
+
+Regardless of dataset, DIGITS uses KITTI metadata format for ingesting the detection bounding labels. These consist of text files with frame numbers corresponding to image filenames, including contents such as:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{dog\ 0\ 0\ 0\ 528.63\ 315.22\ 569.09\ 354.18\ 0\ 0\ 0\ 0\ 0\ 0\ 0}
+\DoxyCodeLine{sheep\ 0\ 0\ 0\ 235.28\ 300.59\ 270.52\ 346.55\ 0\ 0\ 0\ 0\ 0\ 0\ 0}
+
+\end{DoxyCode}
+
+
+\href{https://github.com/NVIDIA/DIGITS/blob/digits-4.0/digits/extensions/data/objectDetection/README.md}{\texttt{Read more}} about the folder structure and KITTI label format that DIGITS uses. ~\newline
+\hypertarget{md_jetson-inference_2docs_2detectnet-training_autotoc_md224}{}\doxysubsubsection{\texorpdfstring{Downloading the Detection Dataset}{Downloading the Detection Dataset}}\label{md_jetson-inference_2docs_2detectnet-training_autotoc_md224}
+Let\textquotesingle{}s explore using the \href{http://mscoco.org/}{\texttt{MS-\/\+COCO}} dataset to train and deploy networks that detect the locations of everyday objects in camera feeds. See the \href{../tools/coco2kitti.py}{\texttt{{\ttfamily coco2kitti.\+py}}} script for converting MS-\/\+COCO object classes to KITTI format. Once in DIGITS folder structure, they can be imported as datasets into DIGITS. Some example classes from MS-\/\+COCO already preprocessed in DIGITS/\+\+KITTI format are provided for convienience.
+
+From a terminal on your DIGITS server download and extract {\bfseries{\href{https://nvidia.box.com/shared/static/tdrvaw3fd2cwst2zu2jsi0u43vzk8ecu.gz}{\texttt{sample MS-\/\+COCO classes}}}} already in DIGITS/\+\+KITTI format here:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$\ wget\ -\/-\/no-\/check-\/certificate\ https://nvidia.box.com/shared/static/tdrvaw3fd2cwst2zu2jsi0u43vzk8ecu.gz\ -\/O\ coco.tar.gz}
+\DoxyCodeLine{}
+\DoxyCodeLine{HTTP\ request\ sent,\ awaiting\ response...\ 200\ OK}
+\DoxyCodeLine{Length:\ 5140413391\ (4.5G)\ [application/octet-\/stream]}
+\DoxyCodeLine{Saving\ to:\ ‘coco.tar.gz’}
+\DoxyCodeLine{}
+\DoxyCodeLine{coco\ 100\%[======================================>]\ \ \ 4.5G\ \ 3.33MB/s\ \ \ \ in\ 28m\ 22s\ }
+\DoxyCodeLine{}
+\DoxyCodeLine{2017-\/04-\/17\ 10:41:19\ (2.5\ MB/s)\ -\/\ ‘coco.tar.gz’\ saved\ [5140413391/5140413391]}
+\DoxyCodeLine{}
+\DoxyCodeLine{\$\ tar\ -\/xzvf\ coco.tar.gz\ }
+
+\end{DoxyCode}
+
+
+Included is the training data in DIGITS format for the airplane, bottle, chair, and dog classes. \href{../tools/coco2kitti.py}{\texttt{{\ttfamily coco2kitti.\+py}}} can be used to convert other classes.\hypertarget{md_jetson-inference_2docs_2detectnet-training_autotoc_md225}{}\doxysubsubsection{\texorpdfstring{Importing the Detection Dataset into DIGITS}{Importing the Detection Dataset into DIGITS}}\label{md_jetson-inference_2docs_2detectnet-training_autotoc_md225}
+Navigate your browser to your DIGITS server instance and choose to create a new {\ttfamily Detection Dataset} from the drop-\/down in the Datasets tab:\+
+
+
+
+In the form fields, specify the following options and paths to the image and label folders under the location where you extracted the aerial dataset:\+
+
+
+\begin{DoxyItemize}
+\item Training image folder:\+ {\ttfamily coco/\+train/\+images/\+dog}
+\item Training label folder:\+ {\ttfamily coco/\+train/\+labels/\+dog}
+\item Validation image folder:\+ {\ttfamily coco/\+val/\+images/\+dog}
+\item Validation label folder:\+ {\ttfamily coco/\+val/\+labels/\+dog}
+\item Pad image (Width x Height):\+ {\ttfamily 640 x 640}
+\item Custom classes:\+ {\ttfamily dontcare, dog}
+\item Group Name:\+ {\ttfamily MS-\/\+COCO}
+\item Dataset Name:\+ {\ttfamily coco-\/dog}
+\end{DoxyItemize}
+
+
+
+Name the dataset whatever you choose and click the {\ttfamily Create} button at the bottom of the page to launch the importing job. Next we\textquotesingle{}ll create the new detection model and begin training it.\hypertarget{md_jetson-inference_2docs_2detectnet-training_autotoc_md226}{}\doxysubsubsection{\texorpdfstring{Creating Detect\+Net Model with DIGITS}{Creating Detect\+Net Model with DIGITS}}\label{md_jetson-inference_2docs_2detectnet-training_autotoc_md226}
+When the previous data import job is complete, return to the DIGITS home screen. Select the {\ttfamily Models} tab and choose to create a new {\ttfamily Detection Model} from the drop-\/down:\+
+
+
+
+Make the following settings in the form:\+
+
+
+\begin{DoxyItemize}
+\item Select Dataset:\+ {\ttfamily coco-\/dog}
+\item Training epochs:\+ {\ttfamily 100}
+\item Subtract Mean:\+ {\ttfamily none}
+\item Solver Type:\+ {\ttfamily Adam}
+\item Base learning rate:\+ {\ttfamily 2.\+5e-\/05}
+\item Select {\ttfamily Show advanced learning options}
+\begin{DoxyItemize}
+\item Policy:\+ {\ttfamily Exponential Decay}
+\item Gamma:\+ {\ttfamily 0.\+99}
+\end{DoxyItemize}
+\end{DoxyItemize}\hypertarget{md_jetson-inference_2docs_2detectnet-training_autotoc_md227}{}\doxysubsubsubsection{\texorpdfstring{Selecting Detect\+Net Batch Size}{Selecting Detect\+Net Batch Size}}\label{md_jetson-inference_2docs_2detectnet-training_autotoc_md227}
+Detect\+Net\textquotesingle{}s network default batch size of 10 consumes up to 12GB GPU memory during training. However by using the {\ttfamily Batch Accumulation} field, you can also train Detect\+Net on a GPU with less than 12GB memory. See the table below depending on the amount of GPU memory available in your DIGITS server:\+
+
+
+\begin{DoxyTable}{3}{}{}{1}
+\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}GPU Memory  &\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}Batch Size  &\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}Batch Accumulation  \\
+4GB  &\SetCell{c}2  &\SetCell{c}5  \\
+8GB  &\SetCell{c}5  &\SetCell{c}2  \\
+12GB or larger  &\SetCell{c}{\ttfamily \+[\doxylink{group__network}{Networking} defaults]\+} (10)  &\SetCell{c}Leave blank (1)  \\
+\end{DoxyTable}
+
+
+If you\textquotesingle{}re training on a card with 12GB of memory or more, leave the {\ttfamily Batch Size} as the default and leave the {\ttfamily Batch Accumulation} blank. For GPUs with less memory, use the settings from above.\hypertarget{md_jetson-inference_2docs_2detectnet-training_autotoc_md228}{}\doxysubsubsubsection{\texorpdfstring{Specifying the Detect\+Net Prototxt}{Specifying the Detect\+Net Prototxt}}\label{md_jetson-inference_2docs_2detectnet-training_autotoc_md228}
+In the network area select the {\ttfamily Custom Network} tab and then copy/\+paste the contents of \href{../data/networks/detectnet.prototxt}{\texttt{{\ttfamily detectnet.\+prototxt}}}
+
+
+
+\doxylink{requirements_The}{The} Detect\+Net prototxt is located at \href{https://github.com/dusty-nv/jetson-inference/blob/master/data/networks/detectnet.prototxt}{\texttt{{\ttfamily data/\+networks/\+detectnet.\+prototxt}}} in the repo.\hypertarget{md_jetson-inference_2docs_2detectnet-training_autotoc_md229}{}\doxysubsubsubsection{\texorpdfstring{Training the Model with Pretrained Googlenet}{Training the Model with Pretrained Googlenet}}\label{md_jetson-inference_2docs_2detectnet-training_autotoc_md229}
+Since Detect\+Net is derived from Googlenet, it is strongly recommended to use pre-\/trained weights from Googlenet as this will help speed up and stabilize training significantly. Download the Googlenet model from \href{http://dl.caffe.berkeleyvision.org/bvlc_googlenet.caffemodel}{\texttt{here}} or by running the following command from your DIGITS server:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{wget\ http://dl.caffe.berkeleyvision.org/bvlc\_googlenet.caffemodel}
+
+\end{DoxyCode}
+
+
+Then specify the path to your Googlenet under the {\ttfamily Pretrained Model} field.
+
+Select a GPU to train on and set a name and group for the model:\+
+
+
+\begin{DoxyItemize}
+\item Group Name {\ttfamily MS-\/\+COCO}
+\item Model Name {\ttfamily Detect\+Net-\/\+COCO-\/\+Dog}
+\end{DoxyItemize}
+
+Finally, click the {\ttfamily Create} button at the bottom to begin training.
+
+\hypertarget{md_jetson-inference_2docs_2detectnet-training_autotoc_md230}{}\doxysubsubsection{\texorpdfstring{Testing Detect\+Net Model Inference in DIGITS}{Testing Detect\+Net Model Inference in DIGITS}}\label{md_jetson-inference_2docs_2detectnet-training_autotoc_md230}
+Leave the training job to run for a while, say 50 epochs, until the m\+AP ({\ttfamily Mean Average Precision}) plot begins to increase. Note that due to the way m\+AP is calculated by the Detect\+Net loss function, the scale of m\+AP isn\textquotesingle{}t necessarily 0-\/100, and even an m\+AP between 5 and 10 may indicate the model is functional. With the size of the example COCO datasets we are using, it should take a couple hours training on a recent GPU before all 100 epochs are complete.
+
+
+
+At this point, we can try testing our new model\textquotesingle{}s inference on some example images in DIGITS. On the same page as the plot above, scroll down under the {\ttfamily Trained Models} section. Set the {\ttfamily Visualization Model} to {\itshape Bounding Boxes} and under {\ttfamily Test a Single Image}, select an image to try (for example, {\ttfamily /\+coco/\+val/\+images/\+dog/\+000074.png}):\+
+
+
+
+Press the {\ttfamily Test One} button and you should see a page similar to:\+
+
+
+
+Next, we will deploy our Detect\+Net model to Jetson and run the inference there.\hypertarget{md_jetson-inference_2docs_2detectnet-training_autotoc_md231}{}\doxysubsection{\texorpdfstring{autotoc\+\_\+md231}{autotoc\+\_\+md231}}\label{md_jetson-inference_2docs_2detectnet-training_autotoc_md231}
+Next \texorpdfstring{$\vert$}{|} {\bfseries{\href{detectnet-snapshot.md}{\texttt{Downloading the Detection Model to Jetson}}}} ~\newline
+ Back \texorpdfstring{$\vert$}{|} {\bfseries{\href{imagenet-custom.md}{\texttt{Loading Custom Models on Jetson}}}}
+
+{\bfseries{ }}
+
+\textsuperscript{© 2016-\/2019 NVIDIA \texorpdfstring{$\vert$}{|} }\href{../README.md\#two-days-to-a-demo-digits}{\texttt{\textsuperscript{Table of Contents}}}

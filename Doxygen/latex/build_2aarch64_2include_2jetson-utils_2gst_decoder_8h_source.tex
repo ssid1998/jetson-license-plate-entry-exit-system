@@ -1,0 +1,109 @@
+\doxysection{gst\+Decoder.\+h}
+\hypertarget{build_2aarch64_2include_2jetson-utils_2gst_decoder_8h_source}{}\label{build_2aarch64_2include_2jetson-utils_2gst_decoder_8h_source}\index{jetson-\/inference/build/aarch64/include/jetson-\/utils/gstDecoder.h@{jetson-\/inference/build/aarch64/include/jetson-\/utils/gstDecoder.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ *\ Copyright\ (c)\ 2018,\ NVIDIA\ CORPORATION.\ All\ rights\ reserved.}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ *\ Permission\ is\ hereby\ granted,\ free\ of\ charge,\ to\ any\ person\ obtaining\ a}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ *\ copy\ of\ this\ software\ and\ associated\ documentation\ files\ (the\ "{}Software"{}),}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ *\ to\ deal\ in\ the\ Software\ without\ restriction,\ including\ without\ limitation}}
+\DoxyCodeLine{00007\ \textcolor{comment}{\ *\ the\ rights\ to\ use,\ copy,\ modify,\ merge,\ publish,\ distribute,\ sublicense,}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ *\ and/or\ sell\ copies\ of\ the\ Software,\ and\ to\ permit\ persons\ to\ whom\ the}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ *\ Software\ is\ furnished\ to\ do\ so,\ subject\ to\ the\ following\ conditions:}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ *\ The\ above\ copyright\ notice\ and\ this\ permission\ notice\ shall\ be\ included\ in}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ *\ all\ copies\ or\ substantial\ portions\ of\ the\ Software.}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ *\ THE\ SOFTWARE\ IS\ PROVIDED\ "{}AS\ IS"{},\ WITHOUT\ WARRANTY\ OF\ ANY\ KIND,\ EXPRESS\ OR}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ *\ IMPLIED,\ INCLUDING\ BUT\ NOT\ LIMITED\ TO\ THE\ WARRANTIES\ OF\ MERCHANTABILITY,}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ *\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE\ AND\ NONINFRINGEMENT.\ \ IN\ NO\ EVENT\ SHALL}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ *\ THE\ AUTHORS\ OR\ COPYRIGHT\ HOLDERS\ BE\ LIABLE\ FOR\ ANY\ CLAIM,\ DAMAGES\ OR\ OTHER}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ *\ LIABILITY,\ WHETHER\ IN\ AN\ ACTION\ OF\ CONTRACT,\ TORT\ OR\ OTHERWISE,\ ARISING}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ *\ FROM,\ OUT\ OF\ OR\ IN\ CONNECTION\ WITH\ THE\ SOFTWARE\ OR\ THE\ USE\ OR\ OTHER}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ *\ DEALINGS\ IN\ THE\ SOFTWARE.}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \textcolor{preprocessor}{\#ifndef\ \_\_GSTREAMER\_DECODER\_H\_\_}}
+\DoxyCodeLine{00024\ \textcolor{preprocessor}{\#define\ \_\_GSTREAMER\_DECODER\_H\_\_}}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \textcolor{preprocessor}{\#include\ "{}gstUtility.h"{}}}
+\DoxyCodeLine{00027\ \textcolor{preprocessor}{\#include\ "{}gstBufferManager.h"{}}}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \textcolor{preprocessor}{\#include\ "{}videoSource.h"{}}}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \textcolor{comment}{//\ Forward\ declarations}}
+\DoxyCodeLine{00033\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_web_r_t_c_server}{WebRTCServer}};}
+\DoxyCodeLine{00034\ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{struct_web_r_t_c_peer}{WebRTCPeer}};}
+\DoxyCodeLine{00035\ \textcolor{keyword}{struct\ }\_GstAppSink;}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00052\ \textcolor{keyword}{class\ }gstDecoder\ :\ \textcolor{keyword}{public}\ videoSource}
+\DoxyCodeLine{00053\ \{}
+\DoxyCodeLine{00054\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00058\ \ \ \ \ \textcolor{keyword}{static}\ gstDecoder*\ \doxymbox{\hyperlink{classgst_decoder_aadf28d2476b3d39d26491927eb5ecdb0}{Create}}(\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{structvideo_options}{videoOptions}}\&\ options\ );}
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keyword}{static}\ gstDecoder*\ \doxymbox{\hyperlink{classgst_decoder_aadf28d2476b3d39d26491927eb5ecdb0}{Create}}(\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_u_r_i}{URI}}\&\ resource,\ \doxymbox{\hyperlink{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8f}{videoOptions::Codec}}\ codec\ );}
+\DoxyCodeLine{00064\ \ \ \ \ }
+\DoxyCodeLine{00068\ \ \ \ \ \doxymbox{\hyperlink{classgst_decoder_a0e13e2625f959c1e612cb90e3d5720d0}{\string~gstDecoder}}();}
+\DoxyCodeLine{00069\ }
+\DoxyCodeLine{00074\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{classgst_decoder_ac9c236a817311af434313b1bb09f9ebc}{Capture}}(\ \textcolor{keywordtype}{void}**\ image,\ \doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{imageFormat}}\ format,\ uint64\_t\ timeout=\doxymbox{\hyperlink{classvideo_source_a3e144d758672a9d304ae6518cbe57508}{DEFAULT\_TIMEOUT}},\ \textcolor{keywordtype}{int}*\ status=NULL,\ cudaStream\_t\ stream=0\ );}
+\DoxyCodeLine{00075\ }
+\DoxyCodeLine{00080\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{classgst_decoder_affaac0729dc378cfadacf330c32995b5}{Open}}();}
+\DoxyCodeLine{00081\ }
+\DoxyCodeLine{00086\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{classgst_decoder_a72b091d525c9bdfd63c6f5da84fa6fcb}{Close}}();}
+\DoxyCodeLine{00087\ }
+\DoxyCodeLine{00095\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{classgst_decoder_a4ce4a72e8d0303f15adee8d0bff2f9d2}{IsEOS}}()\textcolor{keyword}{\ const\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\{\ \textcolor{keywordflow}{return}\ mEOS;\ \}}
+\DoxyCodeLine{00096\ }
+\DoxyCodeLine{00100\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keyword}{inline}\ uint32\_t\ \doxymbox{\hyperlink{classgst_decoder_ad9c4a4b64c50f8ae8712e3061e8a18df}{GetType}}()\textcolor{keyword}{\ const\ \ \ \ \ }\{\ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{classgst_decoder_ad117a9e9b2db658d80e62d8a890f0ac6}{Type}};\ \}}
+\DoxyCodeLine{00101\ }
+\DoxyCodeLine{00105\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ uint32\_t\ \doxymbox{\hyperlink{classgst_decoder_ad117a9e9b2db658d80e62d8a890f0ac6}{Type}}\ =\ (1\ <<\ 1);}
+\DoxyCodeLine{00106\ }
+\DoxyCodeLine{00118\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \doxymbox{\hyperlink{classgst_decoder_a30135594cc61bb7514b38774a8b4c766}{SupportedExtensions}}[];}
+\DoxyCodeLine{00119\ }
+\DoxyCodeLine{00125\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{classgst_decoder_a7ee9a226e7ccf353f2b298649c8a7db1}{IsSupportedExtension}}(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ ext\ );}
+\DoxyCodeLine{00126\ }
+\DoxyCodeLine{00127\ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00128\ \ \ \ \ gstDecoder(\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{structvideo_options}{videoOptions}}\&\ options\ );}
+\DoxyCodeLine{00129\ \ \ \ \ }
+\DoxyCodeLine{00130\ \ \ \ \ \textcolor{keywordtype}{void}\ checkMsgBus();}
+\DoxyCodeLine{00131\ \ \ \ \ \textcolor{keywordtype}{void}\ checkBuffer();}
+\DoxyCodeLine{00132\ \ \ \ \ \textcolor{keywordtype}{bool}\ buildLaunchStr();}
+\DoxyCodeLine{00133\ \ \ \ \ \textcolor{keywordtype}{bool}\ discover();}
+\DoxyCodeLine{00134\ \ \ \ \ }
+\DoxyCodeLine{00135\ \ \ \ \ \textcolor{keywordtype}{bool}\ init();}
+\DoxyCodeLine{00136\ \ \ \ \ \textcolor{keywordtype}{bool}\ initPipeline();}
+\DoxyCodeLine{00137\ \ \ \ \ \textcolor{keywordtype}{void}\ destroyPipeline();}
+\DoxyCodeLine{00138\ \ \ \ \ }
+\DoxyCodeLine{00139\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ isLooping()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ (mOptions.loop\ <\ 0)\ ||\ ((mOptions.loop\ >\ 0)\ \&\&\ (mLoopCount\ <\ mOptions.loop));\ \}}
+\DoxyCodeLine{00140\ }
+\DoxyCodeLine{00141\ \ \ \ \ \textcolor{comment}{//\ appsink\ callbacks}}
+\DoxyCodeLine{00142\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ onEOS(\_GstAppSink*\ sink,\ \textcolor{keywordtype}{void}*\ user\_data);}
+\DoxyCodeLine{00143\ \ \ \ \ }
+\DoxyCodeLine{00144\ \ \ \ \ \textcolor{keyword}{static}\ GstFlowReturn\ onPreroll(\_GstAppSink*\ sink,\ \textcolor{keywordtype}{void}*\ user\_data);}
+\DoxyCodeLine{00145\ \ \ \ \ \textcolor{keyword}{static}\ GstFlowReturn\ onBuffer(\_GstAppSink*\ sink,\ \textcolor{keywordtype}{void}*\ user\_data);}
+\DoxyCodeLine{00146\ }
+\DoxyCodeLine{00147\ \ \ \ \ \textcolor{comment}{//\ WebRTC\ callbacks}}
+\DoxyCodeLine{00148\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ onWebsocketMessage(\ \doxymbox{\hyperlink{struct_web_r_t_c_peer}{WebRTCPeer}}*\ peer,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ message,\ \textcolor{keywordtype}{size\_t}\ message\_size,\ \textcolor{keywordtype}{void}*\ user\_data\ );}
+\DoxyCodeLine{00149\ }
+\DoxyCodeLine{00150\ \ \ \ \ GstBus*\ \ \ \ \ \ mBus;}
+\DoxyCodeLine{00151\ \ \ \ \ GstElement*\ \ mPipeline;}
+\DoxyCodeLine{00152\ \ \ \ \ \_GstAppSink*\ mAppSink;}
+\DoxyCodeLine{00153\ \ \ \ \ }
+\DoxyCodeLine{00154\ \ \ \ \ \doxymbox{\hyperlink{class_event}{Event}}\ \ \ \ \ mWaitEvent;}
+\DoxyCodeLine{00155\ \ \ \ \ std::string\ mLaunchStr;}
+\DoxyCodeLine{00156\ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ mCustomSize;}
+\DoxyCodeLine{00157\ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ \ \ mCustomRate;}
+\DoxyCodeLine{00158\ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ mEOS;}
+\DoxyCodeLine{00159\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \ \ \ mLoopCount;}
+\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00161\ \ \ \ \ \doxymbox{\hyperlink{classgst_buffer_manager}{gstBufferManager}}*\ mBufferManager;}
+\DoxyCodeLine{00162\ \ \ \ \ }
+\DoxyCodeLine{00163\ \ \ \ \ \doxymbox{\hyperlink{class_web_r_t_c_server}{WebRTCServer}}*\ mWebRTCServer;}
+\DoxyCodeLine{00164\ \ \ \ \ \textcolor{keywordtype}{bool}\ mWebRTCConnected;}
+\DoxyCodeLine{00165\ \};}
+\DoxyCodeLine{00166\ \ \ }
+\DoxyCodeLine{00167\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

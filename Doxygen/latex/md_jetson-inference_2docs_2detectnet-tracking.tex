@@ -1,0 +1,118 @@
+\chapter{detectnet-\/tracking }
+\hypertarget{md_jetson-inference_2docs_2detectnet-tracking}{}\label{md_jetson-inference_2docs_2detectnet-tracking}\index{detectnet-\/tracking@{detectnet-\/tracking}}
+ 
+
+\textsuperscript{\href{detectnet-tao.md}{\texttt{Back}} \texorpdfstring{$\vert$}{|} \href{segnet-console-2.md}{\texttt{Next}} \texorpdfstring{$\vert$}{|} }\href{../README.md\#hello-ai-world}{\texttt{\textsuperscript{Contents}}} ~\newline
+ \textsuperscript{Object Detection}\hypertarget{md_jetson-inference_2docs_2detectnet-tracking_autotoc_md217}{}\doxysection{\texorpdfstring{Object Tracking on Video}{Object Tracking on Video}}\label{md_jetson-inference_2docs_2detectnet-tracking_autotoc_md217}
+Although with the accuracy of modern detection DNNs you can essentially do "{}tracking by detection"{}, some degree of temporal filtering can be beneficial to smooth over blips in the detections and temporary occlusions in the video. jetson-\/inference includes basic (but fast) multi-\/object tracking using frame-\/to-\/frame IOU (intersection-\/over-\/union) bounding box comparisons from \href{http://elvera.nue.tu-berlin.de/typo3/files/1517Bochinski2017.pdf}{\texttt{{\ttfamily High-\/\+Speed Tracking-\/by-\/\+Detection Without Using Image Information}}} (Deep\+Stream has more comprehensive tracking implementations available \href{https://docs.nvidia.com/metropolis/deepstream/dev-guide/text/DS_plugin_gst-nvtracker.html}{\texttt{from here}}).
+
+\href{https://www.youtube.com/watch?v=L8vwuXKQrow}{\texttt{}}
+
+To enable tracking with detectnet/\+detectnet.\+py, run it with the {\ttfamily -\/-\/tracking} flag. ~\newline
+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{\#\ Download\ test\ video}
+\DoxyCodeLine{wget\ https://nvidia.box.com/shared/static/veuuimq6pwvd62p9fresqhrrmfqz0e2f.mp4\ -\/O\ pedestrians.mp4}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#\ C++}
+\DoxyCodeLine{\$\ detectnet\ -\/-\/model=peoplenet\ -\/-\/tracking\ pedestrians.mp4\ pedestrians\_tracking.mp4}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#\ Python}
+\DoxyCodeLine{\$\ detectnet.py\ -\/-\/model=peoplenet\ -\/-\/tracking\ pedestrians.mp4\ pedestrians\_tracking.mp4}
+
+\end{DoxyCode}
+\hypertarget{md_jetson-inference_2docs_2detectnet-tracking_autotoc_md218}{}\doxysubsubsection{\texorpdfstring{Tracking Parameters}{Tracking Parameters}}\label{md_jetson-inference_2docs_2detectnet-tracking_autotoc_md218}
+There are other tracker settings you can change with the following command-\/line options:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{objectTracker\ arguments:}
+\DoxyCodeLine{\ \ -\/-\/tracking\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ flag\ to\ enable\ default\ tracker\ (IOU)}
+\DoxyCodeLine{\ \ -\/-\/tracker-\/min-\/frames=N\ \ \ the\ number\ of\ re-\/identified\ frames\ for\ a\ track\ to\ be\ considered\ valid\ (default:\ 3)}
+\DoxyCodeLine{\ \ -\/-\/tracker-\/drop-\/frames=N\ \ number\ of\ consecutive\ lost\ frames\ before\ a\ track\ is\ dropped\ (default:\ 15)}
+\DoxyCodeLine{\ \ -\/-\/tracker-\/overlap=N\ \ \ \ \ \ how\ much\ IOU\ overlap\ is\ required\ for\ a\ bounding\ box\ to\ be\ matched\ (default:\ 0.5)}
+
+\end{DoxyCode}
+
+
+These settings can be also made via Python with the \href{https://rawgit.com/dusty-nv/jetson-inference/master/docs/html/python/jetson.inference.html\#detectNet}{\texttt{{\ttfamily detect\+Net.\+Set\+Tracker\+Params()}}} function or in C++ by the \href{../c/tracking/objectTrackerIOU.h}{\texttt{{\ttfamily object\+Tracker}}} API:\+\hypertarget{md_jetson-inference_2docs_2detectnet-tracking_autotoc_md219}{}\doxysubsubsubsection{\texorpdfstring{Python}{Python}}\label{md_jetson-inference_2docs_2detectnet-tracking_autotoc_md219}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ Python}
+\DoxyCodeLine{from\ jetson\_utils\ import\ detectNet}
+\DoxyCodeLine{}
+\DoxyCodeLine{net\ =\ detectNet()}
+\DoxyCodeLine{}
+\DoxyCodeLine{net.SetTrackingEnabled(True)}
+\DoxyCodeLine{net.SetTrackingParams(minFrames=3,\ dropFrames=15,\ overlapThreshold=0.5)}
+
+\end{DoxyCode}
+\hypertarget{md_jetson-inference_2docs_2detectnet-tracking_autotoc_md220}{}\doxysubsubsubsection{\texorpdfstring{C++}{C++}}\label{md_jetson-inference_2docs_2detectnet-tracking_autotoc_md220}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ cpp}
+\DoxyCodeLine{\#include\ <jetson-\/inference/detectNet.h>}
+\DoxyCodeLine{\#include\ <jetson-\/inference/objectTrackerIOU.h>}
+\DoxyCodeLine{}
+\DoxyCodeLine{detectNet*\ net\ =\ detectNet::Create();}
+\DoxyCodeLine{}
+\DoxyCodeLine{net-\/>SetTracker(objectTrackerIOU::Create(3,\ 15,\ 0.5f));}
+
+\end{DoxyCode}
+
+
+To play around with these settings interactively, you can use the \doxysectlink{md_jetson-inference_2docs_2webrtc-flask}{Flask webapp}{0} from your browser.\hypertarget{md_jetson-inference_2docs_2detectnet-tracking_autotoc_md221}{}\doxysubsubsection{\texorpdfstring{Tracking State}{Tracking State}}\label{md_jetson-inference_2docs_2detectnet-tracking_autotoc_md221}
+When tracking is enabled, the \href{https://rawgit.com/dusty-nv/jetson-inference/master/docs/html/structdetectNet_1_1Detection.html}{\texttt{{\ttfamily detect\+Net.\+Detection}}} results that are returned from Detect() will have additional variables activated that get updated by the tracker and describe the tracking state of each object -\/ such as Track\+ID, Track\+Status, Track\+Frames, and Track\+Lost:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ cpp}
+\DoxyCodeLine{struct\ Detection}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \ \ //\ Detection\ Info}
+\DoxyCodeLine{\ \ \ \ uint32\_t\ ClassID;\ \ \ /**<\ Class\ index\ of\ the\ detected\ object.\ */}
+\DoxyCodeLine{\ \ \ \ float\ Confidence;\ \ \ /**<\ Confidence\ value\ of\ the\ detected\ object.\ */}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ //\ Tracking\ Info}
+\DoxyCodeLine{\ \ \ \ int\ TrackID;\ \ \ \ \ \ \ \ /**<\ Unique\ tracking\ ID\ (or\ -\/1\ if\ untracked)\ */}
+\DoxyCodeLine{\ \ \ \ int\ TrackStatus;\ \ \ \ /**<\ -\/1\ for\ dropped,\ 0\ for\ initializing,\ 1\ for\ active/valid\ */\ }
+\DoxyCodeLine{\ \ \ \ int\ TrackFrames;\ \ \ \ /**<\ The\ number\ of\ frames\ the\ object\ has\ been\ re-\/identified\ for\ */}
+\DoxyCodeLine{\ \ \ \ int\ TrackLost;\ \ \ \ \ \ /**<\ The\ number\ of\ consecutive\ frames\ tracking\ has\ been\ lost\ for\ */}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ //\ Bounding\ Box\ Coordinates}
+\DoxyCodeLine{\ \ \ \ float\ Left;\ \ \ \ \ /**<\ Left\ bounding\ box\ coordinate\ (in\ pixels)\ */}
+\DoxyCodeLine{\ \ \ \ float\ Right;\ \ \ \ \ \ \ \ /**<\ Right\ bounding\ box\ coordinate\ (in\ pixels)\ */}
+\DoxyCodeLine{\ \ \ \ float\ Top;\ \ \ \ \ \ /**<\ Top\ bounding\ box\ cooridnate\ (in\ pixels)\ */}
+\DoxyCodeLine{\ \ \ \ float\ Bottom;\ \ \ \ \ \ \ /**<\ Bottom\ bounding\ box\ coordinate\ (in\ pixels)\ */}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+
+
+These are accessible from both \href{https://rawgit.com/dusty-nv/jetson-inference/master/docs/html/structdetectNet_1_1Detection.html}{\texttt{C++}} and \href{https://rawgit.com/dusty-nv/jetson-inference/master/docs/html/python/jetson.inference.html\#detectNet}{\texttt{Python}}. For example, from Python:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ python}
+\DoxyCodeLine{detections\ =\ net.Detect(img)}
+\DoxyCodeLine{}
+\DoxyCodeLine{for\ detection\ in\ detections:}
+\DoxyCodeLine{\ \ \ \ if\ detection.TrackStatus\ >=\ 0:\ \ \#\ actively\ tracking}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ print(f"{}object\ \{detection.TrackID\}\ at\ (\{detection.Left\},\ \{detection.Top\})\ has\ been\ tracked\ for\ \{detection.TrackFrames\}\ frames"{})}
+\DoxyCodeLine{\ \ \ \ else:\ \ \#\ if\ tracking\ was\ lost,\ this\ object\ will\ be\ dropped\ the\ next\ frame}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ print(f"{}object\ \{detection.TrackID\}\ has\ lost\ tracking"{})\ \ \ }
+
+\end{DoxyCode}
+
+
+If the track was lost ({\ttfamily Track\+Status=-\/1}), that object will be dropped and no longer included in the detections array on subsequent frames.
+
+Next \texorpdfstring{$\vert$}{|} {\bfseries{\href{segnet-console-2.md}{\texttt{Semantic Segmentation}}}} ~\newline
+ Back \texorpdfstring{$\vert$}{|} {\bfseries{\href{detectnet-tao.md}{\texttt{Using TAO Detection Models}}}}
+
+{\bfseries{ }}
+
+\textsuperscript{© 2016-\/2023 NVIDIA \texorpdfstring{$\vert$}{|} }\href{../README.md\#hello-ai-world}{\texttt{\textsuperscript{Table of Contents}}}

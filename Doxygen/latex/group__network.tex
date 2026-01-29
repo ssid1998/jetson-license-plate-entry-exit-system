@@ -1,0 +1,403 @@
+\doxysubsection{Networking }
+\hypertarget{group__network}{}\label{group__network}\index{Networking@{Networking}}
+\doxysubsubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \doxymbox{\hyperlink{struct_network_interface}{Network\+Interface}}
+\item 
+class \doxymbox{\hyperlink{class_r_t_s_p_server}{RTSPServer}}
+\item 
+class \doxymbox{\hyperlink{class_socket}{Socket}}
+\item 
+struct \doxymbox{\hyperlink{struct_web_r_t_c_peer}{Web\+RTCPeer}}
+\item 
+class \doxymbox{\hyperlink{class_web_r_t_c_server}{Web\+RTCServer}}
+\end{DoxyCompactItemize}
+\doxysubsubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\+\#define \doxymbox{\hyperlink{group__network_ga1425b28c4289aa721ccbcdc804f1b511}{INET4\+\_\+\+ADDRLEN}}~4
+\item 
+\+\#define \doxymbox{\hyperlink{group__network_gab0a486cc9b29e51019a796a67d452d8c}{INET6\+\_\+\+ADDRLEN}}~16
+\item 
+\+\#define \doxymbox{\hyperlink{group__network_gaadcbced28f4da19dc28dafcb1caf262b}{LOG\+\_\+\+NETWORK}}~"{}\+[network]\+ "{}
+\item 
+\+\#define \doxymbox{\hyperlink{group__network_gad453571ec9bbc7fc4e595298a9380e53}{RTSP\+\_\+\+DEFAULT\+\_\+\+PORT}}~8554
+\item 
+\+\#define \doxymbox{\hyperlink{group__network_gaa7305b232ee51e64c18323093003a398}{LOG\+\_\+\+RTSP}}~"{}\+[rtsp]\+   "{}
+\item 
+\+\#define \doxymbox{\hyperlink{group__network_ga0168a2334e9e1e13b83a665c8cce0742}{WEBRTC\+\_\+\+DEFAULT\+\_\+\+PORT}}~41567
+\item 
+\+\#define \doxymbox{\hyperlink{group__network_ga99b10c89b7c09a0c753f241f9e74c894}{WEBRTC\+\_\+\+DEFAULT\+\_\+\+STUN\+\_\+\+SERVER}}~"{}stun.\+l.\+google.\+com:\+19302"{}
+\item 
+\+\#define \doxymbox{\hyperlink{group__network_ga14978cf9893d6b4dc89019227ac121e7}{LOG\+\_\+\+WEBRTC}}~"{}\+[webrtc]\+ "{}
+\item 
+\+\#define \doxymbox{\hyperlink{group__network_ga1425b28c4289aa721ccbcdc804f1b511}{INET4\+\_\+\+ADDRLEN}}~4
+\item 
+\+\#define \doxymbox{\hyperlink{group__network_gab0a486cc9b29e51019a796a67d452d8c}{INET6\+\_\+\+ADDRLEN}}~16
+\item 
+\+\#define \doxymbox{\hyperlink{group__network_gaadcbced28f4da19dc28dafcb1caf262b}{LOG\+\_\+\+NETWORK}}~"{}\+[network]\+ "{}
+\item 
+\+\#define \doxymbox{\hyperlink{group__network_gad453571ec9bbc7fc4e595298a9380e53}{RTSP\+\_\+\+DEFAULT\+\_\+\+PORT}}~8554
+\item 
+\+\#define \doxymbox{\hyperlink{group__network_gaa7305b232ee51e64c18323093003a398}{LOG\+\_\+\+RTSP}}~"{}\+[rtsp]\+   "{}
+\item 
+\+\#define \doxymbox{\hyperlink{group__network_ga0168a2334e9e1e13b83a665c8cce0742}{WEBRTC\+\_\+\+DEFAULT\+\_\+\+PORT}}~41567
+\item 
+\+\#define \doxymbox{\hyperlink{group__network_ga99b10c89b7c09a0c753f241f9e74c894}{WEBRTC\+\_\+\+DEFAULT\+\_\+\+STUN\+\_\+\+SERVER}}~"{}stun.\+l.\+google.\+com:\+19302"{}
+\item 
+\+\#define \doxymbox{\hyperlink{group__network_ga14978cf9893d6b4dc89019227ac121e7}{LOG\+\_\+\+WEBRTC}}~"{}\+[webrtc]\+ "{}
+\end{DoxyCompactItemize}
+\doxysubsubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \doxymbox{\hyperlink{group__network_gaa78c7398fa81f7f62aa233159d4d8d97}{Socket\+Type}} \{ \doxymbox{\hyperlink{group__network_ggaa78c7398fa81f7f62aa233159d4d8d97a180747545a72ff6d0fd0569e781aefd5}{SOCKET\+\_\+\+UDP}} = 0
+, \doxymbox{\hyperlink{group__network_ggaa78c7398fa81f7f62aa233159d4d8d97a2843397fd39bd96681bca78a8aa03096}{SOCKET\+\_\+\+TCP}} = 1
+ \}
+\item 
+enum \doxymbox{\hyperlink{group__network_gabfc2d28deff979bf1183220b57b78bd4}{Web\+RTCFlags}} \{ \newline
+{\bfseries WEBRTC\+\_\+\+PRIVATE} = 0
+, {\bfseries WEBRTC\+\_\+\+PUBLIC} = (1 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 1)
+, {\bfseries WEBRTC\+\_\+\+AUDIO} = (1 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 0)
+, {\bfseries WEBRTC\+\_\+\+VIDEO} = (1 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 1)
+, \newline
+{\bfseries WEBRTC\+\_\+\+SEND} = (1 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 2)
+, {\bfseries WEBRTC\+\_\+\+RECEIVE} = (1 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 3)
+, {\bfseries WEBRTC\+\_\+\+MULTI\+\_\+\+CLIENT} = (1 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 4)
+, {\bfseries WEBRTC\+\_\+\+PEER\+\_\+\+CONNECTING} = (1 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 5)
+, \newline
+{\bfseries WEBRTC\+\_\+\+PEER\+\_\+\+CONNECTED} = (1 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 6)
+, {\bfseries WEBRTC\+\_\+\+PEER\+\_\+\+STREAMING} = (1 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 7)
+, {\bfseries WEBRTC\+\_\+\+PEER\+\_\+\+CLOSED} = (1 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 8)
+ \}
+\item 
+enum \doxymbox{\hyperlink{group__network_gaa78c7398fa81f7f62aa233159d4d8d97}{Socket\+Type}} \{ \doxymbox{\hyperlink{group__network_ggaa78c7398fa81f7f62aa233159d4d8d97a180747545a72ff6d0fd0569e781aefd5}{SOCKET\+\_\+\+UDP}} = 0
+, \doxymbox{\hyperlink{group__network_ggaa78c7398fa81f7f62aa233159d4d8d97a2843397fd39bd96681bca78a8aa03096}{SOCKET\+\_\+\+TCP}} = 1
+ \}
+\item 
+enum \doxymbox{\hyperlink{group__network_gabfc2d28deff979bf1183220b57b78bd4}{Web\+RTCFlags}} \{ \newline
+{\bfseries WEBRTC\+\_\+\+PRIVATE} = 0
+, {\bfseries WEBRTC\+\_\+\+PUBLIC} = (1 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 1)
+, {\bfseries WEBRTC\+\_\+\+AUDIO} = (1 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 0)
+, {\bfseries WEBRTC\+\_\+\+VIDEO} = (1 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 1)
+, \newline
+{\bfseries WEBRTC\+\_\+\+SEND} = (1 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 2)
+, {\bfseries WEBRTC\+\_\+\+RECEIVE} = (1 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 3)
+, {\bfseries WEBRTC\+\_\+\+MULTI\+\_\+\+CLIENT} = (1 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 4)
+, {\bfseries WEBRTC\+\_\+\+PEER\+\_\+\+CONNECTING} = (1 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 5)
+, \newline
+{\bfseries WEBRTC\+\_\+\+PEER\+\_\+\+CONNECTED} = (1 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 6)
+, {\bfseries WEBRTC\+\_\+\+PEER\+\_\+\+STREAMING} = (1 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 7)
+, {\bfseries WEBRTC\+\_\+\+PEER\+\_\+\+CLOSED} = (1 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 8)
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \doxymbox{\hyperlink{group__network_ga5eafb2061e9a44862e8fd1a59bea2fe4}{IPv4\+Address\+From\+Str}} (const char \texorpdfstring{$\ast$}{*}str, uint32\+\_\+t \texorpdfstring{$\ast$}{*}ip\+Address)
+\item 
+std::\+string \doxymbox{\hyperlink{group__network_ga8d1b5dfaf28b99b9d86b565a242ceab8}{IPv4\+Address\+To\+Str}} (uint32\+\_\+t ip\+Address)
+\item 
+bool \doxymbox{\hyperlink{group__network_ga35c4991d07188de821f18cfe80cdd085}{IPv6\+Address\+From\+Str}} (const char \texorpdfstring{$\ast$}{*}str, void \texorpdfstring{$\ast$}{*}ip\+Address)
+\item 
+std::\+string \doxymbox{\hyperlink{group__network_ga600322ef1ffde24816714c7e5a0c5624}{IPv6\+Address\+To\+Str}} (void \texorpdfstring{$\ast$}{*}ip\+Address)
+\item 
+std::\+string \doxymbox{\hyperlink{group__network_ga4eeeacba2fc1201c43d42a4f5145b825}{get\+Hostname}} ()
+\item 
+std::\+string \doxymbox{\hyperlink{group__network_ga604bb0e239d02117b959fda9ffd28c9a}{get\+Host\+By\+Name}} (const char \texorpdfstring{$\ast$}{*}name, uint32\+\_\+t retries=10)
+\item 
+uint32\+\_\+t \doxymbox{\hyperlink{group__network_gab8ffc5329146c2db42c61016dcc54c76}{get\+Host\+By\+Name}} (const char \texorpdfstring{$\ast$}{*}name, void \texorpdfstring{$\ast$}{*}ip\+Address, uint32\+\_\+t size, uint32\+\_\+t retries=10)
+\item 
+std::\+vector$<$ \doxymbox{\hyperlink{struct_network_interface}{Network\+Interface}} $>$ \doxymbox{\hyperlink{group__network_ga1066863c8dfa772c8457d14f395491d8}{get\+Network\+Interfaces}} ()
+\item 
+void \doxymbox{\hyperlink{group__network_gad1ca82becf0918d589ec9938b51a977b}{print\+Network\+Interfaces}} (const std::\+vector$<$ \doxymbox{\hyperlink{struct_network_interface}{Network\+Interface}} $>$ \&interfaces)
+\end{DoxyCompactItemize}
+
+
+\doxysubsubsection{Detailed Description}
+TCP/\+\+UDP sockets and IP address manipulation. 
+
+\label{doc-define-members}
+\Hypertarget{group__network_doc-define-members}
+\doxysubsubsection{Macro Definition Documentation}
+\Hypertarget{group__network_ga1425b28c4289aa721ccbcdc804f1b511}\index{Networking@{Networking}!INET4\_ADDRLEN@{INET4\_ADDRLEN}}
+\index{INET4\_ADDRLEN@{INET4\_ADDRLEN}!Networking@{Networking}}
+\doxysubsubsubsection{\texorpdfstring{INET4\_ADDRLEN}{INET4\_ADDRLEN}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{group__network_ga1425b28c4289aa721ccbcdc804f1b511} 
+\+\#define INET4\+\_\+\+ADDRLEN~4}
+
+\doxylink{requirements_The}{The} size in bytes of an IPv4 address (4 bytes) This is meant to compliment POSIX\textquotesingle{}s INET4\+\_\+\+ADDRSTRLEN (16) \Hypertarget{group__network_ga1425b28c4289aa721ccbcdc804f1b511}\index{Networking@{Networking}!INET4\_ADDRLEN@{INET4\_ADDRLEN}}
+\index{INET4\_ADDRLEN@{INET4\_ADDRLEN}!Networking@{Networking}}
+\doxysubsubsubsection{\texorpdfstring{INET4\_ADDRLEN}{INET4\_ADDRLEN}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{group__network_ga1425b28c4289aa721ccbcdc804f1b511} 
+\+\#define INET4\+\_\+\+ADDRLEN~4}
+
+\doxylink{requirements_The}{The} size in bytes of an IPv4 address (4 bytes) This is meant to compliment POSIX\textquotesingle{}s INET4\+\_\+\+ADDRSTRLEN (16) \Hypertarget{group__network_gab0a486cc9b29e51019a796a67d452d8c}\index{Networking@{Networking}!INET6\_ADDRLEN@{INET6\_ADDRLEN}}
+\index{INET6\_ADDRLEN@{INET6\_ADDRLEN}!Networking@{Networking}}
+\doxysubsubsubsection{\texorpdfstring{INET6\_ADDRLEN}{INET6\_ADDRLEN}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{group__network_gab0a486cc9b29e51019a796a67d452d8c} 
+\+\#define INET6\+\_\+\+ADDRLEN~16}
+
+\doxylink{requirements_The}{The} size in bytes of an IPv6 address (16 bytes) This is meant to compliment POSIX\textquotesingle{}s INET6\+\_\+\+ADDRSTRLEN (46) \Hypertarget{group__network_gab0a486cc9b29e51019a796a67d452d8c}\index{Networking@{Networking}!INET6\_ADDRLEN@{INET6\_ADDRLEN}}
+\index{INET6\_ADDRLEN@{INET6\_ADDRLEN}!Networking@{Networking}}
+\doxysubsubsubsection{\texorpdfstring{INET6\_ADDRLEN}{INET6\_ADDRLEN}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{group__network_gab0a486cc9b29e51019a796a67d452d8c} 
+\+\#define INET6\+\_\+\+ADDRLEN~16}
+
+\doxylink{requirements_The}{The} size in bytes of an IPv6 address (16 bytes) This is meant to compliment POSIX\textquotesingle{}s INET6\+\_\+\+ADDRSTRLEN (46) \Hypertarget{group__network_gaadcbced28f4da19dc28dafcb1caf262b}\index{Networking@{Networking}!LOG\_NETWORK@{LOG\_NETWORK}}
+\index{LOG\_NETWORK@{LOG\_NETWORK}!Networking@{Networking}}
+\doxysubsubsubsection{\texorpdfstring{LOG\_NETWORK}{LOG\_NETWORK}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{group__network_gaadcbced28f4da19dc28dafcb1caf262b} 
+\+\#define LOG\+\_\+\+NETWORK~"{}\+[network]\+ "{}}
+
+LOG\+\_\+\+NETWORK logging string. \Hypertarget{group__network_gaadcbced28f4da19dc28dafcb1caf262b}\index{Networking@{Networking}!LOG\_NETWORK@{LOG\_NETWORK}}
+\index{LOG\_NETWORK@{LOG\_NETWORK}!Networking@{Networking}}
+\doxysubsubsubsection{\texorpdfstring{LOG\_NETWORK}{LOG\_NETWORK}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{group__network_gaadcbced28f4da19dc28dafcb1caf262b} 
+\+\#define LOG\+\_\+\+NETWORK~"{}\+[network]\+ "{}}
+
+LOG\+\_\+\+NETWORK logging string. \Hypertarget{group__network_gaa7305b232ee51e64c18323093003a398}\index{Networking@{Networking}!LOG\_RTSP@{LOG\_RTSP}}
+\index{LOG\_RTSP@{LOG\_RTSP}!Networking@{Networking}}
+\doxysubsubsubsection{\texorpdfstring{LOG\_RTSP}{LOG\_RTSP}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{group__network_gaa7305b232ee51e64c18323093003a398} 
+\+\#define LOG\+\_\+\+RTSP~"{}\+[rtsp]\+   "{}}
+
+RTSP logging prefix \Hypertarget{group__network_gaa7305b232ee51e64c18323093003a398}\index{Networking@{Networking}!LOG\_RTSP@{LOG\_RTSP}}
+\index{LOG\_RTSP@{LOG\_RTSP}!Networking@{Networking}}
+\doxysubsubsubsection{\texorpdfstring{LOG\_RTSP}{LOG\_RTSP}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{group__network_gaa7305b232ee51e64c18323093003a398} 
+\+\#define LOG\+\_\+\+RTSP~"{}\+[rtsp]\+   "{}}
+
+RTSP logging prefix \Hypertarget{group__network_ga14978cf9893d6b4dc89019227ac121e7}\index{Networking@{Networking}!LOG\_WEBRTC@{LOG\_WEBRTC}}
+\index{LOG\_WEBRTC@{LOG\_WEBRTC}!Networking@{Networking}}
+\doxysubsubsubsection{\texorpdfstring{LOG\_WEBRTC}{LOG\_WEBRTC}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{group__network_ga14978cf9893d6b4dc89019227ac121e7} 
+\+\#define LOG\+\_\+\+WEBRTC~"{}\+[webrtc]\+ "{}}
+
+Web\+RTC logging prefix \Hypertarget{group__network_ga14978cf9893d6b4dc89019227ac121e7}\index{Networking@{Networking}!LOG\_WEBRTC@{LOG\_WEBRTC}}
+\index{LOG\_WEBRTC@{LOG\_WEBRTC}!Networking@{Networking}}
+\doxysubsubsubsection{\texorpdfstring{LOG\_WEBRTC}{LOG\_WEBRTC}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{group__network_ga14978cf9893d6b4dc89019227ac121e7} 
+\+\#define LOG\+\_\+\+WEBRTC~"{}\+[webrtc]\+ "{}}
+
+Web\+RTC logging prefix \Hypertarget{group__network_gad453571ec9bbc7fc4e595298a9380e53}\index{Networking@{Networking}!RTSP\_DEFAULT\_PORT@{RTSP\_DEFAULT\_PORT}}
+\index{RTSP\_DEFAULT\_PORT@{RTSP\_DEFAULT\_PORT}!Networking@{Networking}}
+\doxysubsubsubsection{\texorpdfstring{RTSP\_DEFAULT\_PORT}{RTSP\_DEFAULT\_PORT}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{group__network_gad453571ec9bbc7fc4e595298a9380e53} 
+\+\#define RTSP\+\_\+\+DEFAULT\+\_\+\+PORT~8554}
+
+Default port used by RTSP server. \Hypertarget{group__network_gad453571ec9bbc7fc4e595298a9380e53}\index{Networking@{Networking}!RTSP\_DEFAULT\_PORT@{RTSP\_DEFAULT\_PORT}}
+\index{RTSP\_DEFAULT\_PORT@{RTSP\_DEFAULT\_PORT}!Networking@{Networking}}
+\doxysubsubsubsection{\texorpdfstring{RTSP\_DEFAULT\_PORT}{RTSP\_DEFAULT\_PORT}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{group__network_gad453571ec9bbc7fc4e595298a9380e53} 
+\+\#define RTSP\+\_\+\+DEFAULT\+\_\+\+PORT~8554}
+
+Default port used by RTSP server. \Hypertarget{group__network_ga0168a2334e9e1e13b83a665c8cce0742}\index{Networking@{Networking}!WEBRTC\_DEFAULT\_PORT@{WEBRTC\_DEFAULT\_PORT}}
+\index{WEBRTC\_DEFAULT\_PORT@{WEBRTC\_DEFAULT\_PORT}!Networking@{Networking}}
+\doxysubsubsubsection{\texorpdfstring{WEBRTC\_DEFAULT\_PORT}{WEBRTC\_DEFAULT\_PORT}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{group__network_ga0168a2334e9e1e13b83a665c8cce0742} 
+\+\#define WEBRTC\+\_\+\+DEFAULT\+\_\+\+PORT~41567}
+
+Default HTTP/\+websocket port used by the Web\+RTC server. \Hypertarget{group__network_ga0168a2334e9e1e13b83a665c8cce0742}\index{Networking@{Networking}!WEBRTC\_DEFAULT\_PORT@{WEBRTC\_DEFAULT\_PORT}}
+\index{WEBRTC\_DEFAULT\_PORT@{WEBRTC\_DEFAULT\_PORT}!Networking@{Networking}}
+\doxysubsubsubsection{\texorpdfstring{WEBRTC\_DEFAULT\_PORT}{WEBRTC\_DEFAULT\_PORT}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{group__network_ga0168a2334e9e1e13b83a665c8cce0742} 
+\+\#define WEBRTC\+\_\+\+DEFAULT\+\_\+\+PORT~41567}
+
+Default HTTP/\+websocket port used by the Web\+RTC server. \Hypertarget{group__network_ga99b10c89b7c09a0c753f241f9e74c894}\index{Networking@{Networking}!WEBRTC\_DEFAULT\_STUN\_SERVER@{WEBRTC\_DEFAULT\_STUN\_SERVER}}
+\index{WEBRTC\_DEFAULT\_STUN\_SERVER@{WEBRTC\_DEFAULT\_STUN\_SERVER}!Networking@{Networking}}
+\doxysubsubsubsection{\texorpdfstring{WEBRTC\_DEFAULT\_STUN\_SERVER}{WEBRTC\_DEFAULT\_STUN\_SERVER}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{group__network_ga99b10c89b7c09a0c753f241f9e74c894} 
+\+\#define WEBRTC\+\_\+\+DEFAULT\+\_\+\+STUN\+\_\+\+SERVER~"{}stun.\+l.\+google.\+com:\+19302"{}}
+
+Default STUN server used for Web\+RTC. STUN servers are used during ICE/\+\+NAT and allow a local device to determine its public IP address. \Hypertarget{group__network_ga99b10c89b7c09a0c753f241f9e74c894}\index{Networking@{Networking}!WEBRTC\_DEFAULT\_STUN\_SERVER@{WEBRTC\_DEFAULT\_STUN\_SERVER}}
+\index{WEBRTC\_DEFAULT\_STUN\_SERVER@{WEBRTC\_DEFAULT\_STUN\_SERVER}!Networking@{Networking}}
+\doxysubsubsubsection{\texorpdfstring{WEBRTC\_DEFAULT\_STUN\_SERVER}{WEBRTC\_DEFAULT\_STUN\_SERVER}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{group__network_ga99b10c89b7c09a0c753f241f9e74c894} 
+\+\#define WEBRTC\+\_\+\+DEFAULT\+\_\+\+STUN\+\_\+\+SERVER~"{}stun.\+l.\+google.\+com:\+19302"{}}
+
+Default STUN server used for Web\+RTC. STUN servers are used during ICE/\+\+NAT and allow a local device to determine its public IP address. 
+
+\label{doc-enum-members}
+\Hypertarget{group__network_doc-enum-members}
+\doxysubsubsection{Enumeration Type Documentation}
+\Hypertarget{group__network_gaa78c7398fa81f7f62aa233159d4d8d97}\index{Networking@{Networking}!SocketType@{SocketType}}
+\index{SocketType@{SocketType}!Networking@{Networking}}
+\doxysubsubsubsection{\texorpdfstring{SocketType}{SocketType}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{group__network_gaa78c7398fa81f7f62aa233159d4d8d97} 
+enum \doxymbox{\hyperlink{group__network_gaa78c7398fa81f7f62aa233159d4d8d97}{Socket\+Type}}}
+
+TCP/\+\+UDP enumeration. \begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{SOCKET\_UDP@{SOCKET\_UDP}!Networking@{Networking}}
+\index{Networking@{Networking}!SOCKET\_UDP@{SOCKET\_UDP}}
+}\Hypertarget{group__network_ggaa78c7398fa81f7f62aa233159d4d8d97a180747545a72ff6d0fd0569e781aefd5}\label{group__network_ggaa78c7398fa81f7f62aa233159d4d8d97a180747545a72ff6d0fd0569e781aefd5} 
+SOCKET\+\_\+\+UDP&flag indicating UDP datagram service (SOCK\+\_\+\+DGRAM) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{SOCKET\_TCP@{SOCKET\_TCP}!Networking@{Networking}}
+\index{Networking@{Networking}!SOCKET\_TCP@{SOCKET\_TCP}}
+}\Hypertarget{group__network_ggaa78c7398fa81f7f62aa233159d4d8d97a2843397fd39bd96681bca78a8aa03096}\label{group__network_ggaa78c7398fa81f7f62aa233159d4d8d97a2843397fd39bd96681bca78a8aa03096} 
+SOCKET\+\_\+\+TCP&flag indicating TCP virtual circuit service (SOCK\+\_\+\+STREAM) \\
+\hline
+
+\end{DoxyEnumFields}
+\Hypertarget{group__network_gaa78c7398fa81f7f62aa233159d4d8d97}\index{Networking@{Networking}!SocketType@{SocketType}}
+\index{SocketType@{SocketType}!Networking@{Networking}}
+\doxysubsubsubsection{\texorpdfstring{SocketType}{SocketType}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{group__network_gaa78c7398fa81f7f62aa233159d4d8d97} 
+enum \doxymbox{\hyperlink{group__network_gaa78c7398fa81f7f62aa233159d4d8d97}{Socket\+Type}}}
+
+TCP/\+\+UDP enumeration. \begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{SOCKET\_UDP@{SOCKET\_UDP}!Networking@{Networking}}
+\index{Networking@{Networking}!SOCKET\_UDP@{SOCKET\_UDP}}
+}\Hypertarget{group__network_ggaa78c7398fa81f7f62aa233159d4d8d97a180747545a72ff6d0fd0569e781aefd5}\label{group__network_ggaa78c7398fa81f7f62aa233159d4d8d97a180747545a72ff6d0fd0569e781aefd5} 
+SOCKET\+\_\+\+UDP&flag indicating UDP datagram service (SOCK\+\_\+\+DGRAM) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{SOCKET\_TCP@{SOCKET\_TCP}!Networking@{Networking}}
+\index{Networking@{Networking}!SOCKET\_TCP@{SOCKET\_TCP}}
+}\Hypertarget{group__network_ggaa78c7398fa81f7f62aa233159d4d8d97a2843397fd39bd96681bca78a8aa03096}\label{group__network_ggaa78c7398fa81f7f62aa233159d4d8d97a2843397fd39bd96681bca78a8aa03096} 
+SOCKET\+\_\+\+TCP&flag indicating TCP virtual circuit service (SOCK\+\_\+\+STREAM) \\
+\hline
+
+\end{DoxyEnumFields}
+\Hypertarget{group__network_gabfc2d28deff979bf1183220b57b78bd4}\index{Networking@{Networking}!WebRTCFlags@{WebRTCFlags}}
+\index{WebRTCFlags@{WebRTCFlags}!Networking@{Networking}}
+\doxysubsubsubsection{\texorpdfstring{WebRTCFlags}{WebRTCFlags}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{group__network_gabfc2d28deff979bf1183220b57b78bd4} 
+enum \doxymbox{\hyperlink{group__network_gabfc2d28deff979bf1183220b57b78bd4}{Web\+RTCFlags}}}
+
+Flags for route decorators or peer state. \Hypertarget{group__network_gabfc2d28deff979bf1183220b57b78bd4}\index{Networking@{Networking}!WebRTCFlags@{WebRTCFlags}}
+\index{WebRTCFlags@{WebRTCFlags}!Networking@{Networking}}
+\doxysubsubsubsection{\texorpdfstring{WebRTCFlags}{WebRTCFlags}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{group__network_gabfc2d28deff979bf1183220b57b78bd4} 
+enum \doxymbox{\hyperlink{group__network_gabfc2d28deff979bf1183220b57b78bd4}{Web\+RTCFlags}}}
+
+Flags for route decorators or peer state. 
+
+\label{doc-func-members}
+\Hypertarget{group__network_doc-func-members}
+\doxysubsubsection{Function Documentation}
+\Hypertarget{group__network_ga604bb0e239d02117b959fda9ffd28c9a}\index{Networking@{Networking}!getHostByName@{getHostByName}}
+\index{getHostByName@{getHostByName}!Networking@{Networking}}
+\doxysubsubsubsection{\texorpdfstring{getHostByName()}{getHostByName()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{group__network_ga604bb0e239d02117b959fda9ffd28c9a} 
+std::\+string get\+Host\+By\+Name (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{name}{, }\item[{uint32\+\_\+t}]{retries}{ = {\ttfamily 10}}\end{DoxyParamCaption})}
+
+Resolve the IP address of a given hostname or domain using DNS lookup, and return it as a string. This uses the system function gethostbyname() and supports both IPv6/\+\+IPv6 addresses.
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & the hostname to lookup. \\
+\hline
+{\em retries} & the number of times to retry the lookup should it fail. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the IP address in string format, or an empty string if an error occurred. 
+\end{DoxyReturn}
+\Hypertarget{group__network_gab8ffc5329146c2db42c61016dcc54c76}\index{Networking@{Networking}!getHostByName@{getHostByName}}
+\index{getHostByName@{getHostByName}!Networking@{Networking}}
+\doxysubsubsubsection{\texorpdfstring{getHostByName()}{getHostByName()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{group__network_gab8ffc5329146c2db42c61016dcc54c76} 
+uint32\+\_\+t get\+Host\+By\+Name (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{name}{, }\item[{void \texorpdfstring{$\ast$}{*}}]{ip\+Address}{, }\item[{uint32\+\_\+t}]{size}{, }\item[{uint32\+\_\+t}]{retries}{ = {\ttfamily 10}}\end{DoxyParamCaption})}
+
+Resolve the IP address of a given hostname or domain using DNS lookup. This uses the system function gethostbyname() and supports both IPv6/\+\+IPv6 addresses.
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & the hostname or domain name to lookup. \\
+\hline
+{\em ip\+Address} & output pointer to buffer that the IPv4 or IPv6 address will be written to. this buffer should be up to 16 bytes long for supporting IPv6 addresses, or 4 bytes long for only supporting IPv4 addresses. \\
+\hline
+{\em size} & the size of the ip\+Address buffer (4 bytes for IPv6 or 16 bytes for IPv6) \\
+\hline
+{\em retries} & the number of times to retry the lookup should it fail.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the size in bytes of the ip\+Address that was written (4 bytes for IPv6 or 16 bytes for IPv6) 0 is returned if an error occurred, or the provided ip\+Address buffer was not large enough. 
+\end{DoxyReturn}
+\Hypertarget{group__network_ga4eeeacba2fc1201c43d42a4f5145b825}\index{Networking@{Networking}!getHostname@{getHostname}}
+\index{getHostname@{getHostname}!Networking@{Networking}}
+\doxysubsubsubsection{\texorpdfstring{getHostname()}{getHostname()}}
+{\footnotesize\ttfamily \label{group__network_ga4eeeacba2fc1201c43d42a4f5145b825} 
+std::\+string get\+Hostname (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Retrieve the host system\textquotesingle{}s network hostname. \begin{DoxyReturn}{Returns}
+the system hostname, or an empty string on error. 
+\end{DoxyReturn}
+\Hypertarget{group__network_ga1066863c8dfa772c8457d14f395491d8}\index{Networking@{Networking}!getNetworkInterfaces@{getNetworkInterfaces}}
+\index{getNetworkInterfaces@{getNetworkInterfaces}!Networking@{Networking}}
+\doxysubsubsubsection{\texorpdfstring{getNetworkInterfaces()}{getNetworkInterfaces()}}
+{\footnotesize\ttfamily \label{group__network_ga1066863c8dfa772c8457d14f395491d8} 
+std::\+vector$<$ \doxymbox{\hyperlink{struct_network_interface}{Network\+Interface}} $>$ get\+Network\+Interfaces (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Retrieve info about the different IPv4/\+\+IPv6 network interfaces of the system. Internally this uses the system function getifaddrs() \begin{DoxyReturn}{Returns}
+a list of network interfaces, or an empty list if an error occurred. 
+\end{DoxyReturn}
+\Hypertarget{group__network_ga5eafb2061e9a44862e8fd1a59bea2fe4}\index{Networking@{Networking}!IPv4AddressFromStr@{IPv4AddressFromStr}}
+\index{IPv4AddressFromStr@{IPv4AddressFromStr}!Networking@{Networking}}
+\doxysubsubsubsection{\texorpdfstring{IPv4AddressFromStr()}{IPv4AddressFromStr()}}
+{\footnotesize\ttfamily \label{group__network_ga5eafb2061e9a44862e8fd1a59bea2fe4} 
+bool IPv4\+Address\+From\+Str (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{str}{, }\item[{uint32\+\_\+t \texorpdfstring{$\ast$}{*}}]{ip\+Address}{}\end{DoxyParamCaption})}
+
+Convert an IPv4 address string in "{}xxx.\+xxx.\+xxx.\+xxx"{} format to binary representation.
+
+
+\begin{DoxyParams}{Parameters}
+{\em str} & the IPv4 string, in "{}xxx.\+xxx.\+xxx.\+xxx"{} format \\
+\hline
+{\em ip\+Address} & output pointer to converted IPv4 address, in network byte order.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true, if str was a valid IPv4 address and the conversion was successful. false, if the conversion failed. 
+\end{DoxyReturn}
+\Hypertarget{group__network_ga8d1b5dfaf28b99b9d86b565a242ceab8}\index{Networking@{Networking}!IPv4AddressToStr@{IPv4AddressToStr}}
+\index{IPv4AddressToStr@{IPv4AddressToStr}!Networking@{Networking}}
+\doxysubsubsubsection{\texorpdfstring{IPv4AddressToStr()}{IPv4AddressToStr()}}
+{\footnotesize\ttfamily \label{group__network_ga8d1b5dfaf28b99b9d86b565a242ceab8} 
+std::\+string IPv4\+Address\+To\+Str (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{ip\+Address}{}\end{DoxyParamCaption})}
+
+Return text string of IPv4 address in "{}xxx.\+xxx.\+xxx.\+xxx"{} format 
+\begin{DoxyParams}{Parameters}
+{\em ip\+Address} & IPv4 address, supplied in network byte order. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{group__network_ga35c4991d07188de821f18cfe80cdd085}\index{Networking@{Networking}!IPv6AddressFromStr@{IPv6AddressFromStr}}
+\index{IPv6AddressFromStr@{IPv6AddressFromStr}!Networking@{Networking}}
+\doxysubsubsubsection{\texorpdfstring{IPv6AddressFromStr()}{IPv6AddressFromStr()}}
+{\footnotesize\ttfamily \label{group__network_ga35c4991d07188de821f18cfe80cdd085} 
+bool IPv6\+Address\+From\+Str (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{str}{, }\item[{void \texorpdfstring{$\ast$}{*}}]{ip\+Address}{}\end{DoxyParamCaption})}
+
+Convert an IPv6 address string in "{}x:\+x:\+x:\+x:\+x:\+x:\+x:\+x"{} hexadecimal format to 128-\/bit binary representation.
+
+
+\begin{DoxyParams}{Parameters}
+{\em str} & the IPv6 string, in "{}x:\+x:\+x:\+x:\+x:\+x:\+x:\+x"{} hexadecimal format \\
+\hline
+{\em ip\+Address} & output pointer to converted 128-\/bit IPv6 address (16 bytes long), in network byte order. this buffer can be a variety of representations (commonly uint8\+[16]\+ or uint16\+[8]\+), as long as it\textquotesingle{}s at least 128 bits (16 bytes) long.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true, if str was a valid IPv6 address and the conversion was successful. false, if the conversion failed. 
+\end{DoxyReturn}
+\Hypertarget{group__network_ga600322ef1ffde24816714c7e5a0c5624}\index{Networking@{Networking}!IPv6AddressToStr@{IPv6AddressToStr}}
+\index{IPv6AddressToStr@{IPv6AddressToStr}!Networking@{Networking}}
+\doxysubsubsubsection{\texorpdfstring{IPv6AddressToStr()}{IPv6AddressToStr()}}
+{\footnotesize\ttfamily \label{group__network_ga600322ef1ffde24816714c7e5a0c5624} 
+std::\+string IPv6\+Address\+To\+Str (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}}]{ip\+Address}{}\end{DoxyParamCaption})}
+
+Return text string of IPv6 address in "{}x:\+x:\+x:\+x:\+x:\+x:\+x:\+x"{} hexadecimal format. 
+\begin{DoxyParams}{Parameters}
+{\em ip\+Address} & pointer to 128-\/bit IPv6 address (16 bytes long), in network byte order. this buffer can be a variety of representations (commonly uint8\+[16]\+ or uint16\+[8]\+), as long as it\textquotesingle{}s at least 128 bits (16 bytes) long. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{group__network_gad1ca82becf0918d589ec9938b51a977b}\index{Networking@{Networking}!printNetworkInterfaces@{printNetworkInterfaces}}
+\index{printNetworkInterfaces@{printNetworkInterfaces}!Networking@{Networking}}
+\doxysubsubsubsection{\texorpdfstring{printNetworkInterfaces()}{printNetworkInterfaces()}}
+{\footnotesize\ttfamily \label{group__network_gad1ca82becf0918d589ec9938b51a977b} 
+void print\+Network\+Interfaces (\begin{DoxyParamCaption}\item[{const std::\+vector$<$ \doxymbox{\hyperlink{struct_network_interface}{Network\+Interface}} $>$ \&}]{interfaces}{}\end{DoxyParamCaption})}
+
+Print out a list of network interfaces. 

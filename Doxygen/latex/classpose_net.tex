@@ -1,0 +1,692 @@
+\doxysection{pose\+Net Class Reference}
+\hypertarget{classpose_net}{}\label{classpose_net}\index{poseNet@{poseNet}}
+
+
+{\ttfamily \+\#include $<$pose\+Net.\+h$>$}
+
+Inheritance diagram for pose\+Net:\+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classpose_net}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \doxymbox{\hyperlink{structpose_net_1_1_object_pose}{Object\+Pose}}
+\item 
+struct \doxymbox{\hyperlink{structpose_net_1_1_topology}{Topology}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \doxymbox{\hyperlink{classpose_net_afda0875e027f7039538b8d2f6b92118a}{Overlay\+Flags}} \{ \newline
+\doxymbox{\hyperlink{classpose_net_afda0875e027f7039538b8d2f6b92118aac903ec60b2ac0e00b29a15f5b42380c3}{OVERLAY\+\_\+\+NONE}} = 0
+, \doxymbox{\hyperlink{classpose_net_afda0875e027f7039538b8d2f6b92118aa22fcdd5a4a06b67fdcb1e063a8755f23}{OVERLAY\+\_\+\+BOX}} = (1 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 0)
+, \doxymbox{\hyperlink{classpose_net_afda0875e027f7039538b8d2f6b92118aa5af88efc86c145ebe02280e6bcdfa98a}{OVERLAY\+\_\+\+LINKS}} = (1 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 1)
+, \doxymbox{\hyperlink{classpose_net_afda0875e027f7039538b8d2f6b92118aa23db8b890105e87de352e4199beb2758}{OVERLAY\+\_\+\+KEYPOINTS}} = (1 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 2)
+, \newline
+{\bfseries OVERLAY\+\_\+\+DEFAULT} = OVERLAY\+\_\+\+LINKS\texorpdfstring{$\vert$}{|}\+OVERLAY\+\_\+\+KEYPOINTS
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual \doxymbox{\hyperlink{classpose_net_a6457d98a7e7f195d5115a2e26d9091d4}{\texorpdfstring{$\sim$}{\string~}pose\+Net}} ()
+\item 
+{\footnotesize template$<$typename T$>$ }\\bool \doxymbox{\hyperlink{classpose_net_ac429431dc3b83dcd5a5f3fcffe446047}{Process}} (T \texorpdfstring{$\ast$}{*}image, uint32\+\_\+t width, uint32\+\_\+t height, std::\+vector$<$ \doxymbox{\hyperlink{structpose_net_1_1_object_pose}{Object\+Pose}} $>$ \&poses, uint32\+\_\+t overlay=OVERLAY\+\_\+\+DEFAULT)
+\item 
+bool \doxymbox{\hyperlink{classpose_net_a660791bc726ceb4672d3a6b75b7e8486}{Process}} (void \texorpdfstring{$\ast$}{*}image, uint32\+\_\+t width, uint32\+\_\+t height, \doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{image\+Format}} format, std::\+vector$<$ \doxymbox{\hyperlink{structpose_net_1_1_object_pose}{Object\+Pose}} $>$ \&poses, uint32\+\_\+t overlay=OVERLAY\+\_\+\+DEFAULT)
+\item 
+{\footnotesize template$<$typename T$>$ }\\bool \doxymbox{\hyperlink{classpose_net_a8ecb6dbc5b0246c6145c1f6222772996}{Process}} (T \texorpdfstring{$\ast$}{*}image, uint32\+\_\+t width, uint32\+\_\+t height, uint32\+\_\+t overlay=OVERLAY\+\_\+\+DEFAULT)
+\item 
+bool \doxymbox{\hyperlink{classpose_net_a63311574884f4be3aa0b5747813f0bbe}{Process}} (void \texorpdfstring{$\ast$}{*}image, uint32\+\_\+t width, uint32\+\_\+t height, \doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{image\+Format}} format, uint32\+\_\+t overlay=OVERLAY\+\_\+\+DEFAULT)
+\item 
+{\footnotesize template$<$typename T$>$ }\\bool \doxymbox{\hyperlink{classpose_net_a2c3161cef2215a8cae4e673042d644db}{Overlay}} (T \texorpdfstring{$\ast$}{*}input, T \texorpdfstring{$\ast$}{*}output, uint32\+\_\+t width, uint32\+\_\+t height, const std::\+vector$<$ \doxymbox{\hyperlink{structpose_net_1_1_object_pose}{Object\+Pose}} $>$ \&poses, uint32\+\_\+t overlay=OVERLAY\+\_\+\+DEFAULT)
+\item 
+bool \doxymbox{\hyperlink{classpose_net_a33653eab2f50e1ac5b0b6fc4ecd793ce}{Overlay}} (void \texorpdfstring{$\ast$}{*}input, void \texorpdfstring{$\ast$}{*}output, uint32\+\_\+t width, uint32\+\_\+t height, \doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{image\+Format}} format, const std::\+vector$<$ \doxymbox{\hyperlink{structpose_net_1_1_object_pose}{Object\+Pose}} $>$ \&poses, uint32\+\_\+t overlay=OVERLAY\+\_\+\+DEFAULT)
+\item 
+float \doxymbox{\hyperlink{classpose_net_a96e03b5516c924ed2f025300b4fbfbf6}{Get\+Threshold}} () const
+\item 
+void \doxymbox{\hyperlink{classpose_net_a8cfd6a21798664d025bd166d26ab7004}{Set\+Threshold}} (float threshold)
+\item 
+const char \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classpose_net_a6662ffc132fdee2b41a91644f8454b0c}{Get\+Category}} () const
+\item 
+uint32\+\_\+t \doxymbox{\hyperlink{classpose_net_a212119ed54dbae900c977576f5aea72a}{Get\+Num\+Keypoints}} () const
+\item 
+const char \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classpose_net_afabcd96af836898f3faeac2b5e86956d}{Get\+Keypoint\+Name}} (uint32\+\_\+t index) const
+\item 
+int \doxymbox{\hyperlink{classpose_net_af103237289d1e4abd55c4a4457b675e0}{Find\+Keypoint\+ID}} (const char \texorpdfstring{$\ast$}{*}name) const
+\item 
+float4 \doxymbox{\hyperlink{classpose_net_aec84aecce84762533afb017778117446}{Get\+Keypoint\+Color}} (uint32\+\_\+t index) const
+\item 
+void \doxymbox{\hyperlink{classpose_net_acdbdb599f7f0ae08b2ab3c11d2db625e}{Set\+Keypoint\+Color}} (uint32\+\_\+t index, const float4 \&color)
+\item 
+void \doxymbox{\hyperlink{classpose_net_a635342be17027229bb25e68fe7bd96b9}{Set\+Keypoint\+Alpha}} (uint32\+\_\+t index, float alpha)
+\item 
+void \doxymbox{\hyperlink{classpose_net_aae9991bb67affc332b2a3fd671713033}{Set\+Keypoint\+Alpha}} (float alpha)
+\item 
+float \doxymbox{\hyperlink{classpose_net_a6a2934b5843740670019eee8424de5f2}{Get\+Keypoint\+Scale}} () const
+\item 
+void \doxymbox{\hyperlink{classpose_net_a90970ad4e9c23f1624bb7415ddc5db5c}{Set\+Keypoint\+Scale}} (float scale)
+\item 
+float \doxymbox{\hyperlink{classpose_net_a7f3dbc604b5f6343734b0d4e3d0082d3}{Get\+Link\+Scale}} () const
+\item 
+void \doxymbox{\hyperlink{classpose_net_a54a554418a2328e46504c9152e4a5330}{Set\+Link\+Scale}} (float scale)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \doxymbox{\hyperlink{classtensor_net}{tensor\+Net}}}
+\begin{DoxyCompactItemize}
+\item 
+virtual \doxymbox{\hyperlink{classtensor_net_ad19aafbfa262f9b8ffb0bff561f4d7f7}{\texorpdfstring{$\sim$}{\string~}tensor\+Net}} ()
+\item 
+bool \doxymbox{\hyperlink{classtensor_net_a2e63d4670461814bd863ee0d9bd41526}{Load\+Network}} (const char \texorpdfstring{$\ast$}{*}prototxt, const char \texorpdfstring{$\ast$}{*}model, const char \texorpdfstring{$\ast$}{*}mean=NULL, const char \texorpdfstring{$\ast$}{*}input\+\_\+blob="{}data"{}, const char \texorpdfstring{$\ast$}{*}output\+\_\+blob="{}prob"{}, uint32\+\_\+t max\+Batch\+Size=\doxymbox{\hyperlink{group__tensor_net_ga5a46a965749d6118e01307fd4d4865c9}{DEFAULT\+\_\+\+MAX\+\_\+\+BATCH\+\_\+\+SIZE}}, \doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precision\+Type}} precision=\doxymbox{\hyperlink{group__tensor_net_ggaac6604fd52c6e5db82877390e0378623a1d325738f49e8e4c424ff671624e66f9}{TYPE\+\_\+\+FASTEST}}, \doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{device\+Type}} device=\doxymbox{\hyperlink{group__tensor_net_ggaa5d3f9981cdbd91516c1474006a80fe4adc7f3f88455afa81458863e5b3092e4b}{DEVICE\+\_\+\+GPU}}, bool allow\+GPUFallback=true, nvinfer1::\+\+IInt8\+Calibrator \texorpdfstring{$\ast$}{*}calibrator=NULL, cuda\+Stream\+\_\+t stream=NULL)
+\item 
+bool \doxymbox{\hyperlink{classtensor_net_a0a06ffd12b465f39160f4a6925cccd9f}{Load\+Network}} (const char \texorpdfstring{$\ast$}{*}prototxt, const char \texorpdfstring{$\ast$}{*}model, const char \texorpdfstring{$\ast$}{*}mean, const char \texorpdfstring{$\ast$}{*}input\+\_\+blob, const std::\+vector$<$ std::\+string $>$ \&output\+\_\+blobs, uint32\+\_\+t max\+Batch\+Size=\doxymbox{\hyperlink{group__tensor_net_ga5a46a965749d6118e01307fd4d4865c9}{DEFAULT\+\_\+\+MAX\+\_\+\+BATCH\+\_\+\+SIZE}}, \doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precision\+Type}} precision=\doxymbox{\hyperlink{group__tensor_net_ggaac6604fd52c6e5db82877390e0378623a1d325738f49e8e4c424ff671624e66f9}{TYPE\+\_\+\+FASTEST}}, \doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{device\+Type}} device=\doxymbox{\hyperlink{group__tensor_net_ggaa5d3f9981cdbd91516c1474006a80fe4adc7f3f88455afa81458863e5b3092e4b}{DEVICE\+\_\+\+GPU}}, bool allow\+GPUFallback=true, nvinfer1::\+\+IInt8\+Calibrator \texorpdfstring{$\ast$}{*}calibrator=NULL, cuda\+Stream\+\_\+t stream=NULL)
+\item 
+bool \doxymbox{\hyperlink{classtensor_net_a68a6f21680ae91bc51bea376221d1c48}{Load\+Network}} (const char \texorpdfstring{$\ast$}{*}prototxt, const char \texorpdfstring{$\ast$}{*}model, const char \texorpdfstring{$\ast$}{*}mean, const std::\+vector$<$ std::\+string $>$ \&input\+\_\+blobs, const std::\+vector$<$ std::\+string $>$ \&output\+\_\+blobs, uint32\+\_\+t max\+Batch\+Size=\doxymbox{\hyperlink{group__tensor_net_ga5a46a965749d6118e01307fd4d4865c9}{DEFAULT\+\_\+\+MAX\+\_\+\+BATCH\+\_\+\+SIZE}}, \doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precision\+Type}} precision=\doxymbox{\hyperlink{group__tensor_net_ggaac6604fd52c6e5db82877390e0378623a1d325738f49e8e4c424ff671624e66f9}{TYPE\+\_\+\+FASTEST}}, \doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{device\+Type}} device=\doxymbox{\hyperlink{group__tensor_net_ggaa5d3f9981cdbd91516c1474006a80fe4adc7f3f88455afa81458863e5b3092e4b}{DEVICE\+\_\+\+GPU}}, bool allow\+GPUFallback=true, nvinfer1::\+\+IInt8\+Calibrator \texorpdfstring{$\ast$}{*}calibrator=NULL, cuda\+Stream\+\_\+t stream=NULL)
+\item 
+bool \doxymbox{\hyperlink{classtensor_net_a168c7f75c9fd6d264afd016e144f3878}{Load\+Network}} (const char \texorpdfstring{$\ast$}{*}prototxt, const char \texorpdfstring{$\ast$}{*}model, const char \texorpdfstring{$\ast$}{*}mean, const char \texorpdfstring{$\ast$}{*}input\+\_\+blob, const Dims3 \&input\+\_\+dims, const std::\+vector$<$ std::\+string $>$ \&output\+\_\+blobs, uint32\+\_\+t max\+Batch\+Size=\doxymbox{\hyperlink{group__tensor_net_ga5a46a965749d6118e01307fd4d4865c9}{DEFAULT\+\_\+\+MAX\+\_\+\+BATCH\+\_\+\+SIZE}}, \doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precision\+Type}} precision=\doxymbox{\hyperlink{group__tensor_net_ggaac6604fd52c6e5db82877390e0378623a1d325738f49e8e4c424ff671624e66f9}{TYPE\+\_\+\+FASTEST}}, \doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{device\+Type}} device=\doxymbox{\hyperlink{group__tensor_net_ggaa5d3f9981cdbd91516c1474006a80fe4adc7f3f88455afa81458863e5b3092e4b}{DEVICE\+\_\+\+GPU}}, bool allow\+GPUFallback=true, nvinfer1::\+\+IInt8\+Calibrator \texorpdfstring{$\ast$}{*}calibrator=NULL, cuda\+Stream\+\_\+t stream=NULL)
+\item 
+bool \doxymbox{\hyperlink{classtensor_net_a8f34a6001c2da01662b85670de9246e4}{Load\+Network}} (const char \texorpdfstring{$\ast$}{*}prototxt, const char \texorpdfstring{$\ast$}{*}model, const char \texorpdfstring{$\ast$}{*}mean, const std::\+vector$<$ std::\+string $>$ \&input\+\_\+blobs, const std::\+vector$<$ Dims3 $>$ \&input\+\_\+dims, const std::\+vector$<$ std::\+string $>$ \&output\+\_\+blobs, uint32\+\_\+t max\+Batch\+Size=\doxymbox{\hyperlink{group__tensor_net_ga5a46a965749d6118e01307fd4d4865c9}{DEFAULT\+\_\+\+MAX\+\_\+\+BATCH\+\_\+\+SIZE}}, \doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precision\+Type}} precision=\doxymbox{\hyperlink{group__tensor_net_ggaac6604fd52c6e5db82877390e0378623a1d325738f49e8e4c424ff671624e66f9}{TYPE\+\_\+\+FASTEST}}, \doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{device\+Type}} device=\doxymbox{\hyperlink{group__tensor_net_ggaa5d3f9981cdbd91516c1474006a80fe4adc7f3f88455afa81458863e5b3092e4b}{DEVICE\+\_\+\+GPU}}, bool allow\+GPUFallback=true, nvinfer1::\+\+IInt8\+Calibrator \texorpdfstring{$\ast$}{*}calibrator=NULL, cuda\+Stream\+\_\+t stream=NULL)
+\item 
+bool \doxymbox{\hyperlink{classtensor_net_acb8076f6ab8d13b6507140826cf438d8}{Load\+Engine}} (const char \texorpdfstring{$\ast$}{*}engine\+\_\+filename, const std::\+vector$<$ std::\+string $>$ \&input\+\_\+blobs, const std::\+vector$<$ std::\+string $>$ \&output\+\_\+blobs, nvinfer1::\+\+IPlugin\+Factory \texorpdfstring{$\ast$}{*}plugin\+Factory=NULL, \doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{device\+Type}} device=\doxymbox{\hyperlink{group__tensor_net_ggaa5d3f9981cdbd91516c1474006a80fe4adc7f3f88455afa81458863e5b3092e4b}{DEVICE\+\_\+\+GPU}}, cuda\+Stream\+\_\+t stream=NULL)
+\item 
+bool \doxymbox{\hyperlink{classtensor_net_aaa4efe2b8d91fe914a22c87b725ac063}{Load\+Engine}} (char \texorpdfstring{$\ast$}{*}engine\+\_\+stream, size\+\_\+t engine\+\_\+size, const std::\+vector$<$ std::\+string $>$ \&input\+\_\+blobs, const std::\+vector$<$ std::\+string $>$ \&output\+\_\+blobs, nvinfer1::\+\+IPlugin\+Factory \texorpdfstring{$\ast$}{*}plugin\+Factory=NULL, \doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{device\+Type}} device=\doxymbox{\hyperlink{group__tensor_net_ggaa5d3f9981cdbd91516c1474006a80fe4adc7f3f88455afa81458863e5b3092e4b}{DEVICE\+\_\+\+GPU}}, cuda\+Stream\+\_\+t stream=NULL)
+\item 
+bool \doxymbox{\hyperlink{classtensor_net_a2d6fe13696a49d61e9abfa9729153e65}{Load\+Engine}} (nvinfer1::\+\+ICuda\+Engine \texorpdfstring{$\ast$}{*}engine, const std::\+vector$<$ std::\+string $>$ \&input\+\_\+blobs, const std::\+vector$<$ std::\+string $>$ \&output\+\_\+blobs, \doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{device\+Type}} device=\doxymbox{\hyperlink{group__tensor_net_ggaa5d3f9981cdbd91516c1474006a80fe4adc7f3f88455afa81458863e5b3092e4b}{DEVICE\+\_\+\+GPU}}, cuda\+Stream\+\_\+t stream=NULL)
+\item 
+bool \doxymbox{\hyperlink{classtensor_net_a89755f8e4b72ead7460deed394967386}{Load\+Engine}} (const char \texorpdfstring{$\ast$}{*}filename, char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}stream, size\+\_\+t \texorpdfstring{$\ast$}{*}size)
+\item 
+bool \doxymbox{\hyperlink{classtensor_net_a24831e27745d99ed9524ec25a205205a}{Load\+Binary}} (const char \texorpdfstring{$\ast$}{*}filename, char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}stream, size\+\_\+t \texorpdfstring{$\ast$}{*}size)
+\item 
+void \doxymbox{\hyperlink{classtensor_net_a3413eb0ad4f240f457f192f39e2e03e8}{Enable\+Layer\+Profiler}} ()
+\item 
+void \doxymbox{\hyperlink{classtensor_net_ae49f74ff83e46112a30318fa0576cace}{Enable\+Debug}} ()
+\item 
+bool \doxymbox{\hyperlink{classtensor_net_a7d0ec0d8504ac8b26c5ab4a6136599ca}{Allow\+GPUFallback}} () const
+\item 
+\doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{device\+Type}} \doxymbox{\hyperlink{classtensor_net_a92bb737172d26bda5f67d15346a02514}{Get\+Device}} () const
+\item 
+\doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precision\+Type}} \doxymbox{\hyperlink{classtensor_net_afb38b5f171025e987a00214cc4379ca9}{Get\+Precision}} () const
+\item 
+bool \doxymbox{\hyperlink{classtensor_net_a6b8e8dba05bc5c677027913d8c64f259}{Is\+Precision}} (\doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precision\+Type}} type) const
+\item 
+cuda\+Stream\+\_\+t \doxymbox{\hyperlink{classtensor_net_a34e350ec6185277ac09ae55a79403e62}{Get\+Stream}} () const
+\item 
+cuda\+Stream\+\_\+t \doxymbox{\hyperlink{classtensor_net_a78cecfb7505be0ea59d29041abc85cbb}{Create\+Stream}} (bool non\+Blocking=true)
+\item 
+void \doxymbox{\hyperlink{classtensor_net_a679b177784c85bfdba63dcd1008ff633}{Set\+Stream}} (cuda\+Stream\+\_\+t stream)
+\item 
+const char \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classtensor_net_acf9c21a1e031071c7fa8bacddc5901e1}{Get\+Prototxt\+Path}} () const
+\item 
+const char \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classtensor_net_ab7c42b9da47d4566e8f1dac0231638dd}{Get\+Model\+Path}} () const
+\item 
+const char \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classtensor_net_a3b64097cd334bb5af48913d58ae074b3}{Get\+Model\+Filename}} () const
+\item 
+\doxymbox{\hyperlink{group__tensor_net_ga5d4597e0e7beae7133d542e220528725}{model\+Type}} \doxymbox{\hyperlink{classtensor_net_acfa7f1f01b46f658ffc96f8a002e8d48}{Get\+Model\+Type}} () const
+\item 
+bool \doxymbox{\hyperlink{classtensor_net_a0a09d691ea080bd9734c5782c8fff6fd}{Is\+Model\+Type}} (\doxymbox{\hyperlink{group__tensor_net_ga5d4597e0e7beae7133d542e220528725}{model\+Type}} type) const
+\item 
+uint32\+\_\+t \doxymbox{\hyperlink{classtensor_net_ac583b8de1dd64b47338b4a3eb42ac166}{Get\+Input\+Layers}} () const
+\item 
+uint32\+\_\+t \doxymbox{\hyperlink{classtensor_net_a2dcc770a7215e2e76a8d520a36689e16}{Get\+Output\+Layers}} () const
+\item 
+Dims3 \doxymbox{\hyperlink{classtensor_net_adcfe61596f291e75a87d36c3771f25df}{Get\+Input\+Dims}} (uint32\+\_\+t layer=0) const
+\item 
+uint32\+\_\+t \doxymbox{\hyperlink{classtensor_net_a2d75ef6f579d1a71ff472bfafd0b7795}{Get\+Input\+Width}} (uint32\+\_\+t layer=0) const
+\item 
+uint32\+\_\+t \doxymbox{\hyperlink{classtensor_net_a214a92c41dcdcb58b3cd8496aac0857a}{Get\+Input\+Height}} (uint32\+\_\+t layer=0) const
+\item 
+uint32\+\_\+t \doxymbox{\hyperlink{classtensor_net_a2c80d46f8a01335e77e41023544102c9}{Get\+Input\+Size}} (uint32\+\_\+t layer=0) const
+\item 
+float \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classtensor_net_a3d04135aeef2b4204852ebd5b4363a68}{Get\+Input\+Ptr}} (uint32\+\_\+t layer=0) const
+\item 
+Dims3 \doxymbox{\hyperlink{classtensor_net_a77703f2a7b59f836c93ae28811e22cb0}{Get\+Output\+Dims}} (uint32\+\_\+t layer=0) const
+\item 
+uint32\+\_\+t \doxymbox{\hyperlink{classtensor_net_a09d63a8fd906c99f8158bf9460a83c02}{Get\+Output\+Width}} (uint32\+\_\+t layer=0) const
+\item 
+uint32\+\_\+t \doxymbox{\hyperlink{classtensor_net_a613679e8ee5315f3b5b16a39011ba76e}{Get\+Output\+Height}} (uint32\+\_\+t layer=0) const
+\item 
+uint32\+\_\+t \doxymbox{\hyperlink{classtensor_net_ae1486438dcdbe0d7f5e88e5336a42efa}{Get\+Output\+Size}} (uint32\+\_\+t layer=0) const
+\item 
+float \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classtensor_net_a5dd41d9c028fa562b1b8f7cb61a4e6f4}{Get\+Output\+Ptr}} (uint32\+\_\+t layer=0) const
+\item 
+float \doxymbox{\hyperlink{classtensor_net_a9dd2db089176ae6878e9ea7dd8fd80c3}{Get\+Network\+FPS}} ()
+\item 
+float \doxymbox{\hyperlink{classtensor_net_a49faef5920860345e503023b7c84423c}{Get\+Network\+Time}} ()
+\item 
+const char \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classtensor_net_a688f17acc51061a039f60cc8ab4f4e5b}{Get\+Network\+Name}} () const
+\item 
+float2 \doxymbox{\hyperlink{classtensor_net_ad266f93035a80dca80cd84d971e4f69b}{Get\+Profiler\+Time}} (\doxymbox{\hyperlink{group__tensor_net_gae34d45c0faa674ef4cc0fbfc8fae5809}{profiler\+Query}} query)
+\item 
+float \doxymbox{\hyperlink{classtensor_net_a27cf81b3fecf93d2e63a61220a54b393}{Get\+Profiler\+Time}} (\doxymbox{\hyperlink{group__tensor_net_gae34d45c0faa674ef4cc0fbfc8fae5809}{profiler\+Query}} query, \doxymbox{\hyperlink{group__tensor_net_gaaa4127ed22c7165a32d0474ebf97975e}{profiler\+Device}} device)
+\item 
+void \doxymbox{\hyperlink{classtensor_net_afc0f50abcf6ac71e96d51eba3ed53d4b}{Print\+Profiler\+Times}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static uint32\+\_\+t \doxymbox{\hyperlink{classpose_net_a1bebbf414fd20210c469223433bb604a}{Overlay\+Flags\+From\+Str}} (const char \texorpdfstring{$\ast$}{*}flags)
+\item 
+static \doxymbox{\hyperlink{classpose_net}{pose\+Net}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classpose_net_a5ebf96b95c78f16cbd1179561c81511c}{Create}} (const char \texorpdfstring{$\ast$}{*}network="{}resnet18-\/body"{}, float threshold=\doxymbox{\hyperlink{group__pose_net_ga9be57c475962d2397058c45c835cc2b5}{POSENET\+\_\+\+DEFAULT\+\_\+\+THRESHOLD}}, uint32\+\_\+t max\+Batch\+Size=\doxymbox{\hyperlink{group__tensor_net_ga5a46a965749d6118e01307fd4d4865c9}{DEFAULT\+\_\+\+MAX\+\_\+\+BATCH\+\_\+\+SIZE}}, \doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precision\+Type}} precision=\doxymbox{\hyperlink{group__tensor_net_ggaac6604fd52c6e5db82877390e0378623a1d325738f49e8e4c424ff671624e66f9}{TYPE\+\_\+\+FASTEST}}, \doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{device\+Type}} device=\doxymbox{\hyperlink{group__tensor_net_ggaa5d3f9981cdbd91516c1474006a80fe4adc7f3f88455afa81458863e5b3092e4b}{DEVICE\+\_\+\+GPU}}, bool allow\+GPUFallback=true)
+\item 
+static \doxymbox{\hyperlink{classpose_net}{pose\+Net}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classpose_net_ae410038d9f194fdffc8213afbbbbc145}{Create}} (const char \texorpdfstring{$\ast$}{*}model\+\_\+path, const char \texorpdfstring{$\ast$}{*}topology, const char \texorpdfstring{$\ast$}{*}colors, float threshold=\doxymbox{\hyperlink{group__pose_net_ga9be57c475962d2397058c45c835cc2b5}{POSENET\+\_\+\+DEFAULT\+\_\+\+THRESHOLD}}, const char \texorpdfstring{$\ast$}{*}input=\doxymbox{\hyperlink{group__pose_net_ga0d5023ddb3b0f2e2348f476f2950fed7}{POSENET\+\_\+\+DEFAULT\+\_\+\+INPUT}}, const char \texorpdfstring{$\ast$}{*}cmap=\doxymbox{\hyperlink{group__pose_net_ga21376894ab9de2658349498fce9ba116}{POSENET\+\_\+\+DEFAULT\+\_\+\+CMAP}}, const char \texorpdfstring{$\ast$}{*}paf=\doxymbox{\hyperlink{group__pose_net_ga6301da70768db25c4a7a0ee2e03cb79d}{POSENET\+\_\+\+DEFAULT\+\_\+\+PAF}}, uint32\+\_\+t max\+Batch\+Size=\doxymbox{\hyperlink{group__tensor_net_ga5a46a965749d6118e01307fd4d4865c9}{DEFAULT\+\_\+\+MAX\+\_\+\+BATCH\+\_\+\+SIZE}}, \doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precision\+Type}} precision=\doxymbox{\hyperlink{group__tensor_net_ggaac6604fd52c6e5db82877390e0378623a1d325738f49e8e4c424ff671624e66f9}{TYPE\+\_\+\+FASTEST}}, \doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{device\+Type}} device=\doxymbox{\hyperlink{group__tensor_net_ggaa5d3f9981cdbd91516c1474006a80fe4adc7f3f88455afa81458863e5b3092e4b}{DEVICE\+\_\+\+GPU}}, bool allow\+GPUFallback=true)
+\item 
+static \doxymbox{\hyperlink{classpose_net}{pose\+Net}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classpose_net_afc09184c62367ac2b0c9c9207773d64e}{Create}} (int argc, char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}argv)
+\item 
+static \doxymbox{\hyperlink{classpose_net}{pose\+Net}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classpose_net_a23ab12a25435f069f3c9b20f1f404d17}{Create}} (const \doxymbox{\hyperlink{classcommand_line}{command\+Line}} \&cmd\+Line)
+\item 
+static const char \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classpose_net_a5f1dea586d249793a7917b652a909a12}{Usage}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions inherited from \doxymbox{\hyperlink{classtensor_net}{tensor\+Net}}}
+\begin{DoxyCompactItemize}
+\item 
+static bool \doxymbox{\hyperlink{classtensor_net_a57cacfea82e9329c2cf776837dd00aef}{Load\+Class\+Labels}} (const char \texorpdfstring{$\ast$}{*}filename, std::\+vector$<$ std::\+string $>$ \&descriptions, int expected\+Classes=-\/1)
+\item 
+static bool \doxymbox{\hyperlink{classtensor_net_aa92022958d3a46655a5e2f2ed416e6b5}{Load\+Class\+Labels}} (const char \texorpdfstring{$\ast$}{*}filename, std::\+vector$<$ std::\+string $>$ \&descriptions, std::\+vector$<$ std::\+string $>$ \&synsets, int expected\+Classes=-\/1)
+\item 
+static bool \doxymbox{\hyperlink{classtensor_net_a7b87410f9133aea37b46979d543219b9}{Load\+Class\+Colors}} (const char \texorpdfstring{$\ast$}{*}filename, float4 \texorpdfstring{$\ast$}{*}colors, int expected\+Classes, float default\+Alpha=255.\+0f)
+\item 
+static bool \doxymbox{\hyperlink{classtensor_net_ae5dd58e2481f6c703abb9abbcfce805e}{Load\+Class\+Colors}} (const char \texorpdfstring{$\ast$}{*}filename, float4 \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}colors, int expected\+Classes, float default\+Alpha=255.\+0f)
+\item 
+static float4 \doxymbox{\hyperlink{classtensor_net_a4fe18908c74efda1708029ca3b04f0e8}{Generate\+Color}} (uint32\+\_\+t class\+ID, float alpha=255.\+0f)
+\item 
+static \doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precision\+Type}} \doxymbox{\hyperlink{classtensor_net_a3c0509631176be6f9e25673cb0aa12dc}{Select\+Precision}} (\doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precision\+Type}} precision, \doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{device\+Type}} device=\doxymbox{\hyperlink{group__tensor_net_ggaa5d3f9981cdbd91516c1474006a80fe4adc7f3f88455afa81458863e5b3092e4b}{DEVICE\+\_\+\+GPU}}, bool allow\+Int8=true)
+\item 
+static \doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precision\+Type}} \doxymbox{\hyperlink{classtensor_net_abe33fae5332296e2d917cb4ce435e255}{Find\+Fastest\+Precision}} (\doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{device\+Type}} device=\doxymbox{\hyperlink{group__tensor_net_ggaa5d3f9981cdbd91516c1474006a80fe4adc7f3f88455afa81458863e5b3092e4b}{DEVICE\+\_\+\+GPU}}, bool allow\+Int8=true)
+\item 
+static std::\+vector$<$ \doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precision\+Type}} $>$ \doxymbox{\hyperlink{classtensor_net_ae53b31ae407d3b1f18130c1313e4b099}{Detect\+Native\+Precisions}} (\doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{device\+Type}} device=\doxymbox{\hyperlink{group__tensor_net_ggaa5d3f9981cdbd91516c1474006a80fe4adc7f3f88455afa81458863e5b3092e4b}{DEVICE\+\_\+\+GPU}})
+\item 
+static bool \doxymbox{\hyperlink{classtensor_net_aa3bf1a3bf1fca38b39a200b4d8f727b2}{Detect\+Native\+Precision}} (const std::\+vector$<$ \doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precision\+Type}} $>$ \&native\+Types, \doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precision\+Type}} type)
+\item 
+static bool \doxymbox{\hyperlink{classtensor_net_a7d72ec8bbaf61278ce533afd60d5391c}{Detect\+Native\+Precision}} (\doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precision\+Type}} precision, \doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{device\+Type}} device=\doxymbox{\hyperlink{group__tensor_net_ggaa5d3f9981cdbd91516c1474006a80fe4adc7f3f88455afa81458863e5b3092e4b}{DEVICE\+\_\+\+GPU}})
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classpose_net_ae009a46f59ae89339b7a9439668d1e72}\label{classpose_net_ae009a46f59ae89339b7a9439668d1e72} 
+bool {\bfseries init} (const char \texorpdfstring{$\ast$}{*}model\+\_\+path, const char \texorpdfstring{$\ast$}{*}topology, const char \texorpdfstring{$\ast$}{*}colors, float threshold, const char \texorpdfstring{$\ast$}{*}input, const char \texorpdfstring{$\ast$}{*}cmap, const char \texorpdfstring{$\ast$}{*}paf, uint32\+\_\+t max\+Batch\+Size, \doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precision\+Type}} precision, \doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{device\+Type}} device, bool allow\+GPUFallback)
+\item 
+\Hypertarget{classpose_net_a07a41e411e22e87fd52d2e1d52bba710}\label{classpose_net_a07a41e411e22e87fd52d2e1d52bba710} 
+bool {\bfseries post\+Process} (std::\+vector$<$ \doxymbox{\hyperlink{structpose_net_1_1_object_pose}{Object\+Pose}} $>$ \&poses, uint32\+\_\+t width, uint32\+\_\+t height)
+\item 
+\Hypertarget{classpose_net_ab5bf5dbd5c02eea49679b68b502d7db2}\label{classpose_net_ab5bf5dbd5c02eea49679b68b502d7db2} 
+bool {\bfseries load\+Topology} (const char \texorpdfstring{$\ast$}{*}json\+\_\+path, \doxymbox{\hyperlink{structpose_net_1_1_topology}{Topology}} \texorpdfstring{$\ast$}{*}topology)
+\item 
+\Hypertarget{classpose_net_a4c56eeb1542a665188f3bcba1f48dd45}\label{classpose_net_a4c56eeb1542a665188f3bcba1f48dd45} 
+bool {\bfseries load\+Keypoint\+Colors} (const char \texorpdfstring{$\ast$}{*}filename)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions inherited from \doxymbox{\hyperlink{classtensor_net}{tensor\+Net}}}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{classtensor_net_ab6e617d96e5542bef023ee9d4c96388a}{tensor\+Net}} ()
+\item 
+bool \doxymbox{\hyperlink{classtensor_net_a2e8dd909e797dfcfbb058dc6b351c586}{Process\+Network}} (bool sync=true)
+\item 
+bool \doxymbox{\hyperlink{classtensor_net_a2fbc013f70b52f885867302446e0dca1}{Profile\+Model}} (const std::\+string \&deploy\+File, const std::\+string \&model\+File, const std::\+vector$<$ std::\+string $>$ \&inputs, const std::\+vector$<$ Dims3 $>$ \&input\+Dims, const std::\+vector$<$ std::\+string $>$ \&outputs, uint32\+\_\+t max\+Batch\+Size, \doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precision\+Type}} precision, \doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{device\+Type}} device, bool allow\+GPUFallback, nvinfer1::\+\+IInt8\+Calibrator \texorpdfstring{$\ast$}{*}calibrator, char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}engine\+Stream, size\+\_\+t \texorpdfstring{$\ast$}{*}engine\+Size)
+\item 
+bool \doxymbox{\hyperlink{classtensor_net_a7a898dfb2553869cdc318ecb03e153f1}{Configure\+Builder}} (nvinfer1::\+\+IBuilder \texorpdfstring{$\ast$}{*}builder, uint32\+\_\+t max\+Batch\+Size, uint32\+\_\+t workspace\+Size, \doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precision\+Type}} precision, \doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{device\+Type}} device, bool allow\+GPUFallback, nvinfer1::\+\+IInt8\+Calibrator \texorpdfstring{$\ast$}{*}calibrator)
+\item 
+bool \doxymbox{\hyperlink{classtensor_net_a6e2fe0a467929d76b20940771b8f96c3}{Validate\+Engine}} (const char \texorpdfstring{$\ast$}{*}model\+\_\+path, const char \texorpdfstring{$\ast$}{*}cache\+\_\+path, const char \texorpdfstring{$\ast$}{*}checksum\+\_\+path)
+\item 
+void \doxymbox{\hyperlink{classtensor_net_a088c3bf591e45e52ec227491f6f299ad}{PROFILER\+\_\+\+BEGIN}} (\doxymbox{\hyperlink{group__tensor_net_gae34d45c0faa674ef4cc0fbfc8fae5809}{profiler\+Query}} query)
+\item 
+void \doxymbox{\hyperlink{classtensor_net_ac8582b9a6099e3265da4c3f9fdf804ea}{PROFILER\+\_\+\+END}} (\doxymbox{\hyperlink{group__tensor_net_gae34d45c0faa674ef4cc0fbfc8fae5809}{profiler\+Query}} query)
+\item 
+bool \doxymbox{\hyperlink{classtensor_net_ae2e0ae17baf6e1975aaad7a7f5c60ce9}{PROFILER\+\_\+\+QUERY}} (\doxymbox{\hyperlink{group__tensor_net_gae34d45c0faa674ef4cc0fbfc8fae5809}{profiler\+Query}} query)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classpose_net_ab8e2cceb7809577c8f46b4e18138060d}\label{classpose_net_ab8e2cceb7809577c8f46b4e18138060d} 
+\doxymbox{\hyperlink{structpose_net_1_1_topology}{Topology}} {\bfseries m\+Topology}
+\item 
+\Hypertarget{classpose_net_a84338d796f9c348c707bbd554cdb113b}\label{classpose_net_a84338d796f9c348c707bbd554cdb113b} 
+float {\bfseries m\+Threshold}
+\item 
+\Hypertarget{classpose_net_a70ead07abc10466c23dac1e2c5f73e40}\label{classpose_net_a70ead07abc10466c23dac1e2c5f73e40} 
+float {\bfseries m\+Link\+Scale}
+\item 
+\Hypertarget{classpose_net_a84aa84e7716c7c7d4a3dd60f2de27544}\label{classpose_net_a84aa84e7716c7c7d4a3dd60f2de27544} 
+float {\bfseries m\+Keypoint\+Scale}
+\item 
+\Hypertarget{classpose_net_aafee76d3817e65915be5be4f51fee3d0}\label{classpose_net_aafee76d3817e65915be5be4f51fee3d0} 
+float4 \texorpdfstring{$\ast$}{*} {\bfseries m\+Keypoint\+Colors}
+\item 
+\Hypertarget{classpose_net_aa11d602a94a99d71a0e72b6bdfd4aedb}\label{classpose_net_aa11d602a94a99d71a0e72b6bdfd4aedb} 
+int \texorpdfstring{$\ast$}{*} {\bfseries m\+Peaks}
+\item 
+\Hypertarget{classpose_net_aeac8b68f59e44b9fd650a9e6801001f5}\label{classpose_net_aeac8b68f59e44b9fd650a9e6801001f5} 
+int \texorpdfstring{$\ast$}{*} {\bfseries m\+Peak\+Counts}
+\item 
+\Hypertarget{classpose_net_a578c10865e493491ae032f7f5489baee}\label{classpose_net_a578c10865e493491ae032f7f5489baee} 
+int \texorpdfstring{$\ast$}{*} {\bfseries m\+Connections}
+\item 
+\Hypertarget{classpose_net_a80fc821527933f3f712cc0b50b64206e}\label{classpose_net_a80fc821527933f3f712cc0b50b64206e} 
+int \texorpdfstring{$\ast$}{*} {\bfseries m\+Objects}
+\item 
+\Hypertarget{classpose_net_a98b7689cd234fe6db287c87fccdef505}\label{classpose_net_a98b7689cd234fe6db287c87fccdef505} 
+int {\bfseries m\+Num\+Objects}
+\item 
+\Hypertarget{classpose_net_aef7c1590e89362f1f6800755e8fb1bf8}\label{classpose_net_aef7c1590e89362f1f6800755e8fb1bf8} 
+float \texorpdfstring{$\ast$}{*} {\bfseries m\+Refined\+Peaks}
+\item 
+\Hypertarget{classpose_net_ab430ddfb43995064ab2e8d92ac8f0328}\label{classpose_net_ab430ddfb43995064ab2e8d92ac8f0328} 
+float \texorpdfstring{$\ast$}{*} {\bfseries m\+Score\+Graph}
+\item 
+\Hypertarget{classpose_net_a66366a8b27c726812eba47a6af3cb2ca}\label{classpose_net_a66366a8b27c726812eba47a6af3cb2ca} 
+void \texorpdfstring{$\ast$}{*} {\bfseries m\+Assignment\+Workspace}
+\item 
+\Hypertarget{classpose_net_aa20634f5d0b02f5b057b7f3f5a4b1a92}\label{classpose_net_aa20634f5d0b02f5b057b7f3f5a4b1a92} 
+void \texorpdfstring{$\ast$}{*} {\bfseries m\+Connection\+Workspace}
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes inherited from \doxymbox{\hyperlink{classtensor_net}{tensor\+Net}}}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{classtensor_net_1_1_logger}{tensor\+Net::\+\+Logger}} {\bfseries g\+Logger}
+\item 
+\doxymbox{\hyperlink{classtensor_net_1_1_profiler}{tensor\+Net::\+\+Profiler}} {\bfseries g\+Profiler}
+\item 
+std::\+string {\bfseries m\+Prototxt\+Path}
+\item 
+std::\+string {\bfseries m\+Model\+Path}
+\item 
+std::\+string {\bfseries m\+Model\+File}
+\item 
+std::\+string {\bfseries m\+Mean\+Path}
+\item 
+std::\+string {\bfseries m\+Cache\+Engine\+Path}
+\item 
+std::\+string {\bfseries m\+Cache\+Calibration\+Path}
+\item 
+std::\+string {\bfseries m\+Checksum\+Path}
+\item 
+\doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{device\+Type}} {\bfseries m\+Device}
+\item 
+\doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precision\+Type}} {\bfseries m\+Precision}
+\item 
+\doxymbox{\hyperlink{group__tensor_net_ga5d4597e0e7beae7133d542e220528725}{model\+Type}} {\bfseries m\+Model\+Type}
+\item 
+cuda\+Stream\+\_\+t {\bfseries m\+Stream}
+\item 
+cuda\+Event\+\_\+t {\bfseries m\+Events\+GPU} \+[PROFILER\+\_\+\+TOTAL \texorpdfstring{$\ast$}{*}2]\+
+\item 
+timespec {\bfseries m\+Events\+CPU} \+[PROFILER\+\_\+\+TOTAL \texorpdfstring{$\ast$}{*}2]\+
+\item 
+nvinfer1::\+\+IRuntime \texorpdfstring{$\ast$}{*} {\bfseries m\+Infer}
+\item 
+nvinfer1::\+\+ICuda\+Engine \texorpdfstring{$\ast$}{*} {\bfseries m\+Engine}
+\item 
+nvinfer1::\+\+IExecution\+Context \texorpdfstring{$\ast$}{*} {\bfseries m\+Context}
+\item 
+float2 {\bfseries m\+Profiler\+Times} \+[PROFILER\+\_\+\+TOTAL+1]\+
+\item 
+uint32\+\_\+t {\bfseries m\+Profiler\+Queries\+Used}
+\item 
+uint32\+\_\+t {\bfseries m\+Profiler\+Queries\+Done}
+\item 
+uint32\+\_\+t {\bfseries m\+Workspace\+Size}
+\item 
+uint32\+\_\+t {\bfseries m\+Max\+Batch\+Size}
+\item 
+bool {\bfseries m\+Enable\+Profiler}
+\item 
+bool {\bfseries m\+Enable\+Debug}
+\item 
+bool {\bfseries m\+Allow\+GPUFallback}
+\item 
+void \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*} {\bfseries m\+Bindings}
+\item 
+std::\+vector$<$ \doxymbox{\hyperlink{structtensor_net_1_1layer_info}{layer\+Info}} $>$ {\bfseries m\+Inputs}
+\item 
+std::\+vector$<$ \doxymbox{\hyperlink{structtensor_net_1_1layer_info}{layer\+Info}} $>$ {\bfseries m\+Outputs}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classpose_net_a64e17aef37702343a8ee95ede544b712}\label{classpose_net_a64e17aef37702343a8ee95ede544b712} 
+static const int {\bfseries CMAP\+\_\+\+WINDOW\+\_\+\+SIZE} =5
+\item 
+\Hypertarget{classpose_net_a9b754e22a45be6e55b281a63e11fb07e}\label{classpose_net_a9b754e22a45be6e55b281a63e11fb07e} 
+static const int {\bfseries PAF\+\_\+\+INTEGRAL\+\_\+\+SAMPLES} =7
+\item 
+\Hypertarget{classpose_net_af182e1684ef671cfa445a800099a8ad2}\label{classpose_net_af182e1684ef671cfa445a800099a8ad2} 
+static const int {\bfseries MAX\+\_\+\+LINKS} =100
+\item 
+\Hypertarget{classpose_net_adeab2b3ac26b72b48191e3b4f2268b83}\label{classpose_net_adeab2b3ac26b72b48191e3b4f2268b83} 
+static const int {\bfseries MAX\+\_\+\+OBJECTS} =100
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Pose estimation models with Tensor\+RT support. 
+
+\label{doc-enum-members}
+\Hypertarget{classpose_net_doc-enum-members}
+\doxysubsection{Member Enumeration Documentation}
+\Hypertarget{classpose_net_afda0875e027f7039538b8d2f6b92118a}\index{poseNet@{poseNet}!OverlayFlags@{OverlayFlags}}
+\index{OverlayFlags@{OverlayFlags}!poseNet@{poseNet}}
+\doxysubsubsection{\texorpdfstring{OverlayFlags}{OverlayFlags}}
+{\footnotesize\ttfamily \label{classpose_net_afda0875e027f7039538b8d2f6b92118a} 
+enum \doxymbox{\hyperlink{classpose_net_afda0875e027f7039538b8d2f6b92118a}{pose\+Net::\+\+Overlay\+Flags}}}
+
+Overlay flags (can be OR\textquotesingle{}d together). \begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OVERLAY\_NONE@{OVERLAY\_NONE}!poseNet@{poseNet}}
+\index{poseNet@{poseNet}!OVERLAY\_NONE@{OVERLAY\_NONE}}
+}\Hypertarget{classpose_net_afda0875e027f7039538b8d2f6b92118aac903ec60b2ac0e00b29a15f5b42380c3}\label{classpose_net_afda0875e027f7039538b8d2f6b92118aac903ec60b2ac0e00b29a15f5b42380c3} 
+OVERLAY\+\_\+\+NONE&No overlay. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OVERLAY\_BOX@{OVERLAY\_BOX}!poseNet@{poseNet}}
+\index{poseNet@{poseNet}!OVERLAY\_BOX@{OVERLAY\_BOX}}
+}\Hypertarget{classpose_net_afda0875e027f7039538b8d2f6b92118aa22fcdd5a4a06b67fdcb1e063a8755f23}\label{classpose_net_afda0875e027f7039538b8d2f6b92118aa22fcdd5a4a06b67fdcb1e063a8755f23} 
+OVERLAY\+\_\+\+BOX&Overlay object bounding boxes \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OVERLAY\_LINKS@{OVERLAY\_LINKS}!poseNet@{poseNet}}
+\index{poseNet@{poseNet}!OVERLAY\_LINKS@{OVERLAY\_LINKS}}
+}\Hypertarget{classpose_net_afda0875e027f7039538b8d2f6b92118aa5af88efc86c145ebe02280e6bcdfa98a}\label{classpose_net_afda0875e027f7039538b8d2f6b92118aa5af88efc86c145ebe02280e6bcdfa98a} 
+OVERLAY\+\_\+\+LINKS&Overlay the skeleton links (bones) as lines \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OVERLAY\_KEYPOINTS@{OVERLAY\_KEYPOINTS}!poseNet@{poseNet}}
+\index{poseNet@{poseNet}!OVERLAY\_KEYPOINTS@{OVERLAY\_KEYPOINTS}}
+}\Hypertarget{classpose_net_afda0875e027f7039538b8d2f6b92118aa23db8b890105e87de352e4199beb2758}\label{classpose_net_afda0875e027f7039538b8d2f6b92118aa23db8b890105e87de352e4199beb2758} 
+OVERLAY\+\_\+\+KEYPOINTS&Overlay the keypoints (joints) as circles \\
+\hline
+
+\end{DoxyEnumFields}
+
+
+\label{doc-constructors}
+\Hypertarget{classpose_net_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classpose_net_a6457d98a7e7f195d5115a2e26d9091d4}\index{poseNet@{poseNet}!````~poseNet@{\texorpdfstring{$\sim$}{\string~}poseNet}}
+\index{````~poseNet@{\texorpdfstring{$\sim$}{\string~}poseNet}!poseNet@{poseNet}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}poseNet()}{\string~poseNet()}}
+{\footnotesize\ttfamily \label{classpose_net_a6457d98a7e7f195d5115a2e26d9091d4} 
+virtual pose\+Net::\+\texorpdfstring{$\sim$}{\string~}pose\+Net (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+Destory 
+
+\label{doc-func-members}
+\Hypertarget{classpose_net_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classpose_net_ae410038d9f194fdffc8213afbbbbc145}\index{poseNet@{poseNet}!Create@{Create}}
+\index{Create@{Create}!poseNet@{poseNet}}
+\doxysubsubsection{\texorpdfstring{Create()}{Create()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily \label{classpose_net_ae410038d9f194fdffc8213afbbbbc145} 
+\doxymbox{\hyperlink{classpose_net}{pose\+Net}} \texorpdfstring{$\ast$}{*} pose\+Net::\+\+Create (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{model\+\_\+path}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{topology}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{colors}{, }\item[{float}]{threshold}{ = {\ttfamily \doxymbox{\hyperlink{group__pose_net_ga9be57c475962d2397058c45c835cc2b5}{POSENET\+\_\+\+DEFAULT\+\_\+\+THRESHOLD}}}, }\item[{const char \texorpdfstring{$\ast$}{*}}]{input}{ = {\ttfamily \doxymbox{\hyperlink{group__pose_net_ga0d5023ddb3b0f2e2348f476f2950fed7}{POSENET\+\_\+\+DEFAULT\+\_\+\+INPUT}}}, }\item[{const char \texorpdfstring{$\ast$}{*}}]{cmap}{ = {\ttfamily \doxymbox{\hyperlink{group__pose_net_ga21376894ab9de2658349498fce9ba116}{POSENET\+\_\+\+DEFAULT\+\_\+\+CMAP}}}, }\item[{const char \texorpdfstring{$\ast$}{*}}]{paf}{ = {\ttfamily \doxymbox{\hyperlink{group__pose_net_ga6301da70768db25c4a7a0ee2e03cb79d}{POSENET\+\_\+\+DEFAULT\+\_\+\+PAF}}}, }\item[{uint32\+\_\+t}]{max\+Batch\+Size}{ = {\ttfamily \doxymbox{\hyperlink{group__tensor_net_ga5a46a965749d6118e01307fd4d4865c9}{DEFAULT\+\_\+\+MAX\+\_\+\+BATCH\+\_\+\+SIZE}}}, }\item[{\doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precision\+Type}}}]{precision}{ = {\ttfamily \doxymbox{\hyperlink{group__tensor_net_ggaac6604fd52c6e5db82877390e0378623a1d325738f49e8e4c424ff671624e66f9}{TYPE\+\_\+\+FASTEST}}}, }\item[{\doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{device\+Type}}}]{device}{ = {\ttfamily \doxymbox{\hyperlink{group__tensor_net_ggaa5d3f9981cdbd91516c1474006a80fe4adc7f3f88455afa81458863e5b3092e4b}{DEVICE\+\_\+\+GPU}}}, }\item[{bool}]{allow\+GPUFallback}{ = {\ttfamily true}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Load a custom network instance 
+\begin{DoxyParams}{Parameters}
+{\em model\+\_\+path} & File path to the ONNX model \\
+\hline
+{\em topology} & File path to the topology JSON \\
+\hline
+{\em colors} & File path to the keypoint colors text file \\
+\hline
+{\em threshold} & default minimum confidence thrshold \\
+\hline
+{\em \doxylink{group__input}{Input}} & Name of the input layer blob. \\
+\hline
+{\em cmap} & Name of the output confidence map layer. \\
+\hline
+{\em paf} & Name of the output Part Affinity Field (PAF) layer. \\
+\hline
+{\em max\+Batch\+Size} & \doxylink{requirements_The}{The} maximum batch size that the network will support and be optimized for. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classpose_net_a5ebf96b95c78f16cbd1179561c81511c}\index{poseNet@{poseNet}!Create@{Create}}
+\index{Create@{Create}!poseNet@{poseNet}}
+\doxysubsubsection{\texorpdfstring{Create()}{Create()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily \label{classpose_net_a5ebf96b95c78f16cbd1179561c81511c} 
+\doxymbox{\hyperlink{classpose_net}{pose\+Net}} \texorpdfstring{$\ast$}{*} pose\+Net::\+\+Create (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{network}{ = {\ttfamily "{}resnet18-\/body"{}}, }\item[{float}]{threshold}{ = {\ttfamily \doxymbox{\hyperlink{group__pose_net_ga9be57c475962d2397058c45c835cc2b5}{POSENET\+\_\+\+DEFAULT\+\_\+\+THRESHOLD}}}, }\item[{uint32\+\_\+t}]{max\+Batch\+Size}{ = {\ttfamily \doxymbox{\hyperlink{group__tensor_net_ga5a46a965749d6118e01307fd4d4865c9}{DEFAULT\+\_\+\+MAX\+\_\+\+BATCH\+\_\+\+SIZE}}}, }\item[{\doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precision\+Type}}}]{precision}{ = {\ttfamily \doxymbox{\hyperlink{group__tensor_net_ggaac6604fd52c6e5db82877390e0378623a1d325738f49e8e4c424ff671624e66f9}{TYPE\+\_\+\+FASTEST}}}, }\item[{\doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{device\+Type}}}]{device}{ = {\ttfamily \doxymbox{\hyperlink{group__tensor_net_ggaa5d3f9981cdbd91516c1474006a80fe4adc7f3f88455afa81458863e5b3092e4b}{DEVICE\+\_\+\+GPU}}}, }\item[{bool}]{allow\+GPUFallback}{ = {\ttfamily true}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Load a pre-\/trained model. 
+\begin{DoxyParams}{Parameters}
+{\em \doxylink{group__network}{Networking}} & type of pre-\/supported network to load (\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\doxylink{group__image_net_ga4f809f603917dd53041335c0881b198e}{POSENET\+\_\+\+USAGE\+\_\+\+STRING} for models) 
+\end{DoxySeeAlso}
+
+\begin{DoxyParams}{Parameters}
+{\em threshold} & default minimum threshold for detection \\
+\hline
+{\em max\+Batch\+Size} & \doxylink{requirements_The}{The} maximum batch size that the network will support and be optimized for. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classpose_net_a23ab12a25435f069f3c9b20f1f404d17}\index{poseNet@{poseNet}!Create@{Create}}
+\index{Create@{Create}!poseNet@{poseNet}}
+\doxysubsubsection{\texorpdfstring{Create()}{Create()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily \label{classpose_net_a23ab12a25435f069f3c9b20f1f404d17} 
+\doxymbox{\hyperlink{classpose_net}{pose\+Net}} \texorpdfstring{$\ast$}{*} pose\+Net::\+\+Create (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{classcommand_line}{command\+Line}} \&}]{cmd\+Line}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Load a new network instance by parsing the command line. \Hypertarget{classpose_net_afc09184c62367ac2b0c9c9207773d64e}\index{poseNet@{poseNet}!Create@{Create}}
+\index{Create@{Create}!poseNet@{poseNet}}
+\doxysubsubsection{\texorpdfstring{Create()}{Create()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily \label{classpose_net_afc09184c62367ac2b0c9c9207773d64e} 
+\doxymbox{\hyperlink{classpose_net}{pose\+Net}} \texorpdfstring{$\ast$}{*} pose\+Net::\+\+Create (\begin{DoxyParamCaption}\item[{int}]{argc}{, }\item[{char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{argv}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Load a new network instance by parsing the command line. \Hypertarget{classpose_net_af103237289d1e4abd55c4a4457b675e0}\index{poseNet@{poseNet}!FindKeypointID@{FindKeypointID}}
+\index{FindKeypointID@{FindKeypointID}!poseNet@{poseNet}}
+\doxysubsubsection{\texorpdfstring{FindKeypointID()}{FindKeypointID()}}
+{\footnotesize\ttfamily \label{classpose_net_af103237289d1e4abd55c4a4457b675e0} 
+int pose\+Net::\+\+Find\+Keypoint\+ID (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{name}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Find the ID of a keypoint by name, or return -\/1 if not found. \Hypertarget{classpose_net_a6662ffc132fdee2b41a91644f8454b0c}\index{poseNet@{poseNet}!GetCategory@{GetCategory}}
+\index{GetCategory@{GetCategory}!poseNet@{poseNet}}
+\doxysubsubsection{\texorpdfstring{GetCategory()}{GetCategory()}}
+{\footnotesize\ttfamily \label{classpose_net_a6662ffc132fdee2b41a91644f8454b0c} 
+const char \texorpdfstring{$\ast$}{*} pose\+Net::\+\+Get\+Category (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Get the category of objects that are detected (e.\+g. \textquotesingle{}person\textquotesingle{}, \textquotesingle{}hand\textquotesingle{}) \Hypertarget{classpose_net_aec84aecce84762533afb017778117446}\index{poseNet@{poseNet}!GetKeypointColor@{GetKeypointColor}}
+\index{GetKeypointColor@{GetKeypointColor}!poseNet@{poseNet}}
+\doxysubsubsection{\texorpdfstring{GetKeypointColor()}{GetKeypointColor()}}
+{\footnotesize\ttfamily \label{classpose_net_aec84aecce84762533afb017778117446} 
+float4 pose\+Net::\+\+Get\+Keypoint\+Color (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{index}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Get the overlay color of a keypoint. \Hypertarget{classpose_net_afabcd96af836898f3faeac2b5e86956d}\index{poseNet@{poseNet}!GetKeypointName@{GetKeypointName}}
+\index{GetKeypointName@{GetKeypointName}!poseNet@{poseNet}}
+\doxysubsubsection{\texorpdfstring{GetKeypointName()}{GetKeypointName()}}
+{\footnotesize\ttfamily \label{classpose_net_afabcd96af836898f3faeac2b5e86956d} 
+const char \texorpdfstring{$\ast$}{*} pose\+Net::\+\+Get\+Keypoint\+Name (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{index}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Get the name of a keypoint in the topology by it\textquotesingle{}s ID. \Hypertarget{classpose_net_a6a2934b5843740670019eee8424de5f2}\index{poseNet@{poseNet}!GetKeypointScale@{GetKeypointScale}}
+\index{GetKeypointScale@{GetKeypointScale}!poseNet@{poseNet}}
+\doxysubsubsection{\texorpdfstring{GetKeypointScale()}{GetKeypointScale()}}
+{\footnotesize\ttfamily \label{classpose_net_a6a2934b5843740670019eee8424de5f2} 
+float pose\+Net::\+\+Get\+Keypoint\+Scale (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Get the scale used to calculate the radius of keypoints relative to input image dimensions. \Hypertarget{classpose_net_a7f3dbc604b5f6343734b0d4e3d0082d3}\index{poseNet@{poseNet}!GetLinkScale@{GetLinkScale}}
+\index{GetLinkScale@{GetLinkScale}!poseNet@{poseNet}}
+\doxysubsubsection{\texorpdfstring{GetLinkScale()}{GetLinkScale()}}
+{\footnotesize\ttfamily \label{classpose_net_a7f3dbc604b5f6343734b0d4e3d0082d3} 
+float pose\+Net::\+\+Get\+Link\+Scale (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Get the scale used to calculate the width of link lines relative to input image dimensions. \Hypertarget{classpose_net_a212119ed54dbae900c977576f5aea72a}\index{poseNet@{poseNet}!GetNumKeypoints@{GetNumKeypoints}}
+\index{GetNumKeypoints@{GetNumKeypoints}!poseNet@{poseNet}}
+\doxysubsubsection{\texorpdfstring{GetNumKeypoints()}{GetNumKeypoints()}}
+{\footnotesize\ttfamily \label{classpose_net_a212119ed54dbae900c977576f5aea72a} 
+uint32\+\_\+t pose\+Net::\+\+Get\+Num\+Keypoints (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Get the number of keypoints in the topology. \Hypertarget{classpose_net_a96e03b5516c924ed2f025300b4fbfbf6}\index{poseNet@{poseNet}!GetThreshold@{GetThreshold}}
+\index{GetThreshold@{GetThreshold}!poseNet@{poseNet}}
+\doxysubsubsection{\texorpdfstring{GetThreshold()}{GetThreshold()}}
+{\footnotesize\ttfamily \label{classpose_net_a96e03b5516c924ed2f025300b4fbfbf6} 
+float pose\+Net::\+\+Get\+Threshold (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Retrieve the minimum confidence threshold. \Hypertarget{classpose_net_a2c3161cef2215a8cae4e673042d644db}\index{poseNet@{poseNet}!Overlay@{Overlay}}
+\index{Overlay@{Overlay}!poseNet@{poseNet}}
+\doxysubsubsection{\texorpdfstring{Overlay()}{Overlay()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classpose_net_a2c3161cef2215a8cae4e673042d644db} 
+template$<$typename T$>$ \\
+bool pose\+Net::\+\+Overlay (\begin{DoxyParamCaption}\item[{T \texorpdfstring{$\ast$}{*}}]{input}{, }\item[{T \texorpdfstring{$\ast$}{*}}]{output}{, }\item[{uint32\+\_\+t}]{width}{, }\item[{uint32\+\_\+t}]{height}{, }\item[{const std::\+vector$<$ \doxymbox{\hyperlink{structpose_net_1_1_object_pose}{Object\+Pose}} $>$ \&}]{poses}{, }\item[{uint32\+\_\+t}]{overlay}{ = {\ttfamily OVERLAY\+\_\+DEFAULT}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Overlay the results on the image. \Hypertarget{classpose_net_a33653eab2f50e1ac5b0b6fc4ecd793ce}\index{poseNet@{poseNet}!Overlay@{Overlay}}
+\index{Overlay@{Overlay}!poseNet@{poseNet}}
+\doxysubsubsection{\texorpdfstring{Overlay()}{Overlay()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classpose_net_a33653eab2f50e1ac5b0b6fc4ecd793ce} 
+bool pose\+Net::\+\+Overlay (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}}]{input}{, }\item[{void \texorpdfstring{$\ast$}{*}}]{output}{, }\item[{uint32\+\_\+t}]{width}{, }\item[{uint32\+\_\+t}]{height}{, }\item[{\doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{image\+Format}}}]{format}{, }\item[{const std::\+vector$<$ \doxymbox{\hyperlink{structpose_net_1_1_object_pose}{Object\+Pose}} $>$ \&}]{poses}{, }\item[{uint32\+\_\+t}]{overlay}{ = {\ttfamily OVERLAY\+\_\+DEFAULT}}\end{DoxyParamCaption})}
+
+Overlay the results on the image. \Hypertarget{classpose_net_a1bebbf414fd20210c469223433bb604a}\index{poseNet@{poseNet}!OverlayFlagsFromStr@{OverlayFlagsFromStr}}
+\index{OverlayFlagsFromStr@{OverlayFlagsFromStr}!poseNet@{poseNet}}
+\doxysubsubsection{\texorpdfstring{OverlayFlagsFromStr()}{OverlayFlagsFromStr()}}
+{\footnotesize\ttfamily \label{classpose_net_a1bebbf414fd20210c469223433bb604a} 
+uint32\+\_\+t pose\+Net::\+\+Overlay\+Flags\+From\+Str (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{flags}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Parse a string sequence into \doxylink{classpose_net_afda0875e027f7039538b8d2f6b92118a}{Overlay\+Flags} enum. Valid flags are "{}none"{}, "{}box"{}, "{}label"{}, and "{}conf"{} and it is possible to combine flags (bitwise OR) together with commas or pipe (\texorpdfstring{$\vert$}{|}) symbol. For example, the string sequence "{}box,label,conf"{} would return the flags {\ttfamily OVERLAY\+\_\+\+BOX\texorpdfstring{$\vert$}{|}\+OVERLAY\+\_\+\+LABEL\texorpdfstring{$\vert$}{|}\+OVERLAY\+\_\+\+CONFIDENCE}. \Hypertarget{classpose_net_ac429431dc3b83dcd5a5f3fcffe446047}\index{poseNet@{poseNet}!Process@{Process}}
+\index{Process@{Process}!poseNet@{poseNet}}
+\doxysubsubsection{\texorpdfstring{Process()}{Process()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily \label{classpose_net_ac429431dc3b83dcd5a5f3fcffe446047} 
+template$<$typename T$>$ \\
+bool pose\+Net::\+\+Process (\begin{DoxyParamCaption}\item[{T \texorpdfstring{$\ast$}{*}}]{image}{, }\item[{uint32\+\_\+t}]{width}{, }\item[{uint32\+\_\+t}]{height}{, }\item[{std::\+vector$<$ \doxymbox{\hyperlink{structpose_net_1_1_object_pose}{Object\+Pose}} $>$ \&}]{poses}{, }\item[{uint32\+\_\+t}]{overlay}{ = {\ttfamily OVERLAY\+\_\+DEFAULT}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Perform pose estimation on the given image, returning object poses, and overlay the results. 
+\begin{DoxyParams}[1]{Parameters}
+\doxymbox{\texttt{in}}  & {\em \doxylink{group__image}{Image I/\+O}} & input image in CUDA device memory (uchar3/\+uchar4/\+float3/\+float4) \\
+\hline
+\doxymbox{\texttt{in}}  & {\em width} & width of the input image in pixels. \\
+\hline
+\doxymbox{\texttt{in}}  & {\em height} & height of the input image in pixels. \\
+\hline
+\doxymbox{\texttt{out}}  & {\em poses} & array of \doxylink{structpose_net_1_1_object_pose}{Object\+Pose} structs that will be filled for each detected object. \\
+\hline
+\doxymbox{\texttt{in}}  & {\em \doxylink{group__overlay}{Overlay}} & bitwise OR combination of overlay flags (\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\doxylink{classpose_net_afda0875e027f7039538b8d2f6b92118a}{Overlay\+Flags} and 
+
+\doxylink{classpose_net_a2c3161cef2215a8cae4e673042d644db}{Overlay()}), or \doxylink{classpose_net_afda0875e027f7039538b8d2f6b92118aac903ec60b2ac0e00b29a15f5b42380c3}{OVERLAY\+\_\+\+NONE}. 
+\end{DoxySeeAlso}
+\begin{DoxyReturn}{Returns}
+True on success, or false if an error occurred. 
+\end{DoxyReturn}
+\Hypertarget{classpose_net_a8ecb6dbc5b0246c6145c1f6222772996}\index{poseNet@{poseNet}!Process@{Process}}
+\index{Process@{Process}!poseNet@{poseNet}}
+\doxysubsubsection{\texorpdfstring{Process()}{Process()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily \label{classpose_net_a8ecb6dbc5b0246c6145c1f6222772996} 
+template$<$typename T$>$ \\
+bool pose\+Net::\+\+Process (\begin{DoxyParamCaption}\item[{T \texorpdfstring{$\ast$}{*}}]{image}{, }\item[{uint32\+\_\+t}]{width}{, }\item[{uint32\+\_\+t}]{height}{, }\item[{uint32\+\_\+t}]{overlay}{ = {\ttfamily OVERLAY\+\_\+DEFAULT}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Perform pose estimation on the given image, and overlay the results. 
+\begin{DoxyParams}[1]{Parameters}
+\doxymbox{\texttt{in}}  & {\em \doxylink{group__image}{Image I/\+O}} & input image in CUDA device memory (uchar3/\+uchar4/\+float3/\+float4) \\
+\hline
+\doxymbox{\texttt{in}}  & {\em width} & width of the input image in pixels. \\
+\hline
+\doxymbox{\texttt{in}}  & {\em height} & height of the input image in pixels. \\
+\hline
+\doxymbox{\texttt{in}}  & {\em \doxylink{group__overlay}{Overlay}} & bitwise OR combination of overlay flags (\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\doxylink{classpose_net_afda0875e027f7039538b8d2f6b92118a}{Overlay\+Flags} and 
+
+\doxylink{classpose_net_a2c3161cef2215a8cae4e673042d644db}{Overlay()}), or \doxylink{classpose_net_afda0875e027f7039538b8d2f6b92118aac903ec60b2ac0e00b29a15f5b42380c3}{OVERLAY\+\_\+\+NONE}. 
+\end{DoxySeeAlso}
+\begin{DoxyReturn}{Returns}
+True on success, or false if an error occurred. 
+\end{DoxyReturn}
+\Hypertarget{classpose_net_a660791bc726ceb4672d3a6b75b7e8486}\index{poseNet@{poseNet}!Process@{Process}}
+\index{Process@{Process}!poseNet@{poseNet}}
+\doxysubsubsection{\texorpdfstring{Process()}{Process()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily \label{classpose_net_a660791bc726ceb4672d3a6b75b7e8486} 
+bool pose\+Net::\+\+Process (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}}]{image}{, }\item[{uint32\+\_\+t}]{width}{, }\item[{uint32\+\_\+t}]{height}{, }\item[{\doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{image\+Format}}}]{format}{, }\item[{std::\+vector$<$ \doxymbox{\hyperlink{structpose_net_1_1_object_pose}{Object\+Pose}} $>$ \&}]{poses}{, }\item[{uint32\+\_\+t}]{overlay}{ = {\ttfamily OVERLAY\+\_\+DEFAULT}}\end{DoxyParamCaption})}
+
+Perform pose estimation on the given image, and overlay the results. 
+\begin{DoxyParams}[1]{Parameters}
+\doxymbox{\texttt{in}}  & {\em \doxylink{group__image}{Image I/\+O}} & input image in CUDA device memory (uchar3/\+uchar4/\+float3/\+float4) \\
+\hline
+\doxymbox{\texttt{in}}  & {\em width} & width of the input image in pixels. \\
+\hline
+\doxymbox{\texttt{in}}  & {\em height} & height of the input image in pixels. \\
+\hline
+\doxymbox{\texttt{out}}  & {\em poses} & array of \doxylink{structpose_net_1_1_object_pose}{Object\+Pose} structs that will be filled for each detected object. \\
+\hline
+\doxymbox{\texttt{in}}  & {\em \doxylink{group__overlay}{Overlay}} & bitwise OR combination of overlay flags (\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\doxylink{classpose_net_afda0875e027f7039538b8d2f6b92118a}{Overlay\+Flags} and 
+
+\doxylink{classpose_net_a2c3161cef2215a8cae4e673042d644db}{Overlay()}), or \doxylink{classpose_net_afda0875e027f7039538b8d2f6b92118aac903ec60b2ac0e00b29a15f5b42380c3}{OVERLAY\+\_\+\+NONE}. 
+\end{DoxySeeAlso}
+\begin{DoxyReturn}{Returns}
+True on success, or false if an error occurred. 
+\end{DoxyReturn}
+\Hypertarget{classpose_net_a63311574884f4be3aa0b5747813f0bbe}\index{poseNet@{poseNet}!Process@{Process}}
+\index{Process@{Process}!poseNet@{poseNet}}
+\doxysubsubsection{\texorpdfstring{Process()}{Process()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily \label{classpose_net_a63311574884f4be3aa0b5747813f0bbe} 
+bool pose\+Net::\+\+Process (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}}]{image}{, }\item[{uint32\+\_\+t}]{width}{, }\item[{uint32\+\_\+t}]{height}{, }\item[{\doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{image\+Format}}}]{format}{, }\item[{uint32\+\_\+t}]{overlay}{ = {\ttfamily OVERLAY\+\_\+DEFAULT}}\end{DoxyParamCaption})}
+
+Perform pose estimation on the given image, and overlay the results. 
+\begin{DoxyParams}[1]{Parameters}
+\doxymbox{\texttt{in}}  & {\em \doxylink{group__image}{Image I/\+O}} & input image in CUDA device memory (uchar3/\+uchar4/\+float3/\+float4) \\
+\hline
+\doxymbox{\texttt{in}}  & {\em width} & width of the input image in pixels. \\
+\hline
+\doxymbox{\texttt{in}}  & {\em height} & height of the input image in pixels. \\
+\hline
+\doxymbox{\texttt{in}}  & {\em \doxylink{group__overlay}{Overlay}} & bitwise OR combination of overlay flags (\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\doxylink{classpose_net_afda0875e027f7039538b8d2f6b92118a}{Overlay\+Flags} and 
+
+\doxylink{classpose_net_a2c3161cef2215a8cae4e673042d644db}{Overlay()}), or \doxylink{classpose_net_afda0875e027f7039538b8d2f6b92118aac903ec60b2ac0e00b29a15f5b42380c3}{OVERLAY\+\_\+\+NONE}. 
+\end{DoxySeeAlso}
+\begin{DoxyReturn}{Returns}
+True on success, or false if an error occurred. 
+\end{DoxyReturn}
+\Hypertarget{classpose_net_aae9991bb67affc332b2a3fd671713033}\index{poseNet@{poseNet}!SetKeypointAlpha@{SetKeypointAlpha}}
+\index{SetKeypointAlpha@{SetKeypointAlpha}!poseNet@{poseNet}}
+\doxysubsubsection{\texorpdfstring{SetKeypointAlpha()}{SetKeypointAlpha()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classpose_net_aae9991bb67affc332b2a3fd671713033} 
+void pose\+Net::\+\+Set\+Keypoint\+Alpha (\begin{DoxyParamCaption}\item[{float}]{alpha}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Set the alpha channel for all keypoints colors used during overlay. \Hypertarget{classpose_net_a635342be17027229bb25e68fe7bd96b9}\index{poseNet@{poseNet}!SetKeypointAlpha@{SetKeypointAlpha}}
+\index{SetKeypointAlpha@{SetKeypointAlpha}!poseNet@{poseNet}}
+\doxysubsubsection{\texorpdfstring{SetKeypointAlpha()}{SetKeypointAlpha()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classpose_net_a635342be17027229bb25e68fe7bd96b9} 
+void pose\+Net::\+\+Set\+Keypoint\+Alpha (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{index}{, }\item[{float}]{alpha}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Set the alpha channel for a keypoint color (between 0-\/255). \Hypertarget{classpose_net_acdbdb599f7f0ae08b2ab3c11d2db625e}\index{poseNet@{poseNet}!SetKeypointColor@{SetKeypointColor}}
+\index{SetKeypointColor@{SetKeypointColor}!poseNet@{poseNet}}
+\doxysubsubsection{\texorpdfstring{SetKeypointColor()}{SetKeypointColor()}}
+{\footnotesize\ttfamily \label{classpose_net_acdbdb599f7f0ae08b2ab3c11d2db625e} 
+void pose\+Net::\+\+Set\+Keypoint\+Color (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{index}{, }\item[{const float4 \&}]{color}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Set the overlay color for a keypoint. \Hypertarget{classpose_net_a90970ad4e9c23f1624bb7415ddc5db5c}\index{poseNet@{poseNet}!SetKeypointScale@{SetKeypointScale}}
+\index{SetKeypointScale@{SetKeypointScale}!poseNet@{poseNet}}
+\doxysubsubsection{\texorpdfstring{SetKeypointScale()}{SetKeypointScale()}}
+{\footnotesize\ttfamily \label{classpose_net_a90970ad4e9c23f1624bb7415ddc5db5c} 
+void pose\+Net::\+\+Set\+Keypoint\+Scale (\begin{DoxyParamCaption}\item[{float}]{scale}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Set the scale used to calculate the radius of keypoint circles. This scale will be multiplied by the largest image dimension. \Hypertarget{classpose_net_a54a554418a2328e46504c9152e4a5330}\index{poseNet@{poseNet}!SetLinkScale@{SetLinkScale}}
+\index{SetLinkScale@{SetLinkScale}!poseNet@{poseNet}}
+\doxysubsubsection{\texorpdfstring{SetLinkScale()}{SetLinkScale()}}
+{\footnotesize\ttfamily \label{classpose_net_a54a554418a2328e46504c9152e4a5330} 
+void pose\+Net::\+\+Set\+Link\+Scale (\begin{DoxyParamCaption}\item[{float}]{scale}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Set the scale used to calculate the width of link lines. This scale will be multiplied by the largest image dimension. \Hypertarget{classpose_net_a8cfd6a21798664d025bd166d26ab7004}\index{poseNet@{poseNet}!SetThreshold@{SetThreshold}}
+\index{SetThreshold@{SetThreshold}!poseNet@{poseNet}}
+\doxysubsubsection{\texorpdfstring{SetThreshold()}{SetThreshold()}}
+{\footnotesize\ttfamily \label{classpose_net_a8cfd6a21798664d025bd166d26ab7004} 
+void pose\+Net::\+\+Set\+Threshold (\begin{DoxyParamCaption}\item[{float}]{threshold}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Set the minimum confidence threshold. \Hypertarget{classpose_net_a5f1dea586d249793a7917b652a909a12}\index{poseNet@{poseNet}!Usage@{Usage}}
+\index{Usage@{Usage}!poseNet@{poseNet}}
+\doxysubsubsection{\texorpdfstring{Usage()}{Usage()}}
+{\footnotesize\ttfamily \label{classpose_net_a5f1dea586d249793a7917b652a909a12} 
+const char \texorpdfstring{$\ast$}{*} pose\+Net::\+\+Usage (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+Usage string for command line arguments to \doxylink{classpose_net_a5ebf96b95c78f16cbd1179561c81511c}{Create()} 
+
+The documentation for this class was generated from the following file:\+\begin{DoxyCompactItemize}
+\item 
+jetson-\/inference/\+build/\+aarch64/\+include/\+jetson-\/inference/\+pose\+Net.\+h\end{DoxyCompactItemize}

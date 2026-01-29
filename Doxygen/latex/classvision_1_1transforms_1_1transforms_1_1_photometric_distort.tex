@@ -1,0 +1,56 @@
+\doxysection{vision.\+transforms.\+transforms.\+Photometric\+Distort Class Reference}
+\hypertarget{classvision_1_1transforms_1_1transforms_1_1_photometric_distort}{}\label{classvision_1_1transforms_1_1transforms_1_1_photometric_distort}\index{vision.transforms.transforms.PhotometricDistort@{vision.transforms.transforms.PhotometricDistort}}
+Inheritance diagram for vision.\+transforms.\+transforms.\+Photometric\+Distort:\+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classvision_1_1transforms_1_1transforms_1_1_photometric_distort}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classvision_1_1transforms_1_1transforms_1_1_photometric_distort_a44a6ef33bf0e493a856f0127c8df170c}\label{classvision_1_1transforms_1_1transforms_1_1_photometric_distort_a44a6ef33bf0e493a856f0127c8df170c} 
+{\bfseries \+\_\+\+\_\+init\+\_\+\+\_\+} (self)
+\item 
+\Hypertarget{classvision_1_1transforms_1_1transforms_1_1_photometric_distort_aed1bb53a65c3eb6faba98dbf8046e780}\label{classvision_1_1transforms_1_1transforms_1_1_photometric_distort_aed1bb53a65c3eb6faba98dbf8046e780} 
+{\bfseries \+\_\+\+\_\+call\+\_\+\+\_\+} (self, image, boxes, labels)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+list \doxymbox{\hyperlink{classvision_1_1transforms_1_1transforms_1_1_photometric_distort_a53c8cbe19f7991472befd5e292103a00}{pd}}
+\item 
+\Hypertarget{classvision_1_1transforms_1_1transforms_1_1_photometric_distort_a20d0e063637312dae196af3ab9d172f3}\label{classvision_1_1transforms_1_1transforms_1_1_photometric_distort_a20d0e063637312dae196af3ab9d172f3} 
+{\bfseries rand\+\_\+brightness} = \doxymbox{\hyperlink{classvision_1_1transforms_1_1transforms_1_1_random_brightness}{Random\+Brightness}}()
+\item 
+\Hypertarget{classvision_1_1transforms_1_1transforms_1_1_photometric_distort_a81d9842d8daf2e3ee1e9e00f6fa77f06}\label{classvision_1_1transforms_1_1transforms_1_1_photometric_distort_a81d9842d8daf2e3ee1e9e00f6fa77f06} 
+{\bfseries rand\+\_\+light\+\_\+noise} = \doxymbox{\hyperlink{classvision_1_1transforms_1_1transforms_1_1_random_lighting_noise}{Random\+Lighting\+Noise}}()
+\end{DoxyCompactItemize}
+
+
+\label{doc-variable-members}
+\Hypertarget{classvision_1_1transforms_1_1transforms_1_1_photometric_distort_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classvision_1_1transforms_1_1transforms_1_1_photometric_distort_a53c8cbe19f7991472befd5e292103a00}\index{vision.transforms.transforms.PhotometricDistort@{vision.transforms.transforms.PhotometricDistort}!pd@{pd}}
+\index{pd@{pd}!vision.transforms.transforms.PhotometricDistort@{vision.transforms.transforms.PhotometricDistort}}
+\doxysubsubsection{\texorpdfstring{pd}{pd}}
+{\footnotesize\ttfamily \label{classvision_1_1transforms_1_1transforms_1_1_photometric_distort_a53c8cbe19f7991472befd5e292103a00} 
+list vision.\+transforms.\+transforms.\+Photometric\+Distort.\+pd}
+
+{\bfseries Initial value:\+}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=\ \ [}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ RandomContrast(),\ \ \textcolor{comment}{\#\ RGB}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ ConvertColor(current=\textcolor{stringliteral}{"{}RGB"{}},\ transform=\textcolor{stringliteral}{'HSV'}),\ \ \textcolor{comment}{\#\ HSV}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ RandomSaturation(),\ \ \textcolor{comment}{\#\ HSV}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ RandomHue(),\ \ \textcolor{comment}{\#\ HSV}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ ConvertColor(current=\textcolor{stringliteral}{'HSV'},\ transform=\textcolor{stringliteral}{'RGB'}),\ \ \textcolor{comment}{\#\ RGB}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ RandomContrast()\ \ \textcolor{comment}{\#\ RGB}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ ]}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file:\+\begin{DoxyCompactItemize}
+\item 
+jetson-\/inference/\+python/\+training/\+detection/\+ssd/\+vision/\+transforms/\+transforms.\+py\end{DoxyCompactItemize}

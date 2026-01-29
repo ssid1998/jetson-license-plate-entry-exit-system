@@ -1,0 +1,383 @@
+\doxysubsubsection{Color Conversion }
+\hypertarget{group__colorspace}{}\label{group__colorspace}\index{Color Conversion@{Color Conversion}}
+\doxysubsubsubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+cuda\+Error\+\_\+t \doxymbox{\hyperlink{group__colorspace_ga300b4f0ab2845de6e13dafc88facdb2f}{cuda\+Convert\+Color}} (void \texorpdfstring{$\ast$}{*}input, \doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{image\+Format}} input\+Format, void \texorpdfstring{$\ast$}{*}output, \doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{image\+Format}} output\+Format, size\+\_\+t width, size\+\_\+t height, const float2 \&pixel\+\_\+range=make\+\_\+float2(0, 255), cuda\+Stream\+\_\+t stream=0)
+\item 
+cuda\+Error\+\_\+t \doxymbox{\hyperlink{group__colorspace_gad429b6d83ab81a7ec47265f3bffe55f1}{cuda\+Convert\+Color}} (void \texorpdfstring{$\ast$}{*}input, \doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{image\+Format}} input\+Format, void \texorpdfstring{$\ast$}{*}output, \doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{image\+Format}} output\+Format, size\+\_\+t width, size\+\_\+t height, cuda\+Stream\+\_\+t stream)
+\item 
+{\footnotesize template$<$typename T\+\_\+in, typename T\+\_\+out$>$ }\\cuda\+Error\+\_\+t \doxymbox{\hyperlink{group__colorspace_gad838ee09f3ae94e7548ad313f4de86ed}{cuda\+Convert\+Color}} (T\+\_\+in \texorpdfstring{$\ast$}{*}input, T\+\_\+out \texorpdfstring{$\ast$}{*}output, size\+\_\+t width, size\+\_\+t height, const float2 \&pixel\+\_\+range=make\+\_\+float2(0, 255), cuda\+Stream\+\_\+t stream=0)
+\end{DoxyCompactItemize}
+\doxysubsubsubsubsection*{8-\/bit grayscale to floating-\/point grayscale (and vice versa)}
+\begin{DoxySeeAlso}{See also}
+\doxylink{group__colorspace_ga300b4f0ab2845de6e13dafc88facdb2f}{cuda\+Convert\+Color()} from cuda\+Colorspace.\+h for automated format conversion 
+\end{DoxySeeAlso}
+\begin{DoxyCompactItemize}
+\item 
+cuda\+Error\+\_\+t \doxymbox{\hyperlink{group__colorspace_ga78bfd45726deb324059e80073b74b79d}{cuda\+Gray8\+To\+Gray32}} (uint8\+\_\+t \texorpdfstring{$\ast$}{*}input, float \texorpdfstring{$\ast$}{*}output, size\+\_\+t width, size\+\_\+t height, cuda\+Stream\+\_\+t stream=0)
+\item 
+cuda\+Error\+\_\+t \doxymbox{\hyperlink{group__colorspace_ga0f722d52a73bfcb1c056da89a28ac45f}{cuda\+Gray32\+To\+Gray8}} (float \texorpdfstring{$\ast$}{*}input, uint8\+\_\+t \texorpdfstring{$\ast$}{*}output, size\+\_\+t width, size\+\_\+t height, const float2 \&pixel\+Range=make\+\_\+float2(0, 255), cuda\+Stream\+\_\+t stream=0)
+\end{DoxyCompactItemize}
+\doxysubsubsubsubsection*{RGB/\+\+BGR to 8-\/bit grayscale}
+\begin{DoxySeeAlso}{See also}
+\doxylink{group__colorspace_ga300b4f0ab2845de6e13dafc88facdb2f}{cuda\+Convert\+Color()} from cuda\+Colorspace.\+h for automated format conversion 
+\end{DoxySeeAlso}
+\begin{DoxyCompactItemize}
+\item 
+cuda\+Error\+\_\+t \doxymbox{\hyperlink{group__colorspace_ga28a2e7db71d32507831724c3759abe17}{cuda\+RGB8\+To\+Gray8}} (uchar3 \texorpdfstring{$\ast$}{*}input, uint8\+\_\+t \texorpdfstring{$\ast$}{*}output, size\+\_\+t width, size\+\_\+t height, bool swap\+Red\+Blue=false, cuda\+Stream\+\_\+t stream=0)
+\item 
+cuda\+Error\+\_\+t \doxymbox{\hyperlink{group__colorspace_ga29c37ba49ec52143fc14bfafb2aa0fa2}{cuda\+RGBA8\+To\+Gray8}} (uchar4 \texorpdfstring{$\ast$}{*}input, uint8\+\_\+t \texorpdfstring{$\ast$}{*}output, size\+\_\+t width, size\+\_\+t height, bool swap\+Red\+Blue=false, cuda\+Stream\+\_\+t stream=0)
+\item 
+cuda\+Error\+\_\+t \doxymbox{\hyperlink{group__colorspace_ga1283d9aa931efc1de75f38c3178dea90}{cuda\+RGB32\+To\+Gray8}} (float3 \texorpdfstring{$\ast$}{*}input, uint8\+\_\+t \texorpdfstring{$\ast$}{*}output, size\+\_\+t width, size\+\_\+t height, bool swap\+Red\+Blue=false, const float2 \&pixel\+Range=make\+\_\+float2(0, 255), cuda\+Stream\+\_\+t stream=0)
+\item 
+cuda\+Error\+\_\+t \doxymbox{\hyperlink{group__colorspace_ga2cf5fda9999a85a70fdb8c162fdcaf30}{cuda\+RGBA32\+To\+Gray8}} (float4 \texorpdfstring{$\ast$}{*}input, uint8\+\_\+t \texorpdfstring{$\ast$}{*}output, size\+\_\+t width, size\+\_\+t height, bool swap\+Red\+Blue=false, const float2 \&pixel\+Range=make\+\_\+float2(0, 255), cuda\+Stream\+\_\+t stream=0)
+\end{DoxyCompactItemize}
+\doxysubsubsubsubsection*{RGB/\+\+BGR to floating-\/point grayscale}
+\begin{DoxySeeAlso}{See also}
+\doxylink{group__colorspace_ga300b4f0ab2845de6e13dafc88facdb2f}{cuda\+Convert\+Color()} from cuda\+Colorspace.\+h for automated format conversion 
+\end{DoxySeeAlso}
+\begin{DoxyCompactItemize}
+\item 
+cuda\+Error\+\_\+t \doxymbox{\hyperlink{group__colorspace_gac20cee0c96ab23b7353d4c62d92b273e}{cuda\+RGB8\+To\+Gray32}} (uchar3 \texorpdfstring{$\ast$}{*}input, float \texorpdfstring{$\ast$}{*}output, size\+\_\+t width, size\+\_\+t height, bool swap\+Red\+Blue=false, cuda\+Stream\+\_\+t stream=0)
+\item 
+cuda\+Error\+\_\+t \doxymbox{\hyperlink{group__colorspace_gae303d2f99398fc13406ee4bea960e00c}{cuda\+RGBA8\+To\+Gray32}} (uchar4 \texorpdfstring{$\ast$}{*}input, float \texorpdfstring{$\ast$}{*}output, size\+\_\+t width, size\+\_\+t height, bool swap\+Red\+Blue=false, cuda\+Stream\+\_\+t stream=0)
+\item 
+cuda\+Error\+\_\+t \doxymbox{\hyperlink{group__colorspace_ga8a9310dc9b9fee48d0f7fe84eea09880}{cuda\+RGB32\+To\+Gray32}} (float3 \texorpdfstring{$\ast$}{*}input, float \texorpdfstring{$\ast$}{*}output, size\+\_\+t width, size\+\_\+t height, bool swap\+Red\+Blue=false, cuda\+Stream\+\_\+t stream=0)
+\item 
+cuda\+Error\+\_\+t \doxymbox{\hyperlink{group__colorspace_ga2cfdd373df7afb8f1c69efcacdbe551f}{cuda\+RGBA32\+To\+Gray32}} (float4 \texorpdfstring{$\ast$}{*}input, float \texorpdfstring{$\ast$}{*}output, size\+\_\+t width, size\+\_\+t height, bool swap\+Red\+Blue=false, cuda\+Stream\+\_\+t stream=0)
+\end{DoxyCompactItemize}
+\doxysubsubsubsubsection*{8-\/bit grayscale to RGB/\+\+BGR}
+\begin{DoxySeeAlso}{See also}
+\doxylink{group__colorspace_ga300b4f0ab2845de6e13dafc88facdb2f}{cuda\+Convert\+Color()} from cuda\+Colorspace.\+h for automated format conversion 
+\end{DoxySeeAlso}
+\begin{DoxyCompactItemize}
+\item 
+cuda\+Error\+\_\+t \doxymbox{\hyperlink{group__colorspace_gac59874b8143a514bd8f60fe9cc94a23a}{cuda\+Gray8\+To\+RGB8}} (uint8\+\_\+t \texorpdfstring{$\ast$}{*}input, uchar3 \texorpdfstring{$\ast$}{*}output, size\+\_\+t width, size\+\_\+t height, cuda\+Stream\+\_\+t stream=0)
+\item 
+cuda\+Error\+\_\+t \doxymbox{\hyperlink{group__colorspace_ga20da00400850d20eda53810139119f4a}{cuda\+Gray8\+To\+RGBA8}} (uint8\+\_\+t \texorpdfstring{$\ast$}{*}input, uchar4 \texorpdfstring{$\ast$}{*}output, size\+\_\+t width, size\+\_\+t height, cuda\+Stream\+\_\+t stream=0)
+\item 
+cuda\+Error\+\_\+t \doxymbox{\hyperlink{group__colorspace_ga5739705ba35873c6d37655342ca29942}{cuda\+Gray8\+To\+RGB32}} (uint8\+\_\+t \texorpdfstring{$\ast$}{*}input, float3 \texorpdfstring{$\ast$}{*}output, size\+\_\+t width, size\+\_\+t height, cuda\+Stream\+\_\+t stream=0)
+\item 
+cuda\+Error\+\_\+t \doxymbox{\hyperlink{group__colorspace_gac76c58412960b51b451a21afefc575b1}{cuda\+Gray8\+To\+RGBA32}} (uint8\+\_\+t \texorpdfstring{$\ast$}{*}input, float4 \texorpdfstring{$\ast$}{*}output, size\+\_\+t width, size\+\_\+t height, cuda\+Stream\+\_\+t stream=0)
+\end{DoxyCompactItemize}
+\doxysubsubsubsubsection*{Floating-\/point grayscale to RGB/\+\+BGR}
+\begin{DoxySeeAlso}{See also}
+\doxylink{group__colorspace_ga300b4f0ab2845de6e13dafc88facdb2f}{cuda\+Convert\+Color()} from cuda\+Colorspace.\+h for automated format conversion 
+\end{DoxySeeAlso}
+\begin{DoxyCompactItemize}
+\item 
+cuda\+Error\+\_\+t \doxymbox{\hyperlink{group__colorspace_gac1cfd6edf0d58513fcdc2cd37b481bb2}{cuda\+Gray32\+To\+RGB8}} (float \texorpdfstring{$\ast$}{*}input, uchar3 \texorpdfstring{$\ast$}{*}output, size\+\_\+t width, size\+\_\+t height, const float2 \&pixel\+Range=make\+\_\+float2(0, 255), cuda\+Stream\+\_\+t stream=0)
+\item 
+cuda\+Error\+\_\+t \doxymbox{\hyperlink{group__colorspace_ga1e08f2bcf60d67a139e899cf5513e267}{cuda\+Gray32\+To\+RGBA8}} (float \texorpdfstring{$\ast$}{*}input, uchar4 \texorpdfstring{$\ast$}{*}output, size\+\_\+t width, size\+\_\+t height, const float2 \&pixel\+Range=make\+\_\+float2(0, 255), cuda\+Stream\+\_\+t stream=0)
+\item 
+cuda\+Error\+\_\+t \doxymbox{\hyperlink{group__colorspace_gab85f8225737129b0c7f9c46d0852d171}{cuda\+Gray32\+To\+RGB32}} (float \texorpdfstring{$\ast$}{*}input, float3 \texorpdfstring{$\ast$}{*}output, size\+\_\+t width, size\+\_\+t height, cuda\+Stream\+\_\+t stream=0)
+\item 
+cuda\+Error\+\_\+t \doxymbox{\hyperlink{group__colorspace_ga7cc3e460f7a335e087fc073361a55bd5}{cuda\+Gray32\+To\+RGBA32}} (float \texorpdfstring{$\ast$}{*}input, float4 \texorpdfstring{$\ast$}{*}output, size\+\_\+t width, size\+\_\+t height, cuda\+Stream\+\_\+t stream=0)
+\end{DoxyCompactItemize}
+
+
+\doxysubsubsubsection{Detailed Description}
+Colorspace conversion functions for various YUV formats, RGB, BGR, Bayer, and grayscale. \begin{DoxySeeAlso}{See also}
+\doxylink{group__colorspace_ga300b4f0ab2845de6e13dafc88facdb2f}{cuda\+Convert\+Color} for automated format conversion. 
+
+cuda\+YUV.\+h for the YUV functions. 
+\end{DoxySeeAlso}
+
+
+\label{doc-func-members}
+\Hypertarget{group__colorspace_doc-func-members}
+\doxysubsubsubsection{Function Documentation}
+\Hypertarget{group__colorspace_gad838ee09f3ae94e7548ad313f4de86ed}\index{Color Conversion@{Color Conversion}!cudaConvertColor@{cudaConvertColor}}
+\index{cudaConvertColor@{cudaConvertColor}!Color Conversion@{Color Conversion}}
+\doxysubsubsubsubsection{\texorpdfstring{cudaConvertColor()}{cudaConvertColor()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily \label{group__colorspace_gad838ee09f3ae94e7548ad313f4de86ed} 
+template$<$typename T\+\_\+in, typename T\+\_\+out$>$ \\
+cuda\+Error\+\_\+t cuda\+Convert\+Color (\begin{DoxyParamCaption}\item[{T\+\_\+in \texorpdfstring{$\ast$}{*}}]{input}{, }\item[{T\+\_\+out \texorpdfstring{$\ast$}{*}}]{output}{, }\item[{size\+\_\+t}]{width}{, }\item[{size\+\_\+t}]{height}{, }\item[{const float2 \&}]{pixel\+\_\+range}{ = {\ttfamily make\+\_\+float2(0,255)}, }\item[{cuda\+Stream\+\_\+t}]{stream}{ = {\ttfamily 0}}\end{DoxyParamCaption})}
+
+Convert between to image formats using the GPU.
+
+This templated overload of \doxylink{group__colorspace_ga300b4f0ab2845de6e13dafc88facdb2f}{cuda\+Convert\+Color()} supports uchar3 ({\ttfamily \doxylink{group__image_format_gga931c48e08f361637d093355d64583406a7e08074dcdc25f156e92c233807b048f}{IMAGE\+\_\+\+RGB8}}), uchar4 ({\ttfamily \doxylink{group__image_format_gga931c48e08f361637d093355d64583406aa36c106df206651efeeba8c7c1e7bddc}{IMAGE\+\_\+\+RGBA8}}), float3 ({\ttfamily \doxylink{group__image_format_gga931c48e08f361637d093355d64583406a9fd17a87f744486a238f2a7daf4143da}{IMAGE\+\_\+\+RGB32F}}), and float4 ({\ttfamily \doxylink{group__image_format_gga931c48e08f361637d093355d64583406a9396c3fdae6987bbf4abc2b2e63e3815}{IMAGE\+\_\+\+RGBA32F}}).
+
+To convert to/\+from other formats such as YUV, grayscale, and BGR/\+\+BGRA, see the other version of \doxylink{group__colorspace_ga300b4f0ab2845de6e13dafc88facdb2f}{cuda\+Convert\+Color()} that uses explicity \doxylink{group__image_format_ga931c48e08f361637d093355d64583406}{image\+Format} enums.
+
+
+\begin{DoxyParams}{Parameters}
+{\em \doxylink{group__input}{Input}} & CUDA device pointer to the input image \\
+\hline
+{\em output} & CUDA device pointer to the input image \\
+\hline
+{\em width} & width of the input and output images (in pixels) \\
+\hline
+{\em height} & height of the input and output images (in pixels) \\
+\hline
+{\em pixel\+\_\+range} & for floating-\/point to 8-\/bit conversions, specifies the range of pixel intensities in the input image that get normalized to {\ttfamily \+[0,255]\+}. \doxylink{requirements_The}{The} default input range is {\ttfamily \+[0,255]\+}, and as such no normalization occurs. Other common pixel ranges include {\ttfamily \+[0,1]\+} and {\ttfamily \+[-\/1,1]\+}, and these pixel values would be re-\/scaled for {\ttfamily \+[0,255]\+} output. Note that this parameter is only used for float-\/to-\/uchar conversions where the data is downcast (for example, {\ttfamily \doxylink{group__image_format_gga931c48e08f361637d093355d64583406a9fd17a87f744486a238f2a7daf4143da}{IMAGE\+\_\+\+RGB32F}} to {\ttfamily \doxylink{group__image_format_gga931c48e08f361637d093355d64583406a7e08074dcdc25f156e92c233807b048f}{IMAGE\+\_\+\+RGB8}}). \\
+\hline
+{\em stream} & the optional CUDA stream to enqueue the kernel on. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{group__colorspace_ga300b4f0ab2845de6e13dafc88facdb2f}\index{Color Conversion@{Color Conversion}!cudaConvertColor@{cudaConvertColor}}
+\index{cudaConvertColor@{cudaConvertColor}!Color Conversion@{Color Conversion}}
+\doxysubsubsubsubsection{\texorpdfstring{cudaConvertColor()}{cudaConvertColor()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily \label{group__colorspace_ga300b4f0ab2845de6e13dafc88facdb2f} 
+cuda\+Error\+\_\+t cuda\+Convert\+Color (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}}]{input}{, }\item[{\doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{image\+Format}}}]{input\+Format}{, }\item[{void \texorpdfstring{$\ast$}{*}}]{output}{, }\item[{\doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{image\+Format}}}]{output\+Format}{, }\item[{size\+\_\+t}]{width}{, }\item[{size\+\_\+t}]{height}{, }\item[{const float2 \&}]{pixel\+\_\+range}{ = {\ttfamily make\+\_\+float2(0,~255)}, }\item[{cuda\+Stream\+\_\+t}]{stream}{ = {\ttfamily 0}}\end{DoxyParamCaption})}
+
+Convert between two image formats using the GPU.
+
+This function supports various conversions between RGB/\+\+RGBA, BGR/\+\+BGRA, Bayer, grayscale, and YUV. In addition to converting between the previously listed colorspaces, you can also change the number of channels or data format (for example, {\ttfamily \doxylink{group__image_format_gga931c48e08f361637d093355d64583406a7e08074dcdc25f156e92c233807b048f}{IMAGE\+\_\+\+RGB8}} to {\ttfamily \doxylink{group__image_format_gga931c48e08f361637d093355d64583406a9396c3fdae6987bbf4abc2b2e63e3815}{IMAGE\+\_\+\+RGBA32F}}).
+
+For the list of image formats available, \begin{DoxySeeAlso}{See also}
+\doxylink{group__image_format_ga931c48e08f361637d093355d64583406}{image\+Format} enum.
+\end{DoxySeeAlso}
+Limitations and unsupported conversions include:\+ \begin{DoxyVerb}- The YUV formats don't support BGR/BGRA or grayscale (RGB/RGBA only)
+- YUV NV12, YUYV, YVYU, and UYVY can only be converted to RGB/RGBA (not from)
+- Bayer formats can only be converted to RGB8 (`uchar3`) and RGBA8 (`uchar4`)
+\end{DoxyVerb}
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em \doxylink{group__input}{Input}} & CUDA device pointer to the input image \\
+\hline
+{\em input\+Format} & format enum of the input image \\
+\hline
+{\em output} & CUDA device pointer to the input image \\
+\hline
+{\em output\+Format} & format enum of the output image \\
+\hline
+{\em width} & width of the input and output images (in pixels) \\
+\hline
+{\em height} & height of the input and output images (in pixels) \\
+\hline
+{\em pixel\+\_\+range} & for floating-\/point to 8-\/bit conversions, specifies the range of pixel intensities in the input image that get normalized to {\ttfamily \+[0,255]\+}. \doxylink{requirements_The}{The} default input range is {\ttfamily \+[0,255]\+}, and as such no normalization occurs. Other common pixel ranges include {\ttfamily \+[0,1]\+} and {\ttfamily \+[-\/1,1]\+}, and these pixel values would be re-\/scaled for {\ttfamily \+[0,255]\+} output. Note that this parameter is only used for float-\/to-\/uchar conversions where the data is downcast (for example, {\ttfamily \doxylink{group__image_format_gga931c48e08f361637d093355d64583406a9fd17a87f744486a238f2a7daf4143da}{IMAGE\+\_\+\+RGB32F}} to {\ttfamily \doxylink{group__image_format_gga931c48e08f361637d093355d64583406a7e08074dcdc25f156e92c233807b048f}{IMAGE\+\_\+\+RGB8}}). \\
+\hline
+{\em stream} & the optional CUDA stream to enqueue the kernel on. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{group__colorspace_gad429b6d83ab81a7ec47265f3bffe55f1}\index{Color Conversion@{Color Conversion}!cudaConvertColor@{cudaConvertColor}}
+\index{cudaConvertColor@{cudaConvertColor}!Color Conversion@{Color Conversion}}
+\doxysubsubsubsubsection{\texorpdfstring{cudaConvertColor()}{cudaConvertColor()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily \label{group__colorspace_gad429b6d83ab81a7ec47265f3bffe55f1} 
+cuda\+Error\+\_\+t cuda\+Convert\+Color (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}}]{input}{, }\item[{\doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{image\+Format}}}]{input\+Format}{, }\item[{void \texorpdfstring{$\ast$}{*}}]{output}{, }\item[{\doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{image\+Format}}}]{output\+Format}{, }\item[{size\+\_\+t}]{width}{, }\item[{size\+\_\+t}]{height}{, }\item[{cuda\+Stream\+\_\+t}]{stream}{}\end{DoxyParamCaption})}
+
+Convert between two image formats using the GPU.
+
+This function supports various conversions between RGB/\+\+RGBA, BGR/\+\+BGRA, Bayer, grayscale, and YUV. In addition to converting between the previously listed colorspaces, you can also change the number of channels or data format (for example, {\ttfamily \doxylink{group__image_format_gga931c48e08f361637d093355d64583406a7e08074dcdc25f156e92c233807b048f}{IMAGE\+\_\+\+RGB8}} to {\ttfamily \doxylink{group__image_format_gga931c48e08f361637d093355d64583406a9396c3fdae6987bbf4abc2b2e63e3815}{IMAGE\+\_\+\+RGBA32F}}).
+
+For the list of image formats available, \begin{DoxySeeAlso}{See also}
+\doxylink{group__image_format_ga931c48e08f361637d093355d64583406}{image\+Format} enum.
+\end{DoxySeeAlso}
+Limitations and unsupported conversions include:\+ \begin{DoxyVerb}- The YUV formats don't support BGR/BGRA or grayscale (RGB/RGBA only)
+- YUV NV12, YUYV, YVYU, and UYVY can only be converted to RGB/RGBA (not from)
+- Bayer formats can only be converted to RGB8 (`uchar3`) and RGBA8 (`uchar4`)
+\end{DoxyVerb}
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em \doxylink{group__input}{Input}} & CUDA device pointer to the input image \\
+\hline
+{\em input\+Format} & format enum of the input image \\
+\hline
+{\em output} & CUDA device pointer to the input image \\
+\hline
+{\em output\+Format} & format enum of the output image \\
+\hline
+{\em width} & width of the input and output images (in pixels) \\
+\hline
+{\em height} & height of the input and output images (in pixels) \\
+\hline
+{\em stream} & the CUDA stream to enqueue the kernel on. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{group__colorspace_ga0f722d52a73bfcb1c056da89a28ac45f}\index{Color Conversion@{Color Conversion}!cudaGray32ToGray8@{cudaGray32ToGray8}}
+\index{cudaGray32ToGray8@{cudaGray32ToGray8}!Color Conversion@{Color Conversion}}
+\doxysubsubsubsubsection{\texorpdfstring{cudaGray32ToGray8()}{cudaGray32ToGray8()}}
+{\footnotesize\ttfamily \label{group__colorspace_ga0f722d52a73bfcb1c056da89a28ac45f} 
+cuda\+Error\+\_\+t cuda\+Gray32\+To\+Gray8 (\begin{DoxyParamCaption}\item[{float \texorpdfstring{$\ast$}{*}}]{input}{, }\item[{uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{output}{, }\item[{size\+\_\+t}]{width}{, }\item[{size\+\_\+t}]{height}{, }\item[{const float2 \&}]{pixel\+Range}{ = {\ttfamily make\+\_\+float2(0,~255)}, }\item[{cuda\+Stream\+\_\+t}]{stream}{ = {\ttfamily 0}}\end{DoxyParamCaption})}
+
+Convert float grayscale image into uint8 grayscale.
+
+
+\begin{DoxyParams}{Parameters}
+{\em pixel\+Range} & specifies the floating-\/point pixel value range of the input image, which is used to rescale the fixed-\/point pixel outputs to \+[0,255]\+. \doxylink{requirements_The}{The} default input range is \+[0,255]\+, where no rescaling occurs. Other common input ranges are \+[-\/1, 1]\+ or \+[0,1]\+. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{group__colorspace_gab85f8225737129b0c7f9c46d0852d171}\index{Color Conversion@{Color Conversion}!cudaGray32ToRGB32@{cudaGray32ToRGB32}}
+\index{cudaGray32ToRGB32@{cudaGray32ToRGB32}!Color Conversion@{Color Conversion}}
+\doxysubsubsubsubsection{\texorpdfstring{cudaGray32ToRGB32()}{cudaGray32ToRGB32()}}
+{\footnotesize\ttfamily \label{group__colorspace_gab85f8225737129b0c7f9c46d0852d171} 
+cuda\+Error\+\_\+t cuda\+Gray32\+To\+RGB32 (\begin{DoxyParamCaption}\item[{float \texorpdfstring{$\ast$}{*}}]{input}{, }\item[{float3 \texorpdfstring{$\ast$}{*}}]{output}{, }\item[{size\+\_\+t}]{width}{, }\item[{size\+\_\+t}]{height}{, }\item[{cuda\+Stream\+\_\+t}]{stream}{ = {\ttfamily 0}}\end{DoxyParamCaption})}
+
+Convert float grayscale image into float3 RGB/\+\+BGR. \Hypertarget{group__colorspace_gac1cfd6edf0d58513fcdc2cd37b481bb2}\index{Color Conversion@{Color Conversion}!cudaGray32ToRGB8@{cudaGray32ToRGB8}}
+\index{cudaGray32ToRGB8@{cudaGray32ToRGB8}!Color Conversion@{Color Conversion}}
+\doxysubsubsubsubsection{\texorpdfstring{cudaGray32ToRGB8()}{cudaGray32ToRGB8()}}
+{\footnotesize\ttfamily \label{group__colorspace_gac1cfd6edf0d58513fcdc2cd37b481bb2} 
+cuda\+Error\+\_\+t cuda\+Gray32\+To\+RGB8 (\begin{DoxyParamCaption}\item[{float \texorpdfstring{$\ast$}{*}}]{input}{, }\item[{uchar3 \texorpdfstring{$\ast$}{*}}]{output}{, }\item[{size\+\_\+t}]{width}{, }\item[{size\+\_\+t}]{height}{, }\item[{const float2 \&}]{pixel\+Range}{ = {\ttfamily make\+\_\+float2(0,~255)}, }\item[{cuda\+Stream\+\_\+t}]{stream}{ = {\ttfamily 0}}\end{DoxyParamCaption})}
+
+Convert float grayscale image into uchar3 RGB/\+\+BGR.
+
+
+\begin{DoxyParams}{Parameters}
+{\em pixel\+Range} & specifies the floating-\/point pixel value range of the input image, \\
+\hline
+{\em pixel\+Range} & specifies the floating-\/point pixel value range of the input image, which is used to rescale the fixed-\/point pixel outputs to \+[0,255]\+. \doxylink{requirements_The}{The} default input range is \+[0,255]\+, where no rescaling occurs. Other common input ranges are \+[-\/1, 1]\+ or \+[0,1]\+. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{group__colorspace_ga7cc3e460f7a335e087fc073361a55bd5}\index{Color Conversion@{Color Conversion}!cudaGray32ToRGBA32@{cudaGray32ToRGBA32}}
+\index{cudaGray32ToRGBA32@{cudaGray32ToRGBA32}!Color Conversion@{Color Conversion}}
+\doxysubsubsubsubsection{\texorpdfstring{cudaGray32ToRGBA32()}{cudaGray32ToRGBA32()}}
+{\footnotesize\ttfamily \label{group__colorspace_ga7cc3e460f7a335e087fc073361a55bd5} 
+cuda\+Error\+\_\+t cuda\+Gray32\+To\+RGBA32 (\begin{DoxyParamCaption}\item[{float \texorpdfstring{$\ast$}{*}}]{input}{, }\item[{float4 \texorpdfstring{$\ast$}{*}}]{output}{, }\item[{size\+\_\+t}]{width}{, }\item[{size\+\_\+t}]{height}{, }\item[{cuda\+Stream\+\_\+t}]{stream}{ = {\ttfamily 0}}\end{DoxyParamCaption})}
+
+Convert float grayscale image into float4 RGB/\+\+BGR. \Hypertarget{group__colorspace_ga1e08f2bcf60d67a139e899cf5513e267}\index{Color Conversion@{Color Conversion}!cudaGray32ToRGBA8@{cudaGray32ToRGBA8}}
+\index{cudaGray32ToRGBA8@{cudaGray32ToRGBA8}!Color Conversion@{Color Conversion}}
+\doxysubsubsubsubsection{\texorpdfstring{cudaGray32ToRGBA8()}{cudaGray32ToRGBA8()}}
+{\footnotesize\ttfamily \label{group__colorspace_ga1e08f2bcf60d67a139e899cf5513e267} 
+cuda\+Error\+\_\+t cuda\+Gray32\+To\+RGBA8 (\begin{DoxyParamCaption}\item[{float \texorpdfstring{$\ast$}{*}}]{input}{, }\item[{uchar4 \texorpdfstring{$\ast$}{*}}]{output}{, }\item[{size\+\_\+t}]{width}{, }\item[{size\+\_\+t}]{height}{, }\item[{const float2 \&}]{pixel\+Range}{ = {\ttfamily make\+\_\+float2(0,~255)}, }\item[{cuda\+Stream\+\_\+t}]{stream}{ = {\ttfamily 0}}\end{DoxyParamCaption})}
+
+Convert float grayscale image into uchar4 RGB/\+\+BGR.
+
+
+\begin{DoxyParams}{Parameters}
+{\em pixel\+Range} & specifies the floating-\/point pixel value range of the input image, which is used to rescale the fixed-\/point pixel outputs to \+[0,255]\+. \doxylink{requirements_The}{The} default input range is \+[0,255]\+, where no rescaling occurs. Other common input ranges are \+[-\/1, 1]\+ or \+[0,1]\+. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{group__colorspace_ga78bfd45726deb324059e80073b74b79d}\index{Color Conversion@{Color Conversion}!cudaGray8ToGray32@{cudaGray8ToGray32}}
+\index{cudaGray8ToGray32@{cudaGray8ToGray32}!Color Conversion@{Color Conversion}}
+\doxysubsubsubsubsection{\texorpdfstring{cudaGray8ToGray32()}{cudaGray8ToGray32()}}
+{\footnotesize\ttfamily \label{group__colorspace_ga78bfd45726deb324059e80073b74b79d} 
+cuda\+Error\+\_\+t cuda\+Gray8\+To\+Gray32 (\begin{DoxyParamCaption}\item[{uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{input}{, }\item[{float \texorpdfstring{$\ast$}{*}}]{output}{, }\item[{size\+\_\+t}]{width}{, }\item[{size\+\_\+t}]{height}{, }\item[{cuda\+Stream\+\_\+t}]{stream}{ = {\ttfamily 0}}\end{DoxyParamCaption})}
+
+Convert uint8 grayscale image into float grayscale. \Hypertarget{group__colorspace_ga5739705ba35873c6d37655342ca29942}\index{Color Conversion@{Color Conversion}!cudaGray8ToRGB32@{cudaGray8ToRGB32}}
+\index{cudaGray8ToRGB32@{cudaGray8ToRGB32}!Color Conversion@{Color Conversion}}
+\doxysubsubsubsubsection{\texorpdfstring{cudaGray8ToRGB32()}{cudaGray8ToRGB32()}}
+{\footnotesize\ttfamily \label{group__colorspace_ga5739705ba35873c6d37655342ca29942} 
+cuda\+Error\+\_\+t cuda\+Gray8\+To\+RGB32 (\begin{DoxyParamCaption}\item[{uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{input}{, }\item[{float3 \texorpdfstring{$\ast$}{*}}]{output}{, }\item[{size\+\_\+t}]{width}{, }\item[{size\+\_\+t}]{height}{, }\item[{cuda\+Stream\+\_\+t}]{stream}{ = {\ttfamily 0}}\end{DoxyParamCaption})}
+
+Convert uint8 grayscale image into float3 RGB/\+\+BGR. \Hypertarget{group__colorspace_gac59874b8143a514bd8f60fe9cc94a23a}\index{Color Conversion@{Color Conversion}!cudaGray8ToRGB8@{cudaGray8ToRGB8}}
+\index{cudaGray8ToRGB8@{cudaGray8ToRGB8}!Color Conversion@{Color Conversion}}
+\doxysubsubsubsubsection{\texorpdfstring{cudaGray8ToRGB8()}{cudaGray8ToRGB8()}}
+{\footnotesize\ttfamily \label{group__colorspace_gac59874b8143a514bd8f60fe9cc94a23a} 
+cuda\+Error\+\_\+t cuda\+Gray8\+To\+RGB8 (\begin{DoxyParamCaption}\item[{uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{input}{, }\item[{uchar3 \texorpdfstring{$\ast$}{*}}]{output}{, }\item[{size\+\_\+t}]{width}{, }\item[{size\+\_\+t}]{height}{, }\item[{cuda\+Stream\+\_\+t}]{stream}{ = {\ttfamily 0}}\end{DoxyParamCaption})}
+
+Convert uint8 grayscale image into uchar3 RGB/\+\+BGR. \Hypertarget{group__colorspace_gac76c58412960b51b451a21afefc575b1}\index{Color Conversion@{Color Conversion}!cudaGray8ToRGBA32@{cudaGray8ToRGBA32}}
+\index{cudaGray8ToRGBA32@{cudaGray8ToRGBA32}!Color Conversion@{Color Conversion}}
+\doxysubsubsubsubsection{\texorpdfstring{cudaGray8ToRGBA32()}{cudaGray8ToRGBA32()}}
+{\footnotesize\ttfamily \label{group__colorspace_gac76c58412960b51b451a21afefc575b1} 
+cuda\+Error\+\_\+t cuda\+Gray8\+To\+RGBA32 (\begin{DoxyParamCaption}\item[{uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{input}{, }\item[{float4 \texorpdfstring{$\ast$}{*}}]{output}{, }\item[{size\+\_\+t}]{width}{, }\item[{size\+\_\+t}]{height}{, }\item[{cuda\+Stream\+\_\+t}]{stream}{ = {\ttfamily 0}}\end{DoxyParamCaption})}
+
+Convert uint8 grayscale image into float4 RGB/\+\+BGR. \Hypertarget{group__colorspace_ga20da00400850d20eda53810139119f4a}\index{Color Conversion@{Color Conversion}!cudaGray8ToRGBA8@{cudaGray8ToRGBA8}}
+\index{cudaGray8ToRGBA8@{cudaGray8ToRGBA8}!Color Conversion@{Color Conversion}}
+\doxysubsubsubsubsection{\texorpdfstring{cudaGray8ToRGBA8()}{cudaGray8ToRGBA8()}}
+{\footnotesize\ttfamily \label{group__colorspace_ga20da00400850d20eda53810139119f4a} 
+cuda\+Error\+\_\+t cuda\+Gray8\+To\+RGBA8 (\begin{DoxyParamCaption}\item[{uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{input}{, }\item[{uchar4 \texorpdfstring{$\ast$}{*}}]{output}{, }\item[{size\+\_\+t}]{width}{, }\item[{size\+\_\+t}]{height}{, }\item[{cuda\+Stream\+\_\+t}]{stream}{ = {\ttfamily 0}}\end{DoxyParamCaption})}
+
+Convert uint8 grayscale image into uchar4 RGB/\+\+BGR. \Hypertarget{group__colorspace_ga8a9310dc9b9fee48d0f7fe84eea09880}\index{Color Conversion@{Color Conversion}!cudaRGB32ToGray32@{cudaRGB32ToGray32}}
+\index{cudaRGB32ToGray32@{cudaRGB32ToGray32}!Color Conversion@{Color Conversion}}
+\doxysubsubsubsubsection{\texorpdfstring{cudaRGB32ToGray32()}{cudaRGB32ToGray32()}}
+{\footnotesize\ttfamily \label{group__colorspace_ga8a9310dc9b9fee48d0f7fe84eea09880} 
+cuda\+Error\+\_\+t cuda\+RGB32\+To\+Gray32 (\begin{DoxyParamCaption}\item[{float3 \texorpdfstring{$\ast$}{*}}]{input}{, }\item[{float \texorpdfstring{$\ast$}{*}}]{output}{, }\item[{size\+\_\+t}]{width}{, }\item[{size\+\_\+t}]{height}{, }\item[{bool}]{swap\+Red\+Blue}{ = {\ttfamily false}, }\item[{cuda\+Stream\+\_\+t}]{stream}{ = {\ttfamily 0}}\end{DoxyParamCaption})}
+
+Convert float3 RGB/\+\+BGR image into float grayscale.
+
+
+\begin{DoxyParams}{Parameters}
+{\em swap\+Red\+Blue} & if true, swap the input\textquotesingle{}s red and blue channels. \doxylink{requirements_The}{The} default is false, and the channels will remain the same. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{group__colorspace_ga1283d9aa931efc1de75f38c3178dea90}\index{Color Conversion@{Color Conversion}!cudaRGB32ToGray8@{cudaRGB32ToGray8}}
+\index{cudaRGB32ToGray8@{cudaRGB32ToGray8}!Color Conversion@{Color Conversion}}
+\doxysubsubsubsubsection{\texorpdfstring{cudaRGB32ToGray8()}{cudaRGB32ToGray8()}}
+{\footnotesize\ttfamily \label{group__colorspace_ga1283d9aa931efc1de75f38c3178dea90} 
+cuda\+Error\+\_\+t cuda\+RGB32\+To\+Gray8 (\begin{DoxyParamCaption}\item[{float3 \texorpdfstring{$\ast$}{*}}]{input}{, }\item[{uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{output}{, }\item[{size\+\_\+t}]{width}{, }\item[{size\+\_\+t}]{height}{, }\item[{bool}]{swap\+Red\+Blue}{ = {\ttfamily false}, }\item[{const float2 \&}]{pixel\+Range}{ = {\ttfamily make\+\_\+float2(0,~255)}, }\item[{cuda\+Stream\+\_\+t}]{stream}{ = {\ttfamily 0}}\end{DoxyParamCaption})}
+
+Convert float3 RGB/\+\+BGR image into uint8 grayscale.
+
+
+\begin{DoxyParams}{Parameters}
+{\em swap\+Red\+Blue} & if true, swap the input\textquotesingle{}s red and blue channels. \doxylink{requirements_The}{The} default is false, and the channels will remain the same.\\
+\hline
+{\em pixel\+Range} & specifies the floating-\/point pixel value range of the input image, which is used to rescale the fixed-\/point pixel outputs to \+[0,255]\+. \doxylink{requirements_The}{The} default input range is \+[0,255]\+, where no rescaling occurs. Other common input ranges are \+[-\/1, 1]\+ or \+[0,1]\+. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{group__colorspace_gac20cee0c96ab23b7353d4c62d92b273e}\index{Color Conversion@{Color Conversion}!cudaRGB8ToGray32@{cudaRGB8ToGray32}}
+\index{cudaRGB8ToGray32@{cudaRGB8ToGray32}!Color Conversion@{Color Conversion}}
+\doxysubsubsubsubsection{\texorpdfstring{cudaRGB8ToGray32()}{cudaRGB8ToGray32()}}
+{\footnotesize\ttfamily \label{group__colorspace_gac20cee0c96ab23b7353d4c62d92b273e} 
+cuda\+Error\+\_\+t cuda\+RGB8\+To\+Gray32 (\begin{DoxyParamCaption}\item[{uchar3 \texorpdfstring{$\ast$}{*}}]{input}{, }\item[{float \texorpdfstring{$\ast$}{*}}]{output}{, }\item[{size\+\_\+t}]{width}{, }\item[{size\+\_\+t}]{height}{, }\item[{bool}]{swap\+Red\+Blue}{ = {\ttfamily false}, }\item[{cuda\+Stream\+\_\+t}]{stream}{ = {\ttfamily 0}}\end{DoxyParamCaption})}
+
+Convert uchar3 RGB/\+\+BGR image into float grayscale.
+
+
+\begin{DoxyParams}{Parameters}
+{\em swap\+Red\+Blue} & if true, swap the input\textquotesingle{}s red and blue channels. \doxylink{requirements_The}{The} default is false, and the channels will remain the same. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{group__colorspace_ga28a2e7db71d32507831724c3759abe17}\index{Color Conversion@{Color Conversion}!cudaRGB8ToGray8@{cudaRGB8ToGray8}}
+\index{cudaRGB8ToGray8@{cudaRGB8ToGray8}!Color Conversion@{Color Conversion}}
+\doxysubsubsubsubsection{\texorpdfstring{cudaRGB8ToGray8()}{cudaRGB8ToGray8()}}
+{\footnotesize\ttfamily \label{group__colorspace_ga28a2e7db71d32507831724c3759abe17} 
+cuda\+Error\+\_\+t cuda\+RGB8\+To\+Gray8 (\begin{DoxyParamCaption}\item[{uchar3 \texorpdfstring{$\ast$}{*}}]{input}{, }\item[{uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{output}{, }\item[{size\+\_\+t}]{width}{, }\item[{size\+\_\+t}]{height}{, }\item[{bool}]{swap\+Red\+Blue}{ = {\ttfamily false}, }\item[{cuda\+Stream\+\_\+t}]{stream}{ = {\ttfamily 0}}\end{DoxyParamCaption})}
+
+Convert uchar3 RGB/\+\+BGR image into uint8 grayscale.
+
+
+\begin{DoxyParams}{Parameters}
+{\em swap\+Red\+Blue} & if true, swap the input\textquotesingle{}s red and blue channels. \doxylink{requirements_The}{The} default is false, and the channels will remain the same. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{group__colorspace_ga2cfdd373df7afb8f1c69efcacdbe551f}\index{Color Conversion@{Color Conversion}!cudaRGBA32ToGray32@{cudaRGBA32ToGray32}}
+\index{cudaRGBA32ToGray32@{cudaRGBA32ToGray32}!Color Conversion@{Color Conversion}}
+\doxysubsubsubsubsection{\texorpdfstring{cudaRGBA32ToGray32()}{cudaRGBA32ToGray32()}}
+{\footnotesize\ttfamily \label{group__colorspace_ga2cfdd373df7afb8f1c69efcacdbe551f} 
+cuda\+Error\+\_\+t cuda\+RGBA32\+To\+Gray32 (\begin{DoxyParamCaption}\item[{float4 \texorpdfstring{$\ast$}{*}}]{input}{, }\item[{float \texorpdfstring{$\ast$}{*}}]{output}{, }\item[{size\+\_\+t}]{width}{, }\item[{size\+\_\+t}]{height}{, }\item[{bool}]{swap\+Red\+Blue}{ = {\ttfamily false}, }\item[{cuda\+Stream\+\_\+t}]{stream}{ = {\ttfamily 0}}\end{DoxyParamCaption})}
+
+Convert float4 RGB/\+\+BGR image into float grayscale.
+
+
+\begin{DoxyParams}{Parameters}
+{\em swap\+Red\+Blue} & if true, swap the input\textquotesingle{}s red and blue channels. \doxylink{requirements_The}{The} default is false, and the channels will remain the same. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{group__colorspace_ga2cf5fda9999a85a70fdb8c162fdcaf30}\index{Color Conversion@{Color Conversion}!cudaRGBA32ToGray8@{cudaRGBA32ToGray8}}
+\index{cudaRGBA32ToGray8@{cudaRGBA32ToGray8}!Color Conversion@{Color Conversion}}
+\doxysubsubsubsubsection{\texorpdfstring{cudaRGBA32ToGray8()}{cudaRGBA32ToGray8()}}
+{\footnotesize\ttfamily \label{group__colorspace_ga2cf5fda9999a85a70fdb8c162fdcaf30} 
+cuda\+Error\+\_\+t cuda\+RGBA32\+To\+Gray8 (\begin{DoxyParamCaption}\item[{float4 \texorpdfstring{$\ast$}{*}}]{input}{, }\item[{uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{output}{, }\item[{size\+\_\+t}]{width}{, }\item[{size\+\_\+t}]{height}{, }\item[{bool}]{swap\+Red\+Blue}{ = {\ttfamily false}, }\item[{const float2 \&}]{pixel\+Range}{ = {\ttfamily make\+\_\+float2(0,~255)}, }\item[{cuda\+Stream\+\_\+t}]{stream}{ = {\ttfamily 0}}\end{DoxyParamCaption})}
+
+Convert float4 RGBA/\+\+BGRA image into uint8 grayscale.
+
+
+\begin{DoxyParams}{Parameters}
+{\em swap\+Red\+Blue} & if true, swap the input\textquotesingle{}s red and blue channels. \doxylink{requirements_The}{The} default is false, and the channels will remain the same.\\
+\hline
+{\em pixel\+Range} & specifies the floating-\/point pixel value range of the input image, which is used to rescale the fixed-\/point pixel outputs to \+[0,255]\+. \doxylink{requirements_The}{The} default input range is \+[0,255]\+, where no rescaling occurs. Other common input ranges are \+[-\/1, 1]\+ or \+[0,1]\+. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{group__colorspace_gae303d2f99398fc13406ee4bea960e00c}\index{Color Conversion@{Color Conversion}!cudaRGBA8ToGray32@{cudaRGBA8ToGray32}}
+\index{cudaRGBA8ToGray32@{cudaRGBA8ToGray32}!Color Conversion@{Color Conversion}}
+\doxysubsubsubsubsection{\texorpdfstring{cudaRGBA8ToGray32()}{cudaRGBA8ToGray32()}}
+{\footnotesize\ttfamily \label{group__colorspace_gae303d2f99398fc13406ee4bea960e00c} 
+cuda\+Error\+\_\+t cuda\+RGBA8\+To\+Gray32 (\begin{DoxyParamCaption}\item[{uchar4 \texorpdfstring{$\ast$}{*}}]{input}{, }\item[{float \texorpdfstring{$\ast$}{*}}]{output}{, }\item[{size\+\_\+t}]{width}{, }\item[{size\+\_\+t}]{height}{, }\item[{bool}]{swap\+Red\+Blue}{ = {\ttfamily false}, }\item[{cuda\+Stream\+\_\+t}]{stream}{ = {\ttfamily 0}}\end{DoxyParamCaption})}
+
+Convert uchar4 RGBA/\+\+BGRA image into float grayscale.
+
+
+\begin{DoxyParams}{Parameters}
+{\em swap\+Red\+Blue} & if true, swap the input\textquotesingle{}s red and blue channels. \doxylink{requirements_The}{The} default is false, and the channels will remain the same. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{group__colorspace_ga29c37ba49ec52143fc14bfafb2aa0fa2}\index{Color Conversion@{Color Conversion}!cudaRGBA8ToGray8@{cudaRGBA8ToGray8}}
+\index{cudaRGBA8ToGray8@{cudaRGBA8ToGray8}!Color Conversion@{Color Conversion}}
+\doxysubsubsubsubsection{\texorpdfstring{cudaRGBA8ToGray8()}{cudaRGBA8ToGray8()}}
+{\footnotesize\ttfamily \label{group__colorspace_ga29c37ba49ec52143fc14bfafb2aa0fa2} 
+cuda\+Error\+\_\+t cuda\+RGBA8\+To\+Gray8 (\begin{DoxyParamCaption}\item[{uchar4 \texorpdfstring{$\ast$}{*}}]{input}{, }\item[{uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{output}{, }\item[{size\+\_\+t}]{width}{, }\item[{size\+\_\+t}]{height}{, }\item[{bool}]{swap\+Red\+Blue}{ = {\ttfamily false}, }\item[{cuda\+Stream\+\_\+t}]{stream}{ = {\ttfamily 0}}\end{DoxyParamCaption})}
+
+Convert uchar4 RGBA/\+\+BGRA image into uint8 grayscale.
+
+
+\begin{DoxyParams}{Parameters}
+{\em swap\+Red\+Blue} & if true, swap the input\textquotesingle{}s red and blue channels. \doxylink{requirements_The}{The} default is false, and the channels will remain the same. \\
+\hline
+\end{DoxyParams}

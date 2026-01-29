@@ -1,0 +1,107 @@
+\doxysection{jetson-\/inference/\+python/\+training/\+classification Directory Reference}
+\hypertarget{dir_74946e755fa1b443ff6e15cb05419b3e}{}\label{dir_74946e755fa1b443ff6e15cb05419b3e}\index{jetson-\/inference/python/training/classification Directory Reference@{jetson-\/inference/python/training/classification Directory Reference}}
+
+
+\doxysubsection{Detailed Description}
+\hypertarget{dir_74946e755fa1b443ff6e15cb05419b3e_autotoc_md457}{}\doxysubsection{\texorpdfstring{Image\+Net training in Py\+Torch}{Image\+Net training in Py\+Torch}}\label{dir_74946e755fa1b443ff6e15cb05419b3e_autotoc_md457}
+This implements training of popular model architectures, such as Res\+Net, Alex\+Net, and VGG on the Image\+Net dataset.\hypertarget{dir_74946e755fa1b443ff6e15cb05419b3e_autotoc_md458}{}\doxysubsection{\texorpdfstring{Requirements}{Requirements}}\label{dir_74946e755fa1b443ff6e15cb05419b3e_autotoc_md458}
+
+\begin{DoxyItemize}
+\item Install Py\+Torch (\href{http://pytorch.org}{\texttt{pytorch.\+org}})
+\item {\ttfamily pip install -\/r requirements.\+txt}
+\item Download the Image\+Net dataset and move validation images to labeled subfolders
+\begin{DoxyItemize}
+\item To do this, you can use the following script:\+ \href{https://raw.githubusercontent.com/soumith/imagenetloader.torch/master/valprep.sh}{\texttt{https:\+/\+/\+raw.\+githubusercontent.\+com/\+soumith/\+imagenetloader.\+torch/\+master/\+valprep.\+sh}}
+\end{DoxyItemize}
+\end{DoxyItemize}\hypertarget{dir_74946e755fa1b443ff6e15cb05419b3e_autotoc_md459}{}\doxysubsection{\texorpdfstring{Training}{Training}}\label{dir_74946e755fa1b443ff6e15cb05419b3e_autotoc_md459}
+To train a model, run {\ttfamily main.\+py} with the desired model architecture and the path to the Image\+Net dataset:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{python\ main.py\ -\/a\ resnet18\ [imagenet-\/folder\ with\ train\ and\ val\ folders]}
+
+\end{DoxyCode}
+
+
+\doxylink{requirements_The}{The} default learning rate schedule starts at 0.\+1 and decays by a factor of 10 every 30 epochs. This is appropriate for Res\+Net and models with batch normalization, but too high for Alex\+Net and VGG. Use 0.\+01 as the initial learning rate for Alex\+Net or VGG:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{python\ main.py\ -\/a\ alexnet\ -\/-\/lr\ 0.01\ [imagenet-\/folder\ with\ train\ and\ val\ folders]}
+
+\end{DoxyCode}
+\hypertarget{dir_74946e755fa1b443ff6e15cb05419b3e_autotoc_md460}{}\doxysubsection{\texorpdfstring{Multi-\/processing Distributed Data Parallel Training}{Multi-\/processing Distributed Data Parallel Training}}\label{dir_74946e755fa1b443ff6e15cb05419b3e_autotoc_md460}
+You should always use the NCCL backend for multi-\/processing distributed training since it currently provides the best distributed training performance.\hypertarget{dir_74946e755fa1b443ff6e15cb05419b3e_autotoc_md461}{}\doxysubsubsection{\texorpdfstring{Single node, multiple GPUs:\+}{Single node, multiple GPUs:\+}}\label{dir_74946e755fa1b443ff6e15cb05419b3e_autotoc_md461}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{python\ main.py\ -\/a\ resnet50\ -\/-\/dist-\/url\ 'tcp://127.0.0.1:FREEPORT'\ -\/-\/dist-\/backend\ 'nccl'\ -\/-\/multiprocessing-\/distributed\ -\/-\/world-\/size\ 1\ -\/-\/rank\ 0\ [imagenet-\/folder\ with\ train\ and\ val\ folders]}
+
+\end{DoxyCode}
+\hypertarget{dir_74946e755fa1b443ff6e15cb05419b3e_autotoc_md462}{}\doxysubsubsection{\texorpdfstring{Multiple nodes:\+}{Multiple nodes:\+}}\label{dir_74946e755fa1b443ff6e15cb05419b3e_autotoc_md462}
+Node 0:\+ 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{python\ main.py\ -\/a\ resnet50\ -\/-\/dist-\/url\ 'tcp://IP\_OF\_NODE0:FREEPORT'\ -\/-\/dist-\/backend\ 'nccl'\ -\/-\/multiprocessing-\/distributed\ -\/-\/world-\/size\ 2\ -\/-\/rank\ 0\ [imagenet-\/folder\ with\ train\ and\ val\ folders]}
+
+\end{DoxyCode}
+
+
+Node 1:\+ 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{python\ main.py\ -\/a\ resnet50\ -\/-\/dist-\/url\ 'tcp://IP\_OF\_NODE0:FREEPORT'\ -\/-\/dist-\/backend\ 'nccl'\ -\/-\/multiprocessing-\/distributed\ -\/-\/world-\/size\ 2\ -\/-\/rank\ 1\ [imagenet-\/folder\ with\ train\ and\ val\ folders]}
+
+\end{DoxyCode}
+\hypertarget{dir_74946e755fa1b443ff6e15cb05419b3e_autotoc_md463}{}\doxysubsection{\texorpdfstring{Usage}{Usage}}\label{dir_74946e755fa1b443ff6e15cb05419b3e_autotoc_md463}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{usage:\ main.py\ [-\/h]\ [-\/-\/arch\ ARCH]\ [-\/j\ N]\ [-\/-\/epochs\ N]\ [-\/-\/start-\/epoch\ N]\ [-\/b\ N]}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [-\/-\/lr\ LR]\ [-\/-\/momentum\ M]\ [-\/-\/weight-\/decay\ W]\ [-\/-\/print-\/freq\ N]}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [-\/-\/resume\ PATH]\ [-\/e]\ [-\/-\/pretrained]\ [-\/-\/world-\/size\ WORLD\_SIZE]}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [-\/-\/rank\ RANK]\ [-\/-\/dist-\/url\ DIST\_URL]}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [-\/-\/dist-\/backend\ DIST\_BACKEND]\ [-\/-\/seed\ SEED]\ [-\/-\/gpu\ GPU]}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [-\/-\/multiprocessing-\/distributed]}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ DIR}
+\DoxyCodeLine{}
+\DoxyCodeLine{PyTorch\ ImageNet\ Training}
+\DoxyCodeLine{}
+\DoxyCodeLine{positional\ arguments:}
+\DoxyCodeLine{\ \ DIR\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ path\ to\ dataset}
+\DoxyCodeLine{}
+\DoxyCodeLine{optional\ arguments:}
+\DoxyCodeLine{\ \ -\/h,\ -\/-\/help\ \ \ \ \ \ \ \ \ \ \ \ show\ this\ help\ message\ and\ exit}
+\DoxyCodeLine{\ \ -\/-\/arch\ ARCH,\ -\/a\ ARCH\ \ model\ architecture:\ alexnet\ |\ densenet121\ |}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ densenet161\ |\ densenet169\ |\ densenet201\ |}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ resnet101\ |\ resnet152\ |\ resnet18\ |\ resnet34\ |}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ resnet50\ |\ squeezenet1\_0\ |\ squeezenet1\_1\ |\ vgg11\ |}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ vgg11\_bn\ |\ vgg13\ |\ vgg13\_bn\ |\ vgg16\ |\ vgg16\_bn\ |\ vgg19}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |\ vgg19\_bn\ (default:\ resnet18)}
+\DoxyCodeLine{\ \ -\/j\ N,\ -\/-\/workers\ N\ \ \ \ \ number\ of\ data\ loading\ workers\ (default:\ 4)}
+\DoxyCodeLine{\ \ -\/-\/epochs\ N\ \ \ \ \ \ \ \ \ \ \ \ number\ of\ total\ epochs\ to\ run}
+\DoxyCodeLine{\ \ -\/-\/start-\/epoch\ N\ \ \ \ \ \ \ manual\ epoch\ number\ (useful\ on\ restarts)}
+\DoxyCodeLine{\ \ -\/b\ N,\ -\/-\/batch-\/size\ N\ \ mini-\/batch\ size\ (default:\ 256),\ this\ is\ the\ total}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ batch\ size\ of\ all\ GPUs\ on\ the\ current\ node\ when\ using}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Data\ Parallel\ or\ Distributed\ Data\ Parallel}
+\DoxyCodeLine{\ \ -\/-\/lr\ LR,\ -\/-\/learning-\/rate\ LR}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ initial\ learning\ rate}
+\DoxyCodeLine{\ \ -\/-\/momentum\ M\ \ \ \ \ \ \ \ \ \ momentum}
+\DoxyCodeLine{\ \ -\/-\/weight-\/decay\ W,\ -\/-\/wd\ W}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ weight\ decay\ (default:\ 1e-\/4)}
+\DoxyCodeLine{\ \ -\/-\/print-\/freq\ N,\ -\/p\ N\ \ print\ frequency\ (default:\ 10)}
+\DoxyCodeLine{\ \ -\/-\/resume\ PATH\ \ \ \ \ \ \ \ \ path\ to\ latest\ checkpoint\ (default:\ none)}
+\DoxyCodeLine{\ \ -\/e,\ -\/-\/evaluate\ \ \ \ \ \ \ \ evaluate\ model\ on\ validation\ set}
+\DoxyCodeLine{\ \ -\/-\/pretrained\ \ \ \ \ \ \ \ \ \ use\ pre-\/trained\ model}
+\DoxyCodeLine{\ \ -\/-\/world-\/size\ WORLD\_SIZE}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ number\ of\ nodes\ for\ distributed\ training}
+\DoxyCodeLine{\ \ -\/-\/rank\ RANK\ \ \ \ \ \ \ \ \ \ \ node\ rank\ for\ distributed\ training}
+\DoxyCodeLine{\ \ -\/-\/dist-\/url\ DIST\_URL\ \ \ url\ used\ to\ set\ up\ distributed\ training}
+\DoxyCodeLine{\ \ -\/-\/dist-\/backend\ DIST\_BACKEND}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ distributed\ backend}
+\DoxyCodeLine{\ \ -\/-\/seed\ SEED\ \ \ \ \ \ \ \ \ \ \ seed\ for\ initializing\ training.}
+\DoxyCodeLine{\ \ -\/-\/gpu\ GPU\ \ \ \ \ \ \ \ \ \ \ \ \ GPU\ id\ to\ use.}
+\DoxyCodeLine{\ \ -\/-\/multiprocessing-\/distributed}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Use\ multi-\/processing\ distributed\ training\ to\ launch\ N}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ processes\ per\ node,\ which\ has\ N\ GPUs.\ This\ is\ the}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fastest\ way\ to\ use\ PyTorch\ for\ either\ single\ node\ or}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ multi\ node\ data\ parallel\ training}
+
+\end{DoxyCode}
+ 

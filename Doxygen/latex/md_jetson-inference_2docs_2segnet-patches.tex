@@ -1,0 +1,56 @@
+\chapter{segnet-\/patches }
+\hypertarget{md_jetson-inference_2docs_2segnet-patches}{}\label{md_jetson-inference_2docs_2segnet-patches}\index{segnet-\/patches@{segnet-\/patches}}
+ 
+
+\textsuperscript{\href{segnet-training.md}{\texttt{Back}} \texorpdfstring{$\vert$}{|} \href{segnet-console.md}{\texttt{Next}} \texorpdfstring{$\vert$}{|} }\href{../README.md\#two-days-to-a-demo-digits}{\texttt{\textsuperscript{Contents}}} ~\newline
+ \textsuperscript{Semantic Segmentation}\hypertarget{md_jetson-inference_2docs_2segnet-patches_autotoc_md419}{}\doxysection{\texorpdfstring{FCN-\/\+Alexnet Patches for Tensor\+RT}{FCN-\/\+Alexnet Patches for Tensor\+RT}}\label{md_jetson-inference_2docs_2segnet-patches_autotoc_md419}
+There exist a couple non-\/essential layers included in the original FCN-\/\+Alexnet which aren\textquotesingle{}t supported in Tensor\+RT and should be deleted from the {\ttfamily deploy.\+prototxt} included in the snapshot.
+
+At the end of {\ttfamily deploy.\+prototxt}, delete the deconv and crop layers:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{layer\ \{}
+\DoxyCodeLine{\ \ name:\ "{}upscore"{}}
+\DoxyCodeLine{\ \ type:\ "{}Deconvolution"{}}
+\DoxyCodeLine{\ \ bottom:\ "{}score\_fr"{}}
+\DoxyCodeLine{\ \ top:\ "{}upscore"{}}
+\DoxyCodeLine{\ \ param\ \{}
+\DoxyCodeLine{\ \ \ \ lr\_mult:\ 0.0}
+\DoxyCodeLine{\ \ \}}
+\DoxyCodeLine{\ \ convolution\_param\ \{}
+\DoxyCodeLine{\ \ \ \ num\_output:\ 21}
+\DoxyCodeLine{\ \ \ \ bias\_term:\ false}
+\DoxyCodeLine{\ \ \ \ kernel\_size:\ 63}
+\DoxyCodeLine{\ \ \ \ group:\ 21}
+\DoxyCodeLine{\ \ \ \ stride:\ 32}
+\DoxyCodeLine{\ \ \ \ weight\_filler\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ type:\ "{}bilinear"{}}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{\ \ \}}
+\DoxyCodeLine{\}}
+\DoxyCodeLine{layer\ \{}
+\DoxyCodeLine{\ \ name:\ "{}score"{}}
+\DoxyCodeLine{\ \ type:\ "{}Crop"{}}
+\DoxyCodeLine{\ \ bottom:\ "{}upscore"{}}
+\DoxyCodeLine{\ \ bottom:\ "{}data"{}}
+\DoxyCodeLine{\ \ top:\ "{}score"{}}
+\DoxyCodeLine{\ \ crop\_param\ \{}
+\DoxyCodeLine{\ \ \ \ axis:\ 2}
+\DoxyCodeLine{\ \ \ \ offset:\ 18}
+\DoxyCodeLine{\ \ \}}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+
+
+And on line 24 of {\ttfamily deploy.\+prototxt}, change {\ttfamily pad:\+ 100} to {\ttfamily pad:\+ 0}. ~\newline
+
+
+Finally, copy the {\ttfamily fpv-\/labels.\+txt} and {\ttfamily fpv-\/deploy-\/colors.\+txt} from the aerial dataset to your model snapshot folder on Jetson. Your FCN-\/\+Alexnet model snapshot is now compatible with Tensor\+RT. Now we can run it on Jetson and perform inference on images.\hypertarget{md_jetson-inference_2docs_2segnet-patches_autotoc_md420}{}\doxysubsection{\texorpdfstring{autotoc\+\_\+md420}{autotoc\+\_\+md420}}\label{md_jetson-inference_2docs_2segnet-patches_autotoc_md420}
+Next \texorpdfstring{$\vert$}{|} {\bfseries{\href{segnet-console.md}{\texttt{Running Segmentation Models on Jetson}}}} ~\newline
+ Back \texorpdfstring{$\vert$}{|} {\bfseries{\href{segnet-training.md}{\texttt{Training FCN-\/\+Alexnet with DIGITS}}}}
+
+{\bfseries{ }}
+
+\textsuperscript{© 2016-\/2019 NVIDIA \texorpdfstring{$\vert$}{|} }\href{../README.md\#two-days-to-a-demo-digits}{\texttt{\textsuperscript{Table of Contents}}}

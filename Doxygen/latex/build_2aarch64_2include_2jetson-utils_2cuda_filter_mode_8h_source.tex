@@ -1,0 +1,58 @@
+\doxysection{cuda\+Filter\+Mode.\+h}
+\hypertarget{build_2aarch64_2include_2jetson-utils_2cuda_filter_mode_8h_source}{}\label{build_2aarch64_2include_2jetson-utils_2cuda_filter_mode_8h_source}\index{jetson-\/inference/build/aarch64/include/jetson-\/utils/cudaFilterMode.h@{jetson-\/inference/build/aarch64/include/jetson-\/utils/cudaFilterMode.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ *\ Copyright\ (c)\ 2019,\ NVIDIA\ CORPORATION.\ All\ rights\ reserved.}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ *\ Permission\ is\ hereby\ granted,\ free\ of\ charge,\ to\ any\ person\ obtaining\ a}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ *\ copy\ of\ this\ software\ and\ associated\ documentation\ files\ (the\ "{}Software"{}),}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ *\ to\ deal\ in\ the\ Software\ without\ restriction,\ including\ without\ limitation}}
+\DoxyCodeLine{00007\ \textcolor{comment}{\ *\ the\ rights\ to\ use,\ copy,\ modify,\ merge,\ publish,\ distribute,\ sublicense,}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ *\ and/or\ sell\ copies\ of\ the\ Software,\ and\ to\ permit\ persons\ to\ whom\ the}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ *\ Software\ is\ furnished\ to\ do\ so,\ subject\ to\ the\ following\ conditions:}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ *\ The\ above\ copyright\ notice\ and\ this\ permission\ notice\ shall\ be\ included\ in}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ *\ all\ copies\ or\ substantial\ portions\ of\ the\ Software.}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ *\ THE\ SOFTWARE\ IS\ PROVIDED\ "{}AS\ IS"{},\ WITHOUT\ WARRANTY\ OF\ ANY\ KIND,\ EXPRESS\ OR}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ *\ IMPLIED,\ INCLUDING\ BUT\ NOT\ LIMITED\ TO\ THE\ WARRANTIES\ OF\ MERCHANTABILITY,}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ *\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE\ AND\ NONINFRINGEMENT.\ \ IN\ NO\ EVENT\ SHALL}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ *\ THE\ AUTHORS\ OR\ COPYRIGHT\ HOLDERS\ BE\ LIABLE\ FOR\ ANY\ CLAIM,\ DAMAGES\ OR\ OTHER}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ *\ LIABILITY,\ WHETHER\ IN\ AN\ ACTION\ OF\ CONTRACT,\ TORT\ OR\ OTHERWISE,\ ARISING}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ *\ FROM,\ OUT\ OF\ OR\ IN\ CONNECTION\ WITH\ THE\ SOFTWARE\ OR\ THE\ USE\ OR\ OTHER}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ *\ DEALINGS\ IN\ THE\ SOFTWARE.}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \textcolor{preprocessor}{\#ifndef\ \_\_CUDA\_FILTER\_MODE\_H\_\_}}
+\DoxyCodeLine{00024\ \textcolor{preprocessor}{\#define\ \_\_CUDA\_FILTER\_MODE\_H\_\_}}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \textcolor{preprocessor}{\#include\ "{}cudaUtility.h"{}}}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00035\ \textcolor{keyword}{enum}\ \doxymbox{\hyperlink{group__cuda_filter_ga25d4283643163befe99948d24cc53311}{cudaFilterMode}}}
+\DoxyCodeLine{00036\ \{}
+\DoxyCodeLine{00037\ \ \ \ \ \doxymbox{\hyperlink{group__cuda_filter_gga25d4283643163befe99948d24cc53311a8928ed98915affb5c7514632a038daa6}{FILTER\_POINT}},\ \ \ \ }
+\DoxyCodeLine{00038\ \ \ \ \ \doxymbox{\hyperlink{group__cuda_filter_gga25d4283643163befe99948d24cc53311ad8e5de74ec16a7e07145b7c18c885094}{FILTER\_LINEAR}}\ \ \ \ }
+\DoxyCodeLine{00039\ \};}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00046\ \doxymbox{\hyperlink{group__cuda_filter_ga25d4283643163befe99948d24cc53311}{cudaFilterMode}}\ \doxymbox{\hyperlink{group__cuda_filter_ga6a34c93022b23a55a5ae440a8ff7a247}{cudaFilterModeFromStr}}(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ filter,\ \doxymbox{\hyperlink{group__cuda_filter_ga25d4283643163befe99948d24cc53311}{cudaFilterMode}}\ default\_value=\doxymbox{\hyperlink{group__cuda_filter_gga25d4283643163befe99948d24cc53311ad8e5de74ec16a7e07145b7c18c885094}{FILTER\_LINEAR}}\ );}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00052\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \doxymbox{\hyperlink{group__cuda_filter_ga66287ee3fd53c25dc2785a4f2ba795a0}{cudaFilterModeToStr}}(\ \doxymbox{\hyperlink{group__cuda_filter_ga25d4283643163befe99948d24cc53311}{cudaFilterMode}}\ filter\ );}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00059\ \textcolor{keyword}{enum}\ \doxymbox{\hyperlink{group__cuda_filter_ga66fe4a27e9fb59cd675d5deb12287195}{cudaDataFormat}}}
+\DoxyCodeLine{00060\ \{}
+\DoxyCodeLine{00061\ \ \ \ \ \doxymbox{\hyperlink{group__cuda_filter_gga66fe4a27e9fb59cd675d5deb12287195a4130db7b40bd34c9b4e91df46d37fc6a}{FORMAT\_HWC}},\ }
+\DoxyCodeLine{00062\ \ \ \ \ \doxymbox{\hyperlink{group__cuda_filter_gga66fe4a27e9fb59cd675d5deb12287195a4ccf6f5b6af6f76d13ef2aefd17ea51a}{FORMAT\_CHW}},\ }
+\DoxyCodeLine{00063\ \ \ \ \ }
+\DoxyCodeLine{00065\ \ \ \ \ FORMAT\_DEFAULT\ =\ \doxymbox{\hyperlink{group__cuda_filter_gga66fe4a27e9fb59cd675d5deb12287195a4130db7b40bd34c9b4e91df46d37fc6a}{FORMAT\_HWC}}}
+\DoxyCodeLine{00066\ \};}
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00069\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00070\ }
+\DoxyCodeLine{00071\ }
+
+\end{DoxyCode}

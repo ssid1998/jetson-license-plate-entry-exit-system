@@ -1,0 +1,195 @@
+\doxysubsection{Time }
+\hypertarget{group__time}{}\label{group__time}\index{Time@{Time}}
+\doxysubsubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \doxymbox{\hyperlink{group__time_ga741cdb5863f122d3e527c8b53e0cb3c3}{timestamp}} (timespec \texorpdfstring{$\ast$}{*}timestamp\+Out)
+\item 
+timespec \doxymbox{\hyperlink{group__time_ga43627a5af271e9abfd46b467d2e309a8}{timestamp}} ()
+\item 
+timespec \doxymbox{\hyperlink{group__time_gaf3c8f1da6d7ab35e2aba66796bff9b7d}{time\+Zero}} ()
+\item 
+timespec \doxymbox{\hyperlink{group__time_gaccb3fcd271afec70d82b9914834a3936}{time\+New}} (time\+\_\+t seconds, long int nanoseconds)
+\item 
+timespec \doxymbox{\hyperlink{group__time_ga99ec3a2bb4cf3de4f7e9a9ccc600255e}{time\+New}} (long int nanoseconds)
+\item 
+timespec \doxymbox{\hyperlink{group__time_gaf087d50741339d18a1c4101985b30a8a}{time\+Add}} (const timespec \&a, const timespec \&b)
+\item 
+void \doxymbox{\hyperlink{group__time_ga3c4b729b99d06b423956e7a3a17aaeb4}{time\+Diff}} (const timespec \&start, const timespec \&end, timespec \texorpdfstring{$\ast$}{*}result)
+\item 
+timespec \doxymbox{\hyperlink{group__time_gaa07ea1ff9097095950d78066456cd703}{time\+Diff}} (const timespec \&start, const timespec \&end)
+\item 
+int \doxymbox{\hyperlink{group__time_ga86c3f22b9c909bb11014c38634c29778}{time\+Cmp}} (const timespec \&a, const timespec \&b)
+\item 
+void \doxymbox{\hyperlink{group__time_gae0b5e8df896fa6809012901fe9254fa1}{apptime}} (timespec \texorpdfstring{$\ast$}{*}a)
+\item 
+uint64\+\_\+t \doxymbox{\hyperlink{group__time_ga0671b9aa950ae00b1c3fbde3b0e64abc}{apptime\+\_\+nano}} ()
+\item 
+float \doxymbox{\hyperlink{group__time_ga379d019a518e124625ccc778424ac0ed}{apptime}} ()
+\item 
+float \doxymbox{\hyperlink{group__time_ga762b4a9f55b4fb1a50d459cc7c384b92}{time\+Float}} (const timespec \&a)
+\item 
+double \doxymbox{\hyperlink{group__time_gaffbef3ffb8eb4bbf71051a3fd7dcb882}{time\+Double}} (const timespec \&a)
+\item 
+double \doxymbox{\hyperlink{group__time_ga58e597d9101a632df1b5ad9e8cf367f8}{time\+Double}} ()
+\item 
+char \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{group__time_gab947e3152250c20745abb3b6eddc7ed1}{time\+Str}} (const timespec \&\doxymbox{\hyperlink{group__time_ga741cdb5863f122d3e527c8b53e0cb3c3}{timestamp}}, char \texorpdfstring{$\ast$}{*}str\+Out)
+\item 
+void \doxymbox{\hyperlink{group__time_ga10a0bd8b7e29af965bb1fa4de9153a52}{time\+Print}} (const timespec \&\doxymbox{\hyperlink{group__time_ga741cdb5863f122d3e527c8b53e0cb3c3}{timestamp}}, const char \texorpdfstring{$\ast$}{*}text=NULL)
+\item 
+void \doxymbox{\hyperlink{group__time_ga54b6c83056c1f1324bcbc2dab776b273}{sleep\+Time}} (const timespec \&duration)
+\item 
+void \doxymbox{\hyperlink{group__time_ga43f8222b603f11d862375e2bc1923b0d}{sleep\+Time}} (time\+\_\+t seconds, long int nanoseconds)
+\item 
+void \doxymbox{\hyperlink{group__time_gadc10da23418dffce632d3bd16000bc5a}{sleep\+Ms}} (uint64\+\_\+t milliseconds)
+\item 
+void \doxymbox{\hyperlink{group__time_ga5b8575ba34c76a27111d26ebac8d347a}{sleep\+Us}} (uint64\+\_\+t microseconds)
+\item 
+void \doxymbox{\hyperlink{group__time_gade2df9f88a694448445740eca02343b9}{sleep\+Ns}} (uint64\+\_\+t nanoseconds)
+\end{DoxyCompactItemize}
+
+
+\doxysubsubsection{Detailed Description}
+Timestamping operations for measuring the timing of CPU code. 
+
+\label{doc-func-members}
+\Hypertarget{group__time_doc-func-members}
+\doxysubsubsection{Function Documentation}
+\Hypertarget{group__time_ga379d019a518e124625ccc778424ac0ed}\index{Time@{Time}!apptime@{apptime}}
+\index{apptime@{apptime}!Time@{Time}}
+\doxysubsubsubsection{\texorpdfstring{apptime()}{apptime()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{group__time_ga379d019a518e124625ccc778424ac0ed} 
+float apptime (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Retrieve the elapsed time since the process started (in seconds). \Hypertarget{group__time_gae0b5e8df896fa6809012901fe9254fa1}\index{Time@{Time}!apptime@{apptime}}
+\index{apptime@{apptime}!Time@{Time}}
+\doxysubsubsubsection{\texorpdfstring{apptime()}{apptime()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{group__time_gae0b5e8df896fa6809012901fe9254fa1} 
+void apptime (\begin{DoxyParamCaption}\item[{timespec \texorpdfstring{$\ast$}{*}}]{a}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Retrieve the elapsed time since the process started. \Hypertarget{group__time_ga0671b9aa950ae00b1c3fbde3b0e64abc}\index{Time@{Time}!apptime\_nano@{apptime\_nano}}
+\index{apptime\_nano@{apptime\_nano}!Time@{Time}}
+\doxysubsubsubsection{\texorpdfstring{apptime\_nano()}{apptime\_nano()}}
+{\footnotesize\ttfamily \label{group__time_ga0671b9aa950ae00b1c3fbde3b0e64abc} 
+uint64\+\_\+t apptime\+\_\+nano (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Retrieve the elapsed time since the process started (in nanoseconds). \Hypertarget{group__time_gadc10da23418dffce632d3bd16000bc5a}\index{Time@{Time}!sleepMs@{sleepMs}}
+\index{sleepMs@{sleepMs}!Time@{Time}}
+\doxysubsubsubsection{\texorpdfstring{sleepMs()}{sleepMs()}}
+{\footnotesize\ttfamily \label{group__time_gadc10da23418dffce632d3bd16000bc5a} 
+void sleep\+Ms (\begin{DoxyParamCaption}\item[{uint64\+\_\+t}]{milliseconds}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Put the current thread to sleep for a specified number of milliseconds. \Hypertarget{group__time_gade2df9f88a694448445740eca02343b9}\index{Time@{Time}!sleepNs@{sleepNs}}
+\index{sleepNs@{sleepNs}!Time@{Time}}
+\doxysubsubsubsection{\texorpdfstring{sleepNs()}{sleepNs()}}
+{\footnotesize\ttfamily \label{group__time_gade2df9f88a694448445740eca02343b9} 
+void sleep\+Ns (\begin{DoxyParamCaption}\item[{uint64\+\_\+t}]{nanoseconds}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Put the current thread to sleep for a specified number of nanoseconds. \Hypertarget{group__time_ga54b6c83056c1f1324bcbc2dab776b273}\index{Time@{Time}!sleepTime@{sleepTime}}
+\index{sleepTime@{sleepTime}!Time@{Time}}
+\doxysubsubsubsection{\texorpdfstring{sleepTime()}{sleepTime()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{group__time_ga54b6c83056c1f1324bcbc2dab776b273} 
+void sleep\+Time (\begin{DoxyParamCaption}\item[{const timespec \&}]{duration}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Put the current thread to sleep for a specified time. \Hypertarget{group__time_ga43f8222b603f11d862375e2bc1923b0d}\index{Time@{Time}!sleepTime@{sleepTime}}
+\index{sleepTime@{sleepTime}!Time@{Time}}
+\doxysubsubsubsection{\texorpdfstring{sleepTime()}{sleepTime()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{group__time_ga43f8222b603f11d862375e2bc1923b0d} 
+void sleep\+Time (\begin{DoxyParamCaption}\item[{time\+\_\+t}]{seconds}{, }\item[{long int}]{nanoseconds}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Put the current thread to sleep for a specified time. \Hypertarget{group__time_ga5b8575ba34c76a27111d26ebac8d347a}\index{Time@{Time}!sleepUs@{sleepUs}}
+\index{sleepUs@{sleepUs}!Time@{Time}}
+\doxysubsubsubsection{\texorpdfstring{sleepUs()}{sleepUs()}}
+{\footnotesize\ttfamily \label{group__time_ga5b8575ba34c76a27111d26ebac8d347a} 
+void sleep\+Us (\begin{DoxyParamCaption}\item[{uint64\+\_\+t}]{microseconds}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Put the current thread to sleep for a specified number of microseconds. \Hypertarget{group__time_gaf087d50741339d18a1c4101985b30a8a}\index{Time@{Time}!timeAdd@{timeAdd}}
+\index{timeAdd@{timeAdd}!Time@{Time}}
+\doxysubsubsubsection{\texorpdfstring{timeAdd()}{timeAdd()}}
+{\footnotesize\ttfamily \label{group__time_gaf087d50741339d18a1c4101985b30a8a} 
+timespec time\+Add (\begin{DoxyParamCaption}\item[{const timespec \&}]{a}{, }\item[{const timespec \&}]{b}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Add two times together. \Hypertarget{group__time_ga86c3f22b9c909bb11014c38634c29778}\index{Time@{Time}!timeCmp@{timeCmp}}
+\index{timeCmp@{timeCmp}!Time@{Time}}
+\doxysubsubsubsection{\texorpdfstring{timeCmp()}{timeCmp()}}
+{\footnotesize\ttfamily \label{group__time_ga86c3f22b9c909bb11014c38634c29778} 
+int time\+Cmp (\begin{DoxyParamCaption}\item[{const timespec \&}]{a}{, }\item[{const timespec \&}]{b}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Compare two timestamps.
+
+\begin{DoxyReturn}{Returns}
+0, if timestamp A equals timestamp B \texorpdfstring{$>$}{>}0, if timestamp A is greater than timestamp B \texorpdfstring{$<$}{<}0, if timestamp A is less than timestamp B 
+\end{DoxyReturn}
+\Hypertarget{group__time_gaa07ea1ff9097095950d78066456cd703}\index{Time@{Time}!timeDiff@{timeDiff}}
+\index{timeDiff@{timeDiff}!Time@{Time}}
+\doxysubsubsubsection{\texorpdfstring{timeDiff()}{timeDiff()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{group__time_gaa07ea1ff9097095950d78066456cd703} 
+timespec time\+Diff (\begin{DoxyParamCaption}\item[{const timespec \&}]{start}{, }\item[{const timespec \&}]{end}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Find the difference between two timestamps. \Hypertarget{group__time_ga3c4b729b99d06b423956e7a3a17aaeb4}\index{Time@{Time}!timeDiff@{timeDiff}}
+\index{timeDiff@{timeDiff}!Time@{Time}}
+\doxysubsubsubsection{\texorpdfstring{timeDiff()}{timeDiff()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{group__time_ga3c4b729b99d06b423956e7a3a17aaeb4} 
+void time\+Diff (\begin{DoxyParamCaption}\item[{const timespec \&}]{start}{, }\item[{const timespec \&}]{end}{, }\item[{timespec \texorpdfstring{$\ast$}{*}}]{result}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Find the difference between two timestamps. \Hypertarget{group__time_ga58e597d9101a632df1b5ad9e8cf367f8}\index{Time@{Time}!timeDouble@{timeDouble}}
+\index{timeDouble@{timeDouble}!Time@{Time}}
+\doxysubsubsubsection{\texorpdfstring{timeDouble()}{timeDouble()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{group__time_ga58e597d9101a632df1b5ad9e8cf367f8} 
+double time\+Double (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Get current timestamp as 64-\/bit double (in milliseconds). \Hypertarget{group__time_gaffbef3ffb8eb4bbf71051a3fd7dcb882}\index{Time@{Time}!timeDouble@{timeDouble}}
+\index{timeDouble@{timeDouble}!Time@{Time}}
+\doxysubsubsubsection{\texorpdfstring{timeDouble()}{timeDouble()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{group__time_gaffbef3ffb8eb4bbf71051a3fd7dcb882} 
+double time\+Double (\begin{DoxyParamCaption}\item[{const timespec \&}]{a}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Convert to 64-\/bit double (in milliseconds). \Hypertarget{group__time_ga762b4a9f55b4fb1a50d459cc7c384b92}\index{Time@{Time}!timeFloat@{timeFloat}}
+\index{timeFloat@{timeFloat}!Time@{Time}}
+\doxysubsubsubsection{\texorpdfstring{timeFloat()}{timeFloat()}}
+{\footnotesize\ttfamily \label{group__time_ga762b4a9f55b4fb1a50d459cc7c384b92} 
+float time\+Float (\begin{DoxyParamCaption}\item[{const timespec \&}]{a}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Convert to 32-\/bit float (in milliseconds). \Hypertarget{group__time_ga99ec3a2bb4cf3de4f7e9a9ccc600255e}\index{Time@{Time}!timeNew@{timeNew}}
+\index{timeNew@{timeNew}!Time@{Time}}
+\doxysubsubsubsection{\texorpdfstring{timeNew()}{timeNew()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{group__time_ga99ec3a2bb4cf3de4f7e9a9ccc600255e} 
+timespec time\+New (\begin{DoxyParamCaption}\item[{long int}]{nanoseconds}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Return an initialized {\ttfamily timespec} \Hypertarget{group__time_gaccb3fcd271afec70d82b9914834a3936}\index{Time@{Time}!timeNew@{timeNew}}
+\index{timeNew@{timeNew}!Time@{Time}}
+\doxysubsubsubsection{\texorpdfstring{timeNew()}{timeNew()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{group__time_gaccb3fcd271afec70d82b9914834a3936} 
+timespec time\+New (\begin{DoxyParamCaption}\item[{time\+\_\+t}]{seconds}{, }\item[{long int}]{nanoseconds}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Return an initialized {\ttfamily timespec} \Hypertarget{group__time_ga10a0bd8b7e29af965bb1fa4de9153a52}\index{Time@{Time}!timePrint@{timePrint}}
+\index{timePrint@{timePrint}!Time@{Time}}
+\doxysubsubsubsection{\texorpdfstring{timePrint()}{timePrint()}}
+{\footnotesize\ttfamily \label{group__time_ga10a0bd8b7e29af965bb1fa4de9153a52} 
+void time\+Print (\begin{DoxyParamCaption}\item[{const timespec \&}]{timestamp}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{text}{ = {\ttfamily NULL}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Print the time to stdout. \Hypertarget{group__time_ga43627a5af271e9abfd46b467d2e309a8}\index{Time@{Time}!timestamp@{timestamp}}
+\index{timestamp@{timestamp}!Time@{Time}}
+\doxysubsubsubsection{\texorpdfstring{timestamp()}{timestamp()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{group__time_ga43627a5af271e9abfd46b467d2e309a8} 
+timespec timestamp (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Retrieve a timestamp of the current system time. \Hypertarget{group__time_ga741cdb5863f122d3e527c8b53e0cb3c3}\index{Time@{Time}!timestamp@{timestamp}}
+\index{timestamp@{timestamp}!Time@{Time}}
+\doxysubsubsubsection{\texorpdfstring{timestamp()}{timestamp()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{group__time_ga741cdb5863f122d3e527c8b53e0cb3c3} 
+void timestamp (\begin{DoxyParamCaption}\item[{timespec \texorpdfstring{$\ast$}{*}}]{timestamp\+Out}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Retrieve a timestamp of the current system time. \Hypertarget{group__time_gab947e3152250c20745abb3b6eddc7ed1}\index{Time@{Time}!timeStr@{timeStr}}
+\index{timeStr@{timeStr}!Time@{Time}}
+\doxysubsubsubsection{\texorpdfstring{timeStr()}{timeStr()}}
+{\footnotesize\ttfamily \label{group__time_gab947e3152250c20745abb3b6eddc7ed1} 
+char \texorpdfstring{$\ast$}{*} time\+Str (\begin{DoxyParamCaption}\item[{const timespec \&}]{timestamp}{, }\item[{char \texorpdfstring{$\ast$}{*}}]{str\+Out}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Produce a text representation of the timestamp. \Hypertarget{group__time_gaf3c8f1da6d7ab35e2aba66796bff9b7d}\index{Time@{Time}!timeZero@{timeZero}}
+\index{timeZero@{timeZero}!Time@{Time}}
+\doxysubsubsubsection{\texorpdfstring{timeZero()}{timeZero()}}
+{\footnotesize\ttfamily \label{group__time_gaf3c8f1da6d7ab35e2aba66796bff9b7d} 
+timespec time\+Zero (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Return a blank timespec that\textquotesingle{}s been zero\textquotesingle{}d. 

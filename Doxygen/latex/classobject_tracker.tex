@@ -1,0 +1,194 @@
+\doxysection{object\+Tracker Class Reference}
+\hypertarget{classobject_tracker}{}\label{classobject_tracker}\index{objectTracker@{objectTracker}}
+
+
+{\ttfamily \+\#include $<$object\+Tracker.\+h$>$}
+
+Inheritance diagram for object\+Tracker:\+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classobject_tracker}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \doxymbox{\hyperlink{classobject_tracker_addf4c9de2082c91d13179a66bb2b100b}{Type}} \{ \doxymbox{\hyperlink{classobject_tracker_addf4c9de2082c91d13179a66bb2b100ba7fea105b79354c240e099923c3372504}{NONE}}
+, \doxymbox{\hyperlink{classobject_tracker_addf4c9de2082c91d13179a66bb2b100ba7d48eb1e17a7473381659dff682848a0}{IOU}}
+, \doxymbox{\hyperlink{classobject_tracker_addf4c9de2082c91d13179a66bb2b100bacc2180e988ec6a82864e2ef5e8fe3297}{KLT}}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual \doxymbox{\hyperlink{classobject_tracker_a63c792eaa3be66365f7b59ddf9cf1d5c}{\texorpdfstring{$\sim$}{\string~}object\+Tracker}} ()
+\item 
+{\footnotesize template$<$typename T$>$ }\\int \doxymbox{\hyperlink{classobject_tracker_a812b09738df6afb79417d87f915a8a26}{Process}} (T \texorpdfstring{$\ast$}{*}image, uint32\+\_\+t width, uint32\+\_\+t height, \doxymbox{\hyperlink{structdetect_net_1_1_detection}{detect\+Net::\+\+Detection}} \texorpdfstring{$\ast$}{*}detections, int num\+Detections)
+\item 
+virtual int \doxymbox{\hyperlink{classobject_tracker_a8652c2178feecddece5c60e202769ff8}{Process}} (void \texorpdfstring{$\ast$}{*}image, uint32\+\_\+t width, uint32\+\_\+t height, \doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{image\+Format}} format, \doxymbox{\hyperlink{structdetect_net_1_1_detection}{detect\+Net::\+\+Detection}} \texorpdfstring{$\ast$}{*}detections, int num\+Detections)=0
+\item 
+bool \doxymbox{\hyperlink{classobject_tracker_ab99bf01e794ea4a417133509c643b5e1}{Is\+Enabled}} () const
+\item 
+virtual void \doxymbox{\hyperlink{classobject_tracker_af7239c64de34f0c98e2e39fcddc72432}{Set\+Enabled}} (bool enabled)
+\item 
+virtual \doxymbox{\hyperlink{classobject_tracker_addf4c9de2082c91d13179a66bb2b100b}{Type}} \doxymbox{\hyperlink{classobject_tracker_a4d84577a983f2ef8f2db05607b3014c8}{Get\+Type}} () const =0
+\item 
+bool \doxymbox{\hyperlink{classobject_tracker_a9e9758abde43c5d0259a5d23bc482740}{Is\+Type}} (\doxymbox{\hyperlink{classobject_tracker_addf4c9de2082c91d13179a66bb2b100b}{Type}} type) const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \doxymbox{\hyperlink{classobject_tracker}{object\+Tracker}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classobject_tracker_ac9dba5966aeb5ecc35791fe80503a34c}{Create}} (\doxymbox{\hyperlink{classobject_tracker_addf4c9de2082c91d13179a66bb2b100b}{Type}} type)
+\item 
+static \doxymbox{\hyperlink{classobject_tracker}{object\+Tracker}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classobject_tracker_acc6930d98d2b0e13b2351b58ddf57a1a}{Create}} (int argc, char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}argv)
+\item 
+static \doxymbox{\hyperlink{classobject_tracker}{object\+Tracker}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classobject_tracker_a5c9aafe53e810e69fcb63c92440e9b4d}{Create}} (const \doxymbox{\hyperlink{classcommand_line}{command\+Line}} \&cmd\+Line)
+\item 
+static const char \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classobject_tracker_a69a7011d2fd16b24a9dd4a7e264f8629}{Usage}} ()
+\item 
+static const char \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classobject_tracker_a31e8d04c856ef3b1fc4fa9df202a7644}{Type\+To\+Str}} (\doxymbox{\hyperlink{classobject_tracker_addf4c9de2082c91d13179a66bb2b100b}{Type}} type)
+\item 
+static \doxymbox{\hyperlink{classobject_tracker_addf4c9de2082c91d13179a66bb2b100b}{Type}} \doxymbox{\hyperlink{classobject_tracker_a5bdcabd6e501912e0c50bae44143a0a8}{Type\+From\+Str}} (const char \texorpdfstring{$\ast$}{*}str)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classobject_tracker_a4c8533c20f592526ad2f5257a5d6df69}\label{classobject_tracker_a4c8533c20f592526ad2f5257a5d6df69} 
+bool {\bfseries m\+Enabled}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Object tracker interface 
+
+\label{doc-enum-members}
+\Hypertarget{classobject_tracker_doc-enum-members}
+\doxysubsection{Member Enumeration Documentation}
+\Hypertarget{classobject_tracker_addf4c9de2082c91d13179a66bb2b100b}\index{objectTracker@{objectTracker}!Type@{Type}}
+\index{Type@{Type}!objectTracker@{objectTracker}}
+\doxysubsubsection{\texorpdfstring{Type}{Type}}
+{\footnotesize\ttfamily \label{classobject_tracker_addf4c9de2082c91d13179a66bb2b100b} 
+enum \doxymbox{\hyperlink{classobject_tracker_addf4c9de2082c91d13179a66bb2b100b}{object\+Tracker::\+\+Type}}}
+
+Tracker type enum. \begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{NONE@{NONE}!objectTracker@{objectTracker}}
+\index{objectTracker@{objectTracker}!NONE@{NONE}}
+}\Hypertarget{classobject_tracker_addf4c9de2082c91d13179a66bb2b100ba7fea105b79354c240e099923c3372504}\label{classobject_tracker_addf4c9de2082c91d13179a66bb2b100ba7fea105b79354c240e099923c3372504} 
+NONE&Tracking disabled \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{IOU@{IOU}!objectTracker@{objectTracker}}
+\index{objectTracker@{objectTracker}!IOU@{IOU}}
+}\Hypertarget{classobject_tracker_addf4c9de2082c91d13179a66bb2b100ba7d48eb1e17a7473381659dff682848a0}\label{classobject_tracker_addf4c9de2082c91d13179a66bb2b100ba7d48eb1e17a7473381659dff682848a0} 
+IOU&Intersection-\/\+Over-\/\+Union (IOU) tracker \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{KLT@{KLT}!objectTracker@{objectTracker}}
+\index{objectTracker@{objectTracker}!KLT@{KLT}}
+}\Hypertarget{classobject_tracker_addf4c9de2082c91d13179a66bb2b100bacc2180e988ec6a82864e2ef5e8fe3297}\label{classobject_tracker_addf4c9de2082c91d13179a66bb2b100bacc2180e988ec6a82864e2ef5e8fe3297} 
+KLT&KLT tracker (only available with VPI) \\
+\hline
+
+\end{DoxyEnumFields}
+
+
+\label{doc-constructors}
+\Hypertarget{classobject_tracker_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classobject_tracker_a63c792eaa3be66365f7b59ddf9cf1d5c}\index{objectTracker@{objectTracker}!````~objectTracker@{\texorpdfstring{$\sim$}{\string~}objectTracker}}
+\index{````~objectTracker@{\texorpdfstring{$\sim$}{\string~}objectTracker}!objectTracker@{objectTracker}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}objectTracker()}{\string~objectTracker()}}
+{\footnotesize\ttfamily \label{classobject_tracker_a63c792eaa3be66365f7b59ddf9cf1d5c} 
+virtual object\+Tracker::\+\texorpdfstring{$\sim$}{\string~}object\+Tracker (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+Destructor 
+
+\label{doc-func-members}
+\Hypertarget{classobject_tracker_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classobject_tracker_a5c9aafe53e810e69fcb63c92440e9b4d}\index{objectTracker@{objectTracker}!Create@{Create}}
+\index{Create@{Create}!objectTracker@{objectTracker}}
+\doxysubsubsection{\texorpdfstring{Create()}{Create()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily \label{classobject_tracker_a5c9aafe53e810e69fcb63c92440e9b4d} 
+\doxymbox{\hyperlink{classobject_tracker}{object\+Tracker}} \texorpdfstring{$\ast$}{*} object\+Tracker::\+\+Create (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{classcommand_line}{command\+Line}} \&}]{cmd\+Line}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Load a new network instance by parsing the command line. \Hypertarget{classobject_tracker_acc6930d98d2b0e13b2351b58ddf57a1a}\index{objectTracker@{objectTracker}!Create@{Create}}
+\index{Create@{Create}!objectTracker@{objectTracker}}
+\doxysubsubsection{\texorpdfstring{Create()}{Create()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily \label{classobject_tracker_acc6930d98d2b0e13b2351b58ddf57a1a} 
+\doxymbox{\hyperlink{classobject_tracker}{object\+Tracker}} \texorpdfstring{$\ast$}{*} object\+Tracker::\+\+Create (\begin{DoxyParamCaption}\item[{int}]{argc}{, }\item[{char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{argv}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Create a new object tracker by parsing the command line. \Hypertarget{classobject_tracker_ac9dba5966aeb5ecc35791fe80503a34c}\index{objectTracker@{objectTracker}!Create@{Create}}
+\index{Create@{Create}!objectTracker@{objectTracker}}
+\doxysubsubsection{\texorpdfstring{Create()}{Create()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily \label{classobject_tracker_ac9dba5966aeb5ecc35791fe80503a34c} 
+\doxymbox{\hyperlink{classobject_tracker}{object\+Tracker}} \texorpdfstring{$\ast$}{*} object\+Tracker::\+\+Create (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{classobject_tracker_addf4c9de2082c91d13179a66bb2b100b}{Type}}}]{type}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Create a new object tracker. \Hypertarget{classobject_tracker_a4d84577a983f2ef8f2db05607b3014c8}\index{objectTracker@{objectTracker}!GetType@{GetType}}
+\index{GetType@{GetType}!objectTracker@{objectTracker}}
+\doxysubsubsection{\texorpdfstring{GetType()}{GetType()}}
+{\footnotesize\ttfamily \label{classobject_tracker_a4d84577a983f2ef8f2db05607b3014c8} 
+virtual \doxymbox{\hyperlink{classobject_tracker_addf4c9de2082c91d13179a66bb2b100b}{Type}} object\+Tracker::\+\+Get\+Type (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+Get\+Type 
+
+Implemented in \doxymbox{\hyperlink{classobject_tracker_i_o_u_ac31321c1fc77b246f2e2989c5ed44e2c}{object\+Tracker\+IOU}}.
+
+\Hypertarget{classobject_tracker_ab99bf01e794ea4a417133509c643b5e1}\index{objectTracker@{objectTracker}!IsEnabled@{IsEnabled}}
+\index{IsEnabled@{IsEnabled}!objectTracker@{objectTracker}}
+\doxysubsubsection{\texorpdfstring{IsEnabled()}{IsEnabled()}}
+{\footnotesize\ttfamily \label{classobject_tracker_ab99bf01e794ea4a417133509c643b5e1} 
+bool object\+Tracker::\+\+Is\+Enabled (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Is\+Enabled \Hypertarget{classobject_tracker_a9e9758abde43c5d0259a5d23bc482740}\index{objectTracker@{objectTracker}!IsType@{IsType}}
+\index{IsType@{IsType}!objectTracker@{objectTracker}}
+\doxysubsubsection{\texorpdfstring{IsType()}{IsType()}}
+{\footnotesize\ttfamily \label{classobject_tracker_a9e9758abde43c5d0259a5d23bc482740} 
+bool object\+Tracker::\+\+Is\+Type (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{classobject_tracker_addf4c9de2082c91d13179a66bb2b100b}{Type}}}]{type}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Is\+Type \Hypertarget{classobject_tracker_a812b09738df6afb79417d87f915a8a26}\index{objectTracker@{objectTracker}!Process@{Process}}
+\index{Process@{Process}!objectTracker@{objectTracker}}
+\doxysubsubsection{\texorpdfstring{Process()}{Process()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classobject_tracker_a812b09738df6afb79417d87f915a8a26} 
+template$<$typename T$>$ \\
+int object\+Tracker::\+\+Process (\begin{DoxyParamCaption}\item[{T \texorpdfstring{$\ast$}{*}}]{image}{, }\item[{uint32\+\_\+t}]{width}{, }\item[{uint32\+\_\+t}]{height}{, }\item[{\doxymbox{\hyperlink{structdetect_net_1_1_detection}{detect\+Net::\+\+Detection}} \texorpdfstring{$\ast$}{*}}]{detections}{, }\item[{int}]{num\+Detections}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\doxylink{class_process}{Process} \Hypertarget{classobject_tracker_a8652c2178feecddece5c60e202769ff8}\index{objectTracker@{objectTracker}!Process@{Process}}
+\index{Process@{Process}!objectTracker@{objectTracker}}
+\doxysubsubsection{\texorpdfstring{Process()}{Process()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classobject_tracker_a8652c2178feecddece5c60e202769ff8} 
+virtual int object\+Tracker::\+\+Process (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}}]{image}{, }\item[{uint32\+\_\+t}]{width}{, }\item[{uint32\+\_\+t}]{height}{, }\item[{\doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{image\+Format}}}]{format}{, }\item[{\doxymbox{\hyperlink{structdetect_net_1_1_detection}{detect\+Net::\+\+Detection}} \texorpdfstring{$\ast$}{*}}]{detections}{, }\item[{int}]{num\+Detections}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+\doxylink{class_process}{Process} 
+
+Implemented in \doxymbox{\hyperlink{classobject_tracker_i_o_u_ae71bd2490e9b7488033e2e508951bd69}{object\+Tracker\+IOU}}.
+
+\Hypertarget{classobject_tracker_af7239c64de34f0c98e2e39fcddc72432}\index{objectTracker@{objectTracker}!SetEnabled@{SetEnabled}}
+\index{SetEnabled@{SetEnabled}!objectTracker@{objectTracker}}
+\doxysubsubsection{\texorpdfstring{SetEnabled()}{SetEnabled()}}
+{\footnotesize\ttfamily \label{classobject_tracker_af7239c64de34f0c98e2e39fcddc72432} 
+virtual void object\+Tracker::\+\+Set\+Enabled (\begin{DoxyParamCaption}\item[{bool}]{enabled}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+Set\+Enabled \Hypertarget{classobject_tracker_a5bdcabd6e501912e0c50bae44143a0a8}\index{objectTracker@{objectTracker}!TypeFromStr@{TypeFromStr}}
+\index{TypeFromStr@{TypeFromStr}!objectTracker@{objectTracker}}
+\doxysubsubsection{\texorpdfstring{TypeFromStr()}{TypeFromStr()}}
+{\footnotesize\ttfamily \label{classobject_tracker_a5bdcabd6e501912e0c50bae44143a0a8} 
+\doxymbox{\hyperlink{classobject_tracker_addf4c9de2082c91d13179a66bb2b100b}{Type}} object\+Tracker::\+\+Type\+From\+Str (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{str}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Parse a \doxylink{classobject_tracker_addf4c9de2082c91d13179a66bb2b100b}{Type} enum from a string. \Hypertarget{classobject_tracker_a31e8d04c856ef3b1fc4fa9df202a7644}\index{objectTracker@{objectTracker}!TypeToStr@{TypeToStr}}
+\index{TypeToStr@{TypeToStr}!objectTracker@{objectTracker}}
+\doxysubsubsection{\texorpdfstring{TypeToStr()}{TypeToStr()}}
+{\footnotesize\ttfamily \label{classobject_tracker_a31e8d04c856ef3b1fc4fa9df202a7644} 
+const char \texorpdfstring{$\ast$}{*} object\+Tracker::\+\+Type\+To\+Str (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{classobject_tracker_addf4c9de2082c91d13179a66bb2b100b}{Type}}}]{type}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Convert a \doxylink{classobject_tracker_addf4c9de2082c91d13179a66bb2b100b}{Type} enum to string. \Hypertarget{classobject_tracker_a69a7011d2fd16b24a9dd4a7e264f8629}\index{objectTracker@{objectTracker}!Usage@{Usage}}
+\index{Usage@{Usage}!objectTracker@{objectTracker}}
+\doxysubsubsection{\texorpdfstring{Usage()}{Usage()}}
+{\footnotesize\ttfamily \label{classobject_tracker_a69a7011d2fd16b24a9dd4a7e264f8629} 
+const char \texorpdfstring{$\ast$}{*} object\+Tracker::\+\+Usage (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+Usage string for command line arguments to \doxylink{classobject_tracker_ac9dba5966aeb5ecc35791fe80503a34c}{Create()} 
+
+The documentation for this class was generated from the following file:\+\begin{DoxyCompactItemize}
+\item 
+jetson-\/inference/\+build/\+aarch64/\+include/\+jetson-\/inference/\+object\+Tracker.\+h\end{DoxyCompactItemize}

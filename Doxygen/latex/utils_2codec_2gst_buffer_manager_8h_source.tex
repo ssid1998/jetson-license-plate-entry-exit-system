@@ -1,0 +1,94 @@
+\doxysection{gst\+Buffer\+Manager.\+h}
+\hypertarget{utils_2codec_2gst_buffer_manager_8h_source}{}\label{utils_2codec_2gst_buffer_manager_8h_source}\index{jetson-\/inference/utils/codec/gstBufferManager.h@{jetson-\/inference/utils/codec/gstBufferManager.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ *\ Copyright\ (c)\ 2021,\ NVIDIA\ CORPORATION.\ All\ rights\ reserved.}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ *\ Permission\ is\ hereby\ granted,\ free\ of\ charge,\ to\ any\ person\ obtaining\ a}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ *\ copy\ of\ this\ software\ and\ associated\ documentation\ files\ (the\ "{}Software"{}),}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ *\ to\ deal\ in\ the\ Software\ without\ restriction,\ including\ without\ limitation}}
+\DoxyCodeLine{00007\ \textcolor{comment}{\ *\ the\ rights\ to\ use,\ copy,\ modify,\ merge,\ publish,\ distribute,\ sublicense,}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ *\ and/or\ sell\ copies\ of\ the\ Software,\ and\ to\ permit\ persons\ to\ whom\ the}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ *\ Software\ is\ furnished\ to\ do\ so,\ subject\ to\ the\ following\ conditions:}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ *\ The\ above\ copyright\ notice\ and\ this\ permission\ notice\ shall\ be\ included\ in}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ *\ all\ copies\ or\ substantial\ portions\ of\ the\ Software.}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ *\ THE\ SOFTWARE\ IS\ PROVIDED\ "{}AS\ IS"{},\ WITHOUT\ WARRANTY\ OF\ ANY\ KIND,\ EXPRESS\ OR}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ *\ IMPLIED,\ INCLUDING\ BUT\ NOT\ LIMITED\ TO\ THE\ WARRANTIES\ OF\ MERCHANTABILITY,}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ *\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE\ AND\ NONINFRINGEMENT.\ \ IN\ NO\ EVENT\ SHALL}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ *\ THE\ AUTHORS\ OR\ COPYRIGHT\ HOLDERS\ BE\ LIABLE\ FOR\ ANY\ CLAIM,\ DAMAGES\ OR\ OTHER}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ *\ LIABILITY,\ WHETHER\ IN\ AN\ ACTION\ OF\ CONTRACT,\ TORT\ OR\ OTHERWISE,\ ARISING}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ *\ FROM,\ OUT\ OF\ OR\ IN\ CONNECTION\ WITH\ THE\ SOFTWARE\ OR\ THE\ USE\ OR\ OTHER}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ *\ DEALINGS\ IN\ THE\ SOFTWARE.}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \textcolor{preprocessor}{\#ifndef\ \_\_GSTREAMER\_BUFFER\_MANAGER\_H\_\_}}
+\DoxyCodeLine{00024\ \textcolor{preprocessor}{\#define\ \_\_GSTREAMER\_BUFFER\_MANAGER\_H\_\_}}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \textcolor{preprocessor}{\#include\ "{}gstUtility.h"{}}}
+\DoxyCodeLine{00027\ \textcolor{preprocessor}{\#include\ "{}imageFormat.h"{}}}
+\DoxyCodeLine{00028\ \textcolor{preprocessor}{\#include\ "{}videoOptions.h"{}}}
+\DoxyCodeLine{00029\ \textcolor{preprocessor}{\#include\ "{}Event.h"{}}}
+\DoxyCodeLine{00030\ \textcolor{preprocessor}{\#include\ "{}Mutex.h"{}}}
+\DoxyCodeLine{00031\ \textcolor{preprocessor}{\#include\ "{}RingBuffer.h"{}}}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \textcolor{preprocessor}{\#ifdef\ ENABLE\_NVMM}}
+\DoxyCodeLine{00035\ \textcolor{preprocessor}{\#if\ !GST\_CHECK\_VERSION(1,0,0)}}
+\DoxyCodeLine{00036\ \textcolor{preprocessor}{\ \ \ \ \#undef\ ENABLE\_NVMM\ \ }\textcolor{comment}{//\ NVMM\ is\ only\ enabled\ for\ GStreamer\ 1.0\ and\ newer}}
+\DoxyCodeLine{00037\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \textcolor{preprocessor}{\#include\ "{}NvInfer.h"{}}}
+\DoxyCodeLine{00040\ \textcolor{preprocessor}{\#if\ NV\_TENSORRT\_MAJOR\ >\ 8\ ||\ (NV\_TENSORRT\_MAJOR\ ==\ 8\ \&\&\ NV\_TENSORRT\_MINOR\ >=\ 4)}}
+\DoxyCodeLine{00041\ \textcolor{preprocessor}{\ \ \ \ \#undef\ ENABLE\_NVMM\ \ }\textcolor{comment}{//\ debug\ NVMM\ under\ JetPack\ 5}}
+\DoxyCodeLine{00042\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00043\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00045\ \textcolor{preprocessor}{\#define\ GST\_CAPS\_FEATURE\_MEMORY\_NVMM\ "{}memory:NVMM"{}}}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00061\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{classgst_buffer_manager}{gstBufferManager}}}
+\DoxyCodeLine{00062\ \{}
+\DoxyCodeLine{00063\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00067\ \ \ \ \ \doxymbox{\hyperlink{classgst_buffer_manager_a8d0c7f6ad4fad98bca732caa255eb94c}{gstBufferManager}}(\ \doxymbox{\hyperlink{structvideo_options}{videoOptions}}*\ options\ );}
+\DoxyCodeLine{00068\ \ \ \ \ }
+\DoxyCodeLine{00072\ \ \ \ \ \doxymbox{\hyperlink{classgst_buffer_manager_a12abb8d449269f24ade36c787fab1bd3}{\string~gstBufferManager}}();}
+\DoxyCodeLine{00073\ \ \ \ \ }
+\DoxyCodeLine{00077\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{classgst_buffer_manager_a8cd180e308002d209ec400f5c9966ebe}{Enqueue}}(\ GstBuffer*\ buffer,\ GstCaps*\ caps\ );}
+\DoxyCodeLine{00078\ \ \ \ \ }
+\DoxyCodeLine{00082\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{classgst_buffer_manager_a451091897b267ffbce465df96118b4b3}{Dequeue}}(\ \textcolor{keywordtype}{void}**\ output,\ \doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{imageFormat}}\ format,\ uint64\_t\ timeout=UINT64\_MAX,\ cudaStream\_t\ stream=0\ );}
+\DoxyCodeLine{00083\ }
+\DoxyCodeLine{00087\ \ \ \ \ uint64\_t\ \doxymbox{\hyperlink{classgst_buffer_manager_a9416f0ffbcd3bee21e909fbd174c3436}{GetLastTimestamp}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{classgst_buffer_manager_abe9df1a58cf2e4ae57c0239a12cc4aa4}{mLastTimestamp}};\ \}}
+\DoxyCodeLine{00088\ }
+\DoxyCodeLine{00092\ \ \ \ \ \textcolor{keyword}{inline}\ \doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{imageFormat}}\ \doxymbox{\hyperlink{classgst_buffer_manager_a850ecaaeb9a220bd42e718f93ecb8ae4}{GetRawFormat}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{classgst_buffer_manager_a648c0f76e9eedc9d3483c36b118b2e0d}{mFormatYUV}};\ \}}
+\DoxyCodeLine{00093\ }
+\DoxyCodeLine{00097\ \ \ \ \ \textcolor{keyword}{inline}\ uint64\_t\ \doxymbox{\hyperlink{classgst_buffer_manager_ac8653af78fcfd69dd452c01b10ba3277}{GetFrameCount}}()\textcolor{keyword}{\ const\ \ \ }\{\ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{classgst_buffer_manager_aac53eb50db281d89d9142576b5adf6d3}{mFrameCount}};\ \}}
+\DoxyCodeLine{00098\ \ \ \ \ }
+\DoxyCodeLine{00099\ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00100\ }
+\DoxyCodeLine{00101\ \ \ \ \ \doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{imageFormat}}\ \ \ \doxymbox{\hyperlink{classgst_buffer_manager_a648c0f76e9eedc9d3483c36b118b2e0d}{mFormatYUV}};\ \ }
+\DoxyCodeLine{00102\ \ \ \ \ \doxymbox{\hyperlink{class_ring_buffer}{RingBuffer}}\ \ \ \ \doxymbox{\hyperlink{classgst_buffer_manager_a9bf6538dcf98e4773b6fe2ea28ee8944}{mBufferYUV}};\ \ }
+\DoxyCodeLine{00103\ \ \ \ \ \doxymbox{\hyperlink{class_ring_buffer}{RingBuffer}}\ \ \ \ \doxymbox{\hyperlink{classgst_buffer_manager_aea126364b147dd2c7946ba66f64fd3a4}{mTimestamps}};\ }
+\DoxyCodeLine{00104\ \ \ \ \ \doxymbox{\hyperlink{class_ring_buffer}{RingBuffer}}\ \ \ \ \doxymbox{\hyperlink{classgst_buffer_manager_ab07dfcccd8fa8e9e5f0c80ba969bd953}{mBufferRGB}};\ \ }
+\DoxyCodeLine{00105\ \ \ \ \ uint64\_t\ \ \ \ \ \ \doxymbox{\hyperlink{classgst_buffer_manager_abe9df1a58cf2e4ae57c0239a12cc4aa4}{mLastTimestamp}};\ \ }
+\DoxyCodeLine{00106\ \ \ \ \ \doxymbox{\hyperlink{class_event}{Event}}\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{classgst_buffer_manager_a9f62a8198853fdab6da3775b9b879280}{mWaitEvent}};\ \ }
+\DoxyCodeLine{00107\ \ \ \ \ }
+\DoxyCodeLine{00108\ \ \ \ \ \doxymbox{\hyperlink{structvideo_options}{videoOptions}}*\ \doxymbox{\hyperlink{classgst_buffer_manager_a742e929409e877a0e8e2b8c56f0d58a3}{mOptions}};\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00109\ \ \ \ \ uint64\_t\ \ \ \ \ \ \doxymbox{\hyperlink{classgst_buffer_manager_aac53eb50db281d89d9142576b5adf6d3}{mFrameCount}};\ }
+\DoxyCodeLine{00110\ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{classgst_buffer_manager_abd5bf5577fd3a1bb129419243dc91d1a}{mNvmmUsed}};\ \ \ }
+\DoxyCodeLine{00111\ \ \ \ \ }
+\DoxyCodeLine{00112\ \textcolor{preprocessor}{\#ifdef\ ENABLE\_NVMM}}
+\DoxyCodeLine{00113\ \ \ \ \ \doxymbox{\hyperlink{class_mutex}{Mutex}}\ \ mNvmmMutex;}
+\DoxyCodeLine{00114\ \ \ \ \ \textcolor{keywordtype}{int}\ \ \ \ mNvmmFD;}
+\DoxyCodeLine{00115\ \ \ \ \ \textcolor{keywordtype}{void}*\ \ mNvmmEGL;}
+\DoxyCodeLine{00116\ \ \ \ \ \textcolor{keywordtype}{void}*\ \ mNvmmCUDA;}
+\DoxyCodeLine{00117\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ mNvmmSize;}
+\DoxyCodeLine{00118\ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ mNvmmReleaseFD;}
+\DoxyCodeLine{00119\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00120\ \};}
+\DoxyCodeLine{00121\ \ \ }
+\DoxyCodeLine{00122\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

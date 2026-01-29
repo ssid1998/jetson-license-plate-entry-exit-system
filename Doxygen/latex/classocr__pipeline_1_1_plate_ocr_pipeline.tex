@@ -1,0 +1,100 @@
+\doxysection{ocr\+\_\+pipeline.\+Plate\+Ocr\+Pipeline Class Reference}
+\hypertarget{classocr__pipeline_1_1_plate_ocr_pipeline}{}\label{classocr__pipeline_1_1_plate_ocr_pipeline}\index{ocr\_pipeline.PlateOcrPipeline@{ocr\_pipeline.PlateOcrPipeline}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classocr__pipeline_1_1_plate_ocr_pipeline_a9dbcb017d243447d35d74dbf45c5acf5}\label{classocr__pipeline_1_1_plate_ocr_pipeline_a9dbcb017d243447d35d74dbf45c5acf5} 
+{\bfseries \+\_\+\+\_\+init\+\_\+\+\_\+} (self, allowlist="{}ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"{}, conf\+Threshold=0.\+6, eu\+Mask\+Ratio=0.\+15, debug=False, use\+Gpu=True)
+\item 
+\Hypertarget{classocr__pipeline_1_1_plate_ocr_pipeline_aee671d4d6ab7cb135eaa24d4e5241c3a}\label{classocr__pipeline_1_1_plate_ocr_pipeline_aee671d4d6ab7cb135eaa24d4e5241c3a} 
+List\+[Tuple\+[str, np.\+ndarray]\+]\+ {\bfseries preprocess\+Plate} (self, plate\+Bgr)
+\item 
+\Hypertarget{classocr__pipeline_1_1_plate_ocr_pipeline_a9f07538e9ac045194c161a35ce8e5c90}\label{classocr__pipeline_1_1_plate_ocr_pipeline_a9f07538e9ac045194c161a35ce8e5c90} 
+Tuple\+[str, float]\+ {\bfseries run\+Easy\+Ocr} (self, plate\+Img)
+\item 
+\Hypertarget{classocr__pipeline_1_1_plate_ocr_pipeline_aa99c158486dec674242d355ff92e0dda}\label{classocr__pipeline_1_1_plate_ocr_pipeline_aa99c158486dec674242d355ff92e0dda} 
+str {\bfseries normalize\+Text} (self, str text)
+\item 
+\Hypertarget{classocr__pipeline_1_1_plate_ocr_pipeline_a7488f7b39c0aa282b9a9f729d79726ee}\label{classocr__pipeline_1_1_plate_ocr_pipeline_a7488f7b39c0aa282b9a9f729d79726ee} 
+str {\bfseries post\+Correct} (self, str text)
+\item 
+\Hypertarget{classocr__pipeline_1_1_plate_ocr_pipeline_a75c154d582c4d54f2f140478fc4a1f82}\label{classocr__pipeline_1_1_plate_ocr_pipeline_a75c154d582c4d54f2f140478fc4a1f82} 
+bool {\bfseries validate\+German\+Plate} (self, str text)
+\item 
+\Hypertarget{classocr__pipeline_1_1_plate_ocr_pipeline_a72a244d3233af987e09cc3edd82e2f9a}\label{classocr__pipeline_1_1_plate_ocr_pipeline_a72a244d3233af987e09cc3edd82e2f9a} 
+{\bfseries read\+Plate} (self, plate\+Bgr)
+\item 
+\Hypertarget{classocr__pipeline_1_1_plate_ocr_pipeline_ad60d066da91b054a5cbc6a1c61fc5afc}\label{classocr__pipeline_1_1_plate_ocr_pipeline_ad60d066da91b054a5cbc6a1c61fc5afc} 
+{\bfseries update\+Temporal\+Vote} (self, str text, float conf)
+\item 
+\Hypertarget{classocr__pipeline_1_1_plate_ocr_pipeline_a6e35c8f6149c30ea984d7531efcf1652}\label{classocr__pipeline_1_1_plate_ocr_pipeline_a6e35c8f6149c30ea984d7531efcf1652} 
+Tuple\+[str, float]\+ {\bfseries get\+Temporal\+Consensus} (self)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classocr__pipeline_1_1_plate_ocr_pipeline_a6fd613519082c2a51d397cbd778b0c07}\label{classocr__pipeline_1_1_plate_ocr_pipeline_a6fd613519082c2a51d397cbd778b0c07} 
+{\bfseries allowlist} = allowlist
+\item 
+\Hypertarget{classocr__pipeline_1_1_plate_ocr_pipeline_a3146bd3ad6182b9d6cc85bef9031213c}\label{classocr__pipeline_1_1_plate_ocr_pipeline_a3146bd3ad6182b9d6cc85bef9031213c} 
+{\bfseries conf\+Threshold} = conf\+Threshold
+\item 
+\Hypertarget{classocr__pipeline_1_1_plate_ocr_pipeline_a3b0849156b750aadddb9299058318c02}\label{classocr__pipeline_1_1_plate_ocr_pipeline_a3b0849156b750aadddb9299058318c02} 
+{\bfseries eu\+Mask\+Ratio} = eu\+Mask\+Ratio
+\item 
+\Hypertarget{classocr__pipeline_1_1_plate_ocr_pipeline_aaa8608747afd18c2ad6637f14672831f}\label{classocr__pipeline_1_1_plate_ocr_pipeline_aaa8608747afd18c2ad6637f14672831f} 
+{\bfseries debug} = debug
+\item 
+\Hypertarget{classocr__pipeline_1_1_plate_ocr_pipeline_a1847dae5a61abd2c098e96c01e88a621}\label{classocr__pipeline_1_1_plate_ocr_pipeline_a1847dae5a61abd2c098e96c01e88a621} 
+{\bfseries use\+Gpu} = use\+Gpu
+\item 
+\Hypertarget{classocr__pipeline_1_1_plate_ocr_pipeline_a4ff4c115424452e516d8e5c61056cfcc}\label{classocr__pipeline_1_1_plate_ocr_pipeline_a4ff4c115424452e516d8e5c61056cfcc} 
+int {\bfseries resize\+Width} = 640
+\item 
+\Hypertarget{classocr__pipeline_1_1_plate_ocr_pipeline_aad9bf0fc1497765c820bd0193a878486}\label{classocr__pipeline_1_1_plate_ocr_pipeline_aad9bf0fc1497765c820bd0193a878486} 
+bool {\bfseries strict\+Validation} = True
+\item 
+\Hypertarget{classocr__pipeline_1_1_plate_ocr_pipeline_aff50f0f89f67252b604b910a88b9e724}\label{classocr__pipeline_1_1_plate_ocr_pipeline_aff50f0f89f67252b604b910a88b9e724} 
+{\bfseries debug\+Dir} = os.\+path.\+join(os.\+path.\+dirname(\+\_\+\+\_\+file\+\_\+\+\_\+), "{}debug"{})
+\item 
+\Hypertarget{classocr__pipeline_1_1_plate_ocr_pipeline_a302d623c3aec963ec237a2dfedb55513}\label{classocr__pipeline_1_1_plate_ocr_pipeline_a302d623c3aec963ec237a2dfedb55513} 
+{\bfseries temporal\+Reads} = deque(maxlen=5)
+\item 
+\Hypertarget{classocr__pipeline_1_1_plate_ocr_pipeline_ab806c13ed4147e69275f4979fdfc6be3}\label{classocr__pipeline_1_1_plate_ocr_pipeline_ab806c13ed4147e69275f4979fdfc6be3} 
+{\bfseries clahe} = cv2.\+create\+CLAHE(clip\+Limit=2.\+0, tile\+Grid\+Size=(8, 8))
+\item 
+\Hypertarget{classocr__pipeline_1_1_plate_ocr_pipeline_a83e06007817f8f711726e3f60bd8d300}\label{classocr__pipeline_1_1_plate_ocr_pipeline_a83e06007817f8f711726e3f60bd8d300} 
+{\bfseries reader} = Plate\+Ocr\+Pipeline.\+\_\+reader
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classocr__pipeline_1_1_plate_ocr_pipeline_a9a46a0b364df8df25acf85cd6de85209}\label{classocr__pipeline_1_1_plate_ocr_pipeline_a9a46a0b364df8df25acf85cd6de85209} 
+{\bfseries \+\_\+ensure\+Reader} (self)
+\item 
+\Hypertarget{classocr__pipeline_1_1_plate_ocr_pipeline_a9cc22a194933ced2dbc7032dee92adb7}\label{classocr__pipeline_1_1_plate_ocr_pipeline_a9cc22a194933ced2dbc7032dee92adb7} 
+{\bfseries \+\_\+save\+Debug\+Image} (self, str name, img)
+\item 
+\Hypertarget{classocr__pipeline_1_1_plate_ocr_pipeline_ac049973a8751f30859076c93a0c56657}\label{classocr__pipeline_1_1_plate_ocr_pipeline_ac049973a8751f30859076c93a0c56657} 
+{\bfseries \+\_\+mask\+Eu\+Band} (self, plate\+Bgr)
+\item 
+\Hypertarget{classocr__pipeline_1_1_plate_ocr_pipeline_a9e606f6deb08dbff2bf6f74a6395464d}\label{classocr__pipeline_1_1_plate_ocr_pipeline_a9e606f6deb08dbff2bf6f74a6395464d} 
+{\bfseries \+\_\+log\+Debug} (self, str message)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classocr__pipeline_1_1_plate_ocr_pipeline_a5076887593c470d85a6fb534c0c33127}\label{classocr__pipeline_1_1_plate_ocr_pipeline_a5076887593c470d85a6fb534c0c33127} 
+{\bfseries \+\_\+reader} = None
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyVerb}Pipeline to run EasyOCR on German license plates with preprocessing,
+validation, and simple temporal smoothing.
+\end{DoxyVerb}
+ 
+
+The documentation for this class was generated from the following file:\+\begin{DoxyCompactItemize}
+\item 
+jetson\+\_\+app/\+ocr\+\_\+pipeline.\+py\end{DoxyCompactItemize}

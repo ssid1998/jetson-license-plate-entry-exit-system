@@ -1,0 +1,73 @@
+\doxysection{vision.\+nn.\+squeezenet.\+Fire Class Reference}
+\hypertarget{classvision_1_1nn_1_1squeezenet_1_1_fire}{}\label{classvision_1_1nn_1_1squeezenet_1_1_fire}\index{vision.nn.squeezenet.Fire@{vision.nn.squeezenet.Fire}}
+Inheritance diagram for vision.\+nn.\+squeezenet.\+Fire:\+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classvision_1_1nn_1_1squeezenet_1_1_fire}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classvision_1_1nn_1_1squeezenet_1_1_fire_a1bb6acffec9d63ac82930793f102863b}\label{classvision_1_1nn_1_1squeezenet_1_1_fire_a1bb6acffec9d63ac82930793f102863b} 
+{\bfseries \+\_\+\+\_\+init\+\_\+\+\_\+} (self, inplanes, squeeze\+\_\+planes, expand1x1\+\_\+planes, expand3x3\+\_\+planes)
+\item 
+\Hypertarget{classvision_1_1nn_1_1squeezenet_1_1_fire_ad8eb373fc301105c3d3a9e8f0c367044}\label{classvision_1_1nn_1_1squeezenet_1_1_fire_ad8eb373fc301105c3d3a9e8f0c367044} 
+{\bfseries forward} (self, x)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classvision_1_1nn_1_1squeezenet_1_1_fire_abaa553046017c4c400cc65b0bef95435}\label{classvision_1_1nn_1_1squeezenet_1_1_fire_abaa553046017c4c400cc65b0bef95435} 
+{\bfseries inplanes} = inplanes
+\item 
+\Hypertarget{classvision_1_1nn_1_1squeezenet_1_1_fire_a46ffa26a16eb7cac620365154764d36c}\label{classvision_1_1nn_1_1squeezenet_1_1_fire_a46ffa26a16eb7cac620365154764d36c} 
+{\bfseries squeeze} = nn.\+Conv2d(inplanes, squeeze\+\_\+planes, kernel\+\_\+size=1)
+\item 
+\Hypertarget{classvision_1_1nn_1_1squeezenet_1_1_fire_af6c189678883640e692092f6424db880}\label{classvision_1_1nn_1_1squeezenet_1_1_fire_af6c189678883640e692092f6424db880} 
+{\bfseries squeeze\+\_\+activation} = nn.\+Re\+LU(inplace=True)
+\item 
+\doxymbox{\hyperlink{classvision_1_1nn_1_1squeezenet_1_1_fire_a8b07355efe837065ceec37be55c6e78d}{expand1x1}}
+\item 
+\Hypertarget{classvision_1_1nn_1_1squeezenet_1_1_fire_affa63427dbf6b5d69eab9cceaae23ac6}\label{classvision_1_1nn_1_1squeezenet_1_1_fire_affa63427dbf6b5d69eab9cceaae23ac6} 
+{\bfseries expand1x1\+\_\+activation} = nn.\+Re\+LU(inplace=True)
+\item 
+\doxymbox{\hyperlink{classvision_1_1nn_1_1squeezenet_1_1_fire_afef5dd978416dd64083b674eb0ff2313}{expand3x3}}
+\item 
+\Hypertarget{classvision_1_1nn_1_1squeezenet_1_1_fire_a3c1b62fbc31cd3e561cf35b39cdfa10e}\label{classvision_1_1nn_1_1squeezenet_1_1_fire_a3c1b62fbc31cd3e561cf35b39cdfa10e} 
+{\bfseries expand3x3\+\_\+activation} = nn.\+Re\+LU(inplace=True)
+\end{DoxyCompactItemize}
+
+
+\label{doc-variable-members}
+\Hypertarget{classvision_1_1nn_1_1squeezenet_1_1_fire_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classvision_1_1nn_1_1squeezenet_1_1_fire_a8b07355efe837065ceec37be55c6e78d}\index{vision.nn.squeezenet.Fire@{vision.nn.squeezenet.Fire}!expand1x1@{expand1x1}}
+\index{expand1x1@{expand1x1}!vision.nn.squeezenet.Fire@{vision.nn.squeezenet.Fire}}
+\doxysubsubsection{\texorpdfstring{expand1x1}{expand1x1}}
+{\footnotesize\ttfamily \label{classvision_1_1nn_1_1squeezenet_1_1_fire_a8b07355efe837065ceec37be55c6e78d} 
+vision.\+nn.\+squeezenet.\+Fire.\+expand1x1}
+
+{\bfseries Initial value:\+}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=\ \ nn.Conv2d(squeeze\_planes,\ expand1x1\_planes,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ kernel\_size=1)}
+
+\end{DoxyCode}
+\Hypertarget{classvision_1_1nn_1_1squeezenet_1_1_fire_afef5dd978416dd64083b674eb0ff2313}\index{vision.nn.squeezenet.Fire@{vision.nn.squeezenet.Fire}!expand3x3@{expand3x3}}
+\index{expand3x3@{expand3x3}!vision.nn.squeezenet.Fire@{vision.nn.squeezenet.Fire}}
+\doxysubsubsection{\texorpdfstring{expand3x3}{expand3x3}}
+{\footnotesize\ttfamily \label{classvision_1_1nn_1_1squeezenet_1_1_fire_afef5dd978416dd64083b674eb0ff2313} 
+vision.\+nn.\+squeezenet.\+Fire.\+expand3x3}
+
+{\bfseries Initial value:\+}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=\ \ nn.Conv2d(squeeze\_planes,\ expand3x3\_planes,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ kernel\_size=3,\ padding=1)}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file:\+\begin{DoxyCompactItemize}
+\item 
+jetson-\/inference/\+python/\+training/\+detection/\+ssd/\+vision/\+nn/\+squeezenet.\+py\end{DoxyCompactItemize}

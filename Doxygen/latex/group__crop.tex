@@ -1,0 +1,267 @@
+\doxysubsubsection{Cropping }
+\hypertarget{group__crop}{}\label{group__crop}\index{Cropping@{Cropping}}
+\doxysubsubsubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+cuda\+Error\+\_\+t \doxymbox{\hyperlink{group__crop_gac1be27bde7887fd769a73cad9f1900fd}{cuda\+Crop}} (uint8\+\_\+t \texorpdfstring{$\ast$}{*}input, uint8\+\_\+t \texorpdfstring{$\ast$}{*}output, const int4 \&roi, size\+\_\+t input\+Width, size\+\_\+t input\+Height, cuda\+Stream\+\_\+t stream=0)
+\item 
+cuda\+Error\+\_\+t \doxymbox{\hyperlink{group__crop_ga5cde6049a20e461c2727489d43110be5}{cuda\+Crop}} (float \texorpdfstring{$\ast$}{*}input, float \texorpdfstring{$\ast$}{*}output, const int4 \&roi, size\+\_\+t input\+Width, size\+\_\+t input\+Height, cuda\+Stream\+\_\+t stream=0)
+\item 
+cuda\+Error\+\_\+t \doxymbox{\hyperlink{group__crop_ga7675fed34fc2ff1b451f2a8e3316bc61}{cuda\+Crop}} (uchar3 \texorpdfstring{$\ast$}{*}input, uchar3 \texorpdfstring{$\ast$}{*}output, const int4 \&roi, size\+\_\+t input\+Width, size\+\_\+t input\+Height, cuda\+Stream\+\_\+t stream=0)
+\item 
+cuda\+Error\+\_\+t \doxymbox{\hyperlink{group__crop_ga896b014dcfb9ccf91992cbe78954c5f3}{cuda\+Crop}} (uchar4 \texorpdfstring{$\ast$}{*}input, uchar4 \texorpdfstring{$\ast$}{*}output, const int4 \&roi, size\+\_\+t input\+Width, size\+\_\+t input\+Height, cuda\+Stream\+\_\+t stream=0)
+\item 
+cuda\+Error\+\_\+t \doxymbox{\hyperlink{group__crop_ga2eabc2228b29ef130054cec9b809717b}{cuda\+Crop}} (float3 \texorpdfstring{$\ast$}{*}input, float3 \texorpdfstring{$\ast$}{*}output, const int4 \&roi, size\+\_\+t input\+Width, size\+\_\+t input\+Height, cuda\+Stream\+\_\+t stream=0)
+\item 
+cuda\+Error\+\_\+t \doxymbox{\hyperlink{group__crop_ga5accbe8538c8c48e0284fabcbf17ecba}{cuda\+Crop}} (float4 \texorpdfstring{$\ast$}{*}input, float4 \texorpdfstring{$\ast$}{*}output, const int4 \&roi, size\+\_\+t input\+Width, size\+\_\+t input\+Height, cuda\+Stream\+\_\+t stream=0)
+\item 
+cuda\+Error\+\_\+t \doxymbox{\hyperlink{group__crop_gaf1ee71fc60a6bdded2d49d61a76b51a7}{cuda\+Crop}} (void \texorpdfstring{$\ast$}{*}input, void \texorpdfstring{$\ast$}{*}output, const int4 \&roi, size\+\_\+t input\+Width, size\+\_\+t input\+Height, \doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{image\+Format}} format, cuda\+Stream\+\_\+t stream=0)
+\end{DoxyCompactItemize}
+
+
+\doxysubsubsubsection{Detailed Description}
+Crop an image to the specified region of interest (ROI). 
+
+\label{doc-func-members}
+\Hypertarget{group__crop_doc-func-members}
+\doxysubsubsubsection{Function Documentation}
+\Hypertarget{group__crop_ga5cde6049a20e461c2727489d43110be5}\index{Cropping@{Cropping}!cudaCrop@{cudaCrop}}
+\index{cudaCrop@{cudaCrop}!Cropping@{Cropping}}
+\doxysubsubsubsubsection{\texorpdfstring{cudaCrop()}{cudaCrop()}\hspace{0.1cm}{\footnotesize\ttfamily [1/7]}}
+{\footnotesize\ttfamily \label{group__crop_ga5cde6049a20e461c2727489d43110be5} 
+cuda\+Error\+\_\+t cuda\+Crop (\begin{DoxyParamCaption}\item[{float \texorpdfstring{$\ast$}{*}}]{input}{, }\item[{float \texorpdfstring{$\ast$}{*}}]{output}{, }\item[{const int4 \&}]{roi}{, }\item[{size\+\_\+t}]{input\+Width}{, }\item[{size\+\_\+t}]{input\+Height}{, }\item[{cuda\+Stream\+\_\+t}]{stream}{ = {\ttfamily 0}}\end{DoxyParamCaption})}
+
+Crop a floating-\/point grayscale image to the specified region of interest (ROI).
+
+
+\begin{DoxyParams}[1]{Parameters}
+\doxymbox{\texttt{in}}  & {\em \doxylink{group__input}{Input}} & Pointer to the input image in CUDA memory. \\
+\hline
+\doxymbox{\texttt{out}}  & {\em output} & Pointer to the output image in CUDA memory. \doxylink{requirements_The}{The} output image should have the same dimensions as the ROI. \\
+\hline
+ & {\em roi} & \doxylink{requirements_The}{The} region of interest from the input image that will be copied to the output image. This {\ttfamily int4} vector forms a crop rectangle as follows:\+\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyItemize}
+\item {\ttfamily roi.\+x -\/\texorpdfstring{$>$}{>} left}
+\item {\ttfamily roi.\+y -\/\texorpdfstring{$>$}{>} top}
+\item {\ttfamily roi.\+z -\/\texorpdfstring{$>$}{>} right}
+\item {\ttfamily roi.\+w -\/\texorpdfstring{$>$}{>} bottom}
+\end{DoxyItemize}
+
+\doxylink{requirements_The}{The} ROI coordinates must not be negative, otherwise an error will be returned.
+
+
+\begin{DoxyParams}{Parameters}
+{\em input\+Width} & width of the input image (in pixels) \\
+\hline
+{\em input\+Width} & height of the input image (in pixels) \\
+\hline
+\end{DoxyParams}
+\Hypertarget{group__crop_ga2eabc2228b29ef130054cec9b809717b}\index{Cropping@{Cropping}!cudaCrop@{cudaCrop}}
+\index{cudaCrop@{cudaCrop}!Cropping@{Cropping}}
+\doxysubsubsubsubsection{\texorpdfstring{cudaCrop()}{cudaCrop()}\hspace{0.1cm}{\footnotesize\ttfamily [2/7]}}
+{\footnotesize\ttfamily \label{group__crop_ga2eabc2228b29ef130054cec9b809717b} 
+cuda\+Error\+\_\+t cuda\+Crop (\begin{DoxyParamCaption}\item[{float3 \texorpdfstring{$\ast$}{*}}]{input}{, }\item[{float3 \texorpdfstring{$\ast$}{*}}]{output}{, }\item[{const int4 \&}]{roi}{, }\item[{size\+\_\+t}]{input\+Width}{, }\item[{size\+\_\+t}]{input\+Height}{, }\item[{cuda\+Stream\+\_\+t}]{stream}{ = {\ttfamily 0}}\end{DoxyParamCaption})}
+
+Crop a float3 RGB/\+\+BGR image to the specified region of interest (ROI).
+
+
+\begin{DoxyParams}[1]{Parameters}
+\doxymbox{\texttt{in}}  & {\em \doxylink{group__input}{Input}} & Pointer to the input image in CUDA memory. \\
+\hline
+\doxymbox{\texttt{out}}  & {\em output} & Pointer to the output image in CUDA memory. \doxylink{requirements_The}{The} output image should have the same dimensions as the ROI. \\
+\hline
+ & {\em roi} & \doxylink{requirements_The}{The} region of interest from the input image that will be copied to the output image. This {\ttfamily int4} vector forms a crop rectangle as follows:\+\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyItemize}
+\item {\ttfamily roi.\+x -\/\texorpdfstring{$>$}{>} left}
+\item {\ttfamily roi.\+y -\/\texorpdfstring{$>$}{>} top}
+\item {\ttfamily roi.\+z -\/\texorpdfstring{$>$}{>} right}
+\item {\ttfamily roi.\+w -\/\texorpdfstring{$>$}{>} bottom}
+\end{DoxyItemize}
+
+\doxylink{requirements_The}{The} ROI coordinates must not be negative, otherwise an error will be returned.
+
+
+\begin{DoxyParams}{Parameters}
+{\em input\+Width} & width of the input image (in pixels) \\
+\hline
+{\em input\+Width} & height of the input image (in pixels) \\
+\hline
+\end{DoxyParams}
+\Hypertarget{group__crop_ga5accbe8538c8c48e0284fabcbf17ecba}\index{Cropping@{Cropping}!cudaCrop@{cudaCrop}}
+\index{cudaCrop@{cudaCrop}!Cropping@{Cropping}}
+\doxysubsubsubsubsection{\texorpdfstring{cudaCrop()}{cudaCrop()}\hspace{0.1cm}{\footnotesize\ttfamily [3/7]}}
+{\footnotesize\ttfamily \label{group__crop_ga5accbe8538c8c48e0284fabcbf17ecba} 
+cuda\+Error\+\_\+t cuda\+Crop (\begin{DoxyParamCaption}\item[{float4 \texorpdfstring{$\ast$}{*}}]{input}{, }\item[{float4 \texorpdfstring{$\ast$}{*}}]{output}{, }\item[{const int4 \&}]{roi}{, }\item[{size\+\_\+t}]{input\+Width}{, }\item[{size\+\_\+t}]{input\+Height}{, }\item[{cuda\+Stream\+\_\+t}]{stream}{ = {\ttfamily 0}}\end{DoxyParamCaption})}
+
+Crop a float4 RGBA/\+\+BGRA image to the specified region of interest (ROI).
+
+
+\begin{DoxyParams}[1]{Parameters}
+\doxymbox{\texttt{in}}  & {\em \doxylink{group__input}{Input}} & Pointer to the input image in CUDA memory. \\
+\hline
+\doxymbox{\texttt{out}}  & {\em output} & Pointer to the output image in CUDA memory. \doxylink{requirements_The}{The} output image should have the same dimensions as the ROI. \\
+\hline
+ & {\em roi} & \doxylink{requirements_The}{The} region of interest from the input image that will be copied to the output image. This {\ttfamily int4} vector forms a crop rectangle as follows:\+\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyItemize}
+\item {\ttfamily roi.\+x -\/\texorpdfstring{$>$}{>} left}
+\item {\ttfamily roi.\+y -\/\texorpdfstring{$>$}{>} top}
+\item {\ttfamily roi.\+z -\/\texorpdfstring{$>$}{>} right}
+\item {\ttfamily roi.\+w -\/\texorpdfstring{$>$}{>} bottom}
+\end{DoxyItemize}
+
+\doxylink{requirements_The}{The} ROI coordinates must not be negative, otherwise an error will be returned.
+
+
+\begin{DoxyParams}{Parameters}
+{\em input\+Width} & width of the input image (in pixels) \\
+\hline
+{\em input\+Width} & height of the input image (in pixels) \\
+\hline
+\end{DoxyParams}
+\Hypertarget{group__crop_ga7675fed34fc2ff1b451f2a8e3316bc61}\index{Cropping@{Cropping}!cudaCrop@{cudaCrop}}
+\index{cudaCrop@{cudaCrop}!Cropping@{Cropping}}
+\doxysubsubsubsubsection{\texorpdfstring{cudaCrop()}{cudaCrop()}\hspace{0.1cm}{\footnotesize\ttfamily [4/7]}}
+{\footnotesize\ttfamily \label{group__crop_ga7675fed34fc2ff1b451f2a8e3316bc61} 
+cuda\+Error\+\_\+t cuda\+Crop (\begin{DoxyParamCaption}\item[{uchar3 \texorpdfstring{$\ast$}{*}}]{input}{, }\item[{uchar3 \texorpdfstring{$\ast$}{*}}]{output}{, }\item[{const int4 \&}]{roi}{, }\item[{size\+\_\+t}]{input\+Width}{, }\item[{size\+\_\+t}]{input\+Height}{, }\item[{cuda\+Stream\+\_\+t}]{stream}{ = {\ttfamily 0}}\end{DoxyParamCaption})}
+
+Crop a uchar3 RGB/\+\+BGR image to the specified region of interest (ROI).
+
+
+\begin{DoxyParams}[1]{Parameters}
+\doxymbox{\texttt{in}}  & {\em \doxylink{group__input}{Input}} & Pointer to the input image in CUDA memory. \\
+\hline
+\doxymbox{\texttt{out}}  & {\em output} & Pointer to the output image in CUDA memory. \doxylink{requirements_The}{The} output image should have the same dimensions as the ROI. \\
+\hline
+ & {\em roi} & \doxylink{requirements_The}{The} region of interest from the input image that will be copied to the output image. This {\ttfamily int4} vector forms a crop rectangle as follows:\+\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyItemize}
+\item {\ttfamily roi.\+x -\/\texorpdfstring{$>$}{>} left}
+\item {\ttfamily roi.\+y -\/\texorpdfstring{$>$}{>} top}
+\item {\ttfamily roi.\+z -\/\texorpdfstring{$>$}{>} right}
+\item {\ttfamily roi.\+w -\/\texorpdfstring{$>$}{>} bottom}
+\end{DoxyItemize}
+
+\doxylink{requirements_The}{The} ROI coordinates must not be negative, otherwise an error will be returned.
+
+
+\begin{DoxyParams}{Parameters}
+{\em input\+Width} & width of the input image (in pixels) \\
+\hline
+{\em input\+Width} & height of the input image (in pixels) \\
+\hline
+\end{DoxyParams}
+\Hypertarget{group__crop_ga896b014dcfb9ccf91992cbe78954c5f3}\index{Cropping@{Cropping}!cudaCrop@{cudaCrop}}
+\index{cudaCrop@{cudaCrop}!Cropping@{Cropping}}
+\doxysubsubsubsubsection{\texorpdfstring{cudaCrop()}{cudaCrop()}\hspace{0.1cm}{\footnotesize\ttfamily [5/7]}}
+{\footnotesize\ttfamily \label{group__crop_ga896b014dcfb9ccf91992cbe78954c5f3} 
+cuda\+Error\+\_\+t cuda\+Crop (\begin{DoxyParamCaption}\item[{uchar4 \texorpdfstring{$\ast$}{*}}]{input}{, }\item[{uchar4 \texorpdfstring{$\ast$}{*}}]{output}{, }\item[{const int4 \&}]{roi}{, }\item[{size\+\_\+t}]{input\+Width}{, }\item[{size\+\_\+t}]{input\+Height}{, }\item[{cuda\+Stream\+\_\+t}]{stream}{ = {\ttfamily 0}}\end{DoxyParamCaption})}
+
+Crop a uchar4 RGBA/\+\+BGRA image to the specified region of interest (ROI).
+
+
+\begin{DoxyParams}[1]{Parameters}
+\doxymbox{\texttt{in}}  & {\em \doxylink{group__input}{Input}} & Pointer to the input image in CUDA memory. \\
+\hline
+\doxymbox{\texttt{out}}  & {\em output} & Pointer to the output image in CUDA memory. \doxylink{requirements_The}{The} output image should have the same dimensions as the ROI. \\
+\hline
+ & {\em roi} & \doxylink{requirements_The}{The} region of interest from the input image that will be copied to the output image. This {\ttfamily int4} vector forms a crop rectangle as follows:\+\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyItemize}
+\item {\ttfamily roi.\+x -\/\texorpdfstring{$>$}{>} left}
+\item {\ttfamily roi.\+y -\/\texorpdfstring{$>$}{>} top}
+\item {\ttfamily roi.\+z -\/\texorpdfstring{$>$}{>} right}
+\item {\ttfamily roi.\+w -\/\texorpdfstring{$>$}{>} bottom}
+\end{DoxyItemize}
+
+\doxylink{requirements_The}{The} ROI coordinates must not be negative, otherwise an error will be returned.
+
+
+\begin{DoxyParams}{Parameters}
+{\em input\+Width} & width of the input image (in pixels) \\
+\hline
+{\em input\+Width} & height of the input image (in pixels) \\
+\hline
+\end{DoxyParams}
+\Hypertarget{group__crop_gac1be27bde7887fd769a73cad9f1900fd}\index{Cropping@{Cropping}!cudaCrop@{cudaCrop}}
+\index{cudaCrop@{cudaCrop}!Cropping@{Cropping}}
+\doxysubsubsubsubsection{\texorpdfstring{cudaCrop()}{cudaCrop()}\hspace{0.1cm}{\footnotesize\ttfamily [6/7]}}
+{\footnotesize\ttfamily \label{group__crop_gac1be27bde7887fd769a73cad9f1900fd} 
+cuda\+Error\+\_\+t cuda\+Crop (\begin{DoxyParamCaption}\item[{uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{input}{, }\item[{uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{output}{, }\item[{const int4 \&}]{roi}{, }\item[{size\+\_\+t}]{input\+Width}{, }\item[{size\+\_\+t}]{input\+Height}{, }\item[{cuda\+Stream\+\_\+t}]{stream}{ = {\ttfamily 0}}\end{DoxyParamCaption})}
+
+Crop a uint8 grayscale image to the specified region of interest (ROI).
+
+
+\begin{DoxyParams}[1]{Parameters}
+\doxymbox{\texttt{in}}  & {\em \doxylink{group__input}{Input}} & Pointer to the input image in CUDA memory. \\
+\hline
+\doxymbox{\texttt{out}}  & {\em output} & Pointer to the output image in CUDA memory. \doxylink{requirements_The}{The} output image should have the same dimensions as the ROI. \\
+\hline
+ & {\em roi} & \doxylink{requirements_The}{The} region of interest from the input image that will be copied to the output image. This {\ttfamily int4} vector forms a crop rectangle as follows:\+\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyItemize}
+\item {\ttfamily roi.\+x -\/\texorpdfstring{$>$}{>} left}
+\item {\ttfamily roi.\+y -\/\texorpdfstring{$>$}{>} top}
+\item {\ttfamily roi.\+z -\/\texorpdfstring{$>$}{>} right}
+\item {\ttfamily roi.\+w -\/\texorpdfstring{$>$}{>} bottom}
+\end{DoxyItemize}
+
+\doxylink{requirements_The}{The} ROI coordinates must not be negative, otherwise an error will be returned.
+
+
+\begin{DoxyParams}{Parameters}
+{\em input\+Width} & width of the input image (in pixels) \\
+\hline
+{\em input\+Width} & height of the input image (in pixels) \\
+\hline
+\end{DoxyParams}
+\Hypertarget{group__crop_gaf1ee71fc60a6bdded2d49d61a76b51a7}\index{Cropping@{Cropping}!cudaCrop@{cudaCrop}}
+\index{cudaCrop@{cudaCrop}!Cropping@{Cropping}}
+\doxysubsubsubsubsection{\texorpdfstring{cudaCrop()}{cudaCrop()}\hspace{0.1cm}{\footnotesize\ttfamily [7/7]}}
+{\footnotesize\ttfamily \label{group__crop_gaf1ee71fc60a6bdded2d49d61a76b51a7} 
+cuda\+Error\+\_\+t cuda\+Crop (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}}]{input}{, }\item[{void \texorpdfstring{$\ast$}{*}}]{output}{, }\item[{const int4 \&}]{roi}{, }\item[{size\+\_\+t}]{input\+Width}{, }\item[{size\+\_\+t}]{input\+Height}{, }\item[{\doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{image\+Format}}}]{format}{, }\item[{cuda\+Stream\+\_\+t}]{stream}{ = {\ttfamily 0}}\end{DoxyParamCaption})}
+
+Crop a float4 RGBA/\+\+BGRA image to the specified region of interest (ROI).
+
+
+\begin{DoxyParams}[1]{Parameters}
+\doxymbox{\texttt{in}}  & {\em \doxylink{group__input}{Input}} & Pointer to the input image in CUDA memory. \\
+\hline
+\doxymbox{\texttt{out}}  & {\em output} & Pointer to the output image in CUDA memory. \doxylink{requirements_The}{The} output image should have the same dimensions as the ROI. \\
+\hline
+ & {\em roi} & \doxylink{requirements_The}{The} region of interest from the input image that will be copied to the output image. This {\ttfamily int4} vector forms a crop rectangle as follows:\+\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyItemize}
+\item {\ttfamily roi.\+x -\/\texorpdfstring{$>$}{>} left}
+\item {\ttfamily roi.\+y -\/\texorpdfstring{$>$}{>} top}
+\item {\ttfamily roi.\+z -\/\texorpdfstring{$>$}{>} right}
+\item {\ttfamily roi.\+w -\/\texorpdfstring{$>$}{>} bottom}
+\end{DoxyItemize}
+
+\doxylink{requirements_The}{The} ROI coordinates must not be negative, otherwise an error will be returned.
+
+
+\begin{DoxyParams}{Parameters}
+{\em input\+Width} & width of the input image (in pixels) \\
+\hline
+{\em input\+Width} & height of the input image (in pixels) \\
+\hline
+{\em format} & format of the image -\/ valid formats are gray8, gray32f, rgb8/\+bgr8, rgba8/\+bgra8, rgb32f/\+bgr32f, and rgba32f/\+bgra32f. \\
+\hline
+\end{DoxyParams}

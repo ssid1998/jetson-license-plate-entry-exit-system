@@ -1,0 +1,1367 @@
+\doxysection{nlohmann::\+basic\+\_\+json\texorpdfstring{$<$}{<} Object\+Type, Array\+Type, String\+Type, Boolean\+Type, Number\+Integer\+Type, Number\+Unsigned\+Type, Number\+Float\+Type, Allocator\+Type, JSONSerializer, Binary\+Type \texorpdfstring{$>$}{>} Class Template Reference}
+\hypertarget{classnlohmann_1_1basic__json}{}\label{classnlohmann_1_1basic__json}\index{nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$@{nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$}}
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classnlohmann_1_1basic__json_ac68cb65a7f3517f0c5b1d3a4967406ad}\label{classnlohmann_1_1basic__json_ac68cb65a7f3517f0c5b1d3a4967406ad} 
+using {\bfseries value\+\_\+t} = \doxymbox{\hyperlink{namespacenlohmann_1_1detail_a1ed8fc6239da25abcaf681d30ace4985}{detail::\+value\+\_\+t}}
+\item 
+\Hypertarget{classnlohmann_1_1basic__json_aa8f1f93b32da01b42413643be32b2c27}\label{classnlohmann_1_1basic__json_aa8f1f93b32da01b42413643be32b2c27} 
+using {\bfseries json\+\_\+pointer} = \doxymbox{\hyperlink{classnlohmann_1_1json__pointer}{::\+nlohmann::\+json\+\_\+pointer}}$<$\doxymbox{\hyperlink{classnlohmann_1_1basic__json}{basic\+\_\+json}}$>$
+\item 
+\Hypertarget{classnlohmann_1_1basic__json_ad6ebc5da7ced975bb184133750e7d49f}\label{classnlohmann_1_1basic__json_ad6ebc5da7ced975bb184133750e7d49f} 
+{\footnotesize template$<$typename T, typename SFINAE$>$ }\\using {\bfseries json\+\_\+serializer} = JSONSerializer$<$T, SFINAE$>$
+\item 
+\Hypertarget{classnlohmann_1_1basic__json_a1e7ca76cc3f62626b380be5e18a002d5}\label{classnlohmann_1_1basic__json_a1e7ca76cc3f62626b380be5e18a002d5} 
+using {\bfseries error\+\_\+handler\+\_\+t} = \doxymbox{\hyperlink{namespacenlohmann_1_1detail_a5a76b60b26dc8c47256a996d18d967df}{detail::\+error\+\_\+handler\+\_\+t}}
+\item 
+\Hypertarget{classnlohmann_1_1basic__json_a54951d14f0dd10cc3cfdaa24f8bfd15c}\label{classnlohmann_1_1basic__json_a54951d14f0dd10cc3cfdaa24f8bfd15c} 
+using {\bfseries cbor\+\_\+tag\+\_\+handler\+\_\+t} = \doxymbox{\hyperlink{namespacenlohmann_1_1detail_a58bb1ef1a9ad287a9cfaf1855784d9ac}{detail::\+cbor\+\_\+tag\+\_\+handler\+\_\+t}}
+\item 
+\Hypertarget{classnlohmann_1_1basic__json_a4d392f594e4c32345d47c2a175aad5c8}\label{classnlohmann_1_1basic__json_a4d392f594e4c32345d47c2a175aad5c8} 
+using {\bfseries initializer\+\_\+list\+\_\+t} = std::\+initializer\+\_\+list$<$\doxymbox{\hyperlink{classnlohmann_1_1detail_1_1json__ref}{detail::\+json\+\_\+ref}}$<$\doxymbox{\hyperlink{classnlohmann_1_1basic__json}{basic\+\_\+json}}$>$$>$
+\item 
+\Hypertarget{classnlohmann_1_1basic__json_a211cf53702226ad9fb3c939a3a3d3689}\label{classnlohmann_1_1basic__json_a211cf53702226ad9fb3c939a3a3d3689} 
+using {\bfseries input\+\_\+format\+\_\+t} = \doxymbox{\hyperlink{namespacenlohmann_1_1detail_aa554fc6a11519e4f347deb25a9f0db40}{detail::\+input\+\_\+format\+\_\+t}}
+\item 
+\Hypertarget{classnlohmann_1_1basic__json_a164b1094a1a9feb54e400d8510bb0b12}\label{classnlohmann_1_1basic__json_a164b1094a1a9feb54e400d8510bb0b12} 
+using {\bfseries json\+\_\+sax\+\_\+t} = \doxymbox{\hyperlink{structnlohmann_1_1json__sax}{json\+\_\+sax}}$<$\doxymbox{\hyperlink{classnlohmann_1_1basic__json}{basic\+\_\+json}}$>$
+\item 
+using \doxymbox{\hyperlink{classnlohmann_1_1basic__json_a8140932a01de832d609e78018dd6145f}{parse\+\_\+error}}
+\item 
+\Hypertarget{classnlohmann_1_1basic__json_a6ccc9788413fd58de998fe92743cb4aa}\label{classnlohmann_1_1basic__json_a6ccc9788413fd58de998fe92743cb4aa} 
+using {\bfseries invalid\+\_\+iterator} = \doxymbox{\hyperlink{classnlohmann_1_1detail_1_1invalid__iterator}{detail::\+invalid\+\_\+iterator}}
+\item 
+\Hypertarget{classnlohmann_1_1basic__json_ace5bf851eafe85bd6332f978991bc11c}\label{classnlohmann_1_1basic__json_ace5bf851eafe85bd6332f978991bc11c} 
+using {\bfseries type\+\_\+error} = \doxymbox{\hyperlink{classnlohmann_1_1detail_1_1type__error}{detail::\+type\+\_\+error}}
+\item 
+\Hypertarget{classnlohmann_1_1basic__json_a2251d8523fa6d16c0fba6388ffa2ef8c}\label{classnlohmann_1_1basic__json_a2251d8523fa6d16c0fba6388ffa2ef8c} 
+using {\bfseries out\+\_\+of\+\_\+range} = \doxymbox{\hyperlink{classnlohmann_1_1detail_1_1out__of__range}{detail::\+out\+\_\+of\+\_\+range}}
+\item 
+\Hypertarget{classnlohmann_1_1basic__json_a6fc373c99facc37aadbc5651b3d6631d}\label{classnlohmann_1_1basic__json_a6fc373c99facc37aadbc5651b3d6631d} 
+using {\bfseries other\+\_\+error} = \doxymbox{\hyperlink{classnlohmann_1_1detail_1_1other__error}{detail::\+other\+\_\+error}}
+\item 
+using \doxymbox{\hyperlink{classnlohmann_1_1basic__json_a0c038e096fe866f2ae6add7a3ae2e6ca}{reference}}
+\item 
+\Hypertarget{classnlohmann_1_1basic__json_ab8a1c33ee7b154fc41ca2545aa9724e6}\label{classnlohmann_1_1basic__json_ab8a1c33ee7b154fc41ca2545aa9724e6} 
+using {\bfseries const\+\_\+reference} = const value\+\_\+type\&
+\item 
+\Hypertarget{classnlohmann_1_1basic__json_a3d20d11e5dfe95084a76f62eca54fadd}\label{classnlohmann_1_1basic__json_a3d20d11e5dfe95084a76f62eca54fadd} 
+using {\bfseries difference\+\_\+type} = std::\+ptrdiff\+\_\+t
+\item 
+\Hypertarget{classnlohmann_1_1basic__json_a3ada29bca70b4965f6fd37ec1c8f85f7}\label{classnlohmann_1_1basic__json_a3ada29bca70b4965f6fd37ec1c8f85f7} 
+using {\bfseries size\+\_\+type} = std::\+size\+\_\+t
+\item 
+\Hypertarget{classnlohmann_1_1basic__json_ad38ae80f1e99d4b1f33c99fea4611457}\label{classnlohmann_1_1basic__json_ad38ae80f1e99d4b1f33c99fea4611457} 
+using {\bfseries allocator\+\_\+type} = Allocator\+Type$<$\doxymbox{\hyperlink{classnlohmann_1_1basic__json}{basic\+\_\+json}}$>$
+\item 
+\Hypertarget{classnlohmann_1_1basic__json_a42e5c23402f4c2e1df487e1d102bc5fa}\label{classnlohmann_1_1basic__json_a42e5c23402f4c2e1df487e1d102bc5fa} 
+using {\bfseries pointer} = typename std::\+allocator\+\_\+traits$<$allocator\+\_\+type$>$::\+pointer
+\item 
+\Hypertarget{classnlohmann_1_1basic__json_a4108c5148f1d7cf13c2681e22f141a10}\label{classnlohmann_1_1basic__json_a4108c5148f1d7cf13c2681e22f141a10} 
+using {\bfseries const\+\_\+pointer} = typename std::\+allocator\+\_\+traits$<$allocator\+\_\+type$>$::\+const\+\_\+pointer
+\item 
+\Hypertarget{classnlohmann_1_1basic__json_aa549b2b382916b3baafb526e5cb410bd}\label{classnlohmann_1_1basic__json_aa549b2b382916b3baafb526e5cb410bd} 
+using {\bfseries iterator} = iter\+\_\+impl$<$\doxymbox{\hyperlink{classnlohmann_1_1basic__json}{basic\+\_\+json}}$>$
+\item 
+\Hypertarget{classnlohmann_1_1basic__json_aebd2cfa7e4ded4e97cde9269bfeeea38}\label{classnlohmann_1_1basic__json_aebd2cfa7e4ded4e97cde9269bfeeea38} 
+using {\bfseries const\+\_\+iterator} = iter\+\_\+impl$<$const \doxymbox{\hyperlink{classnlohmann_1_1basic__json}{basic\+\_\+json}}$>$
+\item 
+\Hypertarget{classnlohmann_1_1basic__json_a5b8c0ebedd920b507f4f7ff4e19bf3c6}\label{classnlohmann_1_1basic__json_a5b8c0ebedd920b507f4f7ff4e19bf3c6} 
+using {\bfseries reverse\+\_\+iterator} = json\+\_\+reverse\+\_\+iterator$<$typename basic\+\_\+json::\+iterator$>$
+\item 
+\Hypertarget{classnlohmann_1_1basic__json_aa7dba16ed9ee97380aeb17a207dd919a}\label{classnlohmann_1_1basic__json_aa7dba16ed9ee97380aeb17a207dd919a} 
+using {\bfseries const\+\_\+reverse\+\_\+iterator} = json\+\_\+reverse\+\_\+iterator$<$typename basic\+\_\+json::\+const\+\_\+iterator$>$
+\item 
+using \doxymbox{\hyperlink{classnlohmann_1_1basic__json_a17973d410285b14d8217a6b0b6104232}{object\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em a type for an object \end{DoxyCompactList}\item 
+using \doxymbox{\hyperlink{classnlohmann_1_1basic__json_a53700c308d804f84aea5ff05abb2ac4e}{array\+\_\+t}} = Array\+Type$<$\doxymbox{\hyperlink{classnlohmann_1_1basic__json}{basic\+\_\+json}}, Allocator\+Type$<$\doxymbox{\hyperlink{classnlohmann_1_1basic__json}{basic\+\_\+json}}$>$$>$
+\begin{DoxyCompactList}\small\item\em a type for an array \end{DoxyCompactList}\item 
+using \doxymbox{\hyperlink{classnlohmann_1_1basic__json_a33593865ffb1860323dcbd52425b90c8}{string\+\_\+t}} = String\+Type
+\begin{DoxyCompactList}\small\item\em a type for a string \end{DoxyCompactList}\item 
+using \doxymbox{\hyperlink{classnlohmann_1_1basic__json_a44fd1a12c9c54623c942b430e7a72937}{boolean\+\_\+t}} = Boolean\+Type
+\begin{DoxyCompactList}\small\item\em a type for a boolean \end{DoxyCompactList}\item 
+using \doxymbox{\hyperlink{classnlohmann_1_1basic__json_a11e390944da90db83089eb2426a749d3}{number\+\_\+integer\+\_\+t}} = Number\+Integer\+Type
+\begin{DoxyCompactList}\small\item\em a type for a number (integer) \end{DoxyCompactList}\item 
+using \doxymbox{\hyperlink{classnlohmann_1_1basic__json_ae09af9c23351b7245d9be4d1b2035fef}{number\+\_\+unsigned\+\_\+t}} = Number\+Unsigned\+Type
+\begin{DoxyCompactList}\small\item\em a type for a number (unsigned) \end{DoxyCompactList}\item 
+using \doxymbox{\hyperlink{classnlohmann_1_1basic__json_a5b8abaebd922d82d69756327c0c347e6}{number\+\_\+float\+\_\+t}} = Number\+Float\+Type
+\begin{DoxyCompactList}\small\item\em a type for a number (floating-\/point) \end{DoxyCompactList}\item 
+using \doxymbox{\hyperlink{classnlohmann_1_1basic__json_ad6c955145bebde84d93991ffed7cd389}{binary\+\_\+t}} = \doxymbox{\hyperlink{classnlohmann_1_1byte__container__with__subtype}{nlohmann::\+byte\+\_\+container\+\_\+with\+\_\+subtype}}$<$Binary\+Type$>$
+\begin{DoxyCompactList}\small\item\em a type for a packed binary type \end{DoxyCompactList}\item 
+using \doxymbox{\hyperlink{classnlohmann_1_1basic__json_a24086b03c5c063849df0307f78c41c54}{parse\+\_\+event\+\_\+t}} = detail::\+parse\+\_\+event\+\_\+t
+\begin{DoxyCompactList}\small\item\em parser event types \end{DoxyCompactList}\item 
+using \doxymbox{\hyperlink{classnlohmann_1_1basic__json_a0273d074462644e5d5a7ff313ad0d742}{parser\+\_\+callback\+\_\+t}} = detail::\+parser\+\_\+callback\+\_\+t$<$\doxymbox{\hyperlink{classnlohmann_1_1basic__json}{basic\+\_\+json}}$>$
+\begin{DoxyCompactList}\small\item\em per-\/element parser callback type \end{DoxyCompactList}\item 
+\Hypertarget{classnlohmann_1_1basic__json_ac68cb65a7f3517f0c5b1d3a4967406ad}\label{classnlohmann_1_1basic__json_ac68cb65a7f3517f0c5b1d3a4967406ad} 
+using {\bfseries value\+\_\+t} = \doxymbox{\hyperlink{namespacenlohmann_1_1detail_a1ed8fc6239da25abcaf681d30ace4985}{detail::\+value\+\_\+t}}
+\item 
+\Hypertarget{classnlohmann_1_1basic__json_aa8f1f93b32da01b42413643be32b2c27}\label{classnlohmann_1_1basic__json_aa8f1f93b32da01b42413643be32b2c27} 
+using {\bfseries json\+\_\+pointer} = \doxymbox{\hyperlink{classnlohmann_1_1json__pointer}{::\+nlohmann::\+json\+\_\+pointer}}$<$\doxymbox{\hyperlink{classnlohmann_1_1basic__json}{basic\+\_\+json}}$>$
+\item 
+\Hypertarget{classnlohmann_1_1basic__json_ad6ebc5da7ced975bb184133750e7d49f}\label{classnlohmann_1_1basic__json_ad6ebc5da7ced975bb184133750e7d49f} 
+{\footnotesize template$<$typename T, typename SFINAE$>$ }\\using {\bfseries json\+\_\+serializer} = JSONSerializer$<$T, SFINAE$>$
+\item 
+\Hypertarget{classnlohmann_1_1basic__json_a1e7ca76cc3f62626b380be5e18a002d5}\label{classnlohmann_1_1basic__json_a1e7ca76cc3f62626b380be5e18a002d5} 
+using {\bfseries error\+\_\+handler\+\_\+t} = \doxymbox{\hyperlink{namespacenlohmann_1_1detail_a5a76b60b26dc8c47256a996d18d967df}{detail::\+error\+\_\+handler\+\_\+t}}
+\item 
+\Hypertarget{classnlohmann_1_1basic__json_a54951d14f0dd10cc3cfdaa24f8bfd15c}\label{classnlohmann_1_1basic__json_a54951d14f0dd10cc3cfdaa24f8bfd15c} 
+using {\bfseries cbor\+\_\+tag\+\_\+handler\+\_\+t} = \doxymbox{\hyperlink{namespacenlohmann_1_1detail_a58bb1ef1a9ad287a9cfaf1855784d9ac}{detail::\+cbor\+\_\+tag\+\_\+handler\+\_\+t}}
+\item 
+\Hypertarget{classnlohmann_1_1basic__json_a4d392f594e4c32345d47c2a175aad5c8}\label{classnlohmann_1_1basic__json_a4d392f594e4c32345d47c2a175aad5c8} 
+using {\bfseries initializer\+\_\+list\+\_\+t} = std::\+initializer\+\_\+list$<$\doxymbox{\hyperlink{classnlohmann_1_1detail_1_1json__ref}{detail::\+json\+\_\+ref}}$<$\doxymbox{\hyperlink{classnlohmann_1_1basic__json}{basic\+\_\+json}}$>$$>$
+\item 
+\Hypertarget{classnlohmann_1_1basic__json_a211cf53702226ad9fb3c939a3a3d3689}\label{classnlohmann_1_1basic__json_a211cf53702226ad9fb3c939a3a3d3689} 
+using {\bfseries input\+\_\+format\+\_\+t} = \doxymbox{\hyperlink{namespacenlohmann_1_1detail_aa554fc6a11519e4f347deb25a9f0db40}{detail::\+input\+\_\+format\+\_\+t}}
+\item 
+\Hypertarget{classnlohmann_1_1basic__json_a164b1094a1a9feb54e400d8510bb0b12}\label{classnlohmann_1_1basic__json_a164b1094a1a9feb54e400d8510bb0b12} 
+using {\bfseries json\+\_\+sax\+\_\+t} = \doxymbox{\hyperlink{structnlohmann_1_1json__sax}{json\+\_\+sax}}$<$\doxymbox{\hyperlink{classnlohmann_1_1basic__json}{basic\+\_\+json}}$>$
+\item 
+using \doxymbox{\hyperlink{classnlohmann_1_1basic__json_a8140932a01de832d609e78018dd6145f}{parse\+\_\+error}}
+\item 
+\Hypertarget{classnlohmann_1_1basic__json_a6ccc9788413fd58de998fe92743cb4aa}\label{classnlohmann_1_1basic__json_a6ccc9788413fd58de998fe92743cb4aa} 
+using {\bfseries invalid\+\_\+iterator} = \doxymbox{\hyperlink{classnlohmann_1_1detail_1_1invalid__iterator}{detail::\+invalid\+\_\+iterator}}
+\item 
+\Hypertarget{classnlohmann_1_1basic__json_ace5bf851eafe85bd6332f978991bc11c}\label{classnlohmann_1_1basic__json_ace5bf851eafe85bd6332f978991bc11c} 
+using {\bfseries type\+\_\+error} = \doxymbox{\hyperlink{classnlohmann_1_1detail_1_1type__error}{detail::\+type\+\_\+error}}
+\item 
+\Hypertarget{classnlohmann_1_1basic__json_a2251d8523fa6d16c0fba6388ffa2ef8c}\label{classnlohmann_1_1basic__json_a2251d8523fa6d16c0fba6388ffa2ef8c} 
+using {\bfseries out\+\_\+of\+\_\+range} = \doxymbox{\hyperlink{classnlohmann_1_1detail_1_1out__of__range}{detail::\+out\+\_\+of\+\_\+range}}
+\item 
+\Hypertarget{classnlohmann_1_1basic__json_a6fc373c99facc37aadbc5651b3d6631d}\label{classnlohmann_1_1basic__json_a6fc373c99facc37aadbc5651b3d6631d} 
+using {\bfseries other\+\_\+error} = \doxymbox{\hyperlink{classnlohmann_1_1detail_1_1other__error}{detail::\+other\+\_\+error}}
+\item 
+using \doxymbox{\hyperlink{classnlohmann_1_1basic__json_a0c038e096fe866f2ae6add7a3ae2e6ca}{reference}}
+\item 
+\Hypertarget{classnlohmann_1_1basic__json_ab8a1c33ee7b154fc41ca2545aa9724e6}\label{classnlohmann_1_1basic__json_ab8a1c33ee7b154fc41ca2545aa9724e6} 
+using {\bfseries const\+\_\+reference} = const value\+\_\+type\&
+\item 
+\Hypertarget{classnlohmann_1_1basic__json_a3d20d11e5dfe95084a76f62eca54fadd}\label{classnlohmann_1_1basic__json_a3d20d11e5dfe95084a76f62eca54fadd} 
+using {\bfseries difference\+\_\+type} = std::\+ptrdiff\+\_\+t
+\item 
+\Hypertarget{classnlohmann_1_1basic__json_a3ada29bca70b4965f6fd37ec1c8f85f7}\label{classnlohmann_1_1basic__json_a3ada29bca70b4965f6fd37ec1c8f85f7} 
+using {\bfseries size\+\_\+type} = std::\+size\+\_\+t
+\item 
+\Hypertarget{classnlohmann_1_1basic__json_ad38ae80f1e99d4b1f33c99fea4611457}\label{classnlohmann_1_1basic__json_ad38ae80f1e99d4b1f33c99fea4611457} 
+using {\bfseries allocator\+\_\+type} = Allocator\+Type$<$\doxymbox{\hyperlink{classnlohmann_1_1basic__json}{basic\+\_\+json}}$>$
+\item 
+\Hypertarget{classnlohmann_1_1basic__json_a42e5c23402f4c2e1df487e1d102bc5fa}\label{classnlohmann_1_1basic__json_a42e5c23402f4c2e1df487e1d102bc5fa} 
+using {\bfseries pointer} = typename std::\+allocator\+\_\+traits$<$allocator\+\_\+type$>$::\+pointer
+\item 
+\Hypertarget{classnlohmann_1_1basic__json_a4108c5148f1d7cf13c2681e22f141a10}\label{classnlohmann_1_1basic__json_a4108c5148f1d7cf13c2681e22f141a10} 
+using {\bfseries const\+\_\+pointer} = typename std::\+allocator\+\_\+traits$<$allocator\+\_\+type$>$::\+const\+\_\+pointer
+\item 
+\Hypertarget{classnlohmann_1_1basic__json_aa549b2b382916b3baafb526e5cb410bd}\label{classnlohmann_1_1basic__json_aa549b2b382916b3baafb526e5cb410bd} 
+using {\bfseries iterator} = iter\+\_\+impl$<$\doxymbox{\hyperlink{classnlohmann_1_1basic__json}{basic\+\_\+json}}$>$
+\item 
+\Hypertarget{classnlohmann_1_1basic__json_aebd2cfa7e4ded4e97cde9269bfeeea38}\label{classnlohmann_1_1basic__json_aebd2cfa7e4ded4e97cde9269bfeeea38} 
+using {\bfseries const\+\_\+iterator} = iter\+\_\+impl$<$const \doxymbox{\hyperlink{classnlohmann_1_1basic__json}{basic\+\_\+json}}$>$
+\item 
+\Hypertarget{classnlohmann_1_1basic__json_a5b8c0ebedd920b507f4f7ff4e19bf3c6}\label{classnlohmann_1_1basic__json_a5b8c0ebedd920b507f4f7ff4e19bf3c6} 
+using {\bfseries reverse\+\_\+iterator} = json\+\_\+reverse\+\_\+iterator$<$typename basic\+\_\+json::\+iterator$>$
+\item 
+\Hypertarget{classnlohmann_1_1basic__json_aa7dba16ed9ee97380aeb17a207dd919a}\label{classnlohmann_1_1basic__json_aa7dba16ed9ee97380aeb17a207dd919a} 
+using {\bfseries const\+\_\+reverse\+\_\+iterator} = json\+\_\+reverse\+\_\+iterator$<$typename basic\+\_\+json::\+const\+\_\+iterator$>$
+\item 
+using \doxymbox{\hyperlink{classnlohmann_1_1basic__json_a17973d410285b14d8217a6b0b6104232}{object\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em a type for an object \end{DoxyCompactList}\item 
+using \doxymbox{\hyperlink{classnlohmann_1_1basic__json_a53700c308d804f84aea5ff05abb2ac4e}{array\+\_\+t}} = Array\+Type$<$\doxymbox{\hyperlink{classnlohmann_1_1basic__json}{basic\+\_\+json}}, Allocator\+Type$<$\doxymbox{\hyperlink{classnlohmann_1_1basic__json}{basic\+\_\+json}}$>$$>$
+\begin{DoxyCompactList}\small\item\em a type for an array \end{DoxyCompactList}\item 
+using \doxymbox{\hyperlink{classnlohmann_1_1basic__json_a33593865ffb1860323dcbd52425b90c8}{string\+\_\+t}} = String\+Type
+\begin{DoxyCompactList}\small\item\em a type for a string \end{DoxyCompactList}\item 
+using \doxymbox{\hyperlink{classnlohmann_1_1basic__json_a44fd1a12c9c54623c942b430e7a72937}{boolean\+\_\+t}} = Boolean\+Type
+\begin{DoxyCompactList}\small\item\em a type for a boolean \end{DoxyCompactList}\item 
+using \doxymbox{\hyperlink{classnlohmann_1_1basic__json_a11e390944da90db83089eb2426a749d3}{number\+\_\+integer\+\_\+t}} = Number\+Integer\+Type
+\begin{DoxyCompactList}\small\item\em a type for a number (integer) \end{DoxyCompactList}\item 
+using \doxymbox{\hyperlink{classnlohmann_1_1basic__json_ae09af9c23351b7245d9be4d1b2035fef}{number\+\_\+unsigned\+\_\+t}} = Number\+Unsigned\+Type
+\begin{DoxyCompactList}\small\item\em a type for a number (unsigned) \end{DoxyCompactList}\item 
+using \doxymbox{\hyperlink{classnlohmann_1_1basic__json_a5b8abaebd922d82d69756327c0c347e6}{number\+\_\+float\+\_\+t}} = Number\+Float\+Type
+\begin{DoxyCompactList}\small\item\em a type for a number (floating-\/point) \end{DoxyCompactList}\item 
+using \doxymbox{\hyperlink{classnlohmann_1_1basic__json_ad6c955145bebde84d93991ffed7cd389}{binary\+\_\+t}} = \doxymbox{\hyperlink{classnlohmann_1_1byte__container__with__subtype}{nlohmann::\+byte\+\_\+container\+\_\+with\+\_\+subtype}}$<$Binary\+Type$>$
+\begin{DoxyCompactList}\small\item\em a type for a packed binary type \end{DoxyCompactList}\item 
+using \doxymbox{\hyperlink{classnlohmann_1_1basic__json_a24086b03c5c063849df0307f78c41c54}{parse\+\_\+event\+\_\+t}} = detail::\+parse\+\_\+event\+\_\+t
+\begin{DoxyCompactList}\small\item\em parser event types \end{DoxyCompactList}\item 
+using \doxymbox{\hyperlink{classnlohmann_1_1basic__json_a0273d074462644e5d5a7ff313ad0d742}{parser\+\_\+callback\+\_\+t}} = detail::\+parser\+\_\+callback\+\_\+t$<$\doxymbox{\hyperlink{classnlohmann_1_1basic__json}{basic\+\_\+json}}$>$
+\begin{DoxyCompactList}\small\item\em per-\/element parser callback type \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classnlohmann_1_1basic__json_a91e4d10ebc42cec73f2a31bcbdd54879}\label{classnlohmann_1_1basic__json_a91e4d10ebc42cec73f2a31bcbdd54879} 
+\texorpdfstring{$\ast$}{*}static allocator\+\_\+type {\bfseries get\+\_\+allocator} ()
+\begin{DoxyCompactList}\small\item\em returns the allocator associated with the container \end{DoxyCompactList}\item 
+static JSON\+\_\+\+HEDLEY\+\_\+\+WARN\+\_\+\+UNUSED\+\_\+\+RESULT \doxymbox{\hyperlink{classnlohmann_1_1basic__json}{basic\+\_\+json}} \doxymbox{\hyperlink{classnlohmann_1_1basic__json_a351b4f65014f6c2b8b2832847d44bbd7}{meta}} ()
+\begin{DoxyCompactList}\small\item\em returns version information on the library \end{DoxyCompactList}\item 
+\Hypertarget{classnlohmann_1_1basic__json_a91e4d10ebc42cec73f2a31bcbdd54879}\label{classnlohmann_1_1basic__json_a91e4d10ebc42cec73f2a31bcbdd54879} 
+\texorpdfstring{$\ast$}{*}static allocator\+\_\+type {\bfseries get\+\_\+allocator} ()
+\begin{DoxyCompactList}\small\item\em returns the allocator associated with the container \end{DoxyCompactList}\item 
+static JSON\+\_\+\+HEDLEY\+\_\+\+WARN\+\_\+\+UNUSED\+\_\+\+RESULT \doxymbox{\hyperlink{classnlohmann_1_1basic__json}{basic\+\_\+json}} \doxymbox{\hyperlink{classnlohmann_1_1basic__json_a351b4f65014f6c2b8b2832847d44bbd7}{meta}} ()
+\begin{DoxyCompactList}\small\item\em returns version information on the library \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classnlohmann_1_1basic__json_a6f8a5528bddd715eab23ac5cb934326c}\label{classnlohmann_1_1basic__json_a6f8a5528bddd715eab23ac5cb934326c} 
+\texorpdfstring{$\ast$}{*}JSON {\bfseries Pointer}
+\item 
+\Hypertarget{classnlohmann_1_1basic__json_aa64992e127fba829148b564d2050f3c6}\label{classnlohmann_1_1basic__json_aa64992e127fba829148b564d2050f3c6} 
+\texorpdfstring{$\ast$}{*}SAX interface {\bfseries type}
+\item 
+\Hypertarget{classnlohmann_1_1basic__json_a3b70f91a48f7870fa44699d303d7030b}\label{classnlohmann_1_1basic__json_a3b70f91a48f7870fa44699d303d7030b} 
+\texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}name constructors and destructors \texorpdfstring{$\ast$}{*}Constructors of class ref \doxymbox{\hyperlink{classnlohmann_1_1basic__json}{basic\+\_\+json}} copy move constructor copy \texorpdfstring{$\ast$}{*} {\bfseries assignment}
+\item 
+\Hypertarget{classnlohmann_1_1basic__json_a42774fd99d40c2b356ccc10b51fe4a2a}\label{classnlohmann_1_1basic__json_a42774fd99d40c2b356ccc10b51fe4a2a} 
+\texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}name constructors and destructors \texorpdfstring{$\ast$}{*}Constructors of class ref \doxymbox{\hyperlink{classnlohmann_1_1basic__json}{basic\+\_\+json}} copy move constructor copy static functions creating and the destructor \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}the value of the current element json\+\_\+value {\bfseries m\+\_\+value} = \{\}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classnlohmann_1_1basic__json_a70858fe2d6ec9a2d41b11534cd239acb}\label{classnlohmann_1_1basic__json_a70858fe2d6ec9a2d41b11534cd239acb} 
+\texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}name constructors and destructors \texorpdfstring{$\ast$}{*}Constructors of class ref \doxymbox{\hyperlink{classnlohmann_1_1basic__json}{basic\+\_\+json}} copy move constructor copy static functions creating {\bfseries objects}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classnlohmann_1_1basic__json_a6275ed57bae6866cdf5db5370a7ad47c}\label{classnlohmann_1_1basic__json_a6275ed57bae6866cdf5db5370a7ad47c} 
+{\footnotesize template$<$\doxymbox{\hyperlink{namespacenlohmann_1_1detail_a1ed8fc6239da25abcaf681d30ace4985}{detail::\+value\+\_\+t}}$>$ }\\struct {\bfseries detail::\+external\+\_\+constructor}
+\item 
+\Hypertarget{classnlohmann_1_1basic__json_ac8f3125911eb018ef4ab00d879487baf}\label{classnlohmann_1_1basic__json_ac8f3125911eb018ef4ab00d879487baf} 
+{\footnotesize template$<$typename Basic\+Json\+Type, typename Input\+Type$>$ }\\class {\bfseries ::\+nlohmann::\+detail::\+parser}
+\item 
+\Hypertarget{classnlohmann_1_1basic__json_a842e5c7ca096025c18b11e715d3401f4}\label{classnlohmann_1_1basic__json_a842e5c7ca096025c18b11e715d3401f4} 
+{\footnotesize template$<$typename Basic\+Json\+Type$>$ }\\class {\bfseries ::\+nlohmann::\+detail::\+iter\+\_\+impl}
+\item 
+\Hypertarget{classnlohmann_1_1basic__json_a69d491bbda88ade6d3c7a2b11309e8bf}\label{classnlohmann_1_1basic__json_a69d491bbda88ade6d3c7a2b11309e8bf} 
+{\footnotesize template$<$typename Basic\+Json\+Type, typename Char\+Type$>$ }\\class {\bfseries ::\+nlohmann::\+detail::\+binary\+\_\+writer}
+\item 
+\Hypertarget{classnlohmann_1_1basic__json_aa226ed5103dfd10e27e562d35a3a106b}\label{classnlohmann_1_1basic__json_aa226ed5103dfd10e27e562d35a3a106b} 
+{\footnotesize template$<$typename Basic\+Json\+Type, typename Input\+Type, typename SAX$>$ }\\class {\bfseries ::\+nlohmann::\+detail::\+binary\+\_\+reader}
+\item 
+\Hypertarget{classnlohmann_1_1basic__json_a47aabb1eceae32e8a6e8e7f0ff34be60}\label{classnlohmann_1_1basic__json_a47aabb1eceae32e8a6e8e7f0ff34be60} 
+{\footnotesize template$<$typename Basic\+Json\+Type$>$ }\\class {\bfseries ::\+nlohmann::\+detail::\+json\+\_\+sax\+\_\+dom\+\_\+parser}
+\item 
+\Hypertarget{classnlohmann_1_1basic__json_a95574da8d12905ea99dc348934c837da}\label{classnlohmann_1_1basic__json_a95574da8d12905ea99dc348934c837da} 
+{\footnotesize template$<$typename Basic\+Json\+Type$>$ }\\class {\bfseries ::\+nlohmann::\+detail::\+json\+\_\+sax\+\_\+dom\+\_\+callback\+\_\+parser}
+\item 
+\Hypertarget{classnlohmann_1_1basic__json_abdcb15d025676b4d3db0f32a50f4393f}\label{classnlohmann_1_1basic__json_abdcb15d025676b4d3db0f32a50f4393f} 
+class {\bfseries ::\+nlohmann::\+detail::\+exception}
+\item 
+\Hypertarget{classnlohmann_1_1basic__json_a3b6ff4868cdf4db1db051059046282de}\label{classnlohmann_1_1basic__json_a3b6ff4868cdf4db1db051059046282de} 
+{\footnotesize template$<$\doxymbox{\hyperlink{namespacenlohmann_1_1detail_a1ed8fc6239da25abcaf681d30ace4985}{detail::\+value\+\_\+t}}$>$ }\\struct {\bfseries detail::\+external\+\_\+constructor}
+\end{DoxyCompactItemize}
+
+
+\label{doc-typedef-members}
+\Hypertarget{classnlohmann_1_1basic__json_doc-typedef-members}
+\doxysubsection{Member Typedef Documentation}
+\Hypertarget{classnlohmann_1_1basic__json_a53700c308d804f84aea5ff05abb2ac4e}\index{nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$@{nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$}!array\_t@{array\_t}}
+\index{array\_t@{array\_t}!nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$@{nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$}}
+\doxysubsubsection{\texorpdfstring{array\_t}{array\_t}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classnlohmann_1_1basic__json_a53700c308d804f84aea5ff05abb2ac4e} 
+template$<$template$<$ typename U, typename V, typename... Args $>$ class Object\+Type = std::\+map, template$<$ typename U, typename... Args $>$ class Array\+Type = std::\+vector, class String\+Type = std::\+string, class Boolean\+Type = bool, class Number\+Integer\+Type = std::\+int64\+\_\+t, class Number\+Unsigned\+Type = std::\+uint64\+\_\+t, class Number\+Float\+Type = double, template$<$ typename U $>$ class Allocator\+Type = std::\+allocator, template$<$ typename T, typename SFINAE=void $>$ class JSONSerializer = adl\+\_\+serializer, class Binary\+Type = std::\+vector$<$std::\+uint8\+\_\+t$>$$>$ \\
+using \doxymbox{\hyperlink{classnlohmann_1_1basic__json}{nlohmann::\+basic\+\_\+json}}$<$ Object\+Type, Array\+Type, String\+Type, Boolean\+Type, Number\+Integer\+Type, Number\+Unsigned\+Type, Number\+Float\+Type, Allocator\+Type, JSONSerializer, Binary\+Type $>$::\+array\+\_\+t = Array\+Type$<$\doxymbox{\hyperlink{classnlohmann_1_1basic__json}{basic\+\_\+json}}, Allocator\+Type$<$\doxymbox{\hyperlink{classnlohmann_1_1basic__json}{basic\+\_\+json}}$>$$>$}
+
+
+
+a type for an array 
+
+\href{https://tools.ietf.org/html/rfc8259}{\texttt{RFC 8259}} describes JSON arrays as follows:\+ \begin{quote}
+An array is an ordered sequence of zero or more values. \end{quote}
+
+
+To store objects in C++, a type is defined by the template parameters explained below.
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em Array\+Type} & container type to store arrays (e.\+g., {\ttfamily std::\+vector} or {\ttfamily std::\+list}) \\
+\hline
+{\em Allocator\+Type} & allocator to use for arrays (e.\+g., {\ttfamily std::\+allocator})\\
+\hline
+\end{DoxyTemplParams}
+\hypertarget{classnlohmann_1_1basic__json_autotoc_md18}{}\doxysubsubsubsubsection{\texorpdfstring{Default type}{Default type}}\label{classnlohmann_1_1basic__json_autotoc_md18}
+With the default values for {\itshape Array\+Type} ({\ttfamily std::\+vector}) and {\itshape Allocator\+Type} ({\ttfamily std::\+allocator}), the default value for {\itshape \doxylink{classnlohmann_1_1basic__json_a53700c308d804f84aea5ff05abb2ac4e}{array\+\_\+t}} is:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{std::vector<}
+\DoxyCodeLine{\ \ basic\_json,\ \textcolor{comment}{//\ value\_type}}
+\DoxyCodeLine{\ \ std::allocator<basic\_json>\ \textcolor{comment}{//\ allocator\_type}}
+\DoxyCodeLine{>}
+
+\end{DoxyCode}
+\hypertarget{classnlohmann_1_1basic__json_autotoc_md19}{}\doxysubsubsubsubsection{\texorpdfstring{Limits}{Limits}}\label{classnlohmann_1_1basic__json_autotoc_md19}
+\href{https://tools.ietf.org/html/rfc8259}{\texttt{RFC 8259}} specifies:\+ \begin{quote}
+An implementation may set limits on the maximum depth of nesting. \end{quote}
+
+
+In this class, the array\textquotesingle{}s limit of nesting is not explicitly constrained. However, a maximum depth of nesting may be introduced by the compiler or runtime environment. A theoretical limit can be queried by calling the max\+\_\+size function of a JSON array.\hypertarget{classnlohmann_1_1basic__json_autotoc_md20}{}\doxysubsubsubsubsection{\texorpdfstring{Storage}{Storage}}\label{classnlohmann_1_1basic__json_autotoc_md20}
+Arrays are stored as pointers in a \doxylink{classnlohmann_1_1basic__json}{basic\+\_\+json} type. That is, for any access to array values, a pointer of type {\ttfamily array\+\_\+t\texorpdfstring{$\ast$}{*}} must be dereferenced.
+
+\begin{DoxySeeAlso}{See also}
+see \doxylink{classnlohmann_1_1basic__json_a17973d410285b14d8217a6b0b6104232}{object\+\_\+t} -- type for an object value
+\end{DoxySeeAlso}
+\begin{DoxySince}{Since}
+version 1.\+0.\+0 
+\end{DoxySince}
+\Hypertarget{classnlohmann_1_1basic__json_a53700c308d804f84aea5ff05abb2ac4e}\index{nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$@{nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$}!array\_t@{array\_t}}
+\index{array\_t@{array\_t}!nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$@{nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$}}
+\doxysubsubsection{\texorpdfstring{array\_t}{array\_t}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classnlohmann_1_1basic__json_a53700c308d804f84aea5ff05abb2ac4e} 
+template$<$template$<$ typename U, typename V, typename... Args $>$ class Object\+Type = std::\+map, template$<$ typename U, typename... Args $>$ class Array\+Type = std::\+vector, class String\+Type = std::\+string, class Boolean\+Type = bool, class Number\+Integer\+Type = std::\+int64\+\_\+t, class Number\+Unsigned\+Type = std::\+uint64\+\_\+t, class Number\+Float\+Type = double, template$<$ typename U $>$ class Allocator\+Type = std::\+allocator, template$<$ typename T, typename SFINAE=void $>$ class JSONSerializer = adl\+\_\+serializer, class Binary\+Type = std::\+vector$<$std::\+uint8\+\_\+t$>$$>$ \\
+using \doxymbox{\hyperlink{classnlohmann_1_1basic__json}{nlohmann::\+basic\+\_\+json}}$<$ Object\+Type, Array\+Type, String\+Type, Boolean\+Type, Number\+Integer\+Type, Number\+Unsigned\+Type, Number\+Float\+Type, Allocator\+Type, JSONSerializer, Binary\+Type $>$::\+array\+\_\+t = Array\+Type$<$\doxymbox{\hyperlink{classnlohmann_1_1basic__json}{basic\+\_\+json}}, Allocator\+Type$<$\doxymbox{\hyperlink{classnlohmann_1_1basic__json}{basic\+\_\+json}}$>$$>$}
+
+
+
+a type for an array 
+
+\href{https://tools.ietf.org/html/rfc8259}{\texttt{RFC 8259}} describes JSON arrays as follows:\+ \begin{quote}
+An array is an ordered sequence of zero or more values. \end{quote}
+
+
+To store objects in C++, a type is defined by the template parameters explained below.
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em Array\+Type} & container type to store arrays (e.\+g., {\ttfamily std::\+vector} or {\ttfamily std::\+list}) \\
+\hline
+{\em Allocator\+Type} & allocator to use for arrays (e.\+g., {\ttfamily std::\+allocator})\\
+\hline
+\end{DoxyTemplParams}
+\hypertarget{classnlohmann_1_1basic__json_autotoc_md495}{}\doxysubsubsubsubsection{\texorpdfstring{Default type}{Default type}}\label{classnlohmann_1_1basic__json_autotoc_md495}
+With the default values for {\itshape Array\+Type} ({\ttfamily std::\+vector}) and {\itshape Allocator\+Type} ({\ttfamily std::\+allocator}), the default value for {\itshape \doxylink{classnlohmann_1_1basic__json_a53700c308d804f84aea5ff05abb2ac4e}{array\+\_\+t}} is:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{std::vector<}
+\DoxyCodeLine{\ \ basic\_json,\ \textcolor{comment}{//\ value\_type}}
+\DoxyCodeLine{\ \ std::allocator<basic\_json>\ \textcolor{comment}{//\ allocator\_type}}
+\DoxyCodeLine{>}
+
+\end{DoxyCode}
+\hypertarget{classnlohmann_1_1basic__json_autotoc_md496}{}\doxysubsubsubsubsection{\texorpdfstring{Limits}{Limits}}\label{classnlohmann_1_1basic__json_autotoc_md496}
+\href{https://tools.ietf.org/html/rfc8259}{\texttt{RFC 8259}} specifies:\+ \begin{quote}
+An implementation may set limits on the maximum depth of nesting. \end{quote}
+
+
+In this class, the array\textquotesingle{}s limit of nesting is not explicitly constrained. However, a maximum depth of nesting may be introduced by the compiler or runtime environment. A theoretical limit can be queried by calling the max\+\_\+size function of a JSON array.\hypertarget{classnlohmann_1_1basic__json_autotoc_md497}{}\doxysubsubsubsubsection{\texorpdfstring{Storage}{Storage}}\label{classnlohmann_1_1basic__json_autotoc_md497}
+Arrays are stored as pointers in a \doxylink{classnlohmann_1_1basic__json}{basic\+\_\+json} type. That is, for any access to array values, a pointer of type {\ttfamily array\+\_\+t\texorpdfstring{$\ast$}{*}} must be dereferenced.
+
+\begin{DoxySeeAlso}{See also}
+see \doxylink{classnlohmann_1_1basic__json_a17973d410285b14d8217a6b0b6104232}{object\+\_\+t} -- type for an object value
+\end{DoxySeeAlso}
+\begin{DoxySince}{Since}
+version 1.\+0.\+0 
+\end{DoxySince}
+\Hypertarget{classnlohmann_1_1basic__json_ad6c955145bebde84d93991ffed7cd389}\index{nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$@{nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$}!binary\_t@{binary\_t}}
+\index{binary\_t@{binary\_t}!nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$@{nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$}}
+\doxysubsubsection{\texorpdfstring{binary\_t}{binary\_t}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classnlohmann_1_1basic__json_ad6c955145bebde84d93991ffed7cd389} 
+template$<$template$<$ typename U, typename V, typename... Args $>$ class Object\+Type = std::\+map, template$<$ typename U, typename... Args $>$ class Array\+Type = std::\+vector, class String\+Type = std::\+string, class Boolean\+Type = bool, class Number\+Integer\+Type = std::\+int64\+\_\+t, class Number\+Unsigned\+Type = std::\+uint64\+\_\+t, class Number\+Float\+Type = double, template$<$ typename U $>$ class Allocator\+Type = std::\+allocator, template$<$ typename T, typename SFINAE=void $>$ class JSONSerializer = adl\+\_\+serializer, class Binary\+Type = std::\+vector$<$std::\+uint8\+\_\+t$>$$>$ \\
+using \doxymbox{\hyperlink{classnlohmann_1_1basic__json}{nlohmann::\+basic\+\_\+json}}$<$ Object\+Type, Array\+Type, String\+Type, Boolean\+Type, Number\+Integer\+Type, Number\+Unsigned\+Type, Number\+Float\+Type, Allocator\+Type, JSONSerializer, Binary\+Type $>$::\+binary\+\_\+t = \doxymbox{\hyperlink{classnlohmann_1_1byte__container__with__subtype}{nlohmann::\+byte\+\_\+container\+\_\+with\+\_\+subtype}}$<$Binary\+Type$>$}
+
+
+
+a type for a packed binary type 
+
+This type is a type designed to carry binary data that appears in various serialized formats, such as CBOR\textquotesingle{}s Major Type 2, Message\+Pack\textquotesingle{}s bin, and BSON\textquotesingle{}s generic binary subtype. This type is NOT a part of standard JSON and exists solely for compatibility with these binary types. As such, it is simply defined as an ordered sequence of zero or more byte values.
+
+Additionally, as an implementation detail, the subtype of the binary data is carried around as a {\ttfamily std::\+uint8\+\_\+t}, which is compatible with both of the binary data formats that use binary subtyping, (though the specific numbering is incompatible with each other, and it is up to the user to translate between them).
+
+\href{https://tools.ietf.org/html/rfc7049}{\texttt{CBOR\textquotesingle{}s RFC 7049}} describes this type as:\+ \begin{quote}
+Major type 2:\+ a byte string. \doxylink{requirements_The}{The} string\textquotesingle{}s length in bytes is represented following the rules for positive integers (major type 0). \end{quote}
+
+
+\href{https://github.com/msgpack/msgpack/blob/master/spec.md\#bin-format-family}{\texttt{Message\+Pack\textquotesingle{}s documentation on the bin type family}} describes this type as:\+ \begin{quote}
+Bin format family stores an byte array in 2, 3, or 5 bytes of extra bytes in addition to the size of the byte array. \end{quote}
+
+
+\href{http://bsonspec.org/spec.html}{\texttt{BSON\textquotesingle{}s specifications}} describe several binary types; however, this type is intended to represent the generic binary type which has the description:\+ \begin{quote}
+Generic binary subtype -\/ This is the most commonly used binary subtype and should be the \textquotesingle{}default\textquotesingle{} for drivers and tools. \end{quote}
+
+
+None of these impose any limitations on the internal representation other than the basic unit of storage be some type of array whose parts are decomposable into bytes.
+
+\doxylink{requirements_The}{The} default representation of this binary format is a {\ttfamily std::\+vector\texorpdfstring{$<$}{<}std::\+uint8\+\_\+t\texorpdfstring{$>$}{>}}, which is a very common way to represent a byte array in modern C++.\hypertarget{classnlohmann_1_1basic__json_autotoc_md39}{}\doxysubsubsubsubsection{\texorpdfstring{Default type}{Default type}}\label{classnlohmann_1_1basic__json_autotoc_md39}
+\doxylink{requirements_The}{The} default values for {\itshape Binary\+Type} is {\ttfamily std::\+vector\texorpdfstring{$<$}{<}std::\+uint8\+\_\+t\texorpdfstring{$>$}{>}}\hypertarget{classnlohmann_1_1basic__json_autotoc_md40}{}\doxysubsubsubsubsection{\texorpdfstring{Storage}{Storage}}\label{classnlohmann_1_1basic__json_autotoc_md40}
+Binary Arrays are stored as pointers in a \doxylink{classnlohmann_1_1basic__json}{basic\+\_\+json} type. That is, for any access to array values, a pointer of the type {\ttfamily binary\+\_\+t\texorpdfstring{$\ast$}{*}} must be dereferenced.\hypertarget{classnlohmann_1_1basic__json_autotoc_md41}{}\doxysubsubsubsubsection{\texorpdfstring{Notes on subtypes}{Notes on subtypes}}\label{classnlohmann_1_1basic__json_autotoc_md41}
+
+\begin{DoxyItemize}
+\item CBOR
+\begin{DoxyItemize}
+\item Binary values are represented as byte strings. No subtypes are supported and will be ignored when CBOR is written.
+\end{DoxyItemize}
+\item Message\+Pack
+\begin{DoxyItemize}
+\item If a subtype is given and the binary array contains exactly 1, 2, 4, 8, or 16 elements, the fixext family (fixext1, fixext2, fixext4, fixext8) is used. For other sizes, the ext family (ext8, ext16, ext32) is used. \doxylink{requirements_The}{The} subtype is then added as singed 8-\/bit integer.
+\item If no subtype is given, the bin family (bin8, bin16, bin32) is used.
+\end{DoxyItemize}
+\item BSON
+\begin{DoxyItemize}
+\item If a subtype is given, it is used and added as unsigned 8-\/bit integer.
+\item If no subtype is given, the generic binary subtype 0x00 is used.
+\end{DoxyItemize}
+\end{DoxyItemize}
+
+\begin{DoxySeeAlso}{See also}
+see binary -- create a binary array
+\end{DoxySeeAlso}
+\begin{DoxySince}{Since}
+version 3.\+8.\+0 
+\end{DoxySince}
+\Hypertarget{classnlohmann_1_1basic__json_ad6c955145bebde84d93991ffed7cd389}\index{nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$@{nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$}!binary\_t@{binary\_t}}
+\index{binary\_t@{binary\_t}!nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$@{nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$}}
+\doxysubsubsection{\texorpdfstring{binary\_t}{binary\_t}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classnlohmann_1_1basic__json_ad6c955145bebde84d93991ffed7cd389} 
+template$<$template$<$ typename U, typename V, typename... Args $>$ class Object\+Type = std::\+map, template$<$ typename U, typename... Args $>$ class Array\+Type = std::\+vector, class String\+Type = std::\+string, class Boolean\+Type = bool, class Number\+Integer\+Type = std::\+int64\+\_\+t, class Number\+Unsigned\+Type = std::\+uint64\+\_\+t, class Number\+Float\+Type = double, template$<$ typename U $>$ class Allocator\+Type = std::\+allocator, template$<$ typename T, typename SFINAE=void $>$ class JSONSerializer = adl\+\_\+serializer, class Binary\+Type = std::\+vector$<$std::\+uint8\+\_\+t$>$$>$ \\
+using \doxymbox{\hyperlink{classnlohmann_1_1basic__json}{nlohmann::\+basic\+\_\+json}}$<$ Object\+Type, Array\+Type, String\+Type, Boolean\+Type, Number\+Integer\+Type, Number\+Unsigned\+Type, Number\+Float\+Type, Allocator\+Type, JSONSerializer, Binary\+Type $>$::\+binary\+\_\+t = \doxymbox{\hyperlink{classnlohmann_1_1byte__container__with__subtype}{nlohmann::\+byte\+\_\+container\+\_\+with\+\_\+subtype}}$<$Binary\+Type$>$}
+
+
+
+a type for a packed binary type 
+
+This type is a type designed to carry binary data that appears in various serialized formats, such as CBOR\textquotesingle{}s Major Type 2, Message\+Pack\textquotesingle{}s bin, and BSON\textquotesingle{}s generic binary subtype. This type is NOT a part of standard JSON and exists solely for compatibility with these binary types. As such, it is simply defined as an ordered sequence of zero or more byte values.
+
+Additionally, as an implementation detail, the subtype of the binary data is carried around as a {\ttfamily std::\+uint8\+\_\+t}, which is compatible with both of the binary data formats that use binary subtyping, (though the specific numbering is incompatible with each other, and it is up to the user to translate between them).
+
+\href{https://tools.ietf.org/html/rfc7049}{\texttt{CBOR\textquotesingle{}s RFC 7049}} describes this type as:\+ \begin{quote}
+Major type 2:\+ a byte string. \doxylink{requirements_The}{The} string\textquotesingle{}s length in bytes is represented following the rules for positive integers (major type 0). \end{quote}
+
+
+\href{https://github.com/msgpack/msgpack/blob/master/spec.md\#bin-format-family}{\texttt{Message\+Pack\textquotesingle{}s documentation on the bin type family}} describes this type as:\+ \begin{quote}
+Bin format family stores an byte array in 2, 3, or 5 bytes of extra bytes in addition to the size of the byte array. \end{quote}
+
+
+\href{http://bsonspec.org/spec.html}{\texttt{BSON\textquotesingle{}s specifications}} describe several binary types; however, this type is intended to represent the generic binary type which has the description:\+ \begin{quote}
+Generic binary subtype -\/ This is the most commonly used binary subtype and should be the \textquotesingle{}default\textquotesingle{} for drivers and tools. \end{quote}
+
+
+None of these impose any limitations on the internal representation other than the basic unit of storage be some type of array whose parts are decomposable into bytes.
+
+\doxylink{requirements_The}{The} default representation of this binary format is a {\ttfamily std::\+vector\texorpdfstring{$<$}{<}std::\+uint8\+\_\+t\texorpdfstring{$>$}{>}}, which is a very common way to represent a byte array in modern C++.\hypertarget{classnlohmann_1_1basic__json_autotoc_md516}{}\doxysubsubsubsubsection{\texorpdfstring{Default type}{Default type}}\label{classnlohmann_1_1basic__json_autotoc_md516}
+\doxylink{requirements_The}{The} default values for {\itshape Binary\+Type} is {\ttfamily std::\+vector\texorpdfstring{$<$}{<}std::\+uint8\+\_\+t\texorpdfstring{$>$}{>}}\hypertarget{classnlohmann_1_1basic__json_autotoc_md517}{}\doxysubsubsubsubsection{\texorpdfstring{Storage}{Storage}}\label{classnlohmann_1_1basic__json_autotoc_md517}
+Binary Arrays are stored as pointers in a \doxylink{classnlohmann_1_1basic__json}{basic\+\_\+json} type. That is, for any access to array values, a pointer of the type {\ttfamily binary\+\_\+t\texorpdfstring{$\ast$}{*}} must be dereferenced.\hypertarget{classnlohmann_1_1basic__json_autotoc_md518}{}\doxysubsubsubsubsection{\texorpdfstring{Notes on subtypes}{Notes on subtypes}}\label{classnlohmann_1_1basic__json_autotoc_md518}
+
+\begin{DoxyItemize}
+\item CBOR
+\begin{DoxyItemize}
+\item Binary values are represented as byte strings. No subtypes are supported and will be ignored when CBOR is written.
+\end{DoxyItemize}
+\item Message\+Pack
+\begin{DoxyItemize}
+\item If a subtype is given and the binary array contains exactly 1, 2, 4, 8, or 16 elements, the fixext family (fixext1, fixext2, fixext4, fixext8) is used. For other sizes, the ext family (ext8, ext16, ext32) is used. \doxylink{requirements_The}{The} subtype is then added as singed 8-\/bit integer.
+\item If no subtype is given, the bin family (bin8, bin16, bin32) is used.
+\end{DoxyItemize}
+\item BSON
+\begin{DoxyItemize}
+\item If a subtype is given, it is used and added as unsigned 8-\/bit integer.
+\item If no subtype is given, the generic binary subtype 0x00 is used.
+\end{DoxyItemize}
+\end{DoxyItemize}
+
+\begin{DoxySeeAlso}{See also}
+see binary -- create a binary array
+\end{DoxySeeAlso}
+\begin{DoxySince}{Since}
+version 3.\+8.\+0 
+\end{DoxySince}
+\Hypertarget{classnlohmann_1_1basic__json_a44fd1a12c9c54623c942b430e7a72937}\index{nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$@{nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$}!boolean\_t@{boolean\_t}}
+\index{boolean\_t@{boolean\_t}!nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$@{nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$}}
+\doxysubsubsection{\texorpdfstring{boolean\_t}{boolean\_t}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classnlohmann_1_1basic__json_a44fd1a12c9c54623c942b430e7a72937} 
+template$<$template$<$ typename U, typename V, typename... Args $>$ class Object\+Type = std::\+map, template$<$ typename U, typename... Args $>$ class Array\+Type = std::\+vector, class String\+Type = std::\+string, class Boolean\+Type = bool, class Number\+Integer\+Type = std::\+int64\+\_\+t, class Number\+Unsigned\+Type = std::\+uint64\+\_\+t, class Number\+Float\+Type = double, template$<$ typename U $>$ class Allocator\+Type = std::\+allocator, template$<$ typename T, typename SFINAE=void $>$ class JSONSerializer = adl\+\_\+serializer, class Binary\+Type = std::\+vector$<$std::\+uint8\+\_\+t$>$$>$ \\
+using \doxymbox{\hyperlink{classnlohmann_1_1basic__json}{nlohmann::\+basic\+\_\+json}}$<$ Object\+Type, Array\+Type, String\+Type, Boolean\+Type, Number\+Integer\+Type, Number\+Unsigned\+Type, Number\+Float\+Type, Allocator\+Type, JSONSerializer, Binary\+Type $>$::\+boolean\+\_\+t = Boolean\+Type}
+
+
+
+a type for a boolean 
+
+\href{https://tools.ietf.org/html/rfc8259}{\texttt{RFC 8259}} implicitly describes a boolean as a type which differentiates the two literals {\ttfamily true} and {\ttfamily false}.
+
+To store objects in C++, a type is defined by the template parameter {\itshape Boolean\+Type} which chooses the type to use.\hypertarget{classnlohmann_1_1basic__json_autotoc_md25}{}\doxysubsubsubsubsection{\texorpdfstring{Default type}{Default type}}\label{classnlohmann_1_1basic__json_autotoc_md25}
+With the default values for {\itshape Boolean\+Type} ({\ttfamily bool}), the default value for {\itshape \doxylink{classnlohmann_1_1basic__json_a44fd1a12c9c54623c942b430e7a72937}{boolean\+\_\+t}} is:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordtype}{bool}}
+
+\end{DoxyCode}
+\hypertarget{classnlohmann_1_1basic__json_autotoc_md26}{}\doxysubsubsubsubsection{\texorpdfstring{Storage}{Storage}}\label{classnlohmann_1_1basic__json_autotoc_md26}
+Boolean values are stored directly inside a \doxylink{classnlohmann_1_1basic__json}{basic\+\_\+json} type.
+
+\begin{DoxySince}{Since}
+version 1.\+0.\+0 
+\end{DoxySince}
+\Hypertarget{classnlohmann_1_1basic__json_a44fd1a12c9c54623c942b430e7a72937}\index{nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$@{nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$}!boolean\_t@{boolean\_t}}
+\index{boolean\_t@{boolean\_t}!nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$@{nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$}}
+\doxysubsubsection{\texorpdfstring{boolean\_t}{boolean\_t}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classnlohmann_1_1basic__json_a44fd1a12c9c54623c942b430e7a72937} 
+template$<$template$<$ typename U, typename V, typename... Args $>$ class Object\+Type = std::\+map, template$<$ typename U, typename... Args $>$ class Array\+Type = std::\+vector, class String\+Type = std::\+string, class Boolean\+Type = bool, class Number\+Integer\+Type = std::\+int64\+\_\+t, class Number\+Unsigned\+Type = std::\+uint64\+\_\+t, class Number\+Float\+Type = double, template$<$ typename U $>$ class Allocator\+Type = std::\+allocator, template$<$ typename T, typename SFINAE=void $>$ class JSONSerializer = adl\+\_\+serializer, class Binary\+Type = std::\+vector$<$std::\+uint8\+\_\+t$>$$>$ \\
+using \doxymbox{\hyperlink{classnlohmann_1_1basic__json}{nlohmann::\+basic\+\_\+json}}$<$ Object\+Type, Array\+Type, String\+Type, Boolean\+Type, Number\+Integer\+Type, Number\+Unsigned\+Type, Number\+Float\+Type, Allocator\+Type, JSONSerializer, Binary\+Type $>$::\+boolean\+\_\+t = Boolean\+Type}
+
+
+
+a type for a boolean 
+
+\href{https://tools.ietf.org/html/rfc8259}{\texttt{RFC 8259}} implicitly describes a boolean as a type which differentiates the two literals {\ttfamily true} and {\ttfamily false}.
+
+To store objects in C++, a type is defined by the template parameter {\itshape Boolean\+Type} which chooses the type to use.\hypertarget{classnlohmann_1_1basic__json_autotoc_md502}{}\doxysubsubsubsubsection{\texorpdfstring{Default type}{Default type}}\label{classnlohmann_1_1basic__json_autotoc_md502}
+With the default values for {\itshape Boolean\+Type} ({\ttfamily bool}), the default value for {\itshape \doxylink{classnlohmann_1_1basic__json_a44fd1a12c9c54623c942b430e7a72937}{boolean\+\_\+t}} is:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordtype}{bool}}
+
+\end{DoxyCode}
+\hypertarget{classnlohmann_1_1basic__json_autotoc_md503}{}\doxysubsubsubsubsection{\texorpdfstring{Storage}{Storage}}\label{classnlohmann_1_1basic__json_autotoc_md503}
+Boolean values are stored directly inside a \doxylink{classnlohmann_1_1basic__json}{basic\+\_\+json} type.
+
+\begin{DoxySince}{Since}
+version 1.\+0.\+0 
+\end{DoxySince}
+\Hypertarget{classnlohmann_1_1basic__json_a5b8abaebd922d82d69756327c0c347e6}\index{nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$@{nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$}!number\_float\_t@{number\_float\_t}}
+\index{number\_float\_t@{number\_float\_t}!nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$@{nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$}}
+\doxysubsubsection{\texorpdfstring{number\_float\_t}{number\_float\_t}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classnlohmann_1_1basic__json_a5b8abaebd922d82d69756327c0c347e6} 
+template$<$template$<$ typename U, typename V, typename... Args $>$ class Object\+Type = std::\+map, template$<$ typename U, typename... Args $>$ class Array\+Type = std::\+vector, class String\+Type = std::\+string, class Boolean\+Type = bool, class Number\+Integer\+Type = std::\+int64\+\_\+t, class Number\+Unsigned\+Type = std::\+uint64\+\_\+t, class Number\+Float\+Type = double, template$<$ typename U $>$ class Allocator\+Type = std::\+allocator, template$<$ typename T, typename SFINAE=void $>$ class JSONSerializer = adl\+\_\+serializer, class Binary\+Type = std::\+vector$<$std::\+uint8\+\_\+t$>$$>$ \\
+using \doxymbox{\hyperlink{classnlohmann_1_1basic__json}{nlohmann::\+basic\+\_\+json}}$<$ Object\+Type, Array\+Type, String\+Type, Boolean\+Type, Number\+Integer\+Type, Number\+Unsigned\+Type, Number\+Float\+Type, Allocator\+Type, JSONSerializer, Binary\+Type $>$::\+number\+\_\+float\+\_\+t = Number\+Float\+Type}
+
+
+
+a type for a number (floating-\/point) 
+
+\href{https://tools.ietf.org/html/rfc8259}{\texttt{RFC 8259}} describes numbers as follows:\+ \begin{quote}
+\doxylink{requirements_The}{The} representation of numbers is similar to that used in most programming languages. A number is represented in base 10 using decimal digits. It contains an integer component that may be prefixed with an optional minus sign, which may be followed by a fraction part and/\+or an exponent part. Leading zeros are not allowed. (...) Numeric values that cannot be represented in the grammar below (such as Infinity and NaN) are not permitted. \end{quote}
+
+
+This description includes both integer and floating-\/point numbers. However, C++ allows more precise storage if it is known whether the number is a signed integer, an unsigned integer or a floating-\/point number. Therefore, three different types, \doxylink{classnlohmann_1_1basic__json_a11e390944da90db83089eb2426a749d3}{number\+\_\+integer\+\_\+t}, \doxylink{classnlohmann_1_1basic__json_ae09af9c23351b7245d9be4d1b2035fef}{number\+\_\+unsigned\+\_\+t} and \doxylink{classnlohmann_1_1basic__json_a5b8abaebd922d82d69756327c0c347e6}{number\+\_\+float\+\_\+t} are used.
+
+To store floating-\/point numbers in C++, a type is defined by the template parameter {\itshape Number\+Float\+Type} which chooses the type to use.\hypertarget{classnlohmann_1_1basic__json_autotoc_md35}{}\doxysubsubsubsubsection{\texorpdfstring{Default type}{Default type}}\label{classnlohmann_1_1basic__json_autotoc_md35}
+With the default values for {\itshape Number\+Float\+Type} ({\ttfamily double}), the default value for {\itshape \doxylink{classnlohmann_1_1basic__json_a5b8abaebd922d82d69756327c0c347e6}{number\+\_\+float\+\_\+t}} is:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordtype}{double}}
+
+\end{DoxyCode}
+\hypertarget{classnlohmann_1_1basic__json_autotoc_md36}{}\doxysubsubsubsubsection{\texorpdfstring{Default behavior}{Default behavior}}\label{classnlohmann_1_1basic__json_autotoc_md36}
+
+\begin{DoxyItemize}
+\item \doxylink{requirements_The}{The} restrictions about leading zeros is not enforced in C++. Instead, leading zeros in floating-\/point literals will be ignored. Internally, the value will be stored as decimal number. For instance, the C++ floating-\/point literal {\ttfamily 01.\+2} will be serialized to {\ttfamily 1.\+2}. During deserialization, leading zeros yield an error.
+\item Not-\/a-\/number (NaN) values will be serialized to {\ttfamily null}.
+\end{DoxyItemize}\hypertarget{classnlohmann_1_1basic__json_autotoc_md37}{}\doxysubsubsubsubsection{\texorpdfstring{Limits}{Limits}}\label{classnlohmann_1_1basic__json_autotoc_md37}
+\href{https://tools.ietf.org/html/rfc8259}{\texttt{RFC 8259}} states:\+ \begin{quote}
+This specification allows implementations to set limits on the range and precision of numbers accepted. Since software that implements IEEE 754-\/2008 binary64 (double precision) numbers is generally available and widely used, good interoperability can be achieved by implementations that expect no more precision or range than these provide, in the sense that implementations will approximate JSON numbers within the expected precision. \end{quote}
+
+
+This implementation does exactly follow this approach, as it uses double precision floating-\/point numbers. Note values smaller than {\ttfamily -\/1.\+79769313486232e+308} and values greater than {\ttfamily 1.\+79769313486232e+308} will be stored as NaN internally and be serialized to {\ttfamily null}.\hypertarget{classnlohmann_1_1basic__json_autotoc_md38}{}\doxysubsubsubsubsection{\texorpdfstring{Storage}{Storage}}\label{classnlohmann_1_1basic__json_autotoc_md38}
+Floating-\/point number values are stored directly inside a \doxylink{classnlohmann_1_1basic__json}{basic\+\_\+json} type.
+
+\begin{DoxySeeAlso}{See also}
+see \doxylink{classnlohmann_1_1basic__json_a11e390944da90db83089eb2426a749d3}{number\+\_\+integer\+\_\+t} -- type for number values (integer)
+
+see \doxylink{classnlohmann_1_1basic__json_ae09af9c23351b7245d9be4d1b2035fef}{number\+\_\+unsigned\+\_\+t} -- type for number values (unsigned integer)
+\end{DoxySeeAlso}
+\begin{DoxySince}{Since}
+version 1.\+0.\+0 
+\end{DoxySince}
+\Hypertarget{classnlohmann_1_1basic__json_a5b8abaebd922d82d69756327c0c347e6}\index{nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$@{nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$}!number\_float\_t@{number\_float\_t}}
+\index{number\_float\_t@{number\_float\_t}!nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$@{nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$}}
+\doxysubsubsection{\texorpdfstring{number\_float\_t}{number\_float\_t}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classnlohmann_1_1basic__json_a5b8abaebd922d82d69756327c0c347e6} 
+template$<$template$<$ typename U, typename V, typename... Args $>$ class Object\+Type = std::\+map, template$<$ typename U, typename... Args $>$ class Array\+Type = std::\+vector, class String\+Type = std::\+string, class Boolean\+Type = bool, class Number\+Integer\+Type = std::\+int64\+\_\+t, class Number\+Unsigned\+Type = std::\+uint64\+\_\+t, class Number\+Float\+Type = double, template$<$ typename U $>$ class Allocator\+Type = std::\+allocator, template$<$ typename T, typename SFINAE=void $>$ class JSONSerializer = adl\+\_\+serializer, class Binary\+Type = std::\+vector$<$std::\+uint8\+\_\+t$>$$>$ \\
+using \doxymbox{\hyperlink{classnlohmann_1_1basic__json}{nlohmann::\+basic\+\_\+json}}$<$ Object\+Type, Array\+Type, String\+Type, Boolean\+Type, Number\+Integer\+Type, Number\+Unsigned\+Type, Number\+Float\+Type, Allocator\+Type, JSONSerializer, Binary\+Type $>$::\+number\+\_\+float\+\_\+t = Number\+Float\+Type}
+
+
+
+a type for a number (floating-\/point) 
+
+\href{https://tools.ietf.org/html/rfc8259}{\texttt{RFC 8259}} describes numbers as follows:\+ \begin{quote}
+\doxylink{requirements_The}{The} representation of numbers is similar to that used in most programming languages. A number is represented in base 10 using decimal digits. It contains an integer component that may be prefixed with an optional minus sign, which may be followed by a fraction part and/\+or an exponent part. Leading zeros are not allowed. (...) Numeric values that cannot be represented in the grammar below (such as Infinity and NaN) are not permitted. \end{quote}
+
+
+This description includes both integer and floating-\/point numbers. However, C++ allows more precise storage if it is known whether the number is a signed integer, an unsigned integer or a floating-\/point number. Therefore, three different types, \doxylink{classnlohmann_1_1basic__json_a11e390944da90db83089eb2426a749d3}{number\+\_\+integer\+\_\+t}, \doxylink{classnlohmann_1_1basic__json_ae09af9c23351b7245d9be4d1b2035fef}{number\+\_\+unsigned\+\_\+t} and \doxylink{classnlohmann_1_1basic__json_a5b8abaebd922d82d69756327c0c347e6}{number\+\_\+float\+\_\+t} are used.
+
+To store floating-\/point numbers in C++, a type is defined by the template parameter {\itshape Number\+Float\+Type} which chooses the type to use.\hypertarget{classnlohmann_1_1basic__json_autotoc_md512}{}\doxysubsubsubsubsection{\texorpdfstring{Default type}{Default type}}\label{classnlohmann_1_1basic__json_autotoc_md512}
+With the default values for {\itshape Number\+Float\+Type} ({\ttfamily double}), the default value for {\itshape \doxylink{classnlohmann_1_1basic__json_a5b8abaebd922d82d69756327c0c347e6}{number\+\_\+float\+\_\+t}} is:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordtype}{double}}
+
+\end{DoxyCode}
+\hypertarget{classnlohmann_1_1basic__json_autotoc_md513}{}\doxysubsubsubsubsection{\texorpdfstring{Default behavior}{Default behavior}}\label{classnlohmann_1_1basic__json_autotoc_md513}
+
+\begin{DoxyItemize}
+\item \doxylink{requirements_The}{The} restrictions about leading zeros is not enforced in C++. Instead, leading zeros in floating-\/point literals will be ignored. Internally, the value will be stored as decimal number. For instance, the C++ floating-\/point literal {\ttfamily 01.\+2} will be serialized to {\ttfamily 1.\+2}. During deserialization, leading zeros yield an error.
+\item Not-\/a-\/number (NaN) values will be serialized to {\ttfamily null}.
+\end{DoxyItemize}\hypertarget{classnlohmann_1_1basic__json_autotoc_md514}{}\doxysubsubsubsubsection{\texorpdfstring{Limits}{Limits}}\label{classnlohmann_1_1basic__json_autotoc_md514}
+\href{https://tools.ietf.org/html/rfc8259}{\texttt{RFC 8259}} states:\+ \begin{quote}
+This specification allows implementations to set limits on the range and precision of numbers accepted. Since software that implements IEEE 754-\/2008 binary64 (double precision) numbers is generally available and widely used, good interoperability can be achieved by implementations that expect no more precision or range than these provide, in the sense that implementations will approximate JSON numbers within the expected precision. \end{quote}
+
+
+This implementation does exactly follow this approach, as it uses double precision floating-\/point numbers. Note values smaller than {\ttfamily -\/1.\+79769313486232e+308} and values greater than {\ttfamily 1.\+79769313486232e+308} will be stored as NaN internally and be serialized to {\ttfamily null}.\hypertarget{classnlohmann_1_1basic__json_autotoc_md515}{}\doxysubsubsubsubsection{\texorpdfstring{Storage}{Storage}}\label{classnlohmann_1_1basic__json_autotoc_md515}
+Floating-\/point number values are stored directly inside a \doxylink{classnlohmann_1_1basic__json}{basic\+\_\+json} type.
+
+\begin{DoxySeeAlso}{See also}
+see \doxylink{classnlohmann_1_1basic__json_a11e390944da90db83089eb2426a749d3}{number\+\_\+integer\+\_\+t} -- type for number values (integer)
+
+see \doxylink{classnlohmann_1_1basic__json_ae09af9c23351b7245d9be4d1b2035fef}{number\+\_\+unsigned\+\_\+t} -- type for number values (unsigned integer)
+\end{DoxySeeAlso}
+\begin{DoxySince}{Since}
+version 1.\+0.\+0 
+\end{DoxySince}
+\Hypertarget{classnlohmann_1_1basic__json_a11e390944da90db83089eb2426a749d3}\index{nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$@{nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$}!number\_integer\_t@{number\_integer\_t}}
+\index{number\_integer\_t@{number\_integer\_t}!nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$@{nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$}}
+\doxysubsubsection{\texorpdfstring{number\_integer\_t}{number\_integer\_t}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classnlohmann_1_1basic__json_a11e390944da90db83089eb2426a749d3} 
+template$<$template$<$ typename U, typename V, typename... Args $>$ class Object\+Type = std::\+map, template$<$ typename U, typename... Args $>$ class Array\+Type = std::\+vector, class String\+Type = std::\+string, class Boolean\+Type = bool, class Number\+Integer\+Type = std::\+int64\+\_\+t, class Number\+Unsigned\+Type = std::\+uint64\+\_\+t, class Number\+Float\+Type = double, template$<$ typename U $>$ class Allocator\+Type = std::\+allocator, template$<$ typename T, typename SFINAE=void $>$ class JSONSerializer = adl\+\_\+serializer, class Binary\+Type = std::\+vector$<$std::\+uint8\+\_\+t$>$$>$ \\
+using \doxymbox{\hyperlink{classnlohmann_1_1basic__json}{nlohmann::\+basic\+\_\+json}}$<$ Object\+Type, Array\+Type, String\+Type, Boolean\+Type, Number\+Integer\+Type, Number\+Unsigned\+Type, Number\+Float\+Type, Allocator\+Type, JSONSerializer, Binary\+Type $>$::\+number\+\_\+integer\+\_\+t = Number\+Integer\+Type}
+
+
+
+a type for a number (integer) 
+
+\href{https://tools.ietf.org/html/rfc8259}{\texttt{RFC 8259}} describes numbers as follows:\+ \begin{quote}
+\doxylink{requirements_The}{The} representation of numbers is similar to that used in most programming languages. A number is represented in base 10 using decimal digits. It contains an integer component that may be prefixed with an optional minus sign, which may be followed by a fraction part and/\+or an exponent part. Leading zeros are not allowed. (...) Numeric values that cannot be represented in the grammar below (such as Infinity and NaN) are not permitted. \end{quote}
+
+
+This description includes both integer and floating-\/point numbers. However, C++ allows more precise storage if it is known whether the number is a signed integer, an unsigned integer or a floating-\/point number. Therefore, three different types, \doxylink{classnlohmann_1_1basic__json_a11e390944da90db83089eb2426a749d3}{number\+\_\+integer\+\_\+t}, \doxylink{classnlohmann_1_1basic__json_ae09af9c23351b7245d9be4d1b2035fef}{number\+\_\+unsigned\+\_\+t} and \doxylink{classnlohmann_1_1basic__json_a5b8abaebd922d82d69756327c0c347e6}{number\+\_\+float\+\_\+t} are used.
+
+To store integer numbers in C++, a type is defined by the template parameter {\itshape Number\+Integer\+Type} which chooses the type to use.\hypertarget{classnlohmann_1_1basic__json_autotoc_md27}{}\doxysubsubsubsubsection{\texorpdfstring{Default type}{Default type}}\label{classnlohmann_1_1basic__json_autotoc_md27}
+With the default values for {\itshape Number\+Integer\+Type} ({\ttfamily int64\+\_\+t}), the default value for {\itshape \doxylink{classnlohmann_1_1basic__json_a11e390944da90db83089eb2426a749d3}{number\+\_\+integer\+\_\+t}} is:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{int64\_t}
+
+\end{DoxyCode}
+\hypertarget{classnlohmann_1_1basic__json_autotoc_md28}{}\doxysubsubsubsubsection{\texorpdfstring{Default behavior}{Default behavior}}\label{classnlohmann_1_1basic__json_autotoc_md28}
+
+\begin{DoxyItemize}
+\item \doxylink{requirements_The}{The} restrictions about leading zeros is not enforced in C++. Instead, leading zeros in integer literals lead to an interpretation as octal number. Internally, the value will be stored as decimal number. For instance, the C++ integer literal {\ttfamily 010} will be serialized to {\ttfamily 8}. During deserialization, leading zeros yield an error.
+\item Not-\/a-\/number (NaN) values will be serialized to {\ttfamily null}.
+\end{DoxyItemize}\hypertarget{classnlohmann_1_1basic__json_autotoc_md29}{}\doxysubsubsubsubsection{\texorpdfstring{Limits}{Limits}}\label{classnlohmann_1_1basic__json_autotoc_md29}
+\href{https://tools.ietf.org/html/rfc8259}{\texttt{RFC 8259}} specifies:\+ \begin{quote}
+An implementation may set limits on the range and precision of numbers. \end{quote}
+
+
+When the default type is used, the maximal integer number that can be stored is {\ttfamily 9223372036854775807} (INT64\+\_\+\+MAX) and the minimal integer number that can be stored is {\ttfamily -\/9223372036854775808} (INT64\+\_\+\+MIN). Integer numbers that are out of range will yield over/\+underflow when used in a constructor. During deserialization, too large or small integer numbers will be automatically be stored as \doxylink{classnlohmann_1_1basic__json_ae09af9c23351b7245d9be4d1b2035fef}{number\+\_\+unsigned\+\_\+t} or \doxylink{classnlohmann_1_1basic__json_a5b8abaebd922d82d69756327c0c347e6}{number\+\_\+float\+\_\+t}.
+
+\href{https://tools.ietf.org/html/rfc8259}{\texttt{RFC 8259}} further states:\+ \begin{quote}
+Note that when such software is used, numbers that are integers and are in the range $[-2^{53}+1, 2^{53}-1]$ are interoperable in the sense that implementations will agree exactly on their numeric values. \end{quote}
+
+
+As this range is a subrange of the exactly supported range \+[INT64\+\_\+\+MIN, INT64\+\_\+\+MAX]\+, this class\textquotesingle{}s integer type is interoperable.\hypertarget{classnlohmann_1_1basic__json_autotoc_md30}{}\doxysubsubsubsubsection{\texorpdfstring{Storage}{Storage}}\label{classnlohmann_1_1basic__json_autotoc_md30}
+Integer number values are stored directly inside a \doxylink{classnlohmann_1_1basic__json}{basic\+\_\+json} type.
+
+\begin{DoxySeeAlso}{See also}
+see \doxylink{classnlohmann_1_1basic__json_a5b8abaebd922d82d69756327c0c347e6}{number\+\_\+float\+\_\+t} -- type for number values (floating-\/point)
+
+see \doxylink{classnlohmann_1_1basic__json_ae09af9c23351b7245d9be4d1b2035fef}{number\+\_\+unsigned\+\_\+t} -- type for number values (unsigned integer)
+\end{DoxySeeAlso}
+\begin{DoxySince}{Since}
+version 1.\+0.\+0 
+\end{DoxySince}
+\Hypertarget{classnlohmann_1_1basic__json_a11e390944da90db83089eb2426a749d3}\index{nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$@{nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$}!number\_integer\_t@{number\_integer\_t}}
+\index{number\_integer\_t@{number\_integer\_t}!nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$@{nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$}}
+\doxysubsubsection{\texorpdfstring{number\_integer\_t}{number\_integer\_t}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classnlohmann_1_1basic__json_a11e390944da90db83089eb2426a749d3} 
+template$<$template$<$ typename U, typename V, typename... Args $>$ class Object\+Type = std::\+map, template$<$ typename U, typename... Args $>$ class Array\+Type = std::\+vector, class String\+Type = std::\+string, class Boolean\+Type = bool, class Number\+Integer\+Type = std::\+int64\+\_\+t, class Number\+Unsigned\+Type = std::\+uint64\+\_\+t, class Number\+Float\+Type = double, template$<$ typename U $>$ class Allocator\+Type = std::\+allocator, template$<$ typename T, typename SFINAE=void $>$ class JSONSerializer = adl\+\_\+serializer, class Binary\+Type = std::\+vector$<$std::\+uint8\+\_\+t$>$$>$ \\
+using \doxymbox{\hyperlink{classnlohmann_1_1basic__json}{nlohmann::\+basic\+\_\+json}}$<$ Object\+Type, Array\+Type, String\+Type, Boolean\+Type, Number\+Integer\+Type, Number\+Unsigned\+Type, Number\+Float\+Type, Allocator\+Type, JSONSerializer, Binary\+Type $>$::\+number\+\_\+integer\+\_\+t = Number\+Integer\+Type}
+
+
+
+a type for a number (integer) 
+
+\href{https://tools.ietf.org/html/rfc8259}{\texttt{RFC 8259}} describes numbers as follows:\+ \begin{quote}
+\doxylink{requirements_The}{The} representation of numbers is similar to that used in most programming languages. A number is represented in base 10 using decimal digits. It contains an integer component that may be prefixed with an optional minus sign, which may be followed by a fraction part and/\+or an exponent part. Leading zeros are not allowed. (...) Numeric values that cannot be represented in the grammar below (such as Infinity and NaN) are not permitted. \end{quote}
+
+
+This description includes both integer and floating-\/point numbers. However, C++ allows more precise storage if it is known whether the number is a signed integer, an unsigned integer or a floating-\/point number. Therefore, three different types, \doxylink{classnlohmann_1_1basic__json_a11e390944da90db83089eb2426a749d3}{number\+\_\+integer\+\_\+t}, \doxylink{classnlohmann_1_1basic__json_ae09af9c23351b7245d9be4d1b2035fef}{number\+\_\+unsigned\+\_\+t} and \doxylink{classnlohmann_1_1basic__json_a5b8abaebd922d82d69756327c0c347e6}{number\+\_\+float\+\_\+t} are used.
+
+To store integer numbers in C++, a type is defined by the template parameter {\itshape Number\+Integer\+Type} which chooses the type to use.\hypertarget{classnlohmann_1_1basic__json_autotoc_md504}{}\doxysubsubsubsubsection{\texorpdfstring{Default type}{Default type}}\label{classnlohmann_1_1basic__json_autotoc_md504}
+With the default values for {\itshape Number\+Integer\+Type} ({\ttfamily int64\+\_\+t}), the default value for {\itshape \doxylink{classnlohmann_1_1basic__json_a11e390944da90db83089eb2426a749d3}{number\+\_\+integer\+\_\+t}} is:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{int64\_t}
+
+\end{DoxyCode}
+\hypertarget{classnlohmann_1_1basic__json_autotoc_md505}{}\doxysubsubsubsubsection{\texorpdfstring{Default behavior}{Default behavior}}\label{classnlohmann_1_1basic__json_autotoc_md505}
+
+\begin{DoxyItemize}
+\item \doxylink{requirements_The}{The} restrictions about leading zeros is not enforced in C++. Instead, leading zeros in integer literals lead to an interpretation as octal number. Internally, the value will be stored as decimal number. For instance, the C++ integer literal {\ttfamily 010} will be serialized to {\ttfamily 8}. During deserialization, leading zeros yield an error.
+\item Not-\/a-\/number (NaN) values will be serialized to {\ttfamily null}.
+\end{DoxyItemize}\hypertarget{classnlohmann_1_1basic__json_autotoc_md506}{}\doxysubsubsubsubsection{\texorpdfstring{Limits}{Limits}}\label{classnlohmann_1_1basic__json_autotoc_md506}
+\href{https://tools.ietf.org/html/rfc8259}{\texttt{RFC 8259}} specifies:\+ \begin{quote}
+An implementation may set limits on the range and precision of numbers. \end{quote}
+
+
+When the default type is used, the maximal integer number that can be stored is {\ttfamily 9223372036854775807} (INT64\+\_\+\+MAX) and the minimal integer number that can be stored is {\ttfamily -\/9223372036854775808} (INT64\+\_\+\+MIN). Integer numbers that are out of range will yield over/\+underflow when used in a constructor. During deserialization, too large or small integer numbers will be automatically be stored as \doxylink{classnlohmann_1_1basic__json_ae09af9c23351b7245d9be4d1b2035fef}{number\+\_\+unsigned\+\_\+t} or \doxylink{classnlohmann_1_1basic__json_a5b8abaebd922d82d69756327c0c347e6}{number\+\_\+float\+\_\+t}.
+
+\href{https://tools.ietf.org/html/rfc8259}{\texttt{RFC 8259}} further states:\+ \begin{quote}
+Note that when such software is used, numbers that are integers and are in the range $[-2^{53}+1, 2^{53}-1]$ are interoperable in the sense that implementations will agree exactly on their numeric values. \end{quote}
+
+
+As this range is a subrange of the exactly supported range \+[INT64\+\_\+\+MIN, INT64\+\_\+\+MAX]\+, this class\textquotesingle{}s integer type is interoperable.\hypertarget{classnlohmann_1_1basic__json_autotoc_md507}{}\doxysubsubsubsubsection{\texorpdfstring{Storage}{Storage}}\label{classnlohmann_1_1basic__json_autotoc_md507}
+Integer number values are stored directly inside a \doxylink{classnlohmann_1_1basic__json}{basic\+\_\+json} type.
+
+\begin{DoxySeeAlso}{See also}
+see \doxylink{classnlohmann_1_1basic__json_a5b8abaebd922d82d69756327c0c347e6}{number\+\_\+float\+\_\+t} -- type for number values (floating-\/point)
+
+see \doxylink{classnlohmann_1_1basic__json_ae09af9c23351b7245d9be4d1b2035fef}{number\+\_\+unsigned\+\_\+t} -- type for number values (unsigned integer)
+\end{DoxySeeAlso}
+\begin{DoxySince}{Since}
+version 1.\+0.\+0 
+\end{DoxySince}
+\Hypertarget{classnlohmann_1_1basic__json_ae09af9c23351b7245d9be4d1b2035fef}\index{nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$@{nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$}!number\_unsigned\_t@{number\_unsigned\_t}}
+\index{number\_unsigned\_t@{number\_unsigned\_t}!nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$@{nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$}}
+\doxysubsubsection{\texorpdfstring{number\_unsigned\_t}{number\_unsigned\_t}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classnlohmann_1_1basic__json_ae09af9c23351b7245d9be4d1b2035fef} 
+template$<$template$<$ typename U, typename V, typename... Args $>$ class Object\+Type = std::\+map, template$<$ typename U, typename... Args $>$ class Array\+Type = std::\+vector, class String\+Type = std::\+string, class Boolean\+Type = bool, class Number\+Integer\+Type = std::\+int64\+\_\+t, class Number\+Unsigned\+Type = std::\+uint64\+\_\+t, class Number\+Float\+Type = double, template$<$ typename U $>$ class Allocator\+Type = std::\+allocator, template$<$ typename T, typename SFINAE=void $>$ class JSONSerializer = adl\+\_\+serializer, class Binary\+Type = std::\+vector$<$std::\+uint8\+\_\+t$>$$>$ \\
+using \doxymbox{\hyperlink{classnlohmann_1_1basic__json}{nlohmann::\+basic\+\_\+json}}$<$ Object\+Type, Array\+Type, String\+Type, Boolean\+Type, Number\+Integer\+Type, Number\+Unsigned\+Type, Number\+Float\+Type, Allocator\+Type, JSONSerializer, Binary\+Type $>$::\+number\+\_\+unsigned\+\_\+t = Number\+Unsigned\+Type}
+
+
+
+a type for a number (unsigned) 
+
+\href{https://tools.ietf.org/html/rfc8259}{\texttt{RFC 8259}} describes numbers as follows:\+ \begin{quote}
+\doxylink{requirements_The}{The} representation of numbers is similar to that used in most programming languages. A number is represented in base 10 using decimal digits. It contains an integer component that may be prefixed with an optional minus sign, which may be followed by a fraction part and/\+or an exponent part. Leading zeros are not allowed. (...) Numeric values that cannot be represented in the grammar below (such as Infinity and NaN) are not permitted. \end{quote}
+
+
+This description includes both integer and floating-\/point numbers. However, C++ allows more precise storage if it is known whether the number is a signed integer, an unsigned integer or a floating-\/point number. Therefore, three different types, \doxylink{classnlohmann_1_1basic__json_a11e390944da90db83089eb2426a749d3}{number\+\_\+integer\+\_\+t}, \doxylink{classnlohmann_1_1basic__json_ae09af9c23351b7245d9be4d1b2035fef}{number\+\_\+unsigned\+\_\+t} and \doxylink{classnlohmann_1_1basic__json_a5b8abaebd922d82d69756327c0c347e6}{number\+\_\+float\+\_\+t} are used.
+
+To store unsigned integer numbers in C++, a type is defined by the template parameter {\itshape Number\+Unsigned\+Type} which chooses the type to use.\hypertarget{classnlohmann_1_1basic__json_autotoc_md31}{}\doxysubsubsubsubsection{\texorpdfstring{Default type}{Default type}}\label{classnlohmann_1_1basic__json_autotoc_md31}
+With the default values for {\itshape Number\+Unsigned\+Type} ({\ttfamily uint64\+\_\+t}), the default value for {\itshape \doxylink{classnlohmann_1_1basic__json_ae09af9c23351b7245d9be4d1b2035fef}{number\+\_\+unsigned\+\_\+t}} is:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{uint64\_t}
+
+\end{DoxyCode}
+\hypertarget{classnlohmann_1_1basic__json_autotoc_md32}{}\doxysubsubsubsubsection{\texorpdfstring{Default behavior}{Default behavior}}\label{classnlohmann_1_1basic__json_autotoc_md32}
+
+\begin{DoxyItemize}
+\item \doxylink{requirements_The}{The} restrictions about leading zeros is not enforced in C++. Instead, leading zeros in integer literals lead to an interpretation as octal number. Internally, the value will be stored as decimal number. For instance, the C++ integer literal {\ttfamily 010} will be serialized to {\ttfamily 8}. During deserialization, leading zeros yield an error.
+\item Not-\/a-\/number (NaN) values will be serialized to {\ttfamily null}.
+\end{DoxyItemize}\hypertarget{classnlohmann_1_1basic__json_autotoc_md33}{}\doxysubsubsubsubsection{\texorpdfstring{Limits}{Limits}}\label{classnlohmann_1_1basic__json_autotoc_md33}
+\href{https://tools.ietf.org/html/rfc8259}{\texttt{RFC 8259}} specifies:\+ \begin{quote}
+An implementation may set limits on the range and precision of numbers. \end{quote}
+
+
+When the default type is used, the maximal integer number that can be stored is {\ttfamily 18446744073709551615} (UINT64\+\_\+\+MAX) and the minimal integer number that can be stored is {\ttfamily 0}. Integer numbers that are out of range will yield over/\+underflow when used in a constructor. During deserialization, too large or small integer numbers will be automatically be stored as \doxylink{classnlohmann_1_1basic__json_a11e390944da90db83089eb2426a749d3}{number\+\_\+integer\+\_\+t} or \doxylink{classnlohmann_1_1basic__json_a5b8abaebd922d82d69756327c0c347e6}{number\+\_\+float\+\_\+t}.
+
+\href{https://tools.ietf.org/html/rfc8259}{\texttt{RFC 8259}} further states:\+ \begin{quote}
+Note that when such software is used, numbers that are integers and are in the range $[-2^{53}+1, 2^{53}-1]$ are interoperable in the sense that implementations will agree exactly on their numeric values. \end{quote}
+
+
+As this range is a subrange (when considered in conjunction with the \doxylink{classnlohmann_1_1basic__json_a11e390944da90db83089eb2426a749d3}{number\+\_\+integer\+\_\+t} type) of the exactly supported range \+[0, UINT64\+\_\+\+MAX]\+, this class\textquotesingle{}s integer type is interoperable.\hypertarget{classnlohmann_1_1basic__json_autotoc_md34}{}\doxysubsubsubsubsection{\texorpdfstring{Storage}{Storage}}\label{classnlohmann_1_1basic__json_autotoc_md34}
+Integer number values are stored directly inside a \doxylink{classnlohmann_1_1basic__json}{basic\+\_\+json} type.
+
+\begin{DoxySeeAlso}{See also}
+see \doxylink{classnlohmann_1_1basic__json_a5b8abaebd922d82d69756327c0c347e6}{number\+\_\+float\+\_\+t} -- type for number values (floating-\/point) 
+
+see \doxylink{classnlohmann_1_1basic__json_a11e390944da90db83089eb2426a749d3}{number\+\_\+integer\+\_\+t} -- type for number values (integer)
+\end{DoxySeeAlso}
+\begin{DoxySince}{Since}
+version 2.\+0.\+0 
+\end{DoxySince}
+\Hypertarget{classnlohmann_1_1basic__json_ae09af9c23351b7245d9be4d1b2035fef}\index{nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$@{nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$}!number\_unsigned\_t@{number\_unsigned\_t}}
+\index{number\_unsigned\_t@{number\_unsigned\_t}!nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$@{nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$}}
+\doxysubsubsection{\texorpdfstring{number\_unsigned\_t}{number\_unsigned\_t}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classnlohmann_1_1basic__json_ae09af9c23351b7245d9be4d1b2035fef} 
+template$<$template$<$ typename U, typename V, typename... Args $>$ class Object\+Type = std::\+map, template$<$ typename U, typename... Args $>$ class Array\+Type = std::\+vector, class String\+Type = std::\+string, class Boolean\+Type = bool, class Number\+Integer\+Type = std::\+int64\+\_\+t, class Number\+Unsigned\+Type = std::\+uint64\+\_\+t, class Number\+Float\+Type = double, template$<$ typename U $>$ class Allocator\+Type = std::\+allocator, template$<$ typename T, typename SFINAE=void $>$ class JSONSerializer = adl\+\_\+serializer, class Binary\+Type = std::\+vector$<$std::\+uint8\+\_\+t$>$$>$ \\
+using \doxymbox{\hyperlink{classnlohmann_1_1basic__json}{nlohmann::\+basic\+\_\+json}}$<$ Object\+Type, Array\+Type, String\+Type, Boolean\+Type, Number\+Integer\+Type, Number\+Unsigned\+Type, Number\+Float\+Type, Allocator\+Type, JSONSerializer, Binary\+Type $>$::\+number\+\_\+unsigned\+\_\+t = Number\+Unsigned\+Type}
+
+
+
+a type for a number (unsigned) 
+
+\href{https://tools.ietf.org/html/rfc8259}{\texttt{RFC 8259}} describes numbers as follows:\+ \begin{quote}
+\doxylink{requirements_The}{The} representation of numbers is similar to that used in most programming languages. A number is represented in base 10 using decimal digits. It contains an integer component that may be prefixed with an optional minus sign, which may be followed by a fraction part and/\+or an exponent part. Leading zeros are not allowed. (...) Numeric values that cannot be represented in the grammar below (such as Infinity and NaN) are not permitted. \end{quote}
+
+
+This description includes both integer and floating-\/point numbers. However, C++ allows more precise storage if it is known whether the number is a signed integer, an unsigned integer or a floating-\/point number. Therefore, three different types, \doxylink{classnlohmann_1_1basic__json_a11e390944da90db83089eb2426a749d3}{number\+\_\+integer\+\_\+t}, \doxylink{classnlohmann_1_1basic__json_ae09af9c23351b7245d9be4d1b2035fef}{number\+\_\+unsigned\+\_\+t} and \doxylink{classnlohmann_1_1basic__json_a5b8abaebd922d82d69756327c0c347e6}{number\+\_\+float\+\_\+t} are used.
+
+To store unsigned integer numbers in C++, a type is defined by the template parameter {\itshape Number\+Unsigned\+Type} which chooses the type to use.\hypertarget{classnlohmann_1_1basic__json_autotoc_md508}{}\doxysubsubsubsubsection{\texorpdfstring{Default type}{Default type}}\label{classnlohmann_1_1basic__json_autotoc_md508}
+With the default values for {\itshape Number\+Unsigned\+Type} ({\ttfamily uint64\+\_\+t}), the default value for {\itshape \doxylink{classnlohmann_1_1basic__json_ae09af9c23351b7245d9be4d1b2035fef}{number\+\_\+unsigned\+\_\+t}} is:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{uint64\_t}
+
+\end{DoxyCode}
+\hypertarget{classnlohmann_1_1basic__json_autotoc_md509}{}\doxysubsubsubsubsection{\texorpdfstring{Default behavior}{Default behavior}}\label{classnlohmann_1_1basic__json_autotoc_md509}
+
+\begin{DoxyItemize}
+\item \doxylink{requirements_The}{The} restrictions about leading zeros is not enforced in C++. Instead, leading zeros in integer literals lead to an interpretation as octal number. Internally, the value will be stored as decimal number. For instance, the C++ integer literal {\ttfamily 010} will be serialized to {\ttfamily 8}. During deserialization, leading zeros yield an error.
+\item Not-\/a-\/number (NaN) values will be serialized to {\ttfamily null}.
+\end{DoxyItemize}\hypertarget{classnlohmann_1_1basic__json_autotoc_md510}{}\doxysubsubsubsubsection{\texorpdfstring{Limits}{Limits}}\label{classnlohmann_1_1basic__json_autotoc_md510}
+\href{https://tools.ietf.org/html/rfc8259}{\texttt{RFC 8259}} specifies:\+ \begin{quote}
+An implementation may set limits on the range and precision of numbers. \end{quote}
+
+
+When the default type is used, the maximal integer number that can be stored is {\ttfamily 18446744073709551615} (UINT64\+\_\+\+MAX) and the minimal integer number that can be stored is {\ttfamily 0}. Integer numbers that are out of range will yield over/\+underflow when used in a constructor. During deserialization, too large or small integer numbers will be automatically be stored as \doxylink{classnlohmann_1_1basic__json_a11e390944da90db83089eb2426a749d3}{number\+\_\+integer\+\_\+t} or \doxylink{classnlohmann_1_1basic__json_a5b8abaebd922d82d69756327c0c347e6}{number\+\_\+float\+\_\+t}.
+
+\href{https://tools.ietf.org/html/rfc8259}{\texttt{RFC 8259}} further states:\+ \begin{quote}
+Note that when such software is used, numbers that are integers and are in the range $[-2^{53}+1, 2^{53}-1]$ are interoperable in the sense that implementations will agree exactly on their numeric values. \end{quote}
+
+
+As this range is a subrange (when considered in conjunction with the \doxylink{classnlohmann_1_1basic__json_a11e390944da90db83089eb2426a749d3}{number\+\_\+integer\+\_\+t} type) of the exactly supported range \+[0, UINT64\+\_\+\+MAX]\+, this class\textquotesingle{}s integer type is interoperable.\hypertarget{classnlohmann_1_1basic__json_autotoc_md511}{}\doxysubsubsubsubsection{\texorpdfstring{Storage}{Storage}}\label{classnlohmann_1_1basic__json_autotoc_md511}
+Integer number values are stored directly inside a \doxylink{classnlohmann_1_1basic__json}{basic\+\_\+json} type.
+
+\begin{DoxySeeAlso}{See also}
+see \doxylink{classnlohmann_1_1basic__json_a5b8abaebd922d82d69756327c0c347e6}{number\+\_\+float\+\_\+t} -- type for number values (floating-\/point) 
+
+see \doxylink{classnlohmann_1_1basic__json_a11e390944da90db83089eb2426a749d3}{number\+\_\+integer\+\_\+t} -- type for number values (integer)
+\end{DoxySeeAlso}
+\begin{DoxySince}{Since}
+version 2.\+0.\+0 
+\end{DoxySince}
+\Hypertarget{classnlohmann_1_1basic__json_a17973d410285b14d8217a6b0b6104232}\index{nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$@{nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$}!object\_t@{object\_t}}
+\index{object\_t@{object\_t}!nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$@{nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$}}
+\doxysubsubsection{\texorpdfstring{object\_t}{object\_t}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classnlohmann_1_1basic__json_a17973d410285b14d8217a6b0b6104232} 
+template$<$template$<$ typename U, typename V, typename... Args $>$ class Object\+Type = std::\+map, template$<$ typename U, typename... Args $>$ class Array\+Type = std::\+vector, class String\+Type = std::\+string, class Boolean\+Type = bool, class Number\+Integer\+Type = std::\+int64\+\_\+t, class Number\+Unsigned\+Type = std::\+uint64\+\_\+t, class Number\+Float\+Type = double, template$<$ typename U $>$ class Allocator\+Type = std::\+allocator, template$<$ typename T, typename SFINAE=void $>$ class JSONSerializer = adl\+\_\+serializer, class Binary\+Type = std::\+vector$<$std::\+uint8\+\_\+t$>$$>$ \\
+using \doxymbox{\hyperlink{classnlohmann_1_1basic__json}{nlohmann::\+basic\+\_\+json}}$<$ Object\+Type, Array\+Type, String\+Type, Boolean\+Type, Number\+Integer\+Type, Number\+Unsigned\+Type, Number\+Float\+Type, Allocator\+Type, JSONSerializer, Binary\+Type $>$::\+object\+\_\+t}
+
+{\bfseries Initial value:\+}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{}
+\DoxyCodeLine{}
+\DoxyCodeLine{}
+\DoxyCodeLine{}
+\DoxyCodeLine{}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{using\ }object\_comparator\_t\ =\ std::less<StringType>\ ObjectType<StringType,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{classnlohmann_1_1basic__json}{basic\_json}},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ object\_comparator\_t,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ AllocatorType<std::pair<\textcolor{keyword}{const}\ StringType,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{classnlohmann_1_1basic__json}{basic\_json}}>>>}
+
+\end{DoxyCode}
+
+
+a type for an object 
+
+\href{https://tools.ietf.org/html/rfc8259}{\texttt{RFC 8259}} describes JSON objects as follows:\+ \begin{quote}
+An object is an unordered collection of zero or more name/\+value pairs, where a name is a string and a value is a string, number, boolean, null, object, or array. \end{quote}
+
+
+To store objects in C++, a type is defined by the template parameters described below.
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em Object\+Type} & the container to store objects (e.\+g., {\ttfamily std::\+map} or {\ttfamily std::\+unordered\+\_\+map}) \\
+\hline
+{\em String\+Type} & the type of the keys or names (e.\+g., {\ttfamily std::\+string}). \doxylink{requirements_The}{The} comparison function {\ttfamily std::\+less\texorpdfstring{$<$}{<}String\+Type\texorpdfstring{$>$}{>}} is used to order elements inside the container. \\
+\hline
+{\em Allocator\+Type} & the allocator to use for objects (e.\+g., {\ttfamily std::\+allocator})\\
+\hline
+\end{DoxyTemplParams}
+\hypertarget{classnlohmann_1_1basic__json_autotoc_md14}{}\doxysubsubsubsubsection{\texorpdfstring{Default type}{Default type}}\label{classnlohmann_1_1basic__json_autotoc_md14}
+With the default values for {\itshape Object\+Type} ({\ttfamily std::\+map}), {\itshape String\+Type} ({\ttfamily std::\+string}), and {\itshape Allocator\+Type} ({\ttfamily std::\+allocator}), the default value for {\itshape \doxylink{classnlohmann_1_1basic__json_a17973d410285b14d8217a6b0b6104232}{object\+\_\+t}} is:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{std::map<}
+\DoxyCodeLine{\ \ std::string,\ \textcolor{comment}{//\ key\_type}}
+\DoxyCodeLine{\ \ basic\_json,\ \textcolor{comment}{//\ value\_type}}
+\DoxyCodeLine{\ \ std::less<std::string>,\ \textcolor{comment}{//\ key\_compare}}
+\DoxyCodeLine{\ \ std::allocator<std::pair<const\ std::string,\ basic\_json>>\ \textcolor{comment}{//\ allocator\_type}}
+\DoxyCodeLine{>}
+
+\end{DoxyCode}
+\hypertarget{classnlohmann_1_1basic__json_autotoc_md15}{}\doxysubsubsubsubsection{\texorpdfstring{Behavior}{Behavior}}\label{classnlohmann_1_1basic__json_autotoc_md15}
+\doxylink{requirements_The}{The} choice of {\itshape \doxylink{classnlohmann_1_1basic__json_a17973d410285b14d8217a6b0b6104232}{object\+\_\+t}} influences the behavior of the JSON class. With the default type, objects have the following behavior:\+
+
+
+\begin{DoxyItemize}
+\item When all names are unique, objects will be interoperable in the sense that all software implementations receiving that object will agree on the name-\/value mappings.
+\item When the names within an object are not unique, it is unspecified which one of the values for a given key will be chosen. For instance, {\ttfamily \{"{}key"{}:\+ 2, "{}key"{}:\+ 1\}} could be equal to either {\ttfamily \{"{}key"{}:\+ 1\}} or {\ttfamily \{"{}key"{}:\+ 2\}}.
+\item Internally, name/\+value pairs are stored in lexicographical order of the names. Objects will also be serialized (see dump) in this order. For instance, {\ttfamily \{"{}b"{}:\+ 1, "{}a"{}:\+ 2\}} and {\ttfamily \{"{}a"{}:\+ 2, "{}b"{}:\+ 1\}} will be stored and serialized as {\ttfamily \{"{}a"{}:\+ 2, "{}b"{}:\+ 1\}}.
+\item When comparing objects, the order of the name/\+value pairs is irrelevant. This makes objects interoperable in the sense that they will not be affected by these differences. For instance, {\ttfamily \{"{}b"{}:\+ 1, "{}a"{}:\+ 2\}} and {\ttfamily \{"{}a"{}:\+ 2, "{}b"{}:\+ 1\}} will be treated as equal.
+\end{DoxyItemize}\hypertarget{classnlohmann_1_1basic__json_autotoc_md16}{}\doxysubsubsubsubsection{\texorpdfstring{Limits}{Limits}}\label{classnlohmann_1_1basic__json_autotoc_md16}
+\href{https://tools.ietf.org/html/rfc8259}{\texttt{RFC 8259}} specifies:\+ \begin{quote}
+An implementation may set limits on the maximum depth of nesting. \end{quote}
+
+
+In this class, the object\textquotesingle{}s limit of nesting is not explicitly constrained. However, a maximum depth of nesting may be introduced by the compiler or runtime environment. A theoretical limit can be queried by calling the max\+\_\+size function of a JSON object.\hypertarget{classnlohmann_1_1basic__json_autotoc_md17}{}\doxysubsubsubsubsection{\texorpdfstring{Storage}{Storage}}\label{classnlohmann_1_1basic__json_autotoc_md17}
+Objects are stored as pointers in a \doxylink{classnlohmann_1_1basic__json}{basic\+\_\+json} type. That is, for any access to object values, a pointer of type {\ttfamily object\+\_\+t\texorpdfstring{$\ast$}{*}} must be dereferenced.
+
+\begin{DoxySeeAlso}{See also}
+see \doxylink{classnlohmann_1_1basic__json_a53700c308d804f84aea5ff05abb2ac4e}{array\+\_\+t} -- type for an array value
+\end{DoxySeeAlso}
+\begin{DoxySince}{Since}
+version 1.\+0.\+0
+\end{DoxySince}
+\begin{DoxyNote}{Note}
+\doxylink{requirements_The}{The} order name/\+value pairs are added to the object is {\itshape not} preserved by the library. Therefore, iterating an object may return name/\+value pairs in a different order than they were originally stored. In fact, keys will be traversed in alphabetical order as {\ttfamily std::\+map} with {\ttfamily std::\+less} is used by default. Please note this behavior conforms to \href{https://tools.ietf.org/html/rfc8259}{\texttt{RFC 8259}}, because any order implements the specified "{}unordered"{} nature of JSON objects. 
+\end{DoxyNote}
+\Hypertarget{classnlohmann_1_1basic__json_a17973d410285b14d8217a6b0b6104232}\index{nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$@{nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$}!object\_t@{object\_t}}
+\index{object\_t@{object\_t}!nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$@{nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$}}
+\doxysubsubsection{\texorpdfstring{object\_t}{object\_t}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classnlohmann_1_1basic__json_a17973d410285b14d8217a6b0b6104232} 
+template$<$template$<$ typename U, typename V, typename... Args $>$ class Object\+Type = std::\+map, template$<$ typename U, typename... Args $>$ class Array\+Type = std::\+vector, class String\+Type = std::\+string, class Boolean\+Type = bool, class Number\+Integer\+Type = std::\+int64\+\_\+t, class Number\+Unsigned\+Type = std::\+uint64\+\_\+t, class Number\+Float\+Type = double, template$<$ typename U $>$ class Allocator\+Type = std::\+allocator, template$<$ typename T, typename SFINAE=void $>$ class JSONSerializer = adl\+\_\+serializer, class Binary\+Type = std::\+vector$<$std::\+uint8\+\_\+t$>$$>$ \\
+using \doxymbox{\hyperlink{classnlohmann_1_1basic__json}{nlohmann::\+basic\+\_\+json}}$<$ Object\+Type, Array\+Type, String\+Type, Boolean\+Type, Number\+Integer\+Type, Number\+Unsigned\+Type, Number\+Float\+Type, Allocator\+Type, JSONSerializer, Binary\+Type $>$::\+object\+\_\+t}
+
+{\bfseries Initial value:\+}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{}
+\DoxyCodeLine{}
+\DoxyCodeLine{}
+\DoxyCodeLine{}
+\DoxyCodeLine{}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{using\ }object\_comparator\_t\ =\ std::less<StringType>\ ObjectType<StringType,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{classnlohmann_1_1basic__json}{basic\_json}},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ object\_comparator\_t,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ AllocatorType<std::pair<\textcolor{keyword}{const}\ StringType,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{classnlohmann_1_1basic__json}{basic\_json}}>>>}
+
+\end{DoxyCode}
+
+
+a type for an object 
+
+\href{https://tools.ietf.org/html/rfc8259}{\texttt{RFC 8259}} describes JSON objects as follows:\+ \begin{quote}
+An object is an unordered collection of zero or more name/\+value pairs, where a name is a string and a value is a string, number, boolean, null, object, or array. \end{quote}
+
+
+To store objects in C++, a type is defined by the template parameters described below.
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em Object\+Type} & the container to store objects (e.\+g., {\ttfamily std::\+map} or {\ttfamily std::\+unordered\+\_\+map}) \\
+\hline
+{\em String\+Type} & the type of the keys or names (e.\+g., {\ttfamily std::\+string}). \doxylink{requirements_The}{The} comparison function {\ttfamily std::\+less\texorpdfstring{$<$}{<}String\+Type\texorpdfstring{$>$}{>}} is used to order elements inside the container. \\
+\hline
+{\em Allocator\+Type} & the allocator to use for objects (e.\+g., {\ttfamily std::\+allocator})\\
+\hline
+\end{DoxyTemplParams}
+\hypertarget{classnlohmann_1_1basic__json_autotoc_md491}{}\doxysubsubsubsubsection{\texorpdfstring{Default type}{Default type}}\label{classnlohmann_1_1basic__json_autotoc_md491}
+With the default values for {\itshape Object\+Type} ({\ttfamily std::\+map}), {\itshape String\+Type} ({\ttfamily std::\+string}), and {\itshape Allocator\+Type} ({\ttfamily std::\+allocator}), the default value for {\itshape \doxylink{classnlohmann_1_1basic__json_a17973d410285b14d8217a6b0b6104232}{object\+\_\+t}} is:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{std::map<}
+\DoxyCodeLine{\ \ std::string,\ \textcolor{comment}{//\ key\_type}}
+\DoxyCodeLine{\ \ basic\_json,\ \textcolor{comment}{//\ value\_type}}
+\DoxyCodeLine{\ \ std::less<std::string>,\ \textcolor{comment}{//\ key\_compare}}
+\DoxyCodeLine{\ \ std::allocator<std::pair<const\ std::string,\ basic\_json>>\ \textcolor{comment}{//\ allocator\_type}}
+\DoxyCodeLine{>}
+
+\end{DoxyCode}
+\hypertarget{classnlohmann_1_1basic__json_autotoc_md492}{}\doxysubsubsubsubsection{\texorpdfstring{Behavior}{Behavior}}\label{classnlohmann_1_1basic__json_autotoc_md492}
+\doxylink{requirements_The}{The} choice of {\itshape \doxylink{classnlohmann_1_1basic__json_a17973d410285b14d8217a6b0b6104232}{object\+\_\+t}} influences the behavior of the JSON class. With the default type, objects have the following behavior:\+
+
+
+\begin{DoxyItemize}
+\item When all names are unique, objects will be interoperable in the sense that all software implementations receiving that object will agree on the name-\/value mappings.
+\item When the names within an object are not unique, it is unspecified which one of the values for a given key will be chosen. For instance, {\ttfamily \{"{}key"{}:\+ 2, "{}key"{}:\+ 1\}} could be equal to either {\ttfamily \{"{}key"{}:\+ 1\}} or {\ttfamily \{"{}key"{}:\+ 2\}}.
+\item Internally, name/\+value pairs are stored in lexicographical order of the names. Objects will also be serialized (see dump) in this order. For instance, {\ttfamily \{"{}b"{}:\+ 1, "{}a"{}:\+ 2\}} and {\ttfamily \{"{}a"{}:\+ 2, "{}b"{}:\+ 1\}} will be stored and serialized as {\ttfamily \{"{}a"{}:\+ 2, "{}b"{}:\+ 1\}}.
+\item When comparing objects, the order of the name/\+value pairs is irrelevant. This makes objects interoperable in the sense that they will not be affected by these differences. For instance, {\ttfamily \{"{}b"{}:\+ 1, "{}a"{}:\+ 2\}} and {\ttfamily \{"{}a"{}:\+ 2, "{}b"{}:\+ 1\}} will be treated as equal.
+\end{DoxyItemize}\hypertarget{classnlohmann_1_1basic__json_autotoc_md493}{}\doxysubsubsubsubsection{\texorpdfstring{Limits}{Limits}}\label{classnlohmann_1_1basic__json_autotoc_md493}
+\href{https://tools.ietf.org/html/rfc8259}{\texttt{RFC 8259}} specifies:\+ \begin{quote}
+An implementation may set limits on the maximum depth of nesting. \end{quote}
+
+
+In this class, the object\textquotesingle{}s limit of nesting is not explicitly constrained. However, a maximum depth of nesting may be introduced by the compiler or runtime environment. A theoretical limit can be queried by calling the max\+\_\+size function of a JSON object.\hypertarget{classnlohmann_1_1basic__json_autotoc_md494}{}\doxysubsubsubsubsection{\texorpdfstring{Storage}{Storage}}\label{classnlohmann_1_1basic__json_autotoc_md494}
+Objects are stored as pointers in a \doxylink{classnlohmann_1_1basic__json}{basic\+\_\+json} type. That is, for any access to object values, a pointer of type {\ttfamily object\+\_\+t\texorpdfstring{$\ast$}{*}} must be dereferenced.
+
+\begin{DoxySeeAlso}{See also}
+see \doxylink{classnlohmann_1_1basic__json_a53700c308d804f84aea5ff05abb2ac4e}{array\+\_\+t} -- type for an array value
+\end{DoxySeeAlso}
+\begin{DoxySince}{Since}
+version 1.\+0.\+0
+\end{DoxySince}
+\begin{DoxyNote}{Note}
+\doxylink{requirements_The}{The} order name/\+value pairs are added to the object is {\itshape not} preserved by the library. Therefore, iterating an object may return name/\+value pairs in a different order than they were originally stored. In fact, keys will be traversed in alphabetical order as {\ttfamily std::\+map} with {\ttfamily std::\+less} is used by default. Please note this behavior conforms to \href{https://tools.ietf.org/html/rfc8259}{\texttt{RFC 8259}}, because any order implements the specified "{}unordered"{} nature of JSON objects. 
+\end{DoxyNote}
+\Hypertarget{classnlohmann_1_1basic__json_a8140932a01de832d609e78018dd6145f}\index{nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$@{nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$}!parse\_error@{parse\_error}}
+\index{parse\_error@{parse\_error}!nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$@{nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$}}
+\doxysubsubsection{\texorpdfstring{parse\_error}{parse\_error}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classnlohmann_1_1basic__json_a8140932a01de832d609e78018dd6145f} 
+template$<$template$<$ typename U, typename V, typename... Args $>$ class Object\+Type = std::\+map, template$<$ typename U, typename... Args $>$ class Array\+Type = std::\+vector, class String\+Type = std::\+string, class Boolean\+Type = bool, class Number\+Integer\+Type = std::\+int64\+\_\+t, class Number\+Unsigned\+Type = std::\+uint64\+\_\+t, class Number\+Float\+Type = double, template$<$ typename U $>$ class Allocator\+Type = std::\+allocator, template$<$ typename T, typename SFINAE=void $>$ class JSONSerializer = adl\+\_\+serializer, class Binary\+Type = std::\+vector$<$std::\+uint8\+\_\+t$>$$>$ \\
+using \doxymbox{\hyperlink{classnlohmann_1_1basic__json}{nlohmann::\+basic\+\_\+json}}$<$ Object\+Type, Array\+Type, String\+Type, Boolean\+Type, Number\+Integer\+Type, Number\+Unsigned\+Type, Number\+Float\+Type, Allocator\+Type, JSONSerializer, Binary\+Type $>$::\+parse\+\_\+error}
+
+{\bfseries Initial value:\+}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ *\ \ @copydoc\ \doxymbox{\hyperlink{classnlohmann_1_1detail_1_1exception}{detail::exception}}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{using\ }exception\ =\ \doxymbox{\hyperlink{classnlohmann_1_1detail_1_1exception}{detail::exception}}\ \doxymbox{\hyperlink{classnlohmann_1_1detail_1_1parse__error}{detail::parse\_error}}}
+
+\end{DoxyCode}
+\Hypertarget{classnlohmann_1_1basic__json_a8140932a01de832d609e78018dd6145f}\index{nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$@{nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$}!parse\_error@{parse\_error}}
+\index{parse\_error@{parse\_error}!nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$@{nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$}}
+\doxysubsubsection{\texorpdfstring{parse\_error}{parse\_error}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classnlohmann_1_1basic__json_a8140932a01de832d609e78018dd6145f} 
+template$<$template$<$ typename U, typename V, typename... Args $>$ class Object\+Type = std::\+map, template$<$ typename U, typename... Args $>$ class Array\+Type = std::\+vector, class String\+Type = std::\+string, class Boolean\+Type = bool, class Number\+Integer\+Type = std::\+int64\+\_\+t, class Number\+Unsigned\+Type = std::\+uint64\+\_\+t, class Number\+Float\+Type = double, template$<$ typename U $>$ class Allocator\+Type = std::\+allocator, template$<$ typename T, typename SFINAE=void $>$ class JSONSerializer = adl\+\_\+serializer, class Binary\+Type = std::\+vector$<$std::\+uint8\+\_\+t$>$$>$ \\
+using \doxymbox{\hyperlink{classnlohmann_1_1basic__json}{nlohmann::\+basic\+\_\+json}}$<$ Object\+Type, Array\+Type, String\+Type, Boolean\+Type, Number\+Integer\+Type, Number\+Unsigned\+Type, Number\+Float\+Type, Allocator\+Type, JSONSerializer, Binary\+Type $>$::\+parse\+\_\+error}
+
+{\bfseries Initial value:\+}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ *\ \ @copydoc\ \doxymbox{\hyperlink{classnlohmann_1_1detail_1_1exception}{detail::exception}}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{using\ }exception\ =\ \doxymbox{\hyperlink{classnlohmann_1_1detail_1_1exception}{detail::exception}}\ \doxymbox{\hyperlink{classnlohmann_1_1detail_1_1parse__error}{detail::parse\_error}}}
+
+\end{DoxyCode}
+\Hypertarget{classnlohmann_1_1basic__json_a24086b03c5c063849df0307f78c41c54}\index{nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$@{nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$}!parse\_event\_t@{parse\_event\_t}}
+\index{parse\_event\_t@{parse\_event\_t}!nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$@{nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$}}
+\doxysubsubsection{\texorpdfstring{parse\_event\_t}{parse\_event\_t}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classnlohmann_1_1basic__json_a24086b03c5c063849df0307f78c41c54} 
+template$<$template$<$ typename U, typename V, typename... Args $>$ class Object\+Type = std::\+map, template$<$ typename U, typename... Args $>$ class Array\+Type = std::\+vector, class String\+Type = std::\+string, class Boolean\+Type = bool, class Number\+Integer\+Type = std::\+int64\+\_\+t, class Number\+Unsigned\+Type = std::\+uint64\+\_\+t, class Number\+Float\+Type = double, template$<$ typename U $>$ class Allocator\+Type = std::\+allocator, template$<$ typename T, typename SFINAE=void $>$ class JSONSerializer = adl\+\_\+serializer, class Binary\+Type = std::\+vector$<$std::\+uint8\+\_\+t$>$$>$ \\
+using \doxymbox{\hyperlink{classnlohmann_1_1basic__json}{nlohmann::\+basic\+\_\+json}}$<$ Object\+Type, Array\+Type, String\+Type, Boolean\+Type, Number\+Integer\+Type, Number\+Unsigned\+Type, Number\+Float\+Type, Allocator\+Type, JSONSerializer, Binary\+Type $>$::\+parse\+\_\+event\+\_\+t = detail::\+parse\+\_\+event\+\_\+t}
+
+
+
+parser event types 
+
+\doxylink{requirements_The}{The} parser callback distinguishes the following events:\+
+\begin{DoxyItemize}
+\item {\ttfamily object\+\_\+start}:\+ the parser read {\ttfamily \{} and started to process a JSON object
+\item {\ttfamily key}:\+ the parser read a key of a value in an object
+\item {\ttfamily object\+\_\+end}:\+ the parser read {\ttfamily \}} and finished processing a JSON object
+\item {\ttfamily array\+\_\+start}:\+ the parser read {\ttfamily \+[} and started to process a JSON array
+\item {\ttfamily array\+\_\+end}:\+ the parser read {\ttfamily ]\+} and finished processing a JSON array
+\item {\ttfamily value}:\+ the parser finished reading a JSON value
+\end{DoxyItemize}
+
+
+
+\begin{DoxySeeAlso}{See also}
+see \doxylink{classnlohmann_1_1basic__json_a0273d074462644e5d5a7ff313ad0d742}{parser\+\_\+callback\+\_\+t} for more information and examples 
+\end{DoxySeeAlso}
+\Hypertarget{classnlohmann_1_1basic__json_a24086b03c5c063849df0307f78c41c54}\index{nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$@{nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$}!parse\_event\_t@{parse\_event\_t}}
+\index{parse\_event\_t@{parse\_event\_t}!nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$@{nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$}}
+\doxysubsubsection{\texorpdfstring{parse\_event\_t}{parse\_event\_t}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classnlohmann_1_1basic__json_a24086b03c5c063849df0307f78c41c54} 
+template$<$template$<$ typename U, typename V, typename... Args $>$ class Object\+Type = std::\+map, template$<$ typename U, typename... Args $>$ class Array\+Type = std::\+vector, class String\+Type = std::\+string, class Boolean\+Type = bool, class Number\+Integer\+Type = std::\+int64\+\_\+t, class Number\+Unsigned\+Type = std::\+uint64\+\_\+t, class Number\+Float\+Type = double, template$<$ typename U $>$ class Allocator\+Type = std::\+allocator, template$<$ typename T, typename SFINAE=void $>$ class JSONSerializer = adl\+\_\+serializer, class Binary\+Type = std::\+vector$<$std::\+uint8\+\_\+t$>$$>$ \\
+using \doxymbox{\hyperlink{classnlohmann_1_1basic__json}{nlohmann::\+basic\+\_\+json}}$<$ Object\+Type, Array\+Type, String\+Type, Boolean\+Type, Number\+Integer\+Type, Number\+Unsigned\+Type, Number\+Float\+Type, Allocator\+Type, JSONSerializer, Binary\+Type $>$::\+parse\+\_\+event\+\_\+t = detail::\+parse\+\_\+event\+\_\+t}
+
+
+
+parser event types 
+
+\doxylink{requirements_The}{The} parser callback distinguishes the following events:\+
+\begin{DoxyItemize}
+\item {\ttfamily object\+\_\+start}:\+ the parser read {\ttfamily \{} and started to process a JSON object
+\item {\ttfamily key}:\+ the parser read a key of a value in an object
+\item {\ttfamily object\+\_\+end}:\+ the parser read {\ttfamily \}} and finished processing a JSON object
+\item {\ttfamily array\+\_\+start}:\+ the parser read {\ttfamily \+[} and started to process a JSON array
+\item {\ttfamily array\+\_\+end}:\+ the parser read {\ttfamily ]\+} and finished processing a JSON array
+\item {\ttfamily value}:\+ the parser finished reading a JSON value
+\end{DoxyItemize}
+
+
+
+\begin{DoxySeeAlso}{See also}
+see \doxylink{classnlohmann_1_1basic__json_a0273d074462644e5d5a7ff313ad0d742}{parser\+\_\+callback\+\_\+t} for more information and examples 
+\end{DoxySeeAlso}
+\Hypertarget{classnlohmann_1_1basic__json_a0273d074462644e5d5a7ff313ad0d742}\index{nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$@{nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$}!parser\_callback\_t@{parser\_callback\_t}}
+\index{parser\_callback\_t@{parser\_callback\_t}!nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$@{nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$}}
+\doxysubsubsection{\texorpdfstring{parser\_callback\_t}{parser\_callback\_t}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classnlohmann_1_1basic__json_a0273d074462644e5d5a7ff313ad0d742} 
+template$<$template$<$ typename U, typename V, typename... Args $>$ class Object\+Type = std::\+map, template$<$ typename U, typename... Args $>$ class Array\+Type = std::\+vector, class String\+Type = std::\+string, class Boolean\+Type = bool, class Number\+Integer\+Type = std::\+int64\+\_\+t, class Number\+Unsigned\+Type = std::\+uint64\+\_\+t, class Number\+Float\+Type = double, template$<$ typename U $>$ class Allocator\+Type = std::\+allocator, template$<$ typename T, typename SFINAE=void $>$ class JSONSerializer = adl\+\_\+serializer, class Binary\+Type = std::\+vector$<$std::\+uint8\+\_\+t$>$$>$ \\
+using \doxymbox{\hyperlink{classnlohmann_1_1basic__json}{nlohmann::\+basic\+\_\+json}}$<$ Object\+Type, Array\+Type, String\+Type, Boolean\+Type, Number\+Integer\+Type, Number\+Unsigned\+Type, Number\+Float\+Type, Allocator\+Type, JSONSerializer, Binary\+Type $>$::\+parser\+\_\+callback\+\_\+t = detail::\+parser\+\_\+callback\+\_\+t$<$\doxymbox{\hyperlink{classnlohmann_1_1basic__json}{basic\+\_\+json}}$>$}
+
+
+
+per-\/element parser callback type 
+
+With a parser callback function, the result of parsing a JSON text can be influenced. When passed to parse, it is called on certain events (passed as \doxylink{classnlohmann_1_1basic__json_a24086b03c5c063849df0307f78c41c54}{parse\+\_\+event\+\_\+t} via parameter {\itshape event}) with a set recursion depth {\itshape depth} and context JSON value {\itshape parsed}. \doxylink{requirements_The}{The} return value of the callback function is a boolean indicating whether the element that emitted the callback shall be kept or not.
+
+We distinguish six scenarios (determined by the event type) in which the callback function can be called. \doxylink{requirements_The}{The} following table describes the values of the parameters {\itshape depth}, {\itshape event}, and {\itshape parsed}.
+
+
+\begin{DoxyTable}{4}{}{}{1}
+\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}parameter {\itshape event}  &\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}description  &\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}parameter {\itshape depth}  &\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}parameter {\itshape parsed}  \\
+parse\+\_\+event\+\_\+t::\+object\+\_\+start  &the parser read {\ttfamily \{} and started to process a JSON object  &depth of the parent of the JSON object  &a JSON value with type discarded  \\
+parse\+\_\+event\+\_\+t::\+key  &the parser read a key of a value in an object  &depth of the currently parsed JSON object  &a JSON string containing the key  \\
+parse\+\_\+event\+\_\+t::\+object\+\_\+end  &the parser read {\ttfamily \}} and finished processing a JSON object  &depth of the parent of the JSON object  &the parsed JSON object  \\
+parse\+\_\+event\+\_\+t::\+array\+\_\+start  &the parser read {\ttfamily \+[} and started to process a JSON array  &depth of the parent of the JSON array  &a JSON value with type discarded  \\
+parse\+\_\+event\+\_\+t::\+array\+\_\+end  &the parser read {\ttfamily ]\+} and finished processing a JSON array  &depth of the parent of the JSON array  &the parsed JSON array  \\
+parse\+\_\+event\+\_\+t::\+value  &the parser finished reading a JSON value  &depth of the value  &the parsed JSON value  \\
+\end{DoxyTable}
+
+
+
+
+Discarding a value (i.\+e., returning {\ttfamily false}) has different effects depending on the context in which function was called:\+
+
+
+\begin{DoxyItemize}
+\item Discarded values in structured types are skipped. That is, the parser will behave as if the discarded value was never read.
+\item In case a value outside a structured type is skipped, it is replaced with {\ttfamily null}. This case happens if the top-\/level element is skipped.
+\end{DoxyItemize}
+
+
+\begin{DoxyParams}[1]{Parameters}
+\doxymbox{\texttt{in}}  & {\em depth} & the depth of the recursion during parsing\\
+\hline
+\doxymbox{\texttt{in}}  & {\em event} & an event of type \doxylink{classnlohmann_1_1basic__json_a24086b03c5c063849df0307f78c41c54}{parse\+\_\+event\+\_\+t} indicating the context in the callback function has been called\\
+\hline
+\doxymbox{\texttt{in,out}}  & {\em parsed} & the current intermediate parse result; note that writing to this value has no effect for parse\+\_\+event\+\_\+t::\+key events\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Whether the JSON value which called the function during parsing should be kept ({\ttfamily true}) or not ({\ttfamily false}). In the latter case, it is either skipped completely or replaced by an empty discarded object.
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+see parse for examples
+\end{DoxySeeAlso}
+\begin{DoxySince}{Since}
+version 1.\+0.\+0 
+\end{DoxySince}
+\Hypertarget{classnlohmann_1_1basic__json_a0273d074462644e5d5a7ff313ad0d742}\index{nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$@{nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$}!parser\_callback\_t@{parser\_callback\_t}}
+\index{parser\_callback\_t@{parser\_callback\_t}!nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$@{nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$}}
+\doxysubsubsection{\texorpdfstring{parser\_callback\_t}{parser\_callback\_t}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classnlohmann_1_1basic__json_a0273d074462644e5d5a7ff313ad0d742} 
+template$<$template$<$ typename U, typename V, typename... Args $>$ class Object\+Type = std::\+map, template$<$ typename U, typename... Args $>$ class Array\+Type = std::\+vector, class String\+Type = std::\+string, class Boolean\+Type = bool, class Number\+Integer\+Type = std::\+int64\+\_\+t, class Number\+Unsigned\+Type = std::\+uint64\+\_\+t, class Number\+Float\+Type = double, template$<$ typename U $>$ class Allocator\+Type = std::\+allocator, template$<$ typename T, typename SFINAE=void $>$ class JSONSerializer = adl\+\_\+serializer, class Binary\+Type = std::\+vector$<$std::\+uint8\+\_\+t$>$$>$ \\
+using \doxymbox{\hyperlink{classnlohmann_1_1basic__json}{nlohmann::\+basic\+\_\+json}}$<$ Object\+Type, Array\+Type, String\+Type, Boolean\+Type, Number\+Integer\+Type, Number\+Unsigned\+Type, Number\+Float\+Type, Allocator\+Type, JSONSerializer, Binary\+Type $>$::\+parser\+\_\+callback\+\_\+t = detail::\+parser\+\_\+callback\+\_\+t$<$\doxymbox{\hyperlink{classnlohmann_1_1basic__json}{basic\+\_\+json}}$>$}
+
+
+
+per-\/element parser callback type 
+
+With a parser callback function, the result of parsing a JSON text can be influenced. When passed to parse, it is called on certain events (passed as \doxylink{classnlohmann_1_1basic__json_a24086b03c5c063849df0307f78c41c54}{parse\+\_\+event\+\_\+t} via parameter {\itshape event}) with a set recursion depth {\itshape depth} and context JSON value {\itshape parsed}. \doxylink{requirements_The}{The} return value of the callback function is a boolean indicating whether the element that emitted the callback shall be kept or not.
+
+We distinguish six scenarios (determined by the event type) in which the callback function can be called. \doxylink{requirements_The}{The} following table describes the values of the parameters {\itshape depth}, {\itshape event}, and {\itshape parsed}.
+
+
+\begin{DoxyTable}{4}{}{}{1}
+\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}parameter {\itshape event}  &\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}description  &\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}parameter {\itshape depth}  &\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}parameter {\itshape parsed}  \\
+parse\+\_\+event\+\_\+t::\+object\+\_\+start  &the parser read {\ttfamily \{} and started to process a JSON object  &depth of the parent of the JSON object  &a JSON value with type discarded  \\
+parse\+\_\+event\+\_\+t::\+key  &the parser read a key of a value in an object  &depth of the currently parsed JSON object  &a JSON string containing the key  \\
+parse\+\_\+event\+\_\+t::\+object\+\_\+end  &the parser read {\ttfamily \}} and finished processing a JSON object  &depth of the parent of the JSON object  &the parsed JSON object  \\
+parse\+\_\+event\+\_\+t::\+array\+\_\+start  &the parser read {\ttfamily \+[} and started to process a JSON array  &depth of the parent of the JSON array  &a JSON value with type discarded  \\
+parse\+\_\+event\+\_\+t::\+array\+\_\+end  &the parser read {\ttfamily ]\+} and finished processing a JSON array  &depth of the parent of the JSON array  &the parsed JSON array  \\
+parse\+\_\+event\+\_\+t::\+value  &the parser finished reading a JSON value  &depth of the value  &the parsed JSON value  \\
+\end{DoxyTable}
+
+
+
+
+Discarding a value (i.\+e., returning {\ttfamily false}) has different effects depending on the context in which function was called:\+
+
+
+\begin{DoxyItemize}
+\item Discarded values in structured types are skipped. That is, the parser will behave as if the discarded value was never read.
+\item In case a value outside a structured type is skipped, it is replaced with {\ttfamily null}. This case happens if the top-\/level element is skipped.
+\end{DoxyItemize}
+
+
+\begin{DoxyParams}[1]{Parameters}
+\doxymbox{\texttt{in}}  & {\em depth} & the depth of the recursion during parsing\\
+\hline
+\doxymbox{\texttt{in}}  & {\em event} & an event of type \doxylink{classnlohmann_1_1basic__json_a24086b03c5c063849df0307f78c41c54}{parse\+\_\+event\+\_\+t} indicating the context in the callback function has been called\\
+\hline
+\doxymbox{\texttt{in,out}}  & {\em parsed} & the current intermediate parse result; note that writing to this value has no effect for parse\+\_\+event\+\_\+t::\+key events\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Whether the JSON value which called the function during parsing should be kept ({\ttfamily true}) or not ({\ttfamily false}). In the latter case, it is either skipped completely or replaced by an empty discarded object.
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+see parse for examples
+\end{DoxySeeAlso}
+\begin{DoxySince}{Since}
+version 1.\+0.\+0 
+\end{DoxySince}
+\Hypertarget{classnlohmann_1_1basic__json_a0c038e096fe866f2ae6add7a3ae2e6ca}\index{nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$@{nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$}!reference@{reference}}
+\index{reference@{reference}!nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$@{nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$}}
+\doxysubsubsection{\texorpdfstring{reference}{reference}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classnlohmann_1_1basic__json_a0c038e096fe866f2ae6add7a3ae2e6ca} 
+template$<$template$<$ typename U, typename V, typename... Args $>$ class Object\+Type = std::\+map, template$<$ typename U, typename... Args $>$ class Array\+Type = std::\+vector, class String\+Type = std::\+string, class Boolean\+Type = bool, class Number\+Integer\+Type = std::\+int64\+\_\+t, class Number\+Unsigned\+Type = std::\+uint64\+\_\+t, class Number\+Float\+Type = double, template$<$ typename U $>$ class Allocator\+Type = std::\+allocator, template$<$ typename T, typename SFINAE=void $>$ class JSONSerializer = adl\+\_\+serializer, class Binary\+Type = std::\+vector$<$std::\+uint8\+\_\+t$>$$>$ \\
+using \doxymbox{\hyperlink{classnlohmann_1_1basic__json}{nlohmann::\+basic\+\_\+json}}$<$ Object\+Type, Array\+Type, String\+Type, Boolean\+Type, Number\+Integer\+Type, Number\+Unsigned\+Type, Number\+Float\+Type, Allocator\+Type, JSONSerializer, Binary\+Type $>$::\+reference}
+
+{\bfseries Initial value:\+}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ *\ \ the\ type\ of\ elements\ in\ a\ \doxymbox{\hyperlink{classnlohmann_1_1basic__json}{basic\_json}}\ container}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{using\ }value\_type\ =\ \doxymbox{\hyperlink{classnlohmann_1_1basic__json}{basic\_json}}\ value\_type\&}
+
+\end{DoxyCode}
+\Hypertarget{classnlohmann_1_1basic__json_a0c038e096fe866f2ae6add7a3ae2e6ca}\index{nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$@{nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$}!reference@{reference}}
+\index{reference@{reference}!nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$@{nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$}}
+\doxysubsubsection{\texorpdfstring{reference}{reference}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classnlohmann_1_1basic__json_a0c038e096fe866f2ae6add7a3ae2e6ca} 
+template$<$template$<$ typename U, typename V, typename... Args $>$ class Object\+Type = std::\+map, template$<$ typename U, typename... Args $>$ class Array\+Type = std::\+vector, class String\+Type = std::\+string, class Boolean\+Type = bool, class Number\+Integer\+Type = std::\+int64\+\_\+t, class Number\+Unsigned\+Type = std::\+uint64\+\_\+t, class Number\+Float\+Type = double, template$<$ typename U $>$ class Allocator\+Type = std::\+allocator, template$<$ typename T, typename SFINAE=void $>$ class JSONSerializer = adl\+\_\+serializer, class Binary\+Type = std::\+vector$<$std::\+uint8\+\_\+t$>$$>$ \\
+using \doxymbox{\hyperlink{classnlohmann_1_1basic__json}{nlohmann::\+basic\+\_\+json}}$<$ Object\+Type, Array\+Type, String\+Type, Boolean\+Type, Number\+Integer\+Type, Number\+Unsigned\+Type, Number\+Float\+Type, Allocator\+Type, JSONSerializer, Binary\+Type $>$::\+reference}
+
+{\bfseries Initial value:\+}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ *\ \ the\ type\ of\ elements\ in\ a\ \doxymbox{\hyperlink{classnlohmann_1_1basic__json}{basic\_json}}\ container}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{using\ }value\_type\ =\ \doxymbox{\hyperlink{classnlohmann_1_1basic__json}{basic\_json}}\ value\_type\&}
+
+\end{DoxyCode}
+\Hypertarget{classnlohmann_1_1basic__json_a33593865ffb1860323dcbd52425b90c8}\index{nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$@{nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$}!string\_t@{string\_t}}
+\index{string\_t@{string\_t}!nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$@{nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$}}
+\doxysubsubsection{\texorpdfstring{string\_t}{string\_t}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classnlohmann_1_1basic__json_a33593865ffb1860323dcbd52425b90c8} 
+template$<$template$<$ typename U, typename V, typename... Args $>$ class Object\+Type = std::\+map, template$<$ typename U, typename... Args $>$ class Array\+Type = std::\+vector, class String\+Type = std::\+string, class Boolean\+Type = bool, class Number\+Integer\+Type = std::\+int64\+\_\+t, class Number\+Unsigned\+Type = std::\+uint64\+\_\+t, class Number\+Float\+Type = double, template$<$ typename U $>$ class Allocator\+Type = std::\+allocator, template$<$ typename T, typename SFINAE=void $>$ class JSONSerializer = adl\+\_\+serializer, class Binary\+Type = std::\+vector$<$std::\+uint8\+\_\+t$>$$>$ \\
+using \doxymbox{\hyperlink{classnlohmann_1_1basic__json}{nlohmann::\+basic\+\_\+json}}$<$ Object\+Type, Array\+Type, String\+Type, Boolean\+Type, Number\+Integer\+Type, Number\+Unsigned\+Type, Number\+Float\+Type, Allocator\+Type, JSONSerializer, Binary\+Type $>$::\+string\+\_\+t = String\+Type}
+
+
+
+a type for a string 
+
+\href{https://tools.ietf.org/html/rfc8259}{\texttt{RFC 8259}} describes JSON strings as follows:\+ \begin{quote}
+A string is a sequence of zero or more Unicode characters. \end{quote}
+
+
+To store objects in C++, a type is defined by the template parameter described below. Unicode values are split by the JSON class into byte-\/sized characters during deserialization.
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em String\+Type} & the container to store strings (e.\+g., {\ttfamily std::\+string}). Note this container is used for keys/\+names in objects, see \doxylink{classnlohmann_1_1basic__json_a17973d410285b14d8217a6b0b6104232}{object\+\_\+t}.\\
+\hline
+\end{DoxyTemplParams}
+\hypertarget{classnlohmann_1_1basic__json_autotoc_md21}{}\doxysubsubsubsubsection{\texorpdfstring{Default type}{Default type}}\label{classnlohmann_1_1basic__json_autotoc_md21}
+With the default values for {\itshape String\+Type} ({\ttfamily std::\+string}), the default value for {\itshape \doxylink{classnlohmann_1_1basic__json_a33593865ffb1860323dcbd52425b90c8}{string\+\_\+t}} is:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{std::string}
+
+\end{DoxyCode}
+\hypertarget{classnlohmann_1_1basic__json_autotoc_md22}{}\doxysubsubsubsubsection{\texorpdfstring{Encoding}{Encoding}}\label{classnlohmann_1_1basic__json_autotoc_md22}
+Strings are stored in UTF-\/8 encoding. Therefore, functions like {\ttfamily std::\+string::\+size()} or {\ttfamily std::\+string::\+length()} return the number of bytes in the string rather than the number of characters or glyphs.\hypertarget{classnlohmann_1_1basic__json_autotoc_md23}{}\doxysubsubsubsubsection{\texorpdfstring{String comparison}{String comparison}}\label{classnlohmann_1_1basic__json_autotoc_md23}
+\href{https://tools.ietf.org/html/rfc8259}{\texttt{RFC 8259}} states:\+ \begin{quote}
+Software implementations are typically required to test names of object members for equality. Implementations that transform the textual representation into sequences of Unicode code units and then perform the comparison numerically, code unit by code unit, are interoperable in the sense that implementations will agree in all cases on equality or inequality of two strings. For example, implementations that compare strings with escaped characters unconverted may incorrectly find that {\ttfamily "{}a\textbackslash{}\textbackslash{}b"{}} and {\ttfamily "{}a\textbackslash{}u005\+Cb"{}} are not equal. \end{quote}
+
+
+This implementation is interoperable as it does compare strings code unit by code unit.\hypertarget{classnlohmann_1_1basic__json_autotoc_md24}{}\doxysubsubsubsubsection{\texorpdfstring{Storage}{Storage}}\label{classnlohmann_1_1basic__json_autotoc_md24}
+String values are stored as pointers in a \doxylink{classnlohmann_1_1basic__json}{basic\+\_\+json} type. That is, for any access to string values, a pointer of type {\ttfamily string\+\_\+t\texorpdfstring{$\ast$}{*}} must be dereferenced.
+
+\begin{DoxySince}{Since}
+version 1.\+0.\+0 
+\end{DoxySince}
+\Hypertarget{classnlohmann_1_1basic__json_a33593865ffb1860323dcbd52425b90c8}\index{nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$@{nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$}!string\_t@{string\_t}}
+\index{string\_t@{string\_t}!nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$@{nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$}}
+\doxysubsubsection{\texorpdfstring{string\_t}{string\_t}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classnlohmann_1_1basic__json_a33593865ffb1860323dcbd52425b90c8} 
+template$<$template$<$ typename U, typename V, typename... Args $>$ class Object\+Type = std::\+map, template$<$ typename U, typename... Args $>$ class Array\+Type = std::\+vector, class String\+Type = std::\+string, class Boolean\+Type = bool, class Number\+Integer\+Type = std::\+int64\+\_\+t, class Number\+Unsigned\+Type = std::\+uint64\+\_\+t, class Number\+Float\+Type = double, template$<$ typename U $>$ class Allocator\+Type = std::\+allocator, template$<$ typename T, typename SFINAE=void $>$ class JSONSerializer = adl\+\_\+serializer, class Binary\+Type = std::\+vector$<$std::\+uint8\+\_\+t$>$$>$ \\
+using \doxymbox{\hyperlink{classnlohmann_1_1basic__json}{nlohmann::\+basic\+\_\+json}}$<$ Object\+Type, Array\+Type, String\+Type, Boolean\+Type, Number\+Integer\+Type, Number\+Unsigned\+Type, Number\+Float\+Type, Allocator\+Type, JSONSerializer, Binary\+Type $>$::\+string\+\_\+t = String\+Type}
+
+
+
+a type for a string 
+
+\href{https://tools.ietf.org/html/rfc8259}{\texttt{RFC 8259}} describes JSON strings as follows:\+ \begin{quote}
+A string is a sequence of zero or more Unicode characters. \end{quote}
+
+
+To store objects in C++, a type is defined by the template parameter described below. Unicode values are split by the JSON class into byte-\/sized characters during deserialization.
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em String\+Type} & the container to store strings (e.\+g., {\ttfamily std::\+string}). Note this container is used for keys/\+names in objects, see \doxylink{classnlohmann_1_1basic__json_a17973d410285b14d8217a6b0b6104232}{object\+\_\+t}.\\
+\hline
+\end{DoxyTemplParams}
+\hypertarget{classnlohmann_1_1basic__json_autotoc_md498}{}\doxysubsubsubsubsection{\texorpdfstring{Default type}{Default type}}\label{classnlohmann_1_1basic__json_autotoc_md498}
+With the default values for {\itshape String\+Type} ({\ttfamily std::\+string}), the default value for {\itshape \doxylink{classnlohmann_1_1basic__json_a33593865ffb1860323dcbd52425b90c8}{string\+\_\+t}} is:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{std::string}
+
+\end{DoxyCode}
+\hypertarget{classnlohmann_1_1basic__json_autotoc_md499}{}\doxysubsubsubsubsection{\texorpdfstring{Encoding}{Encoding}}\label{classnlohmann_1_1basic__json_autotoc_md499}
+Strings are stored in UTF-\/8 encoding. Therefore, functions like {\ttfamily std::\+string::\+size()} or {\ttfamily std::\+string::\+length()} return the number of bytes in the string rather than the number of characters or glyphs.\hypertarget{classnlohmann_1_1basic__json_autotoc_md500}{}\doxysubsubsubsubsection{\texorpdfstring{String comparison}{String comparison}}\label{classnlohmann_1_1basic__json_autotoc_md500}
+\href{https://tools.ietf.org/html/rfc8259}{\texttt{RFC 8259}} states:\+ \begin{quote}
+Software implementations are typically required to test names of object members for equality. Implementations that transform the textual representation into sequences of Unicode code units and then perform the comparison numerically, code unit by code unit, are interoperable in the sense that implementations will agree in all cases on equality or inequality of two strings. For example, implementations that compare strings with escaped characters unconverted may incorrectly find that {\ttfamily "{}a\textbackslash{}\textbackslash{}b"{}} and {\ttfamily "{}a\textbackslash{}u005\+Cb"{}} are not equal. \end{quote}
+
+
+This implementation is interoperable as it does compare strings code unit by code unit.\hypertarget{classnlohmann_1_1basic__json_autotoc_md501}{}\doxysubsubsubsubsection{\texorpdfstring{Storage}{Storage}}\label{classnlohmann_1_1basic__json_autotoc_md501}
+String values are stored as pointers in a \doxylink{classnlohmann_1_1basic__json}{basic\+\_\+json} type. That is, for any access to string values, a pointer of type {\ttfamily string\+\_\+t\texorpdfstring{$\ast$}{*}} must be dereferenced.
+
+\begin{DoxySince}{Since}
+version 1.\+0.\+0 
+\end{DoxySince}
+
+
+\label{doc-func-members}
+\Hypertarget{classnlohmann_1_1basic__json_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classnlohmann_1_1basic__json_a351b4f65014f6c2b8b2832847d44bbd7}\index{nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$@{nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$}!meta@{meta}}
+\index{meta@{meta}!nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$@{nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$}}
+\doxysubsubsection{\texorpdfstring{meta()}{meta()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classnlohmann_1_1basic__json_a351b4f65014f6c2b8b2832847d44bbd7} 
+template$<$template$<$ typename U, typename V, typename... Args $>$ class Object\+Type = std::\+map, template$<$ typename U, typename... Args $>$ class Array\+Type = std::\+vector, class String\+Type = std::\+string, class Boolean\+Type = bool, class Number\+Integer\+Type = std::\+int64\+\_\+t, class Number\+Unsigned\+Type = std::\+uint64\+\_\+t, class Number\+Float\+Type = double, template$<$ typename U $>$ class Allocator\+Type = std::\+allocator, template$<$ typename T, typename SFINAE=void $>$ class JSONSerializer = adl\+\_\+serializer, class Binary\+Type = std::\+vector$<$std::\+uint8\+\_\+t$>$$>$ \\
+JSON\+\_\+\+HEDLEY\+\_\+\+WARN\+\_\+\+UNUSED\+\_\+\+RESULT \doxymbox{\hyperlink{classnlohmann_1_1basic__json}{basic\+\_\+json}} \doxymbox{\hyperlink{classnlohmann_1_1basic__json}{nlohmann::\+basic\+\_\+json}}$<$ Object\+Type, Array\+Type, String\+Type, Boolean\+Type, Number\+Integer\+Type, Number\+Unsigned\+Type, Number\+Float\+Type, Allocator\+Type, JSONSerializer, Binary\+Type $>$::\+meta (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+returns version information on the library 
+
+This function returns a JSON object with information about the library, including the version number and information on the platform and compiler.
+
+\begin{DoxyReturn}{Returns}
+JSON object holding version information 
+\begin{DoxyTable}{2}{}{}{1}
+\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}key  &\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}description  \\
+{\ttfamily compiler}  &Information on the used compiler. It is an object with the following keys:\+ {\ttfamily c++} (the used C++ standard), {\ttfamily family} (the compiler family; possible values are {\ttfamily clang}, {\ttfamily icc}, {\ttfamily gcc}, {\ttfamily ilecpp}, {\ttfamily msvc}, {\ttfamily pgcpp}, {\ttfamily sunpro}, and {\ttfamily unknown}), and {\ttfamily version} (the compiler version).  \\
+{\ttfamily copyright}  &\doxylink{requirements_The}{The} copyright line for the library as string.  \\
+{\ttfamily name}  &\doxylink{requirements_The}{The} name of the library as string.  \\
+{\ttfamily platform}  &\doxylink{requirements_The}{The} used platform as string. Possible values are {\ttfamily win32}, {\ttfamily linux}, {\ttfamily apple}, {\ttfamily unix}, and {\ttfamily unknown}.  \\
+{\ttfamily url}  &\doxylink{requirements_The}{The} URL of the project as string.  \\
+{\ttfamily version}  &\doxylink{requirements_The}{The} version of the library. It is an object with the following keys:\+ {\ttfamily major}, {\ttfamily minor}, and {\ttfamily patch} as defined by \href{http://semver.org}{\texttt{Semantic Versioning}}, and {\ttfamily string} (the version string).  \\
+\end{DoxyTable}
+
+\end{DoxyReturn}
+@liveexample\{\doxylink{requirements_The}{The} following code shows an example output of the {\ttfamily \doxylink{classnlohmann_1_1basic__json_a351b4f65014f6c2b8b2832847d44bbd7}{meta()}} function.,meta\}
+
+@exceptionsafety Strong guarantee:\+ if an exception is thrown, there are no changes to any JSON value.
+
+@complexity Constant.
+
+\begin{DoxySince}{Since}
+2.\+1.\+0 
+\end{DoxySince}
+\Hypertarget{classnlohmann_1_1basic__json_a351b4f65014f6c2b8b2832847d44bbd7}\index{nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$@{nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$}!meta@{meta}}
+\index{meta@{meta}!nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$@{nlohmann::basic\_json$<$ ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType $>$}}
+\doxysubsubsection{\texorpdfstring{meta()}{meta()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classnlohmann_1_1basic__json_a351b4f65014f6c2b8b2832847d44bbd7} 
+template$<$template$<$ typename U, typename V, typename... Args $>$ class Object\+Type = std::\+map, template$<$ typename U, typename... Args $>$ class Array\+Type = std::\+vector, class String\+Type = std::\+string, class Boolean\+Type = bool, class Number\+Integer\+Type = std::\+int64\+\_\+t, class Number\+Unsigned\+Type = std::\+uint64\+\_\+t, class Number\+Float\+Type = double, template$<$ typename U $>$ class Allocator\+Type = std::\+allocator, template$<$ typename T, typename SFINAE=void $>$ class JSONSerializer = adl\+\_\+serializer, class Binary\+Type = std::\+vector$<$std::\+uint8\+\_\+t$>$$>$ \\
+JSON\+\_\+\+HEDLEY\+\_\+\+WARN\+\_\+\+UNUSED\+\_\+\+RESULT \doxymbox{\hyperlink{classnlohmann_1_1basic__json}{basic\+\_\+json}} \doxymbox{\hyperlink{classnlohmann_1_1basic__json}{nlohmann::\+basic\+\_\+json}}$<$ Object\+Type, Array\+Type, String\+Type, Boolean\+Type, Number\+Integer\+Type, Number\+Unsigned\+Type, Number\+Float\+Type, Allocator\+Type, JSONSerializer, Binary\+Type $>$::\+meta (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+returns version information on the library 
+
+This function returns a JSON object with information about the library, including the version number and information on the platform and compiler.
+
+\begin{DoxyReturn}{Returns}
+JSON object holding version information 
+\begin{DoxyTable}{2}{}{}{1}
+\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}key  &\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}description  \\
+{\ttfamily compiler}  &Information on the used compiler. It is an object with the following keys:\+ {\ttfamily c++} (the used C++ standard), {\ttfamily family} (the compiler family; possible values are {\ttfamily clang}, {\ttfamily icc}, {\ttfamily gcc}, {\ttfamily ilecpp}, {\ttfamily msvc}, {\ttfamily pgcpp}, {\ttfamily sunpro}, and {\ttfamily unknown}), and {\ttfamily version} (the compiler version).  \\
+{\ttfamily copyright}  &\doxylink{requirements_The}{The} copyright line for the library as string.  \\
+{\ttfamily name}  &\doxylink{requirements_The}{The} name of the library as string.  \\
+{\ttfamily platform}  &\doxylink{requirements_The}{The} used platform as string. Possible values are {\ttfamily win32}, {\ttfamily linux}, {\ttfamily apple}, {\ttfamily unix}, and {\ttfamily unknown}.  \\
+{\ttfamily url}  &\doxylink{requirements_The}{The} URL of the project as string.  \\
+{\ttfamily version}  &\doxylink{requirements_The}{The} version of the library. It is an object with the following keys:\+ {\ttfamily major}, {\ttfamily minor}, and {\ttfamily patch} as defined by \href{http://semver.org}{\texttt{Semantic Versioning}}, and {\ttfamily string} (the version string).  \\
+\end{DoxyTable}
+
+\end{DoxyReturn}
+@liveexample\{\doxylink{requirements_The}{The} following code shows an example output of the {\ttfamily \doxylink{classnlohmann_1_1basic__json_a351b4f65014f6c2b8b2832847d44bbd7}{meta()}} function.,meta\}
+
+@exceptionsafety Strong guarantee:\+ if an exception is thrown, there are no changes to any JSON value.
+
+@complexity Constant.
+
+\begin{DoxySince}{Since}
+2.\+1.\+0 
+\end{DoxySince}
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+jetson-\/inference/\+build/\+aarch64/\+include/\+jetson-\/utils/\+json.\+hpp\item 
+jetson-\/inference/\+utils/\+json.\+hpp\end{DoxyCompactItemize}

@@ -1,0 +1,93 @@
+\doxysection{background\+Net.\+h}
+\hypertarget{background_net_8h_source}{}\label{background_net_8h_source}\index{jetson-\/inference/build/aarch64/include/jetson-\/inference/backgroundNet.h@{jetson-\/inference/build/aarch64/include/jetson-\/inference/backgroundNet.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ *\ Copyright\ (c)\ 2022,\ NVIDIA\ CORPORATION.\ All\ rights\ reserved.}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ *\ Permission\ is\ hereby\ granted,\ free\ of\ charge,\ to\ any\ person\ obtaining\ a}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ *\ copy\ of\ this\ software\ and\ associated\ documentation\ files\ (the\ "{}Software"{}),}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ *\ to\ deal\ in\ the\ Software\ without\ restriction,\ including\ without\ limitation}}
+\DoxyCodeLine{00007\ \textcolor{comment}{\ *\ the\ rights\ to\ use,\ copy,\ modify,\ merge,\ publish,\ distribute,\ sublicense,}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ *\ and/or\ sell\ copies\ of\ the\ Software,\ and\ to\ permit\ persons\ to\ whom\ the}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ *\ Software\ is\ furnished\ to\ do\ so,\ subject\ to\ the\ following\ conditions:}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ *\ The\ above\ copyright\ notice\ and\ this\ permission\ notice\ shall\ be\ included\ in}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ *\ all\ copies\ or\ substantial\ portions\ of\ the\ Software.}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ *\ THE\ SOFTWARE\ IS\ PROVIDED\ "{}AS\ IS"{},\ WITHOUT\ WARRANTY\ OF\ ANY\ KIND,\ EXPRESS\ OR}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ *\ IMPLIED,\ INCLUDING\ BUT\ NOT\ LIMITED\ TO\ THE\ WARRANTIES\ OF\ MERCHANTABILITY,}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ *\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE\ AND\ NONINFRINGEMENT.\ \ IN\ NO\ EVENT\ SHALL}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ *\ THE\ AUTHORS\ OR\ COPYRIGHT\ HOLDERS\ BE\ LIABLE\ FOR\ ANY\ CLAIM,\ DAMAGES\ OR\ OTHER}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ *\ LIABILITY,\ WHETHER\ IN\ AN\ ACTION\ OF\ CONTRACT,\ TORT\ OR\ OTHERWISE,\ ARISING}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ *\ FROM,\ OUT\ OF\ OR\ IN\ CONNECTION\ WITH\ THE\ SOFTWARE\ OR\ THE\ USE\ OR\ OTHER}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ *\ DEALINGS\ IN\ THE\ SOFTWARE.}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00022\ \ }
+\DoxyCodeLine{00023\ \textcolor{preprocessor}{\#ifndef\ \_\_BACKGROUND\_NET\_H\_\_}}
+\DoxyCodeLine{00024\ \textcolor{preprocessor}{\#define\ \_\_BACKGROUND\_NET\_H\_\_}}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \textcolor{preprocessor}{\#include\ "{}tensorNet.h"{}}}
+\DoxyCodeLine{00028\ \textcolor{preprocessor}{\#include\ <jetson-\/utils/cudaFilterMode.h>}}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00035\ \textcolor{preprocessor}{\#define\ BACKGROUNDNET\_DEFAULT\_INPUT\ \ \ "{}input\_0"{}}}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00041\ \textcolor{preprocessor}{\#define\ BACKGROUNDNET\_DEFAULT\_OUTPUT\ \ "{}output\_0"{}}}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00047\ \textcolor{preprocessor}{\#define\ BACKGROUNDNET\_MODEL\_TYPE\ "{}background"{}}}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00053\ \textcolor{preprocessor}{\#define\ BACKGROUNDNET\_USAGE\_STRING\ \ "{}backgroundNet\ arguments:\ \(\backslash\)n"{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00054\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ "{}\ \ -\/-\/network=NETWORK\ \ \ \ pre-\/trained\ model\ to\ load,\ one\ of\ the\ following:\(\backslash\)n"{}\ \ \ \(\backslash\)}}
+\DoxyCodeLine{00055\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ "{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ u2net\ (default)\(\backslash\)n"{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00056\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ "{}\ \ -\/-\/model=MODEL\ \ \ \ \ \ \ \ path\ to\ custom\ model\ to\ load\ (caffemodel,\ uff,\ or\ onnx)\(\backslash\)n"{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00057\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ "{}\ \ -\/-\/input-\/blob=INPUT\ \ \ name\ of\ the\ input\ layer\ (default\ is\ '"{}\ BACKGROUNDNET\_DEFAULT\_INPUT\ "{}')\(\backslash\)n"{}\ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00058\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ "{}\ \ -\/-\/output-\/blob=OUTPUT\ name\ of\ the\ output\ layer\ (default\ is\ '"{}\ BACKGROUNDNET\_DEFAULT\_OUTPUT\ "{}')\(\backslash\)n"{}\ \ \ \(\backslash\)}}
+\DoxyCodeLine{00059\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ "{}\ \ -\/-\/profile\ \ \ \ \ \ \ \ \ \ \ \ enable\ layer\ profiling\ in\ TensorRT\(\backslash\)n\(\backslash\)n"{}}}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00066\ \textcolor{keyword}{class\ }backgroundNet\ :\ \textcolor{keyword}{public}\ \doxymbox{\hyperlink{classtensor_net_ab6e617d96e5542bef023ee9d4c96388a}{tensorNet}}}
+\DoxyCodeLine{00067\ \{}
+\DoxyCodeLine{00068\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00072\ \ \ \ \ \textcolor{keyword}{static}\ backgroundNet*\ \doxymbox{\hyperlink{classbackground_net_ad76acea6ee3e192af2f40afc8435a1d5}{Create}}(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ network=\textcolor{stringliteral}{"{}u2net"{}},\ uint32\_t\ maxBatchSize=\doxymbox{\hyperlink{group__tensor_net_ga5a46a965749d6118e01307fd4d4865c9}{DEFAULT\_MAX\_BATCH\_SIZE}},\ }
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precisionType}}\ precision=\doxymbox{\hyperlink{group__tensor_net_ggaac6604fd52c6e5db82877390e0378623a1d325738f49e8e4c424ff671624e66f9}{TYPE\_FASTEST}},\ \doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{deviceType}}\ device=\doxymbox{\hyperlink{group__tensor_net_ggaa5d3f9981cdbd91516c1474006a80fe4adc7f3f88455afa81458863e5b3092e4b}{DEVICE\_GPU}},\ \textcolor{keywordtype}{bool}\ allowGPUFallback=\textcolor{keyword}{true}\ );}
+\DoxyCodeLine{00074\ \ \ \ \ }
+\DoxyCodeLine{00082\ \ \ \ \ \textcolor{keyword}{static}\ backgroundNet*\ \doxymbox{\hyperlink{classbackground_net_a95287b6d3e8516e03761a019eebe4b34}{Create}}(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ model\_path,\ }
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ input=\doxymbox{\hyperlink{group__background_net_gaedcfc9671390875215c85dcddd3cff09}{BACKGROUNDNET\_DEFAULT\_INPUT}},\ }
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ output=\doxymbox{\hyperlink{group__background_net_ga3ebbfc2bb8d09adb2e1505704ebedde6}{BACKGROUNDNET\_DEFAULT\_OUTPUT}},\ }
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ maxBatchSize=\doxymbox{\hyperlink{group__tensor_net_ga5a46a965749d6118e01307fd4d4865c9}{DEFAULT\_MAX\_BATCH\_SIZE}},\ }
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precisionType}}\ precision=\doxymbox{\hyperlink{group__tensor_net_ggaac6604fd52c6e5db82877390e0378623a1d325738f49e8e4c424ff671624e66f9}{TYPE\_FASTEST}},}
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{deviceType}}\ device=\doxymbox{\hyperlink{group__tensor_net_ggaa5d3f9981cdbd91516c1474006a80fe4adc7f3f88455afa81458863e5b3092e4b}{DEVICE\_GPU}},\ \textcolor{keywordtype}{bool}\ allowGPUFallback=\textcolor{keyword}{true}\ );}
+\DoxyCodeLine{00088\ \ \ \ \ }
+\DoxyCodeLine{00092\ \ \ \ \ \textcolor{keyword}{static}\ backgroundNet*\ \doxymbox{\hyperlink{classbackground_net_a0427cd500cd65c69894c99842261bbbe}{Create}}(\ \textcolor{keywordtype}{int}\ argc,\ \textcolor{keywordtype}{char}**\ argv\ );}
+\DoxyCodeLine{00093\ }
+\DoxyCodeLine{00097\ \ \ \ \ \textcolor{keyword}{static}\ backgroundNet*\ \doxymbox{\hyperlink{classbackground_net_a6651a438a8300a44609be46f8fea270f}{Create}}(\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{classcommand_line}{commandLine}}\&\ cmdLine\ );}
+\DoxyCodeLine{00098\ }
+\DoxyCodeLine{00102\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \doxymbox{\hyperlink{classbackground_net_ac670f47374ab006253a9136c110687c2}{Usage}}()\ \ \ \ \ \ \ \{\ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{group__background_net_ga554b40e53cb2ec9b6768adaf32087f57}{BACKGROUNDNET\_USAGE\_STRING}};\ \}}
+\DoxyCodeLine{00103\ }
+\DoxyCodeLine{00107\ \ \ \ \ \textcolor{keyword}{virtual}\ \doxymbox{\hyperlink{classbackground_net_a6b474d88a5447623257e0f473352b465}{\string~backgroundNet}}();}
+\DoxyCodeLine{00108\ \ \ \ \ }
+\DoxyCodeLine{00118\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{classbackground_net_adf58aca64daa5f7b6267df690bc00c92}{Process}}(\ T*\ image,\ uint32\_t\ width,\ uint32\_t\ height,}
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{group__cuda_filter_ga25d4283643163befe99948d24cc53311}{cudaFilterMode}}\ filter=\doxymbox{\hyperlink{group__cuda_filter_gga25d4283643163befe99948d24cc53311ad8e5de74ec16a7e07145b7c18c885094}{FILTER\_LINEAR}},\ \textcolor{keywordtype}{bool}\ maskAlpha=\textcolor{keyword}{true}\ )\ \ \{\ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{classbackground_net_adf58aca64daa5f7b6267df690bc00c92}{Process}}((\textcolor{keywordtype}{void}*)image,\ width,\ height,\ imageFormatFromType<T>(),\ filter,\ maskAlpha);\ \}}
+\DoxyCodeLine{00120\ \ \ \ \ }
+\DoxyCodeLine{00131\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{classbackground_net_a21a10a6dbc5d74d9f6723cfc95d64b55}{Process}}(\ T*\ input,\ T*\ output,\ uint32\_t\ width,\ uint32\_t\ height,}
+\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{group__cuda_filter_ga25d4283643163befe99948d24cc53311}{cudaFilterMode}}\ filter=\doxymbox{\hyperlink{group__cuda_filter_gga25d4283643163befe99948d24cc53311ad8e5de74ec16a7e07145b7c18c885094}{FILTER\_LINEAR}},\ \textcolor{keywordtype}{bool}\ maskAlpha=\textcolor{keyword}{true}\ )\ \ \{\ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{classbackground_net_adf58aca64daa5f7b6267df690bc00c92}{Process}}((\textcolor{keywordtype}{void}*)input,\ (\textcolor{keywordtype}{void}*)output,\ width,\ height,\ imageFormatFromType<T>(),\ filter,\ maskAlpha);\ \}}
+\DoxyCodeLine{00133\ \ \ \ \ }
+\DoxyCodeLine{00143\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{classbackground_net_a4c90e4c05c2bfb87b4c87ad7c746609d}{Process}}(\ \textcolor{keywordtype}{void}*\ image,\ uint32\_t\ width,\ uint32\_t\ height,\ \doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{imageFormat}}\ format,}
+\DoxyCodeLine{00144\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{group__cuda_filter_ga25d4283643163befe99948d24cc53311}{cudaFilterMode}}\ filter=\doxymbox{\hyperlink{group__cuda_filter_gga25d4283643163befe99948d24cc53311ad8e5de74ec16a7e07145b7c18c885094}{FILTER\_LINEAR}},\ \textcolor{keywordtype}{bool}\ maskAlpha=\textcolor{keyword}{true}\ )\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{\ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{classbackground_net_adf58aca64daa5f7b6267df690bc00c92}{Process}}(image,\ image,\ width,\ height,\ format,\ filter,\ maskAlpha);\ \}}
+\DoxyCodeLine{00145\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00156\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{classbackground_net_a101e44eee311188da5db39a812295a75}{Process}}(\ \textcolor{keywordtype}{void}*\ input,\ \textcolor{keywordtype}{void}*\ output,\ uint32\_t\ width,\ uint32\_t\ height,\ \doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{imageFormat}}\ format,}
+\DoxyCodeLine{00157\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{group__cuda_filter_ga25d4283643163befe99948d24cc53311}{cudaFilterMode}}\ filter=\doxymbox{\hyperlink{group__cuda_filter_gga25d4283643163befe99948d24cc53311ad8e5de74ec16a7e07145b7c18c885094}{FILTER\_LINEAR}},\ \textcolor{keywordtype}{bool}\ maskAlpha=\textcolor{keyword}{true}\ );}
+\DoxyCodeLine{00158\ }
+\DoxyCodeLine{00159\ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00160\ \ \ \ \ backgroundNet();}
+\DoxyCodeLine{00161\ \ \ \ \ }
+\DoxyCodeLine{00162\ \ \ \ \ \textcolor{keywordtype}{bool}\ init(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ model\_path,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ input,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ output,\ uint32\_t\ maxBatchSize,\ \doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precisionType}}\ precision,\ \doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{deviceType}}\ device,\ \textcolor{keywordtype}{bool}\ allowGPUFallback\ );}
+\DoxyCodeLine{00163\ }
+\DoxyCodeLine{00164\ \};}
+\DoxyCodeLine{00165\ }
+\DoxyCodeLine{00166\ }
+\DoxyCodeLine{00167\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

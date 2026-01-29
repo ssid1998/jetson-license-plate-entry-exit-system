@@ -1,0 +1,369 @@
+\doxysection{Web\+RTCServer Class Reference}
+\hypertarget{class_web_r_t_c_server}{}\label{class_web_r_t_c_server}\index{WebRTCServer@{WebRTCServer}}
+
+
+{\ttfamily \+\#include $<$Web\+RTCServer.\+h$>$}
+
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \doxymbox{\hyperlink{struct_web_r_t_c_server_1_1_http_route}{Http\+Route}}
+\item 
+struct \doxymbox{\hyperlink{struct_web_r_t_c_server_1_1_websocket_route}{Websocket\+Route}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+typedef void(\texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_web_r_t_c_server_a87c958251b5146e420439d6cd0ed2867}{Websocket\+Listener}}) (\doxymbox{\hyperlink{struct_web_r_t_c_peer}{Web\+RTCPeer}} \texorpdfstring{$\ast$}{*}peer, const char \texorpdfstring{$\ast$}{*}message, size\+\_\+t message\+\_\+size, void \texorpdfstring{$\ast$}{*}user\+\_\+data)
+\item 
+typedef Soup\+Server\+Callback \doxymbox{\hyperlink{class_web_r_t_c_server_a0a9229009aca73f62c363f879255bb38}{Http\+Listener}}
+\item 
+typedef void(\texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_web_r_t_c_server_a87c958251b5146e420439d6cd0ed2867}{Websocket\+Listener}}) (\doxymbox{\hyperlink{struct_web_r_t_c_peer}{Web\+RTCPeer}} \texorpdfstring{$\ast$}{*}peer, const char \texorpdfstring{$\ast$}{*}message, size\+\_\+t message\+\_\+size, void \texorpdfstring{$\ast$}{*}user\+\_\+data)
+\item 
+typedef Soup\+Server\+Callback \doxymbox{\hyperlink{class_web_r_t_c_server_a0a9229009aca73f62c363f879255bb38}{Http\+Listener}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \doxymbox{\hyperlink{class_web_r_t_c_server_aeb70147a334c7f4aa526523707d316b9}{Release}} ()
+\item 
+void \doxymbox{\hyperlink{class_web_r_t_c_server_a5d584e6f650648aad396f1873984c621}{Add\+Route}} (const char \texorpdfstring{$\ast$}{*}path, \doxymbox{\hyperlink{class_web_r_t_c_server_a0a9229009aca73f62c363f879255bb38}{Http\+Listener}} callback, void \texorpdfstring{$\ast$}{*}user\+\_\+data=NULL, uint32\+\_\+t flags=0)
+\item 
+void \doxymbox{\hyperlink{class_web_r_t_c_server_ab690301a156ea291d47c93a37d84ecb9}{Add\+Route}} (const char \texorpdfstring{$\ast$}{*}path, \doxymbox{\hyperlink{class_web_r_t_c_server_a87c958251b5146e420439d6cd0ed2867}{Websocket\+Listener}} callback, void \texorpdfstring{$\ast$}{*}user\+\_\+data=NULL, uint32\+\_\+t flags=0)
+\item 
+const char \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_web_r_t_c_server_aed841df92cab954ea5994076e2148ceb}{Get\+STUNServer}} () const
+\item 
+bool \doxymbox{\hyperlink{class_web_r_t_c_server_adbcd3355338382847a31e5e49f5caf97}{Has\+HTTPS}} () const
+\item 
+bool \doxymbox{\hyperlink{class_web_r_t_c_server_a32e99e59a4d0c536e7edcfbbd2dcdaee}{Is\+Threaded}} () const
+\item 
+bool \doxymbox{\hyperlink{class_web_r_t_c_server_ac49ab53764ab184efe91a8c7040be7dc}{Process\+Requests}} (bool blocking=false)
+\item 
+void \doxymbox{\hyperlink{class_web_r_t_c_server_aeb70147a334c7f4aa526523707d316b9}{Release}} ()
+\item 
+void \doxymbox{\hyperlink{class_web_r_t_c_server_a5d584e6f650648aad396f1873984c621}{Add\+Route}} (const char \texorpdfstring{$\ast$}{*}path, \doxymbox{\hyperlink{class_web_r_t_c_server_a0a9229009aca73f62c363f879255bb38}{Http\+Listener}} callback, void \texorpdfstring{$\ast$}{*}user\+\_\+data=NULL, uint32\+\_\+t flags=0)
+\item 
+void \doxymbox{\hyperlink{class_web_r_t_c_server_ab690301a156ea291d47c93a37d84ecb9}{Add\+Route}} (const char \texorpdfstring{$\ast$}{*}path, \doxymbox{\hyperlink{class_web_r_t_c_server_a87c958251b5146e420439d6cd0ed2867}{Websocket\+Listener}} callback, void \texorpdfstring{$\ast$}{*}user\+\_\+data=NULL, uint32\+\_\+t flags=0)
+\item 
+const char \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_web_r_t_c_server_aed841df92cab954ea5994076e2148ceb}{Get\+STUNServer}} () const
+\item 
+bool \doxymbox{\hyperlink{class_web_r_t_c_server_adbcd3355338382847a31e5e49f5caf97}{Has\+HTTPS}} () const
+\item 
+bool \doxymbox{\hyperlink{class_web_r_t_c_server_a32e99e59a4d0c536e7edcfbbd2dcdaee}{Is\+Threaded}} () const
+\item 
+bool \doxymbox{\hyperlink{class_web_r_t_c_server_ac49ab53764ab184efe91a8c7040be7dc}{Process\+Requests}} (bool blocking=false)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \doxymbox{\hyperlink{class_web_r_t_c_server}{Web\+RTCServer}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_web_r_t_c_server_a76f1f209740e7a27e130c787d94903d8}{Create}} (uint16\+\_\+t port=\doxymbox{\hyperlink{group__network_ga0168a2334e9e1e13b83a665c8cce0742}{WEBRTC\+\_\+\+DEFAULT\+\_\+\+PORT}}, const char \texorpdfstring{$\ast$}{*}stun\+\_\+server=\doxymbox{\hyperlink{group__network_ga99b10c89b7c09a0c753f241f9e74c894}{WEBRTC\+\_\+\+DEFAULT\+\_\+\+STUN\+\_\+\+SERVER}}, const char \texorpdfstring{$\ast$}{*}ssl\+\_\+cert=NULL, const char \texorpdfstring{$\ast$}{*}ssl\+\_\+key=NULL, bool threaded=true)
+\item 
+static \doxymbox{\hyperlink{class_web_r_t_c_server}{Web\+RTCServer}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_web_r_t_c_server_a5668c92d08ea8bb65dd6c3dc6a9ab1d6}{Create}} (uint16\+\_\+t port=\doxymbox{\hyperlink{group__network_ga0168a2334e9e1e13b83a665c8cce0742}{WEBRTC\+\_\+\+DEFAULT\+\_\+\+PORT}}, const char \texorpdfstring{$\ast$}{*}stun\+\_\+server=\doxymbox{\hyperlink{group__network_ga99b10c89b7c09a0c753f241f9e74c894}{WEBRTC\+\_\+\+DEFAULT\+\_\+\+STUN\+\_\+\+SERVER}}, const char \texorpdfstring{$\ast$}{*}ssl\+\_\+cert=NULL, const char \texorpdfstring{$\ast$}{*}ssl\+\_\+key=NULL, bool threaded=true)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_web_r_t_c_server_a91c2b446fe98224e7bd66693ccd19e21}\label{class_web_r_t_c_server_a91c2b446fe98224e7bd66693ccd19e21} 
+{\bfseries Web\+RTCServer} (uint16\+\_\+t port, const char \texorpdfstring{$\ast$}{*}stun\+\_\+server, const char \texorpdfstring{$\ast$}{*}ssl\+\_\+cert\+\_\+file, const char \texorpdfstring{$\ast$}{*}ssl\+\_\+key\+\_\+file, bool threaded)
+\item 
+\Hypertarget{class_web_r_t_c_server_aed89521ec525e2a3c24757d2444f388d}\label{class_web_r_t_c_server_aed89521ec525e2a3c24757d2444f388d} 
+bool {\bfseries init} ()
+\item 
+\Hypertarget{class_web_r_t_c_server_a014bae6a6646e8c5b3b9e45de1f71329}\label{class_web_r_t_c_server_a014bae6a6646e8c5b3b9e45de1f71329} 
+\doxymbox{\hyperlink{struct_web_r_t_c_server_1_1_http_route}{Http\+Route}} \texorpdfstring{$\ast$}{*} {\bfseries find\+Http\+Route} (const char \texorpdfstring{$\ast$}{*}path) const
+\item 
+\Hypertarget{class_web_r_t_c_server_a593b37dc00d7653477554389b39f5464}\label{class_web_r_t_c_server_a593b37dc00d7653477554389b39f5464} 
+\doxymbox{\hyperlink{struct_web_r_t_c_server_1_1_websocket_route}{Websocket\+Route}} \texorpdfstring{$\ast$}{*} {\bfseries find\+Websocket\+Route} (const char \texorpdfstring{$\ast$}{*}path) const
+\item 
+\Hypertarget{class_web_r_t_c_server_a2221f9f1ba155c17f6d1f4e99057f7ba}\label{class_web_r_t_c_server_a2221f9f1ba155c17f6d1f4e99057f7ba} 
+void {\bfseries free\+Route} (\doxymbox{\hyperlink{struct_web_r_t_c_server_1_1_http_route}{Http\+Route}} \texorpdfstring{$\ast$}{*}route)
+\item 
+\Hypertarget{class_web_r_t_c_server_a5e9b56063cac461e703148315bbf854e}\label{class_web_r_t_c_server_a5e9b56063cac461e703148315bbf854e} 
+void {\bfseries free\+Route} (\doxymbox{\hyperlink{struct_web_r_t_c_server_1_1_websocket_route}{Websocket\+Route}} \texorpdfstring{$\ast$}{*}route)
+\item 
+\Hypertarget{class_web_r_t_c_server_ac7e9dc3e13c0d61c2b85819ef88fc5b7}\label{class_web_r_t_c_server_ac7e9dc3e13c0d61c2b85819ef88fc5b7} 
+std::\+string {\bfseries print\+Route\+Info} (\doxymbox{\hyperlink{struct_web_r_t_c_server_1_1_websocket_route}{Websocket\+Route}} \texorpdfstring{$\ast$}{*}route) const
+\item 
+\Hypertarget{class_web_r_t_c_server_a91c2b446fe98224e7bd66693ccd19e21}\label{class_web_r_t_c_server_a91c2b446fe98224e7bd66693ccd19e21} 
+{\bfseries Web\+RTCServer} (uint16\+\_\+t port, const char \texorpdfstring{$\ast$}{*}stun\+\_\+server, const char \texorpdfstring{$\ast$}{*}ssl\+\_\+cert\+\_\+file, const char \texorpdfstring{$\ast$}{*}ssl\+\_\+key\+\_\+file, bool threaded)
+\item 
+\Hypertarget{class_web_r_t_c_server_aed89521ec525e2a3c24757d2444f388d}\label{class_web_r_t_c_server_aed89521ec525e2a3c24757d2444f388d} 
+bool {\bfseries init} ()
+\item 
+\Hypertarget{class_web_r_t_c_server_a056385898d02e14659b2b03027b9c5cf}\label{class_web_r_t_c_server_a056385898d02e14659b2b03027b9c5cf} 
+\doxymbox{\hyperlink{struct_web_r_t_c_server_1_1_http_route}{Http\+Route}} \texorpdfstring{$\ast$}{*} {\bfseries find\+Http\+Route} (const char \texorpdfstring{$\ast$}{*}path) const
+\item 
+\Hypertarget{class_web_r_t_c_server_aa13b9ddf4d6f0a5fe0813a4423b8259b}\label{class_web_r_t_c_server_aa13b9ddf4d6f0a5fe0813a4423b8259b} 
+\doxymbox{\hyperlink{struct_web_r_t_c_server_1_1_websocket_route}{Websocket\+Route}} \texorpdfstring{$\ast$}{*} {\bfseries find\+Websocket\+Route} (const char \texorpdfstring{$\ast$}{*}path) const
+\item 
+\Hypertarget{class_web_r_t_c_server_a2221f9f1ba155c17f6d1f4e99057f7ba}\label{class_web_r_t_c_server_a2221f9f1ba155c17f6d1f4e99057f7ba} 
+void {\bfseries free\+Route} (\doxymbox{\hyperlink{struct_web_r_t_c_server_1_1_http_route}{Http\+Route}} \texorpdfstring{$\ast$}{*}route)
+\item 
+\Hypertarget{class_web_r_t_c_server_a5e9b56063cac461e703148315bbf854e}\label{class_web_r_t_c_server_a5e9b56063cac461e703148315bbf854e} 
+void {\bfseries free\+Route} (\doxymbox{\hyperlink{struct_web_r_t_c_server_1_1_websocket_route}{Websocket\+Route}} \texorpdfstring{$\ast$}{*}route)
+\item 
+\Hypertarget{class_web_r_t_c_server_ac7e9dc3e13c0d61c2b85819ef88fc5b7}\label{class_web_r_t_c_server_ac7e9dc3e13c0d61c2b85819ef88fc5b7} 
+std::\+string {\bfseries print\+Route\+Info} (\doxymbox{\hyperlink{struct_web_r_t_c_server_1_1_websocket_route}{Websocket\+Route}} \texorpdfstring{$\ast$}{*}route) const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_web_r_t_c_server_aea37bd451a5b3e282f484e1e918dcff4}\label{class_web_r_t_c_server_aea37bd451a5b3e282f484e1e918dcff4} 
+static void \texorpdfstring{$\ast$}{*} {\bfseries run\+Thread} (void \texorpdfstring{$\ast$}{*}user\+\_\+data)
+\item 
+\Hypertarget{class_web_r_t_c_server_ac2520b6b4a41e5668aaf9a24e472c0dc}\label{class_web_r_t_c_server_ac2520b6b4a41e5668aaf9a24e472c0dc} 
+static void {\bfseries on\+Http\+Request} (Soup\+Server \texorpdfstring{$\ast$}{*}soup\+\_\+server, Soup\+Message \texorpdfstring{$\ast$}{*}message, const char \texorpdfstring{$\ast$}{*}path, GHash\+Table \texorpdfstring{$\ast$}{*}query, Soup\+Client\+Context \texorpdfstring{$\ast$}{*}client\+\_\+context, void \texorpdfstring{$\ast$}{*}user\+\_\+data)
+\item 
+\Hypertarget{class_web_r_t_c_server_ab3c326587345da1acd685b6fe3fbd660}\label{class_web_r_t_c_server_ab3c326587345da1acd685b6fe3fbd660} 
+static void {\bfseries on\+Http\+Default} (Soup\+Server \texorpdfstring{$\ast$}{*}soup\+\_\+server, Soup\+Message \texorpdfstring{$\ast$}{*}message, const char \texorpdfstring{$\ast$}{*}path, GHash\+Table \texorpdfstring{$\ast$}{*}query, Soup\+Client\+Context \texorpdfstring{$\ast$}{*}client\+\_\+context, void \texorpdfstring{$\ast$}{*}user\+\_\+data)
+\item 
+\Hypertarget{class_web_r_t_c_server_a124a2232d275f7ea120937f15c846f30}\label{class_web_r_t_c_server_a124a2232d275f7ea120937f15c846f30} 
+static void {\bfseries on\+Websocket\+Opened} (Soup\+Server \texorpdfstring{$\ast$}{*}server, Soup\+Websocket\+Connection \texorpdfstring{$\ast$}{*}connection, const char \texorpdfstring{$\ast$}{*}path, Soup\+Client\+Context \texorpdfstring{$\ast$}{*}client\+\_\+context, void \texorpdfstring{$\ast$}{*}user\+\_\+data)
+\item 
+\Hypertarget{class_web_r_t_c_server_a49c49b095c4edfcff9d346fd4c2d5f31}\label{class_web_r_t_c_server_a49c49b095c4edfcff9d346fd4c2d5f31} 
+static void {\bfseries on\+Websocket\+Message} (Soup\+Websocket\+Connection \texorpdfstring{$\ast$}{*}connection, Soup\+Websocket\+Data\+Type data\+\_\+type, GBytes \texorpdfstring{$\ast$}{*}message, void \texorpdfstring{$\ast$}{*}user\+\_\+data)
+\item 
+\Hypertarget{class_web_r_t_c_server_aae934539c056c650061cacbb7ffcaa49}\label{class_web_r_t_c_server_aae934539c056c650061cacbb7ffcaa49} 
+static void {\bfseries on\+Websocket\+Closed} (Soup\+Websocket\+Connection \texorpdfstring{$\ast$}{*}connection, void \texorpdfstring{$\ast$}{*}user\+\_\+data)
+\item 
+\Hypertarget{class_web_r_t_c_server_ac0e8d4f8edc1db88a85404fe98384d98}\label{class_web_r_t_c_server_ac0e8d4f8edc1db88a85404fe98384d98} 
+static void \texorpdfstring{$\ast$}{*} {\bfseries run\+Thread} (void \texorpdfstring{$\ast$}{*}user\+\_\+data)
+\item 
+\Hypertarget{class_web_r_t_c_server_ad44d43978599476a12539802ff434d21}\label{class_web_r_t_c_server_ad44d43978599476a12539802ff434d21} 
+static void {\bfseries on\+Http\+Request} (Soup\+Server \texorpdfstring{$\ast$}{*}soup\+\_\+server, Soup\+Message \texorpdfstring{$\ast$}{*}message, const char \texorpdfstring{$\ast$}{*}path, GHash\+Table \texorpdfstring{$\ast$}{*}query, Soup\+Client\+Context \texorpdfstring{$\ast$}{*}client\+\_\+context, void \texorpdfstring{$\ast$}{*}user\+\_\+data)
+\item 
+\Hypertarget{class_web_r_t_c_server_a495cc40be78a8cda04c03e30242ccbfa}\label{class_web_r_t_c_server_a495cc40be78a8cda04c03e30242ccbfa} 
+static void {\bfseries on\+Http\+Default} (Soup\+Server \texorpdfstring{$\ast$}{*}soup\+\_\+server, Soup\+Message \texorpdfstring{$\ast$}{*}message, const char \texorpdfstring{$\ast$}{*}path, GHash\+Table \texorpdfstring{$\ast$}{*}query, Soup\+Client\+Context \texorpdfstring{$\ast$}{*}client\+\_\+context, void \texorpdfstring{$\ast$}{*}user\+\_\+data)
+\item 
+\Hypertarget{class_web_r_t_c_server_a7d50ecf2c197872b45d86adc5aeba0da}\label{class_web_r_t_c_server_a7d50ecf2c197872b45d86adc5aeba0da} 
+static void {\bfseries on\+Websocket\+Opened} (Soup\+Server \texorpdfstring{$\ast$}{*}server, Soup\+Websocket\+Connection \texorpdfstring{$\ast$}{*}connection, const char \texorpdfstring{$\ast$}{*}path, Soup\+Client\+Context \texorpdfstring{$\ast$}{*}client\+\_\+context, void \texorpdfstring{$\ast$}{*}user\+\_\+data)
+\item 
+\Hypertarget{class_web_r_t_c_server_a0b94ce7618d8d4c7a8d4e66f674f958e}\label{class_web_r_t_c_server_a0b94ce7618d8d4c7a8d4e66f674f958e} 
+static void {\bfseries on\+Websocket\+Message} (Soup\+Websocket\+Connection \texorpdfstring{$\ast$}{*}connection, Soup\+Websocket\+Data\+Type data\+\_\+type, GBytes \texorpdfstring{$\ast$}{*}message, void \texorpdfstring{$\ast$}{*}user\+\_\+data)
+\item 
+\Hypertarget{class_web_r_t_c_server_aa4b1d80e74f1bcdcd5e5366ca36e50a2}\label{class_web_r_t_c_server_aa4b1d80e74f1bcdcd5e5366ca36e50a2} 
+static void {\bfseries on\+Websocket\+Closed} (Soup\+Websocket\+Connection \texorpdfstring{$\ast$}{*}connection, void \texorpdfstring{$\ast$}{*}user\+\_\+data)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_web_r_t_c_server_ae16cb674a3ce4a7b9858e403653dc8e9}\label{class_web_r_t_c_server_ae16cb674a3ce4a7b9858e403653dc8e9} 
+std::\+vector$<$ \doxymbox{\hyperlink{struct_web_r_t_c_server_1_1_http_route}{Http\+Route}} \texorpdfstring{$\ast$}{*} $>$ {\bfseries m\+Http\+Routes}
+\item 
+\Hypertarget{class_web_r_t_c_server_aee6d2409d0dda08b26bc6e1fd4a23480}\label{class_web_r_t_c_server_aee6d2409d0dda08b26bc6e1fd4a23480} 
+std::\+vector$<$ \doxymbox{\hyperlink{struct_web_r_t_c_server_1_1_websocket_route}{Websocket\+Route}} \texorpdfstring{$\ast$}{*} $>$ {\bfseries m\+Websocket\+Routes}
+\item 
+\Hypertarget{class_web_r_t_c_server_abd3cac0f9c2d6d78b6ddb4bab5df49dc}\label{class_web_r_t_c_server_abd3cac0f9c2d6d78b6ddb4bab5df49dc} 
+Soup\+Server \texorpdfstring{$\ast$}{*} {\bfseries m\+Soup\+Server}
+\item 
+\Hypertarget{class_web_r_t_c_server_ae4ec44a6d8bdcd422b38082689511c66}\label{class_web_r_t_c_server_ae4ec44a6d8bdcd422b38082689511c66} 
+std::\+string {\bfseries m\+Stun\+Server}
+\item 
+\Hypertarget{class_web_r_t_c_server_ac00aed03b4a8aa98ae5b3f5088a80f9a}\label{class_web_r_t_c_server_ac00aed03b4a8aa98ae5b3f5088a80f9a} 
+std::\+string {\bfseries m\+SSLCert\+File}
+\item 
+\Hypertarget{class_web_r_t_c_server_a333a035d9db6dea40816f8685fda5b24}\label{class_web_r_t_c_server_a333a035d9db6dea40816f8685fda5b24} 
+std::\+string {\bfseries m\+SSLKey\+File}
+\item 
+\Hypertarget{class_web_r_t_c_server_acf3e2efff7428476b75b74f5199bc06b}\label{class_web_r_t_c_server_acf3e2efff7428476b75b74f5199bc06b} 
+bool {\bfseries m\+Has\+HTTPS}
+\item 
+\Hypertarget{class_web_r_t_c_server_a4c5e2f97d7cbd9cf4083aeff416dc5cc}\label{class_web_r_t_c_server_a4c5e2f97d7cbd9cf4083aeff416dc5cc} 
+uint16\+\_\+t {\bfseries m\+Port}
+\item 
+\Hypertarget{class_web_r_t_c_server_a1eb643c9200b6229942cc5e7bf8c8f56}\label{class_web_r_t_c_server_a1eb643c9200b6229942cc5e7bf8c8f56} 
+uint32\+\_\+t {\bfseries m\+Ref\+Count}
+\item 
+\Hypertarget{class_web_r_t_c_server_a437e4568ee60de9a5e94dfe62763e2fc}\label{class_web_r_t_c_server_a437e4568ee60de9a5e94dfe62763e2fc} 
+uint32\+\_\+t {\bfseries m\+Peer\+Count}
+\item 
+\Hypertarget{class_web_r_t_c_server_a1c4e88928763701c2e9fab2727ece29e}\label{class_web_r_t_c_server_a1c4e88928763701c2e9fab2727ece29e} 
+\doxymbox{\hyperlink{class_thread}{Thread}} \texorpdfstring{$\ast$}{*} {\bfseries m\+Thread}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Web\+RTC signalling server for establishing and negotiating connections with peers for bi-\/directional media streaming. Users can bind routing functions that configure their pipelines dynamically to handle incoming/\+outgoing streams.
+
+It uses websockets to handle the communication with clients for SDP offers, ICE messages, ect. \begin{DoxySeeAlso}{See also}
+\href{https://doc-kurento.readthedocs.io/en/stable/_static/client-javadoc/org/kurento/client/WebRtcEndpoint.html}{\texttt{https:\+/\+/\+doc-\/kurento.\+readthedocs.\+io/\+en/\+stable/\+\+\_\+static/\+client-\/javadoc/\+org/\+kurento/\+client/\+\+Web\+Rtc\+Endpoint.\+html}}
+\end{DoxySeeAlso}
+By default it also serves simple HTML for viewing video streams in browsers, but for full hosting you\textquotesingle{}ll want to run this alongside an actual webserver.
+
+multi-\/stream ::\+ multi-\/client ::\+ full-\/duplex 
+
+\label{doc-typedef-members}
+\Hypertarget{class_web_r_t_c_server_doc-typedef-members}
+\doxysubsection{Member Typedef Documentation}
+\Hypertarget{class_web_r_t_c_server_a0a9229009aca73f62c363f879255bb38}\index{WebRTCServer@{WebRTCServer}!HttpListener@{HttpListener}}
+\index{HttpListener@{HttpListener}!WebRTCServer@{WebRTCServer}}
+\doxysubsubsection{\texorpdfstring{HttpListener}{HttpListener}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_web_r_t_c_server_a0a9229009aca73f62c363f879255bb38} 
+typedef Soup\+Server\+Callback \doxymbox{\hyperlink{class_web_r_t_c_server_a0a9229009aca73f62c363f879255bb38}{Web\+RTCServer::\+\+Http\+Listener}}}
+
+Function pointer to a callback for handling HTTP requests. \begin{DoxySeeAlso}{See also}
+\href{https://developer-old.gnome.org/libsoup/stable/SoupServer.html\#SoupServerCallback}{\texttt{https:\+/\+/\+developer-\/old.\+gnome.\+org/\+libsoup/\+stable/\+\+Soup\+Server.\+html\+\#\+Soup\+Server\+Callback}} 
+\end{DoxySeeAlso}
+\Hypertarget{class_web_r_t_c_server_a0a9229009aca73f62c363f879255bb38}\index{WebRTCServer@{WebRTCServer}!HttpListener@{HttpListener}}
+\index{HttpListener@{HttpListener}!WebRTCServer@{WebRTCServer}}
+\doxysubsubsection{\texorpdfstring{HttpListener}{HttpListener}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_web_r_t_c_server_a0a9229009aca73f62c363f879255bb38} 
+typedef Soup\+Server\+Callback \doxymbox{\hyperlink{class_web_r_t_c_server_a0a9229009aca73f62c363f879255bb38}{Web\+RTCServer::\+\+Http\+Listener}}}
+
+Function pointer to a callback for handling HTTP requests. \begin{DoxySeeAlso}{See also}
+\href{https://developer-old.gnome.org/libsoup/stable/SoupServer.html\#SoupServerCallback}{\texttt{https:\+/\+/\+developer-\/old.\+gnome.\+org/\+libsoup/\+stable/\+\+Soup\+Server.\+html\+\#\+Soup\+Server\+Callback}} 
+\end{DoxySeeAlso}
+\Hypertarget{class_web_r_t_c_server_a87c958251b5146e420439d6cd0ed2867}\index{WebRTCServer@{WebRTCServer}!WebsocketListener@{WebsocketListener}}
+\index{WebsocketListener@{WebsocketListener}!WebRTCServer@{WebRTCServer}}
+\doxysubsubsection{\texorpdfstring{WebsocketListener}{WebsocketListener}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_web_r_t_c_server_a87c958251b5146e420439d6cd0ed2867} 
+typedef void(\texorpdfstring{$\ast$}{*} Web\+RTCServer::\+\+Websocket\+Listener) (\doxymbox{\hyperlink{struct_web_r_t_c_peer}{Web\+RTCPeer}} \texorpdfstring{$\ast$}{*}peer, const char \texorpdfstring{$\ast$}{*}message, size\+\_\+t message\+\_\+size, void \texorpdfstring{$\ast$}{*}user\+\_\+data)}
+
+Function pointer to a callback for handling websocket requests. \begin{DoxySeeAlso}{See also}
+Add\+Connection\+Listener 
+\end{DoxySeeAlso}
+\Hypertarget{class_web_r_t_c_server_a87c958251b5146e420439d6cd0ed2867}\index{WebRTCServer@{WebRTCServer}!WebsocketListener@{WebsocketListener}}
+\index{WebsocketListener@{WebsocketListener}!WebRTCServer@{WebRTCServer}}
+\doxysubsubsection{\texorpdfstring{WebsocketListener}{WebsocketListener}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_web_r_t_c_server_a87c958251b5146e420439d6cd0ed2867} 
+typedef void(\texorpdfstring{$\ast$}{*} Web\+RTCServer::\+\+Websocket\+Listener) (\doxymbox{\hyperlink{struct_web_r_t_c_peer}{Web\+RTCPeer}} \texorpdfstring{$\ast$}{*}peer, const char \texorpdfstring{$\ast$}{*}message, size\+\_\+t message\+\_\+size, void \texorpdfstring{$\ast$}{*}user\+\_\+data)}
+
+Function pointer to a callback for handling websocket requests. \begin{DoxySeeAlso}{See also}
+Add\+Connection\+Listener 
+\end{DoxySeeAlso}
+
+
+\label{doc-func-members}
+\Hypertarget{class_web_r_t_c_server_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_web_r_t_c_server_a5d584e6f650648aad396f1873984c621}\index{WebRTCServer@{WebRTCServer}!AddRoute@{AddRoute}}
+\index{AddRoute@{AddRoute}!WebRTCServer@{WebRTCServer}}
+\doxysubsubsection{\texorpdfstring{AddRoute()}{AddRoute()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily \label{class_web_r_t_c_server_a5d584e6f650648aad396f1873984c621} 
+void Web\+RTCServer::\+\+Add\+Route (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{path}{, }\item[{\doxymbox{\hyperlink{class_web_r_t_c_server_a0a9229009aca73f62c363f879255bb38}{Web\+RTCServer::\+\+Http\+Listener}}}]{callback}{, }\item[{void \texorpdfstring{$\ast$}{*}}]{user\+\_\+data}{ = {\ttfamily NULL}, }\item[{uint32\+\_\+t}]{flags}{ = {\ttfamily 0}}\end{DoxyParamCaption})}
+
+Register a function to handle incoming http/\+www requests at the specified path. These are for serving webpages, and should be on different paths than the websockets. If the path is "{}/\+"{} the callback will handle all routes. If the route for this path already exists, it will replace the existing route. To remove a route, set the callback to NULL. \Hypertarget{class_web_r_t_c_server_a5d584e6f650648aad396f1873984c621}\index{WebRTCServer@{WebRTCServer}!AddRoute@{AddRoute}}
+\index{AddRoute@{AddRoute}!WebRTCServer@{WebRTCServer}}
+\doxysubsubsection{\texorpdfstring{AddRoute()}{AddRoute()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily \label{class_web_r_t_c_server_a5d584e6f650648aad396f1873984c621} 
+void Web\+RTCServer::\+\+Add\+Route (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{path}{, }\item[{\doxymbox{\hyperlink{class_web_r_t_c_server_a0a9229009aca73f62c363f879255bb38}{Http\+Listener}}}]{callback}{, }\item[{void \texorpdfstring{$\ast$}{*}}]{user\+\_\+data}{ = {\ttfamily NULL}, }\item[{uint32\+\_\+t}]{flags}{ = {\ttfamily 0}}\end{DoxyParamCaption})}
+
+Register a function to handle incoming http/\+www requests at the specified path. These are for serving webpages, and should be on different paths than the websockets. If the path is "{}/\+"{} the callback will handle all routes. If the route for this path already exists, it will replace the existing route. To remove a route, set the callback to NULL. \Hypertarget{class_web_r_t_c_server_ab690301a156ea291d47c93a37d84ecb9}\index{WebRTCServer@{WebRTCServer}!AddRoute@{AddRoute}}
+\index{AddRoute@{AddRoute}!WebRTCServer@{WebRTCServer}}
+\doxysubsubsection{\texorpdfstring{AddRoute()}{AddRoute()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily \label{class_web_r_t_c_server_ab690301a156ea291d47c93a37d84ecb9} 
+void Web\+RTCServer::\+\+Add\+Route (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{path}{, }\item[{\doxymbox{\hyperlink{class_web_r_t_c_server_a87c958251b5146e420439d6cd0ed2867}{Web\+RTCServer::\+\+Websocket\+Listener}}}]{callback}{, }\item[{void \texorpdfstring{$\ast$}{*}}]{user\+\_\+data}{ = {\ttfamily NULL}, }\item[{uint32\+\_\+t}]{flags}{ = {\ttfamily 0}}\end{DoxyParamCaption})}
+
+Register a function to handle incoming Websocket requests at the specified path.
+
+This path often represents a media stream that can be sent/\+recieved, or a function for dynamically configuring streams when new clients connect.
+
+If the path is "{}/\+"{} the callback will handle all routes. If the route for this path already exists, it will replace the existing route. To remove a route, set the callback to NULL.
+
+\doxylink{requirements_The}{The} optional flags are \doxylink{group__network_gabfc2d28deff979bf1183220b57b78bd4}{Web\+RTCFlags} OR\textquotesingle{}d together and are used for describing the stream capabilities for purposes of discovery.
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{group__network_gabfc2d28deff979bf1183220b57b78bd4}{Web\+RTCFlags} 
+\end{DoxySeeAlso}
+\Hypertarget{class_web_r_t_c_server_ab690301a156ea291d47c93a37d84ecb9}\index{WebRTCServer@{WebRTCServer}!AddRoute@{AddRoute}}
+\index{AddRoute@{AddRoute}!WebRTCServer@{WebRTCServer}}
+\doxysubsubsection{\texorpdfstring{AddRoute()}{AddRoute()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily \label{class_web_r_t_c_server_ab690301a156ea291d47c93a37d84ecb9} 
+void Web\+RTCServer::\+\+Add\+Route (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{path}{, }\item[{\doxymbox{\hyperlink{class_web_r_t_c_server_a87c958251b5146e420439d6cd0ed2867}{Websocket\+Listener}}}]{callback}{, }\item[{void \texorpdfstring{$\ast$}{*}}]{user\+\_\+data}{ = {\ttfamily NULL}, }\item[{uint32\+\_\+t}]{flags}{ = {\ttfamily 0}}\end{DoxyParamCaption})}
+
+Register a function to handle incoming Websocket requests at the specified path.
+
+This path often represents a media stream that can be sent/\+recieved, or a function for dynamically configuring streams when new clients connect.
+
+If the path is "{}/\+"{} the callback will handle all routes. If the route for this path already exists, it will replace the existing route. To remove a route, set the callback to NULL.
+
+\doxylink{requirements_The}{The} optional flags are \doxylink{group__network_gabfc2d28deff979bf1183220b57b78bd4}{Web\+RTCFlags} OR\textquotesingle{}d together and are used for describing the stream capabilities for purposes of discovery.
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{group__network_gabfc2d28deff979bf1183220b57b78bd4}{Web\+RTCFlags} 
+\end{DoxySeeAlso}
+\Hypertarget{class_web_r_t_c_server_a76f1f209740e7a27e130c787d94903d8}\index{WebRTCServer@{WebRTCServer}!Create@{Create}}
+\index{Create@{Create}!WebRTCServer@{WebRTCServer}}
+\doxysubsubsection{\texorpdfstring{Create()}{Create()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_web_r_t_c_server_a76f1f209740e7a27e130c787d94903d8} 
+\doxymbox{\hyperlink{class_web_r_t_c_server}{Web\+RTCServer}} \texorpdfstring{$\ast$}{*} Web\+RTCServer::\+\+Create (\begin{DoxyParamCaption}\item[{uint16\+\_\+t}]{port}{ = {\ttfamily \doxymbox{\hyperlink{group__network_ga0168a2334e9e1e13b83a665c8cce0742}{WEBRTC\+\_\+\+DEFAULT\+\_\+\+PORT}}}, }\item[{const char \texorpdfstring{$\ast$}{*}}]{stun\+\_\+server}{ = {\ttfamily \doxymbox{\hyperlink{group__network_ga99b10c89b7c09a0c753f241f9e74c894}{WEBRTC\+\_\+\+DEFAULT\+\_\+\+STUN\+\_\+\+SERVER}}}, }\item[{const char \texorpdfstring{$\ast$}{*}}]{ssl\+\_\+cert}{ = {\ttfamily NULL}, }\item[{const char \texorpdfstring{$\ast$}{*}}]{ssl\+\_\+key}{ = {\ttfamily NULL}, }\item[{bool}]{threaded}{ = {\ttfamily true}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Create a Web\+RTC server on this port. If this port is already in use, the existing server instance will be returned. \Hypertarget{class_web_r_t_c_server_a5668c92d08ea8bb65dd6c3dc6a9ab1d6}\index{WebRTCServer@{WebRTCServer}!Create@{Create}}
+\index{Create@{Create}!WebRTCServer@{WebRTCServer}}
+\doxysubsubsection{\texorpdfstring{Create()}{Create()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_web_r_t_c_server_a5668c92d08ea8bb65dd6c3dc6a9ab1d6} 
+\doxymbox{\hyperlink{class_web_r_t_c_server}{Web\+RTCServer}} \texorpdfstring{$\ast$}{*} Web\+RTCServer::\+\+Create (\begin{DoxyParamCaption}\item[{uint16\+\_\+t}]{port}{ = {\ttfamily \doxymbox{\hyperlink{group__network_ga0168a2334e9e1e13b83a665c8cce0742}{WEBRTC\+\_\+\+DEFAULT\+\_\+\+PORT}}}, }\item[{const char \texorpdfstring{$\ast$}{*}}]{stun\+\_\+server}{ = {\ttfamily \doxymbox{\hyperlink{group__network_ga99b10c89b7c09a0c753f241f9e74c894}{WEBRTC\+\_\+\+DEFAULT\+\_\+\+STUN\+\_\+\+SERVER}}}, }\item[{const char \texorpdfstring{$\ast$}{*}}]{ssl\+\_\+cert}{ = {\ttfamily NULL}, }\item[{const char \texorpdfstring{$\ast$}{*}}]{ssl\+\_\+key}{ = {\ttfamily NULL}, }\item[{bool}]{threaded}{ = {\ttfamily true}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Create a Web\+RTC server on this port. If this port is already in use, the existing server instance will be returned. \Hypertarget{class_web_r_t_c_server_aed841df92cab954ea5994076e2148ceb}\index{WebRTCServer@{WebRTCServer}!GetSTUNServer@{GetSTUNServer}}
+\index{GetSTUNServer@{GetSTUNServer}!WebRTCServer@{WebRTCServer}}
+\doxysubsubsection{\texorpdfstring{GetSTUNServer()}{GetSTUNServer()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_web_r_t_c_server_aed841df92cab954ea5994076e2148ceb} 
+const char \texorpdfstring{$\ast$}{*} Web\+RTCServer::\+\+Get\+STUNServer (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Get the STUN server being used. STUN servers are used during ICE/\+\+NAT and allow a local device to determine its public IP address. \begin{DoxySeeAlso}{See also}
+\doxylink{group__network_ga99b10c89b7c09a0c753f241f9e74c894}{WEBRTC\+\_\+\+DEFAULT\+\_\+\+STUN\+\_\+\+SERVER} 
+\end{DoxySeeAlso}
+\Hypertarget{class_web_r_t_c_server_aed841df92cab954ea5994076e2148ceb}\index{WebRTCServer@{WebRTCServer}!GetSTUNServer@{GetSTUNServer}}
+\index{GetSTUNServer@{GetSTUNServer}!WebRTCServer@{WebRTCServer}}
+\doxysubsubsection{\texorpdfstring{GetSTUNServer()}{GetSTUNServer()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_web_r_t_c_server_aed841df92cab954ea5994076e2148ceb} 
+const char \texorpdfstring{$\ast$}{*} Web\+RTCServer::\+\+Get\+STUNServer (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Get the STUN server being used. STUN servers are used during ICE/\+\+NAT and allow a local device to determine its public IP address. \begin{DoxySeeAlso}{See also}
+\doxylink{group__network_ga99b10c89b7c09a0c753f241f9e74c894}{WEBRTC\+\_\+\+DEFAULT\+\_\+\+STUN\+\_\+\+SERVER} 
+\end{DoxySeeAlso}
+\Hypertarget{class_web_r_t_c_server_adbcd3355338382847a31e5e49f5caf97}\index{WebRTCServer@{WebRTCServer}!HasHTTPS@{HasHTTPS}}
+\index{HasHTTPS@{HasHTTPS}!WebRTCServer@{WebRTCServer}}
+\doxysubsubsection{\texorpdfstring{HasHTTPS()}{HasHTTPS()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_web_r_t_c_server_adbcd3355338382847a31e5e49f5caf97} 
+bool Web\+RTCServer::\+\+Has\+HTTPS (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Return true if the server is using HTTPS. For HTTPS to be enabled, SSL cert/\+key files must have been provided to \doxylink{class_web_r_t_c_server_a76f1f209740e7a27e130c787d94903d8}{Web\+RTCServer::\+\+Create()}. \Hypertarget{class_web_r_t_c_server_adbcd3355338382847a31e5e49f5caf97}\index{WebRTCServer@{WebRTCServer}!HasHTTPS@{HasHTTPS}}
+\index{HasHTTPS@{HasHTTPS}!WebRTCServer@{WebRTCServer}}
+\doxysubsubsection{\texorpdfstring{HasHTTPS()}{HasHTTPS()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_web_r_t_c_server_adbcd3355338382847a31e5e49f5caf97} 
+bool Web\+RTCServer::\+\+Has\+HTTPS (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Return true if the server is using HTTPS. For HTTPS to be enabled, SSL cert/\+key files must have been provided to \doxylink{class_web_r_t_c_server_a76f1f209740e7a27e130c787d94903d8}{Web\+RTCServer::\+\+Create()}. \Hypertarget{class_web_r_t_c_server_a32e99e59a4d0c536e7edcfbbd2dcdaee}\index{WebRTCServer@{WebRTCServer}!IsThreaded@{IsThreaded}}
+\index{IsThreaded@{IsThreaded}!WebRTCServer@{WebRTCServer}}
+\doxysubsubsection{\texorpdfstring{IsThreaded()}{IsThreaded()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_web_r_t_c_server_a32e99e59a4d0c536e7edcfbbd2dcdaee} 
+bool Web\+RTCServer::\+\+Is\+Threaded (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Return true if the server is running in it\textquotesingle{}s own thread. Otherwise, \doxylink{class_web_r_t_c_server_ac49ab53764ab184efe91a8c7040be7dc}{Process\+Requests()} must be called periodically. \Hypertarget{class_web_r_t_c_server_a32e99e59a4d0c536e7edcfbbd2dcdaee}\index{WebRTCServer@{WebRTCServer}!IsThreaded@{IsThreaded}}
+\index{IsThreaded@{IsThreaded}!WebRTCServer@{WebRTCServer}}
+\doxysubsubsection{\texorpdfstring{IsThreaded()}{IsThreaded()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_web_r_t_c_server_a32e99e59a4d0c536e7edcfbbd2dcdaee} 
+bool Web\+RTCServer::\+\+Is\+Threaded (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Return true if the server is running in it\textquotesingle{}s own thread. Otherwise, \doxylink{class_web_r_t_c_server_ac49ab53764ab184efe91a8c7040be7dc}{Process\+Requests()} must be called periodically. \Hypertarget{class_web_r_t_c_server_ac49ab53764ab184efe91a8c7040be7dc}\index{WebRTCServer@{WebRTCServer}!ProcessRequests@{ProcessRequests}}
+\index{ProcessRequests@{ProcessRequests}!WebRTCServer@{WebRTCServer}}
+\doxysubsubsection{\texorpdfstring{ProcessRequests()}{ProcessRequests()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_web_r_t_c_server_ac49ab53764ab184efe91a8c7040be7dc} 
+bool Web\+RTCServer::\+\+Process\+Requests (\begin{DoxyParamCaption}\item[{bool}]{blocking}{ = {\ttfamily false}}\end{DoxyParamCaption})}
+
+\doxylink{class_process}{Process} incoming requests on the server. If set to blocking, the function can wait indefinitely for requests. This should only be called externally if the server was created with threaded=false \Hypertarget{class_web_r_t_c_server_ac49ab53764ab184efe91a8c7040be7dc}\index{WebRTCServer@{WebRTCServer}!ProcessRequests@{ProcessRequests}}
+\index{ProcessRequests@{ProcessRequests}!WebRTCServer@{WebRTCServer}}
+\doxysubsubsection{\texorpdfstring{ProcessRequests()}{ProcessRequests()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_web_r_t_c_server_ac49ab53764ab184efe91a8c7040be7dc} 
+bool Web\+RTCServer::\+\+Process\+Requests (\begin{DoxyParamCaption}\item[{bool}]{blocking}{ = {\ttfamily false}}\end{DoxyParamCaption})}
+
+\doxylink{class_process}{Process} incoming requests on the server. If set to blocking, the function can wait indefinitely for requests. This should only be called externally if the server was created with threaded=false \Hypertarget{class_web_r_t_c_server_aeb70147a334c7f4aa526523707d316b9}\index{WebRTCServer@{WebRTCServer}!Release@{Release}}
+\index{Release@{Release}!WebRTCServer@{WebRTCServer}}
+\doxysubsubsection{\texorpdfstring{Release()}{Release()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_web_r_t_c_server_aeb70147a334c7f4aa526523707d316b9} 
+void Web\+RTCServer::\+\+Release (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Release a reference to the server instance. Server will be shut down when the reference count reaches zero. \Hypertarget{class_web_r_t_c_server_aeb70147a334c7f4aa526523707d316b9}\index{WebRTCServer@{WebRTCServer}!Release@{Release}}
+\index{Release@{Release}!WebRTCServer@{WebRTCServer}}
+\doxysubsubsection{\texorpdfstring{Release()}{Release()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_web_r_t_c_server_aeb70147a334c7f4aa526523707d316b9} 
+void Web\+RTCServer::\+\+Release (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Release a reference to the server instance. Server will be shut down when the reference count reaches zero. 
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+jetson-\/inference/\+build/\+aarch64/\+include/\+jetson-\/utils/\+Web\+RTCServer.\+h\item 
+jetson-\/inference/\+utils/\+network/\+Web\+RTCServer.\+h\item 
+jetson-\/inference/\+utils/\+network/\+Web\+RTCServer.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,123 @@
+\doxysection{action\+Net.\+h}
+\hypertarget{action_net_8h_source}{}\label{action_net_8h_source}\index{jetson-\/inference/build/aarch64/include/jetson-\/inference/actionNet.h@{jetson-\/inference/build/aarch64/include/jetson-\/inference/actionNet.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ *\ Copyright\ (c)\ 2022,\ NVIDIA\ CORPORATION.\ All\ rights\ reserved.}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ *\ Permission\ is\ hereby\ granted,\ free\ of\ charge,\ to\ any\ person\ obtaining\ a}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ *\ copy\ of\ this\ software\ and\ associated\ documentation\ files\ (the\ "{}Software"{}),}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ *\ to\ deal\ in\ the\ Software\ without\ restriction,\ including\ without\ limitation}}
+\DoxyCodeLine{00007\ \textcolor{comment}{\ *\ the\ rights\ to\ use,\ copy,\ modify,\ merge,\ publish,\ distribute,\ sublicense,}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ *\ and/or\ sell\ copies\ of\ the\ Software,\ and\ to\ permit\ persons\ to\ whom\ the}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ *\ Software\ is\ furnished\ to\ do\ so,\ subject\ to\ the\ following\ conditions:}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ *\ The\ above\ copyright\ notice\ and\ this\ permission\ notice\ shall\ be\ included\ in}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ *\ all\ copies\ or\ substantial\ portions\ of\ the\ Software.}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ *\ THE\ SOFTWARE\ IS\ PROVIDED\ "{}AS\ IS"{},\ WITHOUT\ WARRANTY\ OF\ ANY\ KIND,\ EXPRESS\ OR}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ *\ IMPLIED,\ INCLUDING\ BUT\ NOT\ LIMITED\ TO\ THE\ WARRANTIES\ OF\ MERCHANTABILITY,}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ *\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE\ AND\ NONINFRINGEMENT.\ \ IN\ NO\ EVENT\ SHALL}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ *\ THE\ AUTHORS\ OR\ COPYRIGHT\ HOLDERS\ BE\ LIABLE\ FOR\ ANY\ CLAIM,\ DAMAGES\ OR\ OTHER}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ *\ LIABILITY,\ WHETHER\ IN\ AN\ ACTION\ OF\ CONTRACT,\ TORT\ OR\ OTHERWISE,\ ARISING}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ *\ FROM,\ OUT\ OF\ OR\ IN\ CONNECTION\ WITH\ THE\ SOFTWARE\ OR\ THE\ USE\ OR\ OTHER}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ *\ DEALINGS\ IN\ THE\ SOFTWARE.}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00022\ \ }
+\DoxyCodeLine{00023\ \textcolor{preprocessor}{\#ifndef\ \_\_ACTION\_NET\_H\_\_}}
+\DoxyCodeLine{00024\ \textcolor{preprocessor}{\#define\ \_\_ACTION\_NET\_H\_\_}}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \textcolor{preprocessor}{\#include\ "{}tensorNet.h"{}}}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00034\ \textcolor{preprocessor}{\#define\ ACTIONNET\_DEFAULT\_INPUT\ \ \ "{}input"{}}}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00040\ \textcolor{preprocessor}{\#define\ ACTIONNET\_DEFAULT\_OUTPUT\ \ "{}output"{}}}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00046\ \textcolor{preprocessor}{\#define\ ACTIONNET\_MODEL\_TYPE\ "{}action"{}}}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00052\ \textcolor{preprocessor}{\#define\ ACTIONNET\_USAGE\_STRING\ \ "{}actionNet\ arguments:\ \(\backslash\)n"{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00053\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ "{}\ \ -\/-\/network=NETWORK\ \ \ \ pre-\/trained\ model\ to\ load,\ one\ of\ the\ following:\(\backslash\)n"{}\ \ \ \(\backslash\)}}
+\DoxyCodeLine{00054\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ "{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ resnet-\/18\ (default)\(\backslash\)n"{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00055\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ "{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ resnet-\/34\(\backslash\)n"{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00056\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ "{}\ \ -\/-\/model=MODEL\ \ \ \ \ \ \ \ path\ to\ custom\ model\ to\ load\ (.onnx)\(\backslash\)n"{}\ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00057\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ "{}\ \ -\/-\/labels=LABELS\ \ \ \ \ \ path\ to\ text\ file\ containing\ the\ labels\ for\ each\ class\(\backslash\)n"{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00058\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ "{}\ \ -\/-\/input-\/blob=INPUT\ \ \ name\ of\ the\ input\ layer\ (default\ is\ '"{}\ ACTIONNET\_DEFAULT\_INPUT\ "{}')\(\backslash\)n"{}\ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00059\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ "{}\ \ -\/-\/output-\/blob=OUTPUT\ name\ of\ the\ output\ layer\ (default\ is\ '"{}\ ACTIONNET\_DEFAULT\_OUTPUT\ "{}')\(\backslash\)n"{}\ \ \ \(\backslash\)}}
+\DoxyCodeLine{00060\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ "{}\ \ -\/-\/threshold=CONF\ \ \ \ \ minimum\ confidence\ threshold\ for\ classification\ (default\ is\ 0.01)\(\backslash\)n"{}\ \ \(\backslash\)}}
+\DoxyCodeLine{00061\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ "{}\ \ -\/-\/skip-\/frames=SKIP\ \ \ how\ many\ frames\ to\ skip\ between\ classifications\ (default\ is\ 1)\(\backslash\)n"{}\ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00062\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ "{}\ \ -\/-\/profile\ \ \ \ \ \ \ \ \ \ \ \ enable\ layer\ profiling\ in\ TensorRT\(\backslash\)n\(\backslash\)n"{}}}
+\DoxyCodeLine{00063\ }
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00069\ \textcolor{keyword}{class\ }actionNet\ :\ \textcolor{keyword}{public}\ \doxymbox{\hyperlink{classtensor_net_ab6e617d96e5542bef023ee9d4c96388a}{tensorNet}}}
+\DoxyCodeLine{00070\ \{}
+\DoxyCodeLine{00071\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00075\ \ \ \ \ \textcolor{keyword}{static}\ actionNet*\ \doxymbox{\hyperlink{classaction_net_a164f1df081eafcd1b81aa6ac80ddf978}{Create}}(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ network=\textcolor{stringliteral}{"{}resnet-\/18"{}},\ uint32\_t\ maxBatchSize=\doxymbox{\hyperlink{group__tensor_net_ga5a46a965749d6118e01307fd4d4865c9}{DEFAULT\_MAX\_BATCH\_SIZE}},\ }
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precisionType}}\ precision=\doxymbox{\hyperlink{group__tensor_net_ggaac6604fd52c6e5db82877390e0378623a1d325738f49e8e4c424ff671624e66f9}{TYPE\_FASTEST}},\ \doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{deviceType}}\ device=\doxymbox{\hyperlink{group__tensor_net_ggaa5d3f9981cdbd91516c1474006a80fe4adc7f3f88455afa81458863e5b3092e4b}{DEVICE\_GPU}},\ }
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ allowGPUFallback=\textcolor{keyword}{true}\ );}
+\DoxyCodeLine{00078\ \ \ \ \ }
+\DoxyCodeLine{00089\ \ \ \ \ \textcolor{keyword}{static}\ actionNet*\ \doxymbox{\hyperlink{classaction_net_ac91c0e59758717a367082320a2dbf919}{Create}}(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ model\_path,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ class\_labels,\ }
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ input=\doxymbox{\hyperlink{group__action_net_gaa414276f3672cd7092f4cb6ba2c60a4a}{ACTIONNET\_DEFAULT\_INPUT}},\ }
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ output=\doxymbox{\hyperlink{group__action_net_ga98ce3a39afbda984f4d161e907b72b68}{ACTIONNET\_DEFAULT\_OUTPUT}},\ }
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ maxBatchSize=\doxymbox{\hyperlink{group__tensor_net_ga5a46a965749d6118e01307fd4d4865c9}{DEFAULT\_MAX\_BATCH\_SIZE}},\ }
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precisionType}}\ precision=\doxymbox{\hyperlink{group__tensor_net_ggaac6604fd52c6e5db82877390e0378623a1d325738f49e8e4c424ff671624e66f9}{TYPE\_FASTEST}},}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{deviceType}}\ device=\doxymbox{\hyperlink{group__tensor_net_ggaa5d3f9981cdbd91516c1474006a80fe4adc7f3f88455afa81458863e5b3092e4b}{DEVICE\_GPU}},\ \textcolor{keywordtype}{bool}\ allowGPUFallback=\textcolor{keyword}{true}\ );}
+\DoxyCodeLine{00095\ \ \ \ \ }
+\DoxyCodeLine{00099\ \ \ \ \ \textcolor{keyword}{static}\ actionNet*\ \doxymbox{\hyperlink{classaction_net_abbc0b8a5444cf147b25e27b458b71c33}{Create}}(\ \textcolor{keywordtype}{int}\ argc,\ \textcolor{keywordtype}{char}**\ argv\ );}
+\DoxyCodeLine{00100\ }
+\DoxyCodeLine{00104\ \ \ \ \ \textcolor{keyword}{static}\ actionNet*\ \doxymbox{\hyperlink{classaction_net_a14cca756a0a3f72eab8107e030fe85e6}{Create}}(\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{classcommand_line}{commandLine}}\&\ cmdLine\ );}
+\DoxyCodeLine{00105\ }
+\DoxyCodeLine{00109\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \doxymbox{\hyperlink{classaction_net_ad2e707d316cf62548da6523aea96aa33}{Usage}}()\ \ \ \ \ \ \ \{\ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{group__action_net_ga71fa83f9bb669c46ce0cf85f6cdb0879}{ACTIONNET\_USAGE\_STRING}};\ \}}
+\DoxyCodeLine{00110\ }
+\DoxyCodeLine{00114\ \ \ \ \ \textcolor{keyword}{virtual}\ \doxymbox{\hyperlink{classaction_net_a90871793d4922b61bc7ac81d7355d685}{\string~actionNet}}();}
+\DoxyCodeLine{00115\ \ \ \ \ }
+\DoxyCodeLine{00130\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{classaction_net_a4338f944254f92fe33572ea1cc7a9736}{Classify}}(\ T*\ image,\ uint32\_t\ width,\ uint32\_t\ height,\ \textcolor{keywordtype}{float}*\ confidence=NULL\ )\ \ \ \ \ \ \{\ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{classaction_net_a4338f944254f92fe33572ea1cc7a9736}{Classify}}((\textcolor{keywordtype}{void}*)image,\ width,\ height,\ imageFormatFromType<T>(),\ confidence);\ \}}
+\DoxyCodeLine{00131\ \ \ \ \ }
+\DoxyCodeLine{00146\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{classaction_net_a4c7b95bad0cfa696339590020bc4d7c9}{Classify}}(\ \textcolor{keywordtype}{void}*\ image,\ uint32\_t\ width,\ uint32\_t\ height,\ \doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{imageFormat}}\ format,\ \textcolor{keywordtype}{float}*\ confidence=NULL\ );}
+\DoxyCodeLine{00147\ }
+\DoxyCodeLine{00151\ \ \ \ \ \textcolor{keyword}{inline}\ uint32\_t\ \doxymbox{\hyperlink{classaction_net_afde433b5b807ef910787f1d999cef79a}{GetNumClasses}}()\textcolor{keyword}{\ const\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\{\ \textcolor{keywordflow}{return}\ mNumClasses;\ \}}
+\DoxyCodeLine{00152\ \ \ \ \ }
+\DoxyCodeLine{00156\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \doxymbox{\hyperlink{classaction_net_aa8aab8f9c72022e9e03bc0f786a7ebec}{GetClassLabel}}(\ \textcolor{keywordtype}{int}\ index\ )\textcolor{keyword}{\ const\ \ \ \ \ \ \ \ \ }\{\ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{classaction_net_a738e5a1035599db50809da8930fa2d00}{GetClassDesc}}(index);\ \}}
+\DoxyCodeLine{00157\ \ \ \ \ }
+\DoxyCodeLine{00161\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \doxymbox{\hyperlink{classaction_net_a738e5a1035599db50809da8930fa2d00}{GetClassDesc}}(\ \textcolor{keywordtype}{int}\ index\ )\textcolor{keyword}{\ \ \ \ const\ \ \ \ \ \ \ \ \ \ \ }\{\ \textcolor{keywordflow}{return}\ index\ >=\ 0\ ?\ mClassDesc[index].c\_str()\ :\ \textcolor{stringliteral}{"{}none"{}};\ \}}
+\DoxyCodeLine{00162\ }
+\DoxyCodeLine{00166\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \doxymbox{\hyperlink{classaction_net_a6514200088f218e8fee45a857fbab256}{GetClassPath}}()\textcolor{keyword}{\ const\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\{\ \textcolor{keywordflow}{return}\ mClassPath.c\_str();\ \}}
+\DoxyCodeLine{00167\ }
+\DoxyCodeLine{00171\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{classaction_net_a8ba975e3e175e751c10e2121d339a4d0}{GetThreshold}}()\textcolor{keyword}{\ const\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\{\ \textcolor{keywordflow}{return}\ mThreshold;\ \}}
+\DoxyCodeLine{00172\ \ \ \ \ }
+\DoxyCodeLine{00178\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{classaction_net_a9628498f941ed6709c6b2e13bbb79e29}{SetThreshold}}(\ \textcolor{keywordtype}{float}\ threshold\ )\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{\ mThreshold\ =\ threshold;\ \}}
+\DoxyCodeLine{00179\ \ \ \ \ }
+\DoxyCodeLine{00184\ \ \ \ \ \textcolor{keyword}{inline}\ uint32\_t\ \doxymbox{\hyperlink{classaction_net_a6516543d67148a4a31efd156579676d4}{GetSkipFrames}}()\textcolor{keyword}{\ const\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\{\ \textcolor{keywordflow}{return}\ mSkipFrames;\ \}}
+\DoxyCodeLine{00185\ \ \ \ \ }
+\DoxyCodeLine{00195\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{classaction_net_a0d1b5c7a23698972dc4d1646e2a23d49}{SetSkipFrames}}(\ uint32\_t\ frames\ )\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{\ mSkipFrames\ =\ frames;\ \}}
+\DoxyCodeLine{00196\ \ \ \ \ \ }
+\DoxyCodeLine{00197\ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00198\ \ \ \ \ \doxymbox{\hyperlink{classaction_net}{actionNet}}();}
+\DoxyCodeLine{00199\ \ \ \ \ }
+\DoxyCodeLine{00200\ \ \ \ \ \textcolor{keywordtype}{bool}\ init(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ model\_path,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ class\_path,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ input,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ output,\ uint32\_t\ maxBatchSize,\ \doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precisionType}}\ precision,\ \doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{deviceType}}\ device,\ \textcolor{keywordtype}{bool}\ allowGPUFallback\ );}
+\DoxyCodeLine{00201\ \ \ \ \ \textcolor{keywordtype}{bool}\ preProcess(\ \textcolor{keywordtype}{void}*\ image,\ uint32\_t\ width,\ uint32\_t\ height,\ \doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{imageFormat}}\ format\ );}
+\DoxyCodeLine{00202\ }
+\DoxyCodeLine{00203\ \ \ \ \ \textcolor{keywordtype}{float}*\ mInputBuffers[2];}
+\DoxyCodeLine{00204\ \ \ \ \ }
+\DoxyCodeLine{00205\ \ \ \ \ uint32\_t\ mNumClasses;}
+\DoxyCodeLine{00206\ \ \ \ \ uint32\_t\ mNumFrames;\ \ \ \ \textcolor{comment}{//\ number\ of\ frames\ fed\ into\ the\ model}}
+\DoxyCodeLine{00207\ \ \ \ \ uint32\_t\ mSkipFrames;\ \ \ \textcolor{comment}{//\ number\ of\ frames\ to\ skip\ when\ processing}}
+\DoxyCodeLine{00208\ \ \ \ \ uint32\_t\ mFramesSkipped;\ \ \ \ \textcolor{comment}{//\ frame\ skip\ counter}}
+\DoxyCodeLine{00209\ \ \ \ \ }
+\DoxyCodeLine{00210\ \ \ \ \ uint32\_t\ mCurrentInputBuffer;}
+\DoxyCodeLine{00211\ \ \ \ \ uint32\_t\ mCurrentFrameIndex;}
+\DoxyCodeLine{00212\ }
+\DoxyCodeLine{00213\ \ \ \ \ \textcolor{keywordtype}{float}\ mThreshold;}
+\DoxyCodeLine{00214\ \ \ \ \ \textcolor{keywordtype}{float}\ mLastConfidence;}
+\DoxyCodeLine{00215\ \ \ \ \ \textcolor{keywordtype}{int}\ \ \ mLastClassification;}
+\DoxyCodeLine{00216\ \ \ \ \ }
+\DoxyCodeLine{00217\ \ \ \ \ std::vector<std::string>\ mClassDesc;}
+\DoxyCodeLine{00218\ }
+\DoxyCodeLine{00219\ \ \ \ \ std::string\ mClassPath;}
+\DoxyCodeLine{00220\ \};}
+\DoxyCodeLine{00221\ }
+\DoxyCodeLine{00222\ }
+\DoxyCodeLine{00223\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

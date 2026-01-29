@@ -1,0 +1,20 @@
+var searchData=
+[
+  ['mbufferrgb_0',['mBufferRGB',['../classgst_buffer_manager.html#ab07dfcccd8fa8e9e5f0c80ba969bd953',1,'gstBufferManager']]],
+  ['mbufferyuv_1',['mBufferYUV',['../classgst_buffer_manager.html#a9bf6538dcf98e4773b6fe2ea28ee8944',1,'gstBufferManager']]],
+  ['mclasscolors_2',['mClassColors',['../classseg_net.html#a307dd9f1d322ce42f553361321bbb869',1,'segNet']]],
+  ['mclassmap_3',['mClassMap',['../classseg_net.html#a3db3738778929458b52a709b053d456a',1,'segNet']]],
+  ['mcolorsalphaset_4',['mColorsAlphaSet',['../classseg_net.html#ac8cbd9449fb81520a847aee04b6bbca5',1,'segNet']]],
+  ['memsize_5',['memsize',['../struct___nv_buffer_create_params.html#aece80ee5d7b9fdec553fa170e553dea8',1,'_NvBufferCreateParams::memsize'],['../struct___nv_buffer_params.html#ab0eea53d0e639fab8ac042b87495ec76',1,'_NvBufferParams::memsize']]],
+  ['mformatyuv_6',['mFormatYUV',['../classgst_buffer_manager.html#a648c0f76e9eedc9d3483c36b118b2e0d',1,'gstBufferManager']]],
+  ['mframecount_7',['mFrameCount',['../classgst_buffer_manager.html#aac53eb50db281d89d9142576b5adf6d3',1,'gstBufferManager']]],
+  ['mlastinputformat_8',['mLastInputFormat',['../classseg_net.html#a2d4bf7321a21756ff82551e306e8adb1',1,'segNet']]],
+  ['mlastinputheight_9',['mLastInputHeight',['../classseg_net.html#a4341b8ae226236eef40867bab4c7f251',1,'segNet']]],
+  ['mlastinputimg_10',['mLastInputImg',['../classseg_net.html#aadacbaf1eb15bfe512499276272bf67c',1,'segNet']]],
+  ['mlastinputwidth_11',['mLastInputWidth',['../classseg_net.html#ad984bfe4460621a78440bfb4768f4e8e',1,'segNet']]],
+  ['mlasttimestamp_12',['mLastTimestamp',['../classgst_buffer_manager.html#abe9df1a58cf2e4ae57c0239a12cc4aa4',1,'gstBufferManager']]],
+  ['mnvmmused_13',['mNvmmUsed',['../classgst_buffer_manager.html#abd5bf5577fd3a1bb129419243dc91d1a',1,'gstBufferManager']]],
+  ['moptions_14',['mOptions',['../classgst_buffer_manager.html#a742e929409e877a0e8e2b8c56f0d58a3',1,'gstBufferManager']]],
+  ['mtimestamps_15',['mTimestamps',['../classgst_buffer_manager.html#aea126364b147dd2c7946ba66f64fd3a4',1,'gstBufferManager']]],
+  ['mwaitevent_16',['mWaitEvent',['../classgst_buffer_manager.html#a9f62a8198853fdab6da3775b9b879280',1,'gstBufferManager']]]
+];

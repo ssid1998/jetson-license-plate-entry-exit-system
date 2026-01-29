@@ -1,0 +1,170 @@
+\chapter{depthnet }
+\hypertarget{md_jetson-inference_2docs_2depthnet}{}\label{md_jetson-inference_2docs_2depthnet}\index{depthnet@{depthnet}}
+ 
+
+\textsuperscript{\href{backgroundnet.md}{\texttt{Back}} \texorpdfstring{$\vert$}{|} \href{pytorch-transfer-learning.md}{\texttt{Next}} \texorpdfstring{$\vert$}{|} }\href{../README.md\#hello-ai-world}{\texttt{\textsuperscript{Contents}}} ~\newline
+ \textsuperscript{Mono Depth}\hypertarget{md_jetson-inference_2docs_2depthnet_autotoc_md165}{}\doxysection{\texorpdfstring{Monocular Depth with Depth\+Net}{Monocular Depth with Depth\+Net}}\label{md_jetson-inference_2docs_2depthnet_autotoc_md165}
+Depth sensing is useful for tasks such as mapping, navigation and obstacle detection, however it historically required a stereo camera or RGB-\/D camera. There are now DNNs that are able to infer relative depth from a single monocular image (aka mono depth). See the \href{https://arxiv.org/abs/1903.03273}{\texttt{MIT Fast\+Depth}} paper for one such approach to accomplishing this using Fully-\/\+Convolutional Networks (FCNs).
+
+
+
+\doxylink{requirements_The}{The} \href{../c/depthNet.h}{\texttt{{\ttfamily depth\+Net}}} object accepts a single color image as input, and outputs the depth map. \doxylink{requirements_The}{The} depth map is colorized for visualization, but the raw depth field is also accessible for directly accessing the depths. \href{../c/depthNet.h}{\texttt{{\ttfamily depth\+Net}}} is available to use from \href{https://rawgit.com/dusty-nv/jetson-inference/master/docs/html/python/jetson.inference.html\#depthNet}{\texttt{Python}} and \href{../c/depthNet.h}{\texttt{C++}}.
+
+As examples of using the {\ttfamily \doxylink{classdepth_net}{depth\+Net}} class, we provide sample programs for C++ and Python:\+
+
+
+\begin{DoxyItemize}
+\item \href{../examples/depthnet/depthnet.cpp}{\texttt{{\ttfamily depthnet.\+cpp}}} (C++)
+\item \href{../python/examples/depthnet.py}{\texttt{{\ttfamily depthnet.\+py}}} (Python)
+\end{DoxyItemize}
+
+These samples are able to infer depth from images, videos, and camera feeds. For more info about the various types of input/\+output streams supported, see the \doxysectlink{md_jetson-inference_2docs_2aux-streaming}{Camera Streaming and Multimedia}{0} page.\hypertarget{md_jetson-inference_2docs_2depthnet_autotoc_md166}{}\doxysubsection{\texorpdfstring{Mono Depth on Images}{Mono Depth on Images}}\label{md_jetson-inference_2docs_2depthnet_autotoc_md166}
+First, let\textquotesingle{}s try running the {\ttfamily depthnet} sample on some examples images. In addition to the input/\+output paths, there are some additional command-\/line options that are optional:\+
+
+
+\begin{DoxyItemize}
+\item optional {\ttfamily -\/-\/\doxylink{group__network}{Networking}} flag which changes the depth model being used (recommended default is {\ttfamily fcn-\/mobilenet}).
+\item optional {\ttfamily -\/-\/visualize} flag which can be comma-\/separated combinations of {\ttfamily \doxylink{group__input}{Input}}, {\ttfamily depth}
+\begin{DoxyItemize}
+\item \doxylink{requirements_The}{The} default is {\ttfamily -\/-\/visualize=\doxylink{group__input}{Input},depth} which displays the input and depth images side-\/by-\/side
+\item To view only the depth image, use {\ttfamily -\/-\/visualize=depth}
+\end{DoxyItemize}
+\item optional {\ttfamily -\/-\/depth-\/size} value which scales the size of the depth map relative to the input (the default is {\ttfamily 1.\+0})
+\item optional {\ttfamily -\/-\/filter-\/mode} flag which selects {\ttfamily point} or {\ttfamily linear} filtering used for upsampling (the default is {\ttfamily linear})
+\item optional {\ttfamily -\/-\/\doxylink{group__colormap}{Color Mapping}} flag which sets the color mapping to use during visualization (the default is {\ttfamily viridis\+\_\+inverted})
+\end{DoxyItemize}
+
+If you\textquotesingle{}re using the \doxysectlink{md_jetson-inference_2docs_2aux-docker}{Docker container}{0}, it\textquotesingle{}s recommended to save the output images to the {\ttfamily images/\+test} mounted directory. These images will then be easily viewable from your host device under {\ttfamily jetson-\/inference/\+data/\+images/\+test} (for more info, see \href{aux-docker.md\#mounted-data-volumes}{\texttt{Mounted Data Volumes}}).
+
+Here are some examples of mono depth estimation on indoor scenes:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{\#\ C++}
+\DoxyCodeLine{\$\ ./depthnet\ "{}images/room\_*.jpg"{}\ images/test/depth\_room\_\%i.jpg}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#\ Python}
+\DoxyCodeLine{\$\ ./depthnet.py\ "{}images/room\_*.jpg"{}\ images/test/depth\_room\_\%i.jpg}
+
+\end{DoxyCode}
+
+
+
+
+\begin{quote}
+{\bfseries{note}}:\+ the first time you run each model, Tensor\+RT will take a few minutes to optimize the network. ~\newline
+ ~~~~~~~~~~this optimized network file is then cached to disk, so future runs using the model will load faster. \end{quote}
+
+
+And here are some taken from outdoor scenes:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{\#\ C++}
+\DoxyCodeLine{\$\ ./depthnet\ "{}images/trail\_*.jpg"{}\ images/test/depth\_trail\_\%i.jpg}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#\ Python}
+\DoxyCodeLine{\$\ ./depthnet.py\ "{}images/trail\_*.jpg"{}\ images/test/depth\_trail\_\%i.jpg}
+
+\end{DoxyCode}
+
+
+\hypertarget{md_jetson-inference_2docs_2depthnet_autotoc_md167}{}\doxysubsection{\texorpdfstring{Mono Depth from Video}{Mono Depth from Video}}\label{md_jetson-inference_2docs_2depthnet_autotoc_md167}
+To run mono depth estimation on a live camera stream or video, pass in a device or file path from the \doxysectlink{md_jetson-inference_2docs_2aux-streaming}{Camera Streaming and Multimedia}{0} page.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{\#\ C++}
+\DoxyCodeLine{\$\ ./depthnet\ /dev/video0\ \ \ \ \ \#\ csi://0\ if\ using\ MIPI\ CSI\ camera}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#\ Python}
+\DoxyCodeLine{\$\ ./depthnet.py\ /dev/video0\ \ \#\ csi://0\ if\ using\ MIPI\ CSI\ camera}
+
+\end{DoxyCode}
+
+
+\href{https://www.youtube.com/watch?v=3_bU6Eqb4hE}{\texttt{}}
+
+\begin{quote}
+{\bfseries{note}}:\+ if the screen is too small to fit the output, you can use {\ttfamily -\/-\/depth-\/scale=0.\+5} to reduce the size ~\newline
+ ~~~~~~~~~~of the depth image, or reduce the size of the camera with {\ttfamily -\/-\/input-\/width=X -\/-\/input-\/height=Y} \end{quote}
+\hypertarget{md_jetson-inference_2docs_2depthnet_autotoc_md168}{}\doxysubsection{\texorpdfstring{Getting the Raw Depth Field}{Getting the Raw Depth Field}}\label{md_jetson-inference_2docs_2depthnet_autotoc_md168}
+If you want to access the raw depth map, you can do so with {\ttfamily \doxylink{classdepth_net_a2f1ea14537fb97505adb250db0201950}{depth\+Net.\+Get\+Depth\+Field()}}. This will return a single-\/channel floating point image that is typically smaller (224x224) than the original input -\/ this represents the raw output of the model. On the other hand, the colorized depth image used for visualization is upsampled to match the resolution of the original input (or whatever the {\ttfamily -\/-\/depth-\/size} scale is set to).
+
+Below is Python and C++ pseudocode for accessing the raw depth field:\+\hypertarget{md_jetson-inference_2docs_2depthnet_autotoc_md169}{}\doxysubsubsubsection{\texorpdfstring{Python}{Python}}\label{md_jetson-inference_2docs_2depthnet_autotoc_md169}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ python}
+\DoxyCodeLine{import\ jetson.inference}
+\DoxyCodeLine{import\ jetson.utils}
+\DoxyCodeLine{}
+\DoxyCodeLine{import\ numpy\ as\ np}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#\ load\ mono\ depth\ network}
+\DoxyCodeLine{net\ =\ jetson.inference.depthNet()}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#\ depthNet\ re-\/uses\ the\ same\ memory\ for\ the\ depth\ field,}
+\DoxyCodeLine{\#\ so\ you\ only\ need\ to\ do\ this\ once\ (not\ every\ frame)}
+\DoxyCodeLine{depth\_field\ =\ net.GetDepthField()}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#\ cudaToNumpy()\ will\ map\ the\ depth\ field\ cudaImage\ to\ numpy}
+\DoxyCodeLine{\#\ this\ mapping\ is\ persistent,\ so\ you\ only\ need\ to\ do\ it\ once}
+\DoxyCodeLine{depth\_numpy\ =\ jetson.utils.cudaToNumpy(depth\_field)}
+\DoxyCodeLine{}
+\DoxyCodeLine{print(f"{}depth\ field\ resolution\ is\ \{depth\_field.width\}x\{depth\_field.height\},\ format=\{depth\_field.format\})}
+\DoxyCodeLine{}
+\DoxyCodeLine{while\ True:}
+\DoxyCodeLine{\ \ \ \ img\ =\ input.Capture()\ \ \ \#\ assumes\ you\ have\ created\ an\ input\ videoSource\ stream}
+\DoxyCodeLine{\ \ \ \ net.Process(img)}
+\DoxyCodeLine{\ \ \ \ jetson.utils.cudaDeviceSynchronize()\ \#\ wait\ for\ GPU\ to\ finish\ processing,\ so\ we\ can\ use\ the\ results\ on\ CPU}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \#\ find\ the\ min/max\ values\ with\ numpy}
+\DoxyCodeLine{\ \ \ \ min\_depth\ =\ np.amin(depth\_numpy)}
+\DoxyCodeLine{\ \ \ \ max\_depth\ =\ np.amax(depth\_numpy)}
+
+\end{DoxyCode}
+\hypertarget{md_jetson-inference_2docs_2depthnet_autotoc_md170}{}\doxysubsubsubsection{\texorpdfstring{C++}{C++}}\label{md_jetson-inference_2docs_2depthnet_autotoc_md170}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ cpp}
+\DoxyCodeLine{\#include\ <jetson-\/inference/depthNet.h>}
+\DoxyCodeLine{}
+\DoxyCodeLine{//\ load\ mono\ depth\ network}
+\DoxyCodeLine{depthNet*\ net\ =\ depthNet::Create();}
+\DoxyCodeLine{}
+\DoxyCodeLine{//\ depthNet\ re-\/uses\ the\ same\ memory\ for\ the\ depth\ field,}
+\DoxyCodeLine{//\ so\ you\ only\ need\ to\ do\ this\ once\ (not\ every\ frame)}
+\DoxyCodeLine{float*\ depth\_field\ =\ net-\/>GetDepthField();}
+\DoxyCodeLine{const\ int\ depth\_width\ =\ net-\/>GetDepthWidth();}
+\DoxyCodeLine{const\ int\ depth\_height\ =\ net-\/>GetDepthHeight();}
+\DoxyCodeLine{}
+\DoxyCodeLine{while(true)}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \ \ uchar3*\ img\ =\ NUL;}
+\DoxyCodeLine{\ \ \ \ input-\/>Capture(\&img);\ \ //\ assumes\ you\ have\ created\ an\ input\ videoSource\ stream}
+\DoxyCodeLine{\ \ \ \ net-\/>Process(img,\ input-\/>GetWidth(),\ input-\/>GetHeight());}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ //\ wait\ for\ the\ GPU\ to\ finish\ processing}
+\DoxyCodeLine{\ \ \ \ CUDA(cudaDeviceSynchronize());\ }
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ //\ you\ can\ now\ safely\ access\ depth\_field\ from\ the\ CPU\ (or\ GPU)}
+\DoxyCodeLine{\ \ \ \ for(\ int\ y=0;\ y\ <\ depth\_height;\ y++\ )}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ for(\ int\ x=0;\ x\ <\ depth\_width;\ x++\ )}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ printf("{}depth\ x=\%i\ y=\%i\ -\/>\ \%f\(\backslash\)n"{},\ x,\ y,\ depth\_map[y\ *\ depth\_width\ +\ x]);}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+
+
+Trying to measure absolute distances using mono depth can lead to inaccuracies as it\textquotesingle{}s typically more effective at relative depth estimation. \doxylink{requirements_The}{The} range of values in the raw depth field can vary depending on the scene, so these are often re-\/calculated dynamically. For example, during visualization histogram equalization is performed on the depth field to distribute the colormap more evenly across the range of depth values.
+
+Next, we\textquotesingle{}re going to introduce the concepts of \doxysectlink{md_jetson-inference_2docs_2pytorch-transfer-learning}{Transfer Learning}{0} and train our own DNN models on the Jetson using Py\+Torch.\hypertarget{md_jetson-inference_2docs_2depthnet_autotoc_md171}{}\doxysubsection{\texorpdfstring{autotoc\+\_\+md171}{autotoc\+\_\+md171}}\label{md_jetson-inference_2docs_2depthnet_autotoc_md171}
+Next \texorpdfstring{$\vert$}{|} {\bfseries{\href{pytorch-transfer-learning.md}{\texttt{Transfer Learning with Py\+Torch}}}} ~\newline
+ Back \texorpdfstring{$\vert$}{|} {\bfseries{\href{backgroundnet.md}{\texttt{Background Removal}}}}
+
+{\bfseries{ }}
+
+\textsuperscript{© 2016-\/2021 NVIDIA \texorpdfstring{$\vert$}{|} }\href{../README.md\#hello-ai-world}{\texttt{\textsuperscript{Table of Contents}}}

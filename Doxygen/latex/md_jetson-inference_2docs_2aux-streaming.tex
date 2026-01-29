@@ -1,0 +1,572 @@
+\chapter{aux-\/streaming }
+\hypertarget{md_jetson-inference_2docs_2aux-streaming}{}\label{md_jetson-inference_2docs_2aux-streaming}\index{aux-\/streaming@{aux-\/streaming}}
+ 
+
+\textsuperscript{\href{../README.md\#appendix}{\texttt{Back}} \texorpdfstring{$\vert$}{|} \href{aux-image.md}{\texttt{Next}} \texorpdfstring{$\vert$}{|} }\href{../README.md\#hello-ai-world}{\texttt{\textsuperscript{Contents}}} ~\newline
+ \textsuperscript{Appendix}
+
+~\newline
+\hypertarget{md_jetson-inference_2docs_2aux-streaming_autotoc_md93}{}\doxysection{\texorpdfstring{Camera Streaming and Multimedia}{Camera Streaming and Multimedia}}\label{md_jetson-inference_2docs_2aux-streaming_autotoc_md93}
+This project supports capturing and streaming video feeds \& static images via a variety of interfaces and protocols, including:\+
+
+
+\begin{DoxyItemize}
+\item MIPI CSI cameras
+\item V4\+L2 cameras
+\item Web\+RTC
+\item RTP /\+ RTSP
+\item Videos \& Images
+\item Image sequences
+\item Open\+GL windows
+\end{DoxyItemize}
+
+Streams are identified via a resource \doxylink{struct_u_r_i}{URI} and are acquired through the \`{}video\+Source\`{} and \`{}video\+Output\`{} APIs. These settings can be configured via command-\/line arguments or in your application\textquotesingle{}s source code. \doxylink{requirements_The}{The} tables below show the supported input/\+output protocols and \doxylink{struct_u_r_i}{URI} formats:\+\hypertarget{md_jetson-inference_2docs_2aux-streaming_autotoc_md94}{}\doxysubsubsection{\texorpdfstring{Input Streams}{Input Streams}}\label{md_jetson-inference_2docs_2aux-streaming_autotoc_md94}
+
+\begin{DoxyTable}{4}{}{}{1}
+\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}&\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}Protocol  &\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}Resource \doxylink{struct_u_r_i}{URI}  &\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}Notes  \\
+MIPI CSI camera  &{\ttfamily csi:\+/\+/\+}  &{\ttfamily csi:\+/\+/\+0}  &CSI camera 0 (substitute other camera numbers for {\ttfamily 0})  \\
+V4\+L2 camera  &{\ttfamily v4l2:\+/\+/\+}  &{\ttfamily v4l2:\+/\+/\+/\+dev/\+video0}  &V4\+L2 device 0 (substitute other camera numbers for {\ttfamily 0})  \\
+Web\+RTC stream  &{\ttfamily webrtc:\+/\+/\+}  &{\ttfamily webrtc:\+/\+/\+@:\+8554/\+my\+\_\+input}  &From browser webcam to localhost, port 8554 (requires HTTPS/\+\+SSL)  \\
+RTP stream  &{\ttfamily rtp:\+/\+/\+}  &{\ttfamily rtp:\+/\+/\+@:\+1234}  &localhost, port 1234 (requires additional configuration)  \\
+RTSP stream  &{\ttfamily rtsp:\+/\+/\+}  &{\ttfamily rtsp:\+/\+/\+\texorpdfstring{$<$}{<}remote-\/ip\texorpdfstring{$>$}{>}:\+1234}  &Replace {\ttfamily \texorpdfstring{$<$}{<}remote-\/ip\texorpdfstring{$>$}{>}} with remote host\textquotesingle{}s IP or hostname  \\
+Video file  &{\ttfamily \href{file://}{\texttt{file:\+/\+/\+}}}  &{\ttfamily \href{file://my_video.mp4}{\texttt{file:\+/\+/\+my\+\_\+video.\+mp4}}}  &Supports loading MP4, MKV, AVI, FLV (see codecs below)  \\
+Image file  &{\ttfamily \href{file://}{\texttt{file:\+/\+/\+}}}  &{\ttfamily \href{file://my_image.jpg}{\texttt{file:\+/\+/\+my\+\_\+image.\+jpg}}}  &Supports loading JPG, PNG, TGA, BMP, GIF, ect.  \\
+Image sequence  &{\ttfamily \href{file://}{\texttt{file:\+/\+/\+}}}  &{\ttfamily \href{file://my_directory/}{\texttt{file:\+/\+/\+my\+\_\+directory/\+}}}  &Searches for images in alphanumeric order  \\
+\end{DoxyTable}
+
+
+
+\begin{DoxyItemize}
+\item Supported decoder codecs:\+ H.\+264, H.\+265, VP8, VP9, MPEG-\/2, MPEG-\/4, MJPEG
+\item \doxylink{requirements_The}{The} {\ttfamily \href{file://}{\texttt{file:\+/\+/\+}}}, {\ttfamily v4l2:\+/\+/\+}, and {\ttfamily csi:\+/\+/\+} protocol prefixes can be omitted from the \doxylink{struct_u_r_i}{URI} as shorthand
+\end{DoxyItemize}\hypertarget{md_jetson-inference_2docs_2aux-streaming_autotoc_md95}{}\doxysubsubsection{\texorpdfstring{Output Streams}{Output Streams}}\label{md_jetson-inference_2docs_2aux-streaming_autotoc_md95}
+
+\begin{DoxyTable}{4}{}{}{1}
+\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}&\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}Protocol  &\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}Resource \doxylink{struct_u_r_i}{URI}  &\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}Notes  \\
+Web\+RTC stream  &{\ttfamily webrtc:\+/\+/\+}  &{\ttfamily webrtc:\+/\+/\+@:\+8554/\+my\+\_\+output}  &Send to browser, port 8554, stream name {\ttfamily "{}my\+\_\+output"{}}  \\
+RTP stream  &{\ttfamily rtp:\+/\+/\+}  &{\ttfamily rtp:\+/\+/\+\texorpdfstring{$<$}{<}remote-\/ip\texorpdfstring{$>$}{>}:\+1234}  &Replace {\ttfamily \texorpdfstring{$<$}{<}remote-\/ip\texorpdfstring{$>$}{>}} with remote host\textquotesingle{}s IP or hostname  \\
+RTSP stream  &{\ttfamily rtsp:\+/\+/\+}  &{\ttfamily rtsp:\+/\+/\+@:\+1234/\+my\+\_\+output}  &Reachable at {\ttfamily rtsp:\+/\+/\+\texorpdfstring{$<$}{<}jetson-\/ip\texorpdfstring{$>$}{>}:\+1234/\+my\+\_\+output}  \\
+Video file  &{\ttfamily \href{file://}{\texttt{file:\+/\+/\+}}}  &{\ttfamily \href{file://my_video.mp4}{\texttt{file:\+/\+/\+my\+\_\+video.\+mp4}}}  &Supports saving MP4, MKV, AVI, FLV (see codecs below)  \\
+Image file  &{\ttfamily \href{file://}{\texttt{file:\+/\+/\+}}}  &{\ttfamily \href{file://my_image.jpg}{\texttt{file:\+/\+/\+my\+\_\+image.\+jpg}}}  &Supports saving JPG, PNG, TGA, BMP  \\
+Image sequence  &{\ttfamily \href{file://}{\texttt{file:\+/\+/\+}}}  &{\ttfamily \href{file://image_\%i.jpg}{\texttt{file:\+/\+/\+image\+\_\+\%i.\+jpg}}}  &{\ttfamily i} is replaced by the image number in the sequence  \\
+Open\+GL window  &{\ttfamily display:\+/\+/\+}  &{\ttfamily display:\+/\+/\+0}  &Creates GUI window on screen 0  \\
+\end{DoxyTable}
+
+
+
+\begin{DoxyItemize}
+\item Supported encoder codecs:\+ H.\+264, H.\+265, VP8, VP9, MJPEG
+\item \doxylink{requirements_The}{The} {\ttfamily \href{file://}{\texttt{file:\+/\+/\+}}} protocol prefixes can be omitted from the \doxylink{struct_u_r_i}{URI} as shorthand
+\item By default, an Open\+GL display window will be created unless {\ttfamily -\/-\/headless} is specified
+\end{DoxyItemize}\hypertarget{md_jetson-inference_2docs_2aux-streaming_autotoc_md96}{}\doxysubsection{\texorpdfstring{Command-\/\+Line Arguments}{Command-\/\+Line Arguments}}\label{md_jetson-inference_2docs_2aux-streaming_autotoc_md96}
+Each example C++ and Python program from jetson-\/inference accepts the same set of command-\/line arguments for specifying stream URIs and additional options. So these options can be used on any of the examples (e.\+g. \href{../examples/imagenet/imagenet.cpp}{\texttt{{\ttfamily imagenet}}}/\+\href{../examples/python/imagenet.py}{\texttt{{\ttfamily imagenet.\+py}}}, \href{../examples/detectnet/detectnet.cpp}{\texttt{{\ttfamily detectnet}}}/\+\href{../examples/python/detectnet.py}{\texttt{{\ttfamily detectnet.\+py}}}, \href{../examples/segnet/segnet.cpp}{\texttt{{\ttfamily segnet}}}/\+\href{../examples/python/segnet.py}{\texttt{{\ttfamily segnet.\+py}}}, \href{https://github.com/dusty-nv/jetson-utils/tree/master/video/video-viewer/video-viewer.cpp}{\texttt{{\ttfamily video-\/viewer}}}/\+\href{https://github.com/dusty-nv/jetson-utils/tree/master/python/examples/video-viewer.py}{\texttt{{\ttfamily video-\/viewer.\+py}}}, ect). These command-\/line arguments generally take the form:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$\ imagenet\ [options]\ input\_URI\ [output\_URI]\ \ \#\ output\ URI\ is\ optional\ (default\ is\ display://0)}
+
+\end{DoxyCode}
+
+
+where the input and output URIs are specified by two positional arguments. For example:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$\ imagenet\ input.jpg\ output.jpg\ \ \ \ \ \ \ \ \ \ \ \ \ \ \#\ classify\ input.jpg,\ save\ as\ output.jpg}
+
+\end{DoxyCode}
+
+
+As mentioned above, any of the examples from jetson-\/inference can be substituted here, since they use the same command-\/line parsing. Below are additional stream options that can be specified when running each program:\+\hypertarget{md_jetson-inference_2docs_2aux-streaming_autotoc_md97}{}\doxysubsubsubsection{\texorpdfstring{Input Options}{Input Options}}\label{md_jetson-inference_2docs_2aux-streaming_autotoc_md97}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ input\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ resource\ URI\ of\ the\ input\ stream,\ for\ example:}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ /dev/video0\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (V4L2\ camera\ \#0)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ csi://0\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (MIPI\ CSI\ camera\ \#0)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ rtp://@:1234\ \ \ \ \ \ \ \ \ \ \ \ \ \ (RTP\ stream)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ rtsp://user:pass@ip:1234\ \ (RTSP\ stream)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ webrtc://@:1234/my\_stream\ (WebRTC\ stream)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ file://my\_image.jpg\ \ \ \ \ \ \ (image\ file)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ file://my\_video.mp4\ \ \ \ \ \ \ (video\ file)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ file://my\_directory/\ \ \ \ \ \ (directory\ of\ images)}
+\DoxyCodeLine{-\/-\/input-\/width=WIDTH\ \ \ \ explicitly\ request\ a\ width\ of\ the\ stream\ (optional)}
+\DoxyCodeLine{-\/-\/input-\/height=HEIGHT\ \ explicitly\ request\ a\ height\ of\ the\ stream\ (optional)}
+\DoxyCodeLine{-\/-\/input-\/rate=RATE\ \ \ \ \ \ explicitly\ request\ a\ framerate\ of\ the\ stream\ (optional)}
+\DoxyCodeLine{-\/-\/input-\/save=FILE\ \ \ \ \ \ path\ to\ video\ file\ for\ saving\ the\ input\ stream\ to\ disk}
+\DoxyCodeLine{-\/-\/input-\/codec=CODEC\ \ \ \ RTP\ requires\ the\ codec\ to\ be\ set,\ one\ of\ these:}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ h264,\ h265}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ vp8,\ vp9}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ mpeg2,\ mpeg4}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ mjpeg}
+\DoxyCodeLine{-\/-\/input-\/decoder=TYPE\ \ \ the\ decoder\ engine\ to\ use,\ one\ of\ these:}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ cpu}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ omx\ \ (aarch64/JetPack4\ only)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ v4l2\ (aarch64/JetPack5\ only)}
+\DoxyCodeLine{-\/-\/input-\/flip=FLIP\ \ \ \ \ \ flip\ method\ to\ apply\ to\ input:}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ none\ (default)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ counterclockwise}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ rotate-\/180}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ clockwise}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ horizontal}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ vertical}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ upper-\/right-\/diagonal}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ upper-\/left-\/diagonal}
+\DoxyCodeLine{-\/-\/input-\/loop=LOOP\ \ \ \ \ \ for\ file-\/based\ inputs,\ the\ number\ of\ loops\ to\ run:}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ -\/1\ =\ loop\ forever}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ \ 0\ =\ don't\ loop\ (default)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ >0\ =\ set\ number\ of\ loops}
+
+\end{DoxyCode}
+\hypertarget{md_jetson-inference_2docs_2aux-streaming_autotoc_md98}{}\doxysubsubsubsection{\texorpdfstring{Output Options}{Output Options}}\label{md_jetson-inference_2docs_2aux-streaming_autotoc_md98}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ output\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ resource\ URI\ of\ the\ output\ stream,\ for\ example:}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ file://my\_image.jpg\ \ \ \ \ \ \ (image\ file)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ file://my\_video.mp4\ \ \ \ \ \ \ (video\ file)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ file://my\_directory/\ \ \ \ \ \ (directory\ of\ images)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ rtp://<remote-\/ip>:1234\ \ \ \ (RTP\ stream)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ rtsp://@:8554/my\_stream\ \ \ (RTSP\ stream)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ webrtc://@:1234/my\_stream\ (WebRTC\ stream)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ display://0\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (OpenGL\ window)}
+\DoxyCodeLine{-\/-\/output-\/codec=CODEC\ \ \ desired\ codec\ for\ compressed\ output\ streams:}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ h264\ (default),\ h265}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ vp8,\ vp9}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ mpeg2,\ mpeg4}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ mjpeg}
+\DoxyCodeLine{-\/-\/output-\/encoder=TYPE\ \ the\ encoder\ engine\ to\ use,\ one\ of\ these:}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ cpu}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ omx\ \ (aarch64/JetPack4\ only)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ v4l2\ (aarch64/JetPack5\ only)}
+\DoxyCodeLine{-\/-\/output-\/save=FILE\ \ \ \ \ path\ to\ a\ video\ file\ for\ saving\ the\ compressed\ stream}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ to\ disk,\ in\ addition\ to\ the\ primary\ output\ above}
+\DoxyCodeLine{-\/-\/bitrate=BITRATE\ \ \ \ \ \ desired\ target\ VBR\ bitrate\ for\ compressed\ streams,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ in\ bits\ per\ second.\ The\ default\ is\ 4000000\ (4\ Mbps)}
+\DoxyCodeLine{-\/-\/headless\ \ \ \ \ \ \ \ \ \ \ \ \ don't\ create\ a\ default\ OpenGL\ GUI\ window}
+
+\end{DoxyCode}
+
+
+Below are example commands of launching the {\ttfamily video-\/viewer} tool on various types of streams. You can substitute the other programs for {\ttfamily video-\/viewer} in these commands, since they parse the same arguments. In the Source Code section of this page, you can browse the contents of the {\ttfamily video-\/viewer} source code to show how to use the {\ttfamily \doxylink{classvideo_source}{video\+Source}} and {\ttfamily \doxylink{classvideo_output}{video\+Output}} APIs in your own applications.\hypertarget{md_jetson-inference_2docs_2aux-streaming_autotoc_md99}{}\doxysubsection{\texorpdfstring{MIPI CSI cameras}{MIPI CSI cameras}}\label{md_jetson-inference_2docs_2aux-streaming_autotoc_md99}
+MIPI CSI cameras are compact sensors that are acquired directly by the Jetson\textquotesingle{}s hardware CSI/\+\+ISP interface. Supported CSI cameras include:\+
+
+
+\begin{DoxyItemize}
+\item \href{https://www.raspberrypi.org/products/camera-module-v2/}{\texttt{Raspberry Pi Camera Module v2}} (IMX219) for Jetson Nano and Jetson Xavier NX
+\item OV5693 camera module from the Jetson TX1/\+\+TX2 devkits. ~\newline
+
+\item See the \href{https://developer.nvidia.com/embedded/jetson-partner-supported-cameras}{\texttt{Jetson Partner Supported Cameras}} page for more sensors supported by the ecosystem.
+\end{DoxyItemize}
+
+Here\textquotesingle{}s a few examples of launching with a MIPI CSI camera. If you have multiple CSI cameras attached, subsitute the camera number for 0:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$\ video-\/viewer\ csi://0\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \#\ MIPI\ CSI\ camera\ 0\ (substitue\ other\ camera\ numbers)}
+\DoxyCodeLine{\$\ video-\/viewer\ csi://0\ output.mp4\ \ \ \ \ \ \ \ \ \ \ \ \ \#\ save\ output\ stream\ to\ MP4\ file\ (H.264\ by\ default)}
+\DoxyCodeLine{\$\ video-\/viewer\ csi://0\ rtp://<remote-\/ip>:1234\ \#\ broadcast\ output\ stream\ over\ RTP\ to\ <remote-\/ip>}
+
+\end{DoxyCode}
+
+
+By default, CSI cameras will be created with a 1280x720 resolution. To specify a different resolution, use the {\ttfamily -\/-\/input-\/width} and {\ttfamily input-\/height} options. Note that the specified resolution must match one of the formats supported by the camera.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$\ video-\/viewer\ -\/-\/input-\/width=1920\ -\/-\/input-\/height=1080\ csi://0}
+
+\end{DoxyCode}
+\hypertarget{md_jetson-inference_2docs_2aux-streaming_autotoc_md100}{}\doxysubsection{\texorpdfstring{V4\+L2 cameras}{V4\+L2 cameras}}\label{md_jetson-inference_2docs_2aux-streaming_autotoc_md100}
+USB webcams are most commonly supported as V4\+L2 devices, for example Logitech \href{https://www.logitech.com/en-us/product/hd-webcam-c270}{\texttt{C270}} or \href{https://www.logitech.com/en-us/product/hd-pro-webcam-c920}{\texttt{C920}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$\ video-\/viewer\ v4l2:///dev/video0\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \#\ /dev/video0\ can\ be\ replaced\ with\ /dev/video1,\ ect.}
+\DoxyCodeLine{\$\ video-\/viewer\ /dev/video0\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \#\ dropping\ the\ v4l2://\ protocol\ prefix\ is\ fine}
+\DoxyCodeLine{\$\ video-\/viewer\ /dev/video0\ output.mp4\ \ \ \ \ \ \ \ \ \ \ \ \ \#\ save\ output\ stream\ to\ MP4\ file\ (H.264\ by\ default)}
+\DoxyCodeLine{\$\ video-\/viewer\ /dev/video0\ rtp://<remote-\/ip>:1234\ \#\ broadcast\ output\ stream\ over\ RTP\ to\ <remote-\/ip>}
+
+\end{DoxyCode}
+
+
+\begin{quote}
+{\bfseries{note:\+}} if you have a MIPI CSI camera plugged in, it will also show up as {\ttfamily /\+dev/\+video0}. Then if you plug in a USB webcam, that would show up as {\ttfamily /\+dev/\+video1}, so you would want to substitue {\ttfamily /\+dev/\+video1} in the commands above. Using CSI cameras through V4\+L2 is unsupported in this project, because through V4\+L2 they use raw Bayer without ISP (instead, use CSI cameras as shown above). \end{quote}
+\hypertarget{md_jetson-inference_2docs_2aux-streaming_autotoc_md101}{}\doxysubsubsubsection{\texorpdfstring{V4\+L2 Formats}{V4\+L2 Formats}}\label{md_jetson-inference_2docs_2aux-streaming_autotoc_md101}
+By default, V4\+L2 cameras will be created using the camera format with the highest framerate that most closely matches the desired resolution (by default, that resolution is 1280x720). \doxylink{requirements_The}{The} format with the highest framerate may be encoded (for example with H.\+264 or MJPEG), as USB cameras typically transmit uncompressed YUV/\+\+RGB at lower framerates. In this case, that codec will be detected and the camera stream will automatically be decoded using the Jetson\textquotesingle{}s hardware decoder to attain the highest framerate.
+
+If you explicitly want to choose the format used by the V4\+L2 camera, you can do so with the {\ttfamily -\/-\/input-\/width}, {\ttfamily -\/-\/input-\/height}, and {\ttfamily -\/-\/input-\/codec} options. Possible decoder codec options are {\ttfamily -\/-\/input-\/codec=h264, h265, vp8, vp9, mpeg2, mpeg4, mjpeg}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$\ video-\/viewer\ -\/-\/input-\/width=1920\ -\/-\/input-\/height=1080\ -\/-\/input-\/codec=h264\ /dev/video0}
+
+\end{DoxyCode}
+
+
+When you run one of the jetson-\/inference programs on a V4\+L2 source, the different formats that the V4\+L2 camera supports will be logged to the terminal. However you can also list these supported formats with the {\ttfamily v4l2-\/ctl} command:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$\ sudo\ apt-\/get\ install\ v4l-\/utils}
+\DoxyCodeLine{\$\ v4l2-\/ctl\ -\/-\/device=/dev/video0\ -\/-\/list-\/formats-\/ext}
+
+\end{DoxyCode}
+\hypertarget{md_jetson-inference_2docs_2aux-streaming_autotoc_md102}{}\doxysubsection{\texorpdfstring{Web\+RTC}{Web\+RTC}}\label{md_jetson-inference_2docs_2aux-streaming_autotoc_md102}
+This projects includes a built-\/in Web\+RTC server (input/\+output) for streaming video to/\+from client web browsers. You can use this for conveniently viewing video streams when your Jetson is headless and doesn\textquotesingle{}t have a display attached, or for easily building interactive webapps that use Jetson and edge AI on the backend. Tested browsers include Chrome/\+\+Chromium, mobile Android, and mobile i\+OS (Safari).
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$\ video-\/viewer\ /dev/video0\ webrtc://@:8554/my\_output\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \#\ send\ V4L2\ webcam\ to\ browser}
+\DoxyCodeLine{\$\ video-\/viewer\ webrtc://@:8554/my\_input\ output.mp4\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \#\ receive\ browser\ webcam\ (requires\ HTTPS/SSL)\ and\ save\ to\ MP4}
+\DoxyCodeLine{\$\ video-\/viewer\ webrtc://@:8554/my\_input\ webrtc://@:8554/my\_output\ \ \#\ receieve\ +\ send\ (full-\/duplex\ loopback)}
+
+\end{DoxyCode}
+
+
+\begin{quote}
+{\bfseries{note}}:\+ receiving browser webcams requires \href{webrtc-server.md\#enabling-https--ssl}{\texttt{HTTPS/\+\+SSL}} to be enabled \end{quote}
+
+
+You should then be able to navigate your browser to {\ttfamily \href{https://}{\texttt{https:\+/\+/\+}}\texorpdfstring{$<$}{<}JETSON-\/\+IP\texorpdfstring{$>$}{>}:\+8554} to view the stream. There\textquotesingle{}s an entire section of the Hello AI World tutorial dedicated to using Web\+RTC and building applications with various webapp frameworks:\+
+
+
+\begin{DoxyItemize}
+\item \doxysectlink{md_jetson-inference_2docs_2webrtc-server}{Web\+RTC Server}{0}
+\item \href{../README.md\#webapp-frameworks}{\texttt{Web\+APP Frameworks}}
+\end{DoxyItemize}\hypertarget{md_jetson-inference_2docs_2aux-streaming_autotoc_md103}{}\doxysubsection{\texorpdfstring{RTP}{RTP}}\label{md_jetson-inference_2docs_2aux-streaming_autotoc_md103}
+RTP network streams are broadcast to a particular host or multicast group over UDP/\+\+IP. When recieving an RTP stream, the codec must be specified ({\ttfamily -\/-\/input-\/codec}), because RTP doesn\textquotesingle{}t have the ability to dynamically query this. This will use RTP as input from another device:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$\ video-\/viewer\ -\/-\/input-\/codec=h264\ rtp://@:1234\ \ \ \ \ \ \ \ \ \#\ recieve\ on\ localhost\ port\ 1234}
+\DoxyCodeLine{\$\ video-\/viewer\ -\/-\/input-\/codec=h264\ rtp://224.0.0.0:1234\ \#\ subscribe\ to\ multicast\ group}
+
+\end{DoxyCode}
+
+
+\doxylink{requirements_The}{The} commands above specify RTP as the input source, where another remote host on the network is streaming to the Jetson. However, you can also output an RTP stream from your Jetson and transmit it to another remote host on the network.\hypertarget{md_jetson-inference_2docs_2aux-streaming_autotoc_md104}{}\doxysubsubsubsection{\texorpdfstring{Transmitting RTP}{Transmitting RTP}}\label{md_jetson-inference_2docs_2aux-streaming_autotoc_md104}
+To transmit an RTP output stream, specify the target IP/\+port as the {\ttfamily output\+\_\+\+URI}. If desired, you can specify the bitrate (the default is {\ttfamily -\/-\/bitrate=4000000} or 4Mbps) and/\+or the output codec (the default is {\ttfamily -\/-\/output-\/codec=h264}) which can be {\ttfamily h264, h265, vp8, vp9, mjpeg}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$\ video-\/viewer\ -\/-\/bitrate=1000000\ csi://0\ rtp://<remote-\/ip>:1234\ \ \ \ \ \ \ \ \ \#\ transmit\ camera\ over\ RTP,\ encoded\ as\ H.264\ @\ 1Mbps\ }
+\DoxyCodeLine{\$\ video-\/viewer\ -\/-\/output-\/codec=h265\ my\_video.mp4\ rtp://<remote-\/ip>:1234\ \ \#\ transmit\ a\ video\ file\ over\ RTP,\ encoded\ as\ H.265}
+
+\end{DoxyCode}
+
+
+When outputting RTP, you need to explicitly set the IP address or hostname of the remote host (or multicast group) that the stream is being sent to (shown above as {\ttfamily \texorpdfstring{$<$}{<}remote-\/ip\texorpdfstring{$>$}{>}}). See below for some pointers on viewing the RTP stream from a PC.\hypertarget{md_jetson-inference_2docs_2aux-streaming_autotoc_md105}{}\doxysubsubsubsection{\texorpdfstring{Viewing RTP Remotely}{Viewing RTP Remotely}}\label{md_jetson-inference_2docs_2aux-streaming_autotoc_md105}
+If your Jetson is transmitting RTP to another remote host (like a PC), here are some example commands that you can use to view the stream:\+
+
+
+\begin{DoxyItemize}
+\item Using GStreamer:\+
+\begin{DoxyItemize}
+\item \href{https://gstreamer.freedesktop.org/documentation/installing/index.html}{\texttt{Install GStreamer}} and run this pipeline (replace {\ttfamily port=1234} with the port you are using)
+\end{DoxyItemize}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$\ gst-\/launch-\/1.0\ -\/v\ udpsrc\ port=1234\ \(\backslash\)}
+\DoxyCodeLine{caps\ =\ "{}application/x-\/rtp,\ media=(string)video,\ clock-\/rate=(int)90000,\ encoding-\/name=(string)H264,\ payload=(int)96"{}\ !\ \(\backslash\)}
+\DoxyCodeLine{rtph264depay\ !\ decodebin\ !\ videoconvert\ !\ autovideosink}
+
+\end{DoxyCode}
+
+\item Using VLC Player:\+
+\begin{DoxyItemize}
+\item Create a SDP file (.sdp) with the following contents (replace {\ttfamily 1234} with the port you are using)
+\end{DoxyItemize}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{c=IN\ IP4\ 127.0.0.1}
+\DoxyCodeLine{m=video\ 1234\ RTP/AVP\ 96}
+\DoxyCodeLine{a=rtpmap:96\ H264/90000}
+
+\end{DoxyCode}
+
+\begin{DoxyItemize}
+\item Open the stream in VLC by double-\/clicking the SDP file
+\item You may want to reduce the {\ttfamily File caching} and {\ttfamily Network caching} settings in VLC as \href{https://www.howtogeek.com/howto/windows/fix-for-vlc-skipping-and-lagging-playing-high-def-video-files/}{\texttt{shown here}}
+\end{DoxyItemize}
+\item If your remote host is another Jetson:\+
+\begin{DoxyItemize}
+\item Use the same {\ttfamily video-\/viewer} command as above (replace {\ttfamily 1234} with the port you are using)
+\end{DoxyItemize}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$\ video-\/viewer\ -\/-\/input-\/codec=h264\ rtp://@:1234}
+
+\end{DoxyCode}
+
+\end{DoxyItemize}\hypertarget{md_jetson-inference_2docs_2aux-streaming_autotoc_md106}{}\doxysubsection{\texorpdfstring{RTSP}{RTSP}}\label{md_jetson-inference_2docs_2aux-streaming_autotoc_md106}
+RTSP network streams are subscribed to from a remote host over UDP/\+\+IP. Unlike RTP, RTSP can dynamically query the stream properties (like resolution and codec), so these options don\textquotesingle{}t need to be explicitly provided.\hypertarget{md_jetson-inference_2docs_2aux-streaming_autotoc_md107}{}\doxysubsubsubsection{\texorpdfstring{RTSP Input}{RTSP Input}}\label{md_jetson-inference_2docs_2aux-streaming_autotoc_md107}
+To connect to an RTSP source, supply the IP address and URL of the RTSP server offering it:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$\ video-\/viewer\ rtsp://<remote-\/ip>:1234\ my\_video.mp4\ \ \ \ \ \ \#\ subscribe\ to\ RTSP\ feed\ from\ <remote-\/ip>,\ port\ 1234\ (and\ save\ it\ to\ file)}
+\DoxyCodeLine{\$\ video-\/viewer\ rtsp://username:password@<remote-\/ip>:1234\ \#\ with\ authentication\ (replace\ username/password\ with\ credentials)}
+
+\end{DoxyCode}
+
+
+You might need to supply the username/\+password credentials in the URL if the RTSP server has authentication enabled.\hypertarget{md_jetson-inference_2docs_2aux-streaming_autotoc_md108}{}\doxysubsubsubsection{\texorpdfstring{RTSP Output}{RTSP Output}}\label{md_jetson-inference_2docs_2aux-streaming_autotoc_md108}
+jetson-\/utils includes a built-\/in RTSP server using GStreamer for sending compressed RTSP streams to multiple clients:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$\ video-\/viewer\ /dev/video0\ rtsp://@:1234/my\_output\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \#\ stream\ a\ V4L2\ camera\ out\ over\ RTSP\ }
+\DoxyCodeLine{\$\ video-\/viewer\ rtsp://<remote-\/ip>:1234/input\ rtsp://@:1234/output\ \ \#\ subscribe\ to\ an\ RTSP\ feed,\ and\ relay\ it\ (loopback)}
+
+\end{DoxyCode}
+
+
+\begin{quote}
+{\bfseries{note:\+}} SSL encryption can be enabled for RTSP output in the \href{webrtc-server.md\#enabling-https--ssl}{\texttt{same way}} that it is for Web\+RTC \end{quote}
+
+
+You should then be able to open and view the stream from an RTSP client (like VLC player) at the URL {\ttfamily rtsp:\+/\+/\+\texorpdfstring{$<$}{<}jetson-\/ip\texorpdfstring{$>$}{>}:\+1234/\+my\+\_\+output}\hypertarget{md_jetson-inference_2docs_2aux-streaming_autotoc_md109}{}\doxysubsection{\texorpdfstring{Video Files}{Video Files}}\label{md_jetson-inference_2docs_2aux-streaming_autotoc_md109}
+You can playback and record compressed video files in MP4, MKV, AVI, and FLV formats (in addition to uncontainerized H264/\+\+H265).
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\#\ playback}
+\DoxyCodeLine{\$\ video-\/viewer\ my\_video.mp4\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \#\ display\ the\ video\ file}
+\DoxyCodeLine{\$\ video-\/viewer\ my\_video.mp4\ rtp://<remote-\/ip>:1234\ \ \ \ \ \ \ \#\ transmit\ the\ video\ over\ RTP}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#\ recording}
+\DoxyCodeLine{\$\ video-\/viewer\ csi://0\ my\_video.mp4\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \#\ record\ CSI\ camera\ to\ video\ file}
+\DoxyCodeLine{\$\ video-\/viewer\ /dev/video0\ my\_video.mp4\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \#\ record\ V4L2\ camera\ to\ video\ file}
+
+\end{DoxyCode}
+\hypertarget{md_jetson-inference_2docs_2aux-streaming_autotoc_md110}{}\doxysubsubsubsection{\texorpdfstring{Codecs}{Codecs}}\label{md_jetson-inference_2docs_2aux-streaming_autotoc_md110}
+When loading video files, the codec and resolution is automatically detected, so these don\textquotesingle{}t need to be set. When saving video files, the default codec is H.\+264, but this can be set with the {\ttfamily -\/-\/output-\/codec} option.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$\ video-\/viewer\ -\/-\/output-\/codec=h265\ input.mp4\ output.mp4\ \ \#\ transcode\ video\ to\ H.265}
+
+\end{DoxyCode}
+
+
+\doxylink{requirements_The}{The} following codecs are supported:\+
+
+
+\begin{DoxyItemize}
+\item Decode -\/ {\ttfamily h264, h265, vp8, vp9, mpeg2, mpeg4, mjpeg}
+\item Encode -\/ {\ttfamily h264, h265, vp8, vp9, mjpeg}
+\end{DoxyItemize}\hypertarget{md_jetson-inference_2docs_2aux-streaming_autotoc_md111}{}\doxysubsubsubsection{\texorpdfstring{Resizing Inputs}{Resizing Inputs}}\label{md_jetson-inference_2docs_2aux-streaming_autotoc_md111}
+When loading video files, the resolution is automatically detected. However, if you would like the input video to be re-\/scaled to a different resolution, you can specify the {\ttfamily -\/-\/input-\/width} and {\ttfamily -\/-\/input-\/height} options:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$\ video-\/viewer\ -\/-\/input-\/width=640\ -\/-\/input-\/height=480\ my\_video.mp4\ \ \#\ resize\ video\ to\ 640x480}
+
+\end{DoxyCode}
+\hypertarget{md_jetson-inference_2docs_2aux-streaming_autotoc_md112}{}\doxysubsubsubsection{\texorpdfstring{Looping Inputs}{Looping Inputs}}\label{md_jetson-inference_2docs_2aux-streaming_autotoc_md112}
+By default, the video will terminate once the end of stream (EOS) is reached. However, by specifying the {\ttfamily -\/-\/loop} option, you can set the number of loops that you want the video to run for. Possible options for {\ttfamily -\/-\/loop} are:\+
+
+
+\begin{DoxyItemize}
+\item {\ttfamily -\/1} = loop forever
+\item ~{\ttfamily  0} = don\textquotesingle{}t loop (default)
+\item {\ttfamily \texorpdfstring{$>$}{>}0} = set number of loops
+\end{DoxyItemize}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$\ video-\/viewer\ -\/-\/loop=10\ my\_video.mp4\ \ \ \ \#\ loop\ the\ video\ 10\ times}
+\DoxyCodeLine{\$\ video-\/viewer\ -\/-\/loop=-\/1\ my\_video.mp4\ \ \ \ \#\ loop\ the\ video\ forever\ (until\ user\ quits)}
+
+\end{DoxyCode}
+\hypertarget{md_jetson-inference_2docs_2aux-streaming_autotoc_md113}{}\doxysubsubsubsection{\texorpdfstring{Secondary Destination}{Secondary Destination}}\label{md_jetson-inference_2docs_2aux-streaming_autotoc_md113}
+Sometimes you may wish to save the unprocessed camera feed (or the post-\/processed video) to disk in addition to the primary output stream. For incoming inputs that are already compressed (for example, an H264-\/encoded camera or network stream), the {\ttfamily -\/-\/input-\/save=\texorpdfstring{$<$}{<}FILE\texorpdfstring{$>$}{>}} option can be used to dump the encoded video to disk before it\textquotesingle{}s decoded and processed. It supports MP4, MKV, AVI, FLV, and raw H264/\+\+H265.
+
+For output streams that are to be compressed (i.\+e. network streams like Web\+RTC/\+\+RTP/\+\+RTSP) then the {\ttfamily -\/-\/output-\/save=\texorpdfstring{$<$}{<}FILE\texorpdfstring{$>$}{>}} option will record the processed video to disk in addition to it\textquotesingle{}s primary output. To save an output video file while also displaying it on a screen attached to your Jetson (which doesn\textquotesingle{}t undergo compression), just use the method above for recording video and an Open\+GL GUI window will automatically open.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{\$\ detectnet\ -\/-\/input-\/codec=h264\ -\/-\/input-\/save=camera\_dump.mp4\ /dev/video0\ \ \ \ \ \ \ \#\ save\ incoming/unprocessed\ video}
+\DoxyCodeLine{\$\ detectnet\ -\/-\/output-\/save=post\_dump.mp4\ /dev/video0\ rtsp://@:1234/my\_stream\ \ \ \#\ save\ outgoing/processed\ video}
+
+\end{DoxyCode}
+
+
+\begin{quote}
+{\bfseries{note:\+}} {\ttfamily -\/-\/input-\/save} and {\ttfamily -\/-\/output-\/save} can only be used in conjunction with streams that are already compressed/\+encoded. \end{quote}
+
+
+\doxylink{requirements_The}{The} first command will dump the original camera video, and the second will dump it after processing (e.\+g. including bounding boxes, ect)\hypertarget{md_jetson-inference_2docs_2aux-streaming_autotoc_md114}{}\doxysubsection{\texorpdfstring{Image Files}{Image Files}}\label{md_jetson-inference_2docs_2aux-streaming_autotoc_md114}
+You can load/\+save image files in the following formats:\+
+
+
+\begin{DoxyItemize}
+\item Load:\+ JPG, PNG, TGA, BMP, GIF, PSD, HDR, PIC, and PNM (PPM/\+\+PGM binary)
+\item Save:\+ JPG, PNG, TGA, BMP
+\end{DoxyItemize}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$\ video-\/viewer\ input.jpg\ output.jpg\ \#\ load/save\ an\ image}
+
+\end{DoxyCode}
+
+
+You can also loop images and image sequences -\/ see the Looping Inputs section above.\hypertarget{md_jetson-inference_2docs_2aux-streaming_autotoc_md115}{}\doxysubsubsubsection{\texorpdfstring{Sequences}{Sequences}}\label{md_jetson-inference_2docs_2aux-streaming_autotoc_md115}
+If the path is a directory or contains wildcards, all of the images will be loaded/\+saved sequentially (in alphanumeric order).
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$\ video-\/viewer\ input\_dir/\ output\_dir/\ \ \ \#\ load\ all\ images\ from\ input\_dir\ and\ save\ them\ to\ output\_dir}
+\DoxyCodeLine{\$\ video-\/viewer\ "{}*.jpg"{}\ output\_\%i.jpg\ \ \ \ \#\ load\ all\ jpg\ images\ and\ save\ them\ to\ output\_0.jpg,\ output\_1.jpg,\ ect}
+
+\end{DoxyCode}
+
+
+\begin{quote}
+{\bfseries{note:\+}} when using wildcards, always enclose it in quotes ({\ttfamily "{}\texorpdfstring{$\ast$}{*}.jpg"{}}). Otherwise, the OS will auto-\/expand the sequence and modify the order of arguments on the command-\/line, which may result in one of the input images being overwritten by the output. \end{quote}
+
+
+When saving a sequence of images, if the path is just to a directory ({\ttfamily output\+\_\+dir}), then the images will automatically be saved as JPG with the format {\ttfamily output\+\_\+dir/\+i.\+jpg}, using the image number as it\textquotesingle{}s filename ({\ttfamily output\+\_\+dir/\+0.\+jpg}, {\ttfamily output\+\_\+dir/\+1.\+jpg}, ect). ~\newline
+
+
+If you wish to specify the filename format, do so by using the printf-\/style {\ttfamily i} in the path ({\ttfamily output\+\_\+dir/\+image\+\_\+i.\+png}). You can apply additional printf modifiers such as {\ttfamily \%04i} to create filenames like {\ttfamily output\+\_\+dir/\+image\+\_\+0001.\+jpg}.\hypertarget{md_jetson-inference_2docs_2aux-streaming_autotoc_md116}{}\doxysubsection{\texorpdfstring{Source Code}{Source Code}}\label{md_jetson-inference_2docs_2aux-streaming_autotoc_md116}
+Streams are accessed using the \href{https://github.com/dusty-nv/jetson-utils/tree/master/video/videoSource.h}{\texttt{{\ttfamily video\+Source}}} and \href{https://github.com/dusty-nv/jetson-utils/tree/master/video/videoOutput.h}{\texttt{{\ttfamily video\+Output}}} objects. These have the ability to handle each of the types of streams from above through a unified set of APIs. Images can be captured and output in the following data formats:\+ ~\newline
+
+
+
+\begin{DoxyTable}{4}{}{}{1}
+\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}Format string  &\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}\href{https://rawgit.com/dusty-nv/jetson-inference/master/docs/html/group__imageFormat.html\#ga931c48e08f361637d093355d64583406}{\texttt{{\ttfamily image\+Format} enum}}  &\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}Data Type  &\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}Bit Depth  \\
+{\ttfamily rgb8}  &{\ttfamily \doxylink{group__image_format_gga931c48e08f361637d093355d64583406a7e08074dcdc25f156e92c233807b048f}{IMAGE\+\_\+\+RGB8}}  &{\ttfamily uchar3}  &24  \\
+{\ttfamily rgba8}  &{\ttfamily \doxylink{group__image_format_gga931c48e08f361637d093355d64583406aa36c106df206651efeeba8c7c1e7bddc}{IMAGE\+\_\+\+RGBA8}}  &{\ttfamily uchar4}  &32  \\
+{\ttfamily rgb32f}  &{\ttfamily \doxylink{group__image_format_gga931c48e08f361637d093355d64583406a9fd17a87f744486a238f2a7daf4143da}{IMAGE\+\_\+\+RGB32F}}  &{\ttfamily float3}  &96  \\
+{\ttfamily rgba32f}  &{\ttfamily \doxylink{group__image_format_gga931c48e08f361637d093355d64583406a9396c3fdae6987bbf4abc2b2e63e3815}{IMAGE\+\_\+\+RGBA32F}}  &{\ttfamily float4}  &128  \\
+\end{DoxyTable}
+
+
+
+\begin{DoxyItemize}
+\item the Data Type and \href{https://rawgit.com/dusty-nv/jetson-inference/master/docs/html/group__imageFormat.html\#ga931c48e08f361637d093355d64583406}{\texttt{{\ttfamily image\+Format}}} enum are C++ types
+\item in Python, the format string can be passed to {\ttfamily \doxylink{classvideo_source_a151da5e63cbd96a1b4761316dbd4eb68}{video\+Source.\+Capture()}} to request a specific format (the default is {\ttfamily rgb8})
+\item in C++, the {\ttfamily \doxylink{classvideo_source_a151da5e63cbd96a1b4761316dbd4eb68}{video\+Source::\+\+Capture()}} template will infer the format from the data type of the output pointer
+\end{DoxyItemize}
+
+To convert images to/\+from different formats, see the \doxysectlink{md_jetson-inference_2docs_2aux-image}{Image Manipulation with CUDA}{0} page for more info.
+
+Below is the source code to \href{https://github.com/dusty-nv/jetson-utils/tree/master/python/examples/video-viewer.py}{\texttt{{\ttfamily video-\/viewer.\+py}}} and \href{https://github.com/dusty-nv/jetson-utils/tree/master/video/video-viewer/video-viewer.cpp}{\texttt{{\ttfamily video-\/viewer}}}, slightly abbreviated to improve readability:\+\hypertarget{md_jetson-inference_2docs_2aux-streaming_autotoc_md117}{}\doxysubsubsection{\texorpdfstring{Python}{Python}}\label{md_jetson-inference_2docs_2aux-streaming_autotoc_md117}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{import}\ sys}
+\DoxyCodeLine{\textcolor{keyword}{import}\ argparse}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{from}\ jetson\_utils\ \textcolor{keyword}{import}\ videoSource,\ videoOutput}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{\#\ parse\ command\ line}}
+\DoxyCodeLine{parser\ =\ argparse.ArgumentParser()}
+\DoxyCodeLine{parser.add\_argument(\textcolor{stringliteral}{"{}input"{}},\ type=str,\ help=\textcolor{stringliteral}{"{}URI\ of\ the\ input\ stream"{}})}
+\DoxyCodeLine{parser.add\_argument(\textcolor{stringliteral}{"{}output"{}},\ type=str,\ default=\textcolor{stringliteral}{"{}"{}},\ nargs=\textcolor{stringliteral}{'?'},\ help=\textcolor{stringliteral}{"{}URI\ of\ the\ output\ stream"{}})}
+\DoxyCodeLine{args\ =\ parser.parse\_known\_args()[0]}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{\#\ create\ video\ sources\ \&\ outputs}}
+\DoxyCodeLine{input\ =\ \doxymbox{\hyperlink{classvideo_source}{videoSource}}(args.input,\ argv=sys.argv)\ \ \ \ \textcolor{comment}{\#\ default:\ \ options=\{'width':\ 1280,\ 'height':\ 720,\ 'framerate':\ 30\}}}
+\DoxyCodeLine{output\ =\ \doxymbox{\hyperlink{classvideo_output}{videoOutput}}(args.output,\ argv=sys.argv)\ \ \textcolor{comment}{\#\ default:\ \ options=\{'codec':\ 'h264',\ 'bitrate':\ 4000000\}}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{\#\ capture\ frames\ until\ end-\/of-\/stream\ (or\ the\ user\ exits)}}
+\DoxyCodeLine{\textcolor{keywordflow}{while}\ \textcolor{keyword}{True}:}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{\#\ format\ can\ be:\ \ \ rgb8,\ rgba8,\ rgb32f,\ rgba32f\ (rgb8\ is\ the\ default)}}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{\#\ timeout\ can\ be:\ \ -\/1\ for\ infinite\ timeout\ (blocking),\ 0\ to\ return\ immediately,\ >0\ in\ milliseconds\ (default\ is\ 1000ms)}}
+\DoxyCodeLine{\ \ \ \ image\ =\ input.Capture(format=\textcolor{stringliteral}{'rgb8'},\ timeout=1000)\ \ }
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{if}\ image\ \textcolor{keywordflow}{is}\ \textcolor{keywordtype}{None}:\ \ \textcolor{comment}{\#\ if\ a\ timeout\ occurred}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\ \ \ \ output.Render(image)}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{\#\ exit\ on\ input/output\ EOS}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keywordflow}{not}\ input.IsStreaming()\ \textcolor{keywordflow}{or}\ \textcolor{keywordflow}{not}\ output.IsStreaming():}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{break}}
+
+\end{DoxyCode}
+
+
+To hardcode video configuration settings in Python, you can pass an optional {\ttfamily options} dictionary to the video\+Source/\+video\+Output initializer, which roughly corresponds to the \href{https://github.com/dusty-nv/jetson-utils/blob/master/video/videoOptions.h}{\texttt{{\ttfamily video\+Options}}} structure in C++:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ python}
+\DoxyCodeLine{input\ =\ videoSource("{}/dev/video0"{},\ options=\{'width':\ 1280,\ 'height':\ 720,\ 'framerate':\ 30,\ 'flipMethod':\ 'rotate-\/180'\})}
+\DoxyCodeLine{output\ =\ videoOutput("{}my\_video.mp4"{},\ options=\{'codec':\ 'h264',\ 'bitrate':\ 4000000\})}
+
+\end{DoxyCode}
+
+
+\doxylink{requirements_The}{The} input settings will use the closest resolution/\+framerate available, but it\textquotesingle{}s recommend to check your camera\textquotesingle{}s supported formats first.\hypertarget{md_jetson-inference_2docs_2aux-streaming_autotoc_md118}{}\doxysubsubsection{\texorpdfstring{C++}{C++}}\label{md_jetson-inference_2docs_2aux-streaming_autotoc_md118}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include\ <jetson-\/utils/videoSource.h>}}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include\ <jetson-\/utils/videoOutput.h>}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keywordtype}{int}\ main(\ \textcolor{keywordtype}{int}\ argc,\ \textcolor{keywordtype}{char}**\ argv\ )}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ create\ input/output\ streams}}
+\DoxyCodeLine{\ \ \ \ \doxymbox{\hyperlink{classvideo_source}{videoSource}}*\ input\ =\ \doxymbox{\hyperlink{classvideo_source_a971493dd39e0706bf53779d47621565e}{videoSource::Create}}(argc,\ argv,\ \doxymbox{\hyperlink{group__command_line_gaf63830069581bb594e9ff6d132c08c31}{ARG\_POSITION}}(0));}
+\DoxyCodeLine{\ \ \ \ \doxymbox{\hyperlink{classvideo_output}{videoOutput}}*\ output\ =\ \doxymbox{\hyperlink{classvideo_output_acedbc7ebeb4f736471098dac4369f65a}{videoOutput::Create}}(argc,\ argv,\ \doxymbox{\hyperlink{group__command_line_gaf63830069581bb594e9ff6d132c08c31}{ARG\_POSITION}}(1));}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{if}(\ !input\ )}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ capture/display\ loop}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{while}(\ \textcolor{keyword}{true}\ )}
+\DoxyCodeLine{\ \ \ \ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ uchar3*\ image\ =\ NULL;\ \ \textcolor{comment}{//\ can\ be\ uchar3,\ uchar4,\ float3,\ float4}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ status\ =\ 0;\ \ \ \ \ \ \ \ \textcolor{comment}{//\ see\ videoSource::Status\ (OK,\ TIMEOUT,\ EOS,\ ERROR)}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\ !input-\/>Capture(\&image,\ 1000,\ \&status)\ )\ \ \textcolor{comment}{//\ 1000ms\ timeout\ (default)}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\ status\ ==\ \doxymbox{\hyperlink{classvideo_source_adf535af6425bba4700aa49a8a1c31fc8aee109bb5b2643da575fb3320655f3dda}{videoSource::TIMEOUT}}\ )}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};\ \textcolor{comment}{//\ EOS}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\ output\ !=\ NULL\ )}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ output-\/>Render(image,\ input-\/>GetWidth(),\ input-\/>GetHeight());}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\ !output-\/>IsStreaming()\ )\ \ \textcolor{comment}{//\ check\ if\ the\ user\ quit}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ destroy\ resources}}
+\DoxyCodeLine{\ \ \ \ \doxymbox{\hyperlink{group__util_ga4b8b2bed986c06c207ebac140ba65a7a}{SAFE\_DELETE}}(input);}
+\DoxyCodeLine{\ \ \ \ \doxymbox{\hyperlink{group__util_ga4b8b2bed986c06c207ebac140ba65a7a}{SAFE\_DELETE}}(output);}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+
+
+To create the interfaces programatically from coded settings, the \href{https://github.com/dusty-nv/jetson-utils/blob/master/video/videoOptions.h}{\texttt{{\ttfamily video\+Options}}} struct can also be populated like this:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\doxymbox{\hyperlink{structvideo_options}{videoOptions}}\ options;}
+\DoxyCodeLine{}
+\DoxyCodeLine{options.\doxymbox{\hyperlink{structvideo_options_a5c30587a874bb769d7b346ac00cff580}{width}}\ =\ 1280;}
+\DoxyCodeLine{options.\doxymbox{\hyperlink{structvideo_options_a66660b049937fd088b5ab29a0aa2187c}{height}}\ =\ 720;}
+\DoxyCodeLine{options.\doxymbox{\hyperlink{structvideo_options_a85ceaa18c31e939f92da06027de8dedd}{frameRate}}\ =\ 30;}
+\DoxyCodeLine{options.\doxymbox{\hyperlink{structvideo_options_a7af22e5cccd15cc2bdf14386f7f34d36}{flipMethod}}\ =\ \doxymbox{\hyperlink{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eeaf6bcea96d2852de27d10047158f25c71}{videoOptions::FLIP\_ROTATE\_180}};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\doxymbox{\hyperlink{classvideo_source}{videoSource}}*\ input\ =\ \doxymbox{\hyperlink{classvideo_source_a971493dd39e0706bf53779d47621565e}{videoSource::Create}}(\textcolor{stringliteral}{"{}/dev/video0"{}},\ options);}
+
+\end{DoxyCode}
+
+
+\doxylink{requirements_The}{The} input settings will use the closest resolution/\+framerate available, but it\textquotesingle{}s recommend to check your camera\textquotesingle{}s supported formats first.
+
+Next \texorpdfstring{$\vert$}{|} {\bfseries{\href{aux-image.md}{\texttt{Image Manipulation with CUDA}}}} 
+
+\textsuperscript{© 2016-\/2020 NVIDIA \texorpdfstring{$\vert$}{|} }\href{../README.md\#hello-ai-world}{\texttt{\textsuperscript{Table of Contents}}}

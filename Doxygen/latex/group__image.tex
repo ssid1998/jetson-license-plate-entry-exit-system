@@ -1,0 +1,304 @@
+\doxysubsection{Image I/\+O }
+\hypertarget{group__image}{}\label{group__image}\index{Image I/O@{Image I/O}}
+\doxysubsubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \doxymbox{\hyperlink{struct____image__format__assert__false}{\+\_\+\+\_\+image\+\_\+format\+\_\+assert\+\_\+false$<$ T $>$}}
+\item 
+class \doxymbox{\hyperlink{classimage_loader}{image\+Loader}}
+\item 
+class \doxymbox{\hyperlink{classimage_writer}{image\+Writer}}
+\end{DoxyCompactItemize}
+\doxysubsubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\+\#define \doxymbox{\hyperlink{group__image_ga922c34a0b4c5c10ded7aaede7cb6ee2f}{IMAGE\+\_\+\+DEFAULT\+\_\+\+SAVE\+\_\+\+QUALITY}}~95
+\item 
+\+\#define \doxymbox{\hyperlink{group__image_ga922c34a0b4c5c10ded7aaede7cb6ee2f}{IMAGE\+\_\+\+DEFAULT\+\_\+\+SAVE\+\_\+\+QUALITY}}~95
+\end{DoxyCompactItemize}
+\doxysubsubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$typename T$>$ }\\bool \doxymbox{\hyperlink{group__image_gab2959819259e3cbcfd72ad633f8f9f17}{load\+Image}} (const char \texorpdfstring{$\ast$}{*}filename, T \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}ptr, int \texorpdfstring{$\ast$}{*}width, int \texorpdfstring{$\ast$}{*}height, cuda\+Stream\+\_\+t stream=0)
+\item 
+bool \doxymbox{\hyperlink{group__image_gad1e8f9fadba423c3ad17dd6798c4db97}{load\+Image}} (const char \texorpdfstring{$\ast$}{*}filename, void \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}output, int \texorpdfstring{$\ast$}{*}width, int \texorpdfstring{$\ast$}{*}height, \doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{image\+Format}} format, cuda\+Stream\+\_\+t stream=0)
+\item 
+bool \doxymbox{\hyperlink{group__image_ga6e2a8dafbe55bf80c3f82a67f27434dd}{load\+Image\+RGBA}} (const char \texorpdfstring{$\ast$}{*}filename, float4 \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}ptr, int \texorpdfstring{$\ast$}{*}width, int \texorpdfstring{$\ast$}{*}height, cuda\+Stream\+\_\+t stream=0)
+\item 
+bool \doxymbox{\hyperlink{group__image_ga84d292def151b0d9f3cb1e32b0dcdcb7}{load\+Image\+RGBA}} (const char \texorpdfstring{$\ast$}{*}filename, float4 \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}cpu, float4 \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}gpu, int \texorpdfstring{$\ast$}{*}width, int \texorpdfstring{$\ast$}{*}height, cuda\+Stream\+\_\+t stream=0)
+\item 
+{\footnotesize template$<$typename T$>$ }\\bool \doxymbox{\hyperlink{group__image_gaebd1293bd7119be5164b521dc20b2233}{save\+Image}} (const char \texorpdfstring{$\ast$}{*}filename, T \texorpdfstring{$\ast$}{*}ptr, int width, int height, int quality=\doxymbox{\hyperlink{group__image_ga922c34a0b4c5c10ded7aaede7cb6ee2f}{IMAGE\+\_\+\+DEFAULT\+\_\+\+SAVE\+\_\+\+QUALITY}}, const float2 \&pixel\+\_\+range=make\+\_\+float2(0, 255), bool sync=true, cuda\+Stream\+\_\+t stream=0)
+\item 
+bool \doxymbox{\hyperlink{group__image_gaf13237b247831275f2c35fb03b3d77da}{save\+Image}} (const char \texorpdfstring{$\ast$}{*}filename, void \texorpdfstring{$\ast$}{*}ptr, int width, int height, \doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{image\+Format}} format, int quality=95, const float2 \&pixel\+\_\+range=make\+\_\+float2(0, 255), bool sync=true, cuda\+Stream\+\_\+t stream=0)
+\item 
+bool \doxymbox{\hyperlink{group__image_ga082bec01c6320b4058bd7f3dc65f6390}{save\+Image}} (const char \texorpdfstring{$\ast$}{*}filename, void \texorpdfstring{$\ast$}{*}ptr, int width, int height, \doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{image\+Format}} format, int quality, cuda\+Stream\+\_\+t stream)
+\item 
+bool \doxymbox{\hyperlink{group__image_ga01b651fa2b5b3dec7d304173780378d1}{save\+Image\+RGBA}} (const char \texorpdfstring{$\ast$}{*}filename, float4 \texorpdfstring{$\ast$}{*}ptr, int width, int height, float max\+\_\+pixel=255.\+0f, int quality=100, cuda\+Stream\+\_\+t stream=0)
+\end{DoxyCompactItemize}
+
+
+\doxysubsubsection{Detailed Description}
+Loading and saving image files from disk. 
+
+\label{doc-define-members}
+\Hypertarget{group__image_doc-define-members}
+\doxysubsubsection{Macro Definition Documentation}
+\Hypertarget{group__image_ga922c34a0b4c5c10ded7aaede7cb6ee2f}\index{Image I/O@{Image I/O}!IMAGE\_DEFAULT\_SAVE\_QUALITY@{IMAGE\_DEFAULT\_SAVE\_QUALITY}}
+\index{IMAGE\_DEFAULT\_SAVE\_QUALITY@{IMAGE\_DEFAULT\_SAVE\_QUALITY}!Image I/O@{Image I/O}}
+\doxysubsubsubsection{\texorpdfstring{IMAGE\_DEFAULT\_SAVE\_QUALITY}{IMAGE\_DEFAULT\_SAVE\_QUALITY}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{group__image_ga922c34a0b4c5c10ded7aaede7cb6ee2f} 
+\+\#define IMAGE\+\_\+\+DEFAULT\+\_\+\+SAVE\+\_\+\+QUALITY~95}
+
+Defines the default quality level used when saving images with \doxylink{group__image_gaebd1293bd7119be5164b521dc20b2233}{save\+Image()} \Hypertarget{group__image_ga922c34a0b4c5c10ded7aaede7cb6ee2f}\index{Image I/O@{Image I/O}!IMAGE\_DEFAULT\_SAVE\_QUALITY@{IMAGE\_DEFAULT\_SAVE\_QUALITY}}
+\index{IMAGE\_DEFAULT\_SAVE\_QUALITY@{IMAGE\_DEFAULT\_SAVE\_QUALITY}!Image I/O@{Image I/O}}
+\doxysubsubsubsection{\texorpdfstring{IMAGE\_DEFAULT\_SAVE\_QUALITY}{IMAGE\_DEFAULT\_SAVE\_QUALITY}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{group__image_ga922c34a0b4c5c10ded7aaede7cb6ee2f} 
+\+\#define IMAGE\+\_\+\+DEFAULT\+\_\+\+SAVE\+\_\+\+QUALITY~95}
+
+Defines the default quality level used when saving images with \doxylink{group__image_gaebd1293bd7119be5164b521dc20b2233}{save\+Image()} 
+
+\label{doc-func-members}
+\Hypertarget{group__image_doc-func-members}
+\doxysubsubsection{Function Documentation}
+\Hypertarget{group__image_gab2959819259e3cbcfd72ad633f8f9f17}\index{Image I/O@{Image I/O}!loadImage@{loadImage}}
+\index{loadImage@{loadImage}!Image I/O@{Image I/O}}
+\doxysubsubsubsection{\texorpdfstring{loadImage()}{loadImage()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{group__image_gab2959819259e3cbcfd72ad633f8f9f17} 
+template$<$typename T$>$ \\
+bool load\+Image (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{filename}{, }\item[{T \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{ptr}{, }\item[{int \texorpdfstring{$\ast$}{*}}]{width}{, }\item[{int \texorpdfstring{$\ast$}{*}}]{height}{, }\item[{cuda\+Stream\+\_\+t}]{stream}{ = {\ttfamily 0}}\end{DoxyParamCaption})}
+
+Load a color image from disk into CUDA memory, in uchar3/\+uchar4/\+float3/\+float4 formats with pixel values 0-\/255.
+
+Supported image file formats by \doxylink{group__image_gab2959819259e3cbcfd72ad633f8f9f17}{load\+Image()} include:\+
+
+
+\begin{DoxyItemize}
+\item JPG
+\item PNG
+\item TGA
+\item BMP
+\item GIF
+\item PSD
+\item HDR
+\item PIC
+\item PNM (PPM/\+\+PGM binary)
+\end{DoxyItemize}
+
+This function loads the image into shared CPU/\+\+GPU memory, using the functions from cuda\+Mapped\+Memory.\+h
+
+
+\begin{DoxyParams}[1]{Parameters}
+\doxymbox{\texttt{in}}  & {\em filename} & Path to the image file to load from disk. \\
+\hline
+\doxymbox{\texttt{out}}  & {\em ptr} & Reference to pointer that will be set to the shared CPU/\+\+GPU buffer containing the image that will be allocated. This buffer will be allocated by \doxylink{group__image_gab2959819259e3cbcfd72ad633f8f9f17}{load\+Image()} in CUDA mapped memory, so it is shared between CPU/\+\+GPU. gpu will be the pointer to this shared buffer in the GPU\textquotesingle{}s address space. There is physically one buffer in memory. \\
+\hline
+\doxymbox{\texttt{in,out}}  & {\em width} & Pointer to int variable that gets set to the width of the image in pixels. If the width variable contains a non-\/zero value when it\textquotesingle{}s passed in, the image is resized to this desired width. Otherwise if the value of width is 0, the image will be loaded with it\textquotesingle{}s dimensions from the file on disk. \\
+\hline
+\doxymbox{\texttt{in,out}}  & {\em height} & Pointer to int variable that gets set to the height of the image in pixels. If the height variable contains a non-\/zero value when it\textquotesingle{}s passed in, the image is resized to this desired height. Otherwise if the value of height is 0, the image will be loaded with it\textquotesingle{}s dimensions from the file on disk. \\
+\hline
+ & {\em stream\+[in]\+} & Optional CUDA stream to queue operations on. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{group__image_gad1e8f9fadba423c3ad17dd6798c4db97}\index{Image I/O@{Image I/O}!loadImage@{loadImage}}
+\index{loadImage@{loadImage}!Image I/O@{Image I/O}}
+\doxysubsubsubsection{\texorpdfstring{loadImage()}{loadImage()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{group__image_gad1e8f9fadba423c3ad17dd6798c4db97} 
+bool load\+Image (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{filename}{, }\item[{void \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{output}{, }\item[{int \texorpdfstring{$\ast$}{*}}]{width}{, }\item[{int \texorpdfstring{$\ast$}{*}}]{height}{, }\item[{\doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{image\+Format}}}]{format}{, }\item[{cuda\+Stream\+\_\+t}]{stream}{ = {\ttfamily 0}}\end{DoxyParamCaption})}
+
+Load a color image from disk into CUDA memory, in uchar3/\+uchar4/\+float3/\+float4 formats with pixel values 0-\/255.
+
+Supported image file formats by \doxylink{group__image_gab2959819259e3cbcfd72ad633f8f9f17}{load\+Image()} include:\+
+
+
+\begin{DoxyItemize}
+\item JPG
+\item PNG
+\item TGA
+\item BMP
+\item GIF
+\item PSD
+\item HDR
+\item PIC
+\item PNM (PPM/\+\+PGM binary)
+\end{DoxyItemize}
+
+This function loads the image into shared CPU/\+\+GPU memory, using the functions from cuda\+Mapped\+Memory.\+h
+
+
+\begin{DoxyParams}[1]{Parameters}
+\doxymbox{\texttt{in}}  & {\em filename} & Path to the image file to load from disk. \\
+\hline
+\doxymbox{\texttt{out}}  & {\em ptr} & Reference to pointer that will be set to the shared CPU/\+\+GPU buffer containing the image that will be allocated. This buffer will be allocated by \doxylink{group__image_gab2959819259e3cbcfd72ad633f8f9f17}{load\+Image()} in CUDA mapped memory, so it is shared between CPU/\+\+GPU. gpu will be the pointer to this shared buffer in the GPU\textquotesingle{}s address space. There is physically one buffer in memory. \\
+\hline
+\doxymbox{\texttt{in,out}}  & {\em width} & Pointer to int variable that gets set to the width of the image in pixels. If the width variable contains a non-\/zero value when it\textquotesingle{}s passed in, the image is resized to this desired width. Otherwise if the value of width is 0, the image will be loaded with it\textquotesingle{}s dimensions from the file on disk. \\
+\hline
+\doxymbox{\texttt{in,out}}  & {\em height} & Pointer to int variable that gets set to the height of the image in pixels. If the height variable contains a non-\/zero value when it\textquotesingle{}s passed in, the image is resized to this desired height. Otherwise if the value of height is 0, the image will be loaded with it\textquotesingle{}s dimensions from the file on disk. \\
+\hline
+ & {\em stream\+[in]\+} & Optional CUDA stream to queue operations on. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{group__image_ga84d292def151b0d9f3cb1e32b0dcdcb7}\index{Image I/O@{Image I/O}!loadImageRGBA@{loadImageRGBA}}
+\index{loadImageRGBA@{loadImageRGBA}!Image I/O@{Image I/O}}
+\doxysubsubsubsection{\texorpdfstring{loadImageRGBA()}{loadImageRGBA()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{group__image_ga84d292def151b0d9f3cb1e32b0dcdcb7} 
+bool load\+Image\+RGBA (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{filename}{, }\item[{float4 \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{cpu}{, }\item[{float4 \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{gpu}{, }\item[{int \texorpdfstring{$\ast$}{*}}]{width}{, }\item[{int \texorpdfstring{$\ast$}{*}}]{height}{, }\item[{cuda\+Stream\+\_\+t}]{stream}{ = {\ttfamily 0}}\end{DoxyParamCaption})}
+
+Load a color image from disk into CUDA memory with alpha, in float4 RGBA format with pixel values 0-\/255. \begin{DoxySeeAlso}{See also}
+\doxylink{group__image_gab2959819259e3cbcfd72ad633f8f9f17}{load\+Image()} for more details about parameters and supported \doxylink{group__image}{Image I/\+O} formats. 
+\end{DoxySeeAlso}
+\begin{DoxyRefDesc}{Deprecated}
+\item[\doxymbox{\hyperlink{deprecated__deprecated000017}{Deprecated}}]this overload of \doxylink{group__image_ga6e2a8dafbe55bf80c3f82a67f27434dd}{load\+Image\+RGBA()} is deprecated and provided for legacy compatbility. having separate CPU and GPU pointers for shared memory is no longer needed, as they are the same. it is recommended to use \doxylink{group__image_gab2959819259e3cbcfd72ad633f8f9f17}{load\+Image()} instead, which supports multiple image formats.\end{DoxyRefDesc}
+
+
+Load a color image from disk into CUDA memory with alpha, in float4 RGBA format with pixel values 0-\/255. \begin{DoxySeeAlso}{See also}
+\doxylink{group__image_gab2959819259e3cbcfd72ad633f8f9f17}{load\+Image()} for more details about parameters and supported \doxylink{group__image}{Image I/\+O} formats. 
+\end{DoxySeeAlso}
+\begin{DoxyRefDesc}{Deprecated}
+\item[\doxymbox{\hyperlink{deprecated__deprecated000029}{Deprecated}}]this overload of \doxylink{group__image_ga6e2a8dafbe55bf80c3f82a67f27434dd}{load\+Image\+RGBA()} is deprecated and provided for legacy compatbility. having separate CPU and GPU pointers for shared memory is no longer needed, as they are the same. it is recommended to use \doxylink{group__image_gab2959819259e3cbcfd72ad633f8f9f17}{load\+Image()} instead, which supports multiple image formats.\end{DoxyRefDesc}
+\Hypertarget{group__image_ga6e2a8dafbe55bf80c3f82a67f27434dd}\index{Image I/O@{Image I/O}!loadImageRGBA@{loadImageRGBA}}
+\index{loadImageRGBA@{loadImageRGBA}!Image I/O@{Image I/O}}
+\doxysubsubsubsection{\texorpdfstring{loadImageRGBA()}{loadImageRGBA()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{group__image_ga6e2a8dafbe55bf80c3f82a67f27434dd} 
+bool load\+Image\+RGBA (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{filename}{, }\item[{float4 \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{ptr}{, }\item[{int \texorpdfstring{$\ast$}{*}}]{width}{, }\item[{int \texorpdfstring{$\ast$}{*}}]{height}{, }\item[{cuda\+Stream\+\_\+t}]{stream}{ = {\ttfamily 0}}\end{DoxyParamCaption})}
+
+Load a color image from disk into CUDA memory with alpha, in float4 RGBA format with pixel values 0-\/255. \begin{DoxySeeAlso}{See also}
+\doxylink{group__image_gab2959819259e3cbcfd72ad633f8f9f17}{load\+Image()} for more details about parameters and supported \doxylink{group__image}{Image I/\+O} formats. 
+\end{DoxySeeAlso}
+\begin{DoxyRefDesc}{Deprecated}
+\item[\doxymbox{\hyperlink{deprecated__deprecated000016}{Deprecated}}]this overload of \doxylink{group__image_ga6e2a8dafbe55bf80c3f82a67f27434dd}{load\+Image\+RGBA()} is deprecated and provided for legacy compatbility. it is recommended to use \doxylink{group__image_gab2959819259e3cbcfd72ad633f8f9f17}{load\+Image()} instead, which supports multiple image formats.\end{DoxyRefDesc}
+
+
+Load a color image from disk into CUDA memory with alpha, in float4 RGBA format with pixel values 0-\/255. \begin{DoxySeeAlso}{See also}
+\doxylink{group__image_gab2959819259e3cbcfd72ad633f8f9f17}{load\+Image()} for more details about parameters and supported \doxylink{group__image}{Image I/\+O} formats. 
+\end{DoxySeeAlso}
+\begin{DoxyRefDesc}{Deprecated}
+\item[\doxymbox{\hyperlink{deprecated__deprecated000028}{Deprecated}}]this overload of \doxylink{group__image_ga6e2a8dafbe55bf80c3f82a67f27434dd}{load\+Image\+RGBA()} is deprecated and provided for legacy compatbility. it is recommended to use \doxylink{group__image_gab2959819259e3cbcfd72ad633f8f9f17}{load\+Image()} instead, which supports multiple image formats.\end{DoxyRefDesc}
+\Hypertarget{group__image_gaebd1293bd7119be5164b521dc20b2233}\index{Image I/O@{Image I/O}!saveImage@{saveImage}}
+\index{saveImage@{saveImage}!Image I/O@{Image I/O}}
+\doxysubsubsubsection{\texorpdfstring{saveImage()}{saveImage()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily \label{group__image_gaebd1293bd7119be5164b521dc20b2233} 
+template$<$typename T$>$ \\
+bool save\+Image (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{filename}{, }\item[{T \texorpdfstring{$\ast$}{*}}]{ptr}{, }\item[{int}]{width}{, }\item[{int}]{height}{, }\item[{int}]{quality}{ = {\ttfamily \doxymbox{\hyperlink{group__image_ga922c34a0b4c5c10ded7aaede7cb6ee2f}{IMAGE\+\_\+\+DEFAULT\+\_\+\+SAVE\+\_\+\+QUALITY}}}, }\item[{const float2 \&}]{pixel\+\_\+range}{ = {\ttfamily make\+\_\+float2(0,255)}, }\item[{bool}]{sync}{ = {\ttfamily true}, }\item[{cuda\+Stream\+\_\+t}]{stream}{ = {\ttfamily 0}}\end{DoxyParamCaption})}
+
+Save an image in CPU/\+\+GPU shared memory to disk.
+
+Supported image file formats by \doxylink{group__image_gaebd1293bd7119be5164b521dc20b2233}{save\+Image()} include:\+ ~\newline
+
+
+
+\begin{DoxyItemize}
+\item JPG
+\item PNG
+\item TGA
+\item BMP
+\end{DoxyItemize}
+
+
+\begin{DoxyParams}{Parameters}
+{\em filename} & Desired path of the image file to save to disk. \\
+\hline
+{\em ptr} & Pointer to the buffer containing the image in shared CPU/\+\+GPU zero-\/copy memory. \\
+\hline
+{\em width} & Width of the image in pixels. \\
+\hline
+{\em height} & Height of the image in pixels. \\
+\hline
+{\em max\+\_\+pixel} & \doxylink{requirements_The}{The} maximum pixel value of this image, by default it\textquotesingle{}s 255 for images in the range of 0-\/255. If your image is in the range of 0-\/1, pass 1.\+0 as this value. Then the pixel values of the image will be rescaled appropriately to be stored on disk (which expects a range of 0-\/255). \\
+\hline
+{\em quality} & Indicates the compression quality level (between 1 and 100) to be applied for JPEG and PNG images. A level of 1 correponds to reduced quality and maximum compression. A level of 100 corresponds to maximum quality and reduced compression. By default a level of 95 is used for high quality and moderate compression. Note that this quality parameter only applies to JPEG and PNG, other formats will ignore it. \\
+\hline
+{\em sync} & If true (default), the GPU will be sychronized with the CUDA stream to assure that any processing on the image has been completed before saving it to disk. \\
+\hline
+{\em stream} & Optional CUDA stream to queue operations on. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{group__image_ga082bec01c6320b4058bd7f3dc65f6390}\index{Image I/O@{Image I/O}!saveImage@{saveImage}}
+\index{saveImage@{saveImage}!Image I/O@{Image I/O}}
+\doxysubsubsubsection{\texorpdfstring{saveImage()}{saveImage()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily \label{group__image_ga082bec01c6320b4058bd7f3dc65f6390} 
+bool save\+Image (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{filename}{, }\item[{void \texorpdfstring{$\ast$}{*}}]{ptr}{, }\item[{int}]{width}{, }\item[{int}]{height}{, }\item[{\doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{image\+Format}}}]{format}{, }\item[{int}]{quality}{, }\item[{cuda\+Stream\+\_\+t}]{stream}{}\end{DoxyParamCaption})}
+
+Save an image in CPU/\+\+GPU shared memory to disk.
+
+Supported image file formats by \doxylink{group__image_gaebd1293bd7119be5164b521dc20b2233}{save\+Image()} include:\+ ~\newline
+
+
+
+\begin{DoxyItemize}
+\item JPG
+\item PNG
+\item TGA
+\item BMP
+\end{DoxyItemize}
+
+
+\begin{DoxyParams}{Parameters}
+{\em filename} & Desired path of the image file to save to disk. \\
+\hline
+{\em ptr} & Pointer to the buffer containing the image in shared CPU/\+\+GPU zero-\/copy memory. \\
+\hline
+{\em width} & Width of the image in pixels. \\
+\hline
+{\em height} & Height of the image in pixels. \\
+\hline
+{\em quality} & Indicates the compression quality level (between 1 and 100) to be applied for JPEG and PNG images. A level of 1 correponds to reduced quality and maximum compression. A level of 100 corresponds to maximum quality and reduced compression. By default a level of 95 is used for high quality and moderate compression. Note that this quality parameter only applies to JPEG and PNG, other formats will ignore it. \\
+\hline
+{\em stream} & Optional CUDA stream to queue operations on and synchronize with. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{group__image_gaf13237b247831275f2c35fb03b3d77da}\index{Image I/O@{Image I/O}!saveImage@{saveImage}}
+\index{saveImage@{saveImage}!Image I/O@{Image I/O}}
+\doxysubsubsubsection{\texorpdfstring{saveImage()}{saveImage()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily \label{group__image_gaf13237b247831275f2c35fb03b3d77da} 
+bool save\+Image (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{filename}{, }\item[{void \texorpdfstring{$\ast$}{*}}]{ptr}{, }\item[{int}]{width}{, }\item[{int}]{height}{, }\item[{\doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{image\+Format}}}]{format}{, }\item[{int}]{quality}{ = {\ttfamily 95}, }\item[{const float2 \&}]{pixel\+\_\+range}{ = {\ttfamily make\+\_\+float2(0,~255)}, }\item[{bool}]{sync}{ = {\ttfamily true}, }\item[{cuda\+Stream\+\_\+t}]{stream}{ = {\ttfamily 0}}\end{DoxyParamCaption})}
+
+Save an image in CPU/\+\+GPU shared memory to disk.
+
+Supported image file formats by \doxylink{group__image_gaebd1293bd7119be5164b521dc20b2233}{save\+Image()} include:\+ ~\newline
+
+
+
+\begin{DoxyItemize}
+\item JPG
+\item PNG
+\item TGA
+\item BMP
+\end{DoxyItemize}
+
+
+\begin{DoxyParams}{Parameters}
+{\em filename} & Desired path of the image file to save to disk. \\
+\hline
+{\em ptr} & Pointer to the buffer containing the image in shared CPU/\+\+GPU zero-\/copy memory. \\
+\hline
+{\em width} & Width of the image in pixels. \\
+\hline
+{\em height} & Height of the image in pixels. \\
+\hline
+{\em max\+\_\+pixel} & \doxylink{requirements_The}{The} maximum pixel value of this image, by default it\textquotesingle{}s 255 for images in the range of 0-\/255. If your image is in the range of 0-\/1, pass 1.\+0 as this value. Then the pixel values of the image will be rescaled appropriately to be stored on disk (which expects a range of 0-\/255). \\
+\hline
+{\em quality} & Indicates the compression quality level (between 1 and 100) to be applied for JPEG and PNG images. A level of 1 correponds to reduced quality and maximum compression. A level of 100 corresponds to maximum quality and reduced compression. By default a level of 95 is used for high quality and moderate compression. Note that this quality parameter only applies to JPEG and PNG, other formats will ignore it. \\
+\hline
+{\em sync} & If true (default), the GPU will be sychronized with the CUDA stream to assure that any processing on the image has been completed before saving it to disk. \\
+\hline
+{\em stream} & Optional CUDA stream to queue operations on and synchronize with. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{group__image_ga01b651fa2b5b3dec7d304173780378d1}\index{Image I/O@{Image I/O}!saveImageRGBA@{saveImageRGBA}}
+\index{saveImageRGBA@{saveImageRGBA}!Image I/O@{Image I/O}}
+\doxysubsubsubsection{\texorpdfstring{saveImageRGBA()}{saveImageRGBA()}}
+{\footnotesize\ttfamily \label{group__image_ga01b651fa2b5b3dec7d304173780378d1} 
+bool save\+Image\+RGBA (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{filename}{, }\item[{float4 \texorpdfstring{$\ast$}{*}}]{ptr}{, }\item[{int}]{width}{, }\item[{int}]{height}{, }\item[{float}]{max\+\_\+pixel}{ = {\ttfamily 255.0f}, }\item[{int}]{quality}{ = {\ttfamily 100}, }\item[{cuda\+Stream\+\_\+t}]{stream}{ = {\ttfamily 0}}\end{DoxyParamCaption})}
+
+Save a float4 image in CPU/\+\+GPU shared memory to disk. \begin{DoxySeeAlso}{See also}
+\doxylink{group__image_gaebd1293bd7119be5164b521dc20b2233}{save\+Image()} for more details about parameters and supported \doxylink{group__image}{Image I/\+O} formats. 
+\end{DoxySeeAlso}
+\begin{DoxyRefDesc}{Deprecated}
+\item[\doxymbox{\hyperlink{deprecated__deprecated000018}{Deprecated}}]\doxylink{group__image_ga01b651fa2b5b3dec7d304173780378d1}{save\+Image\+RGBA()} is deprecated and provided for legacy compatbility. it is recommended to use \doxylink{group__image_gaebd1293bd7119be5164b521dc20b2233}{save\+Image()} instead, which supports multiple image formats.\end{DoxyRefDesc}
+
+
+Save a float4 image in CPU/\+\+GPU shared memory to disk. \begin{DoxySeeAlso}{See also}
+\doxylink{group__image_gaebd1293bd7119be5164b521dc20b2233}{save\+Image()} for more details about parameters and supported \doxylink{group__image}{Image I/\+O} formats. 
+\end{DoxySeeAlso}
+\begin{DoxyRefDesc}{Deprecated}
+\item[\doxymbox{\hyperlink{deprecated__deprecated000030}{Deprecated}}]\doxylink{group__image_ga01b651fa2b5b3dec7d304173780378d1}{save\+Image\+RGBA()} is deprecated and provided for legacy compatbility. it is recommended to use \doxylink{group__image_gaebd1293bd7119be5164b521dc20b2233}{save\+Image()} instead, which supports multiple image formats.\end{DoxyRefDesc}

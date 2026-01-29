@@ -1,0 +1,142 @@
+\doxysection{server.\+model.\+Model Class Reference}
+\hypertarget{classserver_1_1model_1_1_model}{}\label{classserver_1_1model_1_1_model}\index{server.model.Model@{server.model.Model}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{classserver_1_1model_1_1_model_a241881e664729255e729e1070f6f0b74}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self, server, name, type, model, labels=\textquotesingle{}\textquotesingle{}, input\+\_\+layers=\textquotesingle{}\textquotesingle{}, output\+\_\+layers=\textquotesingle{}\textquotesingle{}, \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}kwargs)
+\item 
+\Hypertarget{classserver_1_1model_1_1_model_a35f78a134ff886e34ec703f947aea2b9}\label{classserver_1_1model_1_1_model_a35f78a134ff886e34ec703f947aea2b9} 
+{\bfseries clone} (self, \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}kwargs)
+\item 
+\doxymbox{\hyperlink{classserver_1_1model_1_1_model_ab362341e677bc35a81715acc1cf6cd5d}{get\+\_\+config}} (self)
+\item 
+\doxymbox{\hyperlink{classserver_1_1model_1_1_model_ae4335769ee273b147669da28d675131b}{get\+\_\+num\+\_\+classes}} (self)
+\item 
+\doxymbox{\hyperlink{classserver_1_1model_1_1_model_a74a4db6031db0b68a415d752314cfa4e}{get\+\_\+class\+\_\+name}} (self, class\+\_\+id)
+\item 
+\doxymbox{\hyperlink{classserver_1_1model_1_1_model_ab3fb3ee376ddca6bcfa279de143a15e5}{process}} (self, img)
+\item 
+\doxymbox{\hyperlink{classserver_1_1model_1_1_model_a523084ce3ac074c262ea46081d8d8d58}{visualize}} (self, img, results=None)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classserver_1_1model_1_1_model_a6eb5e34c0726c45cfe8493ec550b11d5}\label{classserver_1_1model_1_1_model_a6eb5e34c0726c45cfe8493ec550b11d5} 
+{\bfseries server} = server
+\item 
+\Hypertarget{classserver_1_1model_1_1_model_ae89e79c1da0958a27c3c52926534fe9f}\label{classserver_1_1model_1_1_model_ae89e79c1da0958a27c3c52926534fe9f} 
+{\bfseries name} = name
+\item 
+\Hypertarget{classserver_1_1model_1_1_model_a0b3e4cb14f6191787103f7e54e44f18c}\label{classserver_1_1model_1_1_model_a0b3e4cb14f6191787103f7e54e44f18c} 
+str {\bfseries type} = type
+\item 
+\Hypertarget{classserver_1_1model_1_1_model_aaef556f563c15f1f3653d6e5c36320a8}\label{classserver_1_1model_1_1_model_aaef556f563c15f1f3653d6e5c36320a8} 
+{\bfseries model} = model
+\item 
+\Hypertarget{classserver_1_1model_1_1_model_aca525d068609ed0fb1d785f240cd037b}\label{classserver_1_1model_1_1_model_aca525d068609ed0fb1d785f240cd037b} 
+{\bfseries labels} = labels
+\item 
+\Hypertarget{classserver_1_1model_1_1_model_ae914959bc0d379410ad28b937533e2c4}\label{classserver_1_1model_1_1_model_ae914959bc0d379410ad28b937533e2c4} 
+{\bfseries input\+\_\+layers} = input\+\_\+layers
+\item 
+\Hypertarget{classserver_1_1model_1_1_model_a8753858ba5a3e948514cc4135d8c201b}\label{classserver_1_1model_1_1_model_a8753858ba5a3e948514cc4135d8c201b} 
+{\bfseries output\+\_\+layers} = output\+\_\+layers
+\item 
+\Hypertarget{classserver_1_1model_1_1_model_a36ca5582cd709138f85712a96ce6e0c8}\label{classserver_1_1model_1_1_model_a36ca5582cd709138f85712a96ce6e0c8} 
+{\bfseries results} = deque(maxlen=2)
+\item 
+\Hypertarget{classserver_1_1model_1_1_model_ab5caf210e6b68f11dd46b72e53704264}\label{classserver_1_1model_1_1_model_ab5caf210e6b68f11dd46b72e53704264} 
+{\bfseries stream} = kwargs.\+get(\textquotesingle{}stream\textquotesingle{})
+\item 
+\Hypertarget{classserver_1_1model_1_1_model_acfb3e3aaf2db7ee8971ff3e7ba91ff10}\label{classserver_1_1model_1_1_model_acfb3e3aaf2db7ee8971ff3e7ba91ff10} 
+{\bfseries kwargs} = kwargs
+\item 
+\Hypertarget{classserver_1_1model_1_1_model_ad3ac80ed6393a42cd1ccedbe3325844f}\label{classserver_1_1model_1_1_model_ad3ac80ed6393a42cd1ccedbe3325844f} 
+{\bfseries net} = \doxymbox{\hyperlink{classimage_net}{image\+Net}}(model=model, labels=labels, input\+\_\+blob=input\+\_\+layers, output\+\_\+blob=output\+\_\+layers)
+\item 
+\Hypertarget{classserver_1_1model_1_1_model_a83826f8e56247513b968c73f75198209}\label{classserver_1_1model_1_1_model_a83826f8e56247513b968c73f75198209} 
+{\bfseries font} = \doxymbox{\hyperlink{classcuda_font}{cuda\+Font}}()
+\item 
+\Hypertarget{classserver_1_1model_1_1_model_ae65a29056ee4c64e26cbbbbe5024e908}\label{classserver_1_1model_1_1_model_ae65a29056ee4c64e26cbbbbe5024e908} 
+{\bfseries last\+\_\+event} = \doxymbox{\hyperlink{class_event}{Event}}(self.\+stream, self, results\+[0]\+, self.\+get\+\_\+class\+\_\+name(results\+[0]\+), results\+[1]\+)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyVerb}Represents DNN models for classification, detection, segmentation, ect.
+These can be either built-in models or user-provided / user-trained.
+\end{DoxyVerb}
+ 
+
+\label{doc-constructors}
+\Hypertarget{classserver_1_1model_1_1_model_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classserver_1_1model_1_1_model_a241881e664729255e729e1070f6f0b74}\index{server.model.Model@{server.model.Model}!\_\_init\_\_@{\_\_init\_\_}}
+\index{\_\_init\_\_@{\_\_init\_\_}!server.model.Model@{server.model.Model}}
+\doxysubsubsection{\texorpdfstring{\_\_init\_\_()}{\_\_init\_\_()}}
+{\footnotesize\ttfamily \label{classserver_1_1model_1_1_model_a241881e664729255e729e1070f6f0b74} 
+server.\+model.\+Model.\+\_\+\+\_\+init\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{server}{, }\item[{}]{name}{, }\item[{}]{type}{, }\item[{}]{model}{, }\item[{}]{labels}{ = {\ttfamily \textquotesingle{}\textquotesingle{}}, }\item[{}]{input\+\_\+layers}{ = {\ttfamily \textquotesingle{}\textquotesingle{}}, }\item[{}]{output\+\_\+layers}{ = {\ttfamily \textquotesingle{}\textquotesingle{}}, }\item[{\texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{kwargs}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Load the model, either from a built-in pre-trained model or from a user-provided model.
+
+Parameters:
+
+    server (Server) -- the backend server instance
+    name (string) -- the name of the model
+    type (string) -- the type of the model (classification, detection, ect)
+    model (string) -- either a path to the model or name of the built-in model
+    labels (string) -- path to the model's labels.txt file (optional)
+    input_layers (string or dict) -- the model's input layer(s)
+    output_layers (string or dict) -- the model's output layers()
+\end{DoxyVerb}
+ 
+
+\label{doc-func-members}
+\Hypertarget{classserver_1_1model_1_1_model_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classserver_1_1model_1_1_model_a74a4db6031db0b68a415d752314cfa4e}\index{server.model.Model@{server.model.Model}!get\_class\_name@{get\_class\_name}}
+\index{get\_class\_name@{get\_class\_name}!server.model.Model@{server.model.Model}}
+\doxysubsubsection{\texorpdfstring{get\_class\_name()}{get\_class\_name()}}
+{\footnotesize\ttfamily \label{classserver_1_1model_1_1_model_a74a4db6031db0b68a415d752314cfa4e} 
+server.\+model.\+Model.\+get\+\_\+class\+\_\+name (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{class\+\_\+id}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Return the class name or description for the given class ID.
+\end{DoxyVerb}
+ \Hypertarget{classserver_1_1model_1_1_model_ab362341e677bc35a81715acc1cf6cd5d}\index{server.model.Model@{server.model.Model}!get\_config@{get\_config}}
+\index{get\_config@{get\_config}!server.model.Model@{server.model.Model}}
+\doxysubsubsection{\texorpdfstring{get\_config()}{get\_config()}}
+{\footnotesize\ttfamily \label{classserver_1_1model_1_1_model_ab362341e677bc35a81715acc1cf6cd5d} 
+server.\+model.\+Model.\+get\+\_\+config (\begin{DoxyParamCaption}\item[{}]{self}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Return a dict representation of the object.
+\end{DoxyVerb}
+ \Hypertarget{classserver_1_1model_1_1_model_ae4335769ee273b147669da28d675131b}\index{server.model.Model@{server.model.Model}!get\_num\_classes@{get\_num\_classes}}
+\index{get\_num\_classes@{get\_num\_classes}!server.model.Model@{server.model.Model}}
+\doxysubsubsection{\texorpdfstring{get\_num\_classes()}{get\_num\_classes()}}
+{\footnotesize\ttfamily \label{classserver_1_1model_1_1_model_ae4335769ee273b147669da28d675131b} 
+server.\+model.\+Model.\+get\+\_\+num\+\_\+classes (\begin{DoxyParamCaption}\item[{}]{self}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Get the number of classes that the model supports.
+\end{DoxyVerb}
+ \Hypertarget{classserver_1_1model_1_1_model_ab3fb3ee376ddca6bcfa279de143a15e5}\index{server.model.Model@{server.model.Model}!process@{process}}
+\index{process@{process}!server.model.Model@{server.model.Model}}
+\doxysubsubsection{\texorpdfstring{process()}{process()}}
+{\footnotesize\ttfamily \label{classserver_1_1model_1_1_model_ab3fb3ee376ddca6bcfa279de143a15e5} 
+server.\+model.\+Model.\+process (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{img}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Process an image with the model and return the results.
+TODO refactor event creation
+\end{DoxyVerb}
+ \Hypertarget{classserver_1_1model_1_1_model_a523084ce3ac074c262ea46081d8d8d58}\index{server.model.Model@{server.model.Model}!visualize@{visualize}}
+\index{visualize@{visualize}!server.model.Model@{server.model.Model}}
+\doxysubsubsection{\texorpdfstring{visualize()}{visualize()}}
+{\footnotesize\ttfamily \label{classserver_1_1model_1_1_model_a523084ce3ac074c262ea46081d8d8d58} 
+server.\+model.\+Model.\+visualize (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{img}{, }\item[{}]{results}{ = {\ttfamily None}}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Visualize the results on an image.
+\end{DoxyVerb}
+ 
+
+The documentation for this class was generated from the following file:\+\begin{DoxyCompactItemize}
+\item 
+jetson-\/inference/\+python/\+www/\+dash/\+server/\+model.\+py\end{DoxyCompactItemize}

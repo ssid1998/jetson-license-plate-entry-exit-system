@@ -1,0 +1,63 @@
+\doxysubsection{Object Tracking }
+\hypertarget{group__object_tracker}{}\label{group__object_tracker}\index{Object Tracking@{Object Tracking}}
+\doxysubsubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \doxymbox{\hyperlink{classobject_tracker}{object\+Tracker}}
+\item 
+class \doxymbox{\hyperlink{classobject_tracker_i_o_u}{object\+Tracker\+IOU}}
+\end{DoxyCompactItemize}
+\doxysubsubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\+\#define \doxymbox{\hyperlink{group__object_tracker_gaad6f0bca7f04494ccb291cbe06265d43}{OBJECT\+\_\+\+TRACKER\+\_\+\+USAGE\+\_\+\+STRING}}
+\item 
+\+\#define \doxymbox{\hyperlink{group__object_tracker_ga4f01a917926967a093c6a21fb3b3b1ac}{LOG\+\_\+\+TRACKER}}~"{}\+[tracker]\+ "{}
+\item 
+\+\#define \doxymbox{\hyperlink{group__object_tracker_ga169cc3fe68a9927dc66de0b843c8b02b}{OBJECT\+\_\+\+TRACKER\+\_\+\+DEFAULT\+\_\+\+MIN\+\_\+\+FRAMES}}~3
+\item 
+\+\#define \doxymbox{\hyperlink{group__object_tracker_ga511a83079169144d81877063aa6b9601}{OBJECT\+\_\+\+TRACKER\+\_\+\+DEFAULT\+\_\+\+DROP\+\_\+\+FRAMES}}~15
+\end{DoxyCompactItemize}
+
+
+\doxysubsubsection{Detailed Description}
+Object tracking used by \doxylink{classdetect_net}{detect\+Net} 
+
+\label{doc-define-members}
+\Hypertarget{group__object_tracker_doc-define-members}
+\doxysubsubsection{Macro Definition Documentation}
+\Hypertarget{group__object_tracker_ga4f01a917926967a093c6a21fb3b3b1ac}\index{Object Tracking@{Object Tracking}!LOG\_TRACKER@{LOG\_TRACKER}}
+\index{LOG\_TRACKER@{LOG\_TRACKER}!Object Tracking@{Object Tracking}}
+\doxysubsubsubsection{\texorpdfstring{LOG\_TRACKER}{LOG\_TRACKER}}
+{\footnotesize\ttfamily \label{group__object_tracker_ga4f01a917926967a093c6a21fb3b3b1ac} 
+\+\#define LOG\+\_\+\+TRACKER~"{}\+[tracker]\+ "{}}
+
+Object tracker logging prefix \Hypertarget{group__object_tracker_ga511a83079169144d81877063aa6b9601}\index{Object Tracking@{Object Tracking}!OBJECT\_TRACKER\_DEFAULT\_DROP\_FRAMES@{OBJECT\_TRACKER\_DEFAULT\_DROP\_FRAMES}}
+\index{OBJECT\_TRACKER\_DEFAULT\_DROP\_FRAMES@{OBJECT\_TRACKER\_DEFAULT\_DROP\_FRAMES}!Object Tracking@{Object Tracking}}
+\doxysubsubsubsection{\texorpdfstring{OBJECT\_TRACKER\_DEFAULT\_DROP\_FRAMES}{OBJECT\_TRACKER\_DEFAULT\_DROP\_FRAMES}}
+{\footnotesize\ttfamily \label{group__object_tracker_ga511a83079169144d81877063aa6b9601} 
+\+\#define OBJECT\+\_\+\+TRACKER\+\_\+\+DEFAULT\+\_\+\+DROP\+\_\+\+FRAMES~15}
+
+\doxylink{requirements_The}{The} number of consecutive lost frames after which a track is removed \Hypertarget{group__object_tracker_ga169cc3fe68a9927dc66de0b843c8b02b}\index{Object Tracking@{Object Tracking}!OBJECT\_TRACKER\_DEFAULT\_MIN\_FRAMES@{OBJECT\_TRACKER\_DEFAULT\_MIN\_FRAMES}}
+\index{OBJECT\_TRACKER\_DEFAULT\_MIN\_FRAMES@{OBJECT\_TRACKER\_DEFAULT\_MIN\_FRAMES}!Object Tracking@{Object Tracking}}
+\doxysubsubsubsection{\texorpdfstring{OBJECT\_TRACKER\_DEFAULT\_MIN\_FRAMES}{OBJECT\_TRACKER\_DEFAULT\_MIN\_FRAMES}}
+{\footnotesize\ttfamily \label{group__object_tracker_ga169cc3fe68a9927dc66de0b843c8b02b} 
+\+\#define OBJECT\+\_\+\+TRACKER\+\_\+\+DEFAULT\+\_\+\+MIN\+\_\+\+FRAMES~3}
+
+\doxylink{requirements_The}{The} number of re-\/identified frames before establishing a track \Hypertarget{group__object_tracker_gaad6f0bca7f04494ccb291cbe06265d43}\index{Object Tracking@{Object Tracking}!OBJECT\_TRACKER\_USAGE\_STRING@{OBJECT\_TRACKER\_USAGE\_STRING}}
+\index{OBJECT\_TRACKER\_USAGE\_STRING@{OBJECT\_TRACKER\_USAGE\_STRING}!Object Tracking@{Object Tracking}}
+\doxysubsubsubsection{\texorpdfstring{OBJECT\_TRACKER\_USAGE\_STRING}{OBJECT\_TRACKER\_USAGE\_STRING}}
+{\footnotesize\ttfamily \label{group__object_tracker_gaad6f0bca7f04494ccb291cbe06265d43} 
+\+\#define OBJECT\+\_\+\+TRACKER\+\_\+\+USAGE\+\_\+\+STRING}
+
+{\bfseries Value:\+}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{stringliteral}{"{}objectTracker\ arguments:\ \(\backslash\)n"{}}\ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\textcolor{stringliteral}{"{}\ \ -\/-\/tracking\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ flag\ to\ enable\ default\ tracker\ (IOU)\(\backslash\)n"{}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\textcolor{stringliteral}{"{}\ \ -\/-\/tracker=TRACKER\ \ \ \ \ \ \ \ enable\ tracking\ with\ 'IOU'\ or\ 'KLT'\(\backslash\)n"{}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\textcolor{stringliteral}{"{}\ \ -\/-\/tracker-\/min-\/frames=N\ \ \ the\ number\ of\ re-\/identified\ frames\ for\ a\ track\ to\ be\ considered\ valid\ (default:\ 3)\(\backslash\)n"{}}\ \(\backslash\)}
+\DoxyCodeLine{\textcolor{stringliteral}{"{}\ \ -\/-\/tracker-\/drop-\/frames=N\ \ number\ of\ consecutive\ lost\ frames\ before\ a\ track\ is\ dropped\ (default:\ 15)\(\backslash\)n"{}}\ \ \(\backslash\)}
+\DoxyCodeLine{\textcolor{stringliteral}{"{}\ \ -\/-\/tracker-\/overlap=N\ \ \ \ \ \ how\ much\ IOU\ overlap\ is\ required\ for\ a\ bounding\ box\ to\ be\ matched\ (default:\ 0.5)\(\backslash\)n\(\backslash\)n"{}}\ \(\backslash\)}
+
+\end{DoxyCode}
+Standard command-\/line options able to be passed to \doxylink{classdetect_net_a1343ed35f7dc9b87fe4031b1c81f60d5}{detect\+Net::\+\+Create()} 

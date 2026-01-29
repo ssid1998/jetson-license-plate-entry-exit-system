@@ -1,0 +1,75 @@
+\chapter{detectnet-\/camera-\/2 }
+\hypertarget{md_jetson-inference_2docs_2detectnet-camera-2}{}\label{md_jetson-inference_2docs_2detectnet-camera-2}\index{detectnet-\/camera-\/2@{detectnet-\/camera-\/2}}
+ 
+
+\textsuperscript{\href{detectnet-console-2.md}{\texttt{Back}} \texorpdfstring{$\vert$}{|} \href{detectnet-example-2.md}{\texttt{Next}} \texorpdfstring{$\vert$}{|} }\href{../README.md\#hello-ai-world}{\texttt{\textsuperscript{Contents}}} ~\newline
+ \textsuperscript{Object Detection}\hypertarget{md_jetson-inference_2docs_2detectnet-camera-2_autotoc_md172}{}\doxysection{\texorpdfstring{Running the Live Camera Detection Demo}{Running the Live Camera Detection Demo}}\label{md_jetson-inference_2docs_2detectnet-camera-2_autotoc_md172}
+\doxylink{requirements_The}{The} \href{../examples/detectnet/detectnet.cpp}{\texttt{{\ttfamily detectnet.\+cpp}}} /\+ \href{../python/examples/detectnet.py}{\texttt{{\ttfamily detectnet.\+py}}} sample that we used previously can also be used for realtime camera streaming. \doxylink{requirements_The}{The} types of supported cameras include:\+
+
+
+\begin{DoxyItemize}
+\item MIPI CSI cameras ({\ttfamily csi:\+/\+/\+0})
+\item V4\+L2 cameras ({\ttfamily /\+dev/\+video0})
+\item RTP/\+\+RTSP streams ({\ttfamily rtsp:\+/\+/\+username:\+password@ip:\+port})
+\item Web\+RTC streams ({\ttfamily webrtc:\+/\+/\+@:\+port/\+stream\+\_\+name})
+\end{DoxyItemize}
+
+For more information about video streams and protocols, please see the \doxysectlink{md_jetson-inference_2docs_2aux-streaming}{Camera Streaming and Multimedia}{0} page.
+
+Run the program with {\ttfamily -\/-\/help} to see a full list of options -\/ some of them specific to \doxylink{classdetect_net}{detect\+Net} include:\+
+
+
+\begin{DoxyItemize}
+\item {\ttfamily -\/-\/\doxylink{group__network}{Networking}} flag which changes the \href{detectnet-console-2.md\#pre-trained-detection-models-available}{\texttt{detection model}} being used (the default is SSD-\/\+Mobilenet-\/v2).
+\item {\ttfamily -\/-\/\doxylink{group__overlay}{Overlay}} flag which can be comma-\/separated combinations of {\ttfamily box}, {\ttfamily labels}, {\ttfamily conf}, {\ttfamily track} and {\ttfamily none}
+\begin{DoxyItemize}
+\item \doxylink{requirements_The}{The} default is {\ttfamily -\/-\/\doxylink{group__overlay}{Overlay}=box,labels,conf} which displays boxes, labels, and confidence values
+\end{DoxyItemize}
+\item {\ttfamily -\/-\/alpha} value which sets the alpha blending value used during overlay (the default is {\ttfamily 120}).
+\item {\ttfamily -\/-\/threshold} value which sets the minimum threshold for detection (the default is {\ttfamily 0.\+5}).
+\end{DoxyItemize}
+
+Below are some typical scenarios for launching the program on a camera feed:\+\hypertarget{md_jetson-inference_2docs_2detectnet-camera-2_autotoc_md173}{}\doxysubsubsubsection{\texorpdfstring{C++}{C++}}\label{md_jetson-inference_2docs_2detectnet-camera-2_autotoc_md173}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{\$\ ./detectnet\ csi://0\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \#\ MIPI\ CSI\ camera}
+\DoxyCodeLine{\$\ ./detectnet\ /dev/video0\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \#\ V4L2\ camera}
+\DoxyCodeLine{\$\ ./detectnet\ /dev/video0\ output.mp4\ \ \ \ \ \#\ save\ to\ video\ file}
+
+\end{DoxyCode}
+\hypertarget{md_jetson-inference_2docs_2detectnet-camera-2_autotoc_md174}{}\doxysubsubsubsection{\texorpdfstring{Python}{Python}}\label{md_jetson-inference_2docs_2detectnet-camera-2_autotoc_md174}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{\$\ ./detectnet.py\ csi://0\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \#\ MIPI\ CSI\ camera}
+\DoxyCodeLine{\$\ ./detectnet.py\ /dev/video0\ \ \ \ \ \ \ \ \ \ \ \ \ \#\ V4L2\ camera}
+\DoxyCodeLine{\$\ ./detectnet.py\ /dev/video0\ output.mp4\ \ \#\ save\ to\ video\ file}
+
+\end{DoxyCode}
+
+
+\begin{quote}
+{\bfseries{note}}:\+ for example cameras to use, see these sections of the Jetson Wiki:\+ ~\newline
+ ~~~~~~~~~~~~~-\/ Nano:\+~~\href{https://elinux.org/Jetson_Nano\#Cameras}{\texttt{{\ttfamily https:\+/\+/\+e\+Linux.\+org/\+\+Jetson\+\_\+\+Nano\#Cameras}}} ~\newline
+ ~~~~~~~~~~~~~-\/ Xavier:\+ \href{https://elinux.org/Jetson_AGX_Xavier\#Ecosystem_Products_.26_Cameras}{\texttt{{\ttfamily https:\+/\+/\+e\+Linux.\+org/\+\+Jetson\+\_\+\+AGX\+\_\+\+Xavier\#Ecosystem\+\_\+\+Products\+\_\+.\+26\+\_\+\+Cameras}}} ~\newline
+ ~~~~~~~~~~~~~-\/ TX1/\+\+TX2:\+ developer kits include an onboard MIPI CSI sensor module (0V5693)~\newline
+ \end{quote}
+\hypertarget{md_jetson-inference_2docs_2detectnet-camera-2_autotoc_md175}{}\doxysubsubsubsection{\texorpdfstring{Visualization}{Visualization}}\label{md_jetson-inference_2docs_2detectnet-camera-2_autotoc_md175}
+Displayed in the Open\+GL window are the live camera stream overlayed with the bounding boxes of the detected objects. Note that the SSD-\/based models currently have the highest performance. Here is one using the {\ttfamily coco-\/dog} model:\+
+
+
+
+
+
+
+
+If the desired objects aren\textquotesingle{}t being detected in the video feed or you\textquotesingle{}re getting spurious detections, try decreasing or increasing the detection threshold with the {\ttfamily -\/-\/threshold} parameter (the default is {\ttfamily 0.\+5}).
+
+Next, we\textquotesingle{}ll cover creating the code for a camera detection app in Python.\hypertarget{md_jetson-inference_2docs_2detectnet-camera-2_autotoc_md176}{}\doxysubsection{\texorpdfstring{autotoc\+\_\+md176}{autotoc\+\_\+md176}}\label{md_jetson-inference_2docs_2detectnet-camera-2_autotoc_md176}
+Next \texorpdfstring{$\vert$}{|} {\bfseries{\href{detectnet-example-2.md}{\texttt{Coding Your Own Object Detection Program}}}} ~\newline
+ Back \texorpdfstring{$\vert$}{|} {\bfseries{\href{detectnet-console-2.md}{\texttt{Detecting Objects from Images}}}}
+
+{\bfseries{ }}
+
+\textsuperscript{© 2016-\/2019 NVIDIA \texorpdfstring{$\vert$}{|} }\href{../README.md\#hello-ai-world}{\texttt{\textsuperscript{Table of Contents}}}

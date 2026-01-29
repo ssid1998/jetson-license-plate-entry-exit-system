@@ -1,0 +1,57 @@
+\doxysection{vision.\+nn.\+mobilenet\+\_\+v2.\+Inverted\+Residual Class Reference}
+\hypertarget{classvision_1_1nn_1_1mobilenet__v2_1_1_inverted_residual}{}\label{classvision_1_1nn_1_1mobilenet__v2_1_1_inverted_residual}\index{vision.nn.mobilenet\_v2.InvertedResidual@{vision.nn.mobilenet\_v2.InvertedResidual}}
+Inheritance diagram for vision.\+nn.\+mobilenet\+\_\+v2.\+Inverted\+Residual:\+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classvision_1_1nn_1_1mobilenet__v2_1_1_inverted_residual}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classvision_1_1nn_1_1mobilenet__v2_1_1_inverted_residual_a31e07dfaa5405e1cf119a219bbdd3916}\label{classvision_1_1nn_1_1mobilenet__v2_1_1_inverted_residual_a31e07dfaa5405e1cf119a219bbdd3916} 
+{\bfseries \+\_\+\+\_\+init\+\_\+\+\_\+} (self, inp, oup, stride, expand\+\_\+ratio, use\+\_\+batch\+\_\+norm=True, onnx\+\_\+compatible=False)
+\item 
+\Hypertarget{classvision_1_1nn_1_1mobilenet__v2_1_1_inverted_residual_aa03684ff1a5581842acf2be27c5cb9d7}\label{classvision_1_1nn_1_1mobilenet__v2_1_1_inverted_residual_aa03684ff1a5581842acf2be27c5cb9d7} 
+{\bfseries forward} (self, x)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classvision_1_1nn_1_1mobilenet__v2_1_1_inverted_residual_a29593d0b3363df11e4a9531a7c9fc412}\label{classvision_1_1nn_1_1mobilenet__v2_1_1_inverted_residual_a29593d0b3363df11e4a9531a7c9fc412} 
+{\bfseries stride} = stride
+\item 
+\Hypertarget{classvision_1_1nn_1_1mobilenet__v2_1_1_inverted_residual_a63da40de418fb8d1e4313403fe115c9f}\label{classvision_1_1nn_1_1mobilenet__v2_1_1_inverted_residual_a63da40de418fb8d1e4313403fe115c9f} 
+int {\bfseries use\+\_\+res\+\_\+connect} = oup
+\item 
+\doxymbox{\hyperlink{classvision_1_1nn_1_1mobilenet__v2_1_1_inverted_residual_a7c5f27bf940dadc882113247bec3cdac}{conv}}
+\end{DoxyCompactItemize}
+
+
+\label{doc-variable-members}
+\Hypertarget{classvision_1_1nn_1_1mobilenet__v2_1_1_inverted_residual_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classvision_1_1nn_1_1mobilenet__v2_1_1_inverted_residual_a7c5f27bf940dadc882113247bec3cdac}\index{vision.nn.mobilenet\_v2.InvertedResidual@{vision.nn.mobilenet\_v2.InvertedResidual}!conv@{conv}}
+\index{conv@{conv}!vision.nn.mobilenet\_v2.InvertedResidual@{vision.nn.mobilenet\_v2.InvertedResidual}}
+\doxysubsubsection{\texorpdfstring{conv}{conv}}
+{\footnotesize\ttfamily \label{classvision_1_1nn_1_1mobilenet__v2_1_1_inverted_residual_a7c5f27bf940dadc882113247bec3cdac} 
+vision.\+nn.\+mobilenet\+\_\+v2.\+Inverted\+Residual.\+conv}
+
+{\bfseries Initial value:\+}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=\ \ nn.Sequential(}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ dw}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ nn.Conv2d(hidden\_dim,\ hidden\_dim,\ 3,\ stride,\ 1,\ groups=hidden\_dim,\ bias=\textcolor{keyword}{False}),}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ nn.BatchNorm2d(hidden\_dim),}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ReLU(inplace=\textcolor{keyword}{True}),}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ pw-\/linear}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ nn.Conv2d(hidden\_dim,\ oup,\ 1,\ 1,\ 0,\ bias=\textcolor{keyword}{False}),}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ nn.BatchNorm2d(oup),}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ )}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file:\+\begin{DoxyCompactItemize}
+\item 
+jetson-\/inference/\+python/\+training/\+detection/\+ssd/\+vision/\+nn/\+mobilenet\+\_\+v2.\+py\end{DoxyCompactItemize}

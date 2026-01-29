@@ -1,0 +1,744 @@
+\doxysection{seg\+Net Class Reference}
+\hypertarget{classseg_net}{}\label{classseg_net}\index{segNet@{segNet}}
+
+
+{\ttfamily \+\#include $<$seg\+Net.\+h$>$}
+
+Inheritance diagram for seg\+Net:\+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classseg_net}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \doxymbox{\hyperlink{classseg_net_a5579582306d8b98e3a8acf2b73e13ea0}{Filter\+Mode}} \{ \doxymbox{\hyperlink{classseg_net_a5579582306d8b98e3a8acf2b73e13ea0abe4ae38cf99cdab6c3b070ee4a83bb47}{FILTER\+\_\+\+POINT}} = 0
+, \doxymbox{\hyperlink{classseg_net_a5579582306d8b98e3a8acf2b73e13ea0a034092312a95fa984ab6c8e559c3c9e0}{FILTER\+\_\+\+LINEAR}}
+ \}
+\item 
+enum \doxymbox{\hyperlink{classseg_net_a09a07cb06cd461f6003b655e945d9cf3}{Visualization\+Flags}} \{ \doxymbox{\hyperlink{classseg_net_a09a07cb06cd461f6003b655e945d9cf3ab6a2dc917492d6b83de4b94c9233cb5f}{VISUALIZE\+\_\+\+OVERLAY}} = (1 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 0)
+, \doxymbox{\hyperlink{classseg_net_a09a07cb06cd461f6003b655e945d9cf3a44b13e054270ce1d9a77fea8bfa83bd5}{VISUALIZE\+\_\+\+MASK}} = (1 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 1)
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual \doxymbox{\hyperlink{classseg_net_a167f9d7e76b2837485278bf7323b4eac}{\texorpdfstring{$\sim$}{\string~}seg\+Net}} ()
+\item 
+{\footnotesize template$<$typename T$>$ }\\bool \doxymbox{\hyperlink{classseg_net_a04b332bd106de1f8238d34f36fb97442}{Process}} (T \texorpdfstring{$\ast$}{*}input, uint32\+\_\+t width, uint32\+\_\+t height, const char \texorpdfstring{$\ast$}{*}ignore\+\_\+class="{}void"{})
+\item 
+bool \doxymbox{\hyperlink{classseg_net_ac5a01728bc33bd87aed504550359f3de}{Process}} (void \texorpdfstring{$\ast$}{*}input, uint32\+\_\+t width, uint32\+\_\+t height, \doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{image\+Format}} format, const char \texorpdfstring{$\ast$}{*}ignore\+\_\+class="{}void"{})
+\item 
+bool \doxymbox{\hyperlink{classseg_net_a2fe1beec3215b5d7744420b57ba397c4}{Process}} (float \texorpdfstring{$\ast$}{*}input, uint32\+\_\+t width, uint32\+\_\+t height, const char \texorpdfstring{$\ast$}{*}ignore\+\_\+class="{}void"{})
+\item 
+{\footnotesize template$<$typename T$>$ }\\bool \doxymbox{\hyperlink{classseg_net_af7b6257716514631dd0358e4b2ed692c}{Mask}} (T \texorpdfstring{$\ast$}{*}output, uint32\+\_\+t width, uint32\+\_\+t height, \doxymbox{\hyperlink{classseg_net_a5579582306d8b98e3a8acf2b73e13ea0}{Filter\+Mode}} filter=\doxymbox{\hyperlink{classseg_net_a5579582306d8b98e3a8acf2b73e13ea0a034092312a95fa984ab6c8e559c3c9e0}{FILTER\+\_\+\+LINEAR}})
+\item 
+bool \doxymbox{\hyperlink{classseg_net_afd64ed7b535d7815de734d58ee22aea1}{Mask}} (void \texorpdfstring{$\ast$}{*}output, uint32\+\_\+t width, uint32\+\_\+t height, \doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{image\+Format}} format, \doxymbox{\hyperlink{classseg_net_a5579582306d8b98e3a8acf2b73e13ea0}{Filter\+Mode}} filter=\doxymbox{\hyperlink{classseg_net_a5579582306d8b98e3a8acf2b73e13ea0a034092312a95fa984ab6c8e559c3c9e0}{FILTER\+\_\+\+LINEAR}})
+\item 
+bool \doxymbox{\hyperlink{classseg_net_a656d709bbfb00fb0b9b4d55296aae463}{Mask}} (float \texorpdfstring{$\ast$}{*}output, uint32\+\_\+t width, uint32\+\_\+t height, \doxymbox{\hyperlink{classseg_net_a5579582306d8b98e3a8acf2b73e13ea0}{Filter\+Mode}} filter=\doxymbox{\hyperlink{classseg_net_a5579582306d8b98e3a8acf2b73e13ea0a034092312a95fa984ab6c8e559c3c9e0}{FILTER\+\_\+\+LINEAR}})
+\item 
+bool \doxymbox{\hyperlink{classseg_net_a1efb45b81c82dd6f74c641ab39a41387}{Mask}} (uint8\+\_\+t \texorpdfstring{$\ast$}{*}output, uint32\+\_\+t width, uint32\+\_\+t height)
+\item 
+{\footnotesize template$<$typename T$>$ }\\bool \doxymbox{\hyperlink{classseg_net_a646b59503f89809fefee1c32d33307d9}{Overlay}} (T \texorpdfstring{$\ast$}{*}output, uint32\+\_\+t width, uint32\+\_\+t height, \doxymbox{\hyperlink{classseg_net_a5579582306d8b98e3a8acf2b73e13ea0}{Filter\+Mode}} filter=\doxymbox{\hyperlink{classseg_net_a5579582306d8b98e3a8acf2b73e13ea0a034092312a95fa984ab6c8e559c3c9e0}{FILTER\+\_\+\+LINEAR}})
+\item 
+bool \doxymbox{\hyperlink{classseg_net_af31e030d54df637b68db8155e5f6b11c}{Overlay}} (void \texorpdfstring{$\ast$}{*}output, uint32\+\_\+t width, uint32\+\_\+t height, \doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{image\+Format}} format, \doxymbox{\hyperlink{classseg_net_a5579582306d8b98e3a8acf2b73e13ea0}{Filter\+Mode}} filter=\doxymbox{\hyperlink{classseg_net_a5579582306d8b98e3a8acf2b73e13ea0a034092312a95fa984ab6c8e559c3c9e0}{FILTER\+\_\+\+LINEAR}})
+\item 
+bool \doxymbox{\hyperlink{classseg_net_a3a670c08ad8b13db6ee092c59efe88b8}{Overlay}} (float \texorpdfstring{$\ast$}{*}output, uint32\+\_\+t width, uint32\+\_\+t height, \doxymbox{\hyperlink{classseg_net_a5579582306d8b98e3a8acf2b73e13ea0}{Filter\+Mode}} filter=\doxymbox{\hyperlink{classseg_net_a5579582306d8b98e3a8acf2b73e13ea0a034092312a95fa984ab6c8e559c3c9e0}{FILTER\+\_\+\+LINEAR}})
+\item 
+int \doxymbox{\hyperlink{classseg_net_a04bb46f8a71a45044d324a5e140f0777}{Find\+Class\+ID}} (const char \texorpdfstring{$\ast$}{*}label\+\_\+name)
+\item 
+uint32\+\_\+t \doxymbox{\hyperlink{classseg_net_a31e8118b2a38e330b6e087cf6c98396e}{Get\+Num\+Classes}} () const
+\item 
+const char \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classseg_net_a661919c0f7afb13ec0687c7073b49f23}{Get\+Class\+Label}} (uint32\+\_\+t id) const
+\item 
+const char \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classseg_net_a070cde00d2477ce181b9d07f3e8c4aec}{Get\+Class\+Desc}} (uint32\+\_\+t id) const
+\item 
+float4 \doxymbox{\hyperlink{classseg_net_afdf19dd9b97d89fa0074c75db4263eac}{Get\+Class\+Color}} (uint32\+\_\+t id) const
+\item 
+void \doxymbox{\hyperlink{classseg_net_ac93f4a93e1321260a8f0584614185305}{Set\+Class\+Color}} (uint32\+\_\+t class\+Index, const float4 \&color)
+\item 
+void \doxymbox{\hyperlink{classseg_net_a2a9108ad71f4d5f1995ac58282a10b88}{Set\+Class\+Color}} (uint32\+\_\+t class\+Index, float r, float g, float b, float a=255.\+0f)
+\item 
+float \doxymbox{\hyperlink{classseg_net_a27a03d12169f62dac97e351b2acdea86}{Get\+Overlay\+Alpha}} () const
+\item 
+void \doxymbox{\hyperlink{classseg_net_aa4c64609fb07586bed32ac4b8e9058d7}{Set\+Overlay\+Alpha}} (float alpha, bool explicit\+\_\+exempt=true)
+\item 
+const char \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classseg_net_a33d2e2a0312732bb80baea8ca50b6fab}{Get\+Class\+Path}} () const
+\item 
+uint32\+\_\+t \doxymbox{\hyperlink{classseg_net_a96b6fe6b05534c0792f8cc9353723219}{Get\+Grid\+Width}} () const
+\item 
+uint32\+\_\+t \doxymbox{\hyperlink{classseg_net_a95980d825a9939d0f48bfb2ef51ebb79}{Get\+Grid\+Height}} () const
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \doxymbox{\hyperlink{classtensor_net}{tensor\+Net}}}
+\begin{DoxyCompactItemize}
+\item 
+virtual \doxymbox{\hyperlink{classtensor_net_ad19aafbfa262f9b8ffb0bff561f4d7f7}{\texorpdfstring{$\sim$}{\string~}tensor\+Net}} ()
+\item 
+bool \doxymbox{\hyperlink{classtensor_net_a2e63d4670461814bd863ee0d9bd41526}{Load\+Network}} (const char \texorpdfstring{$\ast$}{*}prototxt, const char \texorpdfstring{$\ast$}{*}model, const char \texorpdfstring{$\ast$}{*}mean=NULL, const char \texorpdfstring{$\ast$}{*}input\+\_\+blob="{}data"{}, const char \texorpdfstring{$\ast$}{*}output\+\_\+blob="{}prob"{}, uint32\+\_\+t max\+Batch\+Size=\doxymbox{\hyperlink{group__tensor_net_ga5a46a965749d6118e01307fd4d4865c9}{DEFAULT\+\_\+\+MAX\+\_\+\+BATCH\+\_\+\+SIZE}}, \doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precision\+Type}} precision=\doxymbox{\hyperlink{group__tensor_net_ggaac6604fd52c6e5db82877390e0378623a1d325738f49e8e4c424ff671624e66f9}{TYPE\+\_\+\+FASTEST}}, \doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{device\+Type}} device=\doxymbox{\hyperlink{group__tensor_net_ggaa5d3f9981cdbd91516c1474006a80fe4adc7f3f88455afa81458863e5b3092e4b}{DEVICE\+\_\+\+GPU}}, bool allow\+GPUFallback=true, nvinfer1::\+\+IInt8\+Calibrator \texorpdfstring{$\ast$}{*}calibrator=NULL, cuda\+Stream\+\_\+t stream=NULL)
+\item 
+bool \doxymbox{\hyperlink{classtensor_net_a0a06ffd12b465f39160f4a6925cccd9f}{Load\+Network}} (const char \texorpdfstring{$\ast$}{*}prototxt, const char \texorpdfstring{$\ast$}{*}model, const char \texorpdfstring{$\ast$}{*}mean, const char \texorpdfstring{$\ast$}{*}input\+\_\+blob, const std::\+vector$<$ std::\+string $>$ \&output\+\_\+blobs, uint32\+\_\+t max\+Batch\+Size=\doxymbox{\hyperlink{group__tensor_net_ga5a46a965749d6118e01307fd4d4865c9}{DEFAULT\+\_\+\+MAX\+\_\+\+BATCH\+\_\+\+SIZE}}, \doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precision\+Type}} precision=\doxymbox{\hyperlink{group__tensor_net_ggaac6604fd52c6e5db82877390e0378623a1d325738f49e8e4c424ff671624e66f9}{TYPE\+\_\+\+FASTEST}}, \doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{device\+Type}} device=\doxymbox{\hyperlink{group__tensor_net_ggaa5d3f9981cdbd91516c1474006a80fe4adc7f3f88455afa81458863e5b3092e4b}{DEVICE\+\_\+\+GPU}}, bool allow\+GPUFallback=true, nvinfer1::\+\+IInt8\+Calibrator \texorpdfstring{$\ast$}{*}calibrator=NULL, cuda\+Stream\+\_\+t stream=NULL)
+\item 
+bool \doxymbox{\hyperlink{classtensor_net_a68a6f21680ae91bc51bea376221d1c48}{Load\+Network}} (const char \texorpdfstring{$\ast$}{*}prototxt, const char \texorpdfstring{$\ast$}{*}model, const char \texorpdfstring{$\ast$}{*}mean, const std::\+vector$<$ std::\+string $>$ \&input\+\_\+blobs, const std::\+vector$<$ std::\+string $>$ \&output\+\_\+blobs, uint32\+\_\+t max\+Batch\+Size=\doxymbox{\hyperlink{group__tensor_net_ga5a46a965749d6118e01307fd4d4865c9}{DEFAULT\+\_\+\+MAX\+\_\+\+BATCH\+\_\+\+SIZE}}, \doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precision\+Type}} precision=\doxymbox{\hyperlink{group__tensor_net_ggaac6604fd52c6e5db82877390e0378623a1d325738f49e8e4c424ff671624e66f9}{TYPE\+\_\+\+FASTEST}}, \doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{device\+Type}} device=\doxymbox{\hyperlink{group__tensor_net_ggaa5d3f9981cdbd91516c1474006a80fe4adc7f3f88455afa81458863e5b3092e4b}{DEVICE\+\_\+\+GPU}}, bool allow\+GPUFallback=true, nvinfer1::\+\+IInt8\+Calibrator \texorpdfstring{$\ast$}{*}calibrator=NULL, cuda\+Stream\+\_\+t stream=NULL)
+\item 
+bool \doxymbox{\hyperlink{classtensor_net_a168c7f75c9fd6d264afd016e144f3878}{Load\+Network}} (const char \texorpdfstring{$\ast$}{*}prototxt, const char \texorpdfstring{$\ast$}{*}model, const char \texorpdfstring{$\ast$}{*}mean, const char \texorpdfstring{$\ast$}{*}input\+\_\+blob, const Dims3 \&input\+\_\+dims, const std::\+vector$<$ std::\+string $>$ \&output\+\_\+blobs, uint32\+\_\+t max\+Batch\+Size=\doxymbox{\hyperlink{group__tensor_net_ga5a46a965749d6118e01307fd4d4865c9}{DEFAULT\+\_\+\+MAX\+\_\+\+BATCH\+\_\+\+SIZE}}, \doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precision\+Type}} precision=\doxymbox{\hyperlink{group__tensor_net_ggaac6604fd52c6e5db82877390e0378623a1d325738f49e8e4c424ff671624e66f9}{TYPE\+\_\+\+FASTEST}}, \doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{device\+Type}} device=\doxymbox{\hyperlink{group__tensor_net_ggaa5d3f9981cdbd91516c1474006a80fe4adc7f3f88455afa81458863e5b3092e4b}{DEVICE\+\_\+\+GPU}}, bool allow\+GPUFallback=true, nvinfer1::\+\+IInt8\+Calibrator \texorpdfstring{$\ast$}{*}calibrator=NULL, cuda\+Stream\+\_\+t stream=NULL)
+\item 
+bool \doxymbox{\hyperlink{classtensor_net_a8f34a6001c2da01662b85670de9246e4}{Load\+Network}} (const char \texorpdfstring{$\ast$}{*}prototxt, const char \texorpdfstring{$\ast$}{*}model, const char \texorpdfstring{$\ast$}{*}mean, const std::\+vector$<$ std::\+string $>$ \&input\+\_\+blobs, const std::\+vector$<$ Dims3 $>$ \&input\+\_\+dims, const std::\+vector$<$ std::\+string $>$ \&output\+\_\+blobs, uint32\+\_\+t max\+Batch\+Size=\doxymbox{\hyperlink{group__tensor_net_ga5a46a965749d6118e01307fd4d4865c9}{DEFAULT\+\_\+\+MAX\+\_\+\+BATCH\+\_\+\+SIZE}}, \doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precision\+Type}} precision=\doxymbox{\hyperlink{group__tensor_net_ggaac6604fd52c6e5db82877390e0378623a1d325738f49e8e4c424ff671624e66f9}{TYPE\+\_\+\+FASTEST}}, \doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{device\+Type}} device=\doxymbox{\hyperlink{group__tensor_net_ggaa5d3f9981cdbd91516c1474006a80fe4adc7f3f88455afa81458863e5b3092e4b}{DEVICE\+\_\+\+GPU}}, bool allow\+GPUFallback=true, nvinfer1::\+\+IInt8\+Calibrator \texorpdfstring{$\ast$}{*}calibrator=NULL, cuda\+Stream\+\_\+t stream=NULL)
+\item 
+bool \doxymbox{\hyperlink{classtensor_net_acb8076f6ab8d13b6507140826cf438d8}{Load\+Engine}} (const char \texorpdfstring{$\ast$}{*}engine\+\_\+filename, const std::\+vector$<$ std::\+string $>$ \&input\+\_\+blobs, const std::\+vector$<$ std::\+string $>$ \&output\+\_\+blobs, nvinfer1::\+\+IPlugin\+Factory \texorpdfstring{$\ast$}{*}plugin\+Factory=NULL, \doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{device\+Type}} device=\doxymbox{\hyperlink{group__tensor_net_ggaa5d3f9981cdbd91516c1474006a80fe4adc7f3f88455afa81458863e5b3092e4b}{DEVICE\+\_\+\+GPU}}, cuda\+Stream\+\_\+t stream=NULL)
+\item 
+bool \doxymbox{\hyperlink{classtensor_net_aaa4efe2b8d91fe914a22c87b725ac063}{Load\+Engine}} (char \texorpdfstring{$\ast$}{*}engine\+\_\+stream, size\+\_\+t engine\+\_\+size, const std::\+vector$<$ std::\+string $>$ \&input\+\_\+blobs, const std::\+vector$<$ std::\+string $>$ \&output\+\_\+blobs, nvinfer1::\+\+IPlugin\+Factory \texorpdfstring{$\ast$}{*}plugin\+Factory=NULL, \doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{device\+Type}} device=\doxymbox{\hyperlink{group__tensor_net_ggaa5d3f9981cdbd91516c1474006a80fe4adc7f3f88455afa81458863e5b3092e4b}{DEVICE\+\_\+\+GPU}}, cuda\+Stream\+\_\+t stream=NULL)
+\item 
+bool \doxymbox{\hyperlink{classtensor_net_a2d6fe13696a49d61e9abfa9729153e65}{Load\+Engine}} (nvinfer1::\+\+ICuda\+Engine \texorpdfstring{$\ast$}{*}engine, const std::\+vector$<$ std::\+string $>$ \&input\+\_\+blobs, const std::\+vector$<$ std::\+string $>$ \&output\+\_\+blobs, \doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{device\+Type}} device=\doxymbox{\hyperlink{group__tensor_net_ggaa5d3f9981cdbd91516c1474006a80fe4adc7f3f88455afa81458863e5b3092e4b}{DEVICE\+\_\+\+GPU}}, cuda\+Stream\+\_\+t stream=NULL)
+\item 
+bool \doxymbox{\hyperlink{classtensor_net_a89755f8e4b72ead7460deed394967386}{Load\+Engine}} (const char \texorpdfstring{$\ast$}{*}filename, char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}stream, size\+\_\+t \texorpdfstring{$\ast$}{*}size)
+\item 
+bool \doxymbox{\hyperlink{classtensor_net_a24831e27745d99ed9524ec25a205205a}{Load\+Binary}} (const char \texorpdfstring{$\ast$}{*}filename, char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}stream, size\+\_\+t \texorpdfstring{$\ast$}{*}size)
+\item 
+void \doxymbox{\hyperlink{classtensor_net_a3413eb0ad4f240f457f192f39e2e03e8}{Enable\+Layer\+Profiler}} ()
+\item 
+void \doxymbox{\hyperlink{classtensor_net_ae49f74ff83e46112a30318fa0576cace}{Enable\+Debug}} ()
+\item 
+bool \doxymbox{\hyperlink{classtensor_net_a7d0ec0d8504ac8b26c5ab4a6136599ca}{Allow\+GPUFallback}} () const
+\item 
+\doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{device\+Type}} \doxymbox{\hyperlink{classtensor_net_a92bb737172d26bda5f67d15346a02514}{Get\+Device}} () const
+\item 
+\doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precision\+Type}} \doxymbox{\hyperlink{classtensor_net_afb38b5f171025e987a00214cc4379ca9}{Get\+Precision}} () const
+\item 
+bool \doxymbox{\hyperlink{classtensor_net_a6b8e8dba05bc5c677027913d8c64f259}{Is\+Precision}} (\doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precision\+Type}} type) const
+\item 
+cuda\+Stream\+\_\+t \doxymbox{\hyperlink{classtensor_net_a34e350ec6185277ac09ae55a79403e62}{Get\+Stream}} () const
+\item 
+cuda\+Stream\+\_\+t \doxymbox{\hyperlink{classtensor_net_a78cecfb7505be0ea59d29041abc85cbb}{Create\+Stream}} (bool non\+Blocking=true)
+\item 
+void \doxymbox{\hyperlink{classtensor_net_a679b177784c85bfdba63dcd1008ff633}{Set\+Stream}} (cuda\+Stream\+\_\+t stream)
+\item 
+const char \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classtensor_net_acf9c21a1e031071c7fa8bacddc5901e1}{Get\+Prototxt\+Path}} () const
+\item 
+const char \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classtensor_net_ab7c42b9da47d4566e8f1dac0231638dd}{Get\+Model\+Path}} () const
+\item 
+const char \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classtensor_net_a3b64097cd334bb5af48913d58ae074b3}{Get\+Model\+Filename}} () const
+\item 
+\doxymbox{\hyperlink{group__tensor_net_ga5d4597e0e7beae7133d542e220528725}{model\+Type}} \doxymbox{\hyperlink{classtensor_net_acfa7f1f01b46f658ffc96f8a002e8d48}{Get\+Model\+Type}} () const
+\item 
+bool \doxymbox{\hyperlink{classtensor_net_a0a09d691ea080bd9734c5782c8fff6fd}{Is\+Model\+Type}} (\doxymbox{\hyperlink{group__tensor_net_ga5d4597e0e7beae7133d542e220528725}{model\+Type}} type) const
+\item 
+uint32\+\_\+t \doxymbox{\hyperlink{classtensor_net_ac583b8de1dd64b47338b4a3eb42ac166}{Get\+Input\+Layers}} () const
+\item 
+uint32\+\_\+t \doxymbox{\hyperlink{classtensor_net_a2dcc770a7215e2e76a8d520a36689e16}{Get\+Output\+Layers}} () const
+\item 
+Dims3 \doxymbox{\hyperlink{classtensor_net_adcfe61596f291e75a87d36c3771f25df}{Get\+Input\+Dims}} (uint32\+\_\+t layer=0) const
+\item 
+uint32\+\_\+t \doxymbox{\hyperlink{classtensor_net_a2d75ef6f579d1a71ff472bfafd0b7795}{Get\+Input\+Width}} (uint32\+\_\+t layer=0) const
+\item 
+uint32\+\_\+t \doxymbox{\hyperlink{classtensor_net_a214a92c41dcdcb58b3cd8496aac0857a}{Get\+Input\+Height}} (uint32\+\_\+t layer=0) const
+\item 
+uint32\+\_\+t \doxymbox{\hyperlink{classtensor_net_a2c80d46f8a01335e77e41023544102c9}{Get\+Input\+Size}} (uint32\+\_\+t layer=0) const
+\item 
+float \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classtensor_net_a3d04135aeef2b4204852ebd5b4363a68}{Get\+Input\+Ptr}} (uint32\+\_\+t layer=0) const
+\item 
+Dims3 \doxymbox{\hyperlink{classtensor_net_a77703f2a7b59f836c93ae28811e22cb0}{Get\+Output\+Dims}} (uint32\+\_\+t layer=0) const
+\item 
+uint32\+\_\+t \doxymbox{\hyperlink{classtensor_net_a09d63a8fd906c99f8158bf9460a83c02}{Get\+Output\+Width}} (uint32\+\_\+t layer=0) const
+\item 
+uint32\+\_\+t \doxymbox{\hyperlink{classtensor_net_a613679e8ee5315f3b5b16a39011ba76e}{Get\+Output\+Height}} (uint32\+\_\+t layer=0) const
+\item 
+uint32\+\_\+t \doxymbox{\hyperlink{classtensor_net_ae1486438dcdbe0d7f5e88e5336a42efa}{Get\+Output\+Size}} (uint32\+\_\+t layer=0) const
+\item 
+float \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classtensor_net_a5dd41d9c028fa562b1b8f7cb61a4e6f4}{Get\+Output\+Ptr}} (uint32\+\_\+t layer=0) const
+\item 
+float \doxymbox{\hyperlink{classtensor_net_a9dd2db089176ae6878e9ea7dd8fd80c3}{Get\+Network\+FPS}} ()
+\item 
+float \doxymbox{\hyperlink{classtensor_net_a49faef5920860345e503023b7c84423c}{Get\+Network\+Time}} ()
+\item 
+const char \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classtensor_net_a688f17acc51061a039f60cc8ab4f4e5b}{Get\+Network\+Name}} () const
+\item 
+float2 \doxymbox{\hyperlink{classtensor_net_ad266f93035a80dca80cd84d971e4f69b}{Get\+Profiler\+Time}} (\doxymbox{\hyperlink{group__tensor_net_gae34d45c0faa674ef4cc0fbfc8fae5809}{profiler\+Query}} query)
+\item 
+float \doxymbox{\hyperlink{classtensor_net_a27cf81b3fecf93d2e63a61220a54b393}{Get\+Profiler\+Time}} (\doxymbox{\hyperlink{group__tensor_net_gae34d45c0faa674ef4cc0fbfc8fae5809}{profiler\+Query}} query, \doxymbox{\hyperlink{group__tensor_net_gaaa4127ed22c7165a32d0474ebf97975e}{profiler\+Device}} device)
+\item 
+void \doxymbox{\hyperlink{classtensor_net_afc0f50abcf6ac71e96d51eba3ed53d4b}{Print\+Profiler\+Times}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static uint32\+\_\+t \doxymbox{\hyperlink{classseg_net_af480f63626ccb573caa816c9446930f5}{Visualization\+Flags\+From\+Str}} (const char \texorpdfstring{$\ast$}{*}str, uint32\+\_\+t default\+\_\+value=\doxymbox{\hyperlink{classseg_net_a09a07cb06cd461f6003b655e945d9cf3ab6a2dc917492d6b83de4b94c9233cb5f}{VISUALIZE\+\_\+\+OVERLAY}})
+\item 
+static \doxymbox{\hyperlink{classseg_net_a5579582306d8b98e3a8acf2b73e13ea0}{Filter\+Mode}} \doxymbox{\hyperlink{classseg_net_a299e7f53cde4e3e25cd00829dc181a10}{Filter\+Mode\+From\+Str}} (const char \texorpdfstring{$\ast$}{*}str, \doxymbox{\hyperlink{classseg_net_a5579582306d8b98e3a8acf2b73e13ea0}{Filter\+Mode}} default\+\_\+value=\doxymbox{\hyperlink{classseg_net_a5579582306d8b98e3a8acf2b73e13ea0a034092312a95fa984ab6c8e559c3c9e0}{FILTER\+\_\+\+LINEAR}})
+\item 
+static \doxymbox{\hyperlink{classseg_net}{seg\+Net}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classseg_net_a2bdc5f47befa50f0ae96e99f0613333d}{Create}} (const char \texorpdfstring{$\ast$}{*}network="{}fcn-\/resnet18-\/voc"{}, uint32\+\_\+t max\+Batch\+Size=\doxymbox{\hyperlink{group__tensor_net_ga5a46a965749d6118e01307fd4d4865c9}{DEFAULT\+\_\+\+MAX\+\_\+\+BATCH\+\_\+\+SIZE}}, \doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precision\+Type}} precision=\doxymbox{\hyperlink{group__tensor_net_ggaac6604fd52c6e5db82877390e0378623a1d325738f49e8e4c424ff671624e66f9}{TYPE\+\_\+\+FASTEST}}, \doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{device\+Type}} device=\doxymbox{\hyperlink{group__tensor_net_ggaa5d3f9981cdbd91516c1474006a80fe4adc7f3f88455afa81458863e5b3092e4b}{DEVICE\+\_\+\+GPU}}, bool allow\+GPUFallback=true)
+\item 
+static \doxymbox{\hyperlink{classseg_net}{seg\+Net}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classseg_net_a6e66a407de91d82d8f7ce0b0ab03641f}{Create}} (const char \texorpdfstring{$\ast$}{*}prototxt\+\_\+path, const char \texorpdfstring{$\ast$}{*}model\+\_\+path, const char \texorpdfstring{$\ast$}{*}class\+\_\+labels, const char \texorpdfstring{$\ast$}{*}class\+\_\+colors=NULL, const char \texorpdfstring{$\ast$}{*}input=\doxymbox{\hyperlink{group__seg_net_ga33b5fd20f8ed468725c55eb0bcc5af71}{SEGNET\+\_\+\+DEFAULT\+\_\+\+INPUT}}, const char \texorpdfstring{$\ast$}{*}output=\doxymbox{\hyperlink{group__seg_net_ga05c359c7dcd0c1e855543a3a9a18c422}{SEGNET\+\_\+\+DEFAULT\+\_\+\+OUTPUT}}, uint32\+\_\+t max\+Batch\+Size=\doxymbox{\hyperlink{group__tensor_net_ga5a46a965749d6118e01307fd4d4865c9}{DEFAULT\+\_\+\+MAX\+\_\+\+BATCH\+\_\+\+SIZE}}, \doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precision\+Type}} precision=\doxymbox{\hyperlink{group__tensor_net_ggaac6604fd52c6e5db82877390e0378623a1d325738f49e8e4c424ff671624e66f9}{TYPE\+\_\+\+FASTEST}}, \doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{device\+Type}} device=\doxymbox{\hyperlink{group__tensor_net_ggaa5d3f9981cdbd91516c1474006a80fe4adc7f3f88455afa81458863e5b3092e4b}{DEVICE\+\_\+\+GPU}}, bool allow\+GPUFallback=true)
+\item 
+static \doxymbox{\hyperlink{classseg_net}{seg\+Net}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classseg_net_a1a55ad2677736d79f7f63d47157412ee}{Create}} (int argc, char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}argv)
+\item 
+static \doxymbox{\hyperlink{classseg_net}{seg\+Net}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classseg_net_ad5016088ba54c00c068509605e7d3036}{Create}} (const \doxymbox{\hyperlink{classcommand_line}{command\+Line}} \&cmd\+Line)
+\item 
+static const char \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classseg_net_afb9e7a83990b24235ec517af5d4daebe}{Usage}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions inherited from \doxymbox{\hyperlink{classtensor_net}{tensor\+Net}}}
+\begin{DoxyCompactItemize}
+\item 
+static bool \doxymbox{\hyperlink{classtensor_net_a57cacfea82e9329c2cf776837dd00aef}{Load\+Class\+Labels}} (const char \texorpdfstring{$\ast$}{*}filename, std::\+vector$<$ std::\+string $>$ \&descriptions, int expected\+Classes=-\/1)
+\item 
+static bool \doxymbox{\hyperlink{classtensor_net_aa92022958d3a46655a5e2f2ed416e6b5}{Load\+Class\+Labels}} (const char \texorpdfstring{$\ast$}{*}filename, std::\+vector$<$ std::\+string $>$ \&descriptions, std::\+vector$<$ std::\+string $>$ \&synsets, int expected\+Classes=-\/1)
+\item 
+static bool \doxymbox{\hyperlink{classtensor_net_a7b87410f9133aea37b46979d543219b9}{Load\+Class\+Colors}} (const char \texorpdfstring{$\ast$}{*}filename, float4 \texorpdfstring{$\ast$}{*}colors, int expected\+Classes, float default\+Alpha=255.\+0f)
+\item 
+static bool \doxymbox{\hyperlink{classtensor_net_ae5dd58e2481f6c703abb9abbcfce805e}{Load\+Class\+Colors}} (const char \texorpdfstring{$\ast$}{*}filename, float4 \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}colors, int expected\+Classes, float default\+Alpha=255.\+0f)
+\item 
+static float4 \doxymbox{\hyperlink{classtensor_net_a4fe18908c74efda1708029ca3b04f0e8}{Generate\+Color}} (uint32\+\_\+t class\+ID, float alpha=255.\+0f)
+\item 
+static \doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precision\+Type}} \doxymbox{\hyperlink{classtensor_net_a3c0509631176be6f9e25673cb0aa12dc}{Select\+Precision}} (\doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precision\+Type}} precision, \doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{device\+Type}} device=\doxymbox{\hyperlink{group__tensor_net_ggaa5d3f9981cdbd91516c1474006a80fe4adc7f3f88455afa81458863e5b3092e4b}{DEVICE\+\_\+\+GPU}}, bool allow\+Int8=true)
+\item 
+static \doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precision\+Type}} \doxymbox{\hyperlink{classtensor_net_abe33fae5332296e2d917cb4ce435e255}{Find\+Fastest\+Precision}} (\doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{device\+Type}} device=\doxymbox{\hyperlink{group__tensor_net_ggaa5d3f9981cdbd91516c1474006a80fe4adc7f3f88455afa81458863e5b3092e4b}{DEVICE\+\_\+\+GPU}}, bool allow\+Int8=true)
+\item 
+static std::\+vector$<$ \doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precision\+Type}} $>$ \doxymbox{\hyperlink{classtensor_net_ae53b31ae407d3b1f18130c1313e4b099}{Detect\+Native\+Precisions}} (\doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{device\+Type}} device=\doxymbox{\hyperlink{group__tensor_net_ggaa5d3f9981cdbd91516c1474006a80fe4adc7f3f88455afa81458863e5b3092e4b}{DEVICE\+\_\+\+GPU}})
+\item 
+static bool \doxymbox{\hyperlink{classtensor_net_aa3bf1a3bf1fca38b39a200b4d8f727b2}{Detect\+Native\+Precision}} (const std::\+vector$<$ \doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precision\+Type}} $>$ \&native\+Types, \doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precision\+Type}} type)
+\item 
+static bool \doxymbox{\hyperlink{classtensor_net_a7d72ec8bbaf61278ce533afd60d5391c}{Detect\+Native\+Precision}} (\doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precision\+Type}} precision, \doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{device\+Type}} device=\doxymbox{\hyperlink{group__tensor_net_ggaa5d3f9981cdbd91516c1474006a80fe4adc7f3f88455afa81458863e5b3092e4b}{DEVICE\+\_\+\+GPU}})
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classseg_net_a3b98b9827d5c07e84ed6711414b96554}\label{classseg_net_a3b98b9827d5c07e84ed6711414b96554} 
+bool {\bfseries classify} (const char \texorpdfstring{$\ast$}{*}ignore\+\_\+class)
+\item 
+\Hypertarget{classseg_net_aeb2ea51dc7597c832bcb1ae61301d678}\label{classseg_net_aeb2ea51dc7597c832bcb1ae61301d678} 
+bool {\bfseries overlay\+Point} (void \texorpdfstring{$\ast$}{*}input, uint32\+\_\+t in\+\_\+width, uint32\+\_\+t in\+\_\+height, \doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{image\+Format}} in\+\_\+format, void \texorpdfstring{$\ast$}{*}output, uint32\+\_\+t out\+\_\+width, uint32\+\_\+t out\+\_\+height, \doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{image\+Format}} out\+\_\+format, bool mask\+\_\+only)
+\item 
+\Hypertarget{classseg_net_aadc91d5c05834ab706691c4861448bc8}\label{classseg_net_aadc91d5c05834ab706691c4861448bc8} 
+bool {\bfseries overlay\+Linear} (void \texorpdfstring{$\ast$}{*}input, uint32\+\_\+t in\+\_\+width, uint32\+\_\+t in\+\_\+height, \doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{image\+Format}} in\+\_\+format, void \texorpdfstring{$\ast$}{*}output, uint32\+\_\+t out\+\_\+width, uint32\+\_\+t out\+\_\+height, \doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{image\+Format}} out\+\_\+format, bool mask\+\_\+only)
+\item 
+\Hypertarget{classseg_net_a218a2c71cb4d59476070385c7370f789}\label{classseg_net_a218a2c71cb4d59476070385c7370f789} 
+bool {\bfseries load\+Class\+Colors} (const char \texorpdfstring{$\ast$}{*}filename)
+\item 
+\Hypertarget{classseg_net_a31d2bd6ddf05ce178a8e6c5b88247075}\label{classseg_net_a31d2bd6ddf05ce178a8e6c5b88247075} 
+bool {\bfseries load\+Class\+Labels} (const char \texorpdfstring{$\ast$}{*}filename)
+\item 
+\Hypertarget{classseg_net_a4eabed9f0e8aa5a8ddad078ada771ad7}\label{classseg_net_a4eabed9f0e8aa5a8ddad078ada771ad7} 
+bool {\bfseries save\+Class\+Legend} (const char \texorpdfstring{$\ast$}{*}filename)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions inherited from \doxymbox{\hyperlink{classtensor_net}{tensor\+Net}}}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{classtensor_net_ab6e617d96e5542bef023ee9d4c96388a}{tensor\+Net}} ()
+\item 
+bool \doxymbox{\hyperlink{classtensor_net_a2e8dd909e797dfcfbb058dc6b351c586}{Process\+Network}} (bool sync=true)
+\item 
+bool \doxymbox{\hyperlink{classtensor_net_a2fbc013f70b52f885867302446e0dca1}{Profile\+Model}} (const std::\+string \&deploy\+File, const std::\+string \&model\+File, const std::\+vector$<$ std::\+string $>$ \&inputs, const std::\+vector$<$ Dims3 $>$ \&input\+Dims, const std::\+vector$<$ std::\+string $>$ \&outputs, uint32\+\_\+t max\+Batch\+Size, \doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precision\+Type}} precision, \doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{device\+Type}} device, bool allow\+GPUFallback, nvinfer1::\+\+IInt8\+Calibrator \texorpdfstring{$\ast$}{*}calibrator, char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}engine\+Stream, size\+\_\+t \texorpdfstring{$\ast$}{*}engine\+Size)
+\item 
+bool \doxymbox{\hyperlink{classtensor_net_a7a898dfb2553869cdc318ecb03e153f1}{Configure\+Builder}} (nvinfer1::\+\+IBuilder \texorpdfstring{$\ast$}{*}builder, uint32\+\_\+t max\+Batch\+Size, uint32\+\_\+t workspace\+Size, \doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precision\+Type}} precision, \doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{device\+Type}} device, bool allow\+GPUFallback, nvinfer1::\+\+IInt8\+Calibrator \texorpdfstring{$\ast$}{*}calibrator)
+\item 
+bool \doxymbox{\hyperlink{classtensor_net_a6e2fe0a467929d76b20940771b8f96c3}{Validate\+Engine}} (const char \texorpdfstring{$\ast$}{*}model\+\_\+path, const char \texorpdfstring{$\ast$}{*}cache\+\_\+path, const char \texorpdfstring{$\ast$}{*}checksum\+\_\+path)
+\item 
+void \doxymbox{\hyperlink{classtensor_net_a088c3bf591e45e52ec227491f6f299ad}{PROFILER\+\_\+\+BEGIN}} (\doxymbox{\hyperlink{group__tensor_net_gae34d45c0faa674ef4cc0fbfc8fae5809}{profiler\+Query}} query)
+\item 
+void \doxymbox{\hyperlink{classtensor_net_ac8582b9a6099e3265da4c3f9fdf804ea}{PROFILER\+\_\+\+END}} (\doxymbox{\hyperlink{group__tensor_net_gae34d45c0faa674ef4cc0fbfc8fae5809}{profiler\+Query}} query)
+\item 
+bool \doxymbox{\hyperlink{classtensor_net_ae2e0ae17baf6e1975aaad7a7f5c60ce9}{PROFILER\+\_\+\+QUERY}} (\doxymbox{\hyperlink{group__tensor_net_gae34d45c0faa674ef4cc0fbfc8fae5809}{profiler\+Query}} query)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classseg_net_a5763fca156e99d9fe07dcbf626489b0e}\label{classseg_net_a5763fca156e99d9fe07dcbf626489b0e} 
+std::\+vector$<$ std::\+string $>$ {\bfseries m\+Class\+Labels}
+\item 
+\Hypertarget{classseg_net_af9a9bd73dc17940aa87aacba2001b09b}\label{classseg_net_af9a9bd73dc17940aa87aacba2001b09b} 
+std::\+string {\bfseries m\+Class\+Path}
+\item 
+bool \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classseg_net_ac8cbd9449fb81520a847aee04b6bbca5}{m\+Colors\+Alpha\+Set}}
+\item 
+float4 \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classseg_net_a307dd9f1d322ce42f553361321bbb869}{m\+Class\+Colors}}
+\item 
+uint8\+\_\+t \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classseg_net_a3db3738778929458b52a709b053d456a}{m\+Class\+Map}}
+\item 
+void \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classseg_net_aadacbaf1eb15bfe512499276272bf67c}{m\+Last\+Input\+Img}}
+\item 
+uint32\+\_\+t \doxymbox{\hyperlink{classseg_net_ad984bfe4460621a78440bfb4768f4e8e}{m\+Last\+Input\+Width}}
+\item 
+uint32\+\_\+t \doxymbox{\hyperlink{classseg_net_a4341b8ae226236eef40867bab4c7f251}{m\+Last\+Input\+Height}}
+\item 
+\doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{image\+Format}} \doxymbox{\hyperlink{classseg_net_a2d4bf7321a21756ff82551e306e8adb1}{m\+Last\+Input\+Format}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes inherited from \doxymbox{\hyperlink{classtensor_net}{tensor\+Net}}}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{classtensor_net_1_1_logger}{tensor\+Net::\+\+Logger}} {\bfseries g\+Logger}
+\item 
+\doxymbox{\hyperlink{classtensor_net_1_1_profiler}{tensor\+Net::\+\+Profiler}} {\bfseries g\+Profiler}
+\item 
+std::\+string {\bfseries m\+Prototxt\+Path}
+\item 
+std::\+string {\bfseries m\+Model\+Path}
+\item 
+std::\+string {\bfseries m\+Model\+File}
+\item 
+std::\+string {\bfseries m\+Mean\+Path}
+\item 
+std::\+string {\bfseries m\+Cache\+Engine\+Path}
+\item 
+std::\+string {\bfseries m\+Cache\+Calibration\+Path}
+\item 
+std::\+string {\bfseries m\+Checksum\+Path}
+\item 
+\doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{device\+Type}} {\bfseries m\+Device}
+\item 
+\doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precision\+Type}} {\bfseries m\+Precision}
+\item 
+\doxymbox{\hyperlink{group__tensor_net_ga5d4597e0e7beae7133d542e220528725}{model\+Type}} {\bfseries m\+Model\+Type}
+\item 
+cuda\+Stream\+\_\+t {\bfseries m\+Stream}
+\item 
+cuda\+Event\+\_\+t {\bfseries m\+Events\+GPU} \+[PROFILER\+\_\+\+TOTAL \texorpdfstring{$\ast$}{*}2]\+
+\item 
+timespec {\bfseries m\+Events\+CPU} \+[PROFILER\+\_\+\+TOTAL \texorpdfstring{$\ast$}{*}2]\+
+\item 
+nvinfer1::\+\+IRuntime \texorpdfstring{$\ast$}{*} {\bfseries m\+Infer}
+\item 
+nvinfer1::\+\+ICuda\+Engine \texorpdfstring{$\ast$}{*} {\bfseries m\+Engine}
+\item 
+nvinfer1::\+\+IExecution\+Context \texorpdfstring{$\ast$}{*} {\bfseries m\+Context}
+\item 
+float2 {\bfseries m\+Profiler\+Times} \+[PROFILER\+\_\+\+TOTAL+1]\+
+\item 
+uint32\+\_\+t {\bfseries m\+Profiler\+Queries\+Used}
+\item 
+uint32\+\_\+t {\bfseries m\+Profiler\+Queries\+Done}
+\item 
+uint32\+\_\+t {\bfseries m\+Workspace\+Size}
+\item 
+uint32\+\_\+t {\bfseries m\+Max\+Batch\+Size}
+\item 
+bool {\bfseries m\+Enable\+Profiler}
+\item 
+bool {\bfseries m\+Enable\+Debug}
+\item 
+bool {\bfseries m\+Allow\+GPUFallback}
+\item 
+void \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*} {\bfseries m\+Bindings}
+\item 
+std::\+vector$<$ \doxymbox{\hyperlink{structtensor_net_1_1layer_info}{layer\+Info}} $>$ {\bfseries m\+Inputs}
+\item 
+std::\+vector$<$ \doxymbox{\hyperlink{structtensor_net_1_1layer_info}{layer\+Info}} $>$ {\bfseries m\+Outputs}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Image segmentation with FCN-\/\+Alexnet or custom models, using Tensor\+RT. 
+
+\label{doc-enum-members}
+\Hypertarget{classseg_net_doc-enum-members}
+\doxysubsection{Member Enumeration Documentation}
+\Hypertarget{classseg_net_a5579582306d8b98e3a8acf2b73e13ea0}\index{segNet@{segNet}!FilterMode@{FilterMode}}
+\index{FilterMode@{FilterMode}!segNet@{segNet}}
+\doxysubsubsection{\texorpdfstring{FilterMode}{FilterMode}}
+{\footnotesize\ttfamily \label{classseg_net_a5579582306d8b98e3a8acf2b73e13ea0} 
+enum \doxymbox{\hyperlink{classseg_net_a5579582306d8b98e3a8acf2b73e13ea0}{seg\+Net::\+\+Filter\+Mode}}}
+
+Enumeration of mask/\+overlay filtering modes. \begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FILTER\_POINT@{FILTER\_POINT}!segNet@{segNet}}
+\index{segNet@{segNet}!FILTER\_POINT@{FILTER\_POINT}}
+}\Hypertarget{classseg_net_a5579582306d8b98e3a8acf2b73e13ea0abe4ae38cf99cdab6c3b070ee4a83bb47}\label{classseg_net_a5579582306d8b98e3a8acf2b73e13ea0abe4ae38cf99cdab6c3b070ee4a83bb47} 
+FILTER\+\_\+\+POINT&Nearest point sampling \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FILTER\_LINEAR@{FILTER\_LINEAR}!segNet@{segNet}}
+\index{segNet@{segNet}!FILTER\_LINEAR@{FILTER\_LINEAR}}
+}\Hypertarget{classseg_net_a5579582306d8b98e3a8acf2b73e13ea0a034092312a95fa984ab6c8e559c3c9e0}\label{classseg_net_a5579582306d8b98e3a8acf2b73e13ea0a034092312a95fa984ab6c8e559c3c9e0} 
+FILTER\+\_\+\+LINEAR&Bilinear filtering \\
+\hline
+
+\end{DoxyEnumFields}
+\Hypertarget{classseg_net_a09a07cb06cd461f6003b655e945d9cf3}\index{segNet@{segNet}!VisualizationFlags@{VisualizationFlags}}
+\index{VisualizationFlags@{VisualizationFlags}!segNet@{segNet}}
+\doxysubsubsection{\texorpdfstring{VisualizationFlags}{VisualizationFlags}}
+{\footnotesize\ttfamily \label{classseg_net_a09a07cb06cd461f6003b655e945d9cf3} 
+enum \doxymbox{\hyperlink{classseg_net_a09a07cb06cd461f6003b655e945d9cf3}{seg\+Net::\+\+Visualization\+Flags}}}
+
+Visualization flags. \begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{VISUALIZE\_OVERLAY@{VISUALIZE\_OVERLAY}!segNet@{segNet}}
+\index{segNet@{segNet}!VISUALIZE\_OVERLAY@{VISUALIZE\_OVERLAY}}
+}\Hypertarget{classseg_net_a09a07cb06cd461f6003b655e945d9cf3ab6a2dc917492d6b83de4b94c9233cb5f}\label{classseg_net_a09a07cb06cd461f6003b655e945d9cf3ab6a2dc917492d6b83de4b94c9233cb5f} 
+VISUALIZE\+\_\+\+OVERLAY&Overlay the segmentation class colors with alpha blending \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{VISUALIZE\_MASK@{VISUALIZE\_MASK}!segNet@{segNet}}
+\index{segNet@{segNet}!VISUALIZE\_MASK@{VISUALIZE\_MASK}}
+}\Hypertarget{classseg_net_a09a07cb06cd461f6003b655e945d9cf3a44b13e054270ce1d9a77fea8bfa83bd5}\label{classseg_net_a09a07cb06cd461f6003b655e945d9cf3a44b13e054270ce1d9a77fea8bfa83bd5} 
+VISUALIZE\+\_\+\+MASK&View just the colorized segmentation class mask \\
+\hline
+
+\end{DoxyEnumFields}
+
+
+\label{doc-constructors}
+\Hypertarget{classseg_net_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classseg_net_a167f9d7e76b2837485278bf7323b4eac}\index{segNet@{segNet}!````~segNet@{\texorpdfstring{$\sim$}{\string~}segNet}}
+\index{````~segNet@{\texorpdfstring{$\sim$}{\string~}segNet}!segNet@{segNet}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}segNet()}{\string~segNet()}}
+{\footnotesize\ttfamily \label{classseg_net_a167f9d7e76b2837485278bf7323b4eac} 
+virtual seg\+Net::\+\texorpdfstring{$\sim$}{\string~}seg\+Net (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+Destroy 
+
+\label{doc-func-members}
+\Hypertarget{classseg_net_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classseg_net_a2bdc5f47befa50f0ae96e99f0613333d}\index{segNet@{segNet}!Create@{Create}}
+\index{Create@{Create}!segNet@{segNet}}
+\doxysubsubsection{\texorpdfstring{Create()}{Create()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily \label{classseg_net_a2bdc5f47befa50f0ae96e99f0613333d} 
+\doxymbox{\hyperlink{classseg_net}{seg\+Net}} \texorpdfstring{$\ast$}{*} seg\+Net::\+\+Create (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{network}{ = {\ttfamily "{}fcn-\/resnet18-\/voc"{}}, }\item[{uint32\+\_\+t}]{max\+Batch\+Size}{ = {\ttfamily \doxymbox{\hyperlink{group__tensor_net_ga5a46a965749d6118e01307fd4d4865c9}{DEFAULT\+\_\+\+MAX\+\_\+\+BATCH\+\_\+\+SIZE}}}, }\item[{\doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precision\+Type}}}]{precision}{ = {\ttfamily \doxymbox{\hyperlink{group__tensor_net_ggaac6604fd52c6e5db82877390e0378623a1d325738f49e8e4c424ff671624e66f9}{TYPE\+\_\+\+FASTEST}}}, }\item[{\doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{device\+Type}}}]{device}{ = {\ttfamily \doxymbox{\hyperlink{group__tensor_net_ggaa5d3f9981cdbd91516c1474006a80fe4adc7f3f88455afa81458863e5b3092e4b}{DEVICE\+\_\+\+GPU}}}, }\item[{bool}]{allow\+GPUFallback}{ = {\ttfamily true}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Load a pre-\/trained model. \begin{DoxySeeAlso}{See also}
+\doxylink{group__seg_net_ga1b784139a64e71b3698a234d83ae2cf8}{SEGNET\+\_\+\+USAGE\+\_\+\+STRING} for the models available. 
+\end{DoxySeeAlso}
+\Hypertarget{classseg_net_a6e66a407de91d82d8f7ce0b0ab03641f}\index{segNet@{segNet}!Create@{Create}}
+\index{Create@{Create}!segNet@{segNet}}
+\doxysubsubsection{\texorpdfstring{Create()}{Create()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily \label{classseg_net_a6e66a407de91d82d8f7ce0b0ab03641f} 
+\doxymbox{\hyperlink{classseg_net}{seg\+Net}} \texorpdfstring{$\ast$}{*} seg\+Net::\+\+Create (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{prototxt\+\_\+path}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{model\+\_\+path}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{class\+\_\+labels}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{class\+\_\+colors}{ = {\ttfamily NULL}, }\item[{const char \texorpdfstring{$\ast$}{*}}]{input}{ = {\ttfamily \doxymbox{\hyperlink{group__seg_net_ga33b5fd20f8ed468725c55eb0bcc5af71}{SEGNET\+\_\+\+DEFAULT\+\_\+\+INPUT}}}, }\item[{const char \texorpdfstring{$\ast$}{*}}]{output}{ = {\ttfamily \doxymbox{\hyperlink{group__seg_net_ga05c359c7dcd0c1e855543a3a9a18c422}{SEGNET\+\_\+\+DEFAULT\+\_\+\+OUTPUT}}}, }\item[{uint32\+\_\+t}]{max\+Batch\+Size}{ = {\ttfamily \doxymbox{\hyperlink{group__tensor_net_ga5a46a965749d6118e01307fd4d4865c9}{DEFAULT\+\_\+\+MAX\+\_\+\+BATCH\+\_\+\+SIZE}}}, }\item[{\doxymbox{\hyperlink{group__tensor_net_gaac6604fd52c6e5db82877390e0378623}{precision\+Type}}}]{precision}{ = {\ttfamily \doxymbox{\hyperlink{group__tensor_net_ggaac6604fd52c6e5db82877390e0378623a1d325738f49e8e4c424ff671624e66f9}{TYPE\+\_\+\+FASTEST}}}, }\item[{\doxymbox{\hyperlink{group__tensor_net_gaa5d3f9981cdbd91516c1474006a80fe4}{device\+Type}}}]{device}{ = {\ttfamily \doxymbox{\hyperlink{group__tensor_net_ggaa5d3f9981cdbd91516c1474006a80fe4adc7f3f88455afa81458863e5b3092e4b}{DEVICE\+\_\+\+GPU}}}, }\item[{bool}]{allow\+GPUFallback}{ = {\ttfamily true}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Load a new network instance 
+\begin{DoxyParams}{Parameters}
+{\em prototxt\+\_\+path} & File path to the deployable network prototxt \\
+\hline
+{\em model\+\_\+path} & File path to the caffemodel \\
+\hline
+{\em class\+\_\+labels} & File path to list of class name labels \\
+\hline
+{\em class\+\_\+colors} & File path to list of class colors \\
+\hline
+{\em \doxylink{group__input}{Input}} & Name of the input layer blob. \\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\doxylink{group__seg_net_ga33b5fd20f8ed468725c55eb0bcc5af71}{SEGNET\+\_\+\+DEFAULT\+\_\+\+INPUT} 
+\end{DoxySeeAlso}
+
+\begin{DoxyParams}{Parameters}
+{\em output} & Name of the output layer blob. \\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\doxylink{group__seg_net_ga05c359c7dcd0c1e855543a3a9a18c422}{SEGNET\+\_\+\+DEFAULT\+\_\+\+OUTPUT} 
+\end{DoxySeeAlso}
+
+\begin{DoxyParams}{Parameters}
+{\em max\+Batch\+Size} & \doxylink{requirements_The}{The} maximum batch size that the network will support and be optimized for. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classseg_net_ad5016088ba54c00c068509605e7d3036}\index{segNet@{segNet}!Create@{Create}}
+\index{Create@{Create}!segNet@{segNet}}
+\doxysubsubsection{\texorpdfstring{Create()}{Create()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily \label{classseg_net_ad5016088ba54c00c068509605e7d3036} 
+\doxymbox{\hyperlink{classseg_net}{seg\+Net}} \texorpdfstring{$\ast$}{*} seg\+Net::\+\+Create (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{classcommand_line}{command\+Line}} \&}]{cmd\+Line}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Load a new network instance by parsing the command line. \Hypertarget{classseg_net_a1a55ad2677736d79f7f63d47157412ee}\index{segNet@{segNet}!Create@{Create}}
+\index{Create@{Create}!segNet@{segNet}}
+\doxysubsubsection{\texorpdfstring{Create()}{Create()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily \label{classseg_net_a1a55ad2677736d79f7f63d47157412ee} 
+\doxymbox{\hyperlink{classseg_net}{seg\+Net}} \texorpdfstring{$\ast$}{*} seg\+Net::\+\+Create (\begin{DoxyParamCaption}\item[{int}]{argc}{, }\item[{char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{argv}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Load a new network instance by parsing the command line. \Hypertarget{classseg_net_a299e7f53cde4e3e25cd00829dc181a10}\index{segNet@{segNet}!FilterModeFromStr@{FilterModeFromStr}}
+\index{FilterModeFromStr@{FilterModeFromStr}!segNet@{segNet}}
+\doxysubsubsection{\texorpdfstring{FilterModeFromStr()}{FilterModeFromStr()}}
+{\footnotesize\ttfamily \label{classseg_net_a299e7f53cde4e3e25cd00829dc181a10} 
+\doxymbox{\hyperlink{classseg_net_a5579582306d8b98e3a8acf2b73e13ea0}{Filter\+Mode}} seg\+Net::\+\+Filter\+Mode\+From\+Str (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{str}{, }\item[{\doxymbox{\hyperlink{classseg_net_a5579582306d8b98e3a8acf2b73e13ea0}{Filter\+Mode}}}]{default\+\_\+value}{ = {\ttfamily \doxymbox{\hyperlink{classseg_net_a5579582306d8b98e3a8acf2b73e13ea0a034092312a95fa984ab6c8e559c3c9e0}{FILTER\+\_\+\+LINEAR}}}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Parse a string from one of the \doxylink{classseg_net_a5579582306d8b98e3a8acf2b73e13ea0}{Filter\+Mode} values. Valid strings are "{}point"{}, and "{}linear"{} \begin{DoxyReturn}{Returns}
+one of the \doxylink{classseg_net_a5579582306d8b98e3a8acf2b73e13ea0}{seg\+Net::\+\+Filter\+Mode} enums, or default \doxylink{classseg_net_a5579582306d8b98e3a8acf2b73e13ea0a034092312a95fa984ab6c8e559c3c9e0}{seg\+Net::\+\+FILTER\+\_\+\+LINEAR} on an error. 
+\end{DoxyReturn}
+\Hypertarget{classseg_net_a04bb46f8a71a45044d324a5e140f0777}\index{segNet@{segNet}!FindClassID@{FindClassID}}
+\index{FindClassID@{FindClassID}!segNet@{segNet}}
+\doxysubsubsection{\texorpdfstring{FindClassID()}{FindClassID()}}
+{\footnotesize\ttfamily \label{classseg_net_a04bb46f8a71a45044d324a5e140f0777} 
+int seg\+Net::\+\+Find\+Class\+ID (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{label\+\_\+name}{}\end{DoxyParamCaption})}
+
+Find the ID of a particular class (by label name). \Hypertarget{classseg_net_afdf19dd9b97d89fa0074c75db4263eac}\index{segNet@{segNet}!GetClassColor@{GetClassColor}}
+\index{GetClassColor@{GetClassColor}!segNet@{segNet}}
+\doxysubsubsection{\texorpdfstring{GetClassColor()}{GetClassColor()}}
+{\footnotesize\ttfamily \label{classseg_net_afdf19dd9b97d89fa0074c75db4263eac} 
+float4 seg\+Net::\+\+Get\+Class\+Color (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{id}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Retrieve the RGBA visualization color a particular class. \Hypertarget{classseg_net_a070cde00d2477ce181b9d07f3e8c4aec}\index{segNet@{segNet}!GetClassDesc@{GetClassDesc}}
+\index{GetClassDesc@{GetClassDesc}!segNet@{segNet}}
+\doxysubsubsection{\texorpdfstring{GetClassDesc()}{GetClassDesc()}}
+{\footnotesize\ttfamily \label{classseg_net_a070cde00d2477ce181b9d07f3e8c4aec} 
+const char \texorpdfstring{$\ast$}{*} seg\+Net::\+\+Get\+Class\+Desc (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{id}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Retrieve the description of a particular class. \Hypertarget{classseg_net_a661919c0f7afb13ec0687c7073b49f23}\index{segNet@{segNet}!GetClassLabel@{GetClassLabel}}
+\index{GetClassLabel@{GetClassLabel}!segNet@{segNet}}
+\doxysubsubsection{\texorpdfstring{GetClassLabel()}{GetClassLabel()}}
+{\footnotesize\ttfamily \label{classseg_net_a661919c0f7afb13ec0687c7073b49f23} 
+const char \texorpdfstring{$\ast$}{*} seg\+Net::\+\+Get\+Class\+Label (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{id}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Retrieve the description of a particular class. \Hypertarget{classseg_net_a33d2e2a0312732bb80baea8ca50b6fab}\index{segNet@{segNet}!GetClassPath@{GetClassPath}}
+\index{GetClassPath@{GetClassPath}!segNet@{segNet}}
+\doxysubsubsection{\texorpdfstring{GetClassPath()}{GetClassPath()}}
+{\footnotesize\ttfamily \label{classseg_net_a33d2e2a0312732bb80baea8ca50b6fab} 
+const char \texorpdfstring{$\ast$}{*} seg\+Net::\+\+Get\+Class\+Path (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Retrieve the path to the file containing the class label descriptions. \Hypertarget{classseg_net_a95980d825a9939d0f48bfb2ef51ebb79}\index{segNet@{segNet}!GetGridHeight@{GetGridHeight}}
+\index{GetGridHeight@{GetGridHeight}!segNet@{segNet}}
+\doxysubsubsection{\texorpdfstring{GetGridHeight()}{GetGridHeight()}}
+{\footnotesize\ttfamily \label{classseg_net_a95980d825a9939d0f48bfb2ef51ebb79} 
+uint32\+\_\+t seg\+Net::\+\+Get\+Grid\+Height (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Retrieve the number of rows in the classification grid. This indicates the resolution of the raw segmentation output. \Hypertarget{classseg_net_a96b6fe6b05534c0792f8cc9353723219}\index{segNet@{segNet}!GetGridWidth@{GetGridWidth}}
+\index{GetGridWidth@{GetGridWidth}!segNet@{segNet}}
+\doxysubsubsection{\texorpdfstring{GetGridWidth()}{GetGridWidth()}}
+{\footnotesize\ttfamily \label{classseg_net_a96b6fe6b05534c0792f8cc9353723219} 
+uint32\+\_\+t seg\+Net::\+\+Get\+Grid\+Width (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Retrieve the number of columns in the classification grid. This indicates the resolution of the raw segmentation output. \Hypertarget{classseg_net_a31e8118b2a38e330b6e087cf6c98396e}\index{segNet@{segNet}!GetNumClasses@{GetNumClasses}}
+\index{GetNumClasses@{GetNumClasses}!segNet@{segNet}}
+\doxysubsubsection{\texorpdfstring{GetNumClasses()}{GetNumClasses()}}
+{\footnotesize\ttfamily \label{classseg_net_a31e8118b2a38e330b6e087cf6c98396e} 
+uint32\+\_\+t seg\+Net::\+\+Get\+Num\+Classes (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Retrieve the number of object classes supported in the detector \Hypertarget{classseg_net_a27a03d12169f62dac97e351b2acdea86}\index{segNet@{segNet}!GetOverlayAlpha@{GetOverlayAlpha}}
+\index{GetOverlayAlpha@{GetOverlayAlpha}!segNet@{segNet}}
+\doxysubsubsection{\texorpdfstring{GetOverlayAlpha()}{GetOverlayAlpha()}}
+{\footnotesize\ttfamily \label{classseg_net_a27a03d12169f62dac97e351b2acdea86} 
+float seg\+Net::\+\+Get\+Overlay\+Alpha (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+Retrieve the overlay alpha blending value for classes that don\textquotesingle{}t have it explicitly set. \Hypertarget{classseg_net_a656d709bbfb00fb0b9b4d55296aae463}\index{segNet@{segNet}!Mask@{Mask}}
+\index{Mask@{Mask}!segNet@{segNet}}
+\doxysubsubsection{\texorpdfstring{Mask()}{Mask()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily \label{classseg_net_a656d709bbfb00fb0b9b4d55296aae463} 
+bool seg\+Net::\+\+Mask (\begin{DoxyParamCaption}\item[{float \texorpdfstring{$\ast$}{*}}]{output}{, }\item[{uint32\+\_\+t}]{width}{, }\item[{uint32\+\_\+t}]{height}{, }\item[{\doxymbox{\hyperlink{classseg_net_a5579582306d8b98e3a8acf2b73e13ea0}{Filter\+Mode}}}]{filter}{ = {\ttfamily \doxymbox{\hyperlink{classseg_net_a5579582306d8b98e3a8acf2b73e13ea0a034092312a95fa984ab6c8e559c3c9e0}{FILTER\+\_\+\+LINEAR}}}}\end{DoxyParamCaption})}
+
+Produce a colorized RGBA segmentation mask. \begin{DoxyRefDesc}{Deprecated}
+\item[\doxymbox{\hyperlink{deprecated__deprecated000008}{Deprecated}}]this overload is for legacy compatibility. It expects float4 RGBA image. \end{DoxyRefDesc}
+\Hypertarget{classseg_net_af7b6257716514631dd0358e4b2ed692c}\index{segNet@{segNet}!Mask@{Mask}}
+\index{Mask@{Mask}!segNet@{segNet}}
+\doxysubsubsection{\texorpdfstring{Mask()}{Mask()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily \label{classseg_net_af7b6257716514631dd0358e4b2ed692c} 
+template$<$typename T$>$ \\
+bool seg\+Net::\+\+Mask (\begin{DoxyParamCaption}\item[{T \texorpdfstring{$\ast$}{*}}]{output}{, }\item[{uint32\+\_\+t}]{width}{, }\item[{uint32\+\_\+t}]{height}{, }\item[{\doxymbox{\hyperlink{classseg_net_a5579582306d8b98e3a8acf2b73e13ea0}{Filter\+Mode}}}]{filter}{ = {\ttfamily \doxymbox{\hyperlink{classseg_net_a5579582306d8b98e3a8acf2b73e13ea0a034092312a95fa984ab6c8e559c3c9e0}{FILTER\+\_\+\+LINEAR}}}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Produce a colorized segmentation mask. \Hypertarget{classseg_net_a1efb45b81c82dd6f74c641ab39a41387}\index{segNet@{segNet}!Mask@{Mask}}
+\index{Mask@{Mask}!segNet@{segNet}}
+\doxysubsubsection{\texorpdfstring{Mask()}{Mask()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily \label{classseg_net_a1efb45b81c82dd6f74c641ab39a41387} 
+bool seg\+Net::\+\+Mask (\begin{DoxyParamCaption}\item[{uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{output}{, }\item[{uint32\+\_\+t}]{width}{, }\item[{uint32\+\_\+t}]{height}{}\end{DoxyParamCaption})}
+
+Produce a grayscale binary segmentation mask, where the pixel values correspond to the class ID of the corresponding class type. \Hypertarget{classseg_net_afd64ed7b535d7815de734d58ee22aea1}\index{segNet@{segNet}!Mask@{Mask}}
+\index{Mask@{Mask}!segNet@{segNet}}
+\doxysubsubsection{\texorpdfstring{Mask()}{Mask()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily \label{classseg_net_afd64ed7b535d7815de734d58ee22aea1} 
+bool seg\+Net::\+\+Mask (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}}]{output}{, }\item[{uint32\+\_\+t}]{width}{, }\item[{uint32\+\_\+t}]{height}{, }\item[{\doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{image\+Format}}}]{format}{, }\item[{\doxymbox{\hyperlink{classseg_net_a5579582306d8b98e3a8acf2b73e13ea0}{Filter\+Mode}}}]{filter}{ = {\ttfamily \doxymbox{\hyperlink{classseg_net_a5579582306d8b98e3a8acf2b73e13ea0a034092312a95fa984ab6c8e559c3c9e0}{FILTER\+\_\+\+LINEAR}}}}\end{DoxyParamCaption})}
+
+Produce a colorized segmentation mask. \Hypertarget{classseg_net_a3a670c08ad8b13db6ee092c59efe88b8}\index{segNet@{segNet}!Overlay@{Overlay}}
+\index{Overlay@{Overlay}!segNet@{segNet}}
+\doxysubsubsection{\texorpdfstring{Overlay()}{Overlay()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily \label{classseg_net_a3a670c08ad8b13db6ee092c59efe88b8} 
+bool seg\+Net::\+\+Overlay (\begin{DoxyParamCaption}\item[{float \texorpdfstring{$\ast$}{*}}]{output}{, }\item[{uint32\+\_\+t}]{width}{, }\item[{uint32\+\_\+t}]{height}{, }\item[{\doxymbox{\hyperlink{classseg_net_a5579582306d8b98e3a8acf2b73e13ea0}{Filter\+Mode}}}]{filter}{ = {\ttfamily \doxymbox{\hyperlink{classseg_net_a5579582306d8b98e3a8acf2b73e13ea0a034092312a95fa984ab6c8e559c3c9e0}{FILTER\+\_\+\+LINEAR}}}}\end{DoxyParamCaption})}
+
+Produce the segmentation overlay alpha blended on top of the original image. \begin{DoxyRefDesc}{Deprecated}
+\item[\doxymbox{\hyperlink{deprecated__deprecated000009}{Deprecated}}]this overload is for legacy compatibility. It expects float4 RGBA image. \end{DoxyRefDesc}
+
+\begin{DoxyParams}{Parameters}
+{\em \doxylink{group__input}{Input}} & float4 input image in CUDA device memory, RGBA colorspace with values 0-\/255. \\
+\hline
+{\em output} & float4 output image in CUDA device memory, RGBA colorspace with values 0-\/255. \\
+\hline
+{\em width} & width of the input image in pixels. \\
+\hline
+{\em height} & height of the input image in pixels. \\
+\hline
+{\em ignore\+\_\+class} & label name of class to ignore in the classification (or NULL to process all). \\
+\hline
+{\em type} & overlay visualization options \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true on success, false on error. 
+\end{DoxyReturn}
+\Hypertarget{classseg_net_a646b59503f89809fefee1c32d33307d9}\index{segNet@{segNet}!Overlay@{Overlay}}
+\index{Overlay@{Overlay}!segNet@{segNet}}
+\doxysubsubsection{\texorpdfstring{Overlay()}{Overlay()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily \label{classseg_net_a646b59503f89809fefee1c32d33307d9} 
+template$<$typename T$>$ \\
+bool seg\+Net::\+\+Overlay (\begin{DoxyParamCaption}\item[{T \texorpdfstring{$\ast$}{*}}]{output}{, }\item[{uint32\+\_\+t}]{width}{, }\item[{uint32\+\_\+t}]{height}{, }\item[{\doxymbox{\hyperlink{classseg_net_a5579582306d8b98e3a8acf2b73e13ea0}{Filter\+Mode}}}]{filter}{ = {\ttfamily \doxymbox{\hyperlink{classseg_net_a5579582306d8b98e3a8acf2b73e13ea0a034092312a95fa984ab6c8e559c3c9e0}{FILTER\+\_\+\+LINEAR}}}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Produce the segmentation overlay alpha blended on top of the original image. 
+\begin{DoxyParams}{Parameters}
+{\em output} & output image in CUDA device memory, RGB/\+\+RGBA colorspace with values 0-\/255. \\
+\hline
+{\em width} & width of the input image in pixels. \\
+\hline
+{\em height} & height of the input image in pixels. \\
+\hline
+{\em ignore\+\_\+class} & label name of class to ignore in the classification (or NULL to process all). \\
+\hline
+{\em type} & overlay visualization options \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true on success, false on error. 
+\end{DoxyReturn}
+\Hypertarget{classseg_net_af31e030d54df637b68db8155e5f6b11c}\index{segNet@{segNet}!Overlay@{Overlay}}
+\index{Overlay@{Overlay}!segNet@{segNet}}
+\doxysubsubsection{\texorpdfstring{Overlay()}{Overlay()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily \label{classseg_net_af31e030d54df637b68db8155e5f6b11c} 
+bool seg\+Net::\+\+Overlay (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}}]{output}{, }\item[{uint32\+\_\+t}]{width}{, }\item[{uint32\+\_\+t}]{height}{, }\item[{\doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{image\+Format}}}]{format}{, }\item[{\doxymbox{\hyperlink{classseg_net_a5579582306d8b98e3a8acf2b73e13ea0}{Filter\+Mode}}}]{filter}{ = {\ttfamily \doxymbox{\hyperlink{classseg_net_a5579582306d8b98e3a8acf2b73e13ea0a034092312a95fa984ab6c8e559c3c9e0}{FILTER\+\_\+\+LINEAR}}}}\end{DoxyParamCaption})}
+
+Produce the segmentation overlay alpha blended on top of the original image. 
+\begin{DoxyParams}{Parameters}
+{\em output} & output image in CUDA device memory, RGB/\+\+RGBA colorspace with values 0-\/255. \\
+\hline
+{\em width} & width of the input image in pixels. \\
+\hline
+{\em height} & height of the input image in pixels. \\
+\hline
+{\em ignore\+\_\+class} & label name of class to ignore in the classification (or NULL to process all). \\
+\hline
+{\em type} & overlay visualization options \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true on success, false on error. 
+\end{DoxyReturn}
+\Hypertarget{classseg_net_a2fe1beec3215b5d7744420b57ba397c4}\index{segNet@{segNet}!Process@{Process}}
+\index{Process@{Process}!segNet@{segNet}}
+\doxysubsubsection{\texorpdfstring{Process()}{Process()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily \label{classseg_net_a2fe1beec3215b5d7744420b57ba397c4} 
+bool seg\+Net::\+\+Process (\begin{DoxyParamCaption}\item[{float \texorpdfstring{$\ast$}{*}}]{input}{, }\item[{uint32\+\_\+t}]{width}{, }\item[{uint32\+\_\+t}]{height}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{ignore\+\_\+class}{ = {\ttfamily "{}void"{}}}\end{DoxyParamCaption})}
+
+Perform the initial inferencing processing portion of the segmentation. \doxylink{requirements_The}{The} results can then be visualized using the \doxylink{classseg_net_a646b59503f89809fefee1c32d33307d9}{Overlay()} and \doxylink{classseg_net_af7b6257716514631dd0358e4b2ed692c}{Mask()} functions. \begin{DoxyRefDesc}{Deprecated}
+\item[\doxymbox{\hyperlink{deprecated__deprecated000007}{Deprecated}}]this overload is for legacy compatibility. It expects float4 RGBA image. \end{DoxyRefDesc}
+
+\begin{DoxyParams}{Parameters}
+{\em \doxylink{group__input}{Input}} & float4 input image in CUDA device memory, RGBA colorspace with values 0-\/255. \\
+\hline
+{\em width} & width of the input image in pixels. \\
+\hline
+{\em height} & height of the input image in pixels. \\
+\hline
+{\em ignore\+\_\+class} & label name of class to ignore in the classification (or NULL to process all). \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classseg_net_a04b332bd106de1f8238d34f36fb97442}\index{segNet@{segNet}!Process@{Process}}
+\index{Process@{Process}!segNet@{segNet}}
+\doxysubsubsection{\texorpdfstring{Process()}{Process()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily \label{classseg_net_a04b332bd106de1f8238d34f36fb97442} 
+template$<$typename T$>$ \\
+bool seg\+Net::\+\+Process (\begin{DoxyParamCaption}\item[{T \texorpdfstring{$\ast$}{*}}]{input}{, }\item[{uint32\+\_\+t}]{width}{, }\item[{uint32\+\_\+t}]{height}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{ignore\+\_\+class}{ = {\ttfamily "{}void"{}}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Perform the initial inferencing processing portion of the segmentation. \doxylink{requirements_The}{The} results can then be visualized using the \doxylink{classseg_net_a646b59503f89809fefee1c32d33307d9}{Overlay()} and \doxylink{classseg_net_af7b6257716514631dd0358e4b2ed692c}{Mask()} functions. ~\newline
+ 
+\begin{DoxyParams}{Parameters}
+{\em \doxylink{group__input}{Input}} & the input image in CUDA device memory, with pixel values 0-\/255. \\
+\hline
+{\em width} & width of the input image in pixels. \\
+\hline
+{\em height} & height of the input image in pixels. \\
+\hline
+{\em ignore\+\_\+class} & label name of class to ignore in the classification (or NULL to process all). \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classseg_net_ac5a01728bc33bd87aed504550359f3de}\index{segNet@{segNet}!Process@{Process}}
+\index{Process@{Process}!segNet@{segNet}}
+\doxysubsubsection{\texorpdfstring{Process()}{Process()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily \label{classseg_net_ac5a01728bc33bd87aed504550359f3de} 
+bool seg\+Net::\+\+Process (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}}]{input}{, }\item[{uint32\+\_\+t}]{width}{, }\item[{uint32\+\_\+t}]{height}{, }\item[{\doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{image\+Format}}}]{format}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{ignore\+\_\+class}{ = {\ttfamily "{}void"{}}}\end{DoxyParamCaption})}
+
+Perform the initial inferencing processing portion of the segmentation. \doxylink{requirements_The}{The} results can then be visualized using the \doxylink{classseg_net_a646b59503f89809fefee1c32d33307d9}{Overlay()} and \doxylink{classseg_net_af7b6257716514631dd0358e4b2ed692c}{Mask()} functions. ~\newline
+ 
+\begin{DoxyParams}{Parameters}
+{\em \doxylink{group__input}{Input}} & the input image in CUDA device memory, with pixel values 0-\/255. \\
+\hline
+{\em width} & width of the input image in pixels. \\
+\hline
+{\em height} & height of the input image in pixels. \\
+\hline
+{\em ignore\+\_\+class} & label name of class to ignore in the classification (or NULL to process all). \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classseg_net_ac93f4a93e1321260a8f0584614185305}\index{segNet@{segNet}!SetClassColor@{SetClassColor}}
+\index{SetClassColor@{SetClassColor}!segNet@{segNet}}
+\doxysubsubsection{\texorpdfstring{SetClassColor()}{SetClassColor()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classseg_net_ac93f4a93e1321260a8f0584614185305} 
+void seg\+Net::\+\+Set\+Class\+Color (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{class\+Index}{, }\item[{const float4 \&}]{color}{}\end{DoxyParamCaption})}
+
+Set the visualization color of a particular class of object. \Hypertarget{classseg_net_a2a9108ad71f4d5f1995ac58282a10b88}\index{segNet@{segNet}!SetClassColor@{SetClassColor}}
+\index{SetClassColor@{SetClassColor}!segNet@{segNet}}
+\doxysubsubsection{\texorpdfstring{SetClassColor()}{SetClassColor()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classseg_net_a2a9108ad71f4d5f1995ac58282a10b88} 
+void seg\+Net::\+\+Set\+Class\+Color (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{class\+Index}{, }\item[{float}]{r}{, }\item[{float}]{g}{, }\item[{float}]{b}{, }\item[{float}]{a}{ = {\ttfamily 255.0f}}\end{DoxyParamCaption})}
+
+Set the visualization color of a particular class of object. \Hypertarget{classseg_net_aa4c64609fb07586bed32ac4b8e9058d7}\index{segNet@{segNet}!SetOverlayAlpha@{SetOverlayAlpha}}
+\index{SetOverlayAlpha@{SetOverlayAlpha}!segNet@{segNet}}
+\doxysubsubsection{\texorpdfstring{SetOverlayAlpha()}{SetOverlayAlpha()}}
+{\footnotesize\ttfamily \label{classseg_net_aa4c64609fb07586bed32ac4b8e9058d7} 
+void seg\+Net::\+\+Set\+Overlay\+Alpha (\begin{DoxyParamCaption}\item[{float}]{alpha}{, }\item[{bool}]{explicit\+\_\+exempt}{ = {\ttfamily true}}\end{DoxyParamCaption})}
+
+Set overlay alpha blending value for all classes (between 0-\/255), (optionally except for those that have been explicitly set). \Hypertarget{classseg_net_afb9e7a83990b24235ec517af5d4daebe}\index{segNet@{segNet}!Usage@{Usage}}
+\index{Usage@{Usage}!segNet@{segNet}}
+\doxysubsubsection{\texorpdfstring{Usage()}{Usage()}}
+{\footnotesize\ttfamily \label{classseg_net_afb9e7a83990b24235ec517af5d4daebe} 
+const char \texorpdfstring{$\ast$}{*} seg\+Net::\+\+Usage (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+Usage string for command line arguments to \doxylink{classseg_net_a2bdc5f47befa50f0ae96e99f0613333d}{Create()} \Hypertarget{classseg_net_af480f63626ccb573caa816c9446930f5}\index{segNet@{segNet}!VisualizationFlagsFromStr@{VisualizationFlagsFromStr}}
+\index{VisualizationFlagsFromStr@{VisualizationFlagsFromStr}!segNet@{segNet}}
+\doxysubsubsection{\texorpdfstring{VisualizationFlagsFromStr()}{VisualizationFlagsFromStr()}}
+{\footnotesize\ttfamily \label{classseg_net_af480f63626ccb573caa816c9446930f5} 
+uint32\+\_\+t seg\+Net::\+\+Visualization\+Flags\+From\+Str (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{str}{, }\item[{uint32\+\_\+t}]{default\+\_\+value}{ = {\ttfamily \doxymbox{\hyperlink{classseg_net_a09a07cb06cd461f6003b655e945d9cf3ab6a2dc917492d6b83de4b94c9233cb5f}{VISUALIZE\+\_\+\+OVERLAY}}}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Parse a string of one of more Visualization\+Mode values. Valid strings are "{}overlay"{} "{}mask"{} "{}overlay\texorpdfstring{$\vert$}{|}mask"{} "{}overlay,mask"{} ect. 
+
+\label{doc-variable-members}
+\Hypertarget{classseg_net_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classseg_net_a307dd9f1d322ce42f553361321bbb869}\index{segNet@{segNet}!mClassColors@{mClassColors}}
+\index{mClassColors@{mClassColors}!segNet@{segNet}}
+\doxysubsubsection{\texorpdfstring{mClassColors}{mClassColors}}
+{\footnotesize\ttfamily \label{classseg_net_a307dd9f1d322ce42f553361321bbb869} 
+float4\texorpdfstring{$\ast$}{*} seg\+Net::\+m\+Class\+Colors\hspace{0.3cm}{\ttfamily [protected]}}
+
+array of overlay colors in shared CPU/\+\+GPU memory \Hypertarget{classseg_net_a3db3738778929458b52a709b053d456a}\index{segNet@{segNet}!mClassMap@{mClassMap}}
+\index{mClassMap@{mClassMap}!segNet@{segNet}}
+\doxysubsubsection{\texorpdfstring{mClassMap}{mClassMap}}
+{\footnotesize\ttfamily \label{classseg_net_a3db3738778929458b52a709b053d456a} 
+uint8\+\_\+t\texorpdfstring{$\ast$}{*} seg\+Net::\+m\+Class\+Map\hspace{0.3cm}{\ttfamily [protected]}}
+
+runtime buffer for the argmax-\/classified class index of each tile \Hypertarget{classseg_net_ac8cbd9449fb81520a847aee04b6bbca5}\index{segNet@{segNet}!mColorsAlphaSet@{mColorsAlphaSet}}
+\index{mColorsAlphaSet@{mColorsAlphaSet}!segNet@{segNet}}
+\doxysubsubsection{\texorpdfstring{mColorsAlphaSet}{mColorsAlphaSet}}
+{\footnotesize\ttfamily \label{classseg_net_ac8cbd9449fb81520a847aee04b6bbca5} 
+bool\texorpdfstring{$\ast$}{*} seg\+Net::\+m\+Colors\+Alpha\+Set\hspace{0.3cm}{\ttfamily [protected]}}
+
+true if class color had been explicitly set from file or user \Hypertarget{classseg_net_a2d4bf7321a21756ff82551e306e8adb1}\index{segNet@{segNet}!mLastInputFormat@{mLastInputFormat}}
+\index{mLastInputFormat@{mLastInputFormat}!segNet@{segNet}}
+\doxysubsubsection{\texorpdfstring{mLastInputFormat}{mLastInputFormat}}
+{\footnotesize\ttfamily \label{classseg_net_a2d4bf7321a21756ff82551e306e8adb1} 
+\doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{image\+Format}} seg\+Net::\+m\+Last\+Input\+Format\hspace{0.3cm}{\ttfamily [protected]}}
+
+pixel format of last input image \Hypertarget{classseg_net_a4341b8ae226236eef40867bab4c7f251}\index{segNet@{segNet}!mLastInputHeight@{mLastInputHeight}}
+\index{mLastInputHeight@{mLastInputHeight}!segNet@{segNet}}
+\doxysubsubsection{\texorpdfstring{mLastInputHeight}{mLastInputHeight}}
+{\footnotesize\ttfamily \label{classseg_net_a4341b8ae226236eef40867bab4c7f251} 
+uint32\+\_\+t seg\+Net::\+m\+Last\+Input\+Height\hspace{0.3cm}{\ttfamily [protected]}}
+
+height in pixels of last input image to be processed \Hypertarget{classseg_net_aadacbaf1eb15bfe512499276272bf67c}\index{segNet@{segNet}!mLastInputImg@{mLastInputImg}}
+\index{mLastInputImg@{mLastInputImg}!segNet@{segNet}}
+\doxysubsubsection{\texorpdfstring{mLastInputImg}{mLastInputImg}}
+{\footnotesize\ttfamily \label{classseg_net_aadacbaf1eb15bfe512499276272bf67c} 
+void\texorpdfstring{$\ast$}{*} seg\+Net::\+m\+Last\+Input\+Img\hspace{0.3cm}{\ttfamily [protected]}}
+
+last input image to be processed, stored for overlay \Hypertarget{classseg_net_ad984bfe4460621a78440bfb4768f4e8e}\index{segNet@{segNet}!mLastInputWidth@{mLastInputWidth}}
+\index{mLastInputWidth@{mLastInputWidth}!segNet@{segNet}}
+\doxysubsubsection{\texorpdfstring{mLastInputWidth}{mLastInputWidth}}
+{\footnotesize\ttfamily \label{classseg_net_ad984bfe4460621a78440bfb4768f4e8e} 
+uint32\+\_\+t seg\+Net::\+m\+Last\+Input\+Width\hspace{0.3cm}{\ttfamily [protected]}}
+
+width in pixels of last input image to be processed 
+
+The documentation for this class was generated from the following file:\+\begin{DoxyCompactItemize}
+\item 
+jetson-\/inference/\+build/\+aarch64/\+include/\+jetson-\/inference/\+seg\+Net.\+h\end{DoxyCompactItemize}

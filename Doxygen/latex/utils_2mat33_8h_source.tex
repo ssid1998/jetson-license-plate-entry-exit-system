@@ -1,0 +1,375 @@
+\doxysection{mat33.\+h}
+\hypertarget{utils_2mat33_8h_source}{}\label{utils_2mat33_8h_source}\index{jetson-\/inference/utils/mat33.h@{jetson-\/inference/utils/mat33.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ *\ Copyright\ (c)\ 2019,\ NVIDIA\ CORPORATION.\ All\ rights\ reserved.}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ *\ Permission\ is\ hereby\ granted,\ free\ of\ charge,\ to\ any\ person\ obtaining\ a}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ *\ copy\ of\ this\ software\ and\ associated\ documentation\ files\ (the\ "{}Software"{}),}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ *\ to\ deal\ in\ the\ Software\ without\ restriction,\ including\ without\ limitation}}
+\DoxyCodeLine{00007\ \textcolor{comment}{\ *\ the\ rights\ to\ use,\ copy,\ modify,\ merge,\ publish,\ distribute,\ sublicense,}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ *\ and/or\ sell\ copies\ of\ the\ Software,\ and\ to\ permit\ persons\ to\ whom\ the}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ *\ Software\ is\ furnished\ to\ do\ so,\ subject\ to\ the\ following\ conditions:}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ *\ The\ above\ copyright\ notice\ and\ this\ permission\ notice\ shall\ be\ included\ in}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ *\ all\ copies\ or\ substantial\ portions\ of\ the\ Software.}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ *\ THE\ SOFTWARE\ IS\ PROVIDED\ "{}AS\ IS"{},\ WITHOUT\ WARRANTY\ OF\ ANY\ KIND,\ EXPRESS\ OR}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ *\ IMPLIED,\ INCLUDING\ BUT\ NOT\ LIMITED\ TO\ THE\ WARRANTIES\ OF\ MERCHANTABILITY,}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ *\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE\ AND\ NONINFRINGEMENT.\ \ IN\ NO\ EVENT\ SHALL}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ *\ THE\ AUTHORS\ OR\ COPYRIGHT\ HOLDERS\ BE\ LIABLE\ FOR\ ANY\ CLAIM,\ DAMAGES\ OR\ OTHER}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ *\ LIABILITY,\ WHETHER\ IN\ AN\ ACTION\ OF\ CONTRACT,\ TORT\ OR\ OTHERWISE,\ ARISING}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ *\ FROM,\ OUT\ OF\ OR\ IN\ CONNECTION\ WITH\ THE\ SOFTWARE\ OR\ THE\ USE\ OR\ OTHER}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ *\ DEALINGS\ IN\ THE\ SOFTWARE.}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00022\ \ }
+\DoxyCodeLine{00023\ \textcolor{preprocessor}{\#ifndef\ \_\_MATRIX\_33\_H\_}}
+\DoxyCodeLine{00024\ \textcolor{preprocessor}{\#define\ \_\_MATRIX\_33\_H\_}}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \textcolor{preprocessor}{\#include\ <stdio.h>}}
+\DoxyCodeLine{00027\ \textcolor{preprocessor}{\#include\ <unistd.h>}}
+\DoxyCodeLine{00028\ \textcolor{preprocessor}{\#include\ <math.h>}}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \textcolor{preprocessor}{\#include\ "{}logging.h"{}}}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00037\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T1,\ \textcolor{keyword}{typename}\ T2>}
+\DoxyCodeLine{00038\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{group__matrix_ga2a59a3e770f0f421c2e21df6f86df48f}{mat33\_cast}}(\ T1\ dst[3][3],\ \textcolor{keyword}{const}\ T2\ src[3][3]\ )}
+\DoxyCodeLine{00039\ \{}
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keywordflow}{for}(\ uint32\_t\ i=0;\ i\ <\ 3;\ i++\ )}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(\ uint32\_t\ j=0;\ j\ <\ 3;\ j++\ )}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \ \ \ \ dst[i][j]\ =\ (T1)src[i][j];}
+\DoxyCodeLine{00043\ \}}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00050\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00051\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{group__matrix_ga4081852912b45ee44f0243ff5718203c}{mat33\_copy}}(\ T\ dst[3][3],\ \textcolor{keyword}{const}\ T\ src[3][3]\ )}
+\DoxyCodeLine{00052\ \{}
+\DoxyCodeLine{00053\ \ \ \ \ memcpy(dst,\ src,\ \textcolor{keyword}{sizeof}(T)\ *\ 9);}
+\DoxyCodeLine{00054\ \}}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00061\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00062\ \textcolor{keyword}{inline}\ T\ \doxymbox{\hyperlink{group__matrix_ga337284e19938f8654d8ebf6dcf6f257b}{mat33\_det}}(\ \textcolor{keyword}{const}\ T\ src[3][3]\ )}
+\DoxyCodeLine{00063\ \{}
+\DoxyCodeLine{00064\ \ \ \ \ \textcolor{keywordflow}{return}\ src[0][0]\ *\ (src[1][1]\ *\ src[2][2]\ -\/\ src[1][2]\ *\ src[2][1])}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ -\/\ src[0][1]\ *\ (src[1][0]\ *\ src[2][2]\ -\/\ src[1][2]\ *\ src[2][0])}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ +\ src[0][2]\ *\ (src[1][0]\ *\ src[2][1]\ -\/\ src[1][1]\ *\ src[2][0]);}
+\DoxyCodeLine{00067\ \}}
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00069\ }
+\DoxyCodeLine{00074\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00075\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{group__matrix_ga984ddbe902542e96416bb22c5c824b80}{mat33\_identity}}(\ T\ dst[3][3]\ )}
+\DoxyCodeLine{00076\ \{}
+\DoxyCodeLine{00077\ \ \ \ \ dst[0][0]\ =\ 1;\ dst[0][1]\ =\ 0;\ dst[0][2]\ =\ 0;}
+\DoxyCodeLine{00078\ \ \ \ \ dst[1][0]\ =\ 0;\ dst[1][1]\ =\ 1;\ dst[1][2]\ =\ 0;}
+\DoxyCodeLine{00079\ \ \ \ \ dst[2][0]\ =\ 0;\ dst[2][1]\ =\ 0;\ dst[2][2]\ =\ 1;}
+\DoxyCodeLine{00080\ \}}
+\DoxyCodeLine{00081\ }
+\DoxyCodeLine{00082\ }
+\DoxyCodeLine{00088\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00089\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{group__matrix_gab7c879d25c250f9b0bbf43d1ca351a84}{mat33\_inverse}}(\ T\ dst[3][3],\ \textcolor{keyword}{const}\ T\ src[3][3]\ )}
+\DoxyCodeLine{00090\ \{}
+\DoxyCodeLine{00091\ \ \ \ \ T\ inv[3][3];}
+\DoxyCodeLine{00092\ }
+\DoxyCodeLine{00093\ \ \ \ \ \textcolor{comment}{//\ invert}}
+\DoxyCodeLine{00094\ \ \ \ \ \textcolor{keyword}{const}\ T\ det\ =\ \doxymbox{\hyperlink{group__matrix_ga337284e19938f8654d8ebf6dcf6f257b}{mat33\_det}}(src);}
+\DoxyCodeLine{00095\ }
+\DoxyCodeLine{00096\ \ \ \ \ inv[0][0]\ =\ +\ (src[1][1]\ *\ src[2][2]\ -\/\ src[1][2]\ *\ src[2][1]);}
+\DoxyCodeLine{00097\ \ \ \ \ inv[0][1]\ =\ -\/\ (src[0][1]\ *\ src[2][2]\ -\/\ src[0][2]\ *\ src[2][1]);}
+\DoxyCodeLine{00098\ \ \ \ \ inv[0][2]\ =\ +\ (src[0][1]\ *\ src[1][2]\ -\/\ src[0][2]\ *\ src[1][1]);}
+\DoxyCodeLine{00099\ \ \ \ \ inv[1][0]\ =\ -\/\ (src[1][0]\ *\ src[2][2]\ -\/\ src[1][2]\ *\ src[2][0]);}
+\DoxyCodeLine{00100\ \ \ \ \ inv[1][1]\ =\ +\ (src[0][0]\ *\ src[2][2]\ -\/\ src[0][2]\ *\ src[2][0]);}
+\DoxyCodeLine{00101\ \ \ \ \ inv[1][2]\ =\ -\/\ (src[0][0]\ *\ src[1][2]\ -\/\ src[0][2]\ *\ src[1][0]);}
+\DoxyCodeLine{00102\ \ \ \ \ inv[2][0]\ =\ +\ (src[1][0]\ *\ src[2][1]\ -\/\ src[1][1]\ *\ src[2][0]);}
+\DoxyCodeLine{00103\ \ \ \ \ inv[2][1]\ =\ -\/\ (src[0][0]\ *\ src[2][1]\ -\/\ src[0][1]\ *\ src[2][0]);}
+\DoxyCodeLine{00104\ \ \ \ \ inv[2][2]\ =\ +\ (src[0][0]\ *\ src[1][1]\ -\/\ src[0][1]\ *\ src[1][0]);}
+\DoxyCodeLine{00105\ }
+\DoxyCodeLine{00106\ \ \ \ \ \textcolor{comment}{//\ scale\ by\ determinant}}
+\DoxyCodeLine{00107\ \ \ \ \ \textcolor{keywordflow}{for}(\ uint32\_t\ i=0;\ i\ <\ 3;\ i++\ )}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(\ uint32\_t\ k=0;\ k\ <\ 3;\ k++\ )}
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ \ \ \ \ dst[i][k]\ =\ inv[i][k]\ /\ det;}
+\DoxyCodeLine{00110\ \}}
+\DoxyCodeLine{00111\ }
+\DoxyCodeLine{00112\ }
+\DoxyCodeLine{00117\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00118\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{group__matrix_ga17719324015094525794f664c86ba20d}{mat33\_multiply}}(\ T\ dst[3][3],\ \textcolor{keyword}{const}\ T\ a[3][3],\ \textcolor{keyword}{const}\ T\ b[3][3]\ )}
+\DoxyCodeLine{00119\ \{}
+\DoxyCodeLine{00120\ \ \ \ \ T\ tmp[3][3];}
+\DoxyCodeLine{00121\ \ \ \ \ }
+\DoxyCodeLine{00122\ \ \ \ \ \textcolor{keywordflow}{for}(\ \textcolor{keywordtype}{int}\ i=0;\ i\ <\ 3;\ i++\ )}
+\DoxyCodeLine{00123\ \ \ \ \ \{}
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(\ \textcolor{keywordtype}{int}\ j=0;\ j\ <\ 3;\ j++\ )}
+\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ \ \ \ \ tmp[i][j]\ =\ 0;}
+\DoxyCodeLine{00127\ }
+\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(\ \textcolor{keywordtype}{int}\ k=0;\ k\ <\ 3;\ k++\ )}
+\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ tmp[i][j]\ =\ tmp[i][j]\ +\ a[i][k]\ *\ b[k][j];}
+\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00131\ \ \ \ \ \}}
+\DoxyCodeLine{00132\ \ \ \ \ }
+\DoxyCodeLine{00133\ \ \ \ \ \doxymbox{\hyperlink{group__matrix_ga4081852912b45ee44f0243ff5718203c}{mat33\_copy}}(dst,\ tmp);}
+\DoxyCodeLine{00134\ \}}
+\DoxyCodeLine{00135\ }
+\DoxyCodeLine{00136\ }
+\DoxyCodeLine{00141\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00142\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{group__matrix_ga58d12875af4d112afdc1354e66f488d2}{mat33\_print}}(\ \textcolor{keyword}{const}\ T\ src[3][3],\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ name=NULL\ )}
+\DoxyCodeLine{00143\ \{}
+\DoxyCodeLine{00144\ \ \ \ \ \textcolor{keywordflow}{if}(\ name\ !=\ NULL\ )}
+\DoxyCodeLine{00145\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{group__log_ga228a21f91213b15d7fdce08182d825e8}{LogInfo}}(\textcolor{stringliteral}{"{}\%s\ =\ \(\backslash\)n"{}},\ name);}
+\DoxyCodeLine{00146\ }
+\DoxyCodeLine{00147\ \ \ \ \ printf(\textcolor{stringliteral}{"{}\ [\ "{}});}
+\DoxyCodeLine{00148\ }
+\DoxyCodeLine{00149\ \ \ \ \ \textcolor{keywordflow}{for}(\ uint32\_t\ i=0;\ i\ <\ 3;\ i++\ )}
+\DoxyCodeLine{00150\ \ \ \ \ \{}
+\DoxyCodeLine{00151\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(\ uint32\_t\ j=0;\ j\ <\ 3;\ j++\ )}
+\DoxyCodeLine{00152\ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{group__log_ga228a21f91213b15d7fdce08182d825e8}{LogInfo}}(\textcolor{stringliteral}{"{}\%f\ "{}},\ src[i][j]);}
+\DoxyCodeLine{00153\ }
+\DoxyCodeLine{00154\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\ i\ <\ 2\ )}
+\DoxyCodeLine{00155\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00156\ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{group__log_ga228a21f91213b15d7fdce08182d825e8}{LogInfo}}(\textcolor{stringliteral}{"{}\(\backslash\)n\ \ \ "{}});}
+\DoxyCodeLine{00157\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00158\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{group__log_ga228a21f91213b15d7fdce08182d825e8}{LogInfo}}(\textcolor{stringliteral}{"{}]\(\backslash\)n"{}});}
+\DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00162\ \ \ \ \ \}}
+\DoxyCodeLine{00163\ \}}
+\DoxyCodeLine{00164\ }
+\DoxyCodeLine{00165\ }
+\DoxyCodeLine{00170\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00171\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{group__matrix_gafa786e888812cb8d884c5e585914b609}{mat33\_rank}}(\ \textcolor{keyword}{const}\ T\ src[3][3]\ )}
+\DoxyCodeLine{00172\ \{}
+\DoxyCodeLine{00173\ \ \ \ \ T\ mat[3][3];}
+\DoxyCodeLine{00174\ }
+\DoxyCodeLine{00175\ \ \ \ \ \textcolor{comment}{//\ reducing\ to\ row-\/echelon\ form\ alters\ the\ matrix}}
+\DoxyCodeLine{00176\ \ \ \ \ \doxymbox{\hyperlink{group__matrix_ga4081852912b45ee44f0243ff5718203c}{mat33\_copy}}(mat,\ src);}
+\DoxyCodeLine{00177\ }
+\DoxyCodeLine{00178\ \ \ \ \ \textcolor{comment}{//\ iteratively\ compute\ the\ rank}}
+\DoxyCodeLine{00179\ \ \ \ \ \textcolor{keywordtype}{int}\ rank\ =\ 3;\ \ \ \textcolor{comment}{//\ (=\ \#columns)}}
+\DoxyCodeLine{00180\ \ \ }
+\DoxyCodeLine{00181\ \ \ \ \ \textcolor{keywordflow}{for}(\ \textcolor{keywordtype}{int}\ row=0;\ row\ <\ rank;\ row++\ )\ }
+\DoxyCodeLine{00182\ \ \ \ \ \{\ }
+\DoxyCodeLine{00183\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\ mat[row][row]\ !=\ 0\ )\ }
+\DoxyCodeLine{00184\ \ \ \ \ \ \ \ \ \{\ }
+\DoxyCodeLine{00185\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(\ \textcolor{keywordtype}{int}\ col=0;\ col\ <\ 3;\ col++\ )\ }
+\DoxyCodeLine{00186\ \ \ \ \ \ \ \ \ \ \ \ \ \{\ }
+\DoxyCodeLine{00187\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (col\ !=\ row)\ }
+\DoxyCodeLine{00188\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{\ }
+\DoxyCodeLine{00189\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ mult\ =\ mat[col][row]\ /\ mat[row][row];\ }
+\DoxyCodeLine{00190\ }
+\DoxyCodeLine{00191\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(\ \textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ rank;\ i++\ )\ }
+\DoxyCodeLine{00192\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mat[col][i]\ -\/=\ mult\ *\ mat[row][i];\ }
+\DoxyCodeLine{00193\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}\ }
+\DoxyCodeLine{00194\ \ \ \ \ \ \ \ \ \ \ \ \ \}\ }
+\DoxyCodeLine{00195\ \ \ \ \ \ \ \ \ \}\ }
+\DoxyCodeLine{00196\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00197\ \ \ \ \ \ \ \ \ \{\ }
+\DoxyCodeLine{00198\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ reduce\ =\ \textcolor{keyword}{true};\ }
+\DoxyCodeLine{00199\ }
+\DoxyCodeLine{00200\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(\ \textcolor{keywordtype}{int}\ i=row+1;\ i\ <\ 3;\ i++\ )\ }
+\DoxyCodeLine{00201\ \ \ \ \ \ \ \ \ \ \ \ \ \{\ }
+\DoxyCodeLine{00202\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\ mat[i][row]\ !=\ 0\ )\ }
+\DoxyCodeLine{00203\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00204\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(\ \textcolor{keywordtype}{int}\ k=0;\ k\ <\ rank;\ k++\ )}
+\DoxyCodeLine{00205\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00206\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ tmp\ =\ mat[row][k];}
+\DoxyCodeLine{00207\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mat[row][k]\ =\ mat[i][k];}
+\DoxyCodeLine{00208\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mat[i][k]\ =\ tmp;}
+\DoxyCodeLine{00209\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00210\ }
+\DoxyCodeLine{00211\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ reduce\ =\ \textcolor{keyword}{false};\ }
+\DoxyCodeLine{00212\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ break\ ;\ }
+\DoxyCodeLine{00213\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}\ }
+\DoxyCodeLine{00214\ \ \ \ \ \ \ \ \ \ \ \ \ \}\ }
+\DoxyCodeLine{00215\ \ \ }
+\DoxyCodeLine{00216\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\ reduce\ )\ }
+\DoxyCodeLine{00217\ \ \ \ \ \ \ \ \ \ \ \ \ \{\ }
+\DoxyCodeLine{00218\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ rank-\/-\/;\ }
+\DoxyCodeLine{00219\ \ \ }
+\DoxyCodeLine{00220\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(\ \textcolor{keywordtype}{int}\ i=0;\ i\ <\ 3;\ i++\ )\ }
+\DoxyCodeLine{00221\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mat[i][row]\ =\ mat[i][rank];\ }
+\DoxyCodeLine{00222\ \ \ \ \ \ \ \ \ \ \ \ \ \}\ }
+\DoxyCodeLine{00223\ \ \ }
+\DoxyCodeLine{00224\ \ \ \ \ \ \ \ \ \ \ \ \ row-\/-\/;\ }
+\DoxyCodeLine{00225\ \ \ \ \ \ \ \ \ \}\ }
+\DoxyCodeLine{00226\ \ \ \ \ \}}
+\DoxyCodeLine{00227\ }
+\DoxyCodeLine{00228\ \ \ \ \ \textcolor{keywordflow}{return}\ rank;\ }
+\DoxyCodeLine{00229\ \}}
+\DoxyCodeLine{00230\ }
+\DoxyCodeLine{00231\ }
+\DoxyCodeLine{00236\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00237\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{group__matrix_gafc607b02cc864b8571d5a984bc3f1851}{mat33\_translate}}(\ T\ dst[3][3],\ T\ x,\ T\ y\ )}
+\DoxyCodeLine{00238\ \{}
+\DoxyCodeLine{00239\ \ \ \ \ \doxymbox{\hyperlink{group__matrix_ga984ddbe902542e96416bb22c5c824b80}{mat33\_identity}}(dst);}
+\DoxyCodeLine{00240\ }
+\DoxyCodeLine{00241\ \ \ \ \ dst[0][2]\ =\ x;}
+\DoxyCodeLine{00242\ \ \ \ \ dst[1][2]\ =\ y;}
+\DoxyCodeLine{00243\ \}}
+\DoxyCodeLine{00244\ }
+\DoxyCodeLine{00245\ }
+\DoxyCodeLine{00250\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00251\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{group__matrix_gafc607b02cc864b8571d5a984bc3f1851}{mat33\_translate}}(\ T\ dst[3][3],\ T\ src[3][3],\ T\ x,\ T\ y\ )}
+\DoxyCodeLine{00252\ \{}
+\DoxyCodeLine{00253\ \ \ \ \ T\ m[3][3];}
+\DoxyCodeLine{00254\ }
+\DoxyCodeLine{00255\ \ \ \ \ \doxymbox{\hyperlink{group__matrix_gafc607b02cc864b8571d5a984bc3f1851}{mat33\_translate}}(m,\ x,\ y);}
+\DoxyCodeLine{00256\ \ \ \ \ \doxymbox{\hyperlink{group__matrix_ga17719324015094525794f664c86ba20d}{mat33\_multiply}}(dst,\ src,\ m);}
+\DoxyCodeLine{00257\ \}}
+\DoxyCodeLine{00258\ }
+\DoxyCodeLine{00259\ }
+\DoxyCodeLine{00264\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00265\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{group__matrix_ga2811064b0130de6dbdb1549e09da0658}{mat33\_rotation}}(\ T\ dst[3][3],\ T\ degrees\ )}
+\DoxyCodeLine{00266\ \{}
+\DoxyCodeLine{00267\ \ \ \ \ \doxymbox{\hyperlink{group__matrix_ga984ddbe902542e96416bb22c5c824b80}{mat33\_identity}}(dst);}
+\DoxyCodeLine{00268\ }
+\DoxyCodeLine{00269\ \ \ \ \ \textcolor{keyword}{const}\ T\ rad\ =\ 0.01745329251\ *\ degrees;}
+\DoxyCodeLine{00270\ }
+\DoxyCodeLine{00271\ \ \ \ \ \textcolor{keyword}{const}\ T\ c\ =\ cos(rad);}
+\DoxyCodeLine{00272\ \ \ \ \ \textcolor{keyword}{const}\ T\ s\ =\ sin(rad);}
+\DoxyCodeLine{00273\ }
+\DoxyCodeLine{00274\ \ \ \ \ dst[0][0]\ =\ c;}
+\DoxyCodeLine{00275\ \ \ \ \ dst[0][1]\ =\ -\/s;}
+\DoxyCodeLine{00276\ \ \ \ \ dst[1][0]\ =\ s;}
+\DoxyCodeLine{00277\ \ \ \ \ dst[1][1]\ =\ c;}
+\DoxyCodeLine{00278\ \}}
+\DoxyCodeLine{00279\ }
+\DoxyCodeLine{00280\ }
+\DoxyCodeLine{00285\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00286\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{group__matrix_ga2811064b0130de6dbdb1549e09da0658}{mat33\_rotation}}(\ T\ dst[3][3],\ T\ src[3][3],\ T\ degrees\ )}
+\DoxyCodeLine{00287\ \{}
+\DoxyCodeLine{00288\ \ \ \ \ T\ m[3][3];}
+\DoxyCodeLine{00289\ }
+\DoxyCodeLine{00290\ \ \ \ \ \doxymbox{\hyperlink{group__matrix_ga2811064b0130de6dbdb1549e09da0658}{mat33\_rotation}}(m,\ degrees);}
+\DoxyCodeLine{00291\ \ \ \ \ \doxymbox{\hyperlink{group__matrix_ga17719324015094525794f664c86ba20d}{mat33\_multiply}}(dst,\ src,\ m);}
+\DoxyCodeLine{00292\ \}}
+\DoxyCodeLine{00293\ }
+\DoxyCodeLine{00294\ }
+\DoxyCodeLine{00299\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00300\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{group__matrix_ga2811064b0130de6dbdb1549e09da0658}{mat33\_rotation}}(\ T\ dst[3][3],\ T\ degrees,\ \textcolor{keywordtype}{float}\ origin\_x,\ \textcolor{keywordtype}{float}\ origin\_y\ )}
+\DoxyCodeLine{00301\ \{}
+\DoxyCodeLine{00302\ \ \ \ \ \doxymbox{\hyperlink{group__matrix_gafc607b02cc864b8571d5a984bc3f1851}{mat33\_translate}}(dst,\ origin\_x,\ origin\_y);}
+\DoxyCodeLine{00303\ \ \ \ \ \doxymbox{\hyperlink{group__matrix_ga2811064b0130de6dbdb1549e09da0658}{mat33\_rotation}}(dst,\ dst,\ degrees);}
+\DoxyCodeLine{00304\ \ \ \ \ \doxymbox{\hyperlink{group__matrix_gafc607b02cc864b8571d5a984bc3f1851}{mat33\_translate}}(dst,\ dst,\ -\/origin\_x,\ -\/origin\_y);}
+\DoxyCodeLine{00305\ \}}
+\DoxyCodeLine{00306\ }
+\DoxyCodeLine{00307\ }
+\DoxyCodeLine{00312\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00313\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{group__matrix_ga2811064b0130de6dbdb1549e09da0658}{mat33\_rotation}}(\ T\ dst[3][3],\ T\ src[3][3],\ T\ degrees,\ \textcolor{keywordtype}{float}\ origin\_x,\ \textcolor{keywordtype}{float}\ origin\_y\ )}
+\DoxyCodeLine{00314\ \{}
+\DoxyCodeLine{00315\ \ \ \ \ \doxymbox{\hyperlink{group__matrix_gafc607b02cc864b8571d5a984bc3f1851}{mat33\_translate}}(dst,\ src,\ origin\_x,\ origin\_y);}
+\DoxyCodeLine{00316\ \ \ \ \ \doxymbox{\hyperlink{group__matrix_ga2811064b0130de6dbdb1549e09da0658}{mat33\_rotation}}(dst,\ dst,\ degrees);}
+\DoxyCodeLine{00317\ \ \ \ \ \doxymbox{\hyperlink{group__matrix_gafc607b02cc864b8571d5a984bc3f1851}{mat33\_translate}}(dst,\ dst,\ -\/origin\_x,\ -\/origin\_y);}
+\DoxyCodeLine{00318\ \}}
+\DoxyCodeLine{00319\ }
+\DoxyCodeLine{00320\ }
+\DoxyCodeLine{00325\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00326\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{group__matrix_ga00f088c37cb0ec42cea53fa7794457e3}{mat33\_scale}}(\ T\ dst[3][3],\ T\ sx,\ T\ sy\ )}
+\DoxyCodeLine{00327\ \{}
+\DoxyCodeLine{00328\ \ \ \ \ \doxymbox{\hyperlink{group__matrix_ga984ddbe902542e96416bb22c5c824b80}{mat33\_identity}}(dst);}
+\DoxyCodeLine{00329\ }
+\DoxyCodeLine{00330\ \ \ \ \ dst[0][0]\ =\ sx;}
+\DoxyCodeLine{00331\ \ \ \ \ dst[1][1]\ =\ sy;}
+\DoxyCodeLine{00332\ \}}
+\DoxyCodeLine{00333\ }
+\DoxyCodeLine{00334\ }
+\DoxyCodeLine{00339\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00340\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{group__matrix_ga00f088c37cb0ec42cea53fa7794457e3}{mat33\_scale}}(\ T\ dst[3][3],\ T\ src[3][3],\ T\ sx,\ T\ sy\ )}
+\DoxyCodeLine{00341\ \{}
+\DoxyCodeLine{00342\ \ \ \ \ T\ m[3][3];}
+\DoxyCodeLine{00343\ }
+\DoxyCodeLine{00344\ \ \ \ \ \doxymbox{\hyperlink{group__matrix_ga00f088c37cb0ec42cea53fa7794457e3}{mat33\_scale}}(m,\ sx,\ sy);}
+\DoxyCodeLine{00345\ \ \ \ \ \doxymbox{\hyperlink{group__matrix_ga17719324015094525794f664c86ba20d}{mat33\_multiply}}(dst,\ src,\ m);}
+\DoxyCodeLine{00346\ \}}
+\DoxyCodeLine{00347\ }
+\DoxyCodeLine{00348\ }
+\DoxyCodeLine{00353\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00354\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{group__matrix_ga389b2d87bdb9ab09c3d873a6dcbf2e87}{mat33\_shear}}(\ T\ dst[3][3],\ T\ sx,\ T\ sy\ )}
+\DoxyCodeLine{00355\ \{}
+\DoxyCodeLine{00356\ \ \ \ \ \doxymbox{\hyperlink{group__matrix_ga984ddbe902542e96416bb22c5c824b80}{mat33\_identity}}(dst);}
+\DoxyCodeLine{00357\ }
+\DoxyCodeLine{00358\ \ \ \ \ dst[0][1]\ =\ sx;}
+\DoxyCodeLine{00359\ \ \ \ \ dst[1][0]\ =\ sy;}
+\DoxyCodeLine{00360\ \}}
+\DoxyCodeLine{00361\ }
+\DoxyCodeLine{00362\ }
+\DoxyCodeLine{00367\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00368\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{group__matrix_ga389b2d87bdb9ab09c3d873a6dcbf2e87}{mat33\_shear}}(\ T\ dst[3][3],\ T\ src[3][3],\ T\ sx,\ T\ sy\ )}
+\DoxyCodeLine{00369\ \{}
+\DoxyCodeLine{00370\ \ \ \ \ T\ m[3][3];}
+\DoxyCodeLine{00371\ }
+\DoxyCodeLine{00372\ \ \ \ \ \doxymbox{\hyperlink{group__matrix_ga389b2d87bdb9ab09c3d873a6dcbf2e87}{mat33\_shear}}(m,\ sx,\ sy);}
+\DoxyCodeLine{00373\ \ \ \ \ \doxymbox{\hyperlink{group__matrix_ga17719324015094525794f664c86ba20d}{mat33\_multiply}}(dst,\ src,\ m);}
+\DoxyCodeLine{00374\ \}}
+\DoxyCodeLine{00375\ }
+\DoxyCodeLine{00376\ }
+\DoxyCodeLine{00381\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00382\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{group__matrix_ga14a2f030b3997bbf73afa1b9868534ec}{mat33\_swap}}(\ T\ a[3][3],\ T\ b[3][3]\ )}
+\DoxyCodeLine{00383\ \{}
+\DoxyCodeLine{00384\ \ \ \ \ T\ c[3][3];}
+\DoxyCodeLine{00385\ }
+\DoxyCodeLine{00386\ \ \ \ \ \doxymbox{\hyperlink{group__matrix_ga4081852912b45ee44f0243ff5718203c}{mat33\_copy}}(c,\ a);}
+\DoxyCodeLine{00387\ \ \ \ \ \doxymbox{\hyperlink{group__matrix_ga4081852912b45ee44f0243ff5718203c}{mat33\_copy}}(a,\ b);}
+\DoxyCodeLine{00388\ \ \ \ \ \doxymbox{\hyperlink{group__matrix_ga4081852912b45ee44f0243ff5718203c}{mat33\_copy}}(b,\ c);}
+\DoxyCodeLine{00389\ \}}
+\DoxyCodeLine{00390\ }
+\DoxyCodeLine{00391\ }
+\DoxyCodeLine{00396\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00397\ \textcolor{keyword}{inline}\ T\ \doxymbox{\hyperlink{group__matrix_ga494f9ef8df9d1e14afce204581247fa4}{mat33\_trace}}(\ \textcolor{keyword}{const}\ T\ src[3][3]\ )}
+\DoxyCodeLine{00398\ \{}
+\DoxyCodeLine{00399\ \ \ \ \ \textcolor{keywordflow}{return}\ src[0][0]\ +\ src[1][1]\ +\ src[2][2];}
+\DoxyCodeLine{00400\ \}}
+\DoxyCodeLine{00401\ }
+\DoxyCodeLine{00402\ }
+\DoxyCodeLine{00407\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00408\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{group__matrix_ga04d1860e5b931f43cb60c78ef6dfc464}{mat33\_transform}}(\ T\&\ x\_out,\ T\&\ y\_out,\ \textcolor{keyword}{const}\ T\ x\_in,\ \textcolor{keyword}{const}\ T\ y\_in,\ \textcolor{keyword}{const}\ T\ mat[3][3]\ )}
+\DoxyCodeLine{00409\ \{}
+\DoxyCodeLine{00410\ \ \ \ \ \textcolor{keyword}{const}\ T\ x\ =\ mat[0][0]\ *\ x\_in\ +\ mat[0][1]\ *\ y\_in\ +\ mat[0][2];}
+\DoxyCodeLine{00411\ \ \ \ \ \textcolor{keyword}{const}\ T\ y\ =\ mat[1][0]\ *\ x\_in\ +\ mat[1][1]\ *\ y\_in\ +\ mat[1][2];}
+\DoxyCodeLine{00412\ \ \ \ \ \textcolor{keyword}{const}\ T\ z\ =\ mat[2][0]\ *\ x\_in\ +\ mat[2][1]\ *\ y\_in\ +\ mat[2][2];}
+\DoxyCodeLine{00413\ }
+\DoxyCodeLine{00414\ \ \ \ \ x\_out\ =\ x\ /\ z;}
+\DoxyCodeLine{00415\ \ \ \ \ y\_out\ =\ y\ /\ z;}
+\DoxyCodeLine{00416\ \}}
+\DoxyCodeLine{00417\ }
+\DoxyCodeLine{00418\ }
+\DoxyCodeLine{00423\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00424\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{group__matrix_ga04d1860e5b931f43cb60c78ef6dfc464}{mat33\_transform}}(\ T\ dst[2],\ \textcolor{keyword}{const}\ T\ src[2],\ \textcolor{keyword}{const}\ T\ mat[3][3]\ )}
+\DoxyCodeLine{00425\ \{}
+\DoxyCodeLine{00426\ \ \ \ \ \doxymbox{\hyperlink{group__matrix_ga04d1860e5b931f43cb60c78ef6dfc464}{mat33\_transform}}(dst[0],\ dst[1],\ src[0],\ src[1],\ mat);}
+\DoxyCodeLine{00427\ \}}
+\DoxyCodeLine{00428\ }
+\DoxyCodeLine{00429\ }
+\DoxyCodeLine{00434\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00435\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{group__matrix_ga04d1860e5b931f43cb60c78ef6dfc464}{mat33\_transform}}(\ T*\ dst,\ \textcolor{keyword}{const}\ T*\ src,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ N,\ \textcolor{keyword}{const}\ T\ mat[3][3]\ )}
+\DoxyCodeLine{00436\ \{}
+\DoxyCodeLine{00437\ \ \ \ \ \textcolor{keywordflow}{for}(\ uint32\_t\ n=0;\ n\ <\ N;\ n++\ )}
+\DoxyCodeLine{00438\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{group__matrix_ga04d1860e5b931f43cb60c78ef6dfc464}{mat33\_transform}}(dst[n*2],\ dst[n*2+1],\ src[n*2],\ src[n*2+1],\ mat);\ }
+\DoxyCodeLine{00439\ \}}
+\DoxyCodeLine{00440\ }
+\DoxyCodeLine{00445\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00446\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{group__matrix_gaef64fca8bb6b4a04d2b7497551719c08}{mat33\_transpose}}(\ T\ dst[3][3],\ \textcolor{keyword}{const}\ T\ src[3][3]\ )}
+\DoxyCodeLine{00447\ \{}
+\DoxyCodeLine{00448\ \ \ \ \ T\ tmp[3][3];}
+\DoxyCodeLine{00449\ \ \ \ \ }
+\DoxyCodeLine{00450\ \ \ \ \ \textcolor{keywordflow}{for}(\ uint32\_t\ i=0;\ i\ <\ 3;\ i++\ )}
+\DoxyCodeLine{00451\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(\ uint32\_t\ j=0;\ j\ <\ 3;\ j++\ )}
+\DoxyCodeLine{00452\ \ \ \ \ \ \ \ \ \ \ \ \ tmp[i][j]\ =\ src[j][i];}
+\DoxyCodeLine{00453\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00454\ \ \ \ \ \doxymbox{\hyperlink{group__matrix_ga4081852912b45ee44f0243ff5718203c}{mat33\_copy}}(dst,\ tmp);}
+\DoxyCodeLine{00455\ \}}
+\DoxyCodeLine{00456\ }
+\DoxyCodeLine{00457\ }
+\DoxyCodeLine{00462\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00463\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{group__matrix_gaf896d4d3e9b5019d367d9f3707305083}{mat33\_zero}}(\ T\ dst[3][3]\ )}
+\DoxyCodeLine{00464\ \{}
+\DoxyCodeLine{00465\ \ \ \ \ memset(dst,\ 0,\ \textcolor{keyword}{sizeof}(T)\ *\ 9);}
+\DoxyCodeLine{00466\ \}}
+\DoxyCodeLine{00467\ }
+\DoxyCodeLine{00468\ }
+\DoxyCodeLine{00469\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00470\ }
+
+\end{DoxyCode}

@@ -1,0 +1,112 @@
+\doxysection{csv\+Writer.\+h}
+\hypertarget{build_2aarch64_2include_2jetson-utils_2csv_writer_8h_source}{}\label{build_2aarch64_2include_2jetson-utils_2csv_writer_8h_source}\index{jetson-\/inference/build/aarch64/include/jetson-\/utils/csvWriter.h@{jetson-\/inference/build/aarch64/include/jetson-\/utils/csvWriter.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ *\ Copyright\ (c)\ 2019,\ NVIDIA\ CORPORATION.\ All\ rights\ reserved.}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ *\ Permission\ is\ hereby\ granted,\ free\ of\ charge,\ to\ any\ person\ obtaining\ a}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ *\ copy\ of\ this\ software\ and\ associated\ documentation\ files\ (the\ "{}Software"{}),}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ *\ to\ deal\ in\ the\ Software\ without\ restriction,\ including\ without\ limitation}}
+\DoxyCodeLine{00007\ \textcolor{comment}{\ *\ the\ rights\ to\ use,\ copy,\ modify,\ merge,\ publish,\ distribute,\ sublicense,}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ *\ and/or\ sell\ copies\ of\ the\ Software,\ and\ to\ permit\ persons\ to\ whom\ the}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ *\ Software\ is\ furnished\ to\ do\ so,\ subject\ to\ the\ following\ conditions:}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ *\ The\ above\ copyright\ notice\ and\ this\ permission\ notice\ shall\ be\ included\ in}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ *\ all\ copies\ or\ substantial\ portions\ of\ the\ Software.}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ *\ THE\ SOFTWARE\ IS\ PROVIDED\ "{}AS\ IS"{},\ WITHOUT\ WARRANTY\ OF\ ANY\ KIND,\ EXPRESS\ OR}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ *\ IMPLIED,\ INCLUDING\ BUT\ NOT\ LIMITED\ TO\ THE\ WARRANTIES\ OF\ MERCHANTABILITY,}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ *\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE\ AND\ NONINFRINGEMENT.\ \ IN\ NO\ EVENT\ SHALL}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ *\ THE\ AUTHORS\ OR\ COPYRIGHT\ HOLDERS\ BE\ LIABLE\ FOR\ ANY\ CLAIM,\ DAMAGES\ OR\ OTHER}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ *\ LIABILITY,\ WHETHER\ IN\ AN\ ACTION\ OF\ CONTRACT,\ TORT\ OR\ OTHERWISE,\ ARISING}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ *\ FROM,\ OUT\ OF\ OR\ IN\ CONNECTION\ WITH\ THE\ SOFTWARE\ OR\ THE\ USE\ OR\ OTHER}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ *\ DEALINGS\ IN\ THE\ SOFTWARE.}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00022\ \ }
+\DoxyCodeLine{00023\ \textcolor{preprocessor}{\#ifndef\ \_\_CSV\_WRITER\_H\_}}
+\DoxyCodeLine{00024\ \textcolor{preprocessor}{\#define\ \_\_CSV\_WRITER\_H\_}}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{00027\ \textcolor{preprocessor}{\#include\ <fstream>}}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \textcolor{preprocessor}{\#include\ <stdio.h>}}
+\DoxyCodeLine{00030\ \textcolor{preprocessor}{\#include\ <stdlib.h>}}
+\DoxyCodeLine{00031\ \textcolor{preprocessor}{\#include\ <errno.h>}}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00034\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00035\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00042\ \textcolor{keyword}{class\ }csvWriter}
+\DoxyCodeLine{00043\ \{}
+\DoxyCodeLine{00044\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{comment}{//\ constructor/destructor}}
+\DoxyCodeLine{00046\ \ \ \ \ csvWriter(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ filename,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ delimiter=\textcolor{stringliteral}{"{},\ "{}}\ );}
+\DoxyCodeLine{00047\ \ \ \ \ \string~csvWriter();}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ \ \ \ \ \textcolor{comment}{//\ open}}
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{static}\ csvWriter*\ Open(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ filename,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ delimiter=\textcolor{stringliteral}{"{},\ "{}}\ );}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{comment}{//\ close/flush}}
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ Close();}
+\DoxyCodeLine{00054\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ Flush();}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{comment}{//\ is\ open\ or\ closed}}
+\DoxyCodeLine{00057\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ IsOpen()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00058\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ IsClosed()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00060\ \ \ \ \ \textcolor{comment}{//\ end\ the\ current\ line}}
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ EndLine();}
+\DoxyCodeLine{00062\ \ \ \ \ }
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{comment}{//\ write\ value}}
+\DoxyCodeLine{00064\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00065\ \ \ \ \ \textcolor{keyword}{inline}\ csvWriter\&\ Write(\ \textcolor{keyword}{const}\ T\&\ value\ );}
+\DoxyCodeLine{00066\ }
+\DoxyCodeLine{00067\ \ \ \ \ \textcolor{comment}{//\ write\ values}}
+\DoxyCodeLine{00068\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T,\ \textcolor{keyword}{typename}...\ Args>}
+\DoxyCodeLine{00069\ \ \ \ \ \textcolor{keyword}{inline}\ csvWriter\&\ Write(\ \textcolor{keyword}{const}\ T\&\ value,\ \textcolor{keyword}{const}\ Args\&...\ args\ );}
+\DoxyCodeLine{00070\ }
+\DoxyCodeLine{00071\ \ \ \ \ \textcolor{comment}{//\ write\ values\ and\ end\ the\ line}}
+\DoxyCodeLine{00072\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T,\ \textcolor{keyword}{typename}...\ Args>}
+\DoxyCodeLine{00073\ \ \ \ \ \textcolor{keyword}{inline}\ csvWriter\&\ WriteLine(\ \textcolor{keyword}{const}\ T\&\ value,\ \textcolor{keyword}{const}\ Args\&...\ args\ );}
+\DoxyCodeLine{00074\ }
+\DoxyCodeLine{00075\ \ \ \ \ \textcolor{comment}{//\ stream\ insertion}}
+\DoxyCodeLine{00076\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00077\ \ \ \ \ \textcolor{keyword}{inline}\ csvWriter\&\ operator\ <<\ (\ \textcolor{keyword}{const}\ T\&\ value\ );}
+\DoxyCodeLine{00078\ }
+\DoxyCodeLine{00079\ \ \ \ \ \textcolor{comment}{//\ stream\ manipulators}}
+\DoxyCodeLine{00080\ \ \ \ \ \textcolor{keyword}{inline}\ csvWriter\&\ operator\ <<\ (\ csvWriter\&\ (*value)(csvWriter\&)\ );}
+\DoxyCodeLine{00081\ }
+\DoxyCodeLine{00082\ \ \ \ \ \textcolor{comment}{//\ set\ default\ delimiter}}
+\DoxyCodeLine{00083\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ SetDelimiter(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ delimiters\ );}
+\DoxyCodeLine{00084\ }
+\DoxyCodeLine{00085\ \ \ \ \ \textcolor{comment}{//\ retrieve\ default\ delimiter}}
+\DoxyCodeLine{00086\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ GetDelimiter()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00087\ }
+\DoxyCodeLine{00088\ \ \ \ \ \textcolor{comment}{//\ retrieve\ the\ filename}}
+\DoxyCodeLine{00089\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ GetFilename()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00090\ }
+\DoxyCodeLine{00091\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00092\ \ \ \ \ std::ofstream\ mFile;}
+\DoxyCodeLine{00093\ \ \ \ \ std::string\ \ \ mFilename;}
+\DoxyCodeLine{00094\ \ \ \ \ std::string\ \ \ mDelimiter;}
+\DoxyCodeLine{00095\ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ \ \ \ \ mNewLine;}
+\DoxyCodeLine{00096\ \};}
+\DoxyCodeLine{00097\ }
+\DoxyCodeLine{00098\ }
+\DoxyCodeLine{00103\ \textcolor{keyword}{namespace\ }\doxymbox{\hyperlink{namespacecsv}{csv}}}
+\DoxyCodeLine{00104\ \{}
+\DoxyCodeLine{00105\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{static}\ \doxymbox{\hyperlink{classcsv_writer}{csvWriter}}\&\ endl(\ \doxymbox{\hyperlink{classcsv_writer}{csvWriter}}\&\ file\ );}
+\DoxyCodeLine{00106\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{static}\ \doxymbox{\hyperlink{classcsv_writer}{csvWriter}}\&\ flush(\ \doxymbox{\hyperlink{classcsv_writer}{csvWriter}}\&\ file\ );}
+\DoxyCodeLine{00107\ \}}
+\DoxyCodeLine{00108\ }
+\DoxyCodeLine{00109\ }
+\DoxyCodeLine{00110\ \textcolor{comment}{//\ internal\ functions}}
+\DoxyCodeLine{00111\ \textcolor{preprocessor}{\#include\ "{}csvWriter.hpp"{}}}
+\DoxyCodeLine{00112\ }
+\DoxyCodeLine{00113\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00114\ }
+
+\end{DoxyCode}

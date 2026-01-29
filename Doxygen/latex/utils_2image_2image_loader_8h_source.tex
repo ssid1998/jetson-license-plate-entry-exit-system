@@ -1,0 +1,77 @@
+\doxysection{image\+Loader.\+h}
+\hypertarget{utils_2image_2image_loader_8h_source}{}\label{utils_2image_2image_loader_8h_source}\index{jetson-\/inference/utils/image/imageLoader.h@{jetson-\/inference/utils/image/imageLoader.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ *\ Copyright\ (c)\ 2020,\ NVIDIA\ CORPORATION.\ All\ rights\ reserved.}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ *\ Permission\ is\ hereby\ granted,\ free\ of\ charge,\ to\ any\ person\ obtaining\ a}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ *\ copy\ of\ this\ software\ and\ associated\ documentation\ files\ (the\ "{}Software"{}),}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ *\ to\ deal\ in\ the\ Software\ without\ restriction,\ including\ without\ limitation}}
+\DoxyCodeLine{00007\ \textcolor{comment}{\ *\ the\ rights\ to\ use,\ copy,\ modify,\ merge,\ publish,\ distribute,\ sublicense,}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ *\ and/or\ sell\ copies\ of\ the\ Software,\ and\ to\ permit\ persons\ to\ whom\ the}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ *\ Software\ is\ furnished\ to\ do\ so,\ subject\ to\ the\ following\ conditions:}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ *\ The\ above\ copyright\ notice\ and\ this\ permission\ notice\ shall\ be\ included\ in}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ *\ all\ copies\ or\ substantial\ portions\ of\ the\ Software.}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ *\ THE\ SOFTWARE\ IS\ PROVIDED\ "{}AS\ IS"{},\ WITHOUT\ WARRANTY\ OF\ ANY\ KIND,\ EXPRESS\ OR}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ *\ IMPLIED,\ INCLUDING\ BUT\ NOT\ LIMITED\ TO\ THE\ WARRANTIES\ OF\ MERCHANTABILITY,}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ *\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE\ AND\ NONINFRINGEMENT.\ \ IN\ NO\ EVENT\ SHALL}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ *\ THE\ AUTHORS\ OR\ COPYRIGHT\ HOLDERS\ BE\ LIABLE\ FOR\ ANY\ CLAIM,\ DAMAGES\ OR\ OTHER}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ *\ LIABILITY,\ WHETHER\ IN\ AN\ ACTION\ OF\ CONTRACT,\ TORT\ OR\ OTHERWISE,\ ARISING}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ *\ FROM,\ OUT\ OF\ OR\ IN\ CONNECTION\ WITH\ THE\ SOFTWARE\ OR\ THE\ USE\ OR\ OTHER}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ *\ DEALINGS\ IN\ THE\ SOFTWARE.}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00022\ \ }
+\DoxyCodeLine{00023\ \textcolor{preprocessor}{\#ifndef\ \_\_IMAGE\_LOADER\_H\_}}
+\DoxyCodeLine{00024\ \textcolor{preprocessor}{\#define\ \_\_IMAGE\_LOADER\_H\_}}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \textcolor{preprocessor}{\#include\ "{}videoSource.h"{}}}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00030\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00052\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{classimage_loader}{imageLoader}}\ :\ \textcolor{keyword}{public}\ \doxymbox{\hyperlink{classvideo_source}{videoSource}}}
+\DoxyCodeLine{00053\ \{}
+\DoxyCodeLine{00054\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00058\ \ \ \ \ \textcolor{keyword}{static}\ imageLoader*\ \doxymbox{\hyperlink{classimage_loader_ac288e56c61835fb763889e3beb4b7e62}{Create}}(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ path,\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{structvideo_options}{videoOptions}}\&\ options=\doxymbox{\hyperlink{structvideo_options}{videoOptions}}()\ );}
+\DoxyCodeLine{00059\ \ \ \ \ }
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keyword}{static}\ imageLoader*\ \doxymbox{\hyperlink{classimage_loader_a548f17121339855cd8e77aaf10871462}{Create}}(\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{structvideo_options}{videoOptions}}\&\ options\ );}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00068\ \ \ \ \ \textcolor{keyword}{virtual}\ \doxymbox{\hyperlink{classimage_loader_afb1939d2bbd24f54c419a33e1b1171d8}{\string~imageLoader}}();}
+\DoxyCodeLine{00069\ }
+\DoxyCodeLine{00074\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{classimage_loader_a9da8f1bc5782bca0cf6acf4118b9c882}{Capture}}(\ \textcolor{keywordtype}{void}**\ image,\ \doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{imageFormat}}\ format,\ uint64\_t\ timeout=\doxymbox{\hyperlink{classvideo_source_a3e144d758672a9d304ae6518cbe57508}{DEFAULT\_TIMEOUT}},\ \textcolor{keywordtype}{int}*\ status=NULL,\ cudaStream\_t\ stream=0\ );}
+\DoxyCodeLine{00075\ }
+\DoxyCodeLine{00080\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{classimage_loader_a1af7d6e4e3ad6232c67dcc1307509677}{Open}}();}
+\DoxyCodeLine{00081\ }
+\DoxyCodeLine{00086\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{classimage_loader_ac06b32600a172fc0107ffe8240a13cb4}{Close}}();}
+\DoxyCodeLine{00087\ }
+\DoxyCodeLine{00094\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{classimage_loader_a76136fd767f46d4e413bc1d7a279a75e}{IsEOS}}()\textcolor{keyword}{\ const\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\{\ \textcolor{keywordflow}{return}\ mEOS;\ \}}
+\DoxyCodeLine{00095\ }
+\DoxyCodeLine{00099\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keyword}{inline}\ uint32\_t\ \doxymbox{\hyperlink{classimage_loader_a4b196ca1c23d9322d5b9bba6e05e0bdf}{GetType}}()\textcolor{keyword}{\ const\ \ \ \ \ }\{\ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{classimage_loader_adcd71a3de201901d7f667e3346668a5a}{Type}};\ \}}
+\DoxyCodeLine{00100\ }
+\DoxyCodeLine{00104\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ uint32\_t\ \doxymbox{\hyperlink{classimage_loader_adcd71a3de201901d7f667e3346668a5a}{Type}}\ =\ (1\ <<\ 4);}
+\DoxyCodeLine{00105\ }
+\DoxyCodeLine{00122\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \doxymbox{\hyperlink{classimage_loader_a4c22fa1e0157babfba26bd5b79a8e302}{SupportedExtensions}}[];}
+\DoxyCodeLine{00123\ }
+\DoxyCodeLine{00129\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{classimage_loader_a521c2bbdb880d36025b696068013def9}{IsSupportedExtension}}(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ ext\ );}
+\DoxyCodeLine{00130\ }
+\DoxyCodeLine{00131\ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00132\ \ \ \ \ imageLoader(\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{structvideo_options}{videoOptions}}\&\ options\ );}
+\DoxyCodeLine{00133\ }
+\DoxyCodeLine{00134\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ isLooping()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ (mOptions.loop\ <\ 0)\ ||\ ((mOptions.loop\ >\ 0)\ \&\&\ (mLoopCount\ <\ mOptions.loop));\ \}}
+\DoxyCodeLine{00135\ }
+\DoxyCodeLine{00136\ \ \ \ \ \textcolor{keywordtype}{bool}\ mEOS;}
+\DoxyCodeLine{00137\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ mLoopCount;}
+\DoxyCodeLine{00138\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ mNextFile;}
+\DoxyCodeLine{00139\ \ \ \ \ }
+\DoxyCodeLine{00140\ \ \ \ \ std::vector<std::string>\ mFiles;}
+\DoxyCodeLine{00141\ \ \ \ \ std::vector<void*>\ mBuffers;}
+\DoxyCodeLine{00142\ \};}
+\DoxyCodeLine{00143\ }
+\DoxyCodeLine{00144\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

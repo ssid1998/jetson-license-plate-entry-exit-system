@@ -1,0 +1,109 @@
+\doxysection{cuda\+Colormap.\+h}
+\hypertarget{utils_2cuda_2cuda_colormap_8h_source}{}\label{utils_2cuda_2cuda_colormap_8h_source}\index{jetson-\/inference/utils/cuda/cudaColormap.h@{jetson-\/inference/utils/cuda/cudaColormap.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ *\ Copyright\ (c)\ 2019,\ NVIDIA\ CORPORATION.\ All\ rights\ reserved.}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ *\ Permission\ is\ hereby\ granted,\ free\ of\ charge,\ to\ any\ person\ obtaining\ a}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ *\ copy\ of\ this\ software\ and\ associated\ documentation\ files\ (the\ "{}Software"{}),}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ *\ to\ deal\ in\ the\ Software\ without\ restriction,\ including\ without\ limitation}}
+\DoxyCodeLine{00007\ \textcolor{comment}{\ *\ the\ rights\ to\ use,\ copy,\ modify,\ merge,\ publish,\ distribute,\ sublicense,}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ *\ and/or\ sell\ copies\ of\ the\ Software,\ and\ to\ permit\ persons\ to\ whom\ the}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ *\ Software\ is\ furnished\ to\ do\ so,\ subject\ to\ the\ following\ conditions:}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ *\ The\ above\ copyright\ notice\ and\ this\ permission\ notice\ shall\ be\ included\ in}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ *\ all\ copies\ or\ substantial\ portions\ of\ the\ Software.}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ *\ THE\ SOFTWARE\ IS\ PROVIDED\ "{}AS\ IS"{},\ WITHOUT\ WARRANTY\ OF\ ANY\ KIND,\ EXPRESS\ OR}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ *\ IMPLIED,\ INCLUDING\ BUT\ NOT\ LIMITED\ TO\ THE\ WARRANTIES\ OF\ MERCHANTABILITY,}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ *\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE\ AND\ NONINFRINGEMENT.\ \ IN\ NO\ EVENT\ SHALL}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ *\ THE\ AUTHORS\ OR\ COPYRIGHT\ HOLDERS\ BE\ LIABLE\ FOR\ ANY\ CLAIM,\ DAMAGES\ OR\ OTHER}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ *\ LIABILITY,\ WHETHER\ IN\ AN\ ACTION\ OF\ CONTRACT,\ TORT\ OR\ OTHERWISE,\ ARISING}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ *\ FROM,\ OUT\ OF\ OR\ IN\ CONNECTION\ WITH\ THE\ SOFTWARE\ OR\ THE\ USE\ OR\ OTHER}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ *\ DEALINGS\ IN\ THE\ SOFTWARE.}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \textcolor{preprocessor}{\#ifndef\ \_\_CUDA\_COLORMAP\_H\_\_}}
+\DoxyCodeLine{00024\ \textcolor{preprocessor}{\#define\ \_\_CUDA\_COLORMAP\_H\_\_}}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \textcolor{preprocessor}{\#include\ "{}cudaFilterMode.h"{}}}
+\DoxyCodeLine{00028\ \textcolor{preprocessor}{\#include\ "{}imageFormat.h"{}}}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00036\ \textcolor{keyword}{enum}\ \doxymbox{\hyperlink{group__colormap_gab66101108d92e39f9ab9283c31da3550}{cudaColormapType}}}
+\DoxyCodeLine{00037\ \{}
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{comment}{//\ Palettized}}
+\DoxyCodeLine{00039\ \ \ \ \ \doxymbox{\hyperlink{group__colormap_ggab66101108d92e39f9ab9283c31da3550a66ba231e27e5c047361cd648353536cf}{COLORMAP\_INFERNO}},\ \ \ }
+\DoxyCodeLine{00040\ \ \ \ \ \doxymbox{\hyperlink{group__colormap_ggab66101108d92e39f9ab9283c31da3550adae05e96cd50fde7278b54a0bd0430af}{COLORMAP\_MAGMA}},\ \ \ \ \ }
+\DoxyCodeLine{00041\ \ \ \ \ \doxymbox{\hyperlink{group__colormap_ggab66101108d92e39f9ab9283c31da3550a9d7e019081acf9030ca57169572a2c49}{COLORMAP\_PARULA}},\ \ \ \ }
+\DoxyCodeLine{00042\ \ \ \ \ \doxymbox{\hyperlink{group__colormap_ggab66101108d92e39f9ab9283c31da3550ac6232462decac13bf8f019216088af4e}{COLORMAP\_PLASMA}},\ \ \ \ }
+\DoxyCodeLine{00043\ \ \ \ \ \doxymbox{\hyperlink{group__colormap_ggab66101108d92e39f9ab9283c31da3550adb42f46fa120d9ffaaa7326456b128ec}{COLORMAP\_TURBO}},\ \ \ \ \ }
+\DoxyCodeLine{00044\ \ \ \ \ \doxymbox{\hyperlink{group__colormap_ggab66101108d92e39f9ab9283c31da3550ab55ee67b1227b4ed30b505eb3a3cbe0c}{COLORMAP\_VIRIDIS}},\ \ \ }
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{comment}{//\ Palettized\ (inverted)}}
+\DoxyCodeLine{00047\ \ \ \ \ \doxymbox{\hyperlink{group__colormap_ggab66101108d92e39f9ab9283c31da3550ab31f17980a2d6cdb8f54688260202cd2}{COLORMAP\_INFERNO\_INVERTED}},\ \ \ }
+\DoxyCodeLine{00048\ \ \ \ \ \doxymbox{\hyperlink{group__colormap_ggab66101108d92e39f9ab9283c31da3550a6c534f5e1f77a71605f40a7398586527}{COLORMAP\_MAGMA\_INVERTED}},\ \ \ \ \ }
+\DoxyCodeLine{00049\ \ \ \ \ \doxymbox{\hyperlink{group__colormap_ggab66101108d92e39f9ab9283c31da3550a75b49821722c28ed6ca13a1bb131aa19}{COLORMAP\_PARULA\_INVERTED}},\ \ \ \ }
+\DoxyCodeLine{00050\ \ \ \ \ \doxymbox{\hyperlink{group__colormap_ggab66101108d92e39f9ab9283c31da3550ae3b37b285976878805d938b96928f88c}{COLORMAP\_PLASMA\_INVERTED}},\ \ \ \ }
+\DoxyCodeLine{00051\ \ \ \ \ \doxymbox{\hyperlink{group__colormap_ggab66101108d92e39f9ab9283c31da3550a0363297af5ee5ea58ffd47e136dbb6cd}{COLORMAP\_TURBO\_INVERTED}},\ \ \ \ \ }
+\DoxyCodeLine{00052\ \ \ \ \ \doxymbox{\hyperlink{group__colormap_ggab66101108d92e39f9ab9283c31da3550a0d0fcdcd836507523dea555ce4a89632}{COLORMAP\_VIRIDIS\_INVERTED}},\ \ \ }
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00054\ \ \ \ \ \textcolor{comment}{//\ Parametric}}
+\DoxyCodeLine{00055\ \ \ \ \ \doxymbox{\hyperlink{group__colormap_ggab66101108d92e39f9ab9283c31da3550a9bcf1c7c8aa1713bd6d77dc88eecda51}{COLORMAP\_FLOW}},\ \ \ \ \ \ }
+\DoxyCodeLine{00056\ \ \ \ \ \doxymbox{\hyperlink{group__colormap_ggab66101108d92e39f9ab9283c31da3550ab4b116ab242a72b661acf670f907d55c}{COLORMAP\_NONE}},\ \ \ \ \ \ }
+\DoxyCodeLine{00057\ \ \ \ \ \doxymbox{\hyperlink{group__colormap_ggab66101108d92e39f9ab9283c31da3550a02c92018e1199bf5574c97044214a808}{COLORMAP\_LINEAR}},\ \ \ \ }
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00060\ \ \ \ \ COLORMAP\_DEFAULT\ =\ \doxymbox{\hyperlink{group__colormap_ggab66101108d92e39f9ab9283c31da3550ab55ee67b1227b4ed30b505eb3a3cbe0c}{COLORMAP\_VIRIDIS}}}
+\DoxyCodeLine{00061\ \};}
+\DoxyCodeLine{00062\ }
+\DoxyCodeLine{00068\ \doxymbox{\hyperlink{group__colormap_gab66101108d92e39f9ab9283c31da3550}{cudaColormapType}}\ \doxymbox{\hyperlink{group__colormap_ga1e36b770c903d6cc1891d2f9baae494a}{cudaColormapFromStr}}(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ colormap\ );}
+\DoxyCodeLine{00069\ }
+\DoxyCodeLine{00074\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \doxymbox{\hyperlink{group__colormap_ga4ed5ad00b3b376360496768e014649d6}{cudaColormapToStr}}(\ \doxymbox{\hyperlink{group__colormap_gab66101108d92e39f9ab9283c31da3550}{cudaColormapType}}\ colormap\ );}
+\DoxyCodeLine{00075\ }
+\DoxyCodeLine{00085\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00086\ cudaError\_t\ \doxymbox{\hyperlink{group__colormap_gac6395d03d0b15cf572eff293cf0c0153}{cudaColormap}}(\ \textcolor{keywordtype}{float}*\ input,\ T*\ output,}
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ width,\ \textcolor{keywordtype}{size\_t}\ height,}
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ float2\&\ input\_range=make\_float2(0,255),}
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{group__cuda_filter_ga66fe4a27e9fb59cd675d5deb12287195}{cudaDataFormat}}\ input\_format=FORMAT\_DEFAULT,}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{group__colormap_gab66101108d92e39f9ab9283c31da3550}{cudaColormapType}}\ colormap=COLORMAP\_DEFAULT,}
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cudaStream\_t\ stream=0\ )\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{\ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{group__colormap_gac6395d03d0b15cf572eff293cf0c0153}{cudaColormap}}(input,\ (\textcolor{keywordtype}{void}*)output,\ width,\ height,\ input\_range,\ input\_format,\ imageFormatFromType<T>(),\ colormap,\ stream);\ \}}
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00102\ cudaError\_t\ \doxymbox{\hyperlink{group__colormap_gac6395d03d0b15cf572eff293cf0c0153}{cudaColormap}}(\ \textcolor{keywordtype}{float}*\ input,\ \textcolor{keywordtype}{void}*\ output,}
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ width,\ \textcolor{keywordtype}{size\_t}\ height,}
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ float2\&\ input\_range=make\_float2(0,255),}
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{group__cuda_filter_ga66fe4a27e9fb59cd675d5deb12287195}{cudaDataFormat}}\ input\_format=FORMAT\_DEFAULT,}
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{imageFormat}}\ output\_format=\doxymbox{\hyperlink{group__image_format_gga931c48e08f361637d093355d64583406ac9e52255f1b44bcb0257383d948c3153}{IMAGE\_UNKNOWN}},}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{group__colormap_gab66101108d92e39f9ab9283c31da3550}{cudaColormapType}}\ colormap=COLORMAP\_DEFAULT,}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cudaStream\_t\ stream=0\ );}
+\DoxyCodeLine{00109\ }
+\DoxyCodeLine{00120\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00121\ cudaError\_t\ \doxymbox{\hyperlink{group__colormap_gac6395d03d0b15cf572eff293cf0c0153}{cudaColormap}}(\ \textcolor{keywordtype}{float}*\ input,\ \textcolor{keywordtype}{size\_t}\ input\_width,\ \textcolor{keywordtype}{size\_t}\ input\_height,}
+\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T*\ output,\ \textcolor{keywordtype}{size\_t}\ output\_width,\ \textcolor{keywordtype}{size\_t}\ output\_height,}
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ float2\&\ input\_range=make\_float2(0,255),}
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{group__cuda_filter_ga66fe4a27e9fb59cd675d5deb12287195}{cudaDataFormat}}\ input\_format=FORMAT\_DEFAULT,}
+\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{group__colormap_gab66101108d92e39f9ab9283c31da3550}{cudaColormapType}}\ colormap=COLORMAP\_DEFAULT,}
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{group__cuda_filter_ga25d4283643163befe99948d24cc53311}{cudaFilterMode}}\ filter=\doxymbox{\hyperlink{group__cuda_filter_gga25d4283643163befe99948d24cc53311ad8e5de74ec16a7e07145b7c18c885094}{FILTER\_LINEAR}},}
+\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cudaStream\_t\ stream=0\ )\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{\ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{group__colormap_gac6395d03d0b15cf572eff293cf0c0153}{cudaColormap}}(input,\ input\_width,\ input\_height,\ output,\ output\_width,\ output\_height,\ input\_range,\ input\_format,\ imageFormatFromType<T>(),\ colormap,\ filter,\ stream);\ \}}
+\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00139\ cudaError\_t\ \doxymbox{\hyperlink{group__colormap_gac6395d03d0b15cf572eff293cf0c0153}{cudaColormap}}(\ \textcolor{keywordtype}{float}*\ input,\ \textcolor{keywordtype}{size\_t}\ input\_width,\ \textcolor{keywordtype}{size\_t}\ input\_height,}
+\DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}*\ output,\ \textcolor{keywordtype}{size\_t}\ output\_width,\ \textcolor{keywordtype}{size\_t}\ output\_height,}
+\DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ float2\&\ input\_range=make\_float2(0,255),}
+\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{group__cuda_filter_ga66fe4a27e9fb59cd675d5deb12287195}{cudaDataFormat}}\ input\_format=FORMAT\_DEFAULT,}
+\DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{imageFormat}}\ output\_format=\doxymbox{\hyperlink{group__image_format_gga931c48e08f361637d093355d64583406ac9e52255f1b44bcb0257383d948c3153}{IMAGE\_UNKNOWN}},}
+\DoxyCodeLine{00144\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{group__colormap_gab66101108d92e39f9ab9283c31da3550}{cudaColormapType}}\ colormap=COLORMAP\_DEFAULT,}
+\DoxyCodeLine{00145\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{group__cuda_filter_ga25d4283643163befe99948d24cc53311}{cudaFilterMode}}\ filter=\doxymbox{\hyperlink{group__cuda_filter_gga25d4283643163befe99948d24cc53311ad8e5de74ec16a7e07145b7c18c885094}{FILTER\_LINEAR}},}
+\DoxyCodeLine{00146\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cudaStream\_t\ stream=0\ );}
+\DoxyCodeLine{00147\ }
+\DoxyCodeLine{00156\ cudaError\_t\ \doxymbox{\hyperlink{group__colormap_ga91c6bbab13dad41089d483d1eee23d08}{cudaColormapInit}}();}
+\DoxyCodeLine{00157\ }
+\DoxyCodeLine{00163\ cudaError\_t\ \doxymbox{\hyperlink{group__colormap_ga635d08d990c024d0a36483490c0899a0}{cudaColormapFree}}();}
+\DoxyCodeLine{00164\ }
+\DoxyCodeLine{00176\ float4*\ cudaColormapPalette(\ \doxymbox{\hyperlink{group__colormap_gab66101108d92e39f9ab9283c31da3550}{cudaColormapType}}\ colormap\ );}
+\DoxyCodeLine{00177\ }
+\DoxyCodeLine{00178\ }
+\DoxyCodeLine{00179\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00180\ }
+
+\end{DoxyCode}

@@ -1,0 +1,233 @@
+\chapter{pytorch-\/ssd }
+\hypertarget{md_jetson-inference_2docs_2pytorch-ssd}{}\label{md_jetson-inference_2docs_2pytorch-ssd}\index{pytorch-\/ssd@{pytorch-\/ssd}}
+ 
+
+\textsuperscript{\href{pytorch-collect.md}{\texttt{Back}} \texorpdfstring{$\vert$}{|} \href{pytorch-collect-detection.md}{\texttt{Next}} \texorpdfstring{$\vert$}{|} }\href{../README.md\#hello-ai-world}{\texttt{\textsuperscript{Contents}}} ~\newline
+ \textsuperscript{Transfer Learning -\/ Object Detection}\hypertarget{md_jetson-inference_2docs_2pytorch-ssd_autotoc_md376}{}\doxysection{\texorpdfstring{Re-\/training SSD-\/\+Mobilenet}{Re-\/training SSD-\/\+Mobilenet}}\label{md_jetson-inference_2docs_2pytorch-ssd_autotoc_md376}
+Next, we\textquotesingle{}ll train our own SSD-\/\+Mobilenet object detection model using Py\+Torch and the \href{https://storage.googleapis.com/openimages/web/visualizer/index.html?set=train&type=detection&c=\%2Fm\%2F06l9r}{\texttt{Open Images}} dataset. SSD-\/\+Mobilenet is a popular network architecture for realtime object detection on mobile and embedded devices that combines the \href{https://arxiv.org/abs/1512.02325}{\texttt{SSD-\/300}} Single-\/\+Shot Multi\+Box Detector with a \href{https://arxiv.org/abs/1704.04861}{\texttt{Mobilenet}} backbone. ~\newline
+
+
+\href{https://arxiv.org/abs/1512.02325}{\texttt{}}
+
+In the example below, we\textquotesingle{}ll train a custom detection model that locates 8 different varieties of fruit, although you are welcome to pick from any of the \href{https://github.com/dusty-nv/pytorch-ssd/blob/master/open_images_classes.txt}{\texttt{600 classes}} in the Open Images dataset to train your model on. You can visually browse the dataset \href{https://storage.googleapis.com/openimages/web/visualizer/index.html?set=train&type=detection}{\texttt{here}}.
+
+
+
+To get started, first make sure that you have \href{https://developer.nvidia.com/embedded/jetpack}{\texttt{Jet\+Pack 4.\+4}} (or newer) and \href{pytorch-transfer-learning.md\#installing-pytorch}{\texttt{Py\+Torch installed}} for {\bfseries{Python 3}} on your Jetson. Jet\+Pack 4.\+4 includes Tensor\+RT 7.\+1, which is the minimum Tensor\+RT version that supports loading SSD-\/\+Mobilenet via ONNX. Newer versions of Tensor\+RT are fine too.\hypertarget{md_jetson-inference_2docs_2pytorch-ssd_autotoc_md377}{}\doxysubsection{\texorpdfstring{Setup}{Setup}}\label{md_jetson-inference_2docs_2pytorch-ssd_autotoc_md377}
+\doxylink{requirements_The}{The} Py\+Torch code for training SSD-\/\+Mobilenet is found in the repo under \href{https://github.com/dusty-nv/pytorch-ssd}{\texttt{{\ttfamily jetson-\/inference/\+python/\+training/\+detection/\+ssd}}}. If you aren\textquotesingle{}t \doxysectlink{md_jetson-inference_2docs_2aux-docker}{Running the Docker Container}{0}, there are a couple steps required before using it:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\#\ you\ only\ need\ to\ run\ these\ if\ you\ aren't\ using\ the\ container}
+\DoxyCodeLine{\$\ cd\ jetson-\/inference/python/training/detection/ssd}
+\DoxyCodeLine{\$\ wget\ https://nvidia.box.com/shared/static/djf5w54rjvpqocsiztzaandq1m3avr7c.pth\ -\/O\ models/mobilenet-\/v1-\/ssd-\/mp-\/0\_675.pth}
+\DoxyCodeLine{\$\ pip3\ install\ -\/v\ -\/r\ requirements.txt}
+
+\end{DoxyCode}
+
+
+\begin{quote}
+{\bfseries{note:\+}} first make sure that you have \href{https://developer.nvidia.com/embedded/jetpack}{\texttt{Jet\+Pack 4.\+4}} or newer on your Jetson and \href{pytorch-transfer-learning.md\#installing-pytorch}{\texttt{Py\+Torch installed}} for {\bfseries{Python 3}} \end{quote}
+
+
+This will download the \href{https://nvidia.box.com/shared/static/djf5w54rjvpqocsiztzaandq1m3avr7c.pth}{\texttt{base model}} to {\ttfamily ssd/\+models} and install some required Python packages (these were already installed into the container). \doxylink{requirements_The}{The} base model was already pre-\/trained on a different dataset (PASCAL VOC) so that we don\textquotesingle{}t need to train SSD-\/\+Mobilenet from scratch, which would take much longer. Instead we\textquotesingle{}ll use transfer learning to fine-\/tune it to detect new object classes of our choosing.\hypertarget{md_jetson-inference_2docs_2pytorch-ssd_autotoc_md378}{}\doxysubsection{\texorpdfstring{Downloading the Data}{Downloading the Data}}\label{md_jetson-inference_2docs_2pytorch-ssd_autotoc_md378}
+\doxylink{requirements_The}{The} \href{https://storage.googleapis.com/openimages/web/visualizer/index.html?set=train&type=detection&c=\%2Fm\%2F0fp6w}{\texttt{Open Images}} dataset contains over \href{https://github.com/dusty-nv/pytorch-ssd/blob/master/open_images_classes.txt}{\texttt{600 object classes}} that you can pick and choose from. There is a script provided called {\ttfamily open\+\_\+images\+\_\+downloader.\+py} which will automatically download the desired object classes for you. ~\newline
+
+
+\begin{quote}
+{\bfseries{note:\+}} the fewer classes used, the faster the model will run during inferencing. Open Images can also contain hundreds of gigabytes of data depending on the classes you pick -\/ so before downloading your own classes, see the Limiting the Amount of Data section below. \end{quote}
+
+
+\doxylink{requirements_The}{The} classes that we\textquotesingle{}ll be using are {\ttfamily "{}Apple,Orange,Banana,Strawberry,Grape,Pear,Pineapple,Watermelon"{}}, for example for a fruit-\/picking robot -\/ although you are welcome to substitute your own choices from the \href{https://github.com/dusty-nv/pytorch-ssd/blob/master/open_images_classes.txt}{\texttt{class list}}. \doxylink{requirements_The}{The} fruit classes have \texorpdfstring{$\sim$}{\string~}6500 images, which is a happy medium.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$\ python3\ open\_images\_downloader.py\ -\/-\/class-\/names\ "{}Apple,Orange,Banana,Strawberry,Grape,Pear,Pineapple,Watermelon"{}\ -\/-\/data=data/fruit}
+\DoxyCodeLine{...}
+\DoxyCodeLine{2020-\/07-\/09\ 16:20:42\ -\/\ Starting\ to\ download\ 6360\ images.}
+\DoxyCodeLine{2020-\/07-\/09\ 16:20:42\ -\/\ Downloaded\ 100\ images.}
+\DoxyCodeLine{2020-\/07-\/09\ 16:20:42\ -\/\ Downloaded\ 200\ images.}
+\DoxyCodeLine{2020-\/07-\/09\ 16:20:42\ -\/\ Downloaded\ 300\ images.}
+\DoxyCodeLine{2020-\/07-\/09\ 16:20:42\ -\/\ Downloaded\ 400\ images.}
+\DoxyCodeLine{2020-\/07-\/09\ 16:20:42\ -\/\ Downloaded\ 500\ images.}
+\DoxyCodeLine{2020-\/07-\/09\ 16:20:46\ -\/\ Downloaded\ 600\ images.}
+\DoxyCodeLine{...}
+\DoxyCodeLine{2020-\/07-\/09\ 16:32:12\ -\/\ Task\ Done.}
+
+\end{DoxyCode}
+
+
+By default, the dataset will be downloaded to the {\ttfamily data/\+} directory under {\ttfamily jetson-\/inference/\+python/\+training/\+detection/\+ssd} (which is automatically \href{aux-docker.md\#mounted-data-volumes}{\texttt{mounted into the container}}), but you can change that by specifying the {\ttfamily -\/-\/data=\texorpdfstring{$<$}{<}PATH\texorpdfstring{$>$}{>}} option. Depending on the size of your dataset, it may be necessary to use external storage. And if you download multiple datasets, you should store each in their own subdirectory.\hypertarget{md_jetson-inference_2docs_2pytorch-ssd_autotoc_md379}{}\doxysubsubsection{\texorpdfstring{Limiting the Amount of Data}{Limiting the Amount of Data}}\label{md_jetson-inference_2docs_2pytorch-ssd_autotoc_md379}
+Depending on the classes that you select, Open Images can contain lots of data -\/ in some cases too much to be trained in a reasonable amount of time for our purposes. In particular, the classes containing people and vehicles have a very large amount of images (\texorpdfstring{$>$}{>}250GB). ~\newline
+
+
+So when selecting your own classes, before downloading the data it\textquotesingle{}s recommended to first run the downloader script with the {\ttfamily -\/-\/stats-\/only} option. This will show how many images there are for your classes, without actually downloading any images. ~\newline
+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{\$\ python3\ open\_images\_downloader.py\ -\/-\/stats-\/only\ -\/-\/class-\/names\ "{}Apple,Orange,Banana,Strawberry,Grape,Pear,Pineapple,Watermelon"{}\ -\/-\/data=data/fruit}
+\DoxyCodeLine{...}
+\DoxyCodeLine{2020-\/07-\/09\ 16:18:06\ -\/\ Total\ available\ images:\ 6360}
+\DoxyCodeLine{2020-\/07-\/09\ 16:18:06\ -\/\ Total\ available\ boxes:\ \ 27188}
+\DoxyCodeLine{}
+\DoxyCodeLine{-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}
+\DoxyCodeLine{\ 'train'\ set\ statistics}
+\DoxyCodeLine{-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}
+\DoxyCodeLine{\ \ Image\ count:\ \ 5145}
+\DoxyCodeLine{\ \ Bounding\ box\ count:\ \ 23539}
+\DoxyCodeLine{\ \ Bounding\ box\ distribution:}
+\DoxyCodeLine{\ \ \ \ Strawberry:\ \ 7553/23539\ =\ 0.32}
+\DoxyCodeLine{\ \ \ \ Orange:\ \ 6186/23539\ =\ 0.26}
+\DoxyCodeLine{\ \ \ \ Apple:\ \ 3622/23539\ =\ 0.15}
+\DoxyCodeLine{\ \ \ \ Grape:\ \ 2560/23539\ =\ 0.11}
+\DoxyCodeLine{\ \ \ \ Banana:\ \ 1574/23539\ =\ 0.07}
+\DoxyCodeLine{\ \ \ \ Pear:\ \ 757/23539\ =\ 0.03}
+\DoxyCodeLine{\ \ \ \ Watermelon:\ \ 753/23539\ =\ 0.03}
+\DoxyCodeLine{\ \ \ \ Pineapple:\ \ 534/23539\ =\ 0.02}
+\DoxyCodeLine{}
+\DoxyCodeLine{...}
+\DoxyCodeLine{}
+\DoxyCodeLine{-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}
+\DoxyCodeLine{\ Overall\ statistics}
+\DoxyCodeLine{-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}
+\DoxyCodeLine{\ \ Image\ count:\ \ 6360}
+\DoxyCodeLine{\ \ Bounding\ box\ count:\ \ 27188}
+
+\end{DoxyCode}
+
+
+\begin{quote}
+{\bfseries{note:\+}} {\ttfamily -\/-\/stats-\/only} does download the annotation data (approximately \texorpdfstring{$\sim$}{\string~}1\+GB), but not the images yet. ~\newline
+ \end{quote}
+
+
+In practice, to keep the training time down (and disk space), you probably want to keep the total number of images \texorpdfstring{$<$}{<}10K. Although the more images you use, the more accurate your model will be. You can limit the amount of data downloaded with the {\ttfamily -\/-\/max-\/images} option or the {\ttfamily -\/-\/max-\/annotations-\/per-\/class} options:\+
+
+
+\begin{DoxyItemize}
+\item {\ttfamily -\/-\/max-\/images} limits the total dataset to the specified number of images, while keeping the distribution of images per class roughly the same as the original dataset. If one class has more images than another, the ratio will remain roughly the same.
+\item {\ttfamily -\/-\/max-\/annotations-\/per-\/class} limits each class to the specified number of bounding boxes, and if a class has less than that number available, all of it\textquotesingle{}s data will be used -\/ this is useful if the distribution of data is unbalanced across classes.
+\end{DoxyItemize}
+
+For example, if you wanted to only use 2500 images for the fruit dataset, you would launch the downloader like this:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{\$\ python3\ open\_images\_downloader.py\ -\/-\/max-\/images=2500\ -\/-\/class-\/names\ "{}Apple,Orange,Banana,Strawberry,Grape,Pear,Pineapple,Watermelon"{}\ -\/-\/data=data/fruit}
+
+\end{DoxyCode}
+
+
+If the {\ttfamily -\/-\/max-\/boxes} option or {\ttfamily -\/-\/max-\/annotations-\/per-\/class} isn\textquotesingle{}t set, by default all the data available will be downloaded -\/ so beforehand, be sure to check the amount of data first with {\ttfamily -\/-\/stats-\/only}. Unfortunately it isn\textquotesingle{}t possible in advance to determine the actual disk size requirements of the images, but a general rule of thumb for this dataset is to budget \texorpdfstring{$\sim$}{\string~}350\+KB per image (\texorpdfstring{$\sim$}{\string~}2\+GB for the fruits).\hypertarget{md_jetson-inference_2docs_2pytorch-ssd_autotoc_md380}{}\doxysubsubsection{\texorpdfstring{Training Performance}{Training Performance}}\label{md_jetson-inference_2docs_2pytorch-ssd_autotoc_md380}
+Below is approximate SSD-\/\+Mobilenet training performance to help estimate the time required for training:\+
+
+
+\begin{DoxyTable}{3}{}{}{1}
+\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}&\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}Images/\+sec  &\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}Time per epoch\texorpdfstring{$\ast$}{*}  \\
+Nano  &\SetCell{c}4.\+77  &\SetCell{c}17 min 55 sec  \\
+Xavier NX  &\SetCell{c}14.\+65  &\SetCell{c}5 min 50 sec  \\
+\end{DoxyTable}
+
+
+
+\begin{DoxyItemize}
+\item measured on the fruits dataset (5145 training images, batch size 4)
+\end{DoxyItemize}\hypertarget{md_jetson-inference_2docs_2pytorch-ssd_autotoc_md381}{}\doxysubsection{\texorpdfstring{Training the SSD-\/\+Mobilenet Model}{Training the SSD-\/\+Mobilenet Model}}\label{md_jetson-inference_2docs_2pytorch-ssd_autotoc_md381}
+Once your data has finished downloading, run the {\ttfamily train\+\_\+ssd.\+py} script to launch the training:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{python3\ train\_ssd.py\ -\/-\/data=data/fruit\ -\/-\/model-\/dir=models/fruit\ -\/-\/batch-\/size=4\ -\/-\/epochs=30}
+
+\end{DoxyCode}
+
+
+\begin{quote}
+{\bfseries{note:\+}} if you run out of memory or your process is "{}killed"{} during training, try \href{pytorch-transfer-learning.md\#mounting-swap}{\texttt{Mounting SWAP}} and \href{pytorch-transfer-learning.md\#disabling-the-desktop-gui}{\texttt{Disabling the Desktop GUI}}. ~\newline
+ ~~~~~~~~~ to save memory, you can also reduce the {\ttfamily -\/-\/batch-\/size} (default 4) and {\ttfamily -\/-\/workers} (default 2) \end{quote}
+
+
+Here are some common options that you can run the training script with:\+
+
+
+\begin{DoxyTable}{3}{}{}{1}
+\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}Argument  &\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}Default  &\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}Description  \\
+{\ttfamily -\/-\/data}  &\SetCell{c}{\ttfamily data/\+}  &the location of the dataset  \\
+{\ttfamily -\/-\/model-\/dir}  &\SetCell{c}{\ttfamily models/\+}  &directory to output the trained model checkpoints  \\
+{\ttfamily -\/-\/resume}  &\SetCell{c}None  &path to an existing checkpoint to resume training from  \\
+{\ttfamily -\/-\/batch-\/size}  &\SetCell{c}4  &try increasing depending on available memory  \\
+{\ttfamily -\/-\/epochs}  &\SetCell{c}30  &up to 100 is desirable, but will increase training time  \\
+{\ttfamily -\/-\/workers}  &\SetCell{c}2  &number of data loader threads (0 = disable multithreading)  \\
+\end{DoxyTable}
+
+
+Over time, you should see the loss decreasing:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{2020-\/07-\/10\ 13:14:12\ -\/\ Epoch:\ 0,\ Step:\ 10/1287,\ Avg\ Loss:\ 12.4240,\ Avg\ Regression\ Loss\ 3.5747,\ Avg\ Classification\ Loss:\ 8.8493}
+\DoxyCodeLine{2020-\/07-\/10\ 13:14:12\ -\/\ Epoch:\ 0,\ Step:\ 20/1287,\ Avg\ Loss:\ 9.6947,\ Avg\ Regression\ Loss\ 4.1911,\ Avg\ Classification\ Loss:\ 5.5036}
+\DoxyCodeLine{2020-\/07-\/10\ 13:14:13\ -\/\ Epoch:\ 0,\ Step:\ 30/1287,\ Avg\ Loss:\ 8.7409,\ Avg\ Regression\ Loss\ 3.4078,\ Avg\ Classification\ Loss:\ 5.3332}
+\DoxyCodeLine{2020-\/07-\/10\ 13:14:13\ -\/\ Epoch:\ 0,\ Step:\ 40/1287,\ Avg\ Loss:\ 7.3736,\ Avg\ Regression\ Loss\ 2.5356,\ Avg\ Classification\ Loss:\ 4.8379}
+\DoxyCodeLine{2020-\/07-\/10\ 13:14:14\ -\/\ Epoch:\ 0,\ Step:\ 50/1287,\ Avg\ Loss:\ 6.3461,\ Avg\ Regression\ Loss\ 2.2286,\ Avg\ Classification\ Loss:\ 4.1175}
+\DoxyCodeLine{...}
+\DoxyCodeLine{2020-\/07-\/10\ 13:19:26\ -\/\ Epoch:\ 0,\ Validation\ Loss:\ 5.6730,\ Validation\ Regression\ Loss\ 1.7096,\ Validation\ Classification\ Loss:\ 3.9634}
+\DoxyCodeLine{2020-\/07-\/10\ 13:19:26\ -\/\ Saved\ model\ models/fruit/mb1-\/ssd-\/Epoch-\/0-\/Loss-\/5.672993580500285.pth}
+
+\end{DoxyCode}
+
+
+To test your model before the full number of epochs have completed training, you can press {\ttfamily Ctrl+C} to kill the training script, and resume it again later with the {\ttfamily -\/-\/resume=\texorpdfstring{$<$}{<}CHECKPOINT\texorpdfstring{$>$}{>}} argument. You can download the fruit model that was already trained for 100 epochs \href{https://nvidia.box.com/shared/static/gq0zlf0g2r258g3ldabl9o7vch18cxmi.gz}{\texttt{here}}.\hypertarget{md_jetson-inference_2docs_2pytorch-ssd_autotoc_md382}{}\doxysubsection{\texorpdfstring{Converting the Model to ONNX}{Converting the Model to ONNX}}\label{md_jetson-inference_2docs_2pytorch-ssd_autotoc_md382}
+Next we need to convert our trained model from Py\+Torch to ONNX, so that we can load it with Tensor\+RT:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{python3\ onnx\_export.py\ -\/-\/model-\/dir=models/fruit}
+
+\end{DoxyCode}
+
+
+This will save a model called {\ttfamily ssd-\/mobilenet.\+onnx} under {\ttfamily jetson-\/inference/\+python/\+training/\+detection/\+ssd/\+models/\+fruit/\+}\hypertarget{md_jetson-inference_2docs_2pytorch-ssd_autotoc_md383}{}\doxysubsection{\texorpdfstring{Processing Images with Tensor\+RT}{Processing Images with Tensor\+RT}}\label{md_jetson-inference_2docs_2pytorch-ssd_autotoc_md383}
+To classify some static test images, we\textquotesingle{}ll use the extended command-\/line parameters to {\ttfamily detectnet} (or {\ttfamily detectnet.\+py}) to load our custom SSD-\/\+Mobilenet ONNX model. To run these commands, the working directory of your terminal should still be located in:\+ {\ttfamily jetson-\/inference/\+python/\+training/\+detection/\+ssd/\+}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{IMAGES=<path-\/to-\/your-\/jetson-\/inference>/data/images\ \ \ \#\ substitute\ your\ jetson-\/inference\ path\ here}
+\DoxyCodeLine{}
+\DoxyCodeLine{detectnet\ -\/-\/model=models/fruit/ssd-\/mobilenet.onnx\ -\/-\/labels=models/fruit/labels.txt\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ -\/-\/input-\/blob=input\_0\ -\/-\/output-\/cvg=scores\ -\/-\/output-\/bbox=boxes\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ "{}\$IMAGES/fruit\_*.jpg"{}\ \$IMAGES/test/fruit\_\%i.jpg}
+
+\end{DoxyCode}
+
+
+\begin{quote}
+{\bfseries{note:\+}} {\ttfamily detectnet.\+py} can be substituted above to run the Python version of the program \end{quote}
+
+
+Below are some of the images output to the {\ttfamily \$IMAGES/\+test} directory:\+
+
+\hypertarget{md_jetson-inference_2docs_2pytorch-ssd_autotoc_md384}{}\doxysubsection{\texorpdfstring{Running the Live Camera Program}{Running the Live Camera Program}}\label{md_jetson-inference_2docs_2pytorch-ssd_autotoc_md384}
+You can also try running your re-\/trained plant model on a camera or video stream like below:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{detectnet\ -\/-\/model=models/fruit/ssd-\/mobilenet.onnx\ -\/-\/labels=models/fruit/labels.txt\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ -\/-\/input-\/blob=input\_0\ -\/-\/output-\/cvg=scores\ -\/-\/output-\/bbox=boxes\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ csi://0}
+
+\end{DoxyCode}
+
+
+For more details about other camera/\+video sources, please see \doxysectlink{md_jetson-inference_2docs_2aux-streaming}{Camera Streaming and Multimedia}{0}.
+
+Next \texorpdfstring{$\vert$}{|} {\bfseries{\href{pytorch-collect-detection.md}{\texttt{Collecting your own Detection Datasets}}}} ~\newline
+ Back \texorpdfstring{$\vert$}{|} {\bfseries{\href{pytorch-collect.md}{\texttt{Collecting your own Classification Datasets}}}}
+
+{\bfseries{ }}
+
+\textsuperscript{© 2016-\/2020 NVIDIA \texorpdfstring{$\vert$}{|} }\href{../README.md\#hello-ai-world}{\texttt{\textsuperscript{Table of Contents}}}

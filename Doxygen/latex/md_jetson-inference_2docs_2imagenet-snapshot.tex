@@ -1,0 +1,33 @@
+\chapter{imagenet-\/snapshot }
+\hypertarget{md_jetson-inference_2docs_2imagenet-snapshot}{}\label{md_jetson-inference_2docs_2imagenet-snapshot}\index{imagenet-\/snapshot@{imagenet-\/snapshot}}
+ 
+
+\textsuperscript{\href{imagenet-training.md}{\texttt{Back}} \texorpdfstring{$\vert$}{|} \href{imagenet-custom.md}{\texttt{Next}} \texorpdfstring{$\vert$}{|} }\href{../README.md\#two-days-to-a-demo-digits}{\texttt{\textsuperscript{Contents}}} ~\newline
+ \textsuperscript{Image Recognition}\hypertarget{md_jetson-inference_2docs_2imagenet-snapshot_autotoc_md315}{}\doxysection{\texorpdfstring{Downloading Model Snapshots to Jetson}{Downloading Model Snapshots to Jetson}}\label{md_jetson-inference_2docs_2imagenet-snapshot_autotoc_md315}
+Now that we confirmed the trained model is working in DIGITS, let\textquotesingle{}s download and extract the model snapshot to Jetson. ~\newline
+
+
+From the browser on your Jetson, navigate to your DIGITS server and the {\ttfamily Google\+Net-\/\+ILSVRC12-\/subset} model. Under the {\ttfamily Trained Models} section, select the desired snapshot from the drop-\/down (usually the one with the highest epoch) and click the {\ttfamily Download Model} button.
+
+
+
+Alternatively, if your Jetson and DIGITS server aren\textquotesingle{}t accessible from the same network, you can use the step above to download the snapshot to an intermediary machine and then use SCP or USB stick to copy it to Jetson. ~\newline
+
+
+Then extract the archive with a command similar to:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ <directory\ where\ you\ downloaded\ the\ snapshot>}
+\DoxyCodeLine{tar\ -\/xzvf\ 20170524-\/140310-\/8c0b\_epoch\_30.0.tar.gz}
+
+\end{DoxyCode}
+
+
+Next, we will load our custom snapshot into Tensor\+RT, running on the Jetson.\hypertarget{md_jetson-inference_2docs_2imagenet-snapshot_autotoc_md316}{}\doxysubsection{\texorpdfstring{autotoc\+\_\+md316}{autotoc\+\_\+md316}}\label{md_jetson-inference_2docs_2imagenet-snapshot_autotoc_md316}
+Next \texorpdfstring{$\vert$}{|} {\bfseries{\href{imagenet-custom.md}{\texttt{Loading Custom Models on Jetson}}}} ~\newline
+ Back \texorpdfstring{$\vert$}{|} {\bfseries{\href{imagenet-training.md}{\texttt{Re-\/\+Training the Recognition Network}}}}
+
+{\bfseries{ }}
+
+\textsuperscript{© 2016-\/2019 NVIDIA \texorpdfstring{$\vert$}{|} }\href{../README.md\#two-days-to-a-demo-digits}{\texttt{\textsuperscript{Table of Contents}}}

@@ -1,0 +1,65 @@
+\doxysection{server.\+stream.\+Stream Class Reference}
+\hypertarget{classserver_1_1stream_1_1_stream}{}\label{classserver_1_1stream_1_1_stream}\index{server.stream.Stream@{server.stream.Stream}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classserver_1_1stream_1_1_stream_ac4d75eb31589d0438389732b5fe26e61}\label{classserver_1_1stream_1_1_stream_ac4d75eb31589d0438389732b5fe26e61} 
+{\bfseries \+\_\+\+\_\+init\+\_\+\+\_\+} (self, server, name, source, models=\+[$\,$]\+)
+\item 
+\doxymbox{\hyperlink{classserver_1_1stream_1_1_stream_ac7bdb3ef971d8bbb310b97d72dc24f1a}{process}} (self)
+\item 
+\doxymbox{\hyperlink{classserver_1_1stream_1_1_stream_a30ff176912dac1ec2abf6558b7da2960}{get\+\_\+config}} (self)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classserver_1_1stream_1_1_stream_adaf12a1b09c6146e086f4555f3ee3d79}\label{classserver_1_1stream_1_1_stream_adaf12a1b09c6146e086f4555f3ee3d79} 
+{\bfseries server} = server
+\item 
+\Hypertarget{classserver_1_1stream_1_1_stream_a11bc0ab1e63f0bf49f28b326e1205c8d}\label{classserver_1_1stream_1_1_stream_a11bc0ab1e63f0bf49f28b326e1205c8d} 
+{\bfseries name} = name
+\item 
+\Hypertarget{classserver_1_1stream_1_1_stream_a1c8dbe7dab2ce8ee7b590b02b805d3e4}\label{classserver_1_1stream_1_1_stream_a1c8dbe7dab2ce8ee7b590b02b805d3e4} 
+int {\bfseries frame\+\_\+count} = 0
+\item 
+\Hypertarget{classserver_1_1stream_1_1_stream_ac832674d48388a6084c1372dcfaab034}\label{classserver_1_1stream_1_1_stream_ac832674d48388a6084c1372dcfaab034} 
+{\bfseries source} = \doxymbox{\hyperlink{classvideo_source}{video\+Source}}(source, argv=video\+\_\+args)
+\item 
+\Hypertarget{classserver_1_1stream_1_1_stream_a7c688b257900de8c3fdc76eca559429b}\label{classserver_1_1stream_1_1_stream_a7c688b257900de8c3fdc76eca559429b} 
+{\bfseries output} = \doxymbox{\hyperlink{classvideo_output}{video\+Output}}(f"{}webrtc:\+/\+/\+@:\+\{self.\+server.\+webrtc\+\_\+port\}\{self.\+name\}"{}, argv=video\+\_\+args)
+\item 
+\Hypertarget{classserver_1_1stream_1_1_stream_af98fd5f5f86ac15887dd489f386a1b83}\label{classserver_1_1stream_1_1_stream_af98fd5f5f86ac15887dd489f386a1b83} 
+list {\bfseries models} = \+[$\,$]\+
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyVerb}Represents a pipeline from a video source -> processing -> video output
+\end{DoxyVerb}
+ 
+
+\label{doc-func-members}
+\Hypertarget{classserver_1_1stream_1_1_stream_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classserver_1_1stream_1_1_stream_a30ff176912dac1ec2abf6558b7da2960}\index{server.stream.Stream@{server.stream.Stream}!get\_config@{get\_config}}
+\index{get\_config@{get\_config}!server.stream.Stream@{server.stream.Stream}}
+\doxysubsubsection{\texorpdfstring{get\_config()}{get\_config()}}
+{\footnotesize\ttfamily \label{classserver_1_1stream_1_1_stream_a30ff176912dac1ec2abf6558b7da2960} 
+server.\+stream.\+Stream.\+get\+\_\+config (\begin{DoxyParamCaption}\item[{}]{self}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}TODO add stats or runtime_stats option for easy frontend state-change comparison?
+the videoOptions could be dynamic as well... (i.e. framerate - actually that is not?)
+\end{DoxyVerb}
+ \Hypertarget{classserver_1_1stream_1_1_stream_ac7bdb3ef971d8bbb310b97d72dc24f1a}\index{server.stream.Stream@{server.stream.Stream}!process@{process}}
+\index{process@{process}!server.stream.Stream@{server.stream.Stream}}
+\doxysubsubsection{\texorpdfstring{process()}{process()}}
+{\footnotesize\ttfamily \label{classserver_1_1stream_1_1_stream_ac7bdb3ef971d8bbb310b97d72dc24f1a} 
+server.\+stream.\+Stream.\+process (\begin{DoxyParamCaption}\item[{}]{self}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Perform one capture/process/output iteration
+\end{DoxyVerb}
+ 
+
+The documentation for this class was generated from the following file:\+\begin{DoxyCompactItemize}
+\item 
+jetson-\/inference/\+python/\+www/\+dash/\+server/\+stream.\+py\end{DoxyCompactItemize}

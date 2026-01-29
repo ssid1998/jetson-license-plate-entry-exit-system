@@ -1,0 +1,120 @@
+\doxysection{cuda\+Mapped\+Memory.\+h}
+\hypertarget{build_2aarch64_2include_2jetson-utils_2cuda_mapped_memory_8h_source}{}\label{build_2aarch64_2include_2jetson-utils_2cuda_mapped_memory_8h_source}\index{jetson-\/inference/build/aarch64/include/jetson-\/utils/cudaMappedMemory.h@{jetson-\/inference/build/aarch64/include/jetson-\/utils/cudaMappedMemory.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ *\ Copyright\ (c)\ 2017,\ NVIDIA\ CORPORATION.\ All\ rights\ reserved.}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ *\ Permission\ is\ hereby\ granted,\ free\ of\ charge,\ to\ any\ person\ obtaining\ a}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ *\ copy\ of\ this\ software\ and\ associated\ documentation\ files\ (the\ "{}Software"{}),}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ *\ to\ deal\ in\ the\ Software\ without\ restriction,\ including\ without\ limitation}}
+\DoxyCodeLine{00007\ \textcolor{comment}{\ *\ the\ rights\ to\ use,\ copy,\ modify,\ merge,\ publish,\ distribute,\ sublicense,}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ *\ and/or\ sell\ copies\ of\ the\ Software,\ and\ to\ permit\ persons\ to\ whom\ the}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ *\ Software\ is\ furnished\ to\ do\ so,\ subject\ to\ the\ following\ conditions:}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ *\ The\ above\ copyright\ notice\ and\ this\ permission\ notice\ shall\ be\ included\ in}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ *\ all\ copies\ or\ substantial\ portions\ of\ the\ Software.}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ *\ THE\ SOFTWARE\ IS\ PROVIDED\ "{}AS\ IS"{},\ WITHOUT\ WARRANTY\ OF\ ANY\ KIND,\ EXPRESS\ OR}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ *\ IMPLIED,\ INCLUDING\ BUT\ NOT\ LIMITED\ TO\ THE\ WARRANTIES\ OF\ MERCHANTABILITY,}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ *\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE\ AND\ NONINFRINGEMENT.\ \ IN\ NO\ EVENT\ SHALL}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ *\ THE\ AUTHORS\ OR\ COPYRIGHT\ HOLDERS\ BE\ LIABLE\ FOR\ ANY\ CLAIM,\ DAMAGES\ OR\ OTHER}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ *\ LIABILITY,\ WHETHER\ IN\ AN\ ACTION\ OF\ CONTRACT,\ TORT\ OR\ OTHERWISE,\ ARISING}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ *\ FROM,\ OUT\ OF\ OR\ IN\ CONNECTION\ WITH\ THE\ SOFTWARE\ OR\ THE\ USE\ OR\ OTHER}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ *\ DEALINGS\ IN\ THE\ SOFTWARE.}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \textcolor{preprocessor}{\#ifndef\ \_\_CUDA\_MAPPED\_MEMORY\_H\_}}
+\DoxyCodeLine{00024\ \textcolor{preprocessor}{\#define\ \_\_CUDA\_MAPPED\_MEMORY\_H\_}}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \textcolor{preprocessor}{\#include\ "{}cudaUtility.h"{}}}
+\DoxyCodeLine{00028\ \textcolor{preprocessor}{\#include\ "{}imageFormat.h"{}}}
+\DoxyCodeLine{00029\ \textcolor{preprocessor}{\#include\ "{}logging.h"{}}}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00047\ \textcolor{keyword}{inline}\ cudaError\_t\ \doxymbox{\hyperlink{group__cuda_memory_gacd510d3fc076c255410fbcc4fa15e514}{cudaMallocMapped}}(\ \textcolor{keywordtype}{void}**\ ptr,\ \textcolor{keywordtype}{size\_t}\ size,\ \textcolor{keywordtype}{bool}\ clear=\textcolor{keyword}{true}\ )}
+\DoxyCodeLine{00048\ \{}
+\DoxyCodeLine{00049\ \ \ \ \ \textcolor{keywordtype}{void}*\ cpu\ =\ NULL;}
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keywordtype}{void}*\ gpu\ =\ NULL;}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keywordflow}{if}(\ !ptr\ ||\ size\ ==\ 0\ )}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ cudaErrorInvalidValue;}
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00055\ \ \ \ \ \textcolor{comment}{//CUDA\_ASSERT(cudaSetDeviceFlags(cudaDeviceMapHost));}}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00057\ \ \ \ \ \doxymbox{\hyperlink{group__cuda_error_ga4c7a015b2b740fdf0923bac71be24d12}{CUDA\_ASSERT}}(cudaHostAlloc(\&cpu,\ size,\ cudaHostAllocMapped));}
+\DoxyCodeLine{00058\ \ \ \ \ \doxymbox{\hyperlink{group__cuda_error_ga4c7a015b2b740fdf0923bac71be24d12}{CUDA\_ASSERT}}(cudaHostGetDevicePointer(\&gpu,\ cpu,\ 0));}
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00060\ \ \ \ \ \textcolor{keywordflow}{if}(\ cpu\ !=\ gpu\ )}
+\DoxyCodeLine{00061\ \ \ \ \ \{}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{group__log_ga0f3919667d0ac0b001e44edb569d22fe}{LogError}}(\doxymbox{\hyperlink{group__cuda_error_gae6c4176aa6f8270000ec2b626a2a8b3c}{LOG\_CUDA}}\ \textcolor{stringliteral}{"{}cudaMallocMapped()\ -\/\ addresses\ of\ CPU\ and\ GPU\ pointers\ don't\ match\ (CPU=\%p\ GPU=\%p)\(\backslash\)n"{}},\ cpu,\ gpu);}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ cudaErrorInvalidDevicePointer;}
+\DoxyCodeLine{00064\ \ \ \ \ \}}
+\DoxyCodeLine{00065\ \ \ \ \ }
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keywordflow}{if}(\ clear\ )}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ memset(cpu,\ 0,\ size);}
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00069\ \ \ \ \ *ptr\ =\ cpu;}
+\DoxyCodeLine{00070\ \ \ \ \ \textcolor{keywordflow}{return}\ cudaSuccess;}
+\DoxyCodeLine{00071\ \}}
+\DoxyCodeLine{00072\ }
+\DoxyCodeLine{00073\ }
+\DoxyCodeLine{00087\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{group__cuda_memory_gaf5a659673481203780b0117f8d7782d0}{cudaAllocMapped}}(\ \textcolor{keywordtype}{void}**\ ptr,\ \textcolor{keywordtype}{size\_t}\ size,\ \textcolor{keywordtype}{bool}\ clear=\textcolor{keyword}{true}\ )}
+\DoxyCodeLine{00088\ \{}
+\DoxyCodeLine{00089\ \ \ \ \ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{group__cuda_error_ga83cbda41b1503ffc548dadc3a10e12af}{CUDA\_SUCCESS}}(\doxymbox{\hyperlink{group__cuda_memory_gacd510d3fc076c255410fbcc4fa15e514}{cudaMallocMapped}}(ptr,\ size,\ clear));}
+\DoxyCodeLine{00090\ \}}
+\DoxyCodeLine{00091\ }
+\DoxyCodeLine{00108\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{group__cuda_memory_gaf5a659673481203780b0117f8d7782d0}{cudaAllocMapped}}(\ \textcolor{keywordtype}{void}**\ ptr,\ \textcolor{keywordtype}{size\_t}\ width,\ \textcolor{keywordtype}{size\_t}\ height,\ \doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{imageFormat}}\ format,\ \textcolor{keywordtype}{bool}\ clear=\textcolor{keyword}{true}\ )}
+\DoxyCodeLine{00109\ \{}
+\DoxyCodeLine{00110\ \ \ \ \ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{group__cuda_memory_gaf5a659673481203780b0117f8d7782d0}{cudaAllocMapped}}(ptr,\ \doxymbox{\hyperlink{group__image_format_gae8779cdbde4c4543a26a736ef7222fae}{imageFormatSize}}(format,\ width,\ height),\ clear);}
+\DoxyCodeLine{00111\ \}}
+\DoxyCodeLine{00112\ }
+\DoxyCodeLine{00113\ }
+\DoxyCodeLine{00129\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{group__cuda_memory_gaf5a659673481203780b0117f8d7782d0}{cudaAllocMapped}}(\ \textcolor{keywordtype}{void}**\ ptr,\ \textcolor{keyword}{const}\ int2\&\ dims,\ \doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{imageFormat}}\ format,\ \textcolor{keywordtype}{bool}\ clear=\textcolor{keyword}{true}\ )}
+\DoxyCodeLine{00130\ \{}
+\DoxyCodeLine{00131\ \ \ \ \ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{group__cuda_memory_gaf5a659673481203780b0117f8d7782d0}{cudaAllocMapped}}(ptr,\ \doxymbox{\hyperlink{group__image_format_gae8779cdbde4c4543a26a736ef7222fae}{imageFormatSize}}(format,\ dims.x,\ dims.y),\ clear);}
+\DoxyCodeLine{00132\ \}}
+\DoxyCodeLine{00133\ }
+\DoxyCodeLine{00134\ }
+\DoxyCodeLine{00150\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{group__cuda_memory_gaf5a659673481203780b0117f8d7782d0}{cudaAllocMapped}}(\ T**\ ptr,\ \textcolor{keywordtype}{size\_t}\ width,\ \textcolor{keywordtype}{size\_t}\ height,\ \textcolor{keywordtype}{bool}\ clear=\textcolor{keyword}{true}\ )}
+\DoxyCodeLine{00151\ \{}
+\DoxyCodeLine{00152\ \ \ \ \ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{group__cuda_memory_gaf5a659673481203780b0117f8d7782d0}{cudaAllocMapped}}((\textcolor{keywordtype}{void}**)ptr,\ width\ *\ height\ *\ \textcolor{keyword}{sizeof}(T),\ clear);}
+\DoxyCodeLine{00153\ \}}
+\DoxyCodeLine{00154\ }
+\DoxyCodeLine{00155\ }
+\DoxyCodeLine{00170\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{group__cuda_memory_gaf5a659673481203780b0117f8d7782d0}{cudaAllocMapped}}(\ T**\ ptr,\ \textcolor{keyword}{const}\ int2\&\ dims,\ \textcolor{keywordtype}{bool}\ clear=\textcolor{keyword}{true}\ )}
+\DoxyCodeLine{00171\ \{}
+\DoxyCodeLine{00172\ \ \ \ \ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{group__cuda_memory_gaf5a659673481203780b0117f8d7782d0}{cudaAllocMapped}}((\textcolor{keywordtype}{void}**)ptr,\ dims.x\ *\ dims.y\ *\ \textcolor{keyword}{sizeof}(T),\ clear);}
+\DoxyCodeLine{00173\ \}}
+\DoxyCodeLine{00174\ }
+\DoxyCodeLine{00175\ }
+\DoxyCodeLine{00190\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{group__cuda_memory_gaf5a659673481203780b0117f8d7782d0}{cudaAllocMapped}}(\ T**\ ptr,\ \textcolor{keywordtype}{size\_t}\ size,\ \textcolor{keywordtype}{bool}\ clear=\textcolor{keyword}{true}\ )}
+\DoxyCodeLine{00191\ \{}
+\DoxyCodeLine{00192\ \ \ \ \ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{group__cuda_memory_gaf5a659673481203780b0117f8d7782d0}{cudaAllocMapped}}((\textcolor{keywordtype}{void}**)ptr,\ size,\ clear);}
+\DoxyCodeLine{00193\ \}}
+\DoxyCodeLine{00194\ }
+\DoxyCodeLine{00195\ }
+\DoxyCodeLine{00209\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{group__cuda_memory_gaf5a659673481203780b0117f8d7782d0}{cudaAllocMapped}}(\ \textcolor{keywordtype}{void}**\ cpuPtr,\ \textcolor{keywordtype}{void}**\ gpuPtr,\ \textcolor{keywordtype}{size\_t}\ size,\ \textcolor{keywordtype}{bool}\ clear=\textcolor{keyword}{true}\ )}
+\DoxyCodeLine{00210\ \{}
+\DoxyCodeLine{00211\ \ \ \ \ \textcolor{keywordflow}{if}(\ !cpuPtr\ ||\ !gpuPtr\ ||\ size\ ==\ 0\ )}
+\DoxyCodeLine{00212\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00213\ }
+\DoxyCodeLine{00214\ \ \ \ \ \textcolor{comment}{//CUDA(cudaSetDeviceFlags(cudaDeviceMapHost));}}
+\DoxyCodeLine{00215\ }
+\DoxyCodeLine{00216\ \ \ \ \ \textcolor{keywordflow}{if}(\ \doxymbox{\hyperlink{group__cuda_error_gad12b27627f04dd0ecf3eb9e2468a846e}{CUDA\_FAILED}}(cudaHostAlloc(cpuPtr,\ size,\ cudaHostAllocMapped))\ )}
+\DoxyCodeLine{00217\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00218\ }
+\DoxyCodeLine{00219\ \ \ \ \ \textcolor{keywordflow}{if}(\ \doxymbox{\hyperlink{group__cuda_error_gad12b27627f04dd0ecf3eb9e2468a846e}{CUDA\_FAILED}}(cudaHostGetDevicePointer(gpuPtr,\ *cpuPtr,\ 0))\ )}
+\DoxyCodeLine{00220\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00221\ }
+\DoxyCodeLine{00222\ \ \ \ \ \textcolor{keywordflow}{if}(\ clear\ )}
+\DoxyCodeLine{00223\ \ \ \ \ \ \ \ \ memset(*cpuPtr,\ 0,\ size);}
+\DoxyCodeLine{00224\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00225\ \ \ \ \ \doxymbox{\hyperlink{group__log_ga210ef343f0bc7d17a786ea6ea882f2d9}{LogDebug}}(\doxymbox{\hyperlink{group__cuda_error_gae6c4176aa6f8270000ec2b626a2a8b3c}{LOG\_CUDA}}\ \textcolor{stringliteral}{"{}cudaAllocMapped\ \%zu\ bytes,\ CPU\ \%p\ GPU\ \%p\(\backslash\)n"{}},\ size,\ *cpuPtr,\ *gpuPtr);}
+\DoxyCodeLine{00226\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00227\ \}}
+\DoxyCodeLine{00228\ }
+\DoxyCodeLine{00229\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

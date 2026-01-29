@@ -1,0 +1,266 @@
+\chapter{imagenet-\/example-\/python-\/2 }
+\hypertarget{md_jetson-inference_2docs_2imagenet-example-python-2}{}\label{md_jetson-inference_2docs_2imagenet-example-python-2}\index{imagenet-\/example-\/python-\/2@{imagenet-\/example-\/python-\/2}}
+ 
+
+\textsuperscript{\href{imagenet-console-2.md}{\texttt{Back}} \texorpdfstring{$\vert$}{|} \href{imagenet-example-2.md}{\texttt{Next}} \texorpdfstring{$\vert$}{|} }\href{../README.md\#hello-ai-world}{\texttt{\textsuperscript{Contents}}} ~\newline
+ \textsuperscript{Image Classification}
+
+~\newline
+\hypertarget{md_jetson-inference_2docs_2imagenet-example-python-2_autotoc_md290}{}\doxysection{\texorpdfstring{Coding Your Own Image Recognition Program (Python)}{Coding Your Own Image Recognition Program (Python)}}\label{md_jetson-inference_2docs_2imagenet-example-python-2_autotoc_md290}
+In the previous step, we ran a sample application that came with the {\ttfamily jetson-\/inference} repo. ~\newline
+
+
+Now, we\textquotesingle{}re going to walk through creating a new program from scratch in Python for image recognition called \href{../python/examples/my-recognition.py}{\texttt{{\ttfamily my-\/recognition.\+py}}}. This script will load an arbitrary image from disk and classify it using the \href{https://rawgit.com/dusty-nv/jetson-inference/master/docs/html/python/jetson.inference.html\#imageNet}{\texttt{{\ttfamily image\+Net}}} object. \doxylink{requirements_The}{The} completed source at \href{../python/examples/my-recognition.py}{\texttt{{\ttfamily python/\+examples/\+my-\/recognition.\+py}}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ python}
+\DoxyCodeLine{\#!/usr/bin/python3}
+\DoxyCodeLine{}
+\DoxyCodeLine{import\ jetson.inference}
+\DoxyCodeLine{import\ jetson.utils}
+\DoxyCodeLine{}
+\DoxyCodeLine{import\ argparse}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#\ parse\ the\ command\ line}
+\DoxyCodeLine{parser\ =\ argparse.ArgumentParser()}
+\DoxyCodeLine{parser.add\_argument("{}filename"{},\ type=str,\ help="{}filename\ of\ the\ image\ to\ process"{})}
+\DoxyCodeLine{parser.add\_argument("{}-\/-\/network"{},\ type=str,\ default="{}googlenet"{},\ help="{}model\ to\ use,\ can\ be:\ \ googlenet,\ resnet-\/18,\ ect."{})}
+\DoxyCodeLine{args\ =\ parser.parse\_args()}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#\ load\ an\ image\ (into\ shared\ CPU/GPU\ memory)}
+\DoxyCodeLine{img\ =\ jetson.utils.loadImage(args.filename)}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#\ load\ the\ recognition\ network}
+\DoxyCodeLine{net\ =\ jetson.inference.imageNet(args.network)}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#\ classify\ the\ image}
+\DoxyCodeLine{class\_idx,\ confidence\ =\ net.Classify(img)}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#\ find\ the\ object\ description}
+\DoxyCodeLine{class\_desc\ =\ net.GetClassDesc(class\_idx)}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#\ print\ out\ the\ result}
+\DoxyCodeLine{print("{}image\ is\ recognized\ as\ '\{:s\}'\ (class\ \#\{:d\})\ with\ \{:f\}\%\ confidence"{}.format(class\_desc,\ class\_idx,\ confidence\ *\ 100))}
+
+\end{DoxyCode}
+\hypertarget{md_jetson-inference_2docs_2imagenet-example-python-2_autotoc_md291}{}\doxysubsection{\texorpdfstring{Setting up the Project}{Setting up the Project}}\label{md_jetson-inference_2docs_2imagenet-example-python-2_autotoc_md291}
+If you\textquotesingle{}re using the Docker container, you\textquotesingle{}ll want to store your code in a \href{aux-docker.md\#mounted-data-volumes}{\texttt{Mounted Directory}}. This way your code won\textquotesingle{}t be lost when you shutdown the container. For simplicity, this guide will create it in a directory on your host device under the user\textquotesingle{}s home directory located at {\ttfamily \texorpdfstring{$\sim$}{\string~}/\+my-\/recognition-\/python}, and then mount that path into the container.
+
+Run these commands from a terminal (outside of container) to create the directory, source file, and download some test images:\+ ~\newline
+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{\#\ run\ these\ commands\ outside\ of\ container}
+\DoxyCodeLine{\$\ cd\ \string~/}
+\DoxyCodeLine{\$\ mkdir\ my-\/recognition-\/python}
+\DoxyCodeLine{\$\ cd\ my-\/recognition-\/python}
+\DoxyCodeLine{\$\ touch\ my-\/recognition.py}
+\DoxyCodeLine{\$\ chmod\ +x\ my-\/recognition.py}
+\DoxyCodeLine{\$\ wget\ https://github.com/dusty-\/nv/jetson-\/inference/raw/master/data/images/black\_bear.jpg\ }
+\DoxyCodeLine{\$\ wget\ https://github.com/dusty-\/nv/jetson-\/inference/raw/master/data/images/brown\_bear.jpg}
+\DoxyCodeLine{\$\ wget\ https://github.com/dusty-\/nv/jetson-\/inference/raw/master/data/images/polar\_bear.jpg\ }
+
+\end{DoxyCode}
+
+
+Then when you start the container, \href{aux-docker.md\#mounted-data-volumes}{\texttt{mount the directory}} that you just created:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$\ docker/run.sh\ -\/-\/volume\ \string~/my-\/recognition-\/python:/my-\/recognition-\/python\ \ \ \#\ mounted\ inside\ the\ container\ to\ /my-\/recognition-\/python\ }
+
+\end{DoxyCode}
+
+
+Next, we\textquotesingle{}ll add the Python code for the program to the empty source file we created here.\hypertarget{md_jetson-inference_2docs_2imagenet-example-python-2_autotoc_md292}{}\doxysubsection{\texorpdfstring{Source Code}{Source Code}}\label{md_jetson-inference_2docs_2imagenet-example-python-2_autotoc_md292}
+Open up {\ttfamily my-\/recognition.\+py} in your editor of choice (or run {\ttfamily gedit my-\/recognition.\+py}). You can edit from outside the container.
+
+First, let\textquotesingle{}s add a shebang sequence to the very top of the file to automatically use the Python interpreter:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ python}
+\DoxyCodeLine{\#!/usr/bin/python3}
+
+\end{DoxyCode}
+
+
+Next, we\textquotesingle{}ll import the Python modules that we\textquotesingle{}re going to use in the script.\hypertarget{md_jetson-inference_2docs_2imagenet-example-python-2_autotoc_md293}{}\doxysubsubsubsection{\texorpdfstring{Importing Modules}{Importing Modules}}\label{md_jetson-inference_2docs_2imagenet-example-python-2_autotoc_md293}
+Add {\ttfamily import} statements to load the \href{https://rawgit.com/dusty-nv/jetson-inference/master/docs/html/python/jetson.inference.html}{\texttt{{\ttfamily jetson.\+inference}}} and \href{https://rawgit.com/dusty-nv/jetson-inference/master/docs/html/python/jetson.utils.html}{\texttt{{\ttfamily jetson.\+utils}}} modules used for recognizing images and image loading. We\textquotesingle{}ll also load the standard {\ttfamily argparse} package for parsing the command line.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ python}
+\DoxyCodeLine{import\ jetson.inference}
+\DoxyCodeLine{import\ jetson.utils}
+\DoxyCodeLine{}
+\DoxyCodeLine{import\ argparse}
+
+\end{DoxyCode}
+
+
+\begin{quote}
+{\bfseries{note}}:\+ these Jetson modules are installed during the {\ttfamily sudo make install} step of \href{building-repo-2.md\#compiling-the-project}{\texttt{building the repo}}. ~\newline
+ ~~~~~~~~~~if you did not run {\ttfamily sudo make install}, then these packages won\textquotesingle{}t be found when we go to run the example. ~\newline
+ \end{quote}
+\hypertarget{md_jetson-inference_2docs_2imagenet-example-python-2_autotoc_md294}{}\doxysubsubsubsection{\texorpdfstring{Parsing the Command Line}{Parsing the Command Line}}\label{md_jetson-inference_2docs_2imagenet-example-python-2_autotoc_md294}
+Next, add some boilerplate code to parse the image filename and an optional {\ttfamily -\/-\/\doxylink{group__network}{Networking}} parameter:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ python}
+\DoxyCodeLine{\#\ parse\ the\ command\ line}
+\DoxyCodeLine{parser\ =\ argparse.ArgumentParser()}
+\DoxyCodeLine{parser.add\_argument("{}filename"{},\ type=str,\ help="{}filename\ of\ the\ image\ to\ process"{})}
+\DoxyCodeLine{parser.add\_argument("{}-\/-\/network"{},\ type=str,\ default="{}googlenet"{},\ help="{}model\ to\ use,\ can\ be:\ \ googlenet,\ resnet-\/18,\ ect.\ (see\ -\/-\/help\ for\ others)"{})}
+\DoxyCodeLine{args\ =\ parser.parse\_args()}
+
+\end{DoxyCode}
+
+
+This example loads and classifies an image that the user specifies. It will be expected to be run like this:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{\$\ ./my-\/recognition.py\ my\_image.jpg}
+
+\end{DoxyCode}
+
+
+\doxylink{requirements_The}{The} desired image filename to be loaded should be substituted for {\ttfamily my\+\_\+image.\+jpg}. You can also optionally specify the {\ttfamily -\/-\/\doxylink{group__network}{Networking}} parameter to change the classification network that\textquotesingle{}s used (the default is Google\+Net):\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{\$\ ./my-\/recognition.py\ -\/-\/network=resnet-\/18\ my\_image.jpg}
+
+\end{DoxyCode}
+
+
+See the \href{imagenet-console-2.md\#downloading-other-classification-models}{\texttt{Downloading Other Classification Models}} section from the previous page for more information about downloading other networks.\hypertarget{md_jetson-inference_2docs_2imagenet-example-python-2_autotoc_md295}{}\doxysubsubsubsection{\texorpdfstring{Loading the Image from Disk}{Loading the Image from Disk}}\label{md_jetson-inference_2docs_2imagenet-example-python-2_autotoc_md295}
+You can load images from disk into shared CPU/\+\+GPU memory using the {\ttfamily \doxylink{group__image_gab2959819259e3cbcfd72ad633f8f9f17}{load\+Image()}} function. Supported formats are JPG, PNG, TGA, and BMP.
+
+Add this line to load the image with the filename that was specified from the command line:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ python}
+\DoxyCodeLine{img\ =\ jetson.utils.loadImage(args.filename)}
+
+\end{DoxyCode}
+
+
+\doxylink{requirements_The}{The} returned image will be a \href{aux-image.md\#image-capsules-in-python}{\texttt{{\ttfamily jetson.\+utils.\+cuda\+Image}}} object that contains attributes like width, height, and pixel format:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{<jetson.utils.cudaImage>}
+\DoxyCodeLine{\ \ .ptr\ \ \ \ \ \ \textcolor{comment}{\#\ memory\ address\ (not\ typically\ used)}}
+\DoxyCodeLine{\ \ .size\ \ \ \ \ \textcolor{comment}{\#\ size\ in\ bytes}}
+\DoxyCodeLine{\ \ .shape\ \ \ \ \textcolor{comment}{\#\ (height,width,channels)\ tuple}}
+\DoxyCodeLine{\ \ .width\ \ \ \ \textcolor{comment}{\#\ width\ in\ pixels}}
+\DoxyCodeLine{\ \ .height\ \ \ \textcolor{comment}{\#\ height\ in\ pixels}}
+\DoxyCodeLine{\ \ .channels\ \textcolor{comment}{\#\ number\ of\ color\ channels}}
+\DoxyCodeLine{\ \ .format\ \ \ \textcolor{comment}{\#\ format\ string}}
+\DoxyCodeLine{\ \ .mapped\ \ \ \textcolor{comment}{\#\ true\ if\ ZeroCopy}}
+
+\end{DoxyCode}
+
+
+For more information about accessing images from Python, see the \doxysectlink{md_jetson-inference_2docs_2aux-image}{Image Manipulation with CUDA}{0} page. For simplicity, we just load a single image here. To load a video or sequence of images, you would want to use the \href{aux-streaming.md\#source-code}{\texttt{{\ttfamily video\+Source}}} API like the previous \href{../python/examples/imagenet.py}{\texttt{{\ttfamily imagenet.\+py}}} sample does.\hypertarget{md_jetson-inference_2docs_2imagenet-example-python-2_autotoc_md296}{}\doxysubsubsubsection{\texorpdfstring{Loading the Image Recognition Network}{Loading the Image Recognition Network}}\label{md_jetson-inference_2docs_2imagenet-example-python-2_autotoc_md296}
+Using the \href{https://rawgit.com/dusty-nv/jetson-inference/master/docs/html/python/jetson.inference.html\#imageNet}{\texttt{{\ttfamily image\+Net}}} object, the following code will load the desired classification model with Tensor\+RT. Unless you specified a different network using the {\ttfamily -\/-\/\doxylink{group__network}{Networking}} flag, by default it will load Google\+Net, which was already downloaded when you initially \href{building-repo-2.md\#downloading-models}{\texttt{built the {\ttfamily jetson-\/inference} repo}} (the {\ttfamily Res\+Net-\/18} model was also selected by default to be downloaded).
+
+All of the available classification models are pre-\/trained on the Image\+Net ILSVRC dataset, which can recognize up to \href{../data/networks/ilsvrc12_synset_words.txt}{\texttt{1000 different classes}} of objects, like different kinds of fruits and vegetables, many different species of animals, along with everyday man-\/made objects like vehicles, office furniture, sporting equipment, ect. ~\newline
+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ python}
+\DoxyCodeLine{\#\ load\ the\ recognition\ network}
+\DoxyCodeLine{net\ =\ jetson.inference.imageNet(args.network)}
+
+\end{DoxyCode}
+\hypertarget{md_jetson-inference_2docs_2imagenet-example-python-2_autotoc_md297}{}\doxysubsubsubsection{\texorpdfstring{Classifying the Image}{Classifying the Image}}\label{md_jetson-inference_2docs_2imagenet-example-python-2_autotoc_md297}
+Next, we are going to classify the image with the recognition network using the {\ttfamily \doxylink{classimage_net_a0023fb5bcd45dcefdac6a7df4bf9bab5}{image\+Net.\+Classify()}} function:\+ ~\newline
+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ python}
+\DoxyCodeLine{\#\ classify\ the\ image}
+\DoxyCodeLine{class\_idx,\ confidence\ =\ net.Classify(img)}
+
+\end{DoxyCode}
+
+
+{\ttfamily \doxylink{classimage_net_a0023fb5bcd45dcefdac6a7df4bf9bab5}{image\+Net.\+Classify()}} accepts the image and it\textquotesingle{}s dimensions, and performs the inferencing with Tensor\+RT. ~\newline
+
+
+It returns a tuple containing the integer index of the object class that the image was recognized as, along with the floating-\/point confidence value of the result.\hypertarget{md_jetson-inference_2docs_2imagenet-example-python-2_autotoc_md298}{}\doxysubsubsubsection{\texorpdfstring{Interpreting the Results}{Interpreting the Results}}\label{md_jetson-inference_2docs_2imagenet-example-python-2_autotoc_md298}
+As the final step, let\textquotesingle{}s retrieve the class description and print out the results of the classification:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ python}
+\DoxyCodeLine{\#\ find\ the\ object\ description}
+\DoxyCodeLine{class\_desc\ =\ net.GetClassDesc(class\_idx)}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#\ print\ out\ the\ result}
+\DoxyCodeLine{print("{}image\ is\ recognized\ as\ '\{:s\}'\ (class\ \#\{:d\})\ with\ \{:f\}\%\ confidence"{}.format(class\_desc,\ class\_idx,\ confidence\ *\ 100))}
+
+\end{DoxyCode}
+
+
+{\ttfamily \doxylink{classimage_net_a0023fb5bcd45dcefdac6a7df4bf9bab5}{image\+Net.\+Classify()}} returns the index of the recognized object class (between {\ttfamily 0} and {\ttfamily 999} for these models that were trained on ILSVRC). Given the class index, the {\ttfamily \doxylink{classimage_net_a9bfc031d94c241692f1dbbdadb0fed1f}{image\+Net.\+Get\+Class\+Desc()}} function will then return the string containing the text description of that class. These descriptions are automatically loaded from \href{../data/networks/ilsvrc12_synset_words.txt}{\texttt{{\ttfamily ilsvrc12\+\_\+synset\+\_\+words.\+txt}}}.
+
+That\textquotesingle{}s it! That is all the Python code we need for image classification. See the completed source above.\hypertarget{md_jetson-inference_2docs_2imagenet-example-python-2_autotoc_md299}{}\doxysubsection{\texorpdfstring{Running the Example}{Running the Example}}\label{md_jetson-inference_2docs_2imagenet-example-python-2_autotoc_md299}
+Now that our Python program is complete, let\textquotesingle{}s classify the test images that we downloaded at the beginning of this page:\+ ~\newline
+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{\$\ ./my-\/recognition.py\ polar\_bear.jpg}
+\DoxyCodeLine{image\ is\ recognized\ as\ 'ice\ bear,\ polar\ bear,\ Ursus\ Maritimus,\ Thalarctos\ maritimus'\ (class\ \#296)\ with\ 99.999878\%\ confidence}
+
+\end{DoxyCode}
+ 
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{\$\ ./my-\/recognition.py\ brown\_bear.jpg}
+\DoxyCodeLine{image\ is\ recognized\ as\ 'brown\ bear,\ bruin,\ Ursus\ arctos'\ (class\ \#294)\ with\ 99.928925\%\ confidence}
+
+\end{DoxyCode}
+ 
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{\$\ ./my-\/recognition.py\ black\_bear.jpg}
+\DoxyCodeLine{image\ is\ recognized\ as\ 'American\ black\ bear,\ black\ bear,\ Ursus\ americanus,\ Euarctos\ americanus'\ (class\ \#295)\ with\ 98.898628\%\ confidence}
+
+\end{DoxyCode}
+ 
+
+You can also choose to use a \href{imagenet-console-2.md\#downloading-other-classification-models}{\texttt{different network}} by specifying the {\ttfamily -\/-\/\doxylink{group__network}{Networking}} flag, like so:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{\$\ ./my-\/recognition.py\ -\/-\/network=resnet-\/18\ polar\_bear.jpg}
+\DoxyCodeLine{image\ is\ recognized\ as\ 'ice\ bear,\ polar\ bear,\ Ursus\ Maritimus,\ Thalarctos\ maritimus'\ (class\ \#296)\ with\ 99.743396\%\ confidence}
+
+\end{DoxyCode}
+
+
+Next, we\textquotesingle{}ll walk through the creation of the C++ version of this program.\hypertarget{md_jetson-inference_2docs_2imagenet-example-python-2_autotoc_md300}{}\doxysubsection{\texorpdfstring{autotoc\+\_\+md300}{autotoc\+\_\+md300}}\label{md_jetson-inference_2docs_2imagenet-example-python-2_autotoc_md300}
+Next \texorpdfstring{$\vert$}{|} {\bfseries{\href{imagenet-example-2.md}{\texttt{Coding Your Own Image Recognition Program (C++)}}}} ~\newline
+ Back \texorpdfstring{$\vert$}{|} {\bfseries{\href{imagenet-console-2.md}{\texttt{Classifying Images with Image\+Net}}}}
+
+\textsuperscript{© 2016-\/2019 NVIDIA \texorpdfstring{$\vert$}{|} }\href{../README.md\#hello-ai-world}{\texttt{\textsuperscript{Table of Contents}}}

@@ -1,0 +1,414 @@
+\doxysection{cuda\+Point\+Cloud Class Reference}
+\hypertarget{classcuda_point_cloud}{}\label{classcuda_point_cloud}\index{cudaPointCloud@{cudaPointCloud}}
+
+
+{\ttfamily \+\#include $<$cuda\+Point\+Cloud.\+h$>$}
+
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \doxymbox{\hyperlink{structcuda_point_cloud_1_1_vertex}{Vertex}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classcuda_point_cloud_ab718e09e5eb03fd1d5432e42c689b814}\label{classcuda_point_cloud_ab718e09e5eb03fd1d5432e42c689b814} 
+struct \doxymbox{\hyperlink{structcuda_point_cloud_1_1_vertex}{cuda\+Point\+Cloud::\+\+Vertex}} {\bfseries \+\_\+\+\_\+attribute\+\_\+\+\_\+} ((packed))
+\item 
+\doxymbox{\hyperlink{classcuda_point_cloud_a512877c3645cb6eb705c4785e7d66911}{\texorpdfstring{$\sim$}{\string~}cuda\+Point\+Cloud}} ()
+\item 
+bool \doxymbox{\hyperlink{classcuda_point_cloud_a9f5e49c1601898cd67749b1a46d9594b}{Reserve}} (uint32\+\_\+t max\+Points)
+\item 
+void \doxymbox{\hyperlink{classcuda_point_cloud_af3e91a3b536a34b1b510136d04f9d782}{Free}} ()
+\item 
+void \doxymbox{\hyperlink{classcuda_point_cloud_a779a39e8cacd830e10e33aa9d0d7a1a2}{Clear}} ()
+\item 
+bool \doxymbox{\hyperlink{classcuda_point_cloud_a66eea4468c09e816ee78b378382ab8fd}{Extract}} (float \texorpdfstring{$\ast$}{*}depth, float4 \texorpdfstring{$\ast$}{*}rgba, uint32\+\_\+t width, uint32\+\_\+t height)
+\item 
+bool \doxymbox{\hyperlink{classcuda_point_cloud_a073facf26574cc15b695c5dbf39e8f01}{Extract}} (float \texorpdfstring{$\ast$}{*}depth, uint32\+\_\+t depth\+\_\+width, uint32\+\_\+t depth\+\_\+height, float4 \texorpdfstring{$\ast$}{*}rgba, uint32\+\_\+t color\+\_\+width, uint32\+\_\+t color\+\_\+height)
+\item 
+uint32\+\_\+t \doxymbox{\hyperlink{classcuda_point_cloud_abeefc53319ad08f9da52a9c5a7cb324a}{Get\+Num\+Points}} () const
+\item 
+uint32\+\_\+t \doxymbox{\hyperlink{classcuda_point_cloud_a21bc4243e26313ce9db0007ddd217407}{Get\+Max\+Points}} () const
+\item 
+size\+\_\+t \doxymbox{\hyperlink{classcuda_point_cloud_af10d3cc8025aeb86f4334f4e9008a5ae}{Get\+Size}} () const
+\item 
+size\+\_\+t \doxymbox{\hyperlink{classcuda_point_cloud_a4f6bad10283464e4d9994f6c5e981731}{Get\+Max\+Size}} () const
+\item 
+\doxymbox{\hyperlink{structcuda_point_cloud_1_1_vertex}{Vertex}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classcuda_point_cloud_a3e6ed78b6f624b9c80b45a65008c8a2f}{Get\+Data}} () const
+\item 
+\doxymbox{\hyperlink{structcuda_point_cloud_1_1_vertex}{Vertex}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classcuda_point_cloud_aaaaad3288c54cb44961fca3d836cd9ec}{Get\+Data}} (size\+\_\+t index) const
+\item 
+bool \doxymbox{\hyperlink{classcuda_point_cloud_a0b3b029a6589afe1fbdc20eb2b6d4788}{Has\+RGB}} () const
+\item 
+bool \doxymbox{\hyperlink{classcuda_point_cloud_af9de940249e215774fb83f7e3132c19f}{Render}} ()
+\item 
+bool \doxymbox{\hyperlink{classcuda_point_cloud_aafd186953251ba2228d574bb7227907f}{Save}} (const char \texorpdfstring{$\ast$}{*}filename)
+\item 
+bool \doxymbox{\hyperlink{classcuda_point_cloud_aa083a64e739dba0957b8078515300d2b}{Set\+Calibration}} (const char \texorpdfstring{$\ast$}{*}filename)
+\item 
+void \doxymbox{\hyperlink{classcuda_point_cloud_ad874061b473d13dd32556d94e301cf1a}{Set\+Calibration}} (const float K\+[3]\+\+[3]\+)
+\item 
+void \doxymbox{\hyperlink{classcuda_point_cloud_a9467ff5c23789c9ec0167305c51fec39}{Set\+Calibration}} (const float2 \&focal\+Length, const float2 \&principal\+Point)
+\item 
+\Hypertarget{classcuda_point_cloud_ab718e09e5eb03fd1d5432e42c689b814}\label{classcuda_point_cloud_ab718e09e5eb03fd1d5432e42c689b814} 
+struct \doxymbox{\hyperlink{structcuda_point_cloud_1_1_vertex}{cuda\+Point\+Cloud::\+\+Vertex}} {\bfseries \+\_\+\+\_\+attribute\+\_\+\+\_\+} ((packed))
+\item 
+\doxymbox{\hyperlink{classcuda_point_cloud_a512877c3645cb6eb705c4785e7d66911}{\texorpdfstring{$\sim$}{\string~}cuda\+Point\+Cloud}} ()
+\item 
+bool \doxymbox{\hyperlink{classcuda_point_cloud_a9f5e49c1601898cd67749b1a46d9594b}{Reserve}} (uint32\+\_\+t max\+Points)
+\item 
+void \doxymbox{\hyperlink{classcuda_point_cloud_af3e91a3b536a34b1b510136d04f9d782}{Free}} ()
+\item 
+void \doxymbox{\hyperlink{classcuda_point_cloud_a779a39e8cacd830e10e33aa9d0d7a1a2}{Clear}} ()
+\item 
+bool \doxymbox{\hyperlink{classcuda_point_cloud_a66eea4468c09e816ee78b378382ab8fd}{Extract}} (float \texorpdfstring{$\ast$}{*}depth, float4 \texorpdfstring{$\ast$}{*}rgba, uint32\+\_\+t width, uint32\+\_\+t height)
+\item 
+bool \doxymbox{\hyperlink{classcuda_point_cloud_a073facf26574cc15b695c5dbf39e8f01}{Extract}} (float \texorpdfstring{$\ast$}{*}depth, uint32\+\_\+t depth\+\_\+width, uint32\+\_\+t depth\+\_\+height, float4 \texorpdfstring{$\ast$}{*}rgba, uint32\+\_\+t color\+\_\+width, uint32\+\_\+t color\+\_\+height)
+\item 
+uint32\+\_\+t \doxymbox{\hyperlink{classcuda_point_cloud_abeefc53319ad08f9da52a9c5a7cb324a}{Get\+Num\+Points}} () const
+\item 
+uint32\+\_\+t \doxymbox{\hyperlink{classcuda_point_cloud_a21bc4243e26313ce9db0007ddd217407}{Get\+Max\+Points}} () const
+\item 
+size\+\_\+t \doxymbox{\hyperlink{classcuda_point_cloud_af10d3cc8025aeb86f4334f4e9008a5ae}{Get\+Size}} () const
+\item 
+size\+\_\+t \doxymbox{\hyperlink{classcuda_point_cloud_a4f6bad10283464e4d9994f6c5e981731}{Get\+Max\+Size}} () const
+\item 
+\doxymbox{\hyperlink{structcuda_point_cloud_1_1_vertex}{Vertex}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classcuda_point_cloud_a3e6ed78b6f624b9c80b45a65008c8a2f}{Get\+Data}} () const
+\item 
+\doxymbox{\hyperlink{structcuda_point_cloud_1_1_vertex}{Vertex}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classcuda_point_cloud_aaaaad3288c54cb44961fca3d836cd9ec}{Get\+Data}} (size\+\_\+t index) const
+\item 
+bool \doxymbox{\hyperlink{classcuda_point_cloud_a0b3b029a6589afe1fbdc20eb2b6d4788}{Has\+RGB}} () const
+\item 
+bool \doxymbox{\hyperlink{classcuda_point_cloud_af9de940249e215774fb83f7e3132c19f}{Render}} ()
+\item 
+bool \doxymbox{\hyperlink{classcuda_point_cloud_aafd186953251ba2228d574bb7227907f}{Save}} (const char \texorpdfstring{$\ast$}{*}filename)
+\item 
+bool \doxymbox{\hyperlink{classcuda_point_cloud_aa083a64e739dba0957b8078515300d2b}{Set\+Calibration}} (const char \texorpdfstring{$\ast$}{*}filename)
+\item 
+void \doxymbox{\hyperlink{classcuda_point_cloud_ad874061b473d13dd32556d94e301cf1a}{Set\+Calibration}} (const float K\+[3]\+\+[3]\+)
+\item 
+void \doxymbox{\hyperlink{classcuda_point_cloud_a9467ff5c23789c9ec0167305c51fec39}{Set\+Calibration}} (const float2 \&focal\+Length, const float2 \&principal\+Point)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \doxymbox{\hyperlink{classcuda_point_cloud}{cuda\+Point\+Cloud}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classcuda_point_cloud_a1aa7dbf23e550955aabc21a09d53d18e}{Create}} ()
+\item 
+static \doxymbox{\hyperlink{classcuda_point_cloud}{cuda\+Point\+Cloud}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classcuda_point_cloud_a508c45428e249a46611255d460e16eaa}{Create}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classcuda_point_cloud_a1b6ba64ed345226be35e9dbe589ab8cc}\label{classcuda_point_cloud_a1b6ba64ed345226be35e9dbe589ab8cc} 
+bool {\bfseries alloc\+Buffer\+GL} ()
+\item 
+\Hypertarget{classcuda_point_cloud_a68e0e108c9e1f65bed3f098800c74f77}\label{classcuda_point_cloud_a68e0e108c9e1f65bed3f098800c74f77} 
+bool {\bfseries alloc\+Depth\+Resize} (size\+\_\+t size)
+\item 
+\Hypertarget{classcuda_point_cloud_a1b6ba64ed345226be35e9dbe589ab8cc}\label{classcuda_point_cloud_a1b6ba64ed345226be35e9dbe589ab8cc} 
+bool {\bfseries alloc\+Buffer\+GL} ()
+\item 
+\Hypertarget{classcuda_point_cloud_a68e0e108c9e1f65bed3f098800c74f77}\label{classcuda_point_cloud_a68e0e108c9e1f65bed3f098800c74f77} 
+bool {\bfseries alloc\+Depth\+Resize} (size\+\_\+t size)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classcuda_point_cloud_ac9dddd9b85232d78ea1a439158116dcc}\label{classcuda_point_cloud_ac9dddd9b85232d78ea1a439158116dcc} 
+\doxymbox{\hyperlink{structcuda_point_cloud_1_1_vertex}{Vertex}} \texorpdfstring{$\ast$}{*} {\bfseries m\+Points\+CPU}
+\item 
+\Hypertarget{classcuda_point_cloud_a78310943c7abba673162fd0f693a5619}\label{classcuda_point_cloud_a78310943c7abba673162fd0f693a5619} 
+\doxymbox{\hyperlink{structcuda_point_cloud_1_1_vertex}{Vertex}} \texorpdfstring{$\ast$}{*} {\bfseries m\+Points\+GPU}
+\item 
+\Hypertarget{classcuda_point_cloud_a1bf5180722740833b83c4d3d043e13e0}\label{classcuda_point_cloud_a1bf5180722740833b83c4d3d043e13e0} 
+\doxymbox{\hyperlink{classgl_buffer}{gl\+Buffer}} \texorpdfstring{$\ast$}{*} {\bfseries m\+Buffer\+GL}
+\item 
+\Hypertarget{classcuda_point_cloud_a1a325958428c5b23629b8cdead859159}\label{classcuda_point_cloud_a1a325958428c5b23629b8cdead859159} 
+\doxymbox{\hyperlink{classgl_camera}{gl\+Camera}} \texorpdfstring{$\ast$}{*} {\bfseries m\+Camera\+GL}
+\item 
+\Hypertarget{classcuda_point_cloud_a47e4be38c0f1303d14a7a7a21ff10afd}\label{classcuda_point_cloud_a47e4be38c0f1303d14a7a7a21ff10afd} 
+uint32\+\_\+t {\bfseries m\+Num\+Points}
+\item 
+\Hypertarget{classcuda_point_cloud_adaf6ec86192f57d18b757fad3581d20e}\label{classcuda_point_cloud_adaf6ec86192f57d18b757fad3581d20e} 
+uint32\+\_\+t {\bfseries m\+Max\+Points}
+\item 
+\Hypertarget{classcuda_point_cloud_a313da46c6a6e74ef929f3a967b86a12c}\label{classcuda_point_cloud_a313da46c6a6e74ef929f3a967b86a12c} 
+float2 {\bfseries m\+Focal\+Length}
+\item 
+\Hypertarget{classcuda_point_cloud_ac301f60a813bead315fa3b2f5bba8467}\label{classcuda_point_cloud_ac301f60a813bead315fa3b2f5bba8467} 
+float2 {\bfseries m\+Principal\+Point}
+\item 
+\Hypertarget{classcuda_point_cloud_a77ad09341d77c13f823daf3452ccf33d}\label{classcuda_point_cloud_a77ad09341d77c13f823daf3452ccf33d} 
+float \texorpdfstring{$\ast$}{*} {\bfseries m\+Depth\+Resize}
+\item 
+\Hypertarget{classcuda_point_cloud_a0e3b4d10f67d2f25988e39ed0e0798ac}\label{classcuda_point_cloud_a0e3b4d10f67d2f25988e39ed0e0798ac} 
+size\+\_\+t {\bfseries m\+Depth\+Size}
+\item 
+\Hypertarget{classcuda_point_cloud_a2ad5b6d7387203c0f4e9e4576d75400c}\label{classcuda_point_cloud_a2ad5b6d7387203c0f4e9e4576d75400c} 
+bool {\bfseries m\+Has\+RGB}
+\item 
+\Hypertarget{classcuda_point_cloud_aeceaf66cb037830355420527fee31498}\label{classcuda_point_cloud_aeceaf66cb037830355420527fee31498} 
+bool {\bfseries m\+Has\+New\+Points}
+\item 
+\Hypertarget{classcuda_point_cloud_adda7b97e920e8dd67457b0ecaa6a0011}\label{classcuda_point_cloud_adda7b97e920e8dd67457b0ecaa6a0011} 
+bool {\bfseries m\+Has\+Calibration}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+CUDA-\/accelerated point cloud processing. 
+
+\label{doc-constructors}
+\Hypertarget{classcuda_point_cloud_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classcuda_point_cloud_a512877c3645cb6eb705c4785e7d66911}\index{cudaPointCloud@{cudaPointCloud}!````~cudaPointCloud@{\texorpdfstring{$\sim$}{\string~}cudaPointCloud}}
+\index{````~cudaPointCloud@{\texorpdfstring{$\sim$}{\string~}cudaPointCloud}!cudaPointCloud@{cudaPointCloud}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}cudaPointCloud()}{\string~cudaPointCloud()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classcuda_point_cloud_a512877c3645cb6eb705c4785e7d66911} 
+cuda\+Point\+Cloud::\+\texorpdfstring{$\sim$}{\string~}cuda\+Point\+Cloud (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Destructor \Hypertarget{classcuda_point_cloud_a512877c3645cb6eb705c4785e7d66911}\index{cudaPointCloud@{cudaPointCloud}!````~cudaPointCloud@{\texorpdfstring{$\sim$}{\string~}cudaPointCloud}}
+\index{````~cudaPointCloud@{\texorpdfstring{$\sim$}{\string~}cudaPointCloud}!cudaPointCloud@{cudaPointCloud}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}cudaPointCloud()}{\string~cudaPointCloud()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classcuda_point_cloud_a512877c3645cb6eb705c4785e7d66911} 
+cuda\+Point\+Cloud::\+\texorpdfstring{$\sim$}{\string~}cuda\+Point\+Cloud (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Destructor 
+
+\label{doc-func-members}
+\Hypertarget{classcuda_point_cloud_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classcuda_point_cloud_a779a39e8cacd830e10e33aa9d0d7a1a2}\index{cudaPointCloud@{cudaPointCloud}!Clear@{Clear}}
+\index{Clear@{Clear}!cudaPointCloud@{cudaPointCloud}}
+\doxysubsubsection{\texorpdfstring{Clear()}{Clear()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classcuda_point_cloud_a779a39e8cacd830e10e33aa9d0d7a1a2} 
+void cuda\+Point\+Cloud::\+\+Clear (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Clear the points, but keep the memory allocated. \Hypertarget{classcuda_point_cloud_a779a39e8cacd830e10e33aa9d0d7a1a2}\index{cudaPointCloud@{cudaPointCloud}!Clear@{Clear}}
+\index{Clear@{Clear}!cudaPointCloud@{cudaPointCloud}}
+\doxysubsubsection{\texorpdfstring{Clear()}{Clear()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classcuda_point_cloud_a779a39e8cacd830e10e33aa9d0d7a1a2} 
+void cuda\+Point\+Cloud::\+\+Clear (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Clear the points, but keep the memory allocated. \Hypertarget{classcuda_point_cloud_a1aa7dbf23e550955aabc21a09d53d18e}\index{cudaPointCloud@{cudaPointCloud}!Create@{Create}}
+\index{Create@{Create}!cudaPointCloud@{cudaPointCloud}}
+\doxysubsubsection{\texorpdfstring{Create()}{Create()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classcuda_point_cloud_a1aa7dbf23e550955aabc21a09d53d18e} 
+\doxymbox{\hyperlink{classcuda_point_cloud}{cuda\+Point\+Cloud}} \texorpdfstring{$\ast$}{*} cuda\+Point\+Cloud::\+\+Create (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Create \Hypertarget{classcuda_point_cloud_a508c45428e249a46611255d460e16eaa}\index{cudaPointCloud@{cudaPointCloud}!Create@{Create}}
+\index{Create@{Create}!cudaPointCloud@{cudaPointCloud}}
+\doxysubsubsection{\texorpdfstring{Create()}{Create()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classcuda_point_cloud_a508c45428e249a46611255d460e16eaa} 
+\doxymbox{\hyperlink{classcuda_point_cloud}{cuda\+Point\+Cloud}} \texorpdfstring{$\ast$}{*} cuda\+Point\+Cloud::\+\+Create (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Create \Hypertarget{classcuda_point_cloud_a66eea4468c09e816ee78b378382ab8fd}\index{cudaPointCloud@{cudaPointCloud}!Extract@{Extract}}
+\index{Extract@{Extract}!cudaPointCloud@{cudaPointCloud}}
+\doxysubsubsection{\texorpdfstring{Extract()}{Extract()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily \label{classcuda_point_cloud_a66eea4468c09e816ee78b378382ab8fd} 
+bool cuda\+Point\+Cloud::\+\+Extract (\begin{DoxyParamCaption}\item[{float \texorpdfstring{$\ast$}{*}}]{depth}{, }\item[{float4 \texorpdfstring{$\ast$}{*}}]{rgba}{, }\item[{uint32\+\_\+t}]{width}{, }\item[{uint32\+\_\+t}]{height}{}\end{DoxyParamCaption})}
+
+Extract point cloud from depth map and optional RGBA image. \Hypertarget{classcuda_point_cloud_a66eea4468c09e816ee78b378382ab8fd}\index{cudaPointCloud@{cudaPointCloud}!Extract@{Extract}}
+\index{Extract@{Extract}!cudaPointCloud@{cudaPointCloud}}
+\doxysubsubsection{\texorpdfstring{Extract()}{Extract()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily \label{classcuda_point_cloud_a66eea4468c09e816ee78b378382ab8fd} 
+bool cuda\+Point\+Cloud::\+\+Extract (\begin{DoxyParamCaption}\item[{float \texorpdfstring{$\ast$}{*}}]{depth}{, }\item[{float4 \texorpdfstring{$\ast$}{*}}]{rgba}{, }\item[{uint32\+\_\+t}]{width}{, }\item[{uint32\+\_\+t}]{height}{}\end{DoxyParamCaption})}
+
+Extract point cloud from depth map and optional RGBA image. \Hypertarget{classcuda_point_cloud_a073facf26574cc15b695c5dbf39e8f01}\index{cudaPointCloud@{cudaPointCloud}!Extract@{Extract}}
+\index{Extract@{Extract}!cudaPointCloud@{cudaPointCloud}}
+\doxysubsubsection{\texorpdfstring{Extract()}{Extract()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily \label{classcuda_point_cloud_a073facf26574cc15b695c5dbf39e8f01} 
+bool cuda\+Point\+Cloud::\+\+Extract (\begin{DoxyParamCaption}\item[{float \texorpdfstring{$\ast$}{*}}]{depth}{, }\item[{uint32\+\_\+t}]{depth\+\_\+width}{, }\item[{uint32\+\_\+t}]{depth\+\_\+height}{, }\item[{float4 \texorpdfstring{$\ast$}{*}}]{rgba}{, }\item[{uint32\+\_\+t}]{color\+\_\+width}{, }\item[{uint32\+\_\+t}]{color\+\_\+height}{}\end{DoxyParamCaption})}
+
+Extract point cloud from depth map and optional RGBA image. \Hypertarget{classcuda_point_cloud_a073facf26574cc15b695c5dbf39e8f01}\index{cudaPointCloud@{cudaPointCloud}!Extract@{Extract}}
+\index{Extract@{Extract}!cudaPointCloud@{cudaPointCloud}}
+\doxysubsubsection{\texorpdfstring{Extract()}{Extract()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily \label{classcuda_point_cloud_a073facf26574cc15b695c5dbf39e8f01} 
+bool cuda\+Point\+Cloud::\+\+Extract (\begin{DoxyParamCaption}\item[{float \texorpdfstring{$\ast$}{*}}]{depth}{, }\item[{uint32\+\_\+t}]{depth\+\_\+width}{, }\item[{uint32\+\_\+t}]{depth\+\_\+height}{, }\item[{float4 \texorpdfstring{$\ast$}{*}}]{rgba}{, }\item[{uint32\+\_\+t}]{color\+\_\+width}{, }\item[{uint32\+\_\+t}]{color\+\_\+height}{}\end{DoxyParamCaption})}
+
+Extract point cloud from depth map and optional RGBA image. \Hypertarget{classcuda_point_cloud_af3e91a3b536a34b1b510136d04f9d782}\index{cudaPointCloud@{cudaPointCloud}!Free@{Free}}
+\index{Free@{Free}!cudaPointCloud@{cudaPointCloud}}
+\doxysubsubsection{\texorpdfstring{Free()}{Free()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classcuda_point_cloud_af3e91a3b536a34b1b510136d04f9d782} 
+void cuda\+Point\+Cloud::\+\+Free (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Free the memory being used to store the point cloud. \Hypertarget{classcuda_point_cloud_af3e91a3b536a34b1b510136d04f9d782}\index{cudaPointCloud@{cudaPointCloud}!Free@{Free}}
+\index{Free@{Free}!cudaPointCloud@{cudaPointCloud}}
+\doxysubsubsection{\texorpdfstring{Free()}{Free()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classcuda_point_cloud_af3e91a3b536a34b1b510136d04f9d782} 
+void cuda\+Point\+Cloud::\+\+Free (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Free the memory being used to store the point cloud. \Hypertarget{classcuda_point_cloud_a3e6ed78b6f624b9c80b45a65008c8a2f}\index{cudaPointCloud@{cudaPointCloud}!GetData@{GetData}}
+\index{GetData@{GetData}!cudaPointCloud@{cudaPointCloud}}
+\doxysubsubsection{\texorpdfstring{GetData()}{GetData()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily \label{classcuda_point_cloud_a3e6ed78b6f624b9c80b45a65008c8a2f} 
+\doxymbox{\hyperlink{structcuda_point_cloud_1_1_vertex}{Vertex}} \texorpdfstring{$\ast$}{*} cuda\+Point\+Cloud::\+\+Get\+Data (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Retrieve memory pointer to point cloud data. \Hypertarget{classcuda_point_cloud_a3e6ed78b6f624b9c80b45a65008c8a2f}\index{cudaPointCloud@{cudaPointCloud}!GetData@{GetData}}
+\index{GetData@{GetData}!cudaPointCloud@{cudaPointCloud}}
+\doxysubsubsection{\texorpdfstring{GetData()}{GetData()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily \label{classcuda_point_cloud_a3e6ed78b6f624b9c80b45a65008c8a2f} 
+\doxymbox{\hyperlink{structcuda_point_cloud_1_1_vertex}{Vertex}} \texorpdfstring{$\ast$}{*} cuda\+Point\+Cloud::\+\+Get\+Data (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Retrieve memory pointer to point cloud data. \Hypertarget{classcuda_point_cloud_aaaaad3288c54cb44961fca3d836cd9ec}\index{cudaPointCloud@{cudaPointCloud}!GetData@{GetData}}
+\index{GetData@{GetData}!cudaPointCloud@{cudaPointCloud}}
+\doxysubsubsection{\texorpdfstring{GetData()}{GetData()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily \label{classcuda_point_cloud_aaaaad3288c54cb44961fca3d836cd9ec} 
+\doxymbox{\hyperlink{structcuda_point_cloud_1_1_vertex}{Vertex}} \texorpdfstring{$\ast$}{*} cuda\+Point\+Cloud::\+\+Get\+Data (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{index}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Retrieve memory pointer to a specific point. \Hypertarget{classcuda_point_cloud_aaaaad3288c54cb44961fca3d836cd9ec}\index{cudaPointCloud@{cudaPointCloud}!GetData@{GetData}}
+\index{GetData@{GetData}!cudaPointCloud@{cudaPointCloud}}
+\doxysubsubsection{\texorpdfstring{GetData()}{GetData()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily \label{classcuda_point_cloud_aaaaad3288c54cb44961fca3d836cd9ec} 
+\doxymbox{\hyperlink{structcuda_point_cloud_1_1_vertex}{Vertex}} \texorpdfstring{$\ast$}{*} cuda\+Point\+Cloud::\+\+Get\+Data (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{index}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Retrieve memory pointer to a specific point. \Hypertarget{classcuda_point_cloud_a21bc4243e26313ce9db0007ddd217407}\index{cudaPointCloud@{cudaPointCloud}!GetMaxPoints@{GetMaxPoints}}
+\index{GetMaxPoints@{GetMaxPoints}!cudaPointCloud@{cudaPointCloud}}
+\doxysubsubsection{\texorpdfstring{GetMaxPoints()}{GetMaxPoints()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classcuda_point_cloud_a21bc4243e26313ce9db0007ddd217407} 
+uint32\+\_\+t cuda\+Point\+Cloud::\+\+Get\+Max\+Points (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Retrieve the max number of points in memory. \Hypertarget{classcuda_point_cloud_a21bc4243e26313ce9db0007ddd217407}\index{cudaPointCloud@{cudaPointCloud}!GetMaxPoints@{GetMaxPoints}}
+\index{GetMaxPoints@{GetMaxPoints}!cudaPointCloud@{cudaPointCloud}}
+\doxysubsubsection{\texorpdfstring{GetMaxPoints()}{GetMaxPoints()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classcuda_point_cloud_a21bc4243e26313ce9db0007ddd217407} 
+uint32\+\_\+t cuda\+Point\+Cloud::\+\+Get\+Max\+Points (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Retrieve the max number of points in memory. \Hypertarget{classcuda_point_cloud_a4f6bad10283464e4d9994f6c5e981731}\index{cudaPointCloud@{cudaPointCloud}!GetMaxSize@{GetMaxSize}}
+\index{GetMaxSize@{GetMaxSize}!cudaPointCloud@{cudaPointCloud}}
+\doxysubsubsection{\texorpdfstring{GetMaxSize()}{GetMaxSize()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classcuda_point_cloud_a4f6bad10283464e4d9994f6c5e981731} 
+size\+\_\+t cuda\+Point\+Cloud::\+\+Get\+Max\+Size (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Retrieve the maximum size in bytes of the point cloud. \Hypertarget{classcuda_point_cloud_a4f6bad10283464e4d9994f6c5e981731}\index{cudaPointCloud@{cudaPointCloud}!GetMaxSize@{GetMaxSize}}
+\index{GetMaxSize@{GetMaxSize}!cudaPointCloud@{cudaPointCloud}}
+\doxysubsubsection{\texorpdfstring{GetMaxSize()}{GetMaxSize()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classcuda_point_cloud_a4f6bad10283464e4d9994f6c5e981731} 
+size\+\_\+t cuda\+Point\+Cloud::\+\+Get\+Max\+Size (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Retrieve the maximum size in bytes of the point cloud. \Hypertarget{classcuda_point_cloud_abeefc53319ad08f9da52a9c5a7cb324a}\index{cudaPointCloud@{cudaPointCloud}!GetNumPoints@{GetNumPoints}}
+\index{GetNumPoints@{GetNumPoints}!cudaPointCloud@{cudaPointCloud}}
+\doxysubsubsection{\texorpdfstring{GetNumPoints()}{GetNumPoints()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classcuda_point_cloud_abeefc53319ad08f9da52a9c5a7cb324a} 
+uint32\+\_\+t cuda\+Point\+Cloud::\+\+Get\+Num\+Points (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Retrieve the number of points being used. \Hypertarget{classcuda_point_cloud_abeefc53319ad08f9da52a9c5a7cb324a}\index{cudaPointCloud@{cudaPointCloud}!GetNumPoints@{GetNumPoints}}
+\index{GetNumPoints@{GetNumPoints}!cudaPointCloud@{cudaPointCloud}}
+\doxysubsubsection{\texorpdfstring{GetNumPoints()}{GetNumPoints()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classcuda_point_cloud_abeefc53319ad08f9da52a9c5a7cb324a} 
+uint32\+\_\+t cuda\+Point\+Cloud::\+\+Get\+Num\+Points (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Retrieve the number of points being used. \Hypertarget{classcuda_point_cloud_af10d3cc8025aeb86f4334f4e9008a5ae}\index{cudaPointCloud@{cudaPointCloud}!GetSize@{GetSize}}
+\index{GetSize@{GetSize}!cudaPointCloud@{cudaPointCloud}}
+\doxysubsubsection{\texorpdfstring{GetSize()}{GetSize()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classcuda_point_cloud_af10d3cc8025aeb86f4334f4e9008a5ae} 
+size\+\_\+t cuda\+Point\+Cloud::\+\+Get\+Size (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Retrieve the size in bytes currently being used. \Hypertarget{classcuda_point_cloud_af10d3cc8025aeb86f4334f4e9008a5ae}\index{cudaPointCloud@{cudaPointCloud}!GetSize@{GetSize}}
+\index{GetSize@{GetSize}!cudaPointCloud@{cudaPointCloud}}
+\doxysubsubsection{\texorpdfstring{GetSize()}{GetSize()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classcuda_point_cloud_af10d3cc8025aeb86f4334f4e9008a5ae} 
+size\+\_\+t cuda\+Point\+Cloud::\+\+Get\+Size (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Retrieve the size in bytes currently being used. \Hypertarget{classcuda_point_cloud_a0b3b029a6589afe1fbdc20eb2b6d4788}\index{cudaPointCloud@{cudaPointCloud}!HasRGB@{HasRGB}}
+\index{HasRGB@{HasRGB}!cudaPointCloud@{cudaPointCloud}}
+\doxysubsubsection{\texorpdfstring{HasRGB()}{HasRGB()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classcuda_point_cloud_a0b3b029a6589afe1fbdc20eb2b6d4788} 
+bool cuda\+Point\+Cloud::\+\+Has\+RGB (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Does the point cloud have RGB data? \Hypertarget{classcuda_point_cloud_a0b3b029a6589afe1fbdc20eb2b6d4788}\index{cudaPointCloud@{cudaPointCloud}!HasRGB@{HasRGB}}
+\index{HasRGB@{HasRGB}!cudaPointCloud@{cudaPointCloud}}
+\doxysubsubsection{\texorpdfstring{HasRGB()}{HasRGB()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classcuda_point_cloud_a0b3b029a6589afe1fbdc20eb2b6d4788} 
+bool cuda\+Point\+Cloud::\+\+Has\+RGB (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Does the point cloud have RGB data? \Hypertarget{classcuda_point_cloud_af9de940249e215774fb83f7e3132c19f}\index{cudaPointCloud@{cudaPointCloud}!Render@{Render}}
+\index{Render@{Render}!cudaPointCloud@{cudaPointCloud}}
+\doxysubsubsection{\texorpdfstring{Render()}{Render()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classcuda_point_cloud_af9de940249e215774fb83f7e3132c19f} 
+bool cuda\+Point\+Cloud::\+\+Render (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Render the point cloud with Open\+GL \Hypertarget{classcuda_point_cloud_af9de940249e215774fb83f7e3132c19f}\index{cudaPointCloud@{cudaPointCloud}!Render@{Render}}
+\index{Render@{Render}!cudaPointCloud@{cudaPointCloud}}
+\doxysubsubsection{\texorpdfstring{Render()}{Render()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classcuda_point_cloud_af9de940249e215774fb83f7e3132c19f} 
+bool cuda\+Point\+Cloud::\+\+Render (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Render the point cloud with Open\+GL \Hypertarget{classcuda_point_cloud_a9f5e49c1601898cd67749b1a46d9594b}\index{cudaPointCloud@{cudaPointCloud}!Reserve@{Reserve}}
+\index{Reserve@{Reserve}!cudaPointCloud@{cudaPointCloud}}
+\doxysubsubsection{\texorpdfstring{Reserve()}{Reserve()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classcuda_point_cloud_a9f5e49c1601898cd67749b1a46d9594b} 
+bool cuda\+Point\+Cloud::\+\+Reserve (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{max\+Points}{}\end{DoxyParamCaption})}
+
+Allocate and reserve memory for the max number of points.
+
+\begin{DoxyNote}{Note}
+Memory is reserved automatically by \doxylink{classcuda_point_cloud_a66eea4468c09e816ee78b378382ab8fd}{Extract()}, but if you know in advance the maximum number of points it is good practice to call \doxylink{classcuda_point_cloud_a9f5e49c1601898cd67749b1a46d9594b}{Reserve()} ahead of time. 
+\end{DoxyNote}
+\Hypertarget{classcuda_point_cloud_a9f5e49c1601898cd67749b1a46d9594b}\index{cudaPointCloud@{cudaPointCloud}!Reserve@{Reserve}}
+\index{Reserve@{Reserve}!cudaPointCloud@{cudaPointCloud}}
+\doxysubsubsection{\texorpdfstring{Reserve()}{Reserve()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classcuda_point_cloud_a9f5e49c1601898cd67749b1a46d9594b} 
+bool cuda\+Point\+Cloud::\+\+Reserve (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{max\+Points}{}\end{DoxyParamCaption})}
+
+Allocate and reserve memory for the max number of points.
+
+\begin{DoxyNote}{Note}
+Memory is reserved automatically by \doxylink{classcuda_point_cloud_a66eea4468c09e816ee78b378382ab8fd}{Extract()}, but if you know in advance the maximum number of points it is good practice to call \doxylink{classcuda_point_cloud_a9f5e49c1601898cd67749b1a46d9594b}{Reserve()} ahead of time. 
+\end{DoxyNote}
+\Hypertarget{classcuda_point_cloud_aafd186953251ba2228d574bb7227907f}\index{cudaPointCloud@{cudaPointCloud}!Save@{Save}}
+\index{Save@{Save}!cudaPointCloud@{cudaPointCloud}}
+\doxysubsubsection{\texorpdfstring{Save()}{Save()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classcuda_point_cloud_aafd186953251ba2228d574bb7227907f} 
+bool cuda\+Point\+Cloud::\+\+Save (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{filename}{}\end{DoxyParamCaption})}
+
+Save point cloud to PCD file. \Hypertarget{classcuda_point_cloud_aafd186953251ba2228d574bb7227907f}\index{cudaPointCloud@{cudaPointCloud}!Save@{Save}}
+\index{Save@{Save}!cudaPointCloud@{cudaPointCloud}}
+\doxysubsubsection{\texorpdfstring{Save()}{Save()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classcuda_point_cloud_aafd186953251ba2228d574bb7227907f} 
+bool cuda\+Point\+Cloud::\+\+Save (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{filename}{}\end{DoxyParamCaption})}
+
+Save point cloud to PCD file. \Hypertarget{classcuda_point_cloud_aa083a64e739dba0957b8078515300d2b}\index{cudaPointCloud@{cudaPointCloud}!SetCalibration@{SetCalibration}}
+\index{SetCalibration@{SetCalibration}!cudaPointCloud@{cudaPointCloud}}
+\doxysubsubsection{\texorpdfstring{SetCalibration()}{SetCalibration()}\hspace{0.1cm}{\footnotesize\ttfamily [1/6]}}
+{\footnotesize\ttfamily \label{classcuda_point_cloud_aa083a64e739dba0957b8078515300d2b} 
+bool cuda\+Point\+Cloud::\+\+Set\+Calibration (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{filename}{}\end{DoxyParamCaption})}
+
+Set the intrinsic camera calibration. \Hypertarget{classcuda_point_cloud_aa083a64e739dba0957b8078515300d2b}\index{cudaPointCloud@{cudaPointCloud}!SetCalibration@{SetCalibration}}
+\index{SetCalibration@{SetCalibration}!cudaPointCloud@{cudaPointCloud}}
+\doxysubsubsection{\texorpdfstring{SetCalibration()}{SetCalibration()}\hspace{0.1cm}{\footnotesize\ttfamily [2/6]}}
+{\footnotesize\ttfamily \label{classcuda_point_cloud_aa083a64e739dba0957b8078515300d2b} 
+bool cuda\+Point\+Cloud::\+\+Set\+Calibration (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{filename}{}\end{DoxyParamCaption})}
+
+Set the intrinsic camera calibration. \Hypertarget{classcuda_point_cloud_ad874061b473d13dd32556d94e301cf1a}\index{cudaPointCloud@{cudaPointCloud}!SetCalibration@{SetCalibration}}
+\index{SetCalibration@{SetCalibration}!cudaPointCloud@{cudaPointCloud}}
+\doxysubsubsection{\texorpdfstring{SetCalibration()}{SetCalibration()}\hspace{0.1cm}{\footnotesize\ttfamily [3/6]}}
+{\footnotesize\ttfamily \label{classcuda_point_cloud_ad874061b473d13dd32556d94e301cf1a} 
+void cuda\+Point\+Cloud::\+\+Set\+Calibration (\begin{DoxyParamCaption}\item[{const float}]{K}{\+[3]\+\+[3]\+}\end{DoxyParamCaption})}
+
+Set the intrinsic camera calibration. \Hypertarget{classcuda_point_cloud_ad874061b473d13dd32556d94e301cf1a}\index{cudaPointCloud@{cudaPointCloud}!SetCalibration@{SetCalibration}}
+\index{SetCalibration@{SetCalibration}!cudaPointCloud@{cudaPointCloud}}
+\doxysubsubsection{\texorpdfstring{SetCalibration()}{SetCalibration()}\hspace{0.1cm}{\footnotesize\ttfamily [4/6]}}
+{\footnotesize\ttfamily \label{classcuda_point_cloud_ad874061b473d13dd32556d94e301cf1a} 
+void cuda\+Point\+Cloud::\+\+Set\+Calibration (\begin{DoxyParamCaption}\item[{const float}]{K}{\+[3]\+\+[3]\+}\end{DoxyParamCaption})}
+
+Set the intrinsic camera calibration. \Hypertarget{classcuda_point_cloud_a9467ff5c23789c9ec0167305c51fec39}\index{cudaPointCloud@{cudaPointCloud}!SetCalibration@{SetCalibration}}
+\index{SetCalibration@{SetCalibration}!cudaPointCloud@{cudaPointCloud}}
+\doxysubsubsection{\texorpdfstring{SetCalibration()}{SetCalibration()}\hspace{0.1cm}{\footnotesize\ttfamily [5/6]}}
+{\footnotesize\ttfamily \label{classcuda_point_cloud_a9467ff5c23789c9ec0167305c51fec39} 
+void cuda\+Point\+Cloud::\+\+Set\+Calibration (\begin{DoxyParamCaption}\item[{const float2 \&}]{focal\+Length}{, }\item[{const float2 \&}]{principal\+Point}{}\end{DoxyParamCaption})}
+
+Set the intrinsic camera calibration. \Hypertarget{classcuda_point_cloud_a9467ff5c23789c9ec0167305c51fec39}\index{cudaPointCloud@{cudaPointCloud}!SetCalibration@{SetCalibration}}
+\index{SetCalibration@{SetCalibration}!cudaPointCloud@{cudaPointCloud}}
+\doxysubsubsection{\texorpdfstring{SetCalibration()}{SetCalibration()}\hspace{0.1cm}{\footnotesize\ttfamily [6/6]}}
+{\footnotesize\ttfamily \label{classcuda_point_cloud_a9467ff5c23789c9ec0167305c51fec39} 
+void cuda\+Point\+Cloud::\+\+Set\+Calibration (\begin{DoxyParamCaption}\item[{const float2 \&}]{focal\+Length}{, }\item[{const float2 \&}]{principal\+Point}{}\end{DoxyParamCaption})}
+
+Set the intrinsic camera calibration. 
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+jetson-\/inference/\+build/\+aarch64/\+include/\+jetson-\/utils/\+cuda\+Point\+Cloud.\+h\item 
+jetson-\/inference/\+utils/\+cuda/\+cuda\+Point\+Cloud.\+h\item 
+jetson-\/inference/\+utils/\+cuda/\+cuda\+Point\+Cloud.\+cpp\end{DoxyCompactItemize}

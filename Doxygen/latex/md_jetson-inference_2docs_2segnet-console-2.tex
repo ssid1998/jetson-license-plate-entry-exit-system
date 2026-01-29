@@ -1,0 +1,193 @@
+\chapter{segnet-\/console-\/2 }
+\hypertarget{md_jetson-inference_2docs_2segnet-console-2}{}\label{md_jetson-inference_2docs_2segnet-console-2}\index{segnet-\/console-\/2@{segnet-\/console-\/2}}
+ 
+
+\textsuperscript{\href{detectnet-tracking.md}{\texttt{Back}} \texorpdfstring{$\vert$}{|} \href{segnet-camera-2.md}{\texttt{Next}} \texorpdfstring{$\vert$}{|} }\href{../README.md\#hello-ai-world}{\texttt{\textsuperscript{Contents}}} ~\newline
+ \textsuperscript{Semantic Segmentation}\hypertarget{md_jetson-inference_2docs_2segnet-console-2_autotoc_md396}{}\doxysection{\texorpdfstring{Semantic Segmentation with Seg\+Net}{Semantic Segmentation with Seg\+Net}}\label{md_jetson-inference_2docs_2segnet-console-2_autotoc_md396}
+\doxylink{requirements_The}{The} next deep learning capability we\textquotesingle{}ll cover in this tutorial is {\bfseries{semantic segmentation}}. Semantic segmentation is based on image recognition, except the classifications occur at the pixel level as opposed to the entire image. This is accomplished by {\itshape convolutionalizing} a pre-\/trained image recognition backbone, which transforms the model into a \href{https://arxiv.org/abs/1605.06211}{\texttt{Fully Convolutional Network (FCN)}} capable of per-\/pixel labeling. Especially useful for environmental perception, segmentation yields dense per-\/pixel classifications of many different potential objects per scene, including scene foregrounds and backgrounds.
+
+
+
+\href{../c/segNet.h}{\texttt{{\ttfamily seg\+Net}}} accepts as input the 2D image, and outputs a second image with the per-\/pixel classification mask overlay. Each pixel of the mask corresponds to the class of object that was classified. \href{../c/segNet.h}{\texttt{{\ttfamily seg\+Net}}} is available to use from \href{https://rawgit.com/dusty-nv/jetson-inference/master/docs/html/python/jetson.inference.html\#segNet}{\texttt{Python}} and \href{../c/segNet.h}{\texttt{C++}}. ~\newline
+
+
+As examples of using the {\ttfamily \doxylink{classseg_net}{seg\+Net}} class, we provide sample programs C++ and Python:\+
+
+
+\begin{DoxyItemize}
+\item \href{../examples/segnet/segnet.cpp}{\texttt{{\ttfamily segnet.\+cpp}}} (C++)
+\item \href{../python/examples/segnet.py}{\texttt{{\ttfamily segnet.\+py}}} (Python)
+\end{DoxyItemize}
+
+These samples are able to segment images, videos, and camera feeds. For more info about the various types of input/\+output streams supported, see the \doxysectlink{md_jetson-inference_2docs_2aux-streaming}{Camera Streaming and Multimedia}{0} page.
+
+See below for various pre-\/trained segmentation models available that use the FCN-\/\+Res\+Net18 network with realtime performance on Jetson. Models are provided for a variety of environments and subject matter, including urban cities, off-\/road trails, and indoor office spaces and homes.\hypertarget{md_jetson-inference_2docs_2segnet-console-2_autotoc_md397}{}\doxysubsubsection{\texorpdfstring{Pre-\/\+Trained Segmentation Models Available}{Pre-\/\+Trained Segmentation Models Available}}\label{md_jetson-inference_2docs_2segnet-console-2_autotoc_md397}
+Below is a table of the pre-\/trained semantic segmentation models available to use, and the associated {\ttfamily -\/-\/\doxylink{group__network}{Networking}} argument to {\ttfamily segnet} used for loading them. They\textquotesingle{}re based on the 21-\/class FCN-\/\+Res\+Net18 network and have been trained on various datasets and resolutions using \href{https://github.com/dusty-nv/pytorch-segmentation}{\texttt{Py\+Torch}}, and were exported to \href{https://onnx.ai/}{\texttt{ONNX format}} to be loaded with Tensor\+RT.
+
+
+\begin{DoxyTable}{6}{}{}{1}
+\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}Dataset  &\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}Resolution  &\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}CLI Argument  &\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}Accuracy  &\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}Jetson Nano  &\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}Jetson Xavier  \\
+\SetCell{c}\href{https://www.cityscapes-dataset.com/}{\texttt{Cityscapes}}  &\SetCell{c}512x256  &{\ttfamily fcn-\/resnet18-\/cityscapes-\/512x256}  &\SetCell{c}83.\+3\%  &\SetCell{c}48 FPS  &\SetCell{c}480 FPS  \\
+\SetCell{c}\href{https://www.cityscapes-dataset.com/}{\texttt{Cityscapes}}  &\SetCell{c}1024x512  &{\ttfamily fcn-\/resnet18-\/cityscapes-\/1024x512}  &\SetCell{c}87.\+3\%  &\SetCell{c}12 FPS  &\SetCell{c}175 FPS  \\
+\SetCell{c}\href{https://www.cityscapes-dataset.com/}{\texttt{Cityscapes}}  &\SetCell{c}2048x1024  &{\ttfamily fcn-\/resnet18-\/cityscapes-\/2048x1024}  &\SetCell{c}89.\+6\%  &\SetCell{c}3 FPS  &\SetCell{c}47 FPS  \\
+\SetCell{c}\href{http://deepscene.cs.uni-freiburg.de/}{\texttt{Deep\+Scene}}  &\SetCell{c}576x320  &{\ttfamily fcn-\/resnet18-\/deepscene-\/576x320}  &\SetCell{c}96.\+4\%  &\SetCell{c}26 FPS  &\SetCell{c}360 FPS  \\
+\SetCell{c}\href{http://deepscene.cs.uni-freiburg.de/}{\texttt{Deep\+Scene}}  &\SetCell{c}864x480  &{\ttfamily fcn-\/resnet18-\/deepscene-\/864x480}  &\SetCell{c}96.\+9\%  &\SetCell{c}14 FPS  &\SetCell{c}190 FPS  \\
+\SetCell{c}\href{https://lv-mhp.github.io/}{\texttt{Multi-\/\+Human}}  &\SetCell{c}512x320  &{\ttfamily fcn-\/resnet18-\/mhp-\/512x320}  &\SetCell{c}86.\+5\%  &\SetCell{c}34 FPS  &\SetCell{c}370 FPS  \\
+\SetCell{c}\href{https://lv-mhp.github.io/}{\texttt{Multi-\/\+Human}}  &\SetCell{c}640x360  &{\ttfamily fcn-\/resnet18-\/mhp-\/640x360}  &\SetCell{c}87.\+1\%  &\SetCell{c}23 FPS  &\SetCell{c}325 FPS  \\
+\SetCell{c}\href{http://host.robots.ox.ac.uk/pascal/VOC/}{\texttt{Pascal VOC}}  &\SetCell{c}320x320  &{\ttfamily fcn-\/resnet18-\/voc-\/320x320}  &\SetCell{c}85.\+9\%  &\SetCell{c}45 FPS  &\SetCell{c}508 FPS  \\
+\SetCell{c}\href{http://host.robots.ox.ac.uk/pascal/VOC/}{\texttt{Pascal VOC}}  &\SetCell{c}512x320  &{\ttfamily fcn-\/resnet18-\/voc-\/512x320}  &\SetCell{c}88.\+5\%  &\SetCell{c}34 FPS  &\SetCell{c}375 FPS  \\
+\SetCell{c}\href{http://rgbd.cs.princeton.edu/}{\texttt{SUN RGB-\/D}}  &\SetCell{c}512x400  &{\ttfamily fcn-\/resnet18-\/sun-\/512x400}  &\SetCell{c}64.\+3\%  &\SetCell{c}28 FPS  &\SetCell{c}340 FPS  \\
+\SetCell{c}\href{http://rgbd.cs.princeton.edu/}{\texttt{SUN RGB-\/D}}  &\SetCell{c}640x512  &{\ttfamily fcn-\/resnet18-\/sun-\/640x512}  &\SetCell{c}65.\+1\%  &\SetCell{c}17 FPS  &\SetCell{c}224 FPS  \\
+\end{DoxyTable}
+
+
+
+\begin{DoxyItemize}
+\item If the resolution is omitted from the CLI argument, the lowest resolution model is loaded
+\item Accuracy indicates the pixel classification accuracy across the model\textquotesingle{}s validation dataset
+\item Performance is measured for GPU FP16 mode with Jet\+Pack 4.\+2.\+1, {\ttfamily nvpmodel 0} (MAX-\/N)
+\end{DoxyItemize}\hypertarget{md_jetson-inference_2docs_2segnet-console-2_autotoc_md398}{}\doxysubsubsection{\texorpdfstring{Segmenting Images from the Command Line}{Segmenting Images from the Command Line}}\label{md_jetson-inference_2docs_2segnet-console-2_autotoc_md398}
+First, let\textquotesingle{}s try using the {\ttfamily segnet} program to segment static images. In addition to the input/\+output paths, there are some additional command-\/line options:\+
+
+
+\begin{DoxyItemize}
+\item optional {\ttfamily -\/-\/\doxylink{group__network}{Networking}} flag changes the segmentation model being used (see above)
+\item optional {\ttfamily -\/-\/visualize} flag accepts {\ttfamily mask} and/\+or {\ttfamily \doxylink{group__overlay}{Overlay}} modes (default is {\ttfamily \doxylink{group__overlay}{Overlay}})
+\item optional {\ttfamily -\/-\/alpha} flag sets the alpha blending value for {\ttfamily \doxylink{group__overlay}{Overlay}} (default is {\ttfamily 120})
+\item optional {\ttfamily -\/-\/filter-\/mode} flag accepts {\ttfamily point} or {\ttfamily linear} sampling (default is {\ttfamily linear})
+\end{DoxyItemize}
+
+Launch the application with the {\ttfamily -\/-\/help} flag for more info, and refer to the \doxysectlink{md_jetson-inference_2docs_2aux-streaming}{Camera Streaming and Multimedia}{0} page for supported input/\+output protocols.
+
+Here are some example usages of the program:\+\hypertarget{md_jetson-inference_2docs_2segnet-console-2_autotoc_md399}{}\doxysubsubsubsection{\texorpdfstring{C++}{C++}}\label{md_jetson-inference_2docs_2segnet-console-2_autotoc_md399}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{\$\ ./segnet\ -\/-\/network=<model>\ input.jpg\ output.jpg\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \#\ overlay\ segmentation\ on\ original}
+\DoxyCodeLine{\$\ ./segnet\ -\/-\/network=<model>\ -\/-\/alpha=200\ input.jpg\ output.jpg\ \ \ \ \ \ \#\ make\ the\ overlay\ less\ opaque}
+\DoxyCodeLine{\$\ ./segnet\ -\/-\/network=<model>\ -\/-\/visualize=mask\ input.jpg\ output.jpg\ \#\ output\ the\ solid\ segmentation\ mask}
+
+\end{DoxyCode}
+\hypertarget{md_jetson-inference_2docs_2segnet-console-2_autotoc_md400}{}\doxysubsubsubsection{\texorpdfstring{Python}{Python}}\label{md_jetson-inference_2docs_2segnet-console-2_autotoc_md400}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{\$\ ./segnet.py\ -\/-\/network=<model>\ input.jpg\ output.jpg\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \#\ overlay\ segmentation\ on\ original}
+\DoxyCodeLine{\$\ ./segnet.py\ -\/-\/network=<model>\ -\/-\/alpha=200\ input.jpg\ output.jpg\ \ \ \ \ \ \#\ make\ the\ overlay\ less\ opaque}
+\DoxyCodeLine{\$\ ./segnet.py\ -\/-\/network=<model>\ -\/-\/visualize=mask\ input.jpg\ output.jpg\ \#\ output\ the\ segmentation\ mask}
+
+\end{DoxyCode}
+\hypertarget{md_jetson-inference_2docs_2segnet-console-2_autotoc_md401}{}\doxysubsubsection{\texorpdfstring{Cityscapes}{Cityscapes}}\label{md_jetson-inference_2docs_2segnet-console-2_autotoc_md401}
+Let\textquotesingle{}s look at some different scenarios. Here\textquotesingle{}s an example of segmenting an urban street scene with the \href{https://www.cityscapes-dataset.com/}{\texttt{Cityscapes}} model:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{\#\ C++}
+\DoxyCodeLine{\$\ ./segnet\ -\/-\/network=fcn-\/resnet18-\/cityscapes\ images/city\_0.jpg\ images/test/output.jpg}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#\ Python}
+\DoxyCodeLine{\$\ ./segnet.py\ -\/-\/network=fcn-\/resnet18-\/cityscapes\ images/city\_0.jpg\ images/test/output.jpg}
+
+\end{DoxyCode}
+
+
+
+
+There are more test images called {\ttfamily city-\/\texorpdfstring{$\ast$}{*}.jpg} found under the {\ttfamily images/\+} subdirectory for trying out the Cityscapes model.\hypertarget{md_jetson-inference_2docs_2segnet-console-2_autotoc_md402}{}\doxysubsubsection{\texorpdfstring{Deep\+Scene}{Deep\+Scene}}\label{md_jetson-inference_2docs_2segnet-console-2_autotoc_md402}
+\doxylink{requirements_The}{The} \href{http://deepscene.cs.uni-freiburg.de/}{\texttt{Deep\+Scene dataset}} consists of off-\/road forest trails and vegetation, aiding in path-\/following for outdoor robots. ~\newline
+ Here\textquotesingle{}s an example of generating the segmentation overlay and mask by specifying the {\ttfamily -\/-\/visualize} argument:\+\hypertarget{md_jetson-inference_2docs_2segnet-console-2_autotoc_md403}{}\doxysubsubsubsection{\texorpdfstring{C++}{C++}}\label{md_jetson-inference_2docs_2segnet-console-2_autotoc_md403}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{\$\ ./segnet\ -\/-\/network=fcn-\/resnet18-\/deepscene\ images/trail\_0.jpg\ images/test/output\_overlay.jpg\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \#\ overlay}
+\DoxyCodeLine{\$\ ./segnet\ -\/-\/network=fcn-\/resnet18-\/deepscene\ -\/-\/visualize=mask\ images/trail\_0.jpg\ images/test/output\_mask.jpg\ \ \#\ mask}
+
+\end{DoxyCode}
+\hypertarget{md_jetson-inference_2docs_2segnet-console-2_autotoc_md404}{}\doxysubsubsubsection{\texorpdfstring{Python}{Python}}\label{md_jetson-inference_2docs_2segnet-console-2_autotoc_md404}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{\$\ ./segnet.py\ -\/-\/network=fcn-\/resnet18-\/deepscene\ images/trail\_0.jpg\ images/test/output\_overlay.jpg\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \#\ overlay}
+\DoxyCodeLine{\$\ ./segnet.py\ -\/-\/network=fcn-\/resnet18-\/deepscene\ -\/-\/visualize=mask\ images/trail\_0.jpg\ images/test/output\_mask.jpg\ \#\ mask}
+
+\end{DoxyCode}
+
+
+ 
+
+There are more sample images called {\ttfamily trail-\/\texorpdfstring{$\ast$}{*}.jpg} located under the {\ttfamily images/\+} subdirectory.\hypertarget{md_jetson-inference_2docs_2segnet-console-2_autotoc_md405}{}\doxysubsubsection{\texorpdfstring{Multi-\/\+Human Parsing (MHP)}{Multi-\/\+Human Parsing (MHP)}}\label{md_jetson-inference_2docs_2segnet-console-2_autotoc_md405}
+\href{https://lv-mhp.github.io/}{\texttt{Multi-\/\+Human Parsing}} provides dense labeling of body parts, like arms, legs, head, and different types of clothing. ~\newline
+ See the handful of test images named {\ttfamily humans-\/\texorpdfstring{$\ast$}{*}.jpg} found under {\ttfamily images/\+} for trying out the MHP model:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{\#\ C++}
+\DoxyCodeLine{\$\ ./segnet\ -\/-\/network=fcn-\/resnet18-\/mhp\ images/humans\_0.jpg\ images/test/output.jpg}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#\ Python}
+\DoxyCodeLine{\$\ ./segnet.py\ -\/-\/network=fcn-\/resnet18-\/mhp\ images/humans\_0.jpg\ images/test/output.jpg}
+
+\end{DoxyCode}
+
+
+ \hypertarget{md_jetson-inference_2docs_2segnet-console-2_autotoc_md406}{}\doxysubsubsubsection{\texorpdfstring{MHP Classes}{MHP Classes}}\label{md_jetson-inference_2docs_2segnet-console-2_autotoc_md406}
+\hypertarget{md_jetson-inference_2docs_2segnet-console-2_autotoc_md407}{}\doxysubsubsection{\texorpdfstring{Pascal VOC}{Pascal VOC}}\label{md_jetson-inference_2docs_2segnet-console-2_autotoc_md407}
+\href{http://host.robots.ox.ac.uk/pascal/VOC/}{\texttt{Pascal VOC}} is one of the original datasets used for semantic segmentation, containing various people, animals, vehicles, and household objects. There are some sample images included named {\ttfamily object-\/\texorpdfstring{$\ast$}{*}.jpg} for testing out the Pascal VOC model:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{\#\ C++}
+\DoxyCodeLine{\$\ ./segnet\ -\/-\/network=fcn-\/resnet18-\/voc\ images/object\_0.jpg\ images/test/output.jpg}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#\ Python}
+\DoxyCodeLine{\$\ ./segnet.py\ -\/-\/network=fcn-\/resnet18-\/voc\ images/object\_0.jpg\ images/test/output.jpg}
+
+\end{DoxyCode}
+
+
+\hypertarget{md_jetson-inference_2docs_2segnet-console-2_autotoc_md408}{}\doxysubsubsubsection{\texorpdfstring{VOC Classes}{VOC Classes}}\label{md_jetson-inference_2docs_2segnet-console-2_autotoc_md408}
+\hypertarget{md_jetson-inference_2docs_2segnet-console-2_autotoc_md409}{}\doxysubsubsection{\texorpdfstring{SUN RGB-\/D}{SUN RGB-\/D}}\label{md_jetson-inference_2docs_2segnet-console-2_autotoc_md409}
+\doxylink{requirements_The}{The} \href{http://rgbd.cs.princeton.edu/}{\texttt{SUN RGB-\/D}} dataset provides segmentation ground-\/truth for many indoor objects and scenes commonly found in office spaces and homes. See the images named {\ttfamily room-\/\texorpdfstring{$\ast$}{*}.jpg} found under the {\ttfamily images/\+} subdirectory for testing out the SUN models:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{\#\ C++}
+\DoxyCodeLine{\$\ ./segnet\ -\/-\/network=fcn-\/resnet18-\/sun\ images/room\_0.jpg\ images/test/output.jpg}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#\ Python}
+\DoxyCodeLine{\$\ ./segnet.py\ -\/-\/network=fcn-\/resnet18-\/sun\ images/room\_0.jpg\ images/test/output.jpg}
+
+\end{DoxyCode}
+
+
+\hypertarget{md_jetson-inference_2docs_2segnet-console-2_autotoc_md410}{}\doxysubsubsubsection{\texorpdfstring{SUN Classes}{SUN Classes}}\label{md_jetson-inference_2docs_2segnet-console-2_autotoc_md410}
+\hypertarget{md_jetson-inference_2docs_2segnet-console-2_autotoc_md411}{}\doxysubsubsection{\texorpdfstring{Processing a Directory or Sequence of Images}{Processing a Directory or Sequence of Images}}\label{md_jetson-inference_2docs_2segnet-console-2_autotoc_md411}
+If you want to process a directory or sequence of images, you can launch the program with the path to the directory that contains images or a wildcard sequence:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{\#\ C++}
+\DoxyCodeLine{\$\ ./segnet\ -\/-\/network=fcn-\/resnet18-\/sun\ "{}images/room\_*.jpg"{}\ images/test/room\_output\_\%i.jpg}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#\ Python}
+\DoxyCodeLine{\$\ ./segnet.py\ -\/-\/network=fcn-\/resnet18-\/sun\ "{}images/room\_*.jpg"{}\ images/test/room\_output\_\%i.jpg}
+
+\end{DoxyCode}
+
+
+\begin{quote}
+{\bfseries{note:\+}} when using wildcards, always enclose it in quotes ({\ttfamily "{}\texorpdfstring{$\ast$}{*}.jpg"{}}). Otherwise, the OS will auto-\/expand the sequence and modify the order of arguments on the command-\/line, which may result in one of the input images being overwritten by the output. \end{quote}
+
+
+For more info about loading/\+saving sequences of images, see the \href{aux-streaming.md\#sequences}{\texttt{Camera Streaming and Multimedia}} page. Next, we\textquotesingle{}ll run segmentation on a live camera or video stream.\hypertarget{md_jetson-inference_2docs_2segnet-console-2_autotoc_md412}{}\doxysubsection{\texorpdfstring{autotoc\+\_\+md412}{autotoc\+\_\+md412}}\label{md_jetson-inference_2docs_2segnet-console-2_autotoc_md412}
+Next \texorpdfstring{$\vert$}{|} {\bfseries{\href{segnet-camera-2.md}{\texttt{Running the Live Camera Segmentation Demo}}}} ~\newline
+ Back \texorpdfstring{$\vert$}{|} {\bfseries{\href{detectnet-tracking.md}{\texttt{Object Tracking on Video}}}}
+
+{\bfseries{ }}
+
+\textsuperscript{© 2016-\/2019 NVIDIA \texorpdfstring{$\vert$}{|} }\href{../README.md\#hello-ai-world}{\texttt{\textsuperscript{Table of Contents}}}

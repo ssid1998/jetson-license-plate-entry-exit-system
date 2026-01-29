@@ -1,0 +1,150 @@
+\chapter{webrtc-\/dash }
+\hypertarget{md_jetson-inference_2docs_2webrtc-dash}{}\label{md_jetson-inference_2docs_2webrtc-dash}\index{webrtc-\/dash@{webrtc-\/dash}}
+ 
+
+\textsuperscript{\href{webrtc-flask.md}{\texttt{Back}} \texorpdfstring{$\vert$}{|} \href{webrtc-recognizer.md}{\texttt{Next}} \texorpdfstring{$\vert$}{|} }\href{../README.md\#hello-ai-world}{\texttt{\textsuperscript{Contents}}} ~\newline
+ \textsuperscript{Web\+App Frameworks}\hypertarget{md_jetson-inference_2docs_2webrtc-dash_autotoc_md426}{}\doxysection{\texorpdfstring{Plotly Dashboard}{Plotly Dashboard}}\label{md_jetson-inference_2docs_2webrtc-dash_autotoc_md426}
+\href{https://plotly.com/dash/}{\texttt{Plotly Dash}} is a Python-\/based web framework for building data-\/driven dashboards and interactive UI\textquotesingle{}s. On the frontend it uses \href{https://reactjs.org/}{\texttt{React.\+js}} client-\/side, which connects state changes to Python callbacks running on the server. With it, you can quickly develop rich visualizations that integrate with backend processing pipelines and data analytics. In this example (found under \href{../python/www/dash}{\texttt{{\ttfamily python/\+www/\+dash}}}), users can dynamically create streams, load DNN models, visualize events, and setup extendable actions triggered by events:\+
+
+
+
+As before, it uses Web\+RTC for streaming live video and Tensor\+RT for inferencing. Note that this sample is still under development as a proof-\/of-\/concept. For reference, the project is structured as follows:\+
+
+
+\begin{DoxyItemize}
+\item \href{../python/www/dash/app.py}{\texttt{{\ttfamily app.\+py}}} (webserver)
+\item \href{../python/www/dash/actions}{\texttt{{\ttfamily actions/\+}}} (action plugins)
+\item \href{../python/www/dash/assets}{\texttt{{\ttfamily assets/\+}}} (CSS/\+\+Java\+Script/\+images)
+\item \href{../python/www/dash/layout}{\texttt{{\ttfamily layout/\+}}} (UI components)
+\item \href{../python/www/dash/server}{\texttt{{\ttfamily server/\+}}} (backend streaming/\+processing)
+\end{DoxyItemize}\hypertarget{md_jetson-inference_2docs_2webrtc-dash_autotoc_md427}{}\doxysubsection{\texorpdfstring{Running the Example}{Running the Example}}\label{md_jetson-inference_2docs_2webrtc-dash_autotoc_md427}
+Launching app.\+py will start the dashboard, along with a backend process that runs the Web\+RTC capture/\+transport, inferencing, and event/\+action triggers. Whereas previous examples ran the streaming in a thread inside same process as the webserver, running the streaming backend in it\textquotesingle{}s own independent process allows for multiple webserver workers to load-\/balance in deployment (i.\+e. with \href{https://gunicorn.org/}{\texttt{Gunicorn}} or other production WSGI webservers). These processes share metadata over REST JSON messages (with the video data residing within the streaming process).
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{\$\ cd\ jetson-\/inference/python/www/dash}
+\DoxyCodeLine{\$\ pip3\ install\ -\/r\ requirements.txt}
+\DoxyCodeLine{\$\ python3\ app.py\ -\/-\/detection=ssd-\/mobilenet-\/v2\ -\/-\/pose=resnet18-\/hand\ -\/-\/action=resnet18-\/kinetics}
+
+\end{DoxyCode}
+
+
+\begin{quote}
+{\bfseries{note}}:\+ it\textquotesingle{}s recommended to enable \href{webrtc-server.md\#enabling-https--ssl}{\texttt{HTTPS/\+\+SSL}} when running the server \end{quote}
+
+
+You should then be able to navigate your browser to {\ttfamily \href{https://}{\texttt{https:\+/\+/\+}}\texorpdfstring{$<$}{<}JETSON-\/\+IP\texorpdfstring{$>$}{>}:\+8050} and start configuring the system. 8050 is the default port used, but you can change that with the {\ttfamily -\/-\/port=N} command-\/line argument. There are also various settings that you can change through {\ttfamily data/\+config.\+json} (which gets written with the defaults from \href{../python/www/dash/config.py}{\texttt{{\ttfamily config.\+py}}} the first time you run the app).\hypertarget{md_jetson-inference_2docs_2webrtc-dash_autotoc_md428}{}\doxysubsubsection{\texorpdfstring{Loading DNN Models}{Loading DNN Models}}\label{md_jetson-inference_2docs_2webrtc-dash_autotoc_md428}
+\doxylink{requirements_The}{The} first thing to do is to load some DNN models by going to the {\ttfamily Models -\/\texorpdfstring{$>$}{>} Load Model} menu. Currently it supports loading pre-\/trained classification and detection models, in addition to importing custom-\/trained ONNX models:\+
+
+
+
+After selecting the model in the dialog, you should see a status message appear at the bottom of the main page when it\textquotesingle{}s been loaded. Typically this takes a 5-\/10 seconds, but if it\textquotesingle{}s the first time you\textquotesingle{}ve loaded that particular model it could take Tensor\+RT a few minutes to generate the network engine (to avoid this delay, it\textquotesingle{}s recommended to load the model once with one of the imagenet.\+py/\+detectnet.py programs prior to running the webapp)\hypertarget{md_jetson-inference_2docs_2webrtc-dash_autotoc_md429}{}\doxysubsubsubsection{\texorpdfstring{Importing Models}{Importing Models}}\label{md_jetson-inference_2docs_2webrtc-dash_autotoc_md429}
+To load a customized classification or detection ONNX model that you trained with Py\+Torch from the Hello AI World tutorial (i.\+e. with \href{pytorch-cat-dog.md\#re-training-resnet-18-model}{\texttt{{\ttfamily train.\+py}}} or \href{https://github.com/dusty-nv/jetson-inference/blob/dev/docs/pytorch-collect-detection.md\#training-your-model}{\texttt{{\ttfamily train\+\_\+ssd.\+py}}}), switch to the {\ttfamily Import} tab:\+
+
+
+
+It\textquotesingle{}s expected that your model already exists somewhere on the server, and you can fill out the input/\+output layer names with the same ones you would use with imagenet.\+py/\+detectnet.py (like used \href{pytorch-cat-dog.md\#processing-images-with-tensorrt}{\texttt{here}} for classification and \href{pytorch-ssd.md\#processing-images-with-tensorrt}{\texttt{here}} for detection)\hypertarget{md_jetson-inference_2docs_2webrtc-dash_autotoc_md430}{}\doxysubsubsection{\texorpdfstring{Creating Streams}{Creating Streams}}\label{md_jetson-inference_2docs_2webrtc-dash_autotoc_md430}
+By opening the {\ttfamily Streams -\/\texorpdfstring{$>$}{>} Add Stream} menu, you can specify video sources to stream, along with the DNN models that you want applied:\+
+
+
+
+\doxylink{requirements_The}{The} syntax for connecting to various types of cameras and video devices can be found on the \doxysectlink{md_jetson-inference_2docs_2aux-streaming}{Camera Streaming and Multimedia}{0} page. Note that Web\+RTC input from browser webcams is not yet supported in this sample, but will be added. After you add a stream, you can open it\textquotesingle{}s video player by selecting it from the {\ttfamily Streams} menu. \doxylink{requirements_The}{The} panel widgets are draggable, resizeable, and collapsable.\hypertarget{md_jetson-inference_2docs_2webrtc-dash_autotoc_md431}{}\doxysubsection{\texorpdfstring{Events}{Events}}\label{md_jetson-inference_2docs_2webrtc-dash_autotoc_md431}
+When the output of a DNN changes (i.\+e. the classification result changes, or a new object is detected) it logs an event in the system. These events can be monitored in realtime by opening the Events Table from under the {\ttfamily Events} menu:\+
+
+
+
+You can filter and sort by column in the table, and visualize the results in the \doxylink{class_event}{Event} Timeline:\+
+
+
+
+\doxylink{requirements_The}{The} y-\/axis of this plot shows confidence score, the x-\/axis shows time, and each object class gets a different trace in the chart. Quickly creating different types of dynamic \href{https://plotly.com/python/}{\texttt{graphs}} and \href{https://dash.plotly.com/datatable}{\texttt{tables}} is a strong feature of Plotly Dash, and you can extend these when creating your own apps.\hypertarget{md_jetson-inference_2docs_2webrtc-dash_autotoc_md432}{}\doxysubsection{\texorpdfstring{Actions}{Actions}}\label{md_jetson-inference_2docs_2webrtc-dash_autotoc_md432}
+Actions are plugins that filter events and trigger user-\/defined code (such as alerts/\+notifications, playing sounds, or generating a physical response) when such an event occurs. An action\textquotesingle{}s properties are exposed through the web UI so that they are configurable at runtime:\+
+
+
+
+You can add your own action types under the project\textquotesingle{}s \href{../python/www/dash/actions}{\texttt{{\ttfamily actions/\+}}} directory, and they\textquotesingle{}ll automatically be loaded by the app at start-\/up and selectable from the UI. Multiple instances of a type of action can be created by the user, each with independent settings they can control.
+
+For example, here\textquotesingle{}s the template for an action that simply logs messages to the server\textquotesingle{}s terminal:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ python}
+\DoxyCodeLine{from\ server\ import\ Action}
+\DoxyCodeLine{}
+\DoxyCodeLine{class\ MyAction(Action):}
+\DoxyCodeLine{\ \ \ \ def\ \_\_init\_\_(self):}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ super().\_\_init\_\_()}
+\DoxyCodeLine{\ \ \ \ \ \ \ }
+\DoxyCodeLine{\ \ \ \ def\ on\_event(self,\ event):}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ if\ event.label\ ==\ 'person'\ and\ event.score\ >\ 0.5:}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ print("{}Detected\ a\ person!"{})\ \ \#\ do\ something\ \ \ \ \ \ \ \ }
+
+\end{DoxyCode}
+
+
+Action plugins should implement the {\ttfamily on\+\_\+event()} callback, which receives all new and updated events from the system. \doxylink{requirements_The}{The} plugins then filter the events by domain-\/specific critera before triggering a response of some kind. See the \href{../python/www/dash/server/event.py}{\texttt{{\ttfamily Event}}} class for the event attributes that can be accessed. This code all runs in the backend streaming process, and has access to the low-\/level data streams without impacting performance.\hypertarget{md_jetson-inference_2docs_2webrtc-dash_autotoc_md433}{}\doxysubsubsection{\texorpdfstring{Filters}{Filters}}\label{md_jetson-inference_2docs_2webrtc-dash_autotoc_md433}
+Actions can implement custom event filtering logic, and/\+or inherit from the \href{../python/www/dash/server/filter.py}{\texttt{{\ttfamily Event\+Filter}}} mix-\/in that implements some default filtering (like class labels, minimum confidence score, minimum number of frames, ect) which can be called with the {\ttfamily filter()} function. \doxylink{requirements_The}{The} \href{../python/www/dash/actions/alert.py}{\texttt{{\ttfamily Browser\+Alert}}} plugin uses that below. It then checks/\+sets an attribute ({\ttfamily alert\+\_\+triggered}) which prevents the same event from triggering multiple alerts:\+ ~\newline
+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ python}
+\DoxyCodeLine{from\ server\ import\ Server,\ Action,\ EventFilter}
+\DoxyCodeLine{}
+\DoxyCodeLine{class\ BrowserAlert(Action,\ EventFilter):}
+\DoxyCodeLine{\ \ \ \ "{}"{}"{}}
+\DoxyCodeLine{\ \ \ \ Action\ that\ triggers\ browser\ alerts\ and\ supports\ event\ filtering.}
+\DoxyCodeLine{\ \ \ \ "{}"{}"{}}
+\DoxyCodeLine{\ \ \ \ def\ \_\_init\_\_(self):}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ super(BrowserAlert,\ self).\_\_init\_\_()}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ def\ on\_event(self,\ event):}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ if\ self.filter(event)\ and\ not\ hasattr(event,\ 'alert\_triggered'):}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ Server.alert(f"{}Detected\ '\{event.label\}'\ (\{event.maxScore\ *\ 100:.1f\}\%)"{})}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ event.alert\_triggered\ =\ True}
+
+\end{DoxyCode}
+
+
+It\textquotesingle{}s possible that in some more advanced scenarios, you may want to re-\/trigger the action when other aspects of the event changes (like a significant deviation in confidence score, or exceeding an amount of time being detected, for example)\hypertarget{md_jetson-inference_2docs_2webrtc-dash_autotoc_md434}{}\doxysubsubsection{\texorpdfstring{Properties}{Properties}}\label{md_jetson-inference_2docs_2webrtc-dash_autotoc_md434}
+Plugins that have {\ttfamily @property} decorators will have those properties automatically exposed to the UI so that they can be dynamically modified by the user at runtime. \doxylink{requirements_The}{The} client/\+server communication happens transparently using REST JSON queries. For example, from \href{../python/www/dash/server/filter.py}{\texttt{{\ttfamily Event\+Filter}}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ python}
+\DoxyCodeLine{@property}
+\DoxyCodeLine{def\ labels(self)\ -\/>\ str:}
+\DoxyCodeLine{\ \ \ return\ ';'.join(self.\_labels)}
+\DoxyCodeLine{\ \ \ }
+\DoxyCodeLine{@labels.setter}
+\DoxyCodeLine{def\ labels(self,\ labels):}
+\DoxyCodeLine{\ \ \ self.\_labels\ =\ [label.strip()\ for\ label\ in\ labels.split(';')]}
+\DoxyCodeLine{}
+\DoxyCodeLine{@property}
+\DoxyCodeLine{def\ min\_frames(self)\ -\/>\ int:}
+\DoxyCodeLine{\ \ \ return\ self.\_min\_frames}
+\DoxyCodeLine{\ \ \ }
+\DoxyCodeLine{@min\_frames.setter}
+\DoxyCodeLine{def\ min\_frames(self,\ min\_frames):}
+\DoxyCodeLine{\ \ \ self.\_min\_frames\ =\ int(min\_frames)}
+\DoxyCodeLine{\ \ }
+\DoxyCodeLine{@property}
+\DoxyCodeLine{def\ min\_score(self)\ -\/>\ float:}
+\DoxyCodeLine{\ \ \ return\ self.\_min\_score}
+\DoxyCodeLine{\ \ \ }
+\DoxyCodeLine{@min\_frames.setter}
+\DoxyCodeLine{def\ min\_score(self,\ min\_score):}
+\DoxyCodeLine{\ \ \ self.\_min\_score\ =\ float(min\_score)}
+
+\end{DoxyCode}
+
+
+Note the Python type hints that are specified on the getter functions -\/ these inform the frontend of what kind of UI control to use (e.\+g. textbox, slider, checkbox, ect). Supported types are {\ttfamily str}, {\ttfamily int}, {\ttfamily float}, and {\ttfamily bool}. If the type hint is omitted, it will be assumed to be a string with a textbox input, and the user\textquotesingle{}s plugin will be responsible for parsing/\+converting it to the desired type.
+
+Next \texorpdfstring{$\vert$}{|} {\bfseries{\href{webrtc-recognizer.md}{\texttt{Recognizer (Interactive Training)}}}} ~\newline
+ Back \texorpdfstring{$\vert$}{|} {\bfseries{\href{webrtc-flask.md}{\texttt{Flask + REST}}}}
+
+{\bfseries{ }}
+
+\textsuperscript{© 2016-\/2023 NVIDIA \texorpdfstring{$\vert$}{|} }\href{../README.md\#hello-ai-world}{\texttt{\textsuperscript{Table of Contents}}}

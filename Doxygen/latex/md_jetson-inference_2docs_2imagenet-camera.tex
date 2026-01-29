@@ -1,0 +1,84 @@
+\chapter{imagenet-\/camera }
+\hypertarget{md_jetson-inference_2docs_2imagenet-camera}{}\label{md_jetson-inference_2docs_2imagenet-camera}\index{imagenet-\/camera@{imagenet-\/camera}}
+ 
+
+\textsuperscript{\href{imagenet-example.md}{\texttt{Back}} \texorpdfstring{$\vert$}{|} \href{imagenet-training.md}{\texttt{Next}} \texorpdfstring{$\vert$}{|} }\href{../README.md\#two-days-to-a-demo-digits}{\texttt{\textsuperscript{Contents}}} ~\newline
+ \textsuperscript{Image Recognition}
+
+~\newline
+\hypertarget{md_jetson-inference_2docs_2imagenet-camera_autotoc_md255}{}\doxysection{\texorpdfstring{Running the Live Camera Recognition Demo}{Running the Live Camera Recognition Demo}}\label{md_jetson-inference_2docs_2imagenet-camera_autotoc_md255}
+Next we have a realtime image recognition camera demo available for C++ and Python:\+
+
+
+\begin{DoxyItemize}
+\item \href{../examples/imagenet-camera/imagenet-camera.cpp}{\texttt{{\ttfamily imagenet-\/camera.\+cpp}}} (C++)
+\item \href{../python/examples/imagenet-camera.py}{\texttt{{\ttfamily imagenet-\/camera.\+py}}} (Python)
+\end{DoxyItemize}
+
+Similar to the previous \doxysectlink{md_jetson-inference_2docs_2imagenet-console}{{\ttfamily imagenet-\/console}}{0} example, the camera applications are built to the {\ttfamily /\+aarch64/\+bin} directory. They run on a live camera stream with Open\+GL rendering and accept 4 optional command-\/line arguments:\+
+
+
+\begin{DoxyItemize}
+\item {\ttfamily -\/-\/\doxylink{group__network}{Networking}} flag setting the classification model (default is Google\+Net)
+\begin{DoxyItemize}
+\item See \href{imagenet-console.md\#downloading-other-classification-models}{\texttt{Downloading Other Classification Models}} for the networks available to use.
+\end{DoxyItemize}
+\item {\ttfamily -\/-\/\doxylink{group__camera}{Camera Capture}} flag setting the camera device to use
+\begin{DoxyItemize}
+\item MIPI CSI cameras are used by specifying the sensor index ({\ttfamily 0} or {\ttfamily 1}, ect.)
+\item V4\+L2 USB cameras are used by specifying their {\ttfamily /\+dev/\+video} node ({\ttfamily /\+dev/\+video0}, {\ttfamily /\+dev/\+video1}, ect.)
+\item \doxylink{requirements_The}{The} default is to use MIPI CSI sensor 0 ({\ttfamily -\/-\/\doxylink{group__camera}{Camera Capture}=0})
+\end{DoxyItemize}
+\item {\ttfamily -\/-\/width} and {\ttfamily -\/-\/height} flags setting the camera resolution (default is {\ttfamily 1280x720})
+\begin{DoxyItemize}
+\item \doxylink{requirements_The}{The} resolution should be set to a format that the camera supports.
+\begin{DoxyItemize}
+\item Query the available formats with the following commands:\+ ~\newline
+ {\ttfamily  bash \$ sudo apt-\/get install v4l-\/utils \$ v4l2-\/ctl -\/-\/list-\/formats-\/ext }
+\end{DoxyItemize}
+\end{DoxyItemize}
+\end{DoxyItemize}
+
+You can combine the usage of these flags as needed, and there are additional command line parameters available for loading custom models. Launch the application with the {\ttfamily -\/-\/help} flag to recieve more info, or see the \href{../README.md\#code-examples}{\texttt{{\ttfamily Examples}}} readme.
+
+Below are some typical scenarios for launching the program:\+\hypertarget{md_jetson-inference_2docs_2imagenet-camera_autotoc_md256}{}\doxysubsubsubsection{\texorpdfstring{C++}{C++}}\label{md_jetson-inference_2docs_2imagenet-camera_autotoc_md256}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{\$\ ./imagenet-\/camera\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \#\ using\ GoogleNet,\ default\ MIPI\ CSI\ camera\ (1280x720)}
+\DoxyCodeLine{\$\ ./imagenet-\/camera\ -\/-\/network=resnet-\/18\ \ \ \ \ \ \#\ using\ ResNet-\/18,\ default\ MIPI\ CSI\ camera\ (1280x720)}
+\DoxyCodeLine{\$\ ./imagenet-\/camera\ -\/-\/camera=/dev/video0\ \ \ \ \ \#\ using\ GoogleNet,\ V4L2\ camera\ /dev/video0\ (1280x720)}
+\DoxyCodeLine{\$\ ./imagenet-\/camera\ -\/-\/width=640\ -\/-\/height=480\ \#\ using\ GoogleNet,\ default\ MIPI\ CSI\ camera\ (640x480)}
+
+\end{DoxyCode}
+\hypertarget{md_jetson-inference_2docs_2imagenet-camera_autotoc_md257}{}\doxysubsubsubsection{\texorpdfstring{Python}{Python}}\label{md_jetson-inference_2docs_2imagenet-camera_autotoc_md257}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{\$\ ./imagenet-\/camera.py\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \#\ using\ GoogleNet,\ default\ MIPI\ CSI\ camera\ (1280x720)}
+\DoxyCodeLine{\$\ ./imagenet-\/camera.py\ -\/-\/network=resnet-\/18\ \ \ \ \ \ \#\ using\ ResNet-\/18,\ default\ MIPI\ CSI\ camera\ (1280x720)}
+\DoxyCodeLine{\$\ ./imagenet-\/camera.py\ -\/-\/camera=/dev/video0\ \ \ \ \ \#\ using\ GoogleNet,\ V4L2\ camera\ /dev/video0\ (1280x720)}
+\DoxyCodeLine{\$\ ./imagenet-\/camera.py\ -\/-\/width=640\ -\/-\/height=480\ \#\ using\ GoogleNet,\ default\ MIPI\ CSI\ camera\ (640x480)}
+
+\end{DoxyCode}
+
+
+\begin{quote}
+{\bfseries{note}}:\+ for example cameras to use, see these sections of the Jetson Wiki:\+ ~\newline
+ ~~~~~~~~~~~~~-\/ Nano:\+~~\href{https://elinux.org/Jetson_Nano\#Cameras}{\texttt{{\ttfamily https:\+/\+/\+e\+Linux.\+org/\+\+Jetson\+\_\+\+Nano\#Cameras}}} ~\newline
+ ~~~~~~~~~~~~~-\/ Xavier:\+ \href{https://elinux.org/Jetson_AGX_Xavier\#Ecosystem_Products_.26_Cameras}{\texttt{{\ttfamily https:\+/\+/\+e\+Linux.\+org/\+\+Jetson\+\_\+\+AGX\+\_\+\+Xavier\#Ecosystem\+\_\+\+Products\+\_\+.\+26\+\_\+\+Cameras}}} ~\newline
+ ~~~~~~~~~~~~~-\/ TX1/\+\+TX2:\+ developer kits include an onboard MIPI CSI sensor module (0V5693)~\newline
+ \end{quote}
+
+
+Displayed in the Open\+GL window are the live camera stream, the classified object name, and the confidence of the classified object, along with the framerate of the network. On Jetson Nano you should see up to around \texorpdfstring{$\sim$}{\string~}75 FPS for Google\+Net and Res\+Net-\/18 (faster on other Jetson\textquotesingle{}s).
+
+  
+
+\doxylink{requirements_The}{The} application can recognize up to 1000 different types of objects, since the classification models are trained on the ILSVRC Image\+Net dataset which contains 1000 classes of objects. \doxylink{requirements_The}{The} mapping of names for the 1000 types of objects, you can find in the repo under \href{http://github.com/dusty-nv/jetson-inference/blob/master/data/networks/ilsvrc12_synset_words.txt}{\texttt{{\ttfamily data/\+networks/\+ilsvrc12\+\_\+synset\+\_\+words.\+txt}}}
+
+Next, we will re-\/train the image recognition network on a customized dataset.\hypertarget{md_jetson-inference_2docs_2imagenet-camera_autotoc_md258}{}\doxysubsection{\texorpdfstring{autotoc\+\_\+md258}{autotoc\+\_\+md258}}\label{md_jetson-inference_2docs_2imagenet-camera_autotoc_md258}
+Next \texorpdfstring{$\vert$}{|} {\bfseries{\href{imagenet-training.md}{\texttt{Re-\/\+Training the Recognition Network}}}} ~\newline
+ Back \texorpdfstring{$\vert$}{|} {\bfseries{\href{imagenet-example.md}{\texttt{Coding Your Own Image Recognition Program}}}}
+
+\textsuperscript{© 2016-\/2019 NVIDIA \texorpdfstring{$\vert$}{|} }\href{../README.md\#two-days-to-a-demo-digits}{\texttt{\textsuperscript{Table of Contents}}}

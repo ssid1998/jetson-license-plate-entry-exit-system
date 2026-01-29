@@ -1,0 +1,686 @@
+\chapter{aux-\/image }
+\hypertarget{md_jetson-inference_2docs_2aux-image}{}\label{md_jetson-inference_2docs_2aux-image}\index{aux-\/image@{aux-\/image}}
+ 
+
+\textsuperscript{\href{aux-streaming.md}{\texttt{Back}} \texorpdfstring{$\vert$}{|} \href{https://github.com/dusty-nv/ros_deep_learning}{\texttt{Next}} \texorpdfstring{$\vert$}{|} }\href{../README.md\#hello-ai-world}{\texttt{\textsuperscript{Contents}}} ~\newline
+ \textsuperscript{Appendix}
+
+~\newline
+\hypertarget{md_jetson-inference_2docs_2aux-image_autotoc_md58}{}\doxysection{\texorpdfstring{Image Manipulation with CUDA}{Image Manipulation with CUDA}}\label{md_jetson-inference_2docs_2aux-image_autotoc_md58}
+This page covers a number of image format, conversion, and pre/\+post-\/processing functions implemented by jetson-\/utils with CUDA:\+
+
+{\bfseries{Image Management}}
+\begin{DoxyItemize}
+\item Image Formats
+\item Image Allocation
+\item Copying Images
+\item Image Capsules in Python
+\begin{DoxyItemize}
+\item Array Interfaces
+\item Accessing Image Data in Python
+\item Accessing as a Numpy Array
+\item CUDA Array Interface
+\item Sharing the Memory Pointer
+\end{DoxyItemize}
+\end{DoxyItemize}
+
+{\bfseries{CUDA Routines}}
+\begin{DoxyItemize}
+\item Color Conversion
+\item Resizing
+\item Cropping
+\item \doxylink{group__normalization}{Normalization}
+\item \doxylink{group__overlay}{Overlay}
+\item Drawing Shapes
+\end{DoxyItemize}
+
+For examples of using these functions, see \href{https://github.com/dusty-nv/jetson-utils/tree/master/python/examples/cuda-examples.py}{\texttt{{\ttfamily cuda-\/examples.\+py}}} in addition to the psuedocode below. Before diving in here, it\textquotesingle{}s recommended to read the previous page on \doxysectlink{md_jetson-inference_2docs_2aux-streaming}{Camera Streaming and Multimedia}{0} for info about video capture and output, loading/\+saving images, ect.\hypertarget{md_jetson-inference_2docs_2aux-image_autotoc_md59}{}\doxysubsection{\texorpdfstring{Image Formats}{Image Formats}}\label{md_jetson-inference_2docs_2aux-image_autotoc_md59}
+Although the \href{aux-streaming\#source-code}{\texttt{video streaming}} APIs and DNN objects (such \href{c/imageNet.h}{\texttt{{\ttfamily image\+Net}}}, \href{c/detectNet.h}{\texttt{{\ttfamily detect\+Net}}}, and \href{c/segNet.h}{\texttt{{\ttfamily seg\+Net}}}) expect images in RGB/\+\+RGBA format, a variety of other formats are defined for sensor acquisition and low-\/level I/\+O:\+ ~\newline
+
+
+
+\begin{DoxyTable}{5}{}{}{1}
+\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}&\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}Format string  &\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}\href{https://rawgit.com/dusty-nv/jetson-inference/master/docs/html/group__imageFormat.html\#ga931c48e08f361637d093355d64583406}{\texttt{{\ttfamily image\+Format} enum}}  &\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}Data Type  &\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}Bit Depth  \\
+{\bfseries{RGB/\+\+RGBA}}  &{\ttfamily rgb8}  &{\ttfamily \doxylink{group__image_format_gga931c48e08f361637d093355d64583406a7e08074dcdc25f156e92c233807b048f}{IMAGE\+\_\+\+RGB8}}  &{\ttfamily uchar3}  &24  \\
+&{\ttfamily rgba8}  &{\ttfamily \doxylink{group__image_format_gga931c48e08f361637d093355d64583406aa36c106df206651efeeba8c7c1e7bddc}{IMAGE\+\_\+\+RGBA8}}  &{\ttfamily uchar4}  &32  \\
+&{\ttfamily rgb32f}  &{\ttfamily \doxylink{group__image_format_gga931c48e08f361637d093355d64583406a9fd17a87f744486a238f2a7daf4143da}{IMAGE\+\_\+\+RGB32F}}  &{\ttfamily float3}  &96  \\
+&{\ttfamily rgba32f}  &{\ttfamily \doxylink{group__image_format_gga931c48e08f361637d093355d64583406a9396c3fdae6987bbf4abc2b2e63e3815}{IMAGE\+\_\+\+RGBA32F}}  &{\ttfamily float4}  &128  \\
+{\bfseries{BGR/\+\+BGRA}}  &{\ttfamily bgr8}  &{\ttfamily \doxylink{group__image_format_gga931c48e08f361637d093355d64583406a81b5ebf9d84207d7400c60194b59196e}{IMAGE\+\_\+\+BGR8}}  &{\ttfamily uchar3}  &24  \\
+&{\ttfamily bgra8}  &{\ttfamily \doxylink{group__image_format_gga931c48e08f361637d093355d64583406acc6673d036d0aa620ad0a00a2b91a290}{IMAGE\+\_\+\+BGRA8}}  &{\ttfamily uchar4}  &32  \\
+&{\ttfamily bgr32f}  &{\ttfamily \doxylink{group__image_format_gga931c48e08f361637d093355d64583406a940ed54272dc8e1c1bf14075b2d4dc3d}{IMAGE\+\_\+\+BGR32F}}  &{\ttfamily float3}  &96  \\
+&{\ttfamily bgra32f}  &{\ttfamily \doxylink{group__image_format_gga931c48e08f361637d093355d64583406a216e1e9101020aa1dff70f7e8a0dab32}{IMAGE\+\_\+\+BGRA32F}}  &{\ttfamily float4}  &128  \\
+{\bfseries{YUV (4:\+2:\+2)}}  &{\ttfamily yuyv}  &{\ttfamily \doxylink{group__image_format_gga931c48e08f361637d093355d64583406a3cf92f3eaec5b2886b11a7d08ab2ee7b}{IMAGE\+\_\+\+YUYV}}  &{\ttfamily uint8}  &16  \\
+&{\ttfamily yuy2}  &{\ttfamily \doxylink{group__image_format_gga931c48e08f361637d093355d64583406ac96c45814140e544d9ad4b905d1d0f9a}{IMAGE\+\_\+\+YUY2}}  &{\ttfamily uint8}  &16  \\
+&{\ttfamily yvyu}  &{\ttfamily \doxylink{group__image_format_gga931c48e08f361637d093355d64583406a5f9010b10d5865f2b1d8af2ffcd0b630}{IMAGE\+\_\+\+YVYU}}  &{\ttfamily uint8}  &16  \\
+&{\ttfamily uyvy}  &{\ttfamily \doxylink{group__image_format_gga931c48e08f361637d093355d64583406afac3609232be82b7b33b45a4021e53eb}{IMAGE\+\_\+\+UYVY}}  &{\ttfamily uint8}  &16  \\
+{\bfseries{YUV (4:\+2:\+0)}}  &{\ttfamily i420}  &{\ttfamily \doxylink{group__image_format_gga931c48e08f361637d093355d64583406aa59dd3d149443a1a7fc83302c6cd9642}{IMAGE\+\_\+\+I420}}  &{\ttfamily uint8}  &12  \\
+&{\ttfamily yv12}  &{\ttfamily \doxylink{group__image_format_gga931c48e08f361637d093355d64583406a803a5323476074e9fe0386152fc49139}{IMAGE\+\_\+\+YV12}}  &{\ttfamily uint8}  &12  \\
+&{\ttfamily nv12}  &{\ttfamily \doxylink{group__image_format_gga931c48e08f361637d093355d64583406a71df900ebdabeec1e39ee59f55bf9a96}{IMAGE\+\_\+\+NV12}}  &{\ttfamily uint8}  &12  \\
+{\bfseries{Bayer}}  &{\ttfamily bayer-\/bggr}  &{\ttfamily \doxylink{group__image_format_gga931c48e08f361637d093355d64583406a5c25062c34b2d7dee20002d4b5d1c136}{IMAGE\+\_\+\+BAYER\+\_\+\+BGGR}}  &{\ttfamily uint8}  &8  \\
+&{\ttfamily bayer-\/gbrg}  &{\ttfamily \doxylink{group__image_format_gga931c48e08f361637d093355d64583406a427ada330759aaa9016b25a5e759debc}{IMAGE\+\_\+\+BAYER\+\_\+\+GBRG}}  &{\ttfamily uint8}  &8  \\
+&{\ttfamily bayer-\/grbg}  &{\ttfamily \doxylink{group__image_format_gga931c48e08f361637d093355d64583406a3696a5c9e323042d1330fa07cc871b3d}{IMAGE\+\_\+\+BAYER\+\_\+\+GRBG}}  &{\ttfamily uint8}  &8  \\
+&{\ttfamily bayer-\/rggb}  &{\ttfamily \doxylink{group__image_format_gga931c48e08f361637d093355d64583406a83927ba3d7be52369555629cd5028b3a}{IMAGE\+\_\+\+BAYER\+\_\+\+RGGB}}  &{\ttfamily uint8}  &8  \\
+{\bfseries{Grayscale}}  &{\ttfamily gray8}  &{\ttfamily \doxylink{group__image_format_gga931c48e08f361637d093355d64583406a15fa3f6f45c0373bb043300b819d364d}{IMAGE\+\_\+\+GRAY8}}  &{\ttfamily uint8}  &8  \\
+&{\ttfamily gray32f}  &{\ttfamily \doxylink{group__image_format_gga931c48e08f361637d093355d64583406a34b0b09e48e4d6e7bd6adfed70e30c63}{IMAGE\+\_\+\+GRAY32F}}  &{\ttfamily float}  &32  \\
+\end{DoxyTable}
+
+\begin{DoxyItemize}
+\item \doxylink{requirements_The}{The} bit depth represents the effective number of bits per pixel
+\item For detailed specifications of the YUV formats, refer to \href{http://fourcc.org/yuv.php}{\texttt{fourcc.\+org}}
+\end{DoxyItemize}
+
+\begin{quote}
+{\bfseries{note:\+}} in C++, the RGB/\+\+RGBA formats are the only ones that should be used with the {\ttfamily uchar3}/\+{\ttfamily uchar4}/\+{\ttfamily float3}/\+{\ttfamily float4} vector types. It is assumed that when these types are used, the images are in RGB/\+\+RGBA format. \end{quote}
+
+
+To convert images between data formats and/\+or colorspaces, see the Color Conversion section below.\hypertarget{md_jetson-inference_2docs_2aux-image_autotoc_md60}{}\doxysubsection{\texorpdfstring{Image Allocation}{Image Allocation}}\label{md_jetson-inference_2docs_2aux-image_autotoc_md60}
+To allocate empty GPU memory for storing intermediate/\+output images (i.\+e. working memory during processing), use one \href{https://github.com/dusty-nv/jetson-utils/tree/master/cuda/cudaMappedMemory.h}{\texttt{{\ttfamily cuda\+Alloc\+Mapped()}}} from C++ or the \href{https://rawgit.com/dusty-nv/jetson-inference/master/docs/html/python/jetson.utils.html\#cudaImage}{\texttt{{\ttfamily cuda\+Image}}} object from Python. Note that the \href{aux-streaming\#source-code}{\texttt{{\ttfamily video\+Source}}} input streams automatically allocate their own GPU memory, and return to you the latest image, so you needn\textquotesingle{}t allocate your own memory for those. ~\newline
+
+
+Memory allocated by \href{https://github.com/dusty-nv/jetson-utils/tree/master/cuda/cudaMappedMemory.h}{\texttt{{\ttfamily cuda\+Alloc\+Mapped()}}} resides in a shared CPU/\+\+GPU memory space, so it is accessible from both the CPU and GPU without needing to perform a memory copy between them (hence it is also referred to as Zero\+Copy memory). ~\newline
+
+
+Synchronization is required however -\/ so if you want to access an image from the CPU after GPU processing has occurred, call \href{https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__DEVICE.html\#group__CUDART__DEVICE_1g10e20b05a95f638a4071a655503df25d}{\texttt{{\ttfamily cuda\+Device\+Synchronize()}}} first. To free the memory in C++, use the \href{https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__MEMORY.html\#group__CUDART__MEMORY_1g71c078689c17627566b2a91989184969}{\texttt{{\ttfamily cuda\+Free\+Host()}}} function. In Python, the memory will automatically be released by the garbage collector, but you can free it explicitly with the {\ttfamily del} operator. ~\newline
+
+
+Below is Python and C++ psuedocode for allocating/\+synchronizing/\+freeing the Zero\+Copy memory:\+\hypertarget{md_jetson-inference_2docs_2aux-image_autotoc_md61}{}\doxysubsubsubsection{\texorpdfstring{Python}{Python}}\label{md_jetson-inference_2docs_2aux-image_autotoc_md61}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{from}\ jetson\_utils\ \textcolor{keyword}{import}\ cudaImage,\ cudaDeviceSynchronize}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{\#\ allocate\ a\ 1920x1080\ image\ in\ rgb8\ format}}
+\DoxyCodeLine{img\ =\ cudaImage(width=1920,\ height=1080,\ format=\textcolor{stringliteral}{'rgb8'})}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{\#\ do\ some\ processing\ on\ the\ GPU\ here}}
+\DoxyCodeLine{...}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{\#\ wait\ for\ the\ GPU\ to\ finish\ processing}}
+\DoxyCodeLine{cudaDeviceSynchronize()}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{\#\ Python\ will\ automatically\ free\ the\ memory,\ but\ you\ can\ explicitly\ do\ it\ with\ 'del'}}
+\DoxyCodeLine{del\ img}
+
+\end{DoxyCode}
+\hypertarget{md_jetson-inference_2docs_2aux-image_autotoc_md62}{}\doxysubsubsubsection{\texorpdfstring{C++}{C++}}\label{md_jetson-inference_2docs_2aux-image_autotoc_md62}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include\ <jetson-\/utils/cudaMappedMemory.h>}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keywordtype}{void}*\ img\ =\ NULL;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//\ allocate\ a\ 1920x1080\ image\ in\ rgb8\ format}}
+\DoxyCodeLine{\textcolor{keywordflow}{if}(\ !\doxymbox{\hyperlink{group__cuda_memory_gaf5a659673481203780b0117f8d7782d0}{cudaAllocMapped}}(\&img,\ 1920,\ 1080,\ \doxymbox{\hyperlink{group__image_format_gga931c48e08f361637d093355d64583406a7e08074dcdc25f156e92c233807b048f}{IMAGE\_RGB8}})\ )}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};\ \ \ \textcolor{comment}{//\ memory\ error}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//\ do\ some\ processing\ on\ the\ GPU\ here\ }}
+\DoxyCodeLine{...}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//\ wait\ for\ the\ GPU\ to\ finish\ processing}}
+\DoxyCodeLine{CUDA(cudaDeviceSynchronize());}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//\ release\ the\ memory}}
+\DoxyCodeLine{\doxymbox{\hyperlink{group__cuda_error_ga5af54ef2b094a11a88feb67b327e1d19}{CUDA}}(cudaFreeHost(img));}
+
+\end{DoxyCode}
+
+
+In C++, you can often omit the explicit \`{}image\+Format\`{} enum if your pointers are typed as {\ttfamily uchar3/\+uchar4/\+float3/\+float4}. Below is functionaly equivalent to the allocation above:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{uchar3*\ img\ =\ NULL;\ \textcolor{comment}{//\ can\ be\ uchar3\ (rgb8),\ uchar4\ (rgba8),\ float3\ (rgb32f),\ float4\ (rgba32f)}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keywordflow}{if}(\ !\doxymbox{\hyperlink{group__cuda_memory_gaf5a659673481203780b0117f8d7782d0}{cudaAllocMapped}}(\&img,\ 1920,\ 1080)\ )}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};\ \ \ }
+
+\end{DoxyCode}
+
+
+\begin{quote}
+{\bfseries{note:\+}} when using these vector types, these images will be assumed to be in their respective RGB/\+\+RGBA colorspace. So if you use {\ttfamily uchar3/\+uchar4/\+float3/\+float4} to represent an image that contains BGR/\+\+BGRA data, it could be intepreted by some processing functions as RGB/\+\+RGBA unless you explicitly specify the proper image format. \end{quote}
+\hypertarget{md_jetson-inference_2docs_2aux-image_autotoc_md63}{}\doxysubsection{\texorpdfstring{Copying Images}{Copying Images}}\label{md_jetson-inference_2docs_2aux-image_autotoc_md63}
+\href{https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__MEMORY.html\#group__CUDART__MEMORY_1gc263dbe6574220cc776b45438fc351e8}{\texttt{{\ttfamily cuda\+Memcpy()}}} can be used to copy memory between images of the same format and dimensions. It\textquotesingle{}s a standard CUDA function in C++, and there is a similar version for Python in the jetson\+\_\+utils library:\+\hypertarget{md_jetson-inference_2docs_2aux-image_autotoc_md64}{}\doxysubsubsubsection{\texorpdfstring{Python}{Python}}\label{md_jetson-inference_2docs_2aux-image_autotoc_md64}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{from}\ jetson\_utils\ \textcolor{keyword}{import}\ cudaMemcpy,\ cudaImage,\ loadImage}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{\#\ load\ an\ image\ and\ allocate\ memory\ to\ copy\ it\ to}}
+\DoxyCodeLine{img\_a\ =\ \doxymbox{\hyperlink{group__image_gab2959819259e3cbcfd72ad633f8f9f17}{loadImage}}(\textcolor{stringliteral}{"{}my\_image.jpg"{}})}
+\DoxyCodeLine{img\_b\ =\ cudaImage(like=img\_a)\ \ \textcolor{comment}{\#\ short\ for\ specifying\ width,\ height,\ format}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{\#\ copy\ the\ image\ (dst,\ src)}}
+\DoxyCodeLine{cudaMemcpy(img\_b,\ img\_a)}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{\#\ or\ you\ can\ use\ this\ shortcut,\ which\ will\ return\ a\ duplicate}}
+\DoxyCodeLine{img\_c\ =\ cudaMemcpy(img\_a)}
+
+\end{DoxyCode}
+\hypertarget{md_jetson-inference_2docs_2aux-image_autotoc_md65}{}\doxysubsubsubsection{\texorpdfstring{C++}{C++}}\label{md_jetson-inference_2docs_2aux-image_autotoc_md65}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include\ <jetson-\/utils/cudaMappedMemory.h>}}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include\ <jetson-\/utils/imageIO.h>}}
+\DoxyCodeLine{}
+\DoxyCodeLine{uchar3*\ img\_a\ =\ NULL;}
+\DoxyCodeLine{uchar3*\ img\_b\ =\ NULL;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keywordtype}{int}\ width\ =\ 0;}
+\DoxyCodeLine{\textcolor{keywordtype}{int}\ height\ =\ 0;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//\ load\ example\ image}}
+\DoxyCodeLine{\textcolor{keywordflow}{if}(\ !\doxymbox{\hyperlink{group__image_gab2959819259e3cbcfd72ad633f8f9f17}{loadImage}}(\textcolor{stringliteral}{"{}my\_image.jpg"{}},\ \&img\_a,\ \&width,\ \&height)\ )}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};\ \ \ \textcolor{comment}{//\ loading\ error}}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\textcolor{comment}{//\ allocate\ memory\ to\ copy\ it\ to}}
+\DoxyCodeLine{\textcolor{keywordflow}{if}(\ !\doxymbox{\hyperlink{group__cuda_memory_gaf5a659673481203780b0117f8d7782d0}{cudaAllocMapped}}(\&img\_b,\ width,\ height)\ )}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};\ \ \textcolor{comment}{//\ memory\ error}}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\textcolor{comment}{//\ copy\ the\ image\ (dst,\ src)}}
+\DoxyCodeLine{\textcolor{keywordflow}{if}(\ \doxymbox{\hyperlink{group__cuda_error_gad12b27627f04dd0ecf3eb9e2468a846e}{CUDA\_FAILED}}(cudaMemcpy(img\_b,\ img\_a,\ width\ *\ height\ *\ \textcolor{keyword}{sizeof}(uchar3),\ cudaMemcpyDeviceToDevice))\ )}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};\ \ \textcolor{comment}{//\ memcpy\ error}}
+
+\end{DoxyCode}
+\hypertarget{md_jetson-inference_2docs_2aux-image_autotoc_md66}{}\doxysubsection{\texorpdfstring{Image Capsules in Python}{Image Capsules in Python}}\label{md_jetson-inference_2docs_2aux-image_autotoc_md66}
+When you allocate an image in Python, or capture an image from a video feed with \href{aux-streaming\#source-code}{\texttt{{\ttfamily video\+Source.\+Capture()}}}, it will return a self-\/contained memory capsule object (of type \href{https://rawgit.com/dusty-nv/jetson-inference/master/docs/html/python/jetson.utils.html\#cudaImage}{\texttt{{\ttfamily \texorpdfstring{$<$}{<}jetson\+\_\+utils.\+cuda\+Image\texorpdfstring{$>$}{>}}}}) that can be passed around without having to copy the underlying memory. ~\newline
+
+
+\doxylink{requirements_The}{The} \href{https://rawgit.com/dusty-nv/jetson-inference/master/docs/html/python/jetson.utils.html\#cudaImage}{\texttt{{\ttfamily cuda\+Image}}} object has the following members:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{<cudaImage\ object>}
+\DoxyCodeLine{\ \ .ptr\ \ \ \ \ \ \ \textcolor{comment}{\#\ memory\ address\ (not\ typically\ used)}}
+\DoxyCodeLine{\ \ .size\ \ \ \ \ \ \textcolor{comment}{\#\ size\ in\ bytes}}
+\DoxyCodeLine{\ \ .shape\ \ \ \ \ \textcolor{comment}{\#\ (height,width,channels)\ tuple}}
+\DoxyCodeLine{\ \ .width\ \ \ \ \ \textcolor{comment}{\#\ width\ in\ pixels}}
+\DoxyCodeLine{\ \ .height\ \ \ \ \textcolor{comment}{\#\ height\ in\ pixels}}
+\DoxyCodeLine{\ \ .channels\ \ \textcolor{comment}{\#\ number\ of\ color\ channels}}
+\DoxyCodeLine{\ \ .format\ \ \ \ \textcolor{comment}{\#\ format\ string}}
+\DoxyCodeLine{\ \ .mapped\ \ \ \ \textcolor{comment}{\#\ true\ if\ ZeroCopy}}
+\DoxyCodeLine{\ \ .timestamp\ \textcolor{comment}{\#\ timestamp\ in\ nanoseconds}}
+
+\end{DoxyCode}
+
+
+So you can do things like {\ttfamily img.\+width} and {\ttfamily img.\+height} to access properties about the image.\hypertarget{md_jetson-inference_2docs_2aux-image_autotoc_md67}{}\doxysubsubsection{\texorpdfstring{Array Interfaces}{Array Interfaces}}\label{md_jetson-inference_2docs_2aux-image_autotoc_md67}
+For zero-\/copy interoperability with other libraries, there exist several ways to access the {\ttfamily cuda\+Image} memory from Python:\+
+
+
+\begin{DoxyItemize}
+\item Indexing images directly from Python
+\item Numpy \`{}\+\_\+\+\_\+array\+\_\+\+\_\+\`{} interface, \`{}cuda\+To\+Numpy()\`{}, \`{}cuda\+From\+Numpy()\`{}
+\item Numba \`{}\+\_\+\+\_\+cuda\+\_\+array\+\_\+interface\+\_\+\+\_\+\`{} (Py\+Torch, Cu\+Py, Py\+CUDA, VPI, ect)
+\item Sharing the Memory Pointer
+\end{DoxyItemize}
+
+These are implemented so that the underlying memory is mapped and shared with the other libraries as to avoid memory copies.\hypertarget{md_jetson-inference_2docs_2aux-image_autotoc_md68}{}\doxysubsubsection{\texorpdfstring{Accessing Image Data in Python}{Accessing Image Data in Python}}\label{md_jetson-inference_2docs_2aux-image_autotoc_md68}
+CUDA images are subscriptable, meaning you can index them to directly access the pixel data from the CPU:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordflow}{for}\ y\ \textcolor{keywordflow}{in}\ range(img.height):}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{for}\ x\ \textcolor{keywordflow}{in}\ range(img.width):}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ pixel\ =\ img[y,x]\ \ \ \ \textcolor{comment}{\#\ returns\ a\ tuple,\ i.e.\ (r,g,b)\ for\ RGB\ formats\ or\ (r,g,b,a)\ for\ RGBA\ formats}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ img[y,x]\ =\ pixel\ \ \ \ \textcolor{comment}{\#\ set\ a\ pixel\ from\ a\ tuple\ (tuple\ length\ must\ match\ the\ number\ of\ channels)}}
+
+\end{DoxyCode}
+
+
+\begin{quote}
+{\bfseries{note:\+}} the Python subscripting index operator is only available if the cuda\+Image was allocated with {\ttfamily mapped=True} (which is the default). Otherwise, the data is not accessible from the CPU, and an exception will be thrown. \end{quote}
+
+
+\doxylink{requirements_The}{The} indexing tuple used to access an image may take the following forms:\+
+
+
+\begin{DoxyItemize}
+\item {\ttfamily img\+[y,x]\+} -\/ note the ordering of the {\ttfamily (y,x)} tuple, same as numpy
+\item {\ttfamily img\+[y,x,channel]\+} -\/ only access a particular channel (i.\+e. 0 for red, 1 for green, 2 for blue, 3 for alpha)
+\item {\ttfamily img\+[y\texorpdfstring{$\ast$}{*}img.width+x]\+} -\/ flat 1D index, access all channels in that pixel
+\end{DoxyItemize}
+
+Although image subscripting is supported, individually accessing each pixel of a large image isn\textquotesingle{}t recommended to do from Python, as it will significantly slow down the application. Assuming that a GPU implementation isn\textquotesingle{}t available, a better alternative is to use Numpy.\hypertarget{md_jetson-inference_2docs_2aux-image_autotoc_md69}{}\doxysubsubsection{\texorpdfstring{Accessing as a Numpy Array}{Accessing as a Numpy Array}}\label{md_jetson-inference_2docs_2aux-image_autotoc_md69}
+cuda\+Image supports the Numpy \href{https://numpy.org/doc/stable/reference/arrays.interface.html}{\texttt{{\ttfamily \+\_\+\+\_\+array\+\_\+\+\_\+}}} interface protocol, so it can be used in many Numpy functions as if it were a Numpy array without needing to copy it back and forth. See \href{https://github.com/dusty-nv/jetson-utils/blob/master/python/examples/cuda-to-numpy.py}{\texttt{{\ttfamily cuda-\/to-\/numpy.\+py}}} for a simple example:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ python}
+\DoxyCodeLine{import\ numpy\ as\ np}
+\DoxyCodeLine{from\ jetson\_utils\ import\ cudaImage}
+\DoxyCodeLine{}
+\DoxyCodeLine{cuda\_img\ =\ cudaImage(320,\ 240,\ 'rgb32f')}
+\DoxyCodeLine{array\ =\ np.ones(cuda\_img.shape,\ np.float32)}
+\DoxyCodeLine{}
+\DoxyCodeLine{print(np.add(cuda\_img,\ array))}
+
+\end{DoxyCode}
+
+
+\begin{quote}
+{\bfseries{note:\+}} Numpy runs on the CPU, so the cuda\+Image should have been allocated with {\ttfamily mapped=True} (the default) so that it\textquotesingle{}s memory is accessible from both the CPU and GPU. Any changes to it from Numpy will be reflected in the underlying cuda\+Image\textquotesingle{}s memory. ~\newline
+ \end{quote}
+
+
+You\textquotesingle{}ll need to use the standalone \href{https://numpy.org/doc/stable/reference/routines.html}{\texttt{numpy routines}} as opposed to the \href{https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html}{\texttt{ndarray class methods}} (e.\+g. use {\ttfamily numpy.\+mean(array) vs array.\+mean()}) because although cuda\+Image exports the {\ttfamily \+\_\+\+\_\+array\+\_\+\+\_\+} interface for accessing it\textquotesingle{}s memory, it doesn\textquotesingle{}t implement the class methods that Numpy does. To use all of those, see the \`{}cuda\+To\+Numpy()\`{} function below.\hypertarget{md_jetson-inference_2docs_2aux-image_autotoc_md70}{}\doxysubsubsubsection{\texorpdfstring{Converting to Numpy Arrays}{Converting to Numpy Arrays}}\label{md_jetson-inference_2docs_2aux-image_autotoc_md70}
+You can explicitly obtain a \href{https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html}{\texttt{{\ttfamily numpy.\+ndarray}}} object that\textquotesingle{}s mapped to a {\ttfamily cuda\+Image} by calling {\ttfamily cuda\+To\+Numpy()} on it:\+ ~\newline
+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ python}
+\DoxyCodeLine{import\ numpy\ as\ np}
+\DoxyCodeLine{from\ jetson\_utils\ import\ cudaImage,\ cudaToNumpy}
+\DoxyCodeLine{}
+\DoxyCodeLine{cuda\_img\ =\ cudaImage(320,\ 240,\ 'rgb32f')}
+\DoxyCodeLine{array\ =\ cudaToNumpy(cuda\_img)}
+\DoxyCodeLine{}
+\DoxyCodeLine{print(array.mean())}
+
+\end{DoxyCode}
+
+
+As before, the underlying memory isn\textquotesingle{}t copied and Numpy will access it directly -\/ so if you change the data in-\/place through Numpy, it will be changed in the underlying {\ttfamily cuda\+Image} as well. For an example of using {\ttfamily cuda\+To\+Numpy()}, see the \href{https://github.com/dusty-nv/jetson-utils/blob/master/python/examples/cuda-to-numpy.py}{\texttt{{\ttfamily cuda-\/to-\/numpy.\+py}}} sample from jetson-\/utils.
+
+Note that if you plan on using the image with Open\+CV, Open\+CV expects images in BGR colorspace, so you should call \`{}cuda\+Convert\+Color()\`{} first to convert it from RGB to BGR (see \href{https://github.com/dusty-nv/jetson-utils/blob/master/python/examples/cuda-to-cv.py}{\texttt{{\ttfamily cuda-\/to-\/cv.\+py}}} for an example of this).\hypertarget{md_jetson-inference_2docs_2aux-image_autotoc_md71}{}\doxysubsubsubsection{\texorpdfstring{Converting from Numpy Arrays}{Converting from Numpy Arrays}}\label{md_jetson-inference_2docs_2aux-image_autotoc_md71}
+Let\textquotesingle{}s say you have an image in a Numpy ndarray, perhaps provided by Open\+CV -\/ as a Numpy array, it will only be accessible from the CPU. You can use {\ttfamily cuda\+From\+Numpy()} to copy it to the GPU (into shared CPU/\+\+GPU mapped memory). For an example, see the \href{https://github.com/dusty-nv/jetson-utils/blob/master/python/examples/cuda-from-numpy.py}{\texttt{{\ttfamily cuda-\/from-\/numpy.\+py}}} sample:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ python}
+\DoxyCodeLine{import\ numpy\ as\ np}
+\DoxyCodeLine{from\ jetson\_utils\ import\ cudaFromNumpy}
+\DoxyCodeLine{}
+\DoxyCodeLine{array\ =\ np.zeros((240,\ 320,\ 3),\ dtype=np.float32)}
+\DoxyCodeLine{cuda\_img\ =\ cudaFromNumpy(array)}
+
+\end{DoxyCode}
+
+
+Like before if you\textquotesingle{}re using Open\+CV, Open\+CV images are in BGR colorspace, and you should call \`{}cuda\+Convert\+Color()\`{} after to convert it from BGR to RGB (see \href{https://github.com/dusty-nv/jetson-utils/blob/master/python/examples/cuda-from-cv.py}{\texttt{{\ttfamily cuda-\/from-\/cv.\+py}}} for an example of this).\hypertarget{md_jetson-inference_2docs_2aux-image_autotoc_md72}{}\doxysubsubsection{\texorpdfstring{CUDA Array Interface}{CUDA Array Interface}}\label{md_jetson-inference_2docs_2aux-image_autotoc_md72}
+{\ttfamily cuda\+Image} also supports Numba\textquotesingle{}s \href{https://numba.readthedocs.io/en/stable/cuda/cuda_array_interface.html}{\texttt{{\ttfamily \+\_\+\+\_\+cuda\+\_\+array\+\_\+interface\+\_\+\+\_\+}}}, which provides zero-\/copy interoperability among libraries that use GPU memory (including Py\+Torch, Cu\+Py, Py\+CUDA, VPI, and others \href{https://numba.readthedocs.io/en/stable/cuda/cuda_array_interface.html\#interoperability}{\texttt{listed here}}). Similar to how {\ttfamily cuda\+Image} implements the Numpy \`{}\+\_\+\+\_\+array\+\_\+\+\_\+\`{} interface, the {\ttfamily \+\_\+\+\_\+cuda\+\_\+array\+\_\+interface\+\_\+\+\_\+} is transparent to use for passing cuda\+Image\textquotesingle{}s into Numba/\+\+Py\+Torch/\+\+Cu\+Py/\+\+Py\+CUDA functions, and the memory is shared with these libraries so there aren\textquotesingle{}t memory copies or extra overhead.
+
+For an example of this, see the code from \href{https://github.com/dusty-nv/jetson-utils/blob/master/python/examples/cuda-array-interface.py}{\texttt{{\ttfamily cuda-\/array-\/interface.\+py}}}:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ python}
+\DoxyCodeLine{import\ cupy}
+\DoxyCodeLine{from\ jetson\_utils\ import\ cudaImage}
+\DoxyCodeLine{}
+\DoxyCodeLine{cuda\_img\ =\ cudaImage(640,\ 480,\ 'rgb8')}
+\DoxyCodeLine{cupy\_array\ =\ cupy.ones((480,\ 640,\ 3))}
+\DoxyCodeLine{}
+\DoxyCodeLine{print(cupy.add(cuda\_img,\ cupy\_array))}
+
+\end{DoxyCode}
+
+
+\begin{quote}
+{\bfseries{note:\+}} {\ttfamily cuda\+Image} also implements \href{https://documen.tician.de/pycuda/array.html}{\texttt{Py\+CUDA\textquotesingle{}s {\ttfamily gpudata} interface}} as well and can be used like a Py\+CUDA {\ttfamily GPUArray}. \end{quote}
+
+
+Another example can be found in \href{https://github.com/dusty-nv/jetson-utils/blob/master/python/examples/cuda-to-pytorch.py}{\texttt{{\ttfamily cuda-\/to-\/pytorch.\+py}}} for sharing memory with Py\+Torch tensors:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ python}
+\DoxyCodeLine{import\ torch}
+\DoxyCodeLine{from\ jetson\_utils\ import\ cudaImage}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#\ allocate\ cuda\ memory}
+\DoxyCodeLine{cuda\_img\ =\ cudaImage(640,\ 480,\ 'rgb8')}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#\ map\ to\ torch\ tensor\ using\ \_\_cuda\_array\_interface\_\_}
+\DoxyCodeLine{tensor\ =\ torch.as\_tensor(cuda\_img,\ device='cuda')}
+
+\end{DoxyCode}
+
+
+This enables the GPU memory from the cuda\+Image to be used by Py\+Torch GPU tensors without copying it -\/ any changes that Py\+Torch makes to contents of the tensor will be reflected in the cuda\+Image. Note that {\ttfamily device=\textquotesingle{}\doxylink{group__cuda}{CUDA}\textquotesingle{}} should be specified in order for Py\+Torch to perform the zero-\/copy mapping -\/ you can check this by confirming that the data pointers match between the cuda\+Image and Py\+Torch tensor objects.\hypertarget{md_jetson-inference_2docs_2aux-image_autotoc_md73}{}\doxysubsubsection{\texorpdfstring{Sharing the Memory Pointer}{Sharing the Memory Pointer}}\label{md_jetson-inference_2docs_2aux-image_autotoc_md73}
+For libraries that don\textquotesingle{}t support one of the above interfaces, cuda\+Image exposes the raw data pointer of it\textquotesingle{}s memory through it\textquotesingle{}s {\ttfamily .ptr} attribute, which can be used to import it into other data structures without copying it. Conversely, the cuda\+Image initializer also has a {\ttfamily ptr} argument that can be set to an externally-\/allocated buffer -\/ in this case, cuda\+Image will share the memory instead allocating it\textquotesingle{}s own.
+
+See \href{https://github.com/dusty-nv/jetson-utils/blob/master/python/examples/cuda-from-pytorch.py}{\texttt{{\ttfamily cuda-\/from-\/pytorch.\+py}}} for an example of doing this, where an existing Py\+Torch GPU tensor is mapped to a cuda\+Image:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ python}
+\DoxyCodeLine{import\ torch}
+\DoxyCodeLine{from\ jetson\_utils\ import\ cudaImage}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#\ allocate\ a\ GPU\ tensor\ with\ NCHW\ layout\ (strided\ colors)}
+\DoxyCodeLine{tensor\ =\ torch.rand(1,\ 3,\ 480,\ 640,\ dtype=torch.float32,\ device='cuda')}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#\ transpose\ the\ channels\ to\ NHWC\ layout\ (interleaved\ colors)}
+\DoxyCodeLine{tensor\ =\ tensor.to(memory\_format=torch.channels\_last)\ \ \ \#\ or\ tensor.permute(0,\ 3,\ 2,\ 1)}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#\ map\ to\ cudaImage\ using\ the\ same\ underlying\ memory\ (any\ changes\ will\ be\ reflected\ in\ the\ PyTorch\ tensor)}
+\DoxyCodeLine{cuda\_img\ =\ cudaImage(ptr=tensor.data\_ptr(),\ width=tensor.shape[-\/1],\ height=tensor.shape[-\/2],\ format='rgb32f')}
+
+\end{DoxyCode}
+
+
+\begin{quote}
+{\bfseries{note:\+}} be aware of NCHW \href{https://pytorch.org/blog/tensor-memory-format-matters/\#memory-formats-supported-by-pytorch-operators}{\texttt{channel layout}} (strided colors) vs. NHWC layout (interleaved colors), as cuda\+Image expects the later. \end{quote}
+
+
+When external pointers are mapped into a cuda\+Image, by default the cuda\+Image does not take ownership over the underlying memory and will not free it when the cuda\+Image is released (to change this, set {\ttfamily free\+On\+Delete=True} in the initializer). Handling synchronization between libraries should be implemented by the user (e.\+g. so that Py\+Torch isn\textquotesingle{}t accessing the memory at the same time that the cuda\+Image is used).\hypertarget{md_jetson-inference_2docs_2aux-image_autotoc_md74}{}\doxysubsection{\texorpdfstring{Color Conversion}{Color Conversion}}\label{md_jetson-inference_2docs_2aux-image_autotoc_md74}
+\doxylink{requirements_The}{The} \href{https://github.com/dusty-nv/jetson-utils/tree/master/cuda/cudaColorspace.h}{\texttt{{\ttfamily cuda\+Convert\+Color()}}} function uses the GPU to convert between image formats and colorspaces. For example, you can convert from RGB to BGR (or vice versa), from YUV to RGB, RGB to grayscale, ect. You can also change the data type and number of channels (e.\+g. RGB8 to RGBA32F). For more info about the different formats available to convert between, see the Image Formats section above.
+
+\href{https://github.com/dusty-nv/jetson-utils/tree/master/cuda/cudaColorspace.h}{\texttt{{\ttfamily cuda\+Convert\+Color()}}} has the following limitations and unsupported conversions:\+
+\begin{DoxyItemize}
+\item \doxylink{requirements_The}{The} YUV formats don\textquotesingle{}t support BGR/\+\+BGRA or grayscale (RGB/\+\+RGBA only)
+\item YUV NV12, YUYV, YVYU, and UYVY can only be converted to RGB/\+\+RGBA (not from)
+\item Bayer formats can only be converted to RGB8 ({\ttfamily uchar3}) and RGBA8 ({\ttfamily uchar4})
+\end{DoxyItemize}
+
+\doxylink{requirements_The}{The} following Python/\+\+C++ psuedocode loads an image in RGB8, and convert it to RGBA32F (note that this is purely illustrative, since the image can be loaded directly as RGBA32F). For a more comprehensive example, see \href{https://github.com/dusty-nv/jetson-utils/tree/master/python/examples/cuda-examples.py}{\texttt{{\ttfamily cuda-\/examples.\+py}}}.\hypertarget{md_jetson-inference_2docs_2aux-image_autotoc_md75}{}\doxysubsubsubsection{\texorpdfstring{Python}{Python}}\label{md_jetson-inference_2docs_2aux-image_autotoc_md75}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{import}\ jetson\_utils}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{\#\ load\ the\ input\ image\ (default\ format\ is\ rgb8)}}
+\DoxyCodeLine{imgInput\ =\ jetson\_utils.loadImage(\textcolor{stringliteral}{'my\_image.jpg'},\ format=\textcolor{stringliteral}{'rgb8'})\ \textcolor{comment}{\#\ default\ format\ is\ 'rgb8',\ but\ can\ also\ be\ 'rgba8',\ 'rgb32f',\ 'rgba32f'}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{\#\ allocate\ the\ output\ as\ rgba32f,\ with\ the\ same\ width/height\ as\ the\ input}}
+\DoxyCodeLine{imgOutput\ =\ jetson\_utils.cudaAllocMapped(width=imgInput.width,\ height=imgInput.height,\ format=\textcolor{stringliteral}{'rgba32f'})}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{\#\ convert\ from\ rgb8\ to\ rgba32f\ (the\ formats\ used\ for\ the\ conversion\ are\ taken\ from\ the\ image\ capsules)}}
+\DoxyCodeLine{jetson\_utils.cudaConvertColor(imgInput,\ imgOutput)}
+
+\end{DoxyCode}
+\hypertarget{md_jetson-inference_2docs_2aux-image_autotoc_md76}{}\doxysubsubsubsection{\texorpdfstring{C++}{C++}}\label{md_jetson-inference_2docs_2aux-image_autotoc_md76}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include\ <jetson-\/utils/cudaColorspace.h>}}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include\ <jetson-\/utils/cudaMappedMemory.h>}}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include\ <jetson-\/utils/imageIO.h>}}
+\DoxyCodeLine{}
+\DoxyCodeLine{uchar3*\ imgInput\ =\ NULL;\ \ \ \textcolor{comment}{//\ input\ is\ rgb8\ (uchar3)}}
+\DoxyCodeLine{float4*\ imgOutput\ =\ NULL;\ \ \textcolor{comment}{//\ output\ is\ rgba32f\ (float4)}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keywordtype}{int}\ width\ =\ 0;}
+\DoxyCodeLine{\textcolor{keywordtype}{int}\ height\ =\ 0;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//\ load\ the\ image\ as\ rgb8\ (uchar3)}}
+\DoxyCodeLine{\textcolor{keywordflow}{if}(\ !\doxymbox{\hyperlink{group__image_gab2959819259e3cbcfd72ad633f8f9f17}{loadImage}}(\textcolor{stringliteral}{"{}my\_image.jpg"{}},\ \&imgInput,\ \&width,\ \&height)\ )}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//\ allocate\ the\ output\ as\ rgba32f\ (float4),\ with\ the\ same\ width/height}}
+\DoxyCodeLine{\textcolor{keywordflow}{if}(\ !\doxymbox{\hyperlink{group__cuda_memory_gaf5a659673481203780b0117f8d7782d0}{cudaAllocMapped}}(\&imgOutput,\ width,\ height)\ )}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//\ convert\ from\ rgb8\ to\ rgba32f}}
+\DoxyCodeLine{\textcolor{keywordflow}{if}(\ \doxymbox{\hyperlink{group__cuda_error_gad12b27627f04dd0ecf3eb9e2468a846e}{CUDA\_FAILED}}(\doxymbox{\hyperlink{group__colorspace_ga300b4f0ab2845de6e13dafc88facdb2f}{cudaConvertColor}}(imgInput,\ \doxymbox{\hyperlink{group__image_format_gga931c48e08f361637d093355d64583406a7e08074dcdc25f156e92c233807b048f}{IMAGE\_RGB8}},\ imgOutput,\ \doxymbox{\hyperlink{group__image_format_gga931c48e08f361637d093355d64583406a9396c3fdae6987bbf4abc2b2e63e3815}{IMAGE\_RGBA32F}},\ width,\ height))\ )}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};\ \ \ \textcolor{comment}{//\ an\ error\ or\ unsupported\ conversion\ occurred}}
+
+\end{DoxyCode}
+\hypertarget{md_jetson-inference_2docs_2aux-image_autotoc_md77}{}\doxysubsection{\texorpdfstring{Resizing}{Resizing}}\label{md_jetson-inference_2docs_2aux-image_autotoc_md77}
+\doxylink{requirements_The}{The} \href{https://github.com/dusty-nv/jetson-utils/tree/master/cuda/cudaResize.h}{\texttt{{\ttfamily cuda\+Resize()}}} function uses the GPU to rescale images to a different size (either downsampled or upsampled). \doxylink{requirements_The}{The} following Python/\+\+C++ psuedocode loads an image, and resizes it by a certain factor (downsampled by half in the example). For a more comprehensive example, see \href{https://github.com/dusty-nv/jetson-utils/tree/master/python/examples/cuda-examples.py}{\texttt{{\ttfamily cuda-\/examples.\+py}}}.\hypertarget{md_jetson-inference_2docs_2aux-image_autotoc_md78}{}\doxysubsubsubsection{\texorpdfstring{Python}{Python}}\label{md_jetson-inference_2docs_2aux-image_autotoc_md78}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{import}\ jetson\_utils}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{\#\ load\ the\ input\ image}}
+\DoxyCodeLine{imgInput\ =\ jetson\_utils.loadImage(\textcolor{stringliteral}{'my\_image.jpg'})}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{\#\ allocate\ the\ output,\ with\ half\ the\ size\ of\ the\ input}}
+\DoxyCodeLine{imgOutput\ =\ jetson\_utils.cudaAllocMapped(width=imgInput.width\ *\ 0.5,\ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ height=imgInput.height\ *\ 0.5,\ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ format=imgInput.format)}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{\#\ rescale\ the\ image\ (the\ dimensions\ are\ taken\ from\ the\ image\ capsules)}}
+\DoxyCodeLine{jetson\_utils.cudaResize(imgInput,\ imgOutput)}
+
+\end{DoxyCode}
+\hypertarget{md_jetson-inference_2docs_2aux-image_autotoc_md79}{}\doxysubsubsubsection{\texorpdfstring{C++}{C++}}\label{md_jetson-inference_2docs_2aux-image_autotoc_md79}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include\ <jetson-\/utils/cudaResize.h>}}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include\ <jetson-\/utils/cudaMappedMemory.h>}}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include\ <jetson-\/utils/imageIO.h>}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//\ load\ the\ input\ image}}
+\DoxyCodeLine{uchar3*\ imgInput\ =\ NULL;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keywordtype}{int}\ inputWidth\ =\ 0;}
+\DoxyCodeLine{\textcolor{keywordtype}{int}\ inputHeight\ =\ 0;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keywordflow}{if}(\ !\doxymbox{\hyperlink{group__image_gab2959819259e3cbcfd72ad633f8f9f17}{loadImage}}(\textcolor{stringliteral}{"{}my\_image.jpg"{}},\ \&imgInput,\ \&inputWidth,\ \&inputHeight)\ )}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//\ allocate\ the\ output\ image,\ with\ half\ the\ size\ of\ the\ input}}
+\DoxyCodeLine{uchar3*\ imgOutput\ =\ NULL;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keywordtype}{int}\ outputWidth\ =\ inputWidth\ *\ 0.5f;}
+\DoxyCodeLine{\textcolor{keywordtype}{int}\ outputHeight\ =\ inputHeight\ *\ 0.5f;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keywordflow}{if}(\ !\doxymbox{\hyperlink{group__cuda_memory_gaf5a659673481203780b0117f8d7782d0}{cudaAllocMapped}}(\&imgOutput,\ outputWidth,\ outputHeight)\ )}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//\ rescale\ the\ image}}
+\DoxyCodeLine{\textcolor{keywordflow}{if}(\ \doxymbox{\hyperlink{group__cuda_error_gad12b27627f04dd0ecf3eb9e2468a846e}{CUDA\_FAILED}}(\doxymbox{\hyperlink{group__resize_ga50088fc96e9bac438d8216bd3a2a696e}{cudaResize}}(imgInput,\ inputWidth,\ inputHeight,\ imgOutput,\ outputWidth,\ outputHeight))\ )}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+
+\end{DoxyCode}
+\hypertarget{md_jetson-inference_2docs_2aux-image_autotoc_md80}{}\doxysubsection{\texorpdfstring{Cropping}{Cropping}}\label{md_jetson-inference_2docs_2aux-image_autotoc_md80}
+\doxylink{requirements_The}{The} \href{https://github.com/dusty-nv/jetson-utils/tree/master/cuda/cudaCrop.h}{\texttt{{\ttfamily cuda\+Crop()}}} function uses the GPU to crop an images to a particular region of interest (ROI). \doxylink{requirements_The}{The} following Python/\+\+C++ psuedocode loads an image, and crops it around the center half of the image. For a more comprehensive example, see \href{https://github.com/dusty-nv/jetson-utils/tree/master/python/examples/cuda-examples.py}{\texttt{{\ttfamily cuda-\/examples.\+py}}}.
+
+Note that the ROI rectangles are provided as {\ttfamily (left, top, right, bottom)} coordinates.\hypertarget{md_jetson-inference_2docs_2aux-image_autotoc_md81}{}\doxysubsubsubsection{\texorpdfstring{Python}{Python}}\label{md_jetson-inference_2docs_2aux-image_autotoc_md81}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{import}\ jetson\_utils}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{\#\ load\ the\ input\ image}}
+\DoxyCodeLine{imgInput\ =\ jetson\_utils.loadImage(\textcolor{stringliteral}{'my\_image.jpg'})}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{\#\ determine\ the\ amount\ of\ border\ pixels\ (cropping\ around\ the\ center\ by\ half)}}
+\DoxyCodeLine{crop\_factor\ =\ 0.5}
+\DoxyCodeLine{crop\_border\ =\ ((1.0\ -\/\ crop\_factor)\ *\ 0.5\ *\ imgInput.width,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (1.0\ -\/\ crop\_factor)\ *\ 0.5\ *\ imgInput.height)}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{\#\ compute\ the\ ROI\ as\ (left,\ top,\ right,\ bottom)}}
+\DoxyCodeLine{crop\_roi\ =\ (crop\_border[0],\ crop\_border[1],\ imgInput.width\ -\/\ crop\_border[0],\ imgInput.height\ -\/\ crop\_border[1])}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{\#\ allocate\ the\ output\ image,\ with\ the\ cropped\ size}}
+\DoxyCodeLine{imgOutput\ =\ jetson\_utils.cudaAllocMapped(width=imgInput.width\ *\ crop\_factor,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ height=imgInput.height\ *\ crop\_factor,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ format=imgInput.format)}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{\#\ crop\ the\ image\ to\ the\ ROI}}
+\DoxyCodeLine{jetson\_utils.cudaCrop(imgInput,\ imgOutput,\ crop\_roi)}
+
+\end{DoxyCode}
+\hypertarget{md_jetson-inference_2docs_2aux-image_autotoc_md82}{}\doxysubsubsubsection{\texorpdfstring{C++}{C++}}\label{md_jetson-inference_2docs_2aux-image_autotoc_md82}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include\ <jetson-\/utils/cudaCrop.h>}}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include\ <jetson-\/utils/cudaMappedMemory.h>}}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include\ <jetson-\/utils/imageIO.h>}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//\ load\ the\ input\ image}}
+\DoxyCodeLine{uchar3*\ imgInput\ =\ NULL;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keywordtype}{int}\ inputWidth\ =\ 0;}
+\DoxyCodeLine{\textcolor{keywordtype}{int}\ inputHeight\ =\ 0;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keywordflow}{if}(\ !\doxymbox{\hyperlink{group__image_gab2959819259e3cbcfd72ad633f8f9f17}{loadImage}}(\textcolor{stringliteral}{"{}my\_image.jpg"{}},\ \&imgInput,\ \&inputWidth,\ \&inputHeight)\ )}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//\ determine\ the\ amount\ of\ border\ pixels\ (cropping\ around\ the\ center\ by\ half)}}
+\DoxyCodeLine{\textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ crop\_factor\ =\ 0.5}
+\DoxyCodeLine{\textcolor{keyword}{const}\ int2\ \ crop\_border\ =\ make\_int2((1.0f\ -\/\ crop\_factor)\ *\ 0.5f\ *\ inputWidth,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (1.0f\ -\/\ crop\_factor)\ *\ 0.5f\ *\ inputHeight);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//\ compute\ the\ ROI\ as\ (left,\ top,\ right,\ bottom)}}
+\DoxyCodeLine{\textcolor{keyword}{const}\ int4\ crop\_roi\ =\ make\_int4(crop\_border.x,\ crop\_border.y,\ inputWidth\ -\/\ crop\_border.x,\ inputHeight\ -\/\ crop\_border.y);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//\ allocate\ the\ output\ image,\ with\ half\ the\ size\ of\ the\ input}}
+\DoxyCodeLine{uchar3*\ imgOutput\ =\ NULL;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keywordflow}{if}(\ !\doxymbox{\hyperlink{group__cuda_memory_gaf5a659673481203780b0117f8d7782d0}{cudaAllocMapped}}(\&imgOutput,\ inputWidth\ *\ crop\_factor,\ inputHeight\ *\ cropFactor)\ )}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//\ crop\ the\ image}}
+\DoxyCodeLine{\textcolor{keywordflow}{if}(\ \doxymbox{\hyperlink{group__cuda_error_gad12b27627f04dd0ecf3eb9e2468a846e}{CUDA\_FAILED}}(\doxymbox{\hyperlink{group__crop_gac1be27bde7887fd769a73cad9f1900fd}{cudaCrop}}(imgInput,\ imgOutput,\ crop\_roi,\ inputWidth,\ inputHeight))\ )}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+
+\end{DoxyCode}
+\hypertarget{md_jetson-inference_2docs_2aux-image_autotoc_md83}{}\doxysubsection{\texorpdfstring{Normalization}{Normalization}}\label{md_jetson-inference_2docs_2aux-image_autotoc_md83}
+\doxylink{requirements_The}{The} \href{https://github.com/dusty-nv/jetson-utils/tree/master/cuda/cudaNormalize.h}{\texttt{{\ttfamily cuda\+Normalize()}}} function uses the GPU to change the range of pixel intensities in an image. For example, convert an image with pixel values between {\ttfamily \+[0,1]\+} to have pixel values between {\ttfamily \+[0,255]\+}. Another common range for pixel values is between {\ttfamily \+[-\/1,1]\+}.
+
+\begin{quote}
+{\bfseries{note:\+}} all of the other functions in jetson-\/inference and jetson-\/utils expect images with pixel ranges between {\ttfamily \+[0,255]\+}, so you wouldn\textquotesingle{}t ordinarily need to use {\ttfamily \doxylink{group__normalization_ga84d13c8a867b4bb12d54e5bd171e8c71}{cuda\+Normalize()}}, but it is available in case you are working with data from an alternative source or destination. \end{quote}
+
+
+\doxylink{requirements_The}{The} following Python/\+\+C++ psuedocode loads an image, and normalizes it from {\ttfamily \+[0,255]\+} to {\ttfamily \+[0,1]\+}.\hypertarget{md_jetson-inference_2docs_2aux-image_autotoc_md84}{}\doxysubsubsubsection{\texorpdfstring{Python}{Python}}\label{md_jetson-inference_2docs_2aux-image_autotoc_md84}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{import}\ jetson\_utils}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{\#\ load\ the\ input\ image\ (its\ pixels\ will\ be\ in\ the\ range\ of\ 0-\/255)}}
+\DoxyCodeLine{imgInput\ =\ jetson\_utils.loadImage(\textcolor{stringliteral}{'my\_image.jpg'})}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{\#\ allocate\ the\ output\ image,\ with\ the\ same\ dimensions\ as\ input}}
+\DoxyCodeLine{imgOutput\ =\ jetson\_utils.cudaAllocMapped(width=imgInput.width,\ height=imgInput.height,\ format=imgInput.format)}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{\#\ normalize\ the\ image\ from\ [0,255]\ to\ [0,1]}}
+\DoxyCodeLine{jetson\_utils.cudaNormalize(imgInput,\ (0,255),\ imgOutput,\ (0,1))}
+
+\end{DoxyCode}
+\hypertarget{md_jetson-inference_2docs_2aux-image_autotoc_md85}{}\doxysubsubsubsection{\texorpdfstring{C++}{C++}}\label{md_jetson-inference_2docs_2aux-image_autotoc_md85}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include\ <jetson-\/utils/cudaNormalize.h>}}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include\ <jetson-\/utils/cudaMappedMemory.h>}}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include\ <jetson-\/utils/imageIO.h>}}
+\DoxyCodeLine{}
+\DoxyCodeLine{uchar3*\ imgInput\ =\ NULL;}
+\DoxyCodeLine{uchar3*\ imgOutput\ =\ NULL;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keywordtype}{int}\ width\ =\ 0;}
+\DoxyCodeLine{\textcolor{keywordtype}{int}\ height\ =\ 0;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//\ load\ the\ input\ image\ (its\ pixels\ will\ be\ in\ the\ range\ of\ 0-\/255)}}
+\DoxyCodeLine{\textcolor{keywordflow}{if}(\ !\doxymbox{\hyperlink{group__image_gab2959819259e3cbcfd72ad633f8f9f17}{loadImage}}(\textcolor{stringliteral}{"{}my\_image.jpg"{}},\ \&imgInput,\ \&width,\ \&height)\ )}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//\ allocate\ the\ output\ image,\ with\ the\ same\ dimensions\ as\ input}}
+\DoxyCodeLine{\textcolor{keywordflow}{if}(\ !\doxymbox{\hyperlink{group__cuda_memory_gaf5a659673481203780b0117f8d7782d0}{cudaAllocMapped}}(\&imgOutput,\ width,\ height)\ )}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//\ normalize\ the\ image\ from\ [0,255]\ to\ [0,1]}}
+\DoxyCodeLine{\doxymbox{\hyperlink{group__cuda_error_ga5af54ef2b094a11a88feb67b327e1d19}{CUDA}}(\doxymbox{\hyperlink{group__normalization_ga84d13c8a867b4bb12d54e5bd171e8c71}{cudaNormalize}}(imgInput,\ make\_float2(0,255),}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ imgOutput,\ make\_float2(0,1),}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ width,\ height));}
+
+\end{DoxyCode}
+\hypertarget{md_jetson-inference_2docs_2aux-image_autotoc_md86}{}\doxysubsection{\texorpdfstring{Overlay}{Overlay}}\label{md_jetson-inference_2docs_2aux-image_autotoc_md86}
+\doxylink{requirements_The}{The} \href{https://github.com/dusty-nv/jetson-utils/tree/master/cuda/cudaOverlay.h}{\texttt{{\ttfamily cuda\+Overlay()}}} function uses the GPU to compost an input image on top of an output image at a particular location. Overlay operations are typically called in sequence to form a composite of multiple images together.
+
+\doxylink{requirements_The}{The} following Python/\+\+C++ psuedocode loads two images, and composts them together side-\/by-\/side in an output image.\hypertarget{md_jetson-inference_2docs_2aux-image_autotoc_md87}{}\doxysubsubsubsection{\texorpdfstring{Python}{Python}}\label{md_jetson-inference_2docs_2aux-image_autotoc_md87}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{import}\ jetson\_utils}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{\#\ load\ the\ input\ images}}
+\DoxyCodeLine{imgInputA\ =\ jetson\_utils.loadImage(\textcolor{stringliteral}{'my\_image\_a.jpg'})}
+\DoxyCodeLine{imgInputB\ =\ jetson\_utils.loadImage(\textcolor{stringliteral}{'my\_image\_b.jpg'})}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{\#\ allocate\ the\ output\ image,\ with\ dimensions\ to\ fit\ both\ inputs\ side-\/by-\/side}}
+\DoxyCodeLine{imgOutput\ =\ jetson\_utils.cudaAllocMapped(width=imgInputA.width\ +\ imgInputB.width,\ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ height=max(imgInputA.height,\ imgInputB.height),}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ format=imgInputA.format)}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{\#\ compost\ the\ two\ images\ (the\ last\ two\ arguments\ are\ x,y\ coordinates\ in\ the\ output\ image)}}
+\DoxyCodeLine{jetson\_utils.cudaOverlay(imgInputA,\ imgOutput,\ 0,\ 0)}
+\DoxyCodeLine{jetson\_utils.cudaOverlay(imgInputB,\ imgOutput,\ imgInputA.width,\ 0)}
+
+\end{DoxyCode}
+\hypertarget{md_jetson-inference_2docs_2aux-image_autotoc_md88}{}\doxysubsubsubsection{\texorpdfstring{C++}{C++}}\label{md_jetson-inference_2docs_2aux-image_autotoc_md88}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include\ <jetson-\/utils/cudaOverlay.h>}}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include\ <jetson-\/utils/cudaMappedMemory.h>}}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include\ <jetson-\/utils/imageIO.h>}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include\ <algorithm>}\ \ \textcolor{comment}{//\ for\ std::max()}}
+\DoxyCodeLine{}
+\DoxyCodeLine{uchar3*\ imgInputA\ =\ NULL;}
+\DoxyCodeLine{uchar3*\ imgInputB\ =\ NULL;}
+\DoxyCodeLine{uchar3*\ imgOutput\ =\ NULL;}
+\DoxyCodeLine{}
+\DoxyCodeLine{int2\ dimsA\ =\ make\_int2(0,0);}
+\DoxyCodeLine{int2\ dimsB\ =\ make\_int2(0,0);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//\ load\ the\ input\ images}}
+\DoxyCodeLine{\textcolor{keywordflow}{if}(\ !\doxymbox{\hyperlink{group__image_gab2959819259e3cbcfd72ad633f8f9f17}{loadImage}}(\textcolor{stringliteral}{"{}my\_image\_a.jpg"{}},\ \&imgInputA,\ \&dimsA.x,\ \&dimsA.y)\ )}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keywordflow}{if}(\ !\doxymbox{\hyperlink{group__image_gab2959819259e3cbcfd72ad633f8f9f17}{loadImage}}(\textcolor{stringliteral}{"{}my\_image\_b.jpg"{}},\ \&imgInputB,\ \&dimsB.x,\ \&dimsB.y)\ )}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//\ allocate\ the\ output\ image,\ with\ dimensions\ to\ fit\ both\ inputs\ side-\/by-\/side}}
+\DoxyCodeLine{\textcolor{keyword}{const}\ int2\ dimsOutput\ =\ make\_int2(dimsA.x\ +\ dimsB.x,\ std::max(dimsA.y,\ dimsB.y));}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keywordflow}{if}(\ !\doxymbox{\hyperlink{group__cuda_memory_gaf5a659673481203780b0117f8d7782d0}{cudaAllocMapped}}(\&imgOutput,\ dimsOutput.x,\ dimsOutput.y)\ )}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//\ compost\ the\ two\ images\ (the\ last\ two\ arguments\ are\ x,y\ coordinates\ in\ the\ output\ image)}}
+\DoxyCodeLine{\doxymbox{\hyperlink{group__cuda_error_ga5af54ef2b094a11a88feb67b327e1d19}{CUDA}}(\doxymbox{\hyperlink{group__overlay_ga065786f45d44a4aa5b3a127fbfe16323}{cudaOverlay}}(imgInputA,\ dimsA,\ imgOutput,\ dimsOutput,\ 0,\ 0));}
+\DoxyCodeLine{\doxymbox{\hyperlink{group__cuda_error_ga5af54ef2b094a11a88feb67b327e1d19}{CUDA}}(\doxymbox{\hyperlink{group__overlay_ga065786f45d44a4aa5b3a127fbfe16323}{cudaOverlay}}(imgInputB,\ dimsB,\ imgOutput,\ dimsOutput,\ dimsA.x,\ 0));}
+
+\end{DoxyCode}
+\hypertarget{md_jetson-inference_2docs_2aux-image_autotoc_md89}{}\doxysubsection{\texorpdfstring{Drawing Shapes}{Drawing Shapes}}\label{md_jetson-inference_2docs_2aux-image_autotoc_md89}
+\href{https://github.com/dusty-nv/jetson-utils/tree/master/cuda/cudaDraw.h}{\texttt{{\ttfamily cuda\+Draw.\+h}}} defines several functions for drawing basic shapes, including circles, lines, and rectangles.
+
+Below are simple Python and C++ psuedocode for using them -\/ see \href{https://github.com/dusty-nv/jetson-utils/tree/master/python/examples/cuda-examples.py}{\texttt{{\ttfamily cuda-\/examples.\+py}}} for a functioning example.\hypertarget{md_jetson-inference_2docs_2aux-image_autotoc_md90}{}\doxysubsubsubsection{\texorpdfstring{Python}{Python}}\label{md_jetson-inference_2docs_2aux-image_autotoc_md90}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ python}
+\DoxyCodeLine{\#\ load\ the\ input\ image}
+\DoxyCodeLine{input\ =\ jetson\_utils.loadImage("{}my\_image.jpg"{})}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#\ cudaDrawCircle(input,\ (cx,cy),\ radius,\ (r,g,b,a),\ output=None)}
+\DoxyCodeLine{jetson\_utils.cudaDrawCircle(input,\ (50,50),\ 25,\ (0,255,127,200))}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#\ cudaDrawRect(input,\ (left,top,right,bottom),\ (r,g,b,a),\ output=None)}
+\DoxyCodeLine{jetson\_utils.cudaDrawRect(input,\ (200,25,350,250),\ (255,127,0,200))}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#\ cudaDrawLine(input,\ (x1,y1),\ (x2,y2),\ (r,g,b,a),\ line\_width,\ output=None)}
+\DoxyCodeLine{jetson\_utils.cudaDrawLine(input,\ (25,150),\ (325,15),\ (255,0,200,200),\ 10)}
+
+\end{DoxyCode}
+
+
+\begin{quote}
+{\bfseries{note:\+}} if the optional {\ttfamily output} image isn\textquotesingle{}t specified, the operation will be performed in-\/place on the {\ttfamily \doxylink{group__input}{Input}} image. \end{quote}
+\hypertarget{md_jetson-inference_2docs_2aux-image_autotoc_md91}{}\doxysubsubsubsection{\texorpdfstring{C++}{C++}}\label{md_jetson-inference_2docs_2aux-image_autotoc_md91}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ cpp}
+\DoxyCodeLine{\#include\ <jetson-\/utils/cudaDraw.h>}
+\DoxyCodeLine{\#include\ <jetson-\/utils/imageIO.h>}
+\DoxyCodeLine{}
+\DoxyCodeLine{uchar3*\ img\ =\ NULL;}
+\DoxyCodeLine{int\ width\ =\ 0;}
+\DoxyCodeLine{int\ height\ =\ 0;}
+\DoxyCodeLine{}
+\DoxyCodeLine{//\ load\ example\ image}
+\DoxyCodeLine{if(\ !loadImage("{}my\_image.jpg"{},\ \&img,\ \&width,\ \&height)\ )}
+\DoxyCodeLine{\ \ \ \ return\ false;\ \ \ //\ loading\ error}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{//\ see\ cudaDraw.h\ for\ definitions}
+\DoxyCodeLine{CUDA(cudaDrawCircle(img,\ width,\ height,\ 50,\ 50,\ 25,\ make\_float4(0,255,127,200)));}
+\DoxyCodeLine{CUDA(cudaDrawRect(img,\ width,\ height,\ 200,\ 25,\ 350,\ 250,\ make\_float4(255,127,0,200)));}
+\DoxyCodeLine{CUDA(cudaDrawLine(img,\ width,\ height,\ 25,\ 150,\ 325,\ 15,\ make\_float4(255,0,200,200),\ 10));}
+
+\end{DoxyCode}
+\hypertarget{md_jetson-inference_2docs_2aux-image_autotoc_md92}{}\doxysubsection{\texorpdfstring{autotoc\+\_\+md92}{autotoc\+\_\+md92}}\label{md_jetson-inference_2docs_2aux-image_autotoc_md92}
+Next \texorpdfstring{$\vert$}{|} {\bfseries{\href{https://github.com/dusty-nv/ros_deep_learning}{\texttt{Deep Learning Nodes for ROS/\+\+ROS2}}}} ~\newline
+ Back \texorpdfstring{$\vert$}{|} {\bfseries{\href{aux-streaming.md}{\texttt{Camera Streaming and Multimedia}}}}
+
+{\bfseries{ }}
+
+{\bfseries{\textsuperscript{© 2016-\/2020 NVIDIA \texorpdfstring{$\vert$}{|} }\href{../README.md\#hello-ai-world}{\texttt{\textsuperscript{Table of Contents}}}}}
+
+{\bfseries{ }}

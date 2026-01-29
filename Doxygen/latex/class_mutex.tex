@@ -1,0 +1,154 @@
+\doxysection{Mutex Class Reference}
+\hypertarget{class_mutex}{}\label{class_mutex}\index{Mutex@{Mutex}}
+
+
+{\ttfamily \+\#include $<$Mutex.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_mutex_a593423d868daf926c7b0d63a833ae29a}{Mutex}} ()
+\item 
+\doxymbox{\hyperlink{class_mutex_ac9e9182407f5f74892318607888e9be4}{\texorpdfstring{$\sim$}{\string~}\+Mutex}} ()
+\item 
+bool \doxymbox{\hyperlink{class_mutex_a87f92bea41231778680c392668b4ad6f}{Attempt\+Lock}} ()
+\item 
+void \doxymbox{\hyperlink{class_mutex_ae5cb54c9c45f90e29206d5679a3b1c7f}{Lock}} ()
+\item 
+void \doxymbox{\hyperlink{class_mutex_ad5de61abafec4bbec4cd7e796e5209fd}{Unlock}} ()
+\item 
+void \doxymbox{\hyperlink{class_mutex_a5fce312e70fb4d09af9436d4e5912f7e}{Sync}} ()
+\item 
+pthread\+\_\+mutex\+\_\+t \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_mutex_ade0122d24f7815370caf34ddd91ddcf4}{Get\+ID}} ()
+\item 
+\doxymbox{\hyperlink{class_mutex_a593423d868daf926c7b0d63a833ae29a}{Mutex}} ()
+\item 
+\doxymbox{\hyperlink{class_mutex_ac9e9182407f5f74892318607888e9be4}{\texorpdfstring{$\sim$}{\string~}\+Mutex}} ()
+\item 
+bool \doxymbox{\hyperlink{class_mutex_a87f92bea41231778680c392668b4ad6f}{Attempt\+Lock}} ()
+\item 
+void \doxymbox{\hyperlink{class_mutex_ae5cb54c9c45f90e29206d5679a3b1c7f}{Lock}} ()
+\item 
+void \doxymbox{\hyperlink{class_mutex_ad5de61abafec4bbec4cd7e796e5209fd}{Unlock}} ()
+\item 
+void \doxymbox{\hyperlink{class_mutex_a5fce312e70fb4d09af9436d4e5912f7e}{Sync}} ()
+\item 
+pthread\+\_\+mutex\+\_\+t \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_mutex_ade0122d24f7815370caf34ddd91ddcf4}{Get\+ID}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_mutex_a8fc19c03aa404e9efddc2c91132ebd02}\label{class_mutex_a8fc19c03aa404e9efddc2c91132ebd02} 
+pthread\+\_\+mutex\+\_\+t {\bfseries m\+ID}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+A lightweight mutual exclusion lock. It is very fast to check if the mutex is available, lock it, and release it. However, if the mutex is unavailable when you attempt to lock it, execution of the thread will stop until it becomes available. 
+
+\label{doc-constructors}
+\Hypertarget{class_mutex_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_mutex_a593423d868daf926c7b0d63a833ae29a}\index{Mutex@{Mutex}!Mutex@{Mutex}}
+\index{Mutex@{Mutex}!Mutex@{Mutex}}
+\doxysubsubsection{\texorpdfstring{Mutex()}{Mutex()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_mutex_a593423d868daf926c7b0d63a833ae29a} 
+Mutex::\+\+Mutex (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Constructor \Hypertarget{class_mutex_ac9e9182407f5f74892318607888e9be4}\index{Mutex@{Mutex}!````~Mutex@{\texorpdfstring{$\sim$}{\string~}Mutex}}
+\index{````~Mutex@{\texorpdfstring{$\sim$}{\string~}Mutex}!Mutex@{Mutex}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}Mutex()}{\string~Mutex()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_mutex_ac9e9182407f5f74892318607888e9be4} 
+Mutex::\+\texorpdfstring{$\sim$}{\string~}\+Mutex (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Destructor \Hypertarget{class_mutex_a593423d868daf926c7b0d63a833ae29a}\index{Mutex@{Mutex}!Mutex@{Mutex}}
+\index{Mutex@{Mutex}!Mutex@{Mutex}}
+\doxysubsubsection{\texorpdfstring{Mutex()}{Mutex()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_mutex_a593423d868daf926c7b0d63a833ae29a} 
+Mutex::\+\+Mutex (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Constructor \Hypertarget{class_mutex_ac9e9182407f5f74892318607888e9be4}\index{Mutex@{Mutex}!````~Mutex@{\texorpdfstring{$\sim$}{\string~}Mutex}}
+\index{````~Mutex@{\texorpdfstring{$\sim$}{\string~}Mutex}!Mutex@{Mutex}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}Mutex()}{\string~Mutex()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_mutex_ac9e9182407f5f74892318607888e9be4} 
+Mutex::\+\texorpdfstring{$\sim$}{\string~}\+Mutex (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Destructor 
+
+\label{doc-func-members}
+\Hypertarget{class_mutex_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_mutex_a87f92bea41231778680c392668b4ad6f}\index{Mutex@{Mutex}!AttemptLock@{AttemptLock}}
+\index{AttemptLock@{AttemptLock}!Mutex@{Mutex}}
+\doxysubsubsection{\texorpdfstring{AttemptLock()}{AttemptLock()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_mutex_a87f92bea41231778680c392668b4ad6f} 
+bool Mutex::\+\+Attempt\+Lock (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+If the lock is free, aquire it. Otherwise, return without waiting for it to become available. \begin{DoxyReturn}{Returns}
+True if the lock was aquired, false if not. 
+\end{DoxyReturn}
+\Hypertarget{class_mutex_a87f92bea41231778680c392668b4ad6f}\index{Mutex@{Mutex}!AttemptLock@{AttemptLock}}
+\index{AttemptLock@{AttemptLock}!Mutex@{Mutex}}
+\doxysubsubsection{\texorpdfstring{AttemptLock()}{AttemptLock()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_mutex_a87f92bea41231778680c392668b4ad6f} 
+bool Mutex::\+\+Attempt\+Lock (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+If the lock is free, aquire it. Otherwise, return without waiting for it to become available. \begin{DoxyReturn}{Returns}
+True if the lock was aquired, false if not. 
+\end{DoxyReturn}
+\Hypertarget{class_mutex_ade0122d24f7815370caf34ddd91ddcf4}\index{Mutex@{Mutex}!GetID@{GetID}}
+\index{GetID@{GetID}!Mutex@{Mutex}}
+\doxysubsubsection{\texorpdfstring{GetID()}{GetID()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_mutex_ade0122d24f7815370caf34ddd91ddcf4} 
+pthread\+\_\+mutex\+\_\+t \texorpdfstring{$\ast$}{*} Mutex::\+\+Get\+ID (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Get the mutex object \Hypertarget{class_mutex_ade0122d24f7815370caf34ddd91ddcf4}\index{Mutex@{Mutex}!GetID@{GetID}}
+\index{GetID@{GetID}!Mutex@{Mutex}}
+\doxysubsubsection{\texorpdfstring{GetID()}{GetID()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_mutex_ade0122d24f7815370caf34ddd91ddcf4} 
+pthread\+\_\+mutex\+\_\+t \texorpdfstring{$\ast$}{*} Mutex::\+\+Get\+ID (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Get the mutex object \Hypertarget{class_mutex_ae5cb54c9c45f90e29206d5679a3b1c7f}\index{Mutex@{Mutex}!Lock@{Lock}}
+\index{Lock@{Lock}!Mutex@{Mutex}}
+\doxysubsubsection{\texorpdfstring{Lock()}{Lock()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_mutex_ae5cb54c9c45f90e29206d5679a3b1c7f} 
+void Mutex::\+\+Lock (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Aquire the lock, whenever it becomes available. This could mean just a few instructions if the lock is already free, or to block the thread if it isn\textquotesingle{}t. \Hypertarget{class_mutex_ae5cb54c9c45f90e29206d5679a3b1c7f}\index{Mutex@{Mutex}!Lock@{Lock}}
+\index{Lock@{Lock}!Mutex@{Mutex}}
+\doxysubsubsection{\texorpdfstring{Lock()}{Lock()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_mutex_ae5cb54c9c45f90e29206d5679a3b1c7f} 
+void Mutex::\+\+Lock (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Aquire the lock, whenever it becomes available. This could mean just a few instructions if the lock is already free, or to block the thread if it isn\textquotesingle{}t. \Hypertarget{class_mutex_a5fce312e70fb4d09af9436d4e5912f7e}\index{Mutex@{Mutex}!Sync@{Sync}}
+\index{Sync@{Sync}!Mutex@{Mutex}}
+\doxysubsubsection{\texorpdfstring{Sync()}{Sync()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_mutex_a5fce312e70fb4d09af9436d4e5912f7e} 
+void Mutex::\+\+Sync (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Wait for the lock, then release it immediately. Use this in situations where you are waiting for an event to occur. \Hypertarget{class_mutex_a5fce312e70fb4d09af9436d4e5912f7e}\index{Mutex@{Mutex}!Sync@{Sync}}
+\index{Sync@{Sync}!Mutex@{Mutex}}
+\doxysubsubsection{\texorpdfstring{Sync()}{Sync()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_mutex_a5fce312e70fb4d09af9436d4e5912f7e} 
+void Mutex::\+\+Sync (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Wait for the lock, then release it immediately. Use this in situations where you are waiting for an event to occur. \Hypertarget{class_mutex_ad5de61abafec4bbec4cd7e796e5209fd}\index{Mutex@{Mutex}!Unlock@{Unlock}}
+\index{Unlock@{Unlock}!Mutex@{Mutex}}
+\doxysubsubsection{\texorpdfstring{Unlock()}{Unlock()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_mutex_ad5de61abafec4bbec4cd7e796e5209fd} 
+void Mutex::\+\+Unlock (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Release the lock \Hypertarget{class_mutex_ad5de61abafec4bbec4cd7e796e5209fd}\index{Mutex@{Mutex}!Unlock@{Unlock}}
+\index{Unlock@{Unlock}!Mutex@{Mutex}}
+\doxysubsubsection{\texorpdfstring{Unlock()}{Unlock()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_mutex_ad5de61abafec4bbec4cd7e796e5209fd} 
+void Mutex::\+\+Unlock (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Release the lock 
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+jetson-\/inference/\+build/\+aarch64/\+include/\+jetson-\/utils/\+Mutex.\+h\item 
+jetson-\/inference/\+utils/\+threads/\+Mutex.\+h\item 
+jetson-\/inference/\+build/\+aarch64/\+include/\+jetson-\/utils/\+Mutex.\+inl\item 
+jetson-\/inference/\+utils/\+threads/\+Mutex.\+inl\end{DoxyCompactItemize}

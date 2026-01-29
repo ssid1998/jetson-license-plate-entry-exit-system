@@ -1,0 +1,265 @@
+\doxysection{detect\+Net::\+Detection Struct Reference}
+\hypertarget{structdetect_net_1_1_detection}{}\label{structdetect_net_1_1_detection}\index{detectNet::Detection@{detectNet::Detection}}
+
+
+{\ttfamily \+\#include $<$detect\+Net.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+float \doxymbox{\hyperlink{structdetect_net_1_1_detection_aeb58c09e547bd40f3a0e33cdd4c7640e}{Width}} () const
+\item 
+float \doxymbox{\hyperlink{structdetect_net_1_1_detection_a2ae87aae76d065e19be1897119daba66}{Height}} () const
+\item 
+float \doxymbox{\hyperlink{structdetect_net_1_1_detection_a239620621f33ed918d2f86a678a68c16}{Area}} () const
+\item 
+void \doxymbox{\hyperlink{structdetect_net_1_1_detection_a127aaa41b6d1032aeb13fde8e6856247}{Center}} (float \texorpdfstring{$\ast$}{*}x, float \texorpdfstring{$\ast$}{*}y) const
+\item 
+bool \doxymbox{\hyperlink{structdetect_net_1_1_detection_a0a62f35a001c19606c58c6b70b4fe633}{Contains}} (float x, float y) const
+\item 
+bool \doxymbox{\hyperlink{structdetect_net_1_1_detection_aed2dfc21c256e9f08daca442a0dc6a84}{Intersects}} (const Detection \&det, float area\+Threshold=0.\+0f) const
+\item 
+bool \doxymbox{\hyperlink{structdetect_net_1_1_detection_affc3f01de5faf9ca0fa4dfbd30077bb4}{Intersects}} (float x1, float y1, float x2, float y2, float area\+Threshold=0.\+0f) const
+\item 
+float \doxymbox{\hyperlink{structdetect_net_1_1_detection_a84ba21eeaf01aae48c3efc119a86d030}{Intersection\+Area}} (const Detection \&det) const
+\item 
+float \doxymbox{\hyperlink{structdetect_net_1_1_detection_a4b025e25025234e43446fb5719dbd46b}{Intersection\+Area}} (float x1, float y1, float x2, float y2) const
+\item 
+float \doxymbox{\hyperlink{structdetect_net_1_1_detection_ad35c38e2d0e592d10ffc9a105c4beab2}{IOU}} (const Detection \&det) const
+\item 
+float \doxymbox{\hyperlink{structdetect_net_1_1_detection_acf01a244de6de3f20e8e3930bae0f60e}{IOU}} (float x1, float y1, float x2, float y2) const
+\item 
+bool \doxymbox{\hyperlink{structdetect_net_1_1_detection_a344619ce0a8fc04050b3cb6238a815f9}{Overlaps}} (const Detection \&det) const
+\item 
+bool \doxymbox{\hyperlink{structdetect_net_1_1_detection_a425de0ee8eaca1dceea17280cb4890b4}{Overlaps}} (float x1, float y1, float x2, float y2) const
+\item 
+bool \doxymbox{\hyperlink{structdetect_net_1_1_detection_aaae60d2bea1b7b1a331b7f880674dcaf}{Expand}} (float x1, float y1, float x2, float y2)
+\item 
+bool \doxymbox{\hyperlink{structdetect_net_1_1_detection_a9a0eb433ce423a5dbaf7e9f2f1c0cb34}{Expand}} (const Detection \&det)
+\item 
+void \doxymbox{\hyperlink{structdetect_net_1_1_detection_a15b1dafa33b267e1ee2cba6eba0a9ae1}{Reset}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static float \doxymbox{\hyperlink{structdetect_net_1_1_detection_a596c0884daa44b3fa341ed67508b5fcb}{Width}} (float x1, float x2)
+\item 
+static float \doxymbox{\hyperlink{structdetect_net_1_1_detection_a676289f208f6ad38391117d260414b62}{Height}} (float y1, float y2)
+\item 
+static float \doxymbox{\hyperlink{structdetect_net_1_1_detection_a14e6f8a1a69ebe30e7c57299ece48c28}{Area}} (float x1, float y1, float x2, float y2)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+uint32\+\_\+t \doxymbox{\hyperlink{structdetect_net_1_1_detection_a0baef8e908f93105f2e6d1202ae2954e}{Class\+ID}}
+\item 
+float \doxymbox{\hyperlink{structdetect_net_1_1_detection_a04b420d87cc33bd1b3d3192509b4bfa5}{Confidence}}
+\item 
+int \doxymbox{\hyperlink{structdetect_net_1_1_detection_ae3ef31867dad24441a3163c457a972ab}{Track\+ID}}
+\item 
+int \doxymbox{\hyperlink{structdetect_net_1_1_detection_a4a4ab1c5c534c82ea14cdaed835f401d}{Track\+Status}}
+\item 
+int \doxymbox{\hyperlink{structdetect_net_1_1_detection_a85fa073a482b8619e74868c53bd83fa5}{Track\+Frames}}
+\item 
+int \doxymbox{\hyperlink{structdetect_net_1_1_detection_ad07a85ac4ef3226fe860b6151b71d750}{Track\+Lost}}
+\item 
+float \doxymbox{\hyperlink{structdetect_net_1_1_detection_a42914a705a6cad72e56a9ad4fb68b0e6}{Left}}
+\item 
+float \doxymbox{\hyperlink{structdetect_net_1_1_detection_aa008c7f9d614b314281366b7797cd00a}{Right}}
+\item 
+float \doxymbox{\hyperlink{structdetect_net_1_1_detection_a2776e71cde1e6c41676bb5e6d12b1d0d}{Top}}
+\item 
+float \doxymbox{\hyperlink{structdetect_net_1_1_detection_a97869bd21815bfc1ca005fa057329ffe}{Bottom}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Object \doxylink{structdetect_net_1_1_detection}{Detection} result. 
+
+\label{doc-func-members}
+\Hypertarget{structdetect_net_1_1_detection_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{structdetect_net_1_1_detection_a239620621f33ed918d2f86a678a68c16}\index{detectNet::Detection@{detectNet::Detection}!Area@{Area}}
+\index{Area@{Area}!detectNet::Detection@{detectNet::Detection}}
+\doxysubsubsection{\texorpdfstring{Area()}{Area()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{structdetect_net_1_1_detection_a239620621f33ed918d2f86a678a68c16} 
+float detect\+Net::\+\+Detection::\+\+Area (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Calculate the width of the bounding box \Hypertarget{structdetect_net_1_1_detection_a14e6f8a1a69ebe30e7c57299ece48c28}\index{detectNet::Detection@{detectNet::Detection}!Area@{Area}}
+\index{Area@{Area}!detectNet::Detection@{detectNet::Detection}}
+\doxysubsubsection{\texorpdfstring{Area()}{Area()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{structdetect_net_1_1_detection_a14e6f8a1a69ebe30e7c57299ece48c28} 
+float detect\+Net::\+\+Detection::\+\+Area (\begin{DoxyParamCaption}\item[{float}]{x1}{, }\item[{float}]{y1}{, }\item[{float}]{x2}{, }\item[{float}]{y2}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+Return the center of the object \Hypertarget{structdetect_net_1_1_detection_a127aaa41b6d1032aeb13fde8e6856247}\index{detectNet::Detection@{detectNet::Detection}!Center@{Center}}
+\index{Center@{Center}!detectNet::Detection@{detectNet::Detection}}
+\doxysubsubsection{\texorpdfstring{Center()}{Center()}}
+{\footnotesize\ttfamily \label{structdetect_net_1_1_detection_a127aaa41b6d1032aeb13fde8e6856247} 
+void detect\+Net::\+\+Detection::\+\+Center (\begin{DoxyParamCaption}\item[{float \texorpdfstring{$\ast$}{*}}]{x}{, }\item[{float \texorpdfstring{$\ast$}{*}}]{y}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Return true if the coordinate is inside the bounding box \Hypertarget{structdetect_net_1_1_detection_a0a62f35a001c19606c58c6b70b4fe633}\index{detectNet::Detection@{detectNet::Detection}!Contains@{Contains}}
+\index{Contains@{Contains}!detectNet::Detection@{detectNet::Detection}}
+\doxysubsubsection{\texorpdfstring{Contains()}{Contains()}}
+{\footnotesize\ttfamily \label{structdetect_net_1_1_detection_a0a62f35a001c19606c58c6b70b4fe633} 
+bool detect\+Net::\+\+Detection::\+\+Contains (\begin{DoxyParamCaption}\item[{float}]{x}{, }\item[{float}]{y}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Return true if the bounding boxes intersect and exceeds area \% threshold \Hypertarget{structdetect_net_1_1_detection_a9a0eb433ce423a5dbaf7e9f2f1c0cb34}\index{detectNet::Detection@{detectNet::Detection}!Expand@{Expand}}
+\index{Expand@{Expand}!detectNet::Detection@{detectNet::Detection}}
+\doxysubsubsection{\texorpdfstring{Expand()}{Expand()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{structdetect_net_1_1_detection_a9a0eb433ce423a5dbaf7e9f2f1c0cb34} 
+bool detect\+Net::\+\+Detection::\+\+Expand (\begin{DoxyParamCaption}\item[{const Detection \&}]{det}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Reset all member variables to zero \Hypertarget{structdetect_net_1_1_detection_aaae60d2bea1b7b1a331b7f880674dcaf}\index{detectNet::Detection@{detectNet::Detection}!Expand@{Expand}}
+\index{Expand@{Expand}!detectNet::Detection@{detectNet::Detection}}
+\doxysubsubsection{\texorpdfstring{Expand()}{Expand()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{structdetect_net_1_1_detection_aaae60d2bea1b7b1a331b7f880674dcaf} 
+bool detect\+Net::\+\+Detection::\+\+Expand (\begin{DoxyParamCaption}\item[{float}]{x1}{, }\item[{float}]{y1}{, }\item[{float}]{x2}{, }\item[{float}]{y2}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Expand the bounding box if they overlap (return true if so) \Hypertarget{structdetect_net_1_1_detection_a2ae87aae76d065e19be1897119daba66}\index{detectNet::Detection@{detectNet::Detection}!Height@{Height}}
+\index{Height@{Height}!detectNet::Detection@{detectNet::Detection}}
+\doxysubsubsection{\texorpdfstring{Height()}{Height()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{structdetect_net_1_1_detection_a2ae87aae76d065e19be1897119daba66} 
+float detect\+Net::\+\+Detection::\+\+Height (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Calculate the area of the object \Hypertarget{structdetect_net_1_1_detection_a676289f208f6ad38391117d260414b62}\index{detectNet::Detection@{detectNet::Detection}!Height@{Height}}
+\index{Height@{Height}!detectNet::Detection@{detectNet::Detection}}
+\doxysubsubsection{\texorpdfstring{Height()}{Height()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{structdetect_net_1_1_detection_a676289f208f6ad38391117d260414b62} 
+float detect\+Net::\+\+Detection::\+\+Height (\begin{DoxyParamCaption}\item[{float}]{y1}{, }\item[{float}]{y2}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+Calculate the area of the bounding box \Hypertarget{structdetect_net_1_1_detection_a84ba21eeaf01aae48c3efc119a86d030}\index{detectNet::Detection@{detectNet::Detection}!IntersectionArea@{IntersectionArea}}
+\index{IntersectionArea@{IntersectionArea}!detectNet::Detection@{detectNet::Detection}}
+\doxysubsubsection{\texorpdfstring{IntersectionArea()}{IntersectionArea()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{structdetect_net_1_1_detection_a84ba21eeaf01aae48c3efc119a86d030} 
+float detect\+Net::\+\+Detection::\+\+Intersection\+Area (\begin{DoxyParamCaption}\item[{const Detection \&}]{det}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Return the area of the bounding box intersection \Hypertarget{structdetect_net_1_1_detection_a4b025e25025234e43446fb5719dbd46b}\index{detectNet::Detection@{detectNet::Detection}!IntersectionArea@{IntersectionArea}}
+\index{IntersectionArea@{IntersectionArea}!detectNet::Detection@{detectNet::Detection}}
+\doxysubsubsection{\texorpdfstring{IntersectionArea()}{IntersectionArea()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{structdetect_net_1_1_detection_a4b025e25025234e43446fb5719dbd46b} 
+float detect\+Net::\+\+Detection::\+\+Intersection\+Area (\begin{DoxyParamCaption}\item[{float}]{x1}{, }\item[{float}]{y1}{, }\item[{float}]{x2}{, }\item[{float}]{y2}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Calculate the Intersection-\/\+Over-\/\+Union (IOU) ratio \Hypertarget{structdetect_net_1_1_detection_aed2dfc21c256e9f08daca442a0dc6a84}\index{detectNet::Detection@{detectNet::Detection}!Intersects@{Intersects}}
+\index{Intersects@{Intersects}!detectNet::Detection@{detectNet::Detection}}
+\doxysubsubsection{\texorpdfstring{Intersects()}{Intersects()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{structdetect_net_1_1_detection_aed2dfc21c256e9f08daca442a0dc6a84} 
+bool detect\+Net::\+\+Detection::\+\+Intersects (\begin{DoxyParamCaption}\item[{const Detection \&}]{det}{, }\item[{float}]{area\+Threshold}{ = {\ttfamily 0.0f}}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Return true if the bounding boxes intersect and exceeds area \% threshold \Hypertarget{structdetect_net_1_1_detection_affc3f01de5faf9ca0fa4dfbd30077bb4}\index{detectNet::Detection@{detectNet::Detection}!Intersects@{Intersects}}
+\index{Intersects@{Intersects}!detectNet::Detection@{detectNet::Detection}}
+\doxysubsubsection{\texorpdfstring{Intersects()}{Intersects()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{structdetect_net_1_1_detection_affc3f01de5faf9ca0fa4dfbd30077bb4} 
+bool detect\+Net::\+\+Detection::\+\+Intersects (\begin{DoxyParamCaption}\item[{float}]{x1}{, }\item[{float}]{y1}{, }\item[{float}]{x2}{, }\item[{float}]{y2}{, }\item[{float}]{area\+Threshold}{ = {\ttfamily 0.0f}}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Return the area of the bounding box intersection \Hypertarget{structdetect_net_1_1_detection_ad35c38e2d0e592d10ffc9a105c4beab2}\index{detectNet::Detection@{detectNet::Detection}!IOU@{IOU}}
+\index{IOU@{IOU}!detectNet::Detection@{detectNet::Detection}}
+\doxysubsubsection{\texorpdfstring{IOU()}{IOU()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{structdetect_net_1_1_detection_ad35c38e2d0e592d10ffc9a105c4beab2} 
+float detect\+Net::\+\+Detection::\+\+IOU (\begin{DoxyParamCaption}\item[{const Detection \&}]{det}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Calculate the Intersection-\/\+Over-\/\+Union (IOU) ratio \Hypertarget{structdetect_net_1_1_detection_acf01a244de6de3f20e8e3930bae0f60e}\index{detectNet::Detection@{detectNet::Detection}!IOU@{IOU}}
+\index{IOU@{IOU}!detectNet::Detection@{detectNet::Detection}}
+\doxysubsubsection{\texorpdfstring{IOU()}{IOU()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{structdetect_net_1_1_detection_acf01a244de6de3f20e8e3930bae0f60e} 
+float detect\+Net::\+\+Detection::\+\+IOU (\begin{DoxyParamCaption}\item[{float}]{x1}{, }\item[{float}]{y1}{, }\item[{float}]{x2}{, }\item[{float}]{y2}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Return true if the bounding boxes overlap \Hypertarget{structdetect_net_1_1_detection_a344619ce0a8fc04050b3cb6238a815f9}\index{detectNet::Detection@{detectNet::Detection}!Overlaps@{Overlaps}}
+\index{Overlaps@{Overlaps}!detectNet::Detection@{detectNet::Detection}}
+\doxysubsubsection{\texorpdfstring{Overlaps()}{Overlaps()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{structdetect_net_1_1_detection_a344619ce0a8fc04050b3cb6238a815f9} 
+bool detect\+Net::\+\+Detection::\+\+Overlaps (\begin{DoxyParamCaption}\item[{const Detection \&}]{det}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Return true if the bounding boxes overlap \Hypertarget{structdetect_net_1_1_detection_a425de0ee8eaca1dceea17280cb4890b4}\index{detectNet::Detection@{detectNet::Detection}!Overlaps@{Overlaps}}
+\index{Overlaps@{Overlaps}!detectNet::Detection@{detectNet::Detection}}
+\doxysubsubsection{\texorpdfstring{Overlaps()}{Overlaps()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{structdetect_net_1_1_detection_a425de0ee8eaca1dceea17280cb4890b4} 
+bool detect\+Net::\+\+Detection::\+\+Overlaps (\begin{DoxyParamCaption}\item[{float}]{x1}{, }\item[{float}]{y1}{, }\item[{float}]{x2}{, }\item[{float}]{y2}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Expand the bounding box if they overlap (return true if so) \Hypertarget{structdetect_net_1_1_detection_a15b1dafa33b267e1ee2cba6eba0a9ae1}\index{detectNet::Detection@{detectNet::Detection}!Reset@{Reset}}
+\index{Reset@{Reset}!detectNet::Detection@{detectNet::Detection}}
+\doxysubsubsection{\texorpdfstring{Reset()}{Reset()}}
+{\footnotesize\ttfamily \label{structdetect_net_1_1_detection_a15b1dafa33b267e1ee2cba6eba0a9ae1} 
+void detect\+Net::\+\+Detection::\+\+Reset (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Default constructor \Hypertarget{structdetect_net_1_1_detection_aeb58c09e547bd40f3a0e33cdd4c7640e}\index{detectNet::Detection@{detectNet::Detection}!Width@{Width}}
+\index{Width@{Width}!detectNet::Detection@{detectNet::Detection}}
+\doxysubsubsection{\texorpdfstring{Width()}{Width()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{structdetect_net_1_1_detection_aeb58c09e547bd40f3a0e33cdd4c7640e} 
+float detect\+Net::\+\+Detection::\+\+Width (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Calculate the height of the object \Hypertarget{structdetect_net_1_1_detection_a596c0884daa44b3fa341ed67508b5fcb}\index{detectNet::Detection@{detectNet::Detection}!Width@{Width}}
+\index{Width@{Width}!detectNet::Detection@{detectNet::Detection}}
+\doxysubsubsection{\texorpdfstring{Width()}{Width()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{structdetect_net_1_1_detection_a596c0884daa44b3fa341ed67508b5fcb} 
+float detect\+Net::\+\+Detection::\+\+Width (\begin{DoxyParamCaption}\item[{float}]{x1}{, }\item[{float}]{x2}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+Calculate the height of the bounding box 
+
+\label{doc-variable-members}
+\Hypertarget{structdetect_net_1_1_detection_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{structdetect_net_1_1_detection_a97869bd21815bfc1ca005fa057329ffe}\index{detectNet::Detection@{detectNet::Detection}!Bottom@{Bottom}}
+\index{Bottom@{Bottom}!detectNet::Detection@{detectNet::Detection}}
+\doxysubsubsection{\texorpdfstring{Bottom}{Bottom}}
+{\footnotesize\ttfamily \label{structdetect_net_1_1_detection_a97869bd21815bfc1ca005fa057329ffe} 
+float detect\+Net::\+\+Detection::\+\+Bottom}
+
+Bottom bounding box coordinate (in pixels) Calculate the width of the object \Hypertarget{structdetect_net_1_1_detection_a0baef8e908f93105f2e6d1202ae2954e}\index{detectNet::Detection@{detectNet::Detection}!ClassID@{ClassID}}
+\index{ClassID@{ClassID}!detectNet::Detection@{detectNet::Detection}}
+\doxysubsubsection{\texorpdfstring{ClassID}{ClassID}}
+{\footnotesize\ttfamily \label{structdetect_net_1_1_detection_a0baef8e908f93105f2e6d1202ae2954e} 
+uint32\+\_\+t detect\+Net::\+\+Detection::\+\+Class\+ID}
+
+Class index of the detected object. \Hypertarget{structdetect_net_1_1_detection_a04b420d87cc33bd1b3d3192509b4bfa5}\index{detectNet::Detection@{detectNet::Detection}!Confidence@{Confidence}}
+\index{Confidence@{Confidence}!detectNet::Detection@{detectNet::Detection}}
+\doxysubsubsection{\texorpdfstring{Confidence}{Confidence}}
+{\footnotesize\ttfamily \label{structdetect_net_1_1_detection_a04b420d87cc33bd1b3d3192509b4bfa5} 
+float detect\+Net::\+\+Detection::\+\+Confidence}
+
+Confidence value of the detected object. \Hypertarget{structdetect_net_1_1_detection_a42914a705a6cad72e56a9ad4fb68b0e6}\index{detectNet::Detection@{detectNet::Detection}!Left@{Left}}
+\index{Left@{Left}!detectNet::Detection@{detectNet::Detection}}
+\doxysubsubsection{\texorpdfstring{Left}{Left}}
+{\footnotesize\ttfamily \label{structdetect_net_1_1_detection_a42914a705a6cad72e56a9ad4fb68b0e6} 
+float detect\+Net::\+\+Detection::\+\+Left}
+
+Left bounding box coordinate (in pixels) \Hypertarget{structdetect_net_1_1_detection_aa008c7f9d614b314281366b7797cd00a}\index{detectNet::Detection@{detectNet::Detection}!Right@{Right}}
+\index{Right@{Right}!detectNet::Detection@{detectNet::Detection}}
+\doxysubsubsection{\texorpdfstring{Right}{Right}}
+{\footnotesize\ttfamily \label{structdetect_net_1_1_detection_aa008c7f9d614b314281366b7797cd00a} 
+float detect\+Net::\+\+Detection::\+\+Right}
+
+Right bounding box coordinate (in pixels) \Hypertarget{structdetect_net_1_1_detection_a2776e71cde1e6c41676bb5e6d12b1d0d}\index{detectNet::Detection@{detectNet::Detection}!Top@{Top}}
+\index{Top@{Top}!detectNet::Detection@{detectNet::Detection}}
+\doxysubsubsection{\texorpdfstring{Top}{Top}}
+{\footnotesize\ttfamily \label{structdetect_net_1_1_detection_a2776e71cde1e6c41676bb5e6d12b1d0d} 
+float detect\+Net::\+\+Detection::\+\+Top}
+
+Top bounding box cooridnate (in pixels) \Hypertarget{structdetect_net_1_1_detection_a85fa073a482b8619e74868c53bd83fa5}\index{detectNet::Detection@{detectNet::Detection}!TrackFrames@{TrackFrames}}
+\index{TrackFrames@{TrackFrames}!detectNet::Detection@{detectNet::Detection}}
+\doxysubsubsection{\texorpdfstring{TrackFrames}{TrackFrames}}
+{\footnotesize\ttfamily \label{structdetect_net_1_1_detection_a85fa073a482b8619e74868c53bd83fa5} 
+int detect\+Net::\+\+Detection::\+\+Track\+Frames}
+
+\doxylink{requirements_The}{The} number of frames the object has been re-\/identified for \Hypertarget{structdetect_net_1_1_detection_ae3ef31867dad24441a3163c457a972ab}\index{detectNet::Detection@{detectNet::Detection}!TrackID@{TrackID}}
+\index{TrackID@{TrackID}!detectNet::Detection@{detectNet::Detection}}
+\doxysubsubsection{\texorpdfstring{TrackID}{TrackID}}
+{\footnotesize\ttfamily \label{structdetect_net_1_1_detection_ae3ef31867dad24441a3163c457a972ab} 
+int detect\+Net::\+\+Detection::\+\+Track\+ID}
+
+Unique tracking ID (or -\/1 if untracked) \Hypertarget{structdetect_net_1_1_detection_ad07a85ac4ef3226fe860b6151b71d750}\index{detectNet::Detection@{detectNet::Detection}!TrackLost@{TrackLost}}
+\index{TrackLost@{TrackLost}!detectNet::Detection@{detectNet::Detection}}
+\doxysubsubsection{\texorpdfstring{TrackLost}{TrackLost}}
+{\footnotesize\ttfamily \label{structdetect_net_1_1_detection_ad07a85ac4ef3226fe860b6151b71d750} 
+int detect\+Net::\+\+Detection::\+\+Track\+Lost}
+
+\doxylink{requirements_The}{The} number of consecutive frames tracking has been lost for \Hypertarget{structdetect_net_1_1_detection_a4a4ab1c5c534c82ea14cdaed835f401d}\index{detectNet::Detection@{detectNet::Detection}!TrackStatus@{TrackStatus}}
+\index{TrackStatus@{TrackStatus}!detectNet::Detection@{detectNet::Detection}}
+\doxysubsubsection{\texorpdfstring{TrackStatus}{TrackStatus}}
+{\footnotesize\ttfamily \label{structdetect_net_1_1_detection_a4a4ab1c5c534c82ea14cdaed835f401d} 
+int detect\+Net::\+\+Detection::\+\+Track\+Status}
+
+-\/1 for dropped, 0 for initializing, 1 for active/\+valid 
+
+The documentation for this struct was generated from the following file:\+\begin{DoxyCompactItemize}
+\item 
+jetson-\/inference/\+build/\+aarch64/\+include/\+jetson-\/inference/\+detect\+Net.\+h\end{DoxyCompactItemize}

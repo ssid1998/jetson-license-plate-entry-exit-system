@@ -1,0 +1,104 @@
+\doxysubsection{Model Downloader }
+\hypertarget{group__model_downloader}{}\label{group__model_downloader}\index{Model Downloader@{Model Downloader}}
+\doxysubsubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\+\#define \doxymbox{\hyperlink{group__model_downloader_ga61fe6cb2e130091e0e33a81e8cca43d2}{JSON\+\_\+\+STR}}(x)
+\item 
+\+\#define \doxymbox{\hyperlink{group__model_downloader_gade5ee56e8f8bf404fcd9dd17e98c54e2}{JSON\+\_\+\+STR\+\_\+\+DEFAULT}}(x,  default)
+\end{DoxyCompactItemize}
+\doxysubsubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \doxymbox{\hyperlink{group__model_downloader_ga05129bb258eeaa3da77f2a1d9d6fd661}{Download\+Model}} (\doxymbox{\hyperlink{namespacenlohmann_a8ba8c5483f73a36e716558571ff97d57}{nlohmann::\+json}} \&model, uint32\+\_\+t retries=2)
+\item 
+bool \doxymbox{\hyperlink{group__model_downloader_gac9a7dd494959c16c291a39167a45a4c7}{Download\+Model}} (const char \texorpdfstring{$\ast$}{*}type, const char \texorpdfstring{$\ast$}{*}name, \doxymbox{\hyperlink{namespacenlohmann_a8ba8c5483f73a36e716558571ff97d57}{nlohmann::\+json}} \&model, uint32\+\_\+t retries=2)
+\item 
+bool \doxymbox{\hyperlink{group__model_downloader_ga8d09a61f26d37db40e8800caf243cbba}{Find\+Model}} (const char \texorpdfstring{$\ast$}{*}type, const char \texorpdfstring{$\ast$}{*}name)
+\item 
+bool \doxymbox{\hyperlink{group__model_downloader_gad929f8b8a7b206dba59108663a8b277d}{Find\+Model}} (const char \texorpdfstring{$\ast$}{*}type, const char \texorpdfstring{$\ast$}{*}name, \doxymbox{\hyperlink{namespacenlohmann_a8ba8c5483f73a36e716558571ff97d57}{nlohmann::\+json}} \&model)
+\item 
+bool \doxymbox{\hyperlink{group__model_downloader_ga55644d0724c16154e419831e4b9ae58f}{Find\+Model}} (const char \texorpdfstring{$\ast$}{*}type, const char \texorpdfstring{$\ast$}{*}name, \doxymbox{\hyperlink{namespacenlohmann_a8ba8c5483f73a36e716558571ff97d57}{nlohmann::\+json}} \&models, \doxymbox{\hyperlink{namespacenlohmann_a8ba8c5483f73a36e716558571ff97d57}{nlohmann::\+json}} \&model)
+\item 
+bool \doxymbox{\hyperlink{group__model_downloader_gaa4476b06252ff64b260870d66eaa5019}{Load\+Model\+Manifest}} (const char \texorpdfstring{$\ast$}{*}path="{}networks/\+models.\+json"{})
+\item 
+bool \doxymbox{\hyperlink{group__model_downloader_gaab9d397a3fdcf7d218a76cf07548e522}{Load\+Model\+Manifest}} (\doxymbox{\hyperlink{namespacenlohmann_a8ba8c5483f73a36e716558571ff97d57}{nlohmann::\+json}} \&models, const char \texorpdfstring{$\ast$}{*}path="{}networks/\+models.\+json"{})
+\end{DoxyCompactItemize}
+
+
+\doxysubsubsection{Detailed Description}
+Utilities for automatically downloading pre-\/trained models. 
+
+\label{doc-define-members}
+\Hypertarget{group__model_downloader_doc-define-members}
+\doxysubsubsection{Macro Definition Documentation}
+\Hypertarget{group__model_downloader_ga61fe6cb2e130091e0e33a81e8cca43d2}\index{Model Downloader@{Model Downloader}!JSON\_STR@{JSON\_STR}}
+\index{JSON\_STR@{JSON\_STR}!Model Downloader@{Model Downloader}}
+\doxysubsubsubsection{\texorpdfstring{JSON\_STR}{JSON\_STR}}
+{\footnotesize\ttfamily \label{group__model_downloader_ga61fe6cb2e130091e0e33a81e8cca43d2} 
+\+\#define JSON\+\_\+\+STR(\begin{DoxyParamCaption}\item[{}]{x}{}\end{DoxyParamCaption})}
+
+{\bfseries Value:\+}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{(x.is\_string()\ ?\ x.get<std::string>()\ :\ \textcolor{stringliteral}{"{}"{}})}
+
+\end{DoxyCode}
+Helper macro for getting a string from a JSON element \Hypertarget{group__model_downloader_gade5ee56e8f8bf404fcd9dd17e98c54e2}\index{Model Downloader@{Model Downloader}!JSON\_STR\_DEFAULT@{JSON\_STR\_DEFAULT}}
+\index{JSON\_STR\_DEFAULT@{JSON\_STR\_DEFAULT}!Model Downloader@{Model Downloader}}
+\doxysubsubsubsection{\texorpdfstring{JSON\_STR\_DEFAULT}{JSON\_STR\_DEFAULT}}
+{\footnotesize\ttfamily \label{group__model_downloader_gade5ee56e8f8bf404fcd9dd17e98c54e2} 
+\+\#define JSON\+\_\+\+STR\+\_\+\+DEFAULT(\begin{DoxyParamCaption}\item[{}]{x}{, }\item[{}]{default}{}\end{DoxyParamCaption})}
+
+{\bfseries Value:\+}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{(x.is\_string()\ ?\ x.get<std::string>()\ :\ \textcolor{keywordflow}{default})}
+
+\end{DoxyCode}
+Helper macro for getting a string from a JSON element 
+
+\label{doc-func-members}
+\Hypertarget{group__model_downloader_doc-func-members}
+\doxysubsubsection{Function Documentation}
+\Hypertarget{group__model_downloader_gac9a7dd494959c16c291a39167a45a4c7}\index{Model Downloader@{Model Downloader}!DownloadModel@{DownloadModel}}
+\index{DownloadModel@{DownloadModel}!Model Downloader@{Model Downloader}}
+\doxysubsubsubsection{\texorpdfstring{DownloadModel()}{DownloadModel()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{group__model_downloader_gac9a7dd494959c16c291a39167a45a4c7} 
+bool Download\+Model (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{type}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{name}{, }\item[{\doxymbox{\hyperlink{namespacenlohmann_a8ba8c5483f73a36e716558571ff97d57}{nlohmann::\+json}} \&}]{model}{, }\item[{uint32\+\_\+t}]{retries}{ = {\ttfamily 2}}\end{DoxyParamCaption})}
+
+Download a pre-\/trained model and return its JSON config. \Hypertarget{group__model_downloader_ga05129bb258eeaa3da77f2a1d9d6fd661}\index{Model Downloader@{Model Downloader}!DownloadModel@{DownloadModel}}
+\index{DownloadModel@{DownloadModel}!Model Downloader@{Model Downloader}}
+\doxysubsubsubsection{\texorpdfstring{DownloadModel()}{DownloadModel()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{group__model_downloader_ga05129bb258eeaa3da77f2a1d9d6fd661} 
+bool Download\+Model (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{namespacenlohmann_a8ba8c5483f73a36e716558571ff97d57}{nlohmann::\+json}} \&}]{model}{, }\item[{uint32\+\_\+t}]{retries}{ = {\ttfamily 2}}\end{DoxyParamCaption})}
+
+Download a pre-\/trained model given its JSON config. \Hypertarget{group__model_downloader_ga8d09a61f26d37db40e8800caf243cbba}\index{Model Downloader@{Model Downloader}!FindModel@{FindModel}}
+\index{FindModel@{FindModel}!Model Downloader@{Model Downloader}}
+\doxysubsubsubsection{\texorpdfstring{FindModel()}{FindModel()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily \label{group__model_downloader_ga8d09a61f26d37db40e8800caf243cbba} 
+bool Find\+Model (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{type}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{name}{}\end{DoxyParamCaption})}
+
+Check if a model can be found in the model manifest. \Hypertarget{group__model_downloader_gad929f8b8a7b206dba59108663a8b277d}\index{Model Downloader@{Model Downloader}!FindModel@{FindModel}}
+\index{FindModel@{FindModel}!Model Downloader@{Model Downloader}}
+\doxysubsubsubsection{\texorpdfstring{FindModel()}{FindModel()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily \label{group__model_downloader_gad929f8b8a7b206dba59108663a8b277d} 
+bool Find\+Model (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{type}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{name}{, }\item[{\doxymbox{\hyperlink{namespacenlohmann_a8ba8c5483f73a36e716558571ff97d57}{nlohmann::\+json}} \&}]{model}{}\end{DoxyParamCaption})}
+
+Find a pre-\/trained model\textquotesingle{}s config in the model manifest. \Hypertarget{group__model_downloader_ga55644d0724c16154e419831e4b9ae58f}\index{Model Downloader@{Model Downloader}!FindModel@{FindModel}}
+\index{FindModel@{FindModel}!Model Downloader@{Model Downloader}}
+\doxysubsubsubsection{\texorpdfstring{FindModel()}{FindModel()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily \label{group__model_downloader_ga55644d0724c16154e419831e4b9ae58f} 
+bool Find\+Model (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{type}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{name}{, }\item[{\doxymbox{\hyperlink{namespacenlohmann_a8ba8c5483f73a36e716558571ff97d57}{nlohmann::\+json}} \&}]{models}{, }\item[{\doxymbox{\hyperlink{namespacenlohmann_a8ba8c5483f73a36e716558571ff97d57}{nlohmann::\+json}} \&}]{model}{}\end{DoxyParamCaption})}
+
+Find a pre-\/trained model\textquotesingle{}s config in the model manifest. \Hypertarget{group__model_downloader_gaa4476b06252ff64b260870d66eaa5019}\index{Model Downloader@{Model Downloader}!LoadModelManifest@{LoadModelManifest}}
+\index{LoadModelManifest@{LoadModelManifest}!Model Downloader@{Model Downloader}}
+\doxysubsubsubsection{\texorpdfstring{LoadModelManifest()}{LoadModelManifest()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{group__model_downloader_gaa4476b06252ff64b260870d66eaa5019} 
+bool Load\+Model\+Manifest (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{path}{ = {\ttfamily "{}networks/\+models.json"{}}}\end{DoxyParamCaption})}
+
+Load the model manifest from a JSON file. \Hypertarget{group__model_downloader_gaab9d397a3fdcf7d218a76cf07548e522}\index{Model Downloader@{Model Downloader}!LoadModelManifest@{LoadModelManifest}}
+\index{LoadModelManifest@{LoadModelManifest}!Model Downloader@{Model Downloader}}
+\doxysubsubsubsection{\texorpdfstring{LoadModelManifest()}{LoadModelManifest()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{group__model_downloader_gaab9d397a3fdcf7d218a76cf07548e522} 
+bool Load\+Model\+Manifest (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{namespacenlohmann_a8ba8c5483f73a36e716558571ff97d57}{nlohmann::\+json}} \&}]{models}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{path}{ = {\ttfamily "{}networks/\+models.json"{}}}\end{DoxyParamCaption})}
+
+Load the model manifest from a JSON file. 

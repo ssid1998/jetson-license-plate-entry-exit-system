@@ -1,0 +1,118 @@
+\chapter{About This Project }
+\hypertarget{md_about}{}\label{md_about}\index{About This Project@{About This Project}}
+\label{md_about_autotoc_md0}%
+\Hypertarget{md_about_autotoc_md0}%
+
+
+This document provides a comprehensive technical overview of the {\bfseries{Car License Plate Identification System}}. \doxylink{requirements_The}{The} project is designed to detect, recognize, and validate German license plates in real-\/time, optimized for edge devices like the NVIDIA Jetson Nano as well as standard desktop environments (mac\+OS/\+\+Linux).\hypertarget{md_about_autotoc_md1}{}\doxysection{\texorpdfstring{1. Project Overview}{1. Project Overview}}\label{md_about_autotoc_md1}
+\doxylink{requirements_The}{The} system operates as a multi-\/stage pipeline:\+
+\begin{DoxyEnumerate}
+\item {\bfseries{Object Detection:\+}} Locates the license plate within a video frame.
+\item {\bfseries{Image Processing:\+}} Crops and validates the region of interest.
+\item {\bfseries{OCR (Optical Character Recognition):\+}} Extracts alphanumeric text from the plate.
+\item {\bfseries{Validation Logic:\+}} Verifies if the detected plate follows the German standard and/\+or visual characteristics (EU blue strip).
+\end{DoxyEnumerate}
+
+\DoxyHorRuler{0}
+\hypertarget{md_about_autotoc_md3}{}\doxysection{\texorpdfstring{2. Dataset Details}{2. Dataset Details}}\label{md_about_autotoc_md3}
+\doxylink{requirements_The}{The} model was trained on a specific dataset sourced from the Roboflow Universe.
+
+
+\begin{DoxyItemize}
+\item {\bfseries{Name:\+}} {\ttfamily german-\/license-\/plates}
+\item {\bfseries{Version:\+}} v7 (Exported 2023-\/05-\/10)
+\item {\bfseries{Source:\+}} \href{https://universe.roboflow.com/max-mustermann-gmm7j/german-license-plates-hptbz/dataset/7}{\texttt{Roboflow Universe -\/ max-\/mustermann-\/gmm7j}}
+\item {\bfseries{Total Images:\+}} 1,243
+\item {\bfseries{Classes:\+}} Single class ({\ttfamily license-\/plates}).
+\item {\bfseries{Format:\+}} YOLOv8 (images + {\ttfamily .txt} labels).
+\item {\bfseries{Preprocessing:\+}} Auto-\/orientation of pixel data (stripping EXIF).
+\item {\bfseries{Augmentations:\+}} None applied during export.
+\end{DoxyItemize}
+
+{\bfseries{Directory Structure:\+}}
+\begin{DoxyItemize}
+\item {\ttfamily data/\+train}:\+ Training set
+\item {\ttfamily data/\+test}:\+ Test set
+\item {\ttfamily data/\+valid}:\+ Validation set
+\item {\ttfamily data/\+data.\+yaml}:\+ YOLO configuration file defining paths and class names.
+\end{DoxyItemize}
+
+\DoxyHorRuler{0}
+\hypertarget{md_about_autotoc_md5}{}\doxysection{\texorpdfstring{3. Machine Learning Models}{3. Machine Learning Models}}\label{md_about_autotoc_md5}
+\hypertarget{md_about_autotoc_md6}{}\doxysubsection{\texorpdfstring{A. Object Detection (YOLOv8)}{A. Object Detection (YOLOv8)}}\label{md_about_autotoc_md6}
+\doxylink{requirements_The}{The} core detection engine uses the {\bfseries{YOLOv8}} (You Only Look Once) architecture, specifically the "{}\+Small"{} variant ({\ttfamily yolov8s.\+pt}), which offers a balance between speed and accuracy suitable for edge deployment.
+
+
+\begin{DoxyItemize}
+\item {\bfseries{Framework:\+}} {\ttfamily ultralytics}
+\item {\bfseries{Base Model:\+}} {\ttfamily yolov8s.\+pt} (Pre-\/trained on COCO dataset).
+\item {\bfseries{Training Configuration:\+}}
+\begin{DoxyItemize}
+\item {\bfseries{Epochs:\+}} 10 (Short fine-\/tuning run).
+\item {\bfseries{Batch Size:\+}} 8.
+\item {\bfseries{Image Size:\+}} 640x640 pixels.
+\item {\bfseries{Output Directory:\+}} {\ttfamily german\+\_\+lpr\+\_\+trained/\+}.
+\end{DoxyItemize}
+\end{DoxyItemize}\hypertarget{md_about_autotoc_md7}{}\doxysubsection{\texorpdfstring{B. Optical Character Recognition (OCR)}{B. Optical Character Recognition (OCR)}}\label{md_about_autotoc_md7}
+Text extraction is handled by {\bfseries{Easy\+OCR}}, a deep-\/learning-\/based OCR library.
+
+
+\begin{DoxyItemize}
+\item {\bfseries{Library:\+}} {\ttfamily easyocr}
+\item {\bfseries{Languages:\+}} Configured for English ({\ttfamily \+[\textquotesingle{}en\textquotesingle{}]\+}) to capture standard alphanumeric characters found on plates.
+\item {\bfseries{Input:\+}} Cropped license plate images from the YOLO detection stage.
+\end{DoxyItemize}
+
+\DoxyHorRuler{0}
+\hypertarget{md_about_autotoc_md9}{}\doxysection{\texorpdfstring{4. Application Logic \& Algorithms}{4. Application Logic \& Algorithms}}\label{md_about_autotoc_md9}
+\doxylink{requirements_The}{The} application logic resides in the {\ttfamily jetson\+\_\+app/\+} directory.\hypertarget{md_about_autotoc_md10}{}\doxysubsection{\texorpdfstring{Detection Loop ({\ttfamily detector.\+py})}{Detection Loop ({\ttfamily detector.\+py})}}\label{md_about_autotoc_md10}
+
+\begin{DoxyEnumerate}
+\item Captures video feed from the camera (Index 0).
+\item Passes frames to the fine-\/tuned YOLOv8 model.
+\item Extracts bounding boxes for detected plates.
+\item Crops the image to the bounding box coordinates.
+\item Passes the crop to the OCR engine and the Validation module.
+\item Annotates the frame with Green (German) or Red (Non-\/\+German) bounding boxes and text.
+\end{DoxyEnumerate}\hypertarget{md_about_autotoc_md11}{}\doxysubsection{\texorpdfstring{Country Validation ({\ttfamily country\+\_\+check.\+py})}{Country Validation ({\ttfamily country\+\_\+check.\+py})}}\label{md_about_autotoc_md11}
+Determines if a plate is likely German using a hybrid approach (Visual + Syntactic):\+
+
+
+\begin{DoxyEnumerate}
+\item {\bfseries{Text Cleaning:\+}}
+\begin{DoxyItemize}
+\item Removes whitespace and special characters.
+\item Normalizes common OCR errors (e.\+g., swapping \textquotesingle{}0\textquotesingle{} for \textquotesingle{}O\textquotesingle{} in the region code).
+\item Heuristically inserts hyphens if missing.
+\end{DoxyItemize}
+\item {\bfseries{Regex Matching:\+}}
+\begin{DoxyItemize}
+\item Pattern:\+ {\ttfamily \texorpdfstring{$^\wedge$}{\string^}\+[A-\/\+ZÄÖÜ]\+\{1,3\}\+[-\/ ]\+?\+[A-\/Z]\+\{1,2\}\+[-\/ ]\+?\+[0-\/9]\+\{1,4\}\$}
+\item Matches standard German format:\+ City Code (1-\/3 letters) + Separator + Letters (1-\/2) + Numbers (1-\/4).
+\end{DoxyItemize}
+\item {\bfseries{Visual Verification (Blue Strip):\+}}
+\begin{DoxyItemize}
+\item Analyzes the left 25\% of the plate image.
+\item Uses {\bfseries{HSV Color Thresholding}} to detect the characteristic EU blue strip.
+\item Thresholds:\+ Blue pixels \texorpdfstring{$>$}{>} 3\% of the analyzed area.
+\end{DoxyItemize}
+\item {\bfseries{Decision Logic:\+}}
+\begin{DoxyItemize}
+\item \doxylink{requirements_The}{The} plate is classified as {\bfseries{German (DE)}} if either the {\bfseries{Regex matches}} OR the {\bfseries{Blue Strip is detected}}.
+\end{DoxyItemize}
+\end{DoxyEnumerate}
+
+\DoxyHorRuler{0}
+\hypertarget{md_about_autotoc_md13}{}\doxysection{\texorpdfstring{5. Hardware \& Requirements}{5. Hardware \& Requirements}}\label{md_about_autotoc_md13}
+
+\begin{DoxyItemize}
+\item {\bfseries{Operating System:\+}} mac\+OS (Darwin) or Linux (Jetson Nano/\+\+Ubuntu).
+\item {\bfseries{Python Version:\+}} Python 3.\+8+ recommended.
+\item {\bfseries{Key Dependencies:\+}}
+\begin{DoxyItemize}
+\item {\ttfamily ultralytics} (YOLOv8)
+\item {\ttfamily easyocr} \& {\ttfamily torch} (OCR)
+\item {\ttfamily opencv-\/python} (Image processing)
+\item {\ttfamily numpy} (Numerical operations) 
+\end{DoxyItemize}
+\end{DoxyItemize}

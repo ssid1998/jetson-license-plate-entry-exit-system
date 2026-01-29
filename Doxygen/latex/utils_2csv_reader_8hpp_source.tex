@@ -1,0 +1,316 @@
+\doxysection{csv\+Reader.\+hpp}
+\hypertarget{utils_2csv_reader_8hpp_source}{}\label{utils_2csv_reader_8hpp_source}\index{jetson-\/inference/utils/csvReader.hpp@{jetson-\/inference/utils/csvReader.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ *\ Copyright\ (c)\ 2019,\ NVIDIA\ CORPORATION.\ All\ rights\ reserved.}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ *\ Permission\ is\ hereby\ granted,\ free\ of\ charge,\ to\ any\ person\ obtaining\ a}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ *\ copy\ of\ this\ software\ and\ associated\ documentation\ files\ (the\ "{}Software"{}),}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ *\ to\ deal\ in\ the\ Software\ without\ restriction,\ including\ without\ limitation}}
+\DoxyCodeLine{00007\ \textcolor{comment}{\ *\ the\ rights\ to\ use,\ copy,\ modify,\ merge,\ publish,\ distribute,\ sublicense,}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ *\ and/or\ sell\ copies\ of\ the\ Software,\ and\ to\ permit\ persons\ to\ whom\ the}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ *\ Software\ is\ furnished\ to\ do\ so,\ subject\ to\ the\ following\ conditions:}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ *\ The\ above\ copyright\ notice\ and\ this\ permission\ notice\ shall\ be\ included\ in}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ *\ all\ copies\ or\ substantial\ portions\ of\ the\ Software.}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ *\ THE\ SOFTWARE\ IS\ PROVIDED\ "{}AS\ IS"{},\ WITHOUT\ WARRANTY\ OF\ ANY\ KIND,\ EXPRESS\ OR}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ *\ IMPLIED,\ INCLUDING\ BUT\ NOT\ LIMITED\ TO\ THE\ WARRANTIES\ OF\ MERCHANTABILITY,}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ *\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE\ AND\ NONINFRINGEMENT.\ \ IN\ NO\ EVENT\ SHALL}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ *\ THE\ AUTHORS\ OR\ COPYRIGHT\ HOLDERS\ BE\ LIABLE\ FOR\ ANY\ CLAIM,\ DAMAGES\ OR\ OTHER}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ *\ LIABILITY,\ WHETHER\ IN\ AN\ ACTION\ OF\ CONTRACT,\ TORT\ OR\ OTHERWISE,\ ARISING}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ *\ FROM,\ OUT\ OF\ OR\ IN\ CONNECTION\ WITH\ THE\ SOFTWARE\ OR\ THE\ USE\ OR\ OTHER}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ *\ DEALINGS\ IN\ THE\ SOFTWARE.}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00022\ \ }
+\DoxyCodeLine{00023\ \textcolor{preprocessor}{\#ifndef\ \_\_CSV\_READER\_HPP\_}}
+\DoxyCodeLine{00024\ \textcolor{preprocessor}{\#define\ \_\_CSV\_READER\_HPP\_}}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \textcolor{preprocessor}{\#include\ "{}csvReader.h"{}}}
+\DoxyCodeLine{00028\ \textcolor{preprocessor}{\#include\ "{}logging.h"{}}}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \textcolor{comment}{//\ toInt()}}
+\DoxyCodeLine{00032\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ csvData::toInt(\ \textcolor{keywordtype}{int}*\ value\ )\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00033\ \textcolor{keyword}{}\{}
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keywordtype}{char}*\ e;}
+\DoxyCodeLine{00035\ \ \ \ \ errno\ =\ 0;}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ x\ =\ strtol(\textcolor{keywordtype}{string}.c\_str(),\ \&e,\ 0);}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keywordflow}{if}(\ *e\ !=\ \textcolor{charliteral}{'\(\backslash\)0'}\ ||\ errno\ !=\ 0\ )}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keywordflow}{if}(\ value\ !=\ NULL\ )}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ *value\ =\ x;}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00046\ \}}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00048\ \textcolor{comment}{//\ toFloat()}}
+\DoxyCodeLine{00049\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ csvData::toFloat(\ \textcolor{keywordtype}{float}*\ value\ )\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00050\ \textcolor{keyword}{}\{}
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keywordtype}{char}*\ e;}
+\DoxyCodeLine{00052\ \ \ \ \ errno\ =\ 0;}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00054\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ x\ =\ strtof(\textcolor{keywordtype}{string}.c\_str(),\ \&e);}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{keywordflow}{if}(\ *e\ !=\ \textcolor{charliteral}{'\(\backslash\)0'}\ ||\ errno\ !=\ 0\ )}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00059\ \ \ \ \ \textcolor{keywordflow}{if}(\ value\ !=\ NULL\ )}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ *value\ =\ x;}
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00063\ \}}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00065\ \textcolor{comment}{//\ toDouble()}}
+\DoxyCodeLine{00066\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ csvData::toDouble(\ \textcolor{keywordtype}{double}*\ value\ )\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00067\ \textcolor{keyword}{}\{}
+\DoxyCodeLine{00068\ \ \ \ \ \textcolor{keywordtype}{char}*\ e;}
+\DoxyCodeLine{00069\ \ \ \ \ errno\ =\ 0;}
+\DoxyCodeLine{00070\ }
+\DoxyCodeLine{00071\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ x\ =\ strtof(\textcolor{keywordtype}{string}.c\_str(),\ \&e);}
+\DoxyCodeLine{00072\ }
+\DoxyCodeLine{00073\ \ \ \ \ \textcolor{keywordflow}{if}(\ *e\ !=\ \textcolor{charliteral}{'\(\backslash\)0'}\ ||\ errno\ !=\ 0\ )}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00075\ }
+\DoxyCodeLine{00076\ \ \ \ \ \textcolor{keywordflow}{if}(\ value\ !=\ NULL\ )}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ *value\ =\ x;}
+\DoxyCodeLine{00078\ }
+\DoxyCodeLine{00079\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00080\ \}}
+\DoxyCodeLine{00081\ }
+\DoxyCodeLine{00082\ \textcolor{comment}{//\ toInt()}}
+\DoxyCodeLine{00083\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{int}\ csvData::toInt(\ \textcolor{keywordtype}{bool}*\ valid\ )\textcolor{keyword}{\ const\ \ \ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{00084\ \textcolor{keyword}{}\{\ }
+\DoxyCodeLine{00085\ \ \ \ \ \textcolor{keywordtype}{int}\ x=0;\ }
+\DoxyCodeLine{00086\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ v=toInt(\&x);\ }
+\DoxyCodeLine{00087\ }
+\DoxyCodeLine{00088\ \ \ \ \ \textcolor{keywordflow}{if}(\ valid\ !=\ NULL\ )\ }
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ *valid=v;}
+\DoxyCodeLine{00090\ }
+\DoxyCodeLine{00091\ \ \ \ \ \textcolor{keywordflow}{return}\ x;\ }
+\DoxyCodeLine{00092\ \}}
+\DoxyCodeLine{00093\ }
+\DoxyCodeLine{00094\ \textcolor{comment}{//\ toFloat()}}
+\DoxyCodeLine{00095\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{float}\ csvData::toFloat(\ \textcolor{keywordtype}{bool}*\ valid\ )\textcolor{keyword}{\ const\ \ \ \ \ \ }}
+\DoxyCodeLine{00096\ \textcolor{keyword}{}\{\ }
+\DoxyCodeLine{00097\ \ \ \ \ \textcolor{keywordtype}{float}\ x=0.0f;\ }
+\DoxyCodeLine{00098\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ v=toFloat(\&x);\ }
+\DoxyCodeLine{00099\ }
+\DoxyCodeLine{00100\ \ \ \ \ \textcolor{keywordflow}{if}(\ valid\ !=\ NULL\ )\ }
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ *valid=v;\ }
+\DoxyCodeLine{00102\ }
+\DoxyCodeLine{00103\ \ \ \ \ \textcolor{keywordflow}{return}\ x;\ }
+\DoxyCodeLine{00104\ \}}
+\DoxyCodeLine{00105\ }
+\DoxyCodeLine{00106\ \textcolor{comment}{//\ toDouble()}}
+\DoxyCodeLine{00107\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{double}\ csvData::toDouble(\ \textcolor{keywordtype}{bool}*\ valid\ )\textcolor{keyword}{\ const\ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{00108\ \textcolor{keyword}{}\{\ }
+\DoxyCodeLine{00109\ \ \ \ \ \textcolor{keywordtype}{double}\ x=0.0f;\ }
+\DoxyCodeLine{00110\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ v=toDouble(\&x);\ }
+\DoxyCodeLine{00111\ }
+\DoxyCodeLine{00112\ \ \ \ \ \textcolor{keywordflow}{if}(\ valid\ !=\ NULL\ )\ }
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ *valid=v;\ }
+\DoxyCodeLine{00114\ }
+\DoxyCodeLine{00115\ \ \ \ \ \textcolor{keywordflow}{return}\ x;\ }
+\DoxyCodeLine{00116\ \}}
+\DoxyCodeLine{00117\ }
+\DoxyCodeLine{00118\ \textcolor{comment}{//\ operator\ >>}}
+\DoxyCodeLine{00119\ \textcolor{keyword}{inline}\ std::istream\&\ operator\ >>\ (std::istream\&\ in,\ \doxymbox{\hyperlink{classcsv_data}{csvData}}\&\ obj)}
+\DoxyCodeLine{00120\ \{}
+\DoxyCodeLine{00121\ \ \ \ \ in\ >>\ obj.string;}
+\DoxyCodeLine{00122\ \ \ \ \ \textcolor{keywordflow}{return}\ in;}
+\DoxyCodeLine{00123\ \}}
+\DoxyCodeLine{00124\ }
+\DoxyCodeLine{00125\ \textcolor{comment}{//\ operator\ <<}}
+\DoxyCodeLine{00126\ \textcolor{keyword}{inline}\ std::ostream\&\ operator\ <<\ (std::ostream\&\ out,\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{classcsv_data}{csvData}}\&\ obj)}
+\DoxyCodeLine{00127\ \{}
+\DoxyCodeLine{00128\ \ \ \ \ out\ <<\ obj.string;}
+\DoxyCodeLine{00129\ \ \ \ \ \textcolor{keywordflow}{return}\ out;}
+\DoxyCodeLine{00130\ \}}
+\DoxyCodeLine{00131\ }
+\DoxyCodeLine{00132\ \textcolor{comment}{//\ Parse()}}
+\DoxyCodeLine{00133\ \textcolor{keyword}{inline}\ std::vector<csvData>\ csvData::Parse(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ str,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ delimiters\ )\ }
+\DoxyCodeLine{00134\ \{}
+\DoxyCodeLine{00135\ \ \ \ \ std::vector<csvData>\ tokens;}
+\DoxyCodeLine{00136\ \ \ \ \ Parse(tokens,\ str,\ delimiters);}
+\DoxyCodeLine{00137\ \ \ \ \ \textcolor{keywordflow}{return}\ tokens;}
+\DoxyCodeLine{00138\ \}}
+\DoxyCodeLine{00139\ }
+\DoxyCodeLine{00140\ \textcolor{comment}{//\ Parse}}
+\DoxyCodeLine{00141\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ csvData::Parse(\ std::vector<csvData>\&\ tokens,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ str,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ delimiters\ )}
+\DoxyCodeLine{00142\ \{}
+\DoxyCodeLine{00143\ \ \ \ \ \textcolor{keywordflow}{if}(\ !str\ ||\ !delimiters\ )}
+\DoxyCodeLine{00144\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00145\ }
+\DoxyCodeLine{00146\ \ \ \ \ tokens.clear();}
+\DoxyCodeLine{00147\ }
+\DoxyCodeLine{00148\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ str\_length\ =\ strlen(str);}
+\DoxyCodeLine{00149\ \ \ \ \ \textcolor{keywordtype}{char}*\ str\_tokens\ =\ (\textcolor{keywordtype}{char}*)malloc(str\_length\ +\ 1);}
+\DoxyCodeLine{00150\ }
+\DoxyCodeLine{00151\ \ \ \ \ \textcolor{keywordflow}{if}(\ !str\_tokens\ )}
+\DoxyCodeLine{00152\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00153\ }
+\DoxyCodeLine{00154\ \ \ \ \ strcpy(str\_tokens,\ str);}
+\DoxyCodeLine{00155\ }
+\DoxyCodeLine{00156\ \ \ \ \ \textcolor{keywordflow}{if}(\ str\_tokens[str\_length]\ ==\ \textcolor{charliteral}{'\(\backslash\)n'}\ )}
+\DoxyCodeLine{00157\ \ \ \ \ \ \ \ \ str\_tokens[str\_length]\ =\ \textcolor{charliteral}{'\(\backslash\)0'};}
+\DoxyCodeLine{00158\ }
+\DoxyCodeLine{00159\ \ \ \ \ \textcolor{keywordflow}{if}(\ str\_tokens[str\_length-\/1]\ ==\ \textcolor{charliteral}{'\(\backslash\)n'}\ )}
+\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ str\_tokens[str\_length-\/1]\ =\ \textcolor{charliteral}{'\(\backslash\)0'};}
+\DoxyCodeLine{00161\ }
+\DoxyCodeLine{00162\ \ \ \ \ \textcolor{keywordtype}{char}*\ token\ =\ strtok(str\_tokens,\ delimiters);}
+\DoxyCodeLine{00163\ }
+\DoxyCodeLine{00164\ \ \ \ \ \textcolor{keywordflow}{while}(\ token\ !=\ NULL\ )}
+\DoxyCodeLine{00165\ \ \ \ \ \{}
+\DoxyCodeLine{00166\ \ \ \ \ \ \ \ \ tokens.push\_back(token);}
+\DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ token\ =\ strtok(NULL,\ delimiters);}
+\DoxyCodeLine{00168\ \ \ \ \ \}}
+\DoxyCodeLine{00169\ }
+\DoxyCodeLine{00170\ \ \ \ \ free(str\_tokens);}
+\DoxyCodeLine{00171\ \ \ \ \ \textcolor{keywordflow}{return}\ tokens.size()\ >\ 0;}
+\DoxyCodeLine{00172\ \}}
+\DoxyCodeLine{00173\ }
+\DoxyCodeLine{00174\ \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00175\ \textcolor{comment}{//\ constructor}}
+\DoxyCodeLine{00176\ csvReader::csvReader(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ filename,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ delimiters\ )\ :\ mFile(NULL)}
+\DoxyCodeLine{00177\ \{}
+\DoxyCodeLine{00178\ \ \ \ \ \textcolor{keywordflow}{if}(\ !filename\ ||\ !delimiters\ )}
+\DoxyCodeLine{00179\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00180\ }
+\DoxyCodeLine{00181\ \ \ \ \ mFile\ =\ fopen(filename,\ \textcolor{stringliteral}{"{}r"{}});}
+\DoxyCodeLine{00182\ }
+\DoxyCodeLine{00183\ \ \ \ \ \textcolor{keywordflow}{if}(\ !mFile\ )}
+\DoxyCodeLine{00184\ \ \ \ \ \{}
+\DoxyCodeLine{00185\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{group__log_ga0f3919667d0ac0b001e44edb569d22fe}{LogError}}(\textcolor{stringliteral}{"{}csvReader\ -\/-\/\ failed\ to\ open\ file\ \%s\(\backslash\)n"{}},\ filename);}
+\DoxyCodeLine{00186\ \ \ \ \ \ \ \ \ perror(\textcolor{stringliteral}{"{}csvReader\ -\/-\/\ error"{}});}
+\DoxyCodeLine{00187\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00188\ \ \ \ \ \}}
+\DoxyCodeLine{00189\ }
+\DoxyCodeLine{00190\ \ \ \ \ mFilename\ =\ filename;}
+\DoxyCodeLine{00191\ \ \ \ \ mDelimiters\ =\ delimiters;}
+\DoxyCodeLine{00192\ \}}
+\DoxyCodeLine{00193\ }
+\DoxyCodeLine{00194\ \textcolor{comment}{//\ destructor}}
+\DoxyCodeLine{00195\ csvReader::\string~csvReader()}
+\DoxyCodeLine{00196\ \{}
+\DoxyCodeLine{00197\ \ \ \ \ Close();}
+\DoxyCodeLine{00198\ \}}
+\DoxyCodeLine{00199\ }
+\DoxyCodeLine{00200\ \ \ \ \ }
+\DoxyCodeLine{00201\ \textcolor{comment}{//\ open}}
+\DoxyCodeLine{00202\ \textcolor{keyword}{inline}\ \doxymbox{\hyperlink{classcsv_reader}{csvReader}}*\ csvReader::Open(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ filename,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ delimiters\ )}
+\DoxyCodeLine{00203\ \{}
+\DoxyCodeLine{00204\ \ \ \ \ \textcolor{keywordflow}{if}(\ !filename\ ||\ !delimiters\ )}
+\DoxyCodeLine{00205\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ NULL;}
+\DoxyCodeLine{00206\ }
+\DoxyCodeLine{00207\ \ \ \ \ csvReader*\ csv\ =\ \textcolor{keyword}{new}\ csvReader(filename,\ delimiters);}
+\DoxyCodeLine{00208\ }
+\DoxyCodeLine{00209\ \ \ \ \ \textcolor{keywordflow}{if}(\ !csv-\/>IsOpen()\ )}
+\DoxyCodeLine{00210\ \ \ \ \ \{}
+\DoxyCodeLine{00211\ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}\ csv;}
+\DoxyCodeLine{00212\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ NULL;}
+\DoxyCodeLine{00213\ \ \ \ \ \}}
+\DoxyCodeLine{00214\ }
+\DoxyCodeLine{00215\ \ \ \ \ \textcolor{keywordflow}{return}\ csv;}
+\DoxyCodeLine{00216\ \}}
+\DoxyCodeLine{00217\ }
+\DoxyCodeLine{00218\ \textcolor{comment}{//\ close}}
+\DoxyCodeLine{00219\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ csvReader::Close()}
+\DoxyCodeLine{00220\ \{}
+\DoxyCodeLine{00221\ \ \ \ \ \textcolor{keywordflow}{if}(\ IsClosed()\ )}
+\DoxyCodeLine{00222\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00223\ }
+\DoxyCodeLine{00224\ \ \ \ \ fclose(mFile);}
+\DoxyCodeLine{00225\ \ \ \ \ mFile\ =\ NULL;}
+\DoxyCodeLine{00226\ \}}
+\DoxyCodeLine{00227\ }
+\DoxyCodeLine{00228\ \textcolor{comment}{//\ isOpen}}
+\DoxyCodeLine{00229\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ csvReader::IsOpen()\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00230\ \textcolor{keyword}{}\{}
+\DoxyCodeLine{00231\ \ \ \ \ \textcolor{keywordflow}{return}\ mFile\ !=\ NULL;}
+\DoxyCodeLine{00232\ \}}
+\DoxyCodeLine{00233\ }
+\DoxyCodeLine{00234\ \textcolor{comment}{//\ isClosed}}
+\DoxyCodeLine{00235\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ csvReader::IsClosed()\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00236\ \textcolor{keyword}{}\{}
+\DoxyCodeLine{00237\ \ \ \ \ \textcolor{keywordflow}{return}\ !IsOpen();}
+\DoxyCodeLine{00238\ \}}
+\DoxyCodeLine{00239\ }
+\DoxyCodeLine{00240\ \textcolor{comment}{//\ readLine}}
+\DoxyCodeLine{00241\ \textcolor{keyword}{inline}\ std::vector<csvData>\ csvReader::Read()}
+\DoxyCodeLine{00242\ \{}
+\DoxyCodeLine{00243\ \ \ \ \ \textcolor{keywordflow}{return}\ Read(mDelimiters.c\_str());}
+\DoxyCodeLine{00244\ \}}
+\DoxyCodeLine{00245\ }
+\DoxyCodeLine{00246\ \textcolor{comment}{//\ readLine}}
+\DoxyCodeLine{00247\ \textcolor{keyword}{inline}\ std::vector<csvData>\ csvReader::Read(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ delimiters\ )}
+\DoxyCodeLine{00248\ \{}
+\DoxyCodeLine{00249\ \ \ \ \ std::vector<csvData>\ tokens;}
+\DoxyCodeLine{00250\ \ \ \ \ Read(tokens,\ delimiters);}
+\DoxyCodeLine{00251\ \}}
+\DoxyCodeLine{00252\ }
+\DoxyCodeLine{00253\ \textcolor{comment}{//\ readLine}}
+\DoxyCodeLine{00254\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ csvReader::Read(\ std::vector<csvData>\&\ data\ )}
+\DoxyCodeLine{00255\ \{}
+\DoxyCodeLine{00256\ \ \ \ \ \textcolor{keywordflow}{return}\ Read(data,\ mDelimiters.c\_str());}
+\DoxyCodeLine{00257\ \}}
+\DoxyCodeLine{00258\ }
+\DoxyCodeLine{00259\ \textcolor{comment}{//\ readLine}}
+\DoxyCodeLine{00260\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ csvReader::Read(\ std::vector<csvData>\&\ data,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ delimiters\ )}
+\DoxyCodeLine{00261\ \{}
+\DoxyCodeLine{00262\ \ \ \ \ \textcolor{keywordflow}{if}(\ IsClosed()\ )}
+\DoxyCodeLine{00263\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00264\ }
+\DoxyCodeLine{00265\ \ \ \ \ \textcolor{comment}{//\ read\ the\ next\ line}}
+\DoxyCodeLine{00266\ \ \ \ \ \textcolor{keywordtype}{char}\ str[MaxLineLength];}
+\DoxyCodeLine{00267\ }
+\DoxyCodeLine{00268\ \ \ \ \ \textcolor{keywordflow}{if}(\ fgets(str,\ \textcolor{keyword}{sizeof}(str),\ mFile)\ ==\ NULL\ )}
+\DoxyCodeLine{00269\ \ \ \ \ \{}
+\DoxyCodeLine{00270\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\ ferror(mFile)\ )}
+\DoxyCodeLine{00271\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00272\ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{group__log_ga0f3919667d0ac0b001e44edb569d22fe}{LogError}}(\textcolor{stringliteral}{"{}csvReader\ -\/-\/\ error\ reading\ file\ \%s\(\backslash\)n"{}},\ mFilename.c\_str());}
+\DoxyCodeLine{00273\ \ \ \ \ \ \ \ \ \ \ \ \ perror(\textcolor{stringliteral}{"{}csvReader\ -\/-\/\ error"{}});}
+\DoxyCodeLine{00274\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00275\ }
+\DoxyCodeLine{00276\ \ \ \ \ \ \ \ \ Close();}
+\DoxyCodeLine{00277\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00278\ \ \ \ \ \}}
+\DoxyCodeLine{00279\ }
+\DoxyCodeLine{00280\ \ \ \ \ \textcolor{comment}{//\ check\ if\ EOF\ was\ reached}}
+\DoxyCodeLine{00281\ \ \ \ \ \textcolor{keywordflow}{if}(\ feof(mFile)\ ==\ EOF\ )}
+\DoxyCodeLine{00282\ \ \ \ \ \ \ \ \ Close();}
+\DoxyCodeLine{00283\ }
+\DoxyCodeLine{00284\ \ \ \ \ \textcolor{comment}{//\ disregard\ comments}}
+\DoxyCodeLine{00285\ \ \ \ \ \textcolor{keywordflow}{if}(\ str[0]\ ==\ \textcolor{charliteral}{'\#'}\ )}
+\DoxyCodeLine{00286\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ Read(data,\ delimiters);}
+\DoxyCodeLine{00287\ }
+\DoxyCodeLine{00288\ \ \ \ \ \textcolor{keywordflow}{return}\ csvData::Parse(data,\ str,\ delimiters);}
+\DoxyCodeLine{00289\ \}}
+\DoxyCodeLine{00290\ }
+\DoxyCodeLine{00291\ \textcolor{comment}{//\ SetDelimiters}}
+\DoxyCodeLine{00292\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ csvReader::SetDelimiters(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ delimiters\ )}
+\DoxyCodeLine{00293\ \{}
+\DoxyCodeLine{00294\ \ \ \ \ mDelimiters\ =\ delimiters;}
+\DoxyCodeLine{00295\ \}}
+\DoxyCodeLine{00296\ }
+\DoxyCodeLine{00297\ \textcolor{comment}{//\ GetDelimiters}}
+\DoxyCodeLine{00298\ \textcolor{keyword}{inline}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ csvReader::GetDelimiters()\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00299\ \textcolor{keyword}{}\{}
+\DoxyCodeLine{00300\ \ \ \ \ \textcolor{keywordflow}{return}\ mDelimiters.c\_str();}
+\DoxyCodeLine{00301\ \}}
+\DoxyCodeLine{00302\ }
+\DoxyCodeLine{00303\ \textcolor{comment}{//\ GetFilename}}
+\DoxyCodeLine{00304\ \textcolor{keyword}{inline}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ csvReader::GetFilename()\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00305\ \textcolor{keyword}{}\{}
+\DoxyCodeLine{00306\ \ \ \ \ \textcolor{keywordflow}{return}\ mFilename.c\_str();}
+\DoxyCodeLine{00307\ \}}
+\DoxyCodeLine{00308\ }
+\DoxyCodeLine{00309\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00310\ }
+
+\end{DoxyCode}

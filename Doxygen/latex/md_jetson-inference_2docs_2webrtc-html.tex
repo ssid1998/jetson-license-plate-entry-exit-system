@@ -1,0 +1,121 @@
+\chapter{webrtc-\/html }
+\hypertarget{md_jetson-inference_2docs_2webrtc-html}{}\label{md_jetson-inference_2docs_2webrtc-html}\index{webrtc-\/html@{webrtc-\/html}}
+ 
+
+\textsuperscript{\href{webrtc-server.md}{\texttt{Back}} \texorpdfstring{$\vert$}{|} \href{webrtc-flask.md}{\texttt{Next}} \texorpdfstring{$\vert$}{|} }\href{../README.md\#hello-ai-world}{\texttt{\textsuperscript{Contents}}} ~\newline
+ \textsuperscript{Web\+App Frameworks}\hypertarget{md_jetson-inference_2docs_2webrtc-html_autotoc_md439}{}\doxysection{\texorpdfstring{HTML /\+ Java\+Script}{HTML /\+ Java\+Script}}\label{md_jetson-inference_2docs_2webrtc-html_autotoc_md439}
+Included in this repo are various example webapps using Web\+RTC that are found under \href{../python/www}{\texttt{{\ttfamily jetson-\/inference/\+python/\+www}}}, such as:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{+\ python/}
+\DoxyCodeLine{\ \ +\ www/}
+\DoxyCodeLine{\ \ \ \ -\/\ dash\ \ \ \ \ \ \ \#\ Plotly\ Dashboard}
+\DoxyCodeLine{\ \ \ \ -\/\ html\ \ \ \ \ \ \ \#\ core\ HTML/JavaScript}
+\DoxyCodeLine{\ \ \ \ -\/\ flask\ \ \ \ \ \ \#\ Flask\ +\ REST}
+\DoxyCodeLine{\ \ \ \ -\/\ recognizer\ \#\ interactive\ training}
+
+\end{DoxyCode}
+
+
+Each of these demonstrate Web\+RTC integration with different Python-\/based webserver frameworks for building out your own AI-\/powered interactive webapps. These generally have similar components like the following:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{-\/\ app.py\ \ \ \ \ \ \#\ server-\/side\ Python\ code\ for\ running\ the\ webserver}
+\DoxyCodeLine{-\/\ stream.py\ \ \ \#\ server-\/side\ Python\ code\ for\ WebRTC\ streaming/inferencing}
+\DoxyCodeLine{-\/\ webrtc.js\ \ \ \#\ client-\/side\ WebRTC\ JavaScript\ code}
+\DoxyCodeLine{-\/\ index.html\ \ \#\ client-\/side\ HTML\ code}
+
+\end{DoxyCode}
+
+
+This first example is the simplest and highlights the core HTML/\+\+Java\+Script code needed to playback/\+send Web\+RTC streams and apply DNN inferencing. You can apply this to any web framework of choice should you already have a preferred frontend to integrate with.\hypertarget{md_jetson-inference_2docs_2webrtc-html_autotoc_md440}{}\doxysubsection{\texorpdfstring{Running the Example}{Running the Example}}\label{md_jetson-inference_2docs_2webrtc-html_autotoc_md440}
+
+
+Launching app.\+py will start a built-\/in Python webserver (which is easy to use, but isn\textquotesingle{}t intended for production and can be easily changed out) along with an independent streaming thread that runs the Web\+RTC capture/\+transport and inferencing code:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{\$\ cd\ jetson-\/inference/python/www/html}
+\DoxyCodeLine{\$\ python3\ app.py\ -\/-\/classification\ \ \#\ see\ below\ for\ other\ DNN\ options}
+
+\end{DoxyCode}
+
+
+\begin{quote}
+{\bfseries{note}}:\+ receiving browser webcams requires \href{webrtc-server.md\#enabling-https--ssl}{\texttt{HTTPS/\+\+SSL}} to be enabled \end{quote}
+
+
+You should then be able to navigate your browser to {\ttfamily \href{https://}{\texttt{https:\+/\+/\+}}\texorpdfstring{$<$}{<}JETSON-\/\+IP\texorpdfstring{$>$}{>}:\+8050} and start the stream. 8050 is the default port used by these webapp examples, but you can change that with the {\ttfamily -\/-\/port=N} command-\/line argument. It\textquotesingle{}s also configured by default for Web\+RTC input and output, but if you want to use a different \href{aux-streaming.md\#input-streams}{\texttt{video input device}}, you can set that with the {\ttfamily -\/-\/\doxylink{group__input}{Input}} argument (for example, {\ttfamily -\/-\/\doxylink{group__input}{Input}=/\+dev/\+video0} for a V4\+L2 camera that\textquotesingle{}s directly attached to your Jetson).\hypertarget{md_jetson-inference_2docs_2webrtc-html_autotoc_md441}{}\doxysubsubsection{\texorpdfstring{Loading DNN Models}{Loading DNN Models}}\label{md_jetson-inference_2docs_2webrtc-html_autotoc_md441}
+This example supports running one DNN model at a time -\/ either classification, detection, segmentation, pose estimation, action recognition, or background removal (subsequent examples support running multiple models simulateously). You can change the DNN when you launch the app like so:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{\$\ python3\ app.py\ -\/-\/classification\ -\/-\/model=resnet18}
+\DoxyCodeLine{\$\ python3\ app.py\ -\/-\/detection\ -\/-\/model=ssd-\/mobilenet-\/v2}
+\DoxyCodeLine{\$\ python3\ app.py\ -\/-\/segmentation\ -\/-\/model=fcn-\/resnet18-\/mhp}
+\DoxyCodeLine{\$\ python3\ app.py\ -\/-\/pose\ -\/-\/model=resnet18-\/body}
+\DoxyCodeLine{\$\ python3\ app.py\ -\/-\/action\ -\/-\/model=resnet18-\/kinetics}
+\DoxyCodeLine{\$\ python3\ app.py\ -\/-\/background\ -\/-\/model=u2net}
+
+\end{DoxyCode}
+
+
+Omitting the optional {\ttfamily -\/-\/model} argument will load the default model for that network, or if you have your own custom classification or detection model from the tutorial that you trained in Py\+Torch and exported to ONNX, you can use the extended command-\/line arguments to load it (like used \href{pytorch-cat-dog.md\#processing-images-with-tensorrt}{\texttt{here}} for classification and \href{pytorch-ssd.md\#processing-images-with-tensorrt}{\texttt{here}} for detection).\hypertarget{md_jetson-inference_2docs_2webrtc-html_autotoc_md442}{}\doxysubsection{\texorpdfstring{HTML Elements}{HTML Elements}}\label{md_jetson-inference_2docs_2webrtc-html_autotoc_md442}
+Consulting the source of \href{../python/www/html/index.html}{\texttt{{\ttfamily index.\+html}}}, let\textquotesingle{}s walkthrough the most important steps of building your own webpages that use Web\+RTC:\+
+
+
+\begin{DoxyEnumerate}
+\item Java\+Script Imports
+\end{DoxyEnumerate}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ html}
+\DoxyCodeLine{<script\ type='text/javascript'\ src='https://webrtc.github.io/adapter/adapter-\/latest.js'></script>}
+\DoxyCodeLine{<script\ type='text/javascript'\ src='/webrtc.js'></script>}
+
+\end{DoxyCode}
+
+
+
+\begin{DoxyEnumerate}
+\item HTML Video Player
+\end{DoxyEnumerate}
+
+This should go in the page {\ttfamily \texorpdfstring{$<$}{<}body\texorpdfstring{$>$}{>}} to create the video player element:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ html}
+\DoxyCodeLine{<video\ id="{}video-\/player"{}\ autoplay\ controls\ playsinline\ muted></video>}
+
+\end{DoxyCode}
+
+
+
+\begin{DoxyEnumerate}
+\item Start Playback
+\end{DoxyEnumerate}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ javascript}
+\DoxyCodeLine{//\ playStream()\ is\ a\ helper\ function\ from\ webrtc.js\ that\ connects\ the\ specified\ WebRTC\ stream\ to\ the\ video\ player}
+\DoxyCodeLine{//\ getWebSocketURL()\ is\ a\ helper\ function\ that\ makes\ a\ URL\ path\ of\ the\ form:\ \ wss://<SERVER-\/IP>:8554/output}
+\DoxyCodeLine{playStream(getWebsocketURL('output'),\ document.getElementById('video-\/player'));}
+
+\end{DoxyCode}
+
+
+Normally this Java\+Script function would be called in {\ttfamily window.\+onload()} or from an event handler like a button\textquotesingle{}s {\ttfamily onclick()} event (like shown in this example). And although it\textquotesingle{}s not called out above, there\textquotesingle{}s also code included for enumerating a browser\textquotesingle{}s webcams and sending those over Web\+RTC to the Jetson as a video input. You can essentially copy \& paste this code (along with {\ttfamily webrtc.\+js}) into any project to enable Web\+RTC.
+
+Next \texorpdfstring{$\vert$}{|} {\bfseries{\href{webrtc-flask.md}{\texttt{Flask + REST}}}} ~\newline
+ Back \texorpdfstring{$\vert$}{|} {\bfseries{\href{webrtc-server.md}{\texttt{Web\+RTC Server}}}}
+
+{\bfseries{ }}
+
+\textsuperscript{© 2016-\/2023 NVIDIA \texorpdfstring{$\vert$}{|} }\href{../README.md\#hello-ai-world}{\texttt{\textsuperscript{Table of Contents}}}

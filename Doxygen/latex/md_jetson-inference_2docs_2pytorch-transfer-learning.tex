@@ -1,0 +1,152 @@
+\chapter{pytorch-\/transfer-\/learning }
+\hypertarget{md_jetson-inference_2docs_2pytorch-transfer-learning}{}\label{md_jetson-inference_2docs_2pytorch-transfer-learning}\index{pytorch-\/transfer-\/learning@{pytorch-\/transfer-\/learning}}
+ 
+
+\textsuperscript{\href{depthnet.md}{\texttt{Back}} \texorpdfstring{$\vert$}{|} \href{pytorch-cat-dog.md}{\texttt{Next}} \texorpdfstring{$\vert$}{|} }\href{../README.md\#hello-ai-world}{\texttt{\textsuperscript{Contents}}} ~\newline
+ \textsuperscript{Transfer Learning}\hypertarget{md_jetson-inference_2docs_2pytorch-transfer-learning_autotoc_md385}{}\doxysection{\texorpdfstring{Transfer Learning with Py\+Torch}{Transfer Learning with Py\+Torch}}\label{md_jetson-inference_2docs_2pytorch-transfer-learning_autotoc_md385}
+Transfer learning is a technique for re-\/training a DNN model on a new dataset, which takes less time than training a network from scratch. With transfer learning, the weights of a pre-\/trained model are fine-\/tuned to classify a customized dataset. In these examples, we\textquotesingle{}ll be using the \href{https://arxiv.org/abs/1512.03385}{\texttt{Res\+Net-\/18}} and \doxysectlink{md_jetson-inference_2docs_2pytorch-ssd}{SSD-\/\+Mobilenet}{0} networks, although you can experiment with other networks too.
+
+\href{https://arxiv.org/abs/1512.03385}{\texttt{}}
+
+Although training is typically performed on a PC, server, or cloud instance with discrete GPU(s) due to the often large datasets used and the associated computational demands, by using transfer learning we\textquotesingle{}re able to re-\/train various networks onboard Jetson to get started with training and deploying our own DNN models. ~\newline
+
+
+\href{https://pytorch.org/}{\texttt{Py\+Torch}} is the machine learning framework that we\textquotesingle{}ll be using, and example datasets along with training scripts are provided to use below, in addition to a camera-\/based tool for collecting and labeling your own training datasets. ~\newline
+\hypertarget{md_jetson-inference_2docs_2pytorch-transfer-learning_autotoc_md386}{}\doxysubsection{\texorpdfstring{Installing Py\+Torch}{Installing Py\+Torch}}\label{md_jetson-inference_2docs_2pytorch-transfer-learning_autotoc_md386}
+If you are \doxysectlink{md_jetson-inference_2docs_2aux-docker}{Running the Docker Container}{0} or optionally chose to install Py\+Torch back when you \href{building-repo-2.md\#installing-pytorch}{\texttt{Built the Project}}, it should already be installed on your Jetson to use. Otherwise, if you aren\textquotesingle{}t using the container and want to proceed with transfer learning, you can install it now:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{\$\ cd\ jetson-\/inference/build}
+\DoxyCodeLine{\$\ ./install-\/pytorch.sh}
+
+\end{DoxyCode}
+
+
+
+
+\begin{quote}
+{\bfseries{note}}:\+ the automated Py\+Torch installation tool requires Jet\+Pack 4.\+2 or newer.~\newline
+ ~~~~~~~~~~and if you want to do \doxysectlink{md_jetson-inference_2docs_2pytorch-ssd}{Object Detection Training}{0}, you should use Jet\+Pack 4.\+4 or newer and install Py\+Torch for {\bfseries{Python 3.\+6}}. \end{quote}
+\hypertarget{md_jetson-inference_2docs_2pytorch-transfer-learning_autotoc_md387}{}\doxysubsubsection{\texorpdfstring{Verifying Py\+Torch}{Verifying Py\+Torch}}\label{md_jetson-inference_2docs_2pytorch-transfer-learning_autotoc_md387}
+You can test that Py\+Torch was installed correctly and detects your GPU by executing these commands from an interactive Python shell -\/ run {\ttfamily python} or {\ttfamily python3} from a terminal:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{>>>\ import\ torch}
+\DoxyCodeLine{>>>\ print(torch.\_\_version\_\_)}
+\DoxyCodeLine{>>>\ print('CUDA\ available:\ '\ +\ str(torch.cuda.is\_available()))}
+\DoxyCodeLine{>>>\ a\ =\ torch.cuda.FloatTensor(2).zero\_()}
+\DoxyCodeLine{>>>\ print('Tensor\ a\ =\ '\ +\ str(a))}
+\DoxyCodeLine{>>>\ b\ =\ torch.randn(2).cuda()}
+\DoxyCodeLine{>>>\ print('Tensor\ b\ =\ '\ +\ str(b))}
+\DoxyCodeLine{>>>\ c\ =\ a\ +\ b}
+\DoxyCodeLine{>>>\ print('Tensor\ c\ =\ '\ +\ str(c))}
+
+\end{DoxyCode}
+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{>>>\ import\ torchvision}
+\DoxyCodeLine{>>>\ print(torchvision.\_\_version\_\_)}
+
+\end{DoxyCode}
+
+
+Note that the torch version should be reported as {\ttfamily 1.\+6.\+0} and the torchvision version should be {\ttfamily 0.\+7.\+0}.\hypertarget{md_jetson-inference_2docs_2pytorch-transfer-learning_autotoc_md388}{}\doxysubsection{\texorpdfstring{Mounting Swap}{Mounting Swap}}\label{md_jetson-inference_2docs_2pytorch-transfer-learning_autotoc_md388}
+Unless you are on Jetson AGX Xavier, you should mount 4GB of swap space, as training uses up a lot of extra memory. ~\newline
+
+
+Run these commands on your Jetson (outside of container) to disable ZRAM and create a swap file:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{sudo\ systemctl\ disable\ nvzramconfig}
+\DoxyCodeLine{sudo\ fallocate\ -\/l\ 4G\ /mnt/4GB.swap}
+\DoxyCodeLine{sudo\ mkswap\ /mnt/4GB.swap}
+\DoxyCodeLine{sudo\ swapon\ /mnt/4GB.swap}
+
+\end{DoxyCode}
+
+
+Then add the following line to the end of {\ttfamily /\+etc/\+fstab} to make the change persistent:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{/mnt/4GB.swap\ \ none\ \ swap\ \ sw\ 0\ \ 0}
+
+\end{DoxyCode}
+
+
+Now your swap file will automatically be mounted after reboots. To check the usage, run {\ttfamily swapon -\/s} or {\ttfamily tegrastats}. Disabling ZRAM (in-\/memory compressed swap) also free\textquotesingle{}s up physical memory and requires a reboot to take effect.\hypertarget{md_jetson-inference_2docs_2pytorch-transfer-learning_autotoc_md389}{}\doxysubsection{\texorpdfstring{Disabling the Desktop GUI}{Disabling the Desktop GUI}}\label{md_jetson-inference_2docs_2pytorch-transfer-learning_autotoc_md389}
+If you are running low on memory while training, you may want to try disabling the Ubuntu desktop GUI while you are training. This will free up extra memory that the window manager and desktop uses (around \texorpdfstring{$\sim$}{\string~}800\+MB for Unity/\+\+GNOME or \texorpdfstring{$\sim$}{\string~}250\+MB for LXDE) ~\newline
+
+
+You can disable the desktop temporarily, run commands in the console, and then re-\/start the desktop when you are done training:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{\$\ sudo\ init\ 3\ \ \ \ \ \#\ stop\ the\ desktop}
+\DoxyCodeLine{\#\ log\ your\ user\ back\ into\ the\ console}
+\DoxyCodeLine{\#\ run\ the\ PyTorch\ training\ scripts}
+\DoxyCodeLine{\$\ sudo\ init\ 5\ \ \ \ \ \#\ restart\ the\ desktop}
+
+\end{DoxyCode}
+
+
+If you wish to make this persistent across reboots, you can use the follow commands to change the boot-\/up behavior:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{\$\ sudo\ systemctl\ set-\/default\ multi-\/user.target\ \ \ \ \ \#\ disable\ desktop\ on\ boot}
+\DoxyCodeLine{\$\ sudo\ systemctl\ set-\/default\ graphical.target\ \ \ \ \ \ \#\ enable\ desktop\ on\ boot}
+
+\end{DoxyCode}
+
+
+Then after you reboot, the desktop will remain disabled or enabled (whichever default you set).\hypertarget{md_jetson-inference_2docs_2pytorch-transfer-learning_autotoc_md390}{}\doxysubsection{\texorpdfstring{Training Datasets}{Training Datasets}}\label{md_jetson-inference_2docs_2pytorch-transfer-learning_autotoc_md390}
+Below are step-\/by-\/step instructions to re-\/training models on some example datasets with transfer learning, in addition to collecting your own data to create your own customized models:\+
+
+
+\begin{DoxyItemize}
+\item Classification/\+\+Recognition (Res\+Net-\/18)
+\begin{DoxyItemize}
+\item \doxysectlink{md_jetson-inference_2docs_2pytorch-cat-dog}{Re-\/training on the Cat/\+\+Dog Dataset}{0}
+\item \doxysectlink{md_jetson-inference_2docs_2pytorch-plants}{Re-\/training on the Plant\+CLEF Dataset}{0}
+\item \doxysectlink{md_jetson-inference_2docs_2pytorch-collect}{Collecting your own Classification Datasets}{0}
+\end{DoxyItemize}
+\item Object Detection (SSD-\/\+Mobilenet)
+\begin{DoxyItemize}
+\item \doxysectlink{md_jetson-inference_2docs_2pytorch-ssd}{Re-\/training SSD-\/\+Mobilenet}{0}
+\item \doxysectlink{md_jetson-inference_2docs_2pytorch-collect-detection}{Collecting your own Detection Datasets}{0}
+\end{DoxyItemize}
+\end{DoxyItemize}
+
+This table contains a summary of the datasets and their associated training times:\+
+
+
+\begin{DoxyTable}{7}{}{}{1}
+\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}Type  &\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}Dataset  &\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}Size  &\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}Classes  &\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}Training Images  &\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}Time per Epoch\texorpdfstring{$\ast$}{*}  &\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}Training Time\texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}  \\
+\SetCell{c}Classification  &\SetCell{c}\doxysectlink{md_jetson-inference_2docs_2pytorch-cat-dog}{{\ttfamily Cat/\+\+Dog}}{0}  &\SetCell{c}800MB  &\SetCell{c}2  &\SetCell{c}5,000  &\SetCell{c}\texorpdfstring{$\sim$}{\string~}7-\/8 minutes  &\SetCell{c}\texorpdfstring{$\sim$}{\string~}4 hours  \\
+\SetCell{c}Classification  &\SetCell{c}\doxysectlink{md_jetson-inference_2docs_2pytorch-plants}{{\ttfamily Plant\+CLEF}}{0}  &\SetCell{c}1.\+5\+GB  &\SetCell{c}20  &\SetCell{c}10,475  &\SetCell{c}\texorpdfstring{$\sim$}{\string~}15 minutes  &\SetCell{c}\texorpdfstring{$\sim$}{\string~}8 hours  \\
+\SetCell{c}Detection  &\SetCell{c}\doxysectlink{md_jetson-inference_2docs_2pytorch-ssd}{{\ttfamily Fruit}}{0}  &\SetCell{c}2GB  &\SetCell{c}8  &\SetCell{c}6,375  &\SetCell{c}\texorpdfstring{$\sim$}{\string~}15 minutes  &\SetCell{c}\texorpdfstring{$\sim$}{\string~}8 hours  \\
+\end{DoxyTable}
+
+
+\texorpdfstring{$\ast$}{*}~~Approximate time for one complete training pass over the dataset with Jetson Nano ~\newline
+ \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*} Approximate time for training the model for 35 epochs with Jetson Nano
+
+Next \texorpdfstring{$\vert$}{|} {\bfseries{\href{pytorch-cat-dog.md}{\texttt{Re-\/training on the Cat/\+\+Dog Dataset}}}} ~\newline
+ Back \texorpdfstring{$\vert$}{|} {\bfseries{\href{depthnet.md}{\texttt{Monocular Depth with Depth\+Net}}}}
+
+{\bfseries{ }}
+
+\textsuperscript{© 2016-\/2019 NVIDIA \texorpdfstring{$\vert$}{|} }\href{../README.md\#hello-ai-world}{\texttt{\textsuperscript{Table of Contents}}}

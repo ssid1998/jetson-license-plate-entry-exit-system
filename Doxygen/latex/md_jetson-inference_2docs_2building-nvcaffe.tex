@@ -1,0 +1,132 @@
+\chapter{building-\/nvcaffe }
+\hypertarget{md_jetson-inference_2docs_2building-nvcaffe}{}\label{md_jetson-inference_2docs_2building-nvcaffe}\index{building-\/nvcaffe@{building-\/nvcaffe}}
+\hypertarget{md_jetson-inference_2docs_2building-nvcaffe_autotoc_md123}{}\doxysection{\texorpdfstring{Building nvcaffe}{Building nvcaffe}}\label{md_jetson-inference_2docs_2building-nvcaffe_autotoc_md123}
+A special branch of caffe is used on TX1 which includes support for FP16.~\newline
+ \doxylink{requirements_The}{The} code is released in NVIDIA\textquotesingle{}s caffe repo in the experimental/\+fp16 branch, located here:\+ \begin{quote}
+\href{https://github.com/nvidia/caffe/tree/experimental/fp16}{\texttt{https:\+/\+/\+github.\+com/\+nvidia/\+caffe/\+tree/\+experimental/\+fp16}} \end{quote}
+\hypertarget{md_jetson-inference_2docs_2building-nvcaffe_autotoc_md124}{}\doxysubsubsubsection{\texorpdfstring{1. Installing Dependencies}{1. Installing Dependencies}}\label{md_jetson-inference_2docs_2building-nvcaffe_autotoc_md124}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{\$\ sudo\ apt-\/get\ update\ -\/y}
+\DoxyCodeLine{\$\ sudo\ apt-\/get\ install\ cmake\ -\/y}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#\ General\ dependencies}
+\DoxyCodeLine{\$\ sudo\ apt-\/get\ install\ libprotobuf-\/dev\ libleveldb-\/dev\ libsnappy-\/dev\ \(\backslash\)}
+\DoxyCodeLine{libhdf5-\/serial-\/dev\ protobuf-\/compiler\ -\/y}
+\DoxyCodeLine{\$\ sudo\ apt-\/get\ install\ -\/-\/no-\/install-\/recommends\ libboost-\/all-\/dev\ -\/y}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#\ BLAS}
+\DoxyCodeLine{\$\ sudo\ apt-\/get\ install\ libatlas-\/base-\/dev\ -\/y}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#\ Remaining\ Dependencies}
+\DoxyCodeLine{\$\ sudo\ apt-\/get\ install\ libgflags-\/dev\ libgoogle-\/glog-\/dev\ liblmdb-\/dev\ -\/y}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#\ Python\ Dependencies}
+\DoxyCodeLine{\$\ sudo\ apt-\/get\ install\ python-\/dev\ python-\/numpy\ python-\/skimage\ python-\/protobuf\ -\/y}
+
+\end{DoxyCode}
+
+
+\doxylink{requirements_The}{The} Snappy package needs a symbolic link created for Caffe to link correctly:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{\$\ sudo\ ln\ -\/s\ /usr/lib/libsnappy.so.1\ /usr/lib/libsnappy.so}
+\DoxyCodeLine{\$\ sudo\ ldconfig}
+
+\end{DoxyCode}
+\hypertarget{md_jetson-inference_2docs_2building-nvcaffe_autotoc_md125}{}\doxysubsubsubsection{\texorpdfstring{2. Clone nvcaffe fp16 branch}{2. Clone nvcaffe fp16 branch}}\label{md_jetson-inference_2docs_2building-nvcaffe_autotoc_md125}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{\$\ git\ clone\ -\/b\ experimental/fp16\ https://github.com/NVIDIA/caffe}
+
+\end{DoxyCode}
+
+
+This will checkout the repo to a local directory called {\ttfamily caffe} on your Jetson.\hypertarget{md_jetson-inference_2docs_2building-nvcaffe_autotoc_md126}{}\doxysubsubsubsection{\texorpdfstring{3. Setup build options}{3. Setup build options}}\label{md_jetson-inference_2docs_2building-nvcaffe_autotoc_md126}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{\$\ cd\ caffe}
+\DoxyCodeLine{\$\ cp\ Makefile.config.example\ Makefile.config}
+\DoxyCodeLine{\$\ rm\ -\/rf\ cmake/\ CMakeLists.txt}
+
+\end{DoxyCode}
+\hypertarget{md_jetson-inference_2docs_2building-nvcaffe_autotoc_md127}{}\doxysubsubsubsubsubsection{\texorpdfstring{Enable FP16:\+}{Enable FP16:\+}}\label{md_jetson-inference_2docs_2building-nvcaffe_autotoc_md127}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{\$\ sed\ -\/i\ 's/\#\ NATIVE\_FP16/NATIVE\_FP16/g'\ Makefile.config}
+
+\end{DoxyCode}
+\hypertarget{md_jetson-inference_2docs_2building-nvcaffe_autotoc_md128}{}\doxysubsubsubsubsubsection{\texorpdfstring{Enable cu\+DNN:\+}{Enable cu\+DNN:\+}}\label{md_jetson-inference_2docs_2building-nvcaffe_autotoc_md128}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{\$\ sed\ -\/i\ 's/\#\ USE\_CUDNN/USE\_CUDNN/g'\ Makefile.config}
+
+\end{DoxyCode}
+\hypertarget{md_jetson-inference_2docs_2building-nvcaffe_autotoc_md129}{}\doxysubsubsubsubsubsection{\texorpdfstring{Enable compute\+\_\+53/\+sm\+\_\+53:\+}{Enable compute\+\_\+53/\+sm\+\_\+53:\+}}\label{md_jetson-inference_2docs_2building-nvcaffe_autotoc_md129}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash\ }
+\DoxyCodeLine{\$\ sed\ -\/i\ 's/-\/gencode\ arch=compute\_50,code=compute\_50/-\/gencode\ arch=compute\_53,code=sm\_53\ -\/gencode\ arch=compute\_53,code=compute\_53/g'\ Makefile.config}
+
+\end{DoxyCode}
+\hypertarget{md_jetson-inference_2docs_2building-nvcaffe_autotoc_md130}{}\doxysubsubsubsubsubsection{\texorpdfstring{Setup header/\+linker paths}{Setup header/\+linker paths}}\label{md_jetson-inference_2docs_2building-nvcaffe_autotoc_md130}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{bash}
+\DoxyCodeLine{\ \ \ INCLUDE\_DIRS\ :=\ \$(PYTHON\_INCLUDE)\ /usr/local/include}
+\DoxyCodeLine{\ \ \ becomes}
+\DoxyCodeLine{\ \ \ INCLUDE\_DIRS\ :=\ \$(PYTHON\_INCLUDE)\ /usr/local/include\ /usr/include/hdf5/serial/}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ LIBRARY\_DIRS\ :=\ \$(PYTHON\_LIB)\ /usr/local/lib\ /usr/lib}
+\DoxyCodeLine{\ \ \ becomes}
+\DoxyCodeLine{\ \ \ LIBRARY\_DIRS\ :=\ \$(PYTHON\_LIB)\ /usr/local/lib\ /usr/lib\ /usr/lib/aarch64-\/linux-\/gnu/hdf5/serial/}
+
+\end{DoxyCode}
+\hypertarget{md_jetson-inference_2docs_2building-nvcaffe_autotoc_md131}{}\doxysubsubsubsubsubsection{\texorpdfstring{Fix HDF5 Linking Issue}{Fix HDF5 Linking Issue}}\label{md_jetson-inference_2docs_2building-nvcaffe_autotoc_md131}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{\$\ sudo\ ln\ -\/s\ /usr/lib/aarch64-\/linux-\/gnu/libhdf5\_serial.so.10\ /usr/lib/aarch64-\/linux-\/gnu/libhdf5.so}
+\DoxyCodeLine{\$\ sudo\ ln\ -\/s\ /usr/lib/aarch64-\/linux-\/gnu/libhdf5\_serial\_hl.so.10\ /usr/lib/aarch64-\/linux-\/gnu/libhdf5\_hl.so}
+
+\end{DoxyCode}
+\hypertarget{md_jetson-inference_2docs_2building-nvcaffe_autotoc_md132}{}\doxysubsubsubsection{\texorpdfstring{4. Compiling nvcaffe}{4. Compiling nvcaffe}}\label{md_jetson-inference_2docs_2building-nvcaffe_autotoc_md132}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{\$\ make\ -\/j4}
+\DoxyCodeLine{\$\ make\ pycaffe}
+\DoxyCodeLine{\$\ make\ distribute}
+
+\end{DoxyCode}
+\hypertarget{md_jetson-inference_2docs_2building-nvcaffe_autotoc_md133}{}\doxysubsubsubsection{\texorpdfstring{5. Set environment paths}{5. Set environment paths}}\label{md_jetson-inference_2docs_2building-nvcaffe_autotoc_md133}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{\#\ Edit\ the\ following\ lines\ in\ .bashrc\ and\ then\ source\ .bashrc}
+\DoxyCodeLine{export\ PATH=/usr/local/cuda-\/8.0/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/ubuntu/caffe/build/tools}
+\DoxyCodeLine{export\ PYTHONPATH=/home/ubuntu/caffe/python:\$PYTHONPATH}
+
+\end{DoxyCode}
+\hypertarget{md_jetson-inference_2docs_2building-nvcaffe_autotoc_md134}{}\doxysubsubsubsection{\texorpdfstring{6. Install i\+Python (optional)}{6. Install i\+Python (optional)}}\label{md_jetson-inference_2docs_2building-nvcaffe_autotoc_md134}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{\$\ sudo\ apt-\/get\ install\ ipython\ ipython-\/notebook\ python-\/pandas\ -\/y}
+
+\end{DoxyCode}
+\hypertarget{md_jetson-inference_2docs_2building-nvcaffe_autotoc_md135}{}\doxysubsubsubsection{\texorpdfstring{6. Testing nvcaffe}{6. Testing nvcaffe}}\label{md_jetson-inference_2docs_2building-nvcaffe_autotoc_md135}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{\$\ make\ runtest}
+
+\end{DoxyCode}
+ 

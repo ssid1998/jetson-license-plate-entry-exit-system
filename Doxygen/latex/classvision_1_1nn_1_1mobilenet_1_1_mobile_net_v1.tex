@@ -1,0 +1,61 @@
+\doxysection{vision.\+nn.\+mobilenet.\+Mobile\+Net\+V1 Class Reference}
+\hypertarget{classvision_1_1nn_1_1mobilenet_1_1_mobile_net_v1}{}\label{classvision_1_1nn_1_1mobilenet_1_1_mobile_net_v1}\index{vision.nn.mobilenet.MobileNetV1@{vision.nn.mobilenet.MobileNetV1}}
+Inheritance diagram for vision.\+nn.\+mobilenet.\+Mobile\+Net\+V1:\+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classvision_1_1nn_1_1mobilenet_1_1_mobile_net_v1}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classvision_1_1nn_1_1mobilenet_1_1_mobile_net_v1_a693120d86aa497ebfe4904d3ed84c093}\label{classvision_1_1nn_1_1mobilenet_1_1_mobile_net_v1_a693120d86aa497ebfe4904d3ed84c093} 
+{\bfseries \+\_\+\+\_\+init\+\_\+\+\_\+} (self, num\+\_\+classes=1024)
+\item 
+\Hypertarget{classvision_1_1nn_1_1mobilenet_1_1_mobile_net_v1_a77e3417979751a88a35963524b3ab367}\label{classvision_1_1nn_1_1mobilenet_1_1_mobile_net_v1_a77e3417979751a88a35963524b3ab367} 
+{\bfseries forward} (self, x)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{classvision_1_1nn_1_1mobilenet_1_1_mobile_net_v1_ab5627a91ec0056b1613cb9d06a4bc8db}{model}}
+\item 
+\Hypertarget{classvision_1_1nn_1_1mobilenet_1_1_mobile_net_v1_a366a6c09e0c6f86424b9e603e2747ca4}\label{classvision_1_1nn_1_1mobilenet_1_1_mobile_net_v1_a366a6c09e0c6f86424b9e603e2747ca4} 
+{\bfseries fc} = nn.\+Linear(1024, num\+\_\+classes)
+\end{DoxyCompactItemize}
+
+
+\label{doc-variable-members}
+\Hypertarget{classvision_1_1nn_1_1mobilenet_1_1_mobile_net_v1_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classvision_1_1nn_1_1mobilenet_1_1_mobile_net_v1_ab5627a91ec0056b1613cb9d06a4bc8db}\index{vision.nn.mobilenet.MobileNetV1@{vision.nn.mobilenet.MobileNetV1}!model@{model}}
+\index{model@{model}!vision.nn.mobilenet.MobileNetV1@{vision.nn.mobilenet.MobileNetV1}}
+\doxysubsubsection{\texorpdfstring{model}{model}}
+{\footnotesize\ttfamily \label{classvision_1_1nn_1_1mobilenet_1_1_mobile_net_v1_ab5627a91ec0056b1613cb9d06a4bc8db} 
+vision.\+nn.\+mobilenet.\+Mobile\+Net\+V1.\+model}
+
+{\bfseries Initial value:\+}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=\ \ nn.Sequential(}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ conv\_bn(3,\ 32,\ 2),}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ conv\_dw(32,\ 64,\ 1),}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ conv\_dw(64,\ 128,\ 2),}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ conv\_dw(128,\ 128,\ 1),}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ conv\_dw(128,\ 256,\ 2),}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ conv\_dw(256,\ 256,\ 1),}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ conv\_dw(256,\ 512,\ 2),}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ conv\_dw(512,\ 512,\ 1),}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ conv\_dw(512,\ 512,\ 1),}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ conv\_dw(512,\ 512,\ 1),}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ conv\_dw(512,\ 512,\ 1),}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ conv\_dw(512,\ 512,\ 1),}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ conv\_dw(512,\ 1024,\ 2),}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ conv\_dw(1024,\ 1024,\ 1),}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ )}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file:\+\begin{DoxyCompactItemize}
+\item 
+jetson-\/inference/\+python/\+training/\+detection/\+ssd/\+vision/\+nn/\+mobilenet.\+py\end{DoxyCompactItemize}

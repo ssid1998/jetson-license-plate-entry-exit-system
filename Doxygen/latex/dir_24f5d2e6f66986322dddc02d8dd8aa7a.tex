@@ -1,0 +1,101 @@
+\doxysection{jetson-\/inference/\+utils Directory Reference}
+\hypertarget{dir_24f5d2e6f66986322dddc02d8dd8aa7a}{}\label{dir_24f5d2e6f66986322dddc02d8dd8aa7a}\index{jetson-\/inference/utils Directory Reference@{jetson-\/inference/utils Directory Reference}}
+\doxysubsubsection*{Directories}
+\begin{DoxyCompactItemize}
+\item 
+directory \doxymbox{\hyperlink{dir_d21a061a9723963da275491d1eae01eb}{camera}}
+\item 
+directory \doxymbox{\hyperlink{dir_96f05a99133856ebe8500d18b272c8bb}{codec}}
+\item 
+directory \doxymbox{\hyperlink{dir_ceca74faae6a9c2172f36e0a17aeeca2}{cuda}}
+\item 
+directory \doxymbox{\hyperlink{dir_4d17920d7d85e189733f0f6df40e721d}{display}}
+\item 
+directory \doxymbox{\hyperlink{dir_92b2f7968a2bf3e551ce34b625d8bd15}{image}}
+\item 
+directory \doxymbox{\hyperlink{dir_0c685dc9739e32a0f21e279371bfce11}{input}}
+\item 
+directory \doxymbox{\hyperlink{dir_21a83aac22678a107dce8701a3c8ed8b}{network}}
+\item 
+directory \doxymbox{\hyperlink{dir_cf1db3f8719d82114cb9c0715e6ec644}{threads}}
+\item 
+directory \doxymbox{\hyperlink{dir_529c7391deb6b5e2426783bb2d588829}{video}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Files}
+\begin{DoxyCompactItemize}
+\item 
+file {\bfseries alphanum.\+h}
+\item 
+file {\bfseries command\+Line.\+h}
+\item 
+file {\bfseries csv\+Reader.\+h}
+\item 
+file {\bfseries csv\+Reader.\+hpp}
+\item 
+file {\bfseries csv\+Writer.\+h}
+\item 
+file {\bfseries csv\+Writer.\+hpp}
+\item 
+file {\bfseries filesystem.\+h}
+\item 
+file {\bfseries json.\+hpp}
+\item 
+file {\bfseries logging.\+h}
+\item 
+file {\bfseries mat33.\+h}
+\item 
+file {\bfseries pi.\+h}
+\item 
+file {\bfseries rand.\+h}
+\item 
+file {\bfseries timespec.\+h}
+\item 
+file {\bfseries xml.\+h}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\hypertarget{dir_24f5d2e6f66986322dddc02d8dd8aa7a_autotoc_md519}{}\doxysubsection{\texorpdfstring{jetson-\/utils}{jetson-\/utils}}\label{dir_24f5d2e6f66986322dddc02d8dd8aa7a_autotoc_md519}
+C++/\+\+CUDA/\+\+Python multimedia utilities for NVIDIA Jetson:\+
+
+
+\begin{DoxyTable}{2}{}{}{1}
+\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}&\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}\\
+\href{/}{\texttt{{\ttfamily /\+}}}  &Filesystem, CSV/\+\+JSON/\+\+XML parsing, command-\/line  \\
+\href{camera/}{\texttt{{\ttfamily camera/\+}}}  &GStreamer-\/based camera capture (V4\+L2, MIPI CSI)  \\
+\href{codec/}{\texttt{{\ttfamily codec/\+}}}  &GStreamer-\/based hardware video encoder/\+decoder  \\
+\href{cuda/}{\texttt{{\ttfamily cuda/\+}}}  &CUDA image processing functions  \\
+\href{display/}{\texttt{{\ttfamily display/\+}}}  &Open\+GL window \& rendering  \\
+\href{image/}{\texttt{{\ttfamily image/\+}}}  &Image loading \& saving  \\
+\href{input/}{\texttt{{\ttfamily input/\+}}}  &Human Interface Devices (HID) from {\ttfamily /\+dev/\+input}  \\
+\href{network/}{\texttt{{\ttfamily network/\+}}}  &Sockets, IPv4/\+\+IPv6, Web\+RTC/\+\+RTSP server  \\
+\href{python/}{\texttt{{\ttfamily python/\+}}}  &Python bindings and examples  \\
+\href{threads/}{\texttt{{\ttfamily threads/\+}}}  &Multithreading, locks, and events  \\
+\href{video/}{\texttt{{\ttfamily video/\+}}}  &Video streaming interfaces  \\
+\end{DoxyTable}
+\hypertarget{dir_24f5d2e6f66986322dddc02d8dd8aa7a_autotoc_md520}{}\doxysubsubsection{\texorpdfstring{Documentation}{Documentation}}\label{dir_24f5d2e6f66986322dddc02d8dd8aa7a_autotoc_md520}
+Documentation for jetson-\/utils can be found here:\+
+
+
+\begin{DoxyItemize}
+\item \href{https://github.com/dusty-nv/jetson-inference\#api-reference}{\texttt{API Reference}}
+\item \href{https://github.com/dusty-nv/jetson-inference/blob/master/docs/aux-streaming.md}{\texttt{Camera Streaming and Multimedia}}
+\item \href{https://github.com/dusty-nv/jetson-inference/blob/master/docs/aux-image.md}{\texttt{Image Manipulation with CUDA}}
+\end{DoxyItemize}\hypertarget{dir_24f5d2e6f66986322dddc02d8dd8aa7a_autotoc_md521}{}\doxysubsubsection{\texorpdfstring{Building from Source}{Building from Source}}\label{dir_24f5d2e6f66986322dddc02d8dd8aa7a_autotoc_md521}
+jetson-\/utils is typically built as a submodule of \href{https://github.com/dusty-nv/jetson-inference}{\texttt{jetson-\/inference}}, but it can also be compiled/\+installed standalone:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{git\ clone\ https://github.com/dusty-\/nv/jetson-\/utils}
+\DoxyCodeLine{mkdir\ build}
+\DoxyCodeLine{cd\ build}
+\DoxyCodeLine{cmake\ ../}
+\DoxyCodeLine{make\ -\/j\$(nproc)}
+\DoxyCodeLine{sudo\ make\ install}
+\DoxyCodeLine{sudo\ ldconfig}
+
+\end{DoxyCode}
+
+
+If you\textquotesingle{}re missing dependencies, run the \href{https://github.com/dusty-nv/jetson-inference/blob/master/CMakePreBuild.sh}{\texttt{{\ttfamily jetson-\/inference/\+\+CMake\+Pre\+Build.\+sh}}} script. 

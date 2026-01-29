@@ -1,0 +1,137 @@
+\chapter{detectnet-\/tao }
+\hypertarget{md_jetson-inference_2docs_2detectnet-tao}{}\label{md_jetson-inference_2docs_2detectnet-tao}\index{detectnet-\/tao@{detectnet-\/tao}}
+ 
+
+\textsuperscript{\href{detectnet-example-2.md}{\texttt{Back}} \texorpdfstring{$\vert$}{|} \href{detectnet-tracking.md}{\texttt{Next}} \texorpdfstring{$\vert$}{|} }\href{../README.md\#hello-ai-world}{\texttt{\textsuperscript{Contents}}} ~\newline
+ \textsuperscript{Object Detection}\hypertarget{md_jetson-inference_2docs_2detectnet-tao_autotoc_md212}{}\doxysection{\texorpdfstring{Using TAO Detection Models}{Using TAO Detection Models}}\label{md_jetson-inference_2docs_2detectnet-tao_autotoc_md212}
+NVIDIA\textquotesingle{}s \href{https://developer.nvidia.com/tao-toolkit}{\texttt{TAO Toolkit}} includes highly-\/accurate high-\/resolution object detection models, optimized/\+pruned and quantized for INT8 precision. jetson-\/inference supports for TAO models that are based on the \href{https://docs.nvidia.com/tao/tao-toolkit/text/object_detection/detectnet_v2.html}{\texttt{Detect\+Net\+\_\+v2}} DNN architecture, including the following pre-\/trained models:\+
+
+
+\begin{DoxyTable}{3}{}{}{1}
+\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}Model  &\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}CLI argument  &\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}Object classes  \\
+\href{https://catalog.ngc.nvidia.com/orgs/nvidia/teams/tao/models/peoplenet}{\texttt{TAO People\+Net}}  &{\ttfamily peoplenet}  &person, bag, face  \\
+\href{https://catalog.ngc.nvidia.com/orgs/nvidia/teams/tao/models/peoplenet}{\texttt{TAO People\+Net}} \textsuperscript{(pruned)}  &{\ttfamily peoplenet-\/pruned}  &person, bag, face  \\
+\href{https://catalog.ngc.nvidia.com/orgs/nvidia/teams/tao/models/dashcamnet}{\texttt{TAO Dash\+Cam\+Net}}  &{\ttfamily dashcamnet}  &person, car, bike, sign  \\
+\href{https://catalog.ngc.nvidia.com/orgs/nvidia/teams/tao/models/trafficcamnet}{\texttt{TAO Traffic\+Cam\+Net}}  &{\ttfamily trafficcamnet}  &person, car, bike, sign  \\
+\href{https://catalog.ngc.nvidia.com/orgs/nvidia/teams/tao/models/facenet}{\texttt{TAO Face\+Detect}}  &{\ttfamily facedetect}  &face  \\
+\end{DoxyTable}
+
+
+Although a section below covers how to load your own TAO models, let\textquotesingle{}s take a look at using the pre-\/trained models first.\hypertarget{md_jetson-inference_2docs_2detectnet-tao_autotoc_md213}{}\doxysubsubsection{\texorpdfstring{People\+Net}{People\+Net}}\label{md_jetson-inference_2docs_2detectnet-tao_autotoc_md213}
+\href{https://catalog.ngc.nvidia.com/orgs/nvidia/teams/tao/models/peoplenet}{\texttt{People\+Net}} is a high-\/resolution 960x544 model with up to \texorpdfstring{$\sim$}{\string~}90\% accuracy for detecting people, bags, and faces. It\textquotesingle{}s based on Detect\+Net\+\_\+v2 with a Res\+Net-\/34 backbone. Launching detectnet/\+detectnet.\+py with {\ttfamily -\/-\/model=peoplenet} will run the TAO People\+Net model with INT8 precision on platforms that support it (FP16 otherwise). There\textquotesingle{}s also the {\ttfamily peoplenet-\/pruned} model which is faster and slightly less accurate.
+
+\href{https://youtu.be/rWGTxeb3Nrw}{\texttt{}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{\#\ Download\ test\ video}
+\DoxyCodeLine{wget\ https://nvidia.box.com/shared/static/veuuimq6pwvd62p9fresqhrrmfqz0e2f.mp4\ -\/O\ pedestrians.mp4}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#\ C++}
+\DoxyCodeLine{\$\ detectnet\ -\/-\/model=peoplenet\ pedestrians.mp4\ pedestrians\_peoplenet.mp4}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#\ Python}
+\DoxyCodeLine{\$\ detectnet.py\ -\/-\/model=peoplenet\ pedestrians.mp4\ pedestrians\_peoplenet.mp4}
+
+\end{DoxyCode}
+
+
+You can also adjust the {\ttfamily -\/-\/confidence} and {\ttfamily -\/-\/clustering} thresholds -\/ these TAO models seem not introduce too many false positives with lower thresholds due to their increased accuracy. \doxylink{requirements_The}{The} \doxysectlink{md_jetson-inference_2docs_2webrtc-flask}{Flask webapp}{0} is a convenient tool for playing around with these settings interactively.\hypertarget{md_jetson-inference_2docs_2detectnet-tao_autotoc_md214}{}\doxysubsubsection{\texorpdfstring{Dash\+Cam\+Net}{Dash\+Cam\+Net}}\label{md_jetson-inference_2docs_2detectnet-tao_autotoc_md214}
+Like People\+Net, \href{https://catalog.ngc.nvidia.com/orgs/nvidia/teams/tao/models/dashcamnet}{\texttt{Dash\+Cam\+Net}} is a 960x544 detector based on Detect\+Net\+\_\+v2 and Res\+Net-\/34. It\textquotesingle{}s intended use is for detecting people and vehicles from street-\/level viewpoints and first-\/person perspectives. Traffic\+Cam\+Net is similar, for imagery taken from a higher vantage point.
+
+\href{https://www.youtube.com/watch?v=tsugHIgFrwI}{\texttt{}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{\#\ C++}
+\DoxyCodeLine{\$\ detectnet\ -\/-\/model=dashcamnet\ input.mp4\ output.mp4}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#\ Python}
+\DoxyCodeLine{\$\ detectnet.py\ -\/-\/model=dashcamnet\ input.mp4\ output.mp4}
+
+\end{DoxyCode}
+
+
+\begin{quote}
+{\bfseries{note}}:\+ you can run this with any input/\+output from the \doxysectlink{md_jetson-inference_2docs_2aux-streaming}{Camera Streaming and Multimedia}{0} page \end{quote}
+\hypertarget{md_jetson-inference_2docs_2detectnet-tao_autotoc_md215}{}\doxysubsubsection{\texorpdfstring{Face\+Detect}{Face\+Detect}}\label{md_jetson-inference_2docs_2detectnet-tao_autotoc_md215}
+\href{https://catalog.ngc.nvidia.com/orgs/nvidia/teams/tao/models/facenet}{\texttt{Face\+Detect}} is a TAO model for just detecting faces. It was trained with up to \texorpdfstring{$\sim$}{\string~}85\% accuracy on a dataset with more than 1.\+8M samples taken from a variety of camera angles. It has a resolution of 736x416 and uses Detect\+Net\+\_\+v2 with a Res\+Net-\/18 backbone.
+
+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{\#\ C++}
+\DoxyCodeLine{\$\ detectnet\ -\/-\/model=facedetect\ "{}images/humans\_*.jpg"{}\ images/test/facedetect\_humans\_\%i.jpg}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#\ Python}
+\DoxyCodeLine{\$\ detectnet.py\ -\/-\/model=facedetect\ "{}images/humans\_*.jpg"{}\ images/test/facedetect\_humans\_\%i.jpg}
+
+\end{DoxyCode}
+\hypertarget{md_jetson-inference_2docs_2detectnet-tao_autotoc_md216}{}\doxysubsubsection{\texorpdfstring{Importing Your Own TAO Detection Models}{Importing Your Own TAO Detection Models}}\label{md_jetson-inference_2docs_2detectnet-tao_autotoc_md216}
+Although jetson-\/inference can automatically download, convert, and load the pre-\/trained TAO detection models above, you may wish to use a different version of those models or your own Detect\+Net\+\_\+v2 model that you trained or fine-\/tuned using TAO. To do that, copy your trained ETLT model to your Jetson, along with the appropriate version of the \href{https://catalog.ngc.nvidia.com/orgs/nvidia/teams/tao/resources/tao-converter}{\texttt{{\ttfamily tao-\/converter}}} tool. Then depending on your model\textquotesingle{}s configuration (the details of which are typically found on the model card), you can run a script like below to generate the Tensor\+RT engine from the ETLT:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{\#\ model\ config}
+\DoxyCodeLine{MODEL\_DIR="{}peoplenet\_deployable\_quantized\_v2.6.1"{}}
+\DoxyCodeLine{MODEL\_INPUT="{}\$MODEL\_DIR/resnet34\_peoplenet\_int8.etlt"{}}
+\DoxyCodeLine{MODEL\_OUTPUT="{}\$MODEL\_INPUT.engine"{}}
+\DoxyCodeLine{}
+\DoxyCodeLine{INPUT\_DIMS="{}3,544,960"{}}
+\DoxyCodeLine{OUTPUT\_LAYERS="{}output\_bbox/BiasAdd,output\_cov/Sigmoid"{}}
+\DoxyCodeLine{MAX\_BATCH\_SIZE="{}1"{}}
+\DoxyCodeLine{}
+\DoxyCodeLine{WORKSPACE="{}4294967296"{}\ \#\ 4GB\ (default)}
+\DoxyCodeLine{PRECISION="{}int8"{}\ \ \ \ \ \ \ \#\ fp32,\ fp16,\ int8}
+\DoxyCodeLine{CALIBRATION="{}\$MODEL\_DIR/resnet34\_peoplenet\_int8.txt"{}}
+\DoxyCodeLine{}
+\DoxyCodeLine{ENCRYPTION\_KEY="{}tlt\_encode"{}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#\ generate\ TensorRT\ engine}
+\DoxyCodeLine{tao-\/converter\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ -\/k\ \$ENCRYPTION\_KEY\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ -\/d\ \$INPUT\_DIMS\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ -\/o\ \$OUTPUT\_LAYERS\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ -\/m\ \$MAX\_BATCH\_SIZE\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ -\/w\ \$WORKSPACE\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ -\/t\ \$PRECISION\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ -\/c\ \$CALIBRATION\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ -\/e\ \$MODEL\_OUTPUT\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \$MODEL\_INPUT}
+
+\end{DoxyCode}
+
+
+After converting it, you can load it with detectnet/\+detectnet.\+py like so:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{\$\ detectnet\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ -\/-\/model=\$MODEL\_DIR/resnet34\_peoplenet\_int8.etlt.engine\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ -\/-\/labels=\$MODEL\_DIR/labels.txt\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ -\/-\/input-\/blob=input\_1\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ -\/-\/output-\/cvg=output\_cov/Sigmoid\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ -\/-\/output-\/bbox=output\_bbox/BiasAdd\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ input.mp4\ output.mp4}
+
+\end{DoxyCode}
+
+
+\begin{quote}
+{\bfseries{note}}:\+ only TAO Detect\+Net\+\_\+v2 models are currently supported in jetson-\/inference, as it is setup for that network\textquotesingle{}s pre/\+post-\/processing \end{quote}
+
+
+In your own applications, you can also load them directly from \href{https://rawgit.com/dusty-nv/jetson-inference/master/docs/html/classdetectNet.html\#a9981735c38d2cb97205aa9e255ab4a0e}{\texttt{C++}} or \href{https://github.com/dusty-nv/jetson-inference/blob/89a9bbe8812ec8a142910ae55e9a6c25dbdb9841/python/examples/detectnet.py\#L57}{\texttt{Python}} by using the extended form of the \doxylink{classdetect_net}{detect\+Net} API.
+
+Next \texorpdfstring{$\vert$}{|} {\bfseries{\href{detectnet-tracking.md}{\texttt{Object Tracking on Video}}}} ~\newline
+ Back \texorpdfstring{$\vert$}{|} {\bfseries{\href{detectnet-example-2.md}{\texttt{Coding Your Own Object Detection Program}}}}
+
+{\bfseries{ }}
+
+\textsuperscript{© 2016-\/2023 NVIDIA \texorpdfstring{$\vert$}{|} }\href{../README.md\#hello-ai-world}{\texttt{\textsuperscript{Table of Contents}}}

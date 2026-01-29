@@ -1,0 +1,123 @@
+\chapter{pytorch-\/collect-\/detection }
+\hypertarget{md_jetson-inference_2docs_2pytorch-collect-detection}{}\label{md_jetson-inference_2docs_2pytorch-collect-detection}\index{pytorch-\/collect-\/detection@{pytorch-\/collect-\/detection}}
+ 
+
+\textsuperscript{\href{pytorch-plants.md}{\texttt{Back}} \texorpdfstring{$\vert$}{|} \href{../README.md\#webapp-frameworks}{\texttt{Next}} \texorpdfstring{$\vert$}{|} }\href{../README.md\#hello-ai-world}{\texttt{\textsuperscript{Contents}}} ~\newline
+ \textsuperscript{Transfer Learning -\/ Object Detection}\hypertarget{md_jetson-inference_2docs_2pytorch-collect-detection_autotoc_md358}{}\doxysection{\texorpdfstring{Collecting your own Detection Datasets}{Collecting your own Detection Datasets}}\label{md_jetson-inference_2docs_2pytorch-collect-detection_autotoc_md358}
+\doxylink{requirements_The}{The} previously used {\ttfamily camera-\/capture} tool can also label object detection datasets from live video:\+
+
+
+
+When the {\ttfamily Dataset Type} drop-\/down is in Detection mode, the tool creates datasets in \href{http://host.robots.ox.ac.uk/pascal/VOC/}{\texttt{Pascal VOC}} format (which is supported during training).
+
+\begin{quote}
+{\bfseries{note:\+}} if you want to label a set of images that you already have (as opposed to capturing them from camera), try using a tool like \href{https://github.com/openvinotoolkit/cvat}{\texttt{{\ttfamily CVAT}}} and export the dataset in Pascal VOC format. Then create a labels.\+txt in the dataset with the names of each of your object classes. \end{quote}
+\hypertarget{md_jetson-inference_2docs_2pytorch-collect-detection_autotoc_md359}{}\doxysubsection{\texorpdfstring{Creating the Label File}{Creating the Label File}}\label{md_jetson-inference_2docs_2pytorch-collect-detection_autotoc_md359}
+Under {\ttfamily jetson-\/inference/\+python/\+training/\+detection/\+ssd/\+data}, create an empty directory for storing your dataset and a text file that will define the class labels (usually called {\ttfamily labels.\+txt}). \doxylink{requirements_The}{The} label file contains one class label per line, for example:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{Water}
+\DoxyCodeLine{Nalgene}
+\DoxyCodeLine{Coke}
+\DoxyCodeLine{Diet\ Coke}
+\DoxyCodeLine{Ginger\ ale}
+
+\end{DoxyCode}
+
+
+If you\textquotesingle{}re using the container, you\textquotesingle{}ll want to store your dataset in a \href{aux-docker.md\#mounted-data-volumes}{\texttt{Mounted Directory}} like above, so it\textquotesingle{}s saved after the container shuts down.\hypertarget{md_jetson-inference_2docs_2pytorch-collect-detection_autotoc_md360}{}\doxysubsection{\texorpdfstring{Launching the Tool}{Launching the Tool}}\label{md_jetson-inference_2docs_2pytorch-collect-detection_autotoc_md360}
+\doxylink{requirements_The}{The} {\ttfamily camera-\/capture} tool accepts the same input \doxylink{struct_u_r_i}{URI}\textquotesingle{}s on the command line that are found on the \href{aux-streaming.md\#sequences}{\texttt{Camera Streaming and Multimedia}} page.
+
+Below are some example commands for launching the tool:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{\$\ camera-\/capture\ csi://0\ \ \ \ \ \ \ \#\ using\ default\ MIPI\ CSI\ camera}
+\DoxyCodeLine{\$\ camera-\/capture\ /dev/video0\ \ \ \#\ using\ V4L2\ camera\ /dev/video0}
+
+\end{DoxyCode}
+
+
+\begin{quote}
+{\bfseries{note}}:\+ for example cameras to use, see these sections of the Jetson Wiki:\+ ~\newline
+ ~~~~~~~~~~~~~-\/ Nano:\+~~\href{https://elinux.org/Jetson_Nano\#Cameras}{\texttt{{\ttfamily https:\+/\+/\+e\+Linux.\+org/\+\+Jetson\+\_\+\+Nano\#Cameras}}} ~\newline
+ ~~~~~~~~~~~~~-\/ Xavier:\+ \href{https://elinux.org/Jetson_AGX_Xavier\#Ecosystem_Products_.26_Cameras}{\texttt{{\ttfamily https:\+/\+/\+e\+Linux.\+org/\+\+Jetson\+\_\+\+AGX\+\_\+\+Xavier\#Ecosystem\+\_\+\+Products\+\_\+.\+26\+\_\+\+Cameras}}} ~\newline
+ ~~~~~~~~~~~~~-\/ TX1/\+\+TX2:\+ developer kits include an onboard MIPI CSI sensor module (0V5693)~\newline
+ \end{quote}
+\hypertarget{md_jetson-inference_2docs_2pytorch-collect-detection_autotoc_md361}{}\doxysubsection{\texorpdfstring{Collecting Data}{Collecting Data}}\label{md_jetson-inference_2docs_2pytorch-collect-detection_autotoc_md361}
+Below is the {\ttfamily Data Capture Control} window, after the {\ttfamily Dataset Type} drop-\/down has been set to Detection mode (do this first).
+
+
+
+Then, open the dataset path and class labels that you created. \doxylink{requirements_The}{The} {\ttfamily Freeze/\+\+Edit} and {\ttfamily Save} buttons will then become active.
+
+Position the camera at the object(s) in your scene, and click the {\ttfamily Freeze/\+\+Edit} button (or press the spacebar). \doxylink{requirements_The}{The} live camera view will then be \textquotesingle{}frozen\textquotesingle{} and you will be able to draw bounding boxes over the objects. You can then select the appropriate object class for each bounding box in the grid table in the control window. When you are done labeling the image, click the depressed {\ttfamily Freeze/\+\+Edit} button again to save the data and unfreeze the camera view for the next image.
+
+Other widgets in the control window include:\+
+
+
+\begin{DoxyItemize}
+\item {\ttfamily Save on Unfreeze} -\/ automatically save the data when {\ttfamily Freeze/\+\+Edit} is unfreezed
+\item {\ttfamily Clear on Unfreeze} -\/ automatically remove the previous bounding boxes on unfreeze
+\item {\ttfamily Merge Sets} -\/ save the same data across the train, val, and test sets
+\item {\ttfamily Current Set} -\/ select from train/\+val/\+test sets
+\begin{DoxyItemize}
+\item for object detection, you need at least train and test sets
+\item although if you check {\ttfamily Merge Sets}, the data will be replicated as train, val, and test
+\end{DoxyItemize}
+\item {\ttfamily JPEG Quality} -\/ control the encoding quality and disk size of the saved images
+\end{DoxyItemize}
+
+It\textquotesingle{}s important that your data is collected from varying object orientations, camera viewpoints, lighting conditions, and ideally with different backgrounds to create a model that is robust to noise and changes in environment. If you find that you\textquotesingle{}re model isn\textquotesingle{}t performing as well as you\textquotesingle{}d like, try adding more training data and playing around with the conditions.\hypertarget{md_jetson-inference_2docs_2pytorch-collect-detection_autotoc_md362}{}\doxysubsection{\texorpdfstring{Training your Model}{Training your Model}}\label{md_jetson-inference_2docs_2pytorch-collect-detection_autotoc_md362}
+When you\textquotesingle{}ve collected a bunch of data, then you can try training a model on it using the same {\ttfamily train\+\_\+ssd.\+py} script. \doxylink{requirements_The}{The} training process is the same as the previous example, with the exception that the {\ttfamily -\/-\/dataset-\/type=voc} and {\ttfamily -\/-\/data=\texorpdfstring{$<$}{<}PATH\texorpdfstring{$>$}{>}} arguments should be set:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$\ cd\ jetson-\/inference/python/training/detection/ssd}
+\DoxyCodeLine{\$\ python3\ train\_ssd.py\ -\/-\/dataset-\/type=voc\ -\/-\/data=data/<YOUR-\/DATASET>\ -\/-\/model-\/dir=models/<YOUR-\/MODEL>}
+
+\end{DoxyCode}
+
+
+\begin{quote}
+{\bfseries{note:\+}} if you run out of memory or your process is "{}killed"{} during training, try \href{pytorch-transfer-learning.md\#mounting-swap}{\texttt{Mounting SWAP}} and \href{pytorch-transfer-learning.md\#disabling-the-desktop-gui}{\texttt{Disabling the Desktop GUI}}. ~\newline
+ ~~~~~~~~~ to save memory, you can also reduce the {\ttfamily -\/-\/batch-\/size} (default 4) and {\ttfamily -\/-\/workers} (default 2) \end{quote}
+
+
+Like before, after training you\textquotesingle{}ll need to convert your Py\+Torch model to ONNX:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$\ python3\ onnx\_export.py\ -\/-\/model-\/dir=models/<YOUR-\/MODEL>}
+
+\end{DoxyCode}
+
+
+\doxylink{requirements_The}{The} converted model will then be saved under {\ttfamily \texorpdfstring{$<$}{<}YOUR-\/\+MODEL\texorpdfstring{$>$}{>}/\+ssd-\/mobilenet.onnx}, which you can then load with the {\ttfamily detectnet} programs like we did in the previous examples:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{NET=models/<YOUR-\/MODEL>}
+\DoxyCodeLine{}
+\DoxyCodeLine{detectnet\ -\/-\/model=\$NET/ssd-\/mobilenet.onnx\ -\/-\/labels=\$NET/labels.txt\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ -\/-\/input-\/blob=input\_0\ -\/-\/output-\/cvg=scores\ -\/-\/output-\/bbox=boxes\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ csi://0}
+
+\end{DoxyCode}
+
+
+\begin{quote}
+{\bfseries{note:\+}} it\textquotesingle{}s important to run inference with the labels file that gets generated to your model directory, and not the one that you originally created for your dataset. This is because a {\ttfamily BACKGROUND} class gets added to the class labels by {\ttfamily train\+\_\+ssd.\+py} and saved to the model directory (which the trained model expects to use). \end{quote}
+
+
+If you need to, go back and collect more training data and re-\/train your model again. You can restart again and pick up where you left off using the {\ttfamily -\/-\/resume} argument (run {\ttfamily python3 train\+\_\+ssd.\+py -\/-\/help} for more info). Remember to re-\/export the model to ONNX after re-\/training.
+
+Next \texorpdfstring{$\vert$}{|} {\bfseries{\href{../README.md\#webapp-frameworks}{\texttt{Web\+App Frameworks}}}} ~\newline
+ Back \texorpdfstring{$\vert$}{|} {\bfseries{\href{pytorch-ssd.md}{\texttt{Re-\/training SSD-\/\+Mobilenet}}}}
+
+{\bfseries{ }}
+
+\textsuperscript{© 2016-\/2020 NVIDIA \texorpdfstring{$\vert$}{|} }\href{../README.md\#hello-ai-world}{\texttt{\textsuperscript{Table of Contents}}}

@@ -1,0 +1,267 @@
+\doxysection{Event Class Reference}
+\hypertarget{class_event}{}\label{class_event}\index{Event@{Event}}
+
+
+{\ttfamily \+\#include $<$Event.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_event_a44841bb41f204f03100a2759e7097389}{Event}} (bool auto\+\_\+reset=true)
+\item 
+\doxymbox{\hyperlink{class_event_a7704ec01ce91e673885792054214b3d2}{\texorpdfstring{$\sim$}{\string~}\+Event}} ()
+\item 
+void \doxymbox{\hyperlink{class_event_a86507f584eb0bff8eb7bdb2c280d0c23}{Wake}} ()
+\item 
+void \doxymbox{\hyperlink{class_event_afed31be0b4f98fb83163a4d725886e81}{Reset}} ()
+\item 
+bool \doxymbox{\hyperlink{class_event_a188ebb92f80c6fae559051b084524fcd}{Query}} ()
+\item 
+bool \doxymbox{\hyperlink{class_event_a55398e16a006f6a0ec00de1e75ff6162}{Wait}} ()
+\item 
+bool \doxymbox{\hyperlink{class_event_ab081aad525e1599f9d46cf52df91be4f}{Wait}} (const timespec \&timeout)
+\item 
+bool \doxymbox{\hyperlink{class_event_acf45a1a49a93de6c9c9d0d8ce3f8b811}{Wait}} (uint64\+\_\+t timeout)
+\item 
+bool \doxymbox{\hyperlink{class_event_a7c5e80c726452ce485d9baa7cdd8c148}{Wait\+Ns}} (uint64\+\_\+t timeout)
+\item 
+bool \doxymbox{\hyperlink{class_event_a515f66ad3126b7c3b456a10604a40c39}{Wait\+Us}} (uint64\+\_\+t timeout)
+\item 
+pthread\+\_\+cond\+\_\+t \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_event_a5d1d8894bb8994116c0e781639117738}{Get\+ID}} ()
+\item 
+\doxymbox{\hyperlink{class_event_a44841bb41f204f03100a2759e7097389}{Event}} (bool auto\+\_\+reset=true)
+\item 
+\doxymbox{\hyperlink{class_event_a7704ec01ce91e673885792054214b3d2}{\texorpdfstring{$\sim$}{\string~}\+Event}} ()
+\item 
+void \doxymbox{\hyperlink{class_event_a86507f584eb0bff8eb7bdb2c280d0c23}{Wake}} ()
+\item 
+void \doxymbox{\hyperlink{class_event_afed31be0b4f98fb83163a4d725886e81}{Reset}} ()
+\item 
+bool \doxymbox{\hyperlink{class_event_a188ebb92f80c6fae559051b084524fcd}{Query}} ()
+\item 
+bool \doxymbox{\hyperlink{class_event_a55398e16a006f6a0ec00de1e75ff6162}{Wait}} ()
+\item 
+bool \doxymbox{\hyperlink{class_event_ab081aad525e1599f9d46cf52df91be4f}{Wait}} (const timespec \&timeout)
+\item 
+bool \doxymbox{\hyperlink{class_event_acf45a1a49a93de6c9c9d0d8ce3f8b811}{Wait}} (uint64\+\_\+t timeout)
+\item 
+bool \doxymbox{\hyperlink{class_event_a7c5e80c726452ce485d9baa7cdd8c148}{Wait\+Ns}} (uint64\+\_\+t timeout)
+\item 
+bool \doxymbox{\hyperlink{class_event_a515f66ad3126b7c3b456a10604a40c39}{Wait\+Us}} (uint64\+\_\+t timeout)
+\item 
+pthread\+\_\+cond\+\_\+t \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_event_a5d1d8894bb8994116c0e781639117738}{Get\+ID}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_event_ae11735d4e337daa14050ddb84d6253d2}\label{class_event_ae11735d4e337daa14050ddb84d6253d2} 
+pthread\+\_\+cond\+\_\+t {\bfseries m\+ID}
+\item 
+\Hypertarget{class_event_a67ed51a825c8901e9e4f144c1a636475}\label{class_event_a67ed51a825c8901e9e4f144c1a636475} 
+\doxymbox{\hyperlink{class_mutex}{Mutex}} {\bfseries m\+Query\+Mutex}
+\item 
+\Hypertarget{class_event_aa07a3222402d83bf1d6d817c0b2835ff}\label{class_event_aa07a3222402d83bf1d6d817c0b2835ff} 
+bool {\bfseries m\+Query}
+\item 
+\Hypertarget{class_event_a3827c7366d7f1c7139ba10555827ed30}\label{class_event_a3827c7366d7f1c7139ba10555827ed30} 
+bool {\bfseries m\+Auto\+Reset}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\doxylink{class_event}{Event} object for signalling other threads. 
+
+\label{doc-constructors}
+\Hypertarget{class_event_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_event_a44841bb41f204f03100a2759e7097389}\index{Event@{Event}!Event@{Event}}
+\index{Event@{Event}!Event@{Event}}
+\doxysubsubsection{\texorpdfstring{Event()}{Event()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_event_a44841bb41f204f03100a2759e7097389} 
+Event::\+\+Event (\begin{DoxyParamCaption}\item[{bool}]{auto\+\_\+reset}{ = {\ttfamily true}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\doxylink{class_event}{Event} constructor. By default, it will automatically be reset when it\textquotesingle{}s raised. 
+\begin{DoxyParams}{Parameters}
+{\em auto\+\_\+reset} & Once this event has been raised, should it automatically be reset? \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_event_a7704ec01ce91e673885792054214b3d2}\index{Event@{Event}!````~Event@{\texorpdfstring{$\sim$}{\string~}Event}}
+\index{````~Event@{\texorpdfstring{$\sim$}{\string~}Event}!Event@{Event}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}Event()}{\string~Event()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_event_a7704ec01ce91e673885792054214b3d2} 
+Event::\+\texorpdfstring{$\sim$}{\string~}\+Event (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Destructor \Hypertarget{class_event_a44841bb41f204f03100a2759e7097389}\index{Event@{Event}!Event@{Event}}
+\index{Event@{Event}!Event@{Event}}
+\doxysubsubsection{\texorpdfstring{Event()}{Event()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_event_a44841bb41f204f03100a2759e7097389} 
+Event::\+\+Event (\begin{DoxyParamCaption}\item[{bool}]{auto\+\_\+reset}{ = {\ttfamily true}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\doxylink{class_event}{Event} constructor. By default, it will automatically be reset when it\textquotesingle{}s raised. 
+\begin{DoxyParams}{Parameters}
+{\em auto\+\_\+reset} & Once this event has been raised, should it automatically be reset? \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_event_a7704ec01ce91e673885792054214b3d2}\index{Event@{Event}!````~Event@{\texorpdfstring{$\sim$}{\string~}Event}}
+\index{````~Event@{\texorpdfstring{$\sim$}{\string~}Event}!Event@{Event}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}Event()}{\string~Event()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_event_a7704ec01ce91e673885792054214b3d2} 
+Event::\+\texorpdfstring{$\sim$}{\string~}\+Event (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Destructor 
+
+\label{doc-func-members}
+\Hypertarget{class_event_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_event_a5d1d8894bb8994116c0e781639117738}\index{Event@{Event}!GetID@{GetID}}
+\index{GetID@{GetID}!Event@{Event}}
+\doxysubsubsection{\texorpdfstring{GetID()}{GetID()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_event_a5d1d8894bb8994116c0e781639117738} 
+pthread\+\_\+cond\+\_\+t \texorpdfstring{$\ast$}{*} Event::\+\+Get\+ID (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Get the \doxylink{class_event}{Event} object \Hypertarget{class_event_a5d1d8894bb8994116c0e781639117738}\index{Event@{Event}!GetID@{GetID}}
+\index{GetID@{GetID}!Event@{Event}}
+\doxysubsubsection{\texorpdfstring{GetID()}{GetID()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_event_a5d1d8894bb8994116c0e781639117738} 
+pthread\+\_\+cond\+\_\+t \texorpdfstring{$\ast$}{*} Event::\+\+Get\+ID (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Get the \doxylink{class_event}{Event} object \Hypertarget{class_event_a188ebb92f80c6fae559051b084524fcd}\index{Event@{Event}!Query@{Query}}
+\index{Query@{Query}!Event@{Event}}
+\doxysubsubsection{\texorpdfstring{Query()}{Query()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_event_a188ebb92f80c6fae559051b084524fcd} 
+bool Event::\+\+Query (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Query the status of this event. \begin{DoxyReturn}{Returns}
+True if the event is raised, false if not. 
+\end{DoxyReturn}
+\Hypertarget{class_event_a188ebb92f80c6fae559051b084524fcd}\index{Event@{Event}!Query@{Query}}
+\index{Query@{Query}!Event@{Event}}
+\doxysubsubsection{\texorpdfstring{Query()}{Query()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_event_a188ebb92f80c6fae559051b084524fcd} 
+bool Event::\+\+Query (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Query the status of this event. \begin{DoxyReturn}{Returns}
+True if the event is raised, false if not. 
+\end{DoxyReturn}
+\Hypertarget{class_event_afed31be0b4f98fb83163a4d725886e81}\index{Event@{Event}!Reset@{Reset}}
+\index{Reset@{Reset}!Event@{Event}}
+\doxysubsubsection{\texorpdfstring{Reset()}{Reset()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_event_afed31be0b4f98fb83163a4d725886e81} 
+void Event::\+\+Reset (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Reset the event status to un-\/raised. \Hypertarget{class_event_afed31be0b4f98fb83163a4d725886e81}\index{Event@{Event}!Reset@{Reset}}
+\index{Reset@{Reset}!Event@{Event}}
+\doxysubsubsection{\texorpdfstring{Reset()}{Reset()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_event_afed31be0b4f98fb83163a4d725886e81} 
+void Event::\+\+Reset (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Reset the event status to un-\/raised. \Hypertarget{class_event_a55398e16a006f6a0ec00de1e75ff6162}\index{Event@{Event}!Wait@{Wait}}
+\index{Wait@{Wait}!Event@{Event}}
+\doxysubsubsection{\texorpdfstring{Wait()}{Wait()}\hspace{0.1cm}{\footnotesize\ttfamily [1/6]}}
+{\footnotesize\ttfamily \label{class_event_a55398e16a006f6a0ec00de1e75ff6162} 
+bool Event::\+\+Wait (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Wait until this event is raised. It is likely this will block this thread (and will never timeout). \begin{DoxySeeAlso}{See also}
+\doxylink{class_event_a86507f584eb0bff8eb7bdb2c280d0c23}{Wake} 
+\end{DoxySeeAlso}
+\Hypertarget{class_event_a55398e16a006f6a0ec00de1e75ff6162}\index{Event@{Event}!Wait@{Wait}}
+\index{Wait@{Wait}!Event@{Event}}
+\doxysubsubsection{\texorpdfstring{Wait()}{Wait()}\hspace{0.1cm}{\footnotesize\ttfamily [2/6]}}
+{\footnotesize\ttfamily \label{class_event_a55398e16a006f6a0ec00de1e75ff6162} 
+bool Event::\+\+Wait (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Wait until this event is raised. It is likely this will block this thread (and will never timeout). \begin{DoxySeeAlso}{See also}
+\doxylink{class_event_a86507f584eb0bff8eb7bdb2c280d0c23}{Wake} 
+\end{DoxySeeAlso}
+\Hypertarget{class_event_ab081aad525e1599f9d46cf52df91be4f}\index{Event@{Event}!Wait@{Wait}}
+\index{Wait@{Wait}!Event@{Event}}
+\doxysubsubsection{\texorpdfstring{Wait()}{Wait()}\hspace{0.1cm}{\footnotesize\ttfamily [3/6]}}
+{\footnotesize\ttfamily \label{class_event_ab081aad525e1599f9d46cf52df91be4f} 
+bool Event::\+\+Wait (\begin{DoxyParamCaption}\item[{const timespec \&}]{timeout}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Wait for a specified amount of time until this event is raised or timeout occurs. \begin{DoxySeeAlso}{See also}
+\doxylink{class_event_a86507f584eb0bff8eb7bdb2c280d0c23}{Wake} 
+\end{DoxySeeAlso}
+\Hypertarget{class_event_ab081aad525e1599f9d46cf52df91be4f}\index{Event@{Event}!Wait@{Wait}}
+\index{Wait@{Wait}!Event@{Event}}
+\doxysubsubsection{\texorpdfstring{Wait()}{Wait()}\hspace{0.1cm}{\footnotesize\ttfamily [4/6]}}
+{\footnotesize\ttfamily \label{class_event_ab081aad525e1599f9d46cf52df91be4f} 
+bool Event::\+\+Wait (\begin{DoxyParamCaption}\item[{const timespec \&}]{timeout}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Wait for a specified amount of time until this event is raised or timeout occurs. \begin{DoxySeeAlso}{See also}
+\doxylink{class_event_a86507f584eb0bff8eb7bdb2c280d0c23}{Wake} 
+\end{DoxySeeAlso}
+\Hypertarget{class_event_acf45a1a49a93de6c9c9d0d8ce3f8b811}\index{Event@{Event}!Wait@{Wait}}
+\index{Wait@{Wait}!Event@{Event}}
+\doxysubsubsection{\texorpdfstring{Wait()}{Wait()}\hspace{0.1cm}{\footnotesize\ttfamily [5/6]}}
+{\footnotesize\ttfamily \label{class_event_acf45a1a49a93de6c9c9d0d8ce3f8b811} 
+bool Event::\+\+Wait (\begin{DoxyParamCaption}\item[{uint64\+\_\+t}]{timeout}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Wait for a specified number of milliseconds until this event is raised or timeout occurs. \begin{DoxySeeAlso}{See also}
+\doxylink{class_event_a86507f584eb0bff8eb7bdb2c280d0c23}{Wake} 
+\end{DoxySeeAlso}
+\Hypertarget{class_event_acf45a1a49a93de6c9c9d0d8ce3f8b811}\index{Event@{Event}!Wait@{Wait}}
+\index{Wait@{Wait}!Event@{Event}}
+\doxysubsubsection{\texorpdfstring{Wait()}{Wait()}\hspace{0.1cm}{\footnotesize\ttfamily [6/6]}}
+{\footnotesize\ttfamily \label{class_event_acf45a1a49a93de6c9c9d0d8ce3f8b811} 
+bool Event::\+\+Wait (\begin{DoxyParamCaption}\item[{uint64\+\_\+t}]{timeout}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Wait for a specified number of milliseconds until this event is raised or timeout occurs. \begin{DoxySeeAlso}{See also}
+\doxylink{class_event_a86507f584eb0bff8eb7bdb2c280d0c23}{Wake} 
+\end{DoxySeeAlso}
+\Hypertarget{class_event_a7c5e80c726452ce485d9baa7cdd8c148}\index{Event@{Event}!WaitNs@{WaitNs}}
+\index{WaitNs@{WaitNs}!Event@{Event}}
+\doxysubsubsection{\texorpdfstring{WaitNs()}{WaitNs()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_event_a7c5e80c726452ce485d9baa7cdd8c148} 
+bool Event::\+\+Wait\+Ns (\begin{DoxyParamCaption}\item[{uint64\+\_\+t}]{timeout}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Wait for a specified number of nanoseconds until this event is raised or timeout occurs. \begin{DoxySeeAlso}{See also}
+\doxylink{class_event_a86507f584eb0bff8eb7bdb2c280d0c23}{Wake} 
+\end{DoxySeeAlso}
+\Hypertarget{class_event_a7c5e80c726452ce485d9baa7cdd8c148}\index{Event@{Event}!WaitNs@{WaitNs}}
+\index{WaitNs@{WaitNs}!Event@{Event}}
+\doxysubsubsection{\texorpdfstring{WaitNs()}{WaitNs()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_event_a7c5e80c726452ce485d9baa7cdd8c148} 
+bool Event::\+\+Wait\+Ns (\begin{DoxyParamCaption}\item[{uint64\+\_\+t}]{timeout}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Wait for a specified number of nanoseconds until this event is raised or timeout occurs. \begin{DoxySeeAlso}{See also}
+\doxylink{class_event_a86507f584eb0bff8eb7bdb2c280d0c23}{Wake} 
+\end{DoxySeeAlso}
+\Hypertarget{class_event_a515f66ad3126b7c3b456a10604a40c39}\index{Event@{Event}!WaitUs@{WaitUs}}
+\index{WaitUs@{WaitUs}!Event@{Event}}
+\doxysubsubsection{\texorpdfstring{WaitUs()}{WaitUs()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_event_a515f66ad3126b7c3b456a10604a40c39} 
+bool Event::\+\+Wait\+Us (\begin{DoxyParamCaption}\item[{uint64\+\_\+t}]{timeout}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Wait for a specified number of microseconds until this event is raised or timeout occurs. \begin{DoxySeeAlso}{See also}
+\doxylink{class_event_a86507f584eb0bff8eb7bdb2c280d0c23}{Wake} 
+\end{DoxySeeAlso}
+\Hypertarget{class_event_a515f66ad3126b7c3b456a10604a40c39}\index{Event@{Event}!WaitUs@{WaitUs}}
+\index{WaitUs@{WaitUs}!Event@{Event}}
+\doxysubsubsection{\texorpdfstring{WaitUs()}{WaitUs()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_event_a515f66ad3126b7c3b456a10604a40c39} 
+bool Event::\+\+Wait\+Us (\begin{DoxyParamCaption}\item[{uint64\+\_\+t}]{timeout}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Wait for a specified number of microseconds until this event is raised or timeout occurs. \begin{DoxySeeAlso}{See also}
+\doxylink{class_event_a86507f584eb0bff8eb7bdb2c280d0c23}{Wake} 
+\end{DoxySeeAlso}
+\Hypertarget{class_event_a86507f584eb0bff8eb7bdb2c280d0c23}\index{Event@{Event}!Wake@{Wake}}
+\index{Wake@{Wake}!Event@{Event}}
+\doxysubsubsection{\texorpdfstring{Wake()}{Wake()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_event_a86507f584eb0bff8eb7bdb2c280d0c23} 
+void Event::\+\+Wake (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Raise the event. Any threads waiting on this event will be woken up. \Hypertarget{class_event_a86507f584eb0bff8eb7bdb2c280d0c23}\index{Event@{Event}!Wake@{Wake}}
+\index{Wake@{Wake}!Event@{Event}}
+\doxysubsubsection{\texorpdfstring{Wake()}{Wake()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_event_a86507f584eb0bff8eb7bdb2c280d0c23} 
+void Event::\+\+Wake (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Raise the event. Any threads waiting on this event will be woken up. 
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+jetson-\/inference/\+build/\+aarch64/\+include/\+jetson-\/utils/\+Event.\+h\item 
+jetson-\/inference/\+utils/\+threads/\+Event.\+h\item 
+jetson-\/inference/\+build/\+aarch64/\+include/\+jetson-\/utils/\+Event.\+inl\item 
+jetson-\/inference/\+utils/\+threads/\+Event.\+inl\end{DoxyCompactItemize}

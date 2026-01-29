@@ -1,0 +1,169 @@
+\doxysection{Py\+Inference.\+h}
+\hypertarget{_py_inference_8h_source}{}\label{_py_inference_8h_source}\index{jetson-\/inference/python/bindings/PyInference.h@{jetson-\/inference/python/bindings/PyInference.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ *\ Copyright\ (c)\ 2019,\ NVIDIA\ CORPORATION.\ All\ rights\ reserved.}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ *\ Permission\ is\ hereby\ granted,\ free\ of\ charge,\ to\ any\ person\ obtaining\ a}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ *\ copy\ of\ this\ software\ and\ associated\ documentation\ files\ (the\ "{}Software"{}),}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ *\ to\ deal\ in\ the\ Software\ without\ restriction,\ including\ without\ limitation}}
+\DoxyCodeLine{00007\ \textcolor{comment}{\ *\ the\ rights\ to\ use,\ copy,\ modify,\ merge,\ publish,\ distribute,\ sublicense,}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ *\ and/or\ sell\ copies\ of\ the\ Software,\ and\ to\ permit\ persons\ to\ whom\ the}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ *\ Software\ is\ furnished\ to\ do\ so,\ subject\ to\ the\ following\ conditions:}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ *\ The\ above\ copyright\ notice\ and\ this\ permission\ notice\ shall\ be\ included\ in}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ *\ all\ copies\ or\ substantial\ portions\ of\ the\ Software.}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ *\ THE\ SOFTWARE\ IS\ PROVIDED\ "{}AS\ IS"{},\ WITHOUT\ WARRANTY\ OF\ ANY\ KIND,\ EXPRESS\ OR}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ *\ IMPLIED,\ INCLUDING\ BUT\ NOT\ LIMITED\ TO\ THE\ WARRANTIES\ OF\ MERCHANTABILITY,}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ *\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE\ AND\ NONINFRINGEMENT.\ \ IN\ NO\ EVENT\ SHALL}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ *\ THE\ AUTHORS\ OR\ COPYRIGHT\ HOLDERS\ BE\ LIABLE\ FOR\ ANY\ CLAIM,\ DAMAGES\ OR\ OTHER}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ *\ LIABILITY,\ WHETHER\ IN\ AN\ ACTION\ OF\ CONTRACT,\ TORT\ OR\ OTHERWISE,\ ARISING}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ *\ FROM,\ OUT\ OF\ OR\ IN\ CONNECTION\ WITH\ THE\ SOFTWARE\ OR\ THE\ USE\ OR\ OTHER}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ *\ DEALINGS\ IN\ THE\ SOFTWARE.}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00022\ \ }
+\DoxyCodeLine{00023\ \textcolor{preprocessor}{\#ifndef\ \_\_PYTHON\_BINDINGS\_INFERENCE\_\_}}
+\DoxyCodeLine{00024\ \textcolor{preprocessor}{\#define\ \_\_PYTHON\_BINDINGS\_INFERENCE\_\_}}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \textcolor{preprocessor}{\#include\ <Python.h>}}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \textcolor{comment}{//\ user-\/facing\ module\ name\ }}
+\DoxyCodeLine{00029\ \textcolor{preprocessor}{\#define\ PY\_INFERENCE\_MODULE\_NAME\ "{}jetson.inference"{}}}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \textcolor{comment}{//\ logging\ prefix}}
+\DoxyCodeLine{00032\ \textcolor{preprocessor}{\#define\ LOG\_PY\_INFERENCE\ PY\_INFERENCE\_MODULE\_NAME\ "{}\ -\/-\/\ "{}}}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \textcolor{comment}{//\ check\ Python\ version}}
+\DoxyCodeLine{00035\ \textcolor{preprocessor}{\#if\ PY\_MAJOR\_VERSION\ >=\ 3}}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{comment}{//\ Python3\ defines}}
+\DoxyCodeLine{00038\ \textcolor{preprocessor}{\ \ \ \ \#ifndef\ PYTHON\_3}}
+\DoxyCodeLine{00039\ \textcolor{preprocessor}{\ \ \ \ \#define\ PYTHON\_3}}
+\DoxyCodeLine{00040\ \textcolor{preprocessor}{\ \ \ \ \#endif}}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ \textcolor{preprocessor}{\ \ \ \ \#define\ PYLONG\_AS\_LONG(x)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PyLong\_AsLong(x)}}
+\DoxyCodeLine{00043\ \textcolor{preprocessor}{\ \ \ \ \#define\ PYLONG\_FROM\_LONG(x)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PyLong\_FromLong(x)}}
+\DoxyCodeLine{00044\ \textcolor{preprocessor}{\ \ \ \ \#define\ PYLONG\_FROM\_UNSIGNED\_LONG(x)\ \ \ \ \ \ \ \ PyLong\_FromUnsignedLong(x)}}
+\DoxyCodeLine{00045\ \textcolor{preprocessor}{\ \ \ \ \#define\ PYLONG\_FROM\_UNSIGNED\_LONG\_LONG(x)\ \ \ PyLong\_FromUnsignedLongLong(x)}}
+\DoxyCodeLine{00046\ \textcolor{preprocessor}{\ \ \ \ \#define\ PYLONG\_FROM\_PTR(x)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PyLong\_FromUnsignedLongLong((uint64\_t)x)}}
+\DoxyCodeLine{00047\ \ \ \ \ }
+\DoxyCodeLine{00048\ \textcolor{preprocessor}{\ \ \ \ \#define\ PYSTRING\_CHECK\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PyUnicode\_Check}}
+\DoxyCodeLine{00049\ \textcolor{preprocessor}{\ \ \ \ \#define\ PYSTRING\_AS\_STRING\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PyUnicode\_AsUTF8}}
+\DoxyCodeLine{00050\ \textcolor{preprocessor}{\ \ \ \ \#define\ PYSTRING\_FROM\_STRING\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PyUnicode\_FromString}}
+\DoxyCodeLine{00051\ \textcolor{preprocessor}{\ \ \ \ \#define\ PYSTRING\_FROM\_FORMAT\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PyUnicode\_FromFormat}}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00053\ \textcolor{preprocessor}{\#elif\ PY\_MAJOR\_VERSION\ >=\ 2}}
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00055\ \ \ \ \ \textcolor{comment}{//\ Python2\ defines}}
+\DoxyCodeLine{00056\ \textcolor{preprocessor}{\ \ \ \ \#ifndef\ PYTHON\_2}}
+\DoxyCodeLine{00057\ \textcolor{preprocessor}{\ \ \ \ \#define\ PYTHON\_2}}
+\DoxyCodeLine{00058\ \textcolor{preprocessor}{\ \ \ \ \#endif}}
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00060\ \textcolor{preprocessor}{\ \ \ \ \#define\ PYLONG\_AS\_LONG(x)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PyInt\_AsLong(x)}}
+\DoxyCodeLine{00061\ \textcolor{preprocessor}{\ \ \ \ \#define\ PYLONG\_FROM\_LONG(x)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PyInt\_FromLong(x)}}
+\DoxyCodeLine{00062\ \textcolor{preprocessor}{\ \ \ \ \#define\ PYLONG\_FROM\_UNSIGNED\_LONG(x)\ \ \ \ \ \ \ \ PyLong\_FromUnsignedLong(x)}}
+\DoxyCodeLine{00063\ \textcolor{preprocessor}{\ \ \ \ \#define\ PYLONG\_FROM\_UNSIGNED\_LONG\_LONG(x)\ \ \ PyLong\_FromUnsignedLongLong((long)x)}}
+\DoxyCodeLine{00064\ \textcolor{preprocessor}{\ \ \ \ \#define\ PYLONG\_FROM\_PTR(x)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PyLong\_FromUnsignedLongLong((uint64\_t)x)}}
+\DoxyCodeLine{00065\ \ \ \ \ }
+\DoxyCodeLine{00066\ \textcolor{preprocessor}{\ \ \ \ \#define\ PYSTRING\_CHECK\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PyString\_Check}}
+\DoxyCodeLine{00067\ \textcolor{preprocessor}{\ \ \ \ \#define\ PYSTRING\_AS\_STRING\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PyString\_AsString}}
+\DoxyCodeLine{00068\ \textcolor{preprocessor}{\ \ \ \ \#define\ PYSTRING\_FROM\_STRING\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PyString\_FromString}}
+\DoxyCodeLine{00069\ \textcolor{preprocessor}{\ \ \ \ \#define\ PYSTRING\_FROM\_FORMAT\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PyString\_FromFormat}}
+\DoxyCodeLine{00070\ \ \ \ \ }
+\DoxyCodeLine{00071\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00072\ }
+\DoxyCodeLine{00073\ \textcolor{preprocessor}{\#ifndef\ PY\_RETURN\_BOOL}}
+\DoxyCodeLine{00074\ \textcolor{preprocessor}{\#define\ PY\_RETURN\_BOOL(x)\ \ \ if(x)\ Py\_RETURN\_TRUE;\ else\ Py\_RETURN\_FALSE}}
+\DoxyCodeLine{00075\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00076\ }
+\DoxyCodeLine{00077\ \textcolor{preprocessor}{\#define\ PYDICT\_SET\_ITEM(dict,\ key,\ val)\ \{\ \(\backslash\)}}
+\DoxyCodeLine{00078\ \textcolor{preprocessor}{\ \ \ \ PyObject*\ object\ =\ val;\ \(\backslash\)}}
+\DoxyCodeLine{00079\ \textcolor{preprocessor}{\ \ \ \ if(\ object\ !=\ NULL\ )\ \{\ \(\backslash\)}}
+\DoxyCodeLine{00080\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ PyDict\_SetItemString(dict,\ key,\ object);\ \(\backslash\)}}
+\DoxyCodeLine{00081\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ Py\_DECREF(object);\ \(\backslash\)}}
+\DoxyCodeLine{00082\ \textcolor{preprocessor}{\ \ \ \ \}\ \(\backslash\)}}
+\DoxyCodeLine{00083\ \textcolor{preprocessor}{\}}}
+\DoxyCodeLine{00084\ \ \ \ \ }
+\DoxyCodeLine{00085\ \textcolor{preprocessor}{\#define\ PYDICT\_SET\_STRING(dict,\ key,\ str)\ \{\ \(\backslash\)}}
+\DoxyCodeLine{00086\ \textcolor{preprocessor}{\ \ \ \ const\ char*\ string\ =\ str;\ \(\backslash\)}}
+\DoxyCodeLine{00087\ \textcolor{preprocessor}{\ \ \ \ if(\ string\ !=\ NULL\ \&\&\ strlen(string)\ >\ 0\ )\ \{\ \(\backslash\)}}
+\DoxyCodeLine{00088\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ PyObject*\ obj\ =\ PYSTRING\_FROM\_STRING(string);\ \(\backslash\)}}
+\DoxyCodeLine{00089\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ PyDict\_SetItemString(dict,\ key,\ obj);\ \(\backslash\)}}
+\DoxyCodeLine{00090\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ Py\_DECREF(obj);\ \(\backslash\)}}
+\DoxyCodeLine{00091\ \textcolor{preprocessor}{\ \ \ \ \}\ \(\backslash\)}}
+\DoxyCodeLine{00092\ \textcolor{preprocessor}{\}}}
+\DoxyCodeLine{00093\ }
+\DoxyCodeLine{00094\ \textcolor{preprocessor}{\#define\ PYDICT\_SET\_STDSTR(dict,\ key,\ str)\ \(\backslash\)}}
+\DoxyCodeLine{00095\ \textcolor{preprocessor}{\ \ \ \ if(\ str.length()\ >\ 0\ )\ \{\ \(\backslash\)}}
+\DoxyCodeLine{00096\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ PyObject*\ obj\ =\ PYSTRING\_FROM\_STRING(str.c\_str());\ \(\backslash\)}}
+\DoxyCodeLine{00097\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ PyDict\_SetItemString(dict,\ key,\ obj);\ \(\backslash\)}}
+\DoxyCodeLine{00098\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ Py\_DECREF(obj);\ \(\backslash\)}}
+\DoxyCodeLine{00099\ \textcolor{preprocessor}{\ \ \ \ \}}}
+\DoxyCodeLine{00100\ \ \ \ \ }
+\DoxyCodeLine{00101\ \textcolor{preprocessor}{\#define\ PYDICT\_SET\_BOOL(dict,\ key,\ val)\ \{\ \(\backslash\)}}
+\DoxyCodeLine{00102\ \textcolor{preprocessor}{\ \ \ \ const\ bool\ value\ =\ val;\ \(\backslash\)}}
+\DoxyCodeLine{00103\ \textcolor{preprocessor}{\ \ \ \ PyDict\_SetItemString(dict,\ key,\ value\ ?\ Py\_True\ :\ Py\_False);\ \(\backslash\)}}
+\DoxyCodeLine{00104\ \textcolor{preprocessor}{\}}}
+\DoxyCodeLine{00105\ }
+\DoxyCodeLine{00106\ \textcolor{preprocessor}{\#define\ PYDICT\_SET\_INT(dict,\ key,\ val)\ \ \ \ \ \ PYDICT\_SET\_ITEM(dict,\ key,\ PYLONG\_FROM\_LONG(val))}}
+\DoxyCodeLine{00107\ \textcolor{preprocessor}{\#define\ PYDICT\_SET\_UINT(dict,\ key,\ val)\ \ \ \ \ PYDICT\_SET\_ITEM(dict,\ key,\ PYLONG\_FROM\_UNSIGNED\_LONG(val))}}
+\DoxyCodeLine{00108\ \textcolor{preprocessor}{\#define\ PYDICT\_SET\_FLOAT(dict,\ key,\ val)\ \ \ \ PYDICT\_SET\_ITEM(dict,\ key,\ PyFloat\_FromDouble(val))}}
+\DoxyCodeLine{00109\ }
+\DoxyCodeLine{00110\ \textcolor{preprocessor}{\#define\ PYDICT\_GET\_INT(dict,\ key,\ output)\ \{\ \(\backslash\)}}
+\DoxyCodeLine{00111\ \textcolor{preprocessor}{\ \ \ \ PyObject*\ obj\ =\ PyDict\_GetItemString(dict,\ key);\ \(\backslash\)}}
+\DoxyCodeLine{00112\ \textcolor{preprocessor}{\ \ \ \ if(\ obj\ !=\ NULL\ )\ \{\ \(\backslash\)}}
+\DoxyCodeLine{00113\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ const\ int\ value\ =\ PYLONG\_AS\_LONG(obj);\ \(\backslash\)}}
+\DoxyCodeLine{00114\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ if(\ !PyErr\_Occurred()\ )\ \(\backslash\)}}
+\DoxyCodeLine{00115\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ output\ =\ value;\ \(\backslash\)}}
+\DoxyCodeLine{00116\ \textcolor{preprocessor}{\ \ \ \ \}\ \(\backslash\)}}
+\DoxyCodeLine{00117\ \textcolor{preprocessor}{\}}}
+\DoxyCodeLine{00118\ }
+\DoxyCodeLine{00119\ \textcolor{preprocessor}{\#define\ PYDICT\_GET\_UINT(dict,\ key,\ output)\ \{\ \(\backslash\)}}
+\DoxyCodeLine{00120\ \textcolor{preprocessor}{\ \ \ \ PyObject*\ obj\ =\ PyDict\_GetItemString(dict,\ key);\ \(\backslash\)}}
+\DoxyCodeLine{00121\ \textcolor{preprocessor}{\ \ \ \ if(\ obj\ !=\ NULL\ )\ \{\ \(\backslash\)}}
+\DoxyCodeLine{00122\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ const\ int\ value\ =\ PYLONG\_AS\_LONG(obj);\ \(\backslash\)}}
+\DoxyCodeLine{00123\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ if(\ !PyErr\_Occurred()\ \&\&\ value\ >=\ 0\ )\ \(\backslash\)}}
+\DoxyCodeLine{00124\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ output\ =\ value;\ \(\backslash\)}}
+\DoxyCodeLine{00125\ \textcolor{preprocessor}{\ \ \ \ \}\ \(\backslash\)}}
+\DoxyCodeLine{00126\ \textcolor{preprocessor}{\}}}
+\DoxyCodeLine{00127\ }
+\DoxyCodeLine{00128\ \textcolor{preprocessor}{\#define\ PYDICT\_GET\_FLOAT(dict,\ key,\ output)\ \{\ \(\backslash\)}}
+\DoxyCodeLine{00129\ \textcolor{preprocessor}{\ \ \ \ PyObject*\ obj\ =\ PyDict\_GetItemString(dict,\ key);\ \(\backslash\)}}
+\DoxyCodeLine{00130\ \textcolor{preprocessor}{\ \ \ \ if(\ obj\ !=\ NULL\ )\ \{\ \(\backslash\)}}
+\DoxyCodeLine{00131\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ const\ float\ value\ =\ PyFloat\_AsDouble(obj);\ \(\backslash\)}}
+\DoxyCodeLine{00132\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ if(\ !PyErr\_Occurred()\ )\ \(\backslash\)}}
+\DoxyCodeLine{00133\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ output\ =\ value;\ \(\backslash\)}}
+\DoxyCodeLine{00134\ \textcolor{preprocessor}{\ \ \ \ \}\ \(\backslash\)}}
+\DoxyCodeLine{00135\ \textcolor{preprocessor}{\}}}
+\DoxyCodeLine{00136\ }
+\DoxyCodeLine{00137\ \textcolor{preprocessor}{\#define\ PYDICT\_GET\_BOOL(dict,\ key,\ output)\ \{\ \(\backslash\)}}
+\DoxyCodeLine{00138\ \textcolor{preprocessor}{\ \ \ \ PyObject*\ obj\ =\ PyDict\_GetItemString(dict,\ key);\ \(\backslash\)}}
+\DoxyCodeLine{00139\ \textcolor{preprocessor}{\ \ \ \ if(\ obj\ !=\ NULL\ \&\&\ PyBool\_Check(obj)\ )\ \{\ \(\backslash\)}}
+\DoxyCodeLine{00140\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ output\ =\ (obj\ ==\ Py\_True)\ ?\ true\ :\ false;\ \(\backslash\)}}
+\DoxyCodeLine{00141\ \textcolor{preprocessor}{\ \ \ \ \}\ \(\backslash\)}}
+\DoxyCodeLine{00142\ \textcolor{preprocessor}{\}}}
+\DoxyCodeLine{00143\ }
+\DoxyCodeLine{00144\ \textcolor{preprocessor}{\#define\ PYDICT\_GET\_STRING(dict,\ key,\ output)\ \{\ \(\backslash\)}}
+\DoxyCodeLine{00145\ \textcolor{preprocessor}{\ \ \ \ PyObject*\ obj\ =\ PyDict\_GetItemString(dict,\ key);\ \(\backslash\)}}
+\DoxyCodeLine{00146\ \textcolor{preprocessor}{\ \ \ \ if(\ obj\ !=\ NULL\ \&\&\ PYSTRING\_CHECK(obj)\ )\ \{\ \(\backslash\)}}
+\DoxyCodeLine{00147\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ const\ char*\ value\ =\ PYSTRING\_AS\_STRING(obj);\ \(\backslash\)}}
+\DoxyCodeLine{00148\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ if(\ value\ !=\ NULL\ )\ \(\backslash\)}}
+\DoxyCodeLine{00149\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ output\ =\ value;\ \(\backslash\)}}
+\DoxyCodeLine{00150\ \textcolor{preprocessor}{\ \ \ \ \}\ \(\backslash\)}}
+\DoxyCodeLine{00151\ \textcolor{preprocessor}{\}}}
+\DoxyCodeLine{00152\ }
+\DoxyCodeLine{00153\ \textcolor{preprocessor}{\#define\ PYDICT\_GET\_ENUM(dict,\ key,\ output,\ parser)\ \{\ \(\backslash\)}}
+\DoxyCodeLine{00154\ \textcolor{preprocessor}{\ \ \ \ PyObject*\ obj\ =\ PyDict\_GetItemString(dict,\ key);\ \(\backslash\)}}
+\DoxyCodeLine{00155\ \textcolor{preprocessor}{\ \ \ \ if(\ obj\ !=\ NULL\ \&\&\ PYSTRING\_CHECK(obj)\ )\ \{\ \(\backslash\)}}
+\DoxyCodeLine{00156\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ const\ char*\ value\ =\ PYSTRING\_AS\_STRING(obj);\ \(\backslash\)}}
+\DoxyCodeLine{00157\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ if(\ value\ !=\ NULL\ )\ \(\backslash\)}}
+\DoxyCodeLine{00158\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ output\ =\ parser(value);\ \(\backslash\)}}
+\DoxyCodeLine{00159\ \textcolor{preprocessor}{\ \ \ \ \}\ \(\backslash\)}}
+\DoxyCodeLine{00160\ \textcolor{preprocessor}{\}}}
+\DoxyCodeLine{00161\ }
+\DoxyCodeLine{00162\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00163\ }
+
+\end{DoxyCode}

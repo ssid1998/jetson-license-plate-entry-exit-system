@@ -1,0 +1,384 @@
+\doxysection{jetson-\/inference Directory Reference}
+\hypertarget{dir_5fcaaf5af391369b2d07f8dcd23285dd}{}\label{dir_5fcaaf5af391369b2d07f8dcd23285dd}\index{jetson-\/inference Directory Reference@{jetson-\/inference Directory Reference}}
+\doxysubsubsection*{Directories}
+\begin{DoxyCompactItemize}
+\item 
+directory \doxymbox{\hyperlink{dir_21d0a8a0f5d1b7a7b8ecabd75e82c7c4}{docs}}
+\item 
+directory \doxymbox{\hyperlink{dir_c4e9c01cc410ef4363235b7dfdd81ea6}{examples}}
+\item 
+directory \doxymbox{\hyperlink{dir_24f5d2e6f66986322dddc02d8dd8aa7a}{utils}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\hypertarget{dir_5fcaaf5af391369b2d07f8dcd23285dd_autotoc_md467}{}\doxysubsection{\texorpdfstring{Deploying Deep Learning}{Deploying Deep Learning}}\label{dir_5fcaaf5af391369b2d07f8dcd23285dd_autotoc_md467}
+Welcome to our instructional guide for inference and realtime vision DNN library for {\bfseries{\href{https://developer.nvidia.com/embedded-computing}{\texttt{NVIDIA Jetson}}}} devices. This project uses {\bfseries{\href{https://developer.nvidia.com/tensorrt}{\texttt{Tensor\+RT}}}} to run optimized networks on GPUs from C++ or Python, and Py\+Torch for training models.
+
+Supported DNN vision primitives include \doxysectlink{md_jetson-inference_2docs_2imagenet-console-2}{{\ttfamily image\+Net}}{0} for image classification, \doxysectlink{md_jetson-inference_2docs_2detectnet-console-2}{{\ttfamily detect\+Net}}{0} for object detection, \doxysectlink{md_jetson-inference_2docs_2segnet-console-2}{{\ttfamily seg\+Net}}{0} for semantic segmentation, \doxysectlink{md_jetson-inference_2docs_2posenet}{{\ttfamily pose\+Net}}{0} for pose estimation, and \doxysectlink{md_jetson-inference_2docs_2actionnet}{{\ttfamily action\+Net}}{0} for action recognition. Examples are provided for streaming from live camera feeds, making webapps with Web\+RTC, and support for ROS/\+\+ROS2.
+
+
+
+Follow the {\bfseries{Hello AI World}} tutorial for running inference and transfer learning onboard your Jetson, including collecting your own datasets, training your own models with Py\+Torch, and deploying them with Tensor\+RT.\hypertarget{dir_5fcaaf5af391369b2d07f8dcd23285dd_autotoc_md468}{}\doxysubsubsubsection{\texorpdfstring{Table of Contents}{Table of Contents}}\label{dir_5fcaaf5af391369b2d07f8dcd23285dd_autotoc_md468}
+
+\begin{DoxyItemize}
+\item Hello AI World
+\item Jetson AI Lab
+\item Video Walkthroughs
+\item API Reference
+\item Code Examples
+\item Pre-\/\+Trained Models
+\item System Requirements
+\item Change Log
+\end{DoxyItemize}
+
+\begin{quote}
+\texorpdfstring{$>$}{>} ~ Jet\+Pack 6 is now supported on Orin devices (\href{https://developer.nvidia.com/embedded/jetpack}{\texttt{developer.\+nvidia.\+com/\+jetpack}}) ~\newline
+ \texorpdfstring{$>$}{>} ~ Check out the Generative AI and LLM tutorials on \href{https://www.jetson-ai-lab.com/}{\texttt{Jetson AI Lab}}! ~\newline
+ \texorpdfstring{$>$}{>} ~ See the Change Log for the latest updates and new features. ~\newline
+ \end{quote}
+\hypertarget{dir_5fcaaf5af391369b2d07f8dcd23285dd_autotoc_md469}{}\doxysubsubsection{\texorpdfstring{Hello AI World}{Hello AI World}}\label{dir_5fcaaf5af391369b2d07f8dcd23285dd_autotoc_md469}
+Hello AI World can be run completely onboard your Jetson, including live inferencing with Tensor\+RT and transfer learning with Py\+Torch. For installation instructions, see System Setup. It\textquotesingle{}s then recommended to start with the Inference section to familiarize yourself with the concepts, before diving into Training your own models.\hypertarget{dir_5fcaaf5af391369b2d07f8dcd23285dd_autotoc_md470}{}\doxysubsubsubsubsection{\texorpdfstring{System Setup}{System Setup}}\label{dir_5fcaaf5af391369b2d07f8dcd23285dd_autotoc_md470}
+
+\begin{DoxyItemize}
+\item \doxysectlink{md_jetson-inference_2docs_2jetpack-setup-2}{Setting up Jetson with Jet\+Pack}{0}
+\item \doxysectlink{md_jetson-inference_2docs_2aux-docker}{Running the Docker Container}{0}
+\item \doxysectlink{md_jetson-inference_2docs_2building-repo-2}{Building the Project from Source}{0}
+\end{DoxyItemize}\hypertarget{dir_5fcaaf5af391369b2d07f8dcd23285dd_autotoc_md471}{}\doxysubsubsubsubsection{\texorpdfstring{Inference}{Inference}}\label{dir_5fcaaf5af391369b2d07f8dcd23285dd_autotoc_md471}
+
+\begin{DoxyItemize}
+\item \doxysectlink{md_jetson-inference_2docs_2imagenet-console-2}{Image Classification}{0}
+\begin{DoxyItemize}
+\item \doxysectlink{md_jetson-inference_2docs_2imagenet-console-2}{Using the Image\+Net Program on Jetson}{0}
+\item \doxysectlink{md_jetson-inference_2docs_2imagenet-example-python-2}{Coding Your Own Image Recognition Program (Python)}{0}
+\item \doxysectlink{md_jetson-inference_2docs_2imagenet-example-2}{Coding Your Own Image Recognition Program (C++)}{0}
+\item \doxysectlink{md_jetson-inference_2docs_2imagenet-camera-2}{Running the Live Camera Recognition Demo}{0}
+\item \doxysectlink{md_jetson-inference_2docs_2imagenet-tagging}{Multi-\/\+Label Classification for Image Tagging}{0}
+\end{DoxyItemize}
+\item \doxysectlink{md_jetson-inference_2docs_2detectnet-console-2}{Object Detection}{0}
+\begin{DoxyItemize}
+\item \href{docs/detectnet-console-2.md\#detecting-objects-from-the-command-line}{\texttt{Detecting Objects from Images}}
+\item \doxysectlink{md_jetson-inference_2docs_2detectnet-camera-2}{Running the Live Camera Detection Demo}{0}
+\item \doxysectlink{md_jetson-inference_2docs_2detectnet-example-2}{Coding Your Own Object Detection Program}{0}
+\item \doxysectlink{md_jetson-inference_2docs_2detectnet-tao}{Using TAO Detection Models}{0}
+\item \doxysectlink{md_jetson-inference_2docs_2detectnet-tracking}{Object Tracking on Video}{0}
+\end{DoxyItemize}
+\item \doxysectlink{md_jetson-inference_2docs_2segnet-console-2}{Semantic Segmentation}{0}
+\begin{DoxyItemize}
+\item \href{docs/segnet-console-2.md\#segmenting-images-from-the-command-line}{\texttt{Segmenting Images from the Command Line}}
+\item \doxysectlink{md_jetson-inference_2docs_2segnet-camera-2}{Running the Live Camera Segmentation Demo}{0}
+\end{DoxyItemize}
+\item \doxysectlink{md_jetson-inference_2docs_2posenet}{Pose Estimation}{0}
+\item \doxysectlink{md_jetson-inference_2docs_2actionnet}{Action Recognition}{0}
+\item \doxysectlink{md_jetson-inference_2docs_2backgroundnet}{Background Removal}{0}
+\item \doxysectlink{md_jetson-inference_2docs_2depthnet}{Monocular Depth}{0}
+\end{DoxyItemize}\hypertarget{dir_5fcaaf5af391369b2d07f8dcd23285dd_autotoc_md472}{}\doxysubsubsubsubsection{\texorpdfstring{Training}{Training}}\label{dir_5fcaaf5af391369b2d07f8dcd23285dd_autotoc_md472}
+
+\begin{DoxyItemize}
+\item \doxysectlink{md_jetson-inference_2docs_2pytorch-transfer-learning}{Transfer Learning with Py\+Torch}{0}
+\item Classification/\+\+Recognition (Res\+Net-\/18)
+\begin{DoxyItemize}
+\item \doxysectlink{md_jetson-inference_2docs_2pytorch-cat-dog}{Re-\/training on the Cat/\+\+Dog Dataset}{0}
+\item \doxysectlink{md_jetson-inference_2docs_2pytorch-plants}{Re-\/training on the Plant\+CLEF Dataset}{0}
+\item \doxysectlink{md_jetson-inference_2docs_2pytorch-collect}{Collecting your own Classification Datasets}{0}
+\end{DoxyItemize}
+\item Object Detection (SSD-\/\+Mobilenet)
+\begin{DoxyItemize}
+\item \doxysectlink{md_jetson-inference_2docs_2pytorch-ssd}{Re-\/training SSD-\/\+Mobilenet}{0}
+\item \doxysectlink{md_jetson-inference_2docs_2pytorch-collect-detection}{Collecting your own Detection Datasets}{0}
+\end{DoxyItemize}
+\end{DoxyItemize}\hypertarget{dir_5fcaaf5af391369b2d07f8dcd23285dd_autotoc_md473}{}\doxysubsubsubsubsection{\texorpdfstring{Web\+App Frameworks}{Web\+App Frameworks}}\label{dir_5fcaaf5af391369b2d07f8dcd23285dd_autotoc_md473}
+
+\begin{DoxyItemize}
+\item \doxysectlink{md_jetson-inference_2docs_2webrtc-server}{Web\+RTC Server}{0}
+\item \doxysectlink{md_jetson-inference_2docs_2webrtc-html}{HTML /\+ Java\+Script}{0}
+\item \doxysectlink{md_jetson-inference_2docs_2webrtc-flask}{Flask + REST}{0}
+\item \doxysectlink{md_jetson-inference_2docs_2webrtc-dash}{Plotly Dashboard}{0}
+\item \doxysectlink{md_jetson-inference_2docs_2webrtc-recognizer}{Recognizer (Interactive Training)}{0}
+\end{DoxyItemize}\hypertarget{dir_5fcaaf5af391369b2d07f8dcd23285dd_autotoc_md474}{}\doxysubsubsubsubsection{\texorpdfstring{Appendix}{Appendix}}\label{dir_5fcaaf5af391369b2d07f8dcd23285dd_autotoc_md474}
+
+\begin{DoxyItemize}
+\item \doxysectlink{md_jetson-inference_2docs_2aux-streaming}{Camera Streaming and Multimedia}{0}
+\item \doxysectlink{md_jetson-inference_2docs_2aux-image}{Image Manipulation with CUDA}{0}
+\item \href{https://github.com/dusty-nv/ros_deep_learning}{\texttt{DNN Inference Nodes for ROS/\+\+ROS2}}
+\end{DoxyItemize}\hypertarget{dir_5fcaaf5af391369b2d07f8dcd23285dd_autotoc_md475}{}\doxysubsubsection{\texorpdfstring{Jetson AI Lab}{Jetson AI Lab}}\label{dir_5fcaaf5af391369b2d07f8dcd23285dd_autotoc_md475}
+\href{https://www.jetson-ai-lab.com}{\texttt{}}
+
+\doxylink{requirements_The}{The} \href{https://www.jetson-ai-lab.com}{\texttt{{\bfseries{Jetson AI Lab}}}} has additional tutorials on LLMs, Vision Transformers (ViT), and Vision Language Models (VLM) that run on Orin (and in some cases Xavier). Check out some of these:\+
+
+\href{https://www.jetson-ai-lab.com/tutorial_nanoowl.html}{\texttt{}} \begin{quote}
+\href{https://www.jetson-ai-lab.com/tutorial_nanoowl.html}{\texttt{Nano\+OWL -\/ Open Vocabulary Object Detection ViT}} (container:\+ \href{/packages/vit/nanoowl}{\texttt{{\ttfamily nanoowl}}}) \end{quote}
+
+
+\href{https://youtu.be/X-OXxPiUTuU}{\texttt{}} \begin{quote}
+\href{https://youtu.be/X-OXxPiUTuU}{\texttt{Live Llava on Jetson AGX Orin}} (container:\+ \href{/packages/llm/local_llm\#live-llava}{\texttt{{\ttfamily local\+\_\+llm}}}) \end{quote}
+
+
+\href{https://youtu.be/dRmAGGuupuE}{\texttt{}} \begin{quote}
+\href{https://youtu.be/X-OXxPiUTuU}{\texttt{Live Llava 2.\+0 -\/ VILA + Multimodal Nano\+DB on Jetson Orin}} (container:\+ \href{/packages/llm/local_llm\#live-llava}{\texttt{{\ttfamily local\+\_\+llm}}}) \end{quote}
+
+
+\href{https://youtu.be/ayqKpQNd1Jw}{\texttt{}} \begin{quote}
+\href{https://www.youtube.com/watch?v=wzLHAgDxMjQ}{\texttt{Realtime Multimodal Vector\+DB on NVIDIA Jetson}} (container:\+ \href{/packages/vectordb/nanodb}{\texttt{{\ttfamily nanodb}}}) ~\newline
+ \end{quote}
+\hypertarget{dir_5fcaaf5af391369b2d07f8dcd23285dd_autotoc_md476}{}\doxysubsubsection{\texorpdfstring{Video Walkthroughs}{Video Walkthroughs}}\label{dir_5fcaaf5af391369b2d07f8dcd23285dd_autotoc_md476}
+Below are screencasts of Hello AI World that were recorded for the \href{https://developer.nvidia.com/embedded/learn/jetson-ai-certification-programs}{\texttt{Jetson AI Certification}} course:\+
+
+
+\begin{DoxyTable}{2}{}{}{1}
+\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}Description  &\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}Video  \\
+\href{https://www.youtube.com/watch?v=QXIwdsyK7Rw&list=PL5B692fm6--uQRRDTPsJDp4o0xbzkoyf8&index=9}{\texttt{{\bfseries{Hello AI World Setup}}}}~\newline
+Download and run the Hello AI World container on Jetson Nano, test your camera feed, and see how to stream it over the network via RTP.  &\href{https://www.youtube.com/watch?v=QXIwdsyK7Rw&list=PL5B692fm6--uQRRDTPsJDp4o0xbzkoyf8&index=9}{\texttt{}}  \\
+\href{https://www.youtube.com/watch?v=QatH8iF0Efk&list=PL5B692fm6--uQRRDTPsJDp4o0xbzkoyf8&index=10}{\texttt{{\bfseries{Image Classification Inference}}}}~\newline
+Code your own Python program for image classification using Jetson Nano and deep learning, then experiment with realtime classification on a live camera stream.  &\href{https://www.youtube.com/watch?v=QatH8iF0Efk&list=PL5B692fm6--uQRRDTPsJDp4o0xbzkoyf8&index=10}{\texttt{}}  \\
+\href{https://www.youtube.com/watch?v=sN6aT9TpltU&list=PL5B692fm6--uQRRDTPsJDp4o0xbzkoyf8&index=11}{\texttt{{\bfseries{Training Image Classification Models}}}}~\newline
+Learn how to train image classification models with Py\+Torch onboard Jetson Nano, and collect your own classification datasets to create custom models.  &\href{https://www.youtube.com/watch?v=sN6aT9TpltU&list=PL5B692fm6--uQRRDTPsJDp4o0xbzkoyf8&index=11}{\texttt{}}  \\
+\href{https://www.youtube.com/watch?v=obt60r8ZeB0&list=PL5B692fm6--uQRRDTPsJDp4o0xbzkoyf8&index=12}{\texttt{{\bfseries{Object Detection Inference}}}}~\newline
+Code your own Python program for object detection using Jetson Nano and deep learning, then experiment with realtime detection on a live camera stream.  &\href{https://www.youtube.com/watch?v=obt60r8ZeB0&list=PL5B692fm6--uQRRDTPsJDp4o0xbzkoyf8&index=12}{\texttt{}}  \\
+\href{https://www.youtube.com/watch?v=2XMkPW_sIGg&list=PL5B692fm6--uQRRDTPsJDp4o0xbzkoyf8&index=13}{\texttt{{\bfseries{Training Object Detection Models}}}}~\newline
+Learn how to train object detection models with Py\+Torch onboard Jetson Nano, and collect your own detection datasets to create custom models.  &\href{https://www.youtube.com/watch?v=2XMkPW_sIGg&list=PL5B692fm6--uQRRDTPsJDp4o0xbzkoyf8&index=13}{\texttt{}}  \\
+\href{https://www.youtube.com/watch?v=AQhkMLaB_fY&list=PL5B692fm6--uQRRDTPsJDp4o0xbzkoyf8&index=14}{\texttt{{\bfseries{Semantic Segmentation}}}}~\newline
+Experiment with fully-\/convolutional semantic segmentation networks on Jetson Nano, and run realtime segmentation on a live camera stream.  &\href{https://www.youtube.com/watch?v=AQhkMLaB_fY&list=PL5B692fm6--uQRRDTPsJDp4o0xbzkoyf8&index=14}{\texttt{}}  \\
+\end{DoxyTable}
+\hypertarget{dir_5fcaaf5af391369b2d07f8dcd23285dd_autotoc_md477}{}\doxysubsubsection{\texorpdfstring{API Reference}{API Reference}}\label{dir_5fcaaf5af391369b2d07f8dcd23285dd_autotoc_md477}
+Below are links to reference documentation for the \href{https://rawgit.com/dusty-nv/jetson-inference/master/docs/html/index.html}{\texttt{C++}} and \href{https://rawgit.com/dusty-nv/jetson-inference/master/docs/html/python/jetson.html}{\texttt{Python}} libraries from the repo:\+\hypertarget{dir_5fcaaf5af391369b2d07f8dcd23285dd_autotoc_md478}{}\doxysubsubsubsubsection{\texorpdfstring{jetson-\/inference}{jetson-\/inference}}\label{dir_5fcaaf5af391369b2d07f8dcd23285dd_autotoc_md478}
+
+\begin{DoxyTable}{3}{}{}{1}
+\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}&\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}\href{https://rawgit.com/dusty-nv/jetson-inference/master/docs/html/group__deepVision.html}{\texttt{C++}}  &\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}\href{https://rawgit.com/dusty-nv/jetson-inference/master/docs/html/python/jetson.inference.html}{\texttt{Python}}  \\
+Image Recognition  &\href{https://rawgit.com/dusty-nv/jetson-inference/master/docs/html/group__imageNet.html\#classimageNet}{\texttt{{\ttfamily image\+Net}}}  &\href{https://rawgit.com/dusty-nv/jetson-inference/master/docs/html/python/jetson.inference.html\#imageNet}{\texttt{{\ttfamily image\+Net}}}  \\
+Object Detection  &\href{https://rawgit.com/dusty-nv/jetson-inference/master/docs/html/group__detectNet.html\#classdetectNet}{\texttt{{\ttfamily detect\+Net}}}  &\href{https://rawgit.com/dusty-nv/jetson-inference/master/docs/html/python/jetson.inference.html\#detectNet}{\texttt{{\ttfamily detect\+Net}}}  \\
+Segmentation  &\href{https://rawgit.com/dusty-nv/jetson-inference/master/docs/html/group__segNet.html\#classsegNet}{\texttt{{\ttfamily seg\+Net}}}  &\href{https://rawgit.com/dusty-nv/jetson-inference/master/docs/html/python/jetson.inference.html\#segNet}{\texttt{{\ttfamily seg\+Net}}}  \\
+Pose Estimation  &\href{https://rawgit.com/dusty-nv/jetson-inference/master/docs/html/group__poseNet.html\#classposeNet}{\texttt{{\ttfamily pose\+Net}}}  &\href{https://rawgit.com/dusty-nv/jetson-inference/master/docs/html/python/jetson.inference.html\#poseNet}{\texttt{{\ttfamily pose\+Net}}}  \\
+Action Recognition  &\href{https://rawgit.com/dusty-nv/jetson-inference/master/docs/html/group__actionNet.html\#classactionNet}{\texttt{{\ttfamily action\+Net}}}  &\href{https://rawgit.com/dusty-nv/jetson-inference/master/docs/html/python/jetson.inference.html\#actionNet}{\texttt{{\ttfamily action\+Net}}}  \\
+Background Removal  &\href{https://rawgit.com/dusty-nv/jetson-inference/master/docs/html/group__backgroundNet.html\#classbackgroundNet}{\texttt{{\ttfamily background\+Net}}}  &\href{https://rawgit.com/dusty-nv/jetson-inference/master/docs/html/python/jetson.inference.html\#backgroundNet}{\texttt{{\ttfamily action\+Net}}}  \\
+Monocular Depth  &\href{https://rawgit.com/dusty-nv/jetson-inference/master/docs/html/group__depthNet.html\#classdepthNet}{\texttt{{\ttfamily depth\+Net}}}  &\href{https://rawgit.com/dusty-nv/jetson-inference/master/docs/html/python/jetson.inference.html\#depthNet}{\texttt{{\ttfamily depth\+Net}}}  \\
+\end{DoxyTable}
+\hypertarget{dir_5fcaaf5af391369b2d07f8dcd23285dd_autotoc_md479}{}\doxysubsubsubsubsection{\texorpdfstring{jetson-\/utils}{jetson-\/utils}}\label{dir_5fcaaf5af391369b2d07f8dcd23285dd_autotoc_md479}
+
+\begin{DoxyItemize}
+\item \href{https://rawgit.com/dusty-nv/jetson-inference/master/docs/html/group__util.html}{\texttt{C++}}
+\item \href{https://rawgit.com/dusty-nv/jetson-inference/master/docs/html/python/jetson.utils.html}{\texttt{Python}}
+\end{DoxyItemize}
+
+These libraries are able to be used in external projects by linking to {\ttfamily libjetson-\/inference} and {\ttfamily libjetson-\/utils}.\hypertarget{dir_5fcaaf5af391369b2d07f8dcd23285dd_autotoc_md480}{}\doxysubsubsection{\texorpdfstring{Code Examples}{Code Examples}}\label{dir_5fcaaf5af391369b2d07f8dcd23285dd_autotoc_md480}
+Introductory code walkthroughs of using the library are covered during these steps of the Hello AI World tutorial:\+
+
+
+\begin{DoxyItemize}
+\item \doxysectlink{md_jetson-inference_2docs_2imagenet-example-python-2}{Coding Your Own Image Recognition Program (Python)}{0}
+\item \doxysectlink{md_jetson-inference_2docs_2imagenet-example-2}{Coding Your Own Image Recognition Program (C++)}{0}
+\end{DoxyItemize}
+
+Additional C++ and Python samples for running the networks on images and live camera streams can be found here:\+
+
+
+\begin{DoxyTable}{3}{}{}{1}
+\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}&\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}C++  &\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}Python  \\
+~~~Image Recognition  &\href{examples/imagenet/imagenet.cpp}{\texttt{{\ttfamily imagenet.\+cpp}}}  &\href{python/examples/imagenet.py}{\texttt{{\ttfamily imagenet.\+py}}}  \\
+~~~Object Detection  &\href{examples/detectnet/detectnet.cpp}{\texttt{{\ttfamily detectnet.\+cpp}}}  &\href{python/examples/detectnet.py}{\texttt{{\ttfamily detectnet.\+py}}}  \\
+~~~Segmentation  &\href{examples/segnet/segnet.cpp}{\texttt{{\ttfamily segnet.\+cpp}}}  &\href{python/examples/segnet.py}{\texttt{{\ttfamily segnet.\+py}}}  \\
+~~~Pose Estimation  &\href{examples/posenet/posenet.cpp}{\texttt{{\ttfamily posenet.\+cpp}}}  &\href{python/examples/posenet.py}{\texttt{{\ttfamily posenet.\+py}}}  \\
+~~~Action Recognition  &\href{examples/actionnet/actionnet.cpp}{\texttt{{\ttfamily actionnet.\+cpp}}}  &\href{python/examples/actionnet.py}{\texttt{{\ttfamily actionnet.\+py}}}  \\
+~~~Background Removal  &\href{examples/backgroundnet/backgroundnet.cpp}{\texttt{{\ttfamily backgroundnet.\+cpp}}}  &\href{python/examples/backgroundnet.py}{\texttt{{\ttfamily backgroundnet.\+py}}}  \\
+~~~Monocular Depth  &\href{examples/depthnet/segnet.cpp}{\texttt{{\ttfamily depthnet.\+cpp}}}  &\href{python/examples/depthnet.py}{\texttt{{\ttfamily depthnet.\+py}}}  \\
+\end{DoxyTable}
+
+
+\begin{quote}
+{\bfseries{note}}:\+ see the \href{docs/aux-image.md\#array-interfaces}{\texttt{Array Interfaces}} section for using memory with other Python libraries (like Numpy, Py\+Torch, ect) \end{quote}
+
+
+These examples will automatically be compiled while \doxysectlink{md_jetson-inference_2docs_2building-repo-2}{Building the Project from Source}{0}, and are able to run the pre-\/trained models listed below in addition to custom models provided by the user. Launch each example with {\ttfamily -\/-\/help} for usage info.\hypertarget{dir_5fcaaf5af391369b2d07f8dcd23285dd_autotoc_md481}{}\doxysubsubsection{\texorpdfstring{Pre-\/\+Trained Models}{Pre-\/\+Trained Models}}\label{dir_5fcaaf5af391369b2d07f8dcd23285dd_autotoc_md481}
+\doxylink{requirements_The}{The} project comes with a number of pre-\/trained models that are available to use and will be automatically downloaded:\+\hypertarget{dir_5fcaaf5af391369b2d07f8dcd23285dd_autotoc_md482}{}\doxysubsubsubsubsection{\texorpdfstring{Image Recognition}{Image Recognition}}\label{dir_5fcaaf5af391369b2d07f8dcd23285dd_autotoc_md482}
+
+\begin{DoxyTable}{3}{}{}{1}
+\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}Network  &\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}CLI argument  &\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}Network\+Type enum  \\
+Alex\+Net  &{\ttfamily alexnet}  &{\ttfamily ALEXNET}  \\
+Google\+Net  &{\ttfamily googlenet}  &{\ttfamily GOOGLENET}  \\
+Google\+Net-\/12  &{\ttfamily googlenet-\/12}  &{\ttfamily GOOGLENET\+\_\+12}  \\
+Res\+Net-\/18  &{\ttfamily resnet-\/18}  &{\ttfamily RESNET\+\_\+18}  \\
+Res\+Net-\/50  &{\ttfamily resnet-\/50}  &{\ttfamily RESNET\+\_\+50}  \\
+Res\+Net-\/101  &{\ttfamily resnet-\/101}  &{\ttfamily RESNET\+\_\+101}  \\
+Res\+Net-\/152  &{\ttfamily resnet-\/152}  &{\ttfamily RESNET\+\_\+152}  \\
+VGG-\/16  &{\ttfamily vgg-\/16}  &{\ttfamily VGG-\/16}  \\
+VGG-\/19  &{\ttfamily vgg-\/19}  &{\ttfamily VGG-\/19}  \\
+Inception-\/v4  &{\ttfamily inception-\/v4}  &{\ttfamily INCEPTION\+\_\+\+V4}  \\
+\end{DoxyTable}
+\hypertarget{dir_5fcaaf5af391369b2d07f8dcd23285dd_autotoc_md483}{}\doxysubsubsubsubsection{\texorpdfstring{Object Detection}{Object Detection}}\label{dir_5fcaaf5af391369b2d07f8dcd23285dd_autotoc_md483}
+
+\begin{DoxyTable}{4}{}{}{1}
+\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}Model  &\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}CLI argument  &\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}Network\+Type enum  &\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}Object classes  \\
+SSD-\/\+Mobilenet-\/v1  &{\ttfamily ssd-\/mobilenet-\/v1}  &{\ttfamily SSD\+\_\+\+MOBILENET\+\_\+\+V1}  &91 (\href{../data/networks/ssd_coco_labels.txt}{\texttt{COCO classes}})  \\
+SSD-\/\+Mobilenet-\/v2  &{\ttfamily ssd-\/mobilenet-\/v2}  &{\ttfamily SSD\+\_\+\+MOBILENET\+\_\+\+V2}  &91 (\href{../data/networks/ssd_coco_labels.txt}{\texttt{COCO classes}})  \\
+SSD-\/\+Inception-\/v2  &{\ttfamily ssd-\/inception-\/v2}  &{\ttfamily SSD\+\_\+\+INCEPTION\+\_\+\+V2}  &91 (\href{../data/networks/ssd_coco_labels.txt}{\texttt{COCO classes}})  \\
+TAO People\+Net  &{\ttfamily peoplenet}  &{\ttfamily PEOPLENET}  &person, bag, face  \\
+TAO People\+Net (pruned)  &{\ttfamily peoplenet-\/pruned}  &{\ttfamily PEOPLENET\+\_\+\+PRUNED}  &person, bag, face  \\
+TAO Dash\+Cam\+Net  &{\ttfamily dashcamnet}  &{\ttfamily DASHCAMNET}  &person, car, bike, sign  \\
+TAO Traffic\+Cam\+Net  &{\ttfamily trafficcamnet}  &{\ttfamily TRAFFICCAMNET}  &person, car, bike, sign  \\
+TAO Face\+Detect  &{\ttfamily facedetect}  &{\ttfamily FACEDETECT}  &face  \\
+\end{DoxyTable}
+
+
+
+
+{\bfseries{Legacy Detection Models}}\begin{adjustwidth}{1em}{0em}
+
+
+
+\begin{DoxyTable}{4}{}{}{1}
+\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}Model  &\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}CLI argument  &\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}Network\+Type enum  &\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}Object classes  \\
+Detect\+Net-\/\+COCO-\/\+Dog  &{\ttfamily coco-\/dog}  &{\ttfamily COCO\+\_\+\+DOG}  &dogs  \\
+Detect\+Net-\/\+COCO-\/\+Bottle  &{\ttfamily coco-\/bottle}  &{\ttfamily COCO\+\_\+\+BOTTLE}  &bottles  \\
+Detect\+Net-\/\+COCO-\/\+Chair  &{\ttfamily coco-\/chair}  &{\ttfamily COCO\+\_\+\+CHAIR}  &chairs  \\
+Detect\+Net-\/\+COCO-\/\+Airplane  &{\ttfamily coco-\/airplane}  &{\ttfamily COCO\+\_\+\+AIRPLANE}  &airplanes  \\
+ped-\/100  &{\ttfamily pednet}  &{\ttfamily PEDNET}  &pedestrians  \\
+multiped-\/500  &{\ttfamily multiped}  &{\ttfamily PEDNET\+\_\+\+MULTI}  &pedestrians, luggage  \\
+facenet-\/120  &{\ttfamily facenet}  &{\ttfamily FACENET}  &faces  \\
+\end{DoxyTable}
+
+
+\end{adjustwidth}
+\hypertarget{dir_5fcaaf5af391369b2d07f8dcd23285dd_autotoc_md484}{}\doxysubsubsubsubsection{\texorpdfstring{Semantic Segmentation}{Semantic Segmentation}}\label{dir_5fcaaf5af391369b2d07f8dcd23285dd_autotoc_md484}
+
+\begin{DoxyTable}{6}{}{}{1}
+\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}Dataset  &\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}Resolution  &\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}CLI Argument  &\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}Accuracy  &\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}Jetson Nano  &\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}Jetson Xavier  \\
+\SetCell{c}\href{https://www.cityscapes-dataset.com/}{\texttt{Cityscapes}}  &\SetCell{c}512x256  &{\ttfamily fcn-\/resnet18-\/cityscapes-\/512x256}  &\SetCell{c}83.\+3\%  &\SetCell{c}48 FPS  &\SetCell{c}480 FPS  \\
+\SetCell{c}\href{https://www.cityscapes-dataset.com/}{\texttt{Cityscapes}}  &\SetCell{c}1024x512  &{\ttfamily fcn-\/resnet18-\/cityscapes-\/1024x512}  &\SetCell{c}87.\+3\%  &\SetCell{c}12 FPS  &\SetCell{c}175 FPS  \\
+\SetCell{c}\href{https://www.cityscapes-dataset.com/}{\texttt{Cityscapes}}  &\SetCell{c}2048x1024  &{\ttfamily fcn-\/resnet18-\/cityscapes-\/2048x1024}  &\SetCell{c}89.\+6\%  &\SetCell{c}3 FPS  &\SetCell{c}47 FPS  \\
+\SetCell{c}\href{http://deepscene.cs.uni-freiburg.de/}{\texttt{Deep\+Scene}}  &\SetCell{c}576x320  &{\ttfamily fcn-\/resnet18-\/deepscene-\/576x320}  &\SetCell{c}96.\+4\%  &\SetCell{c}26 FPS  &\SetCell{c}360 FPS  \\
+\SetCell{c}\href{http://deepscene.cs.uni-freiburg.de/}{\texttt{Deep\+Scene}}  &\SetCell{c}864x480  &{\ttfamily fcn-\/resnet18-\/deepscene-\/864x480}  &\SetCell{c}96.\+9\%  &\SetCell{c}14 FPS  &\SetCell{c}190 FPS  \\
+\SetCell{c}\href{https://lv-mhp.github.io/}{\texttt{Multi-\/\+Human}}  &\SetCell{c}512x320  &{\ttfamily fcn-\/resnet18-\/mhp-\/512x320}  &\SetCell{c}86.\+5\%  &\SetCell{c}34 FPS  &\SetCell{c}370 FPS  \\
+\SetCell{c}\href{https://lv-mhp.github.io/}{\texttt{Multi-\/\+Human}}  &\SetCell{c}640x360  &{\ttfamily fcn-\/resnet18-\/mhp-\/512x320}  &\SetCell{c}87.\+1\%  &\SetCell{c}23 FPS  &\SetCell{c}325 FPS  \\
+\SetCell{c}\href{http://host.robots.ox.ac.uk/pascal/VOC/}{\texttt{Pascal VOC}}  &\SetCell{c}320x320  &{\ttfamily fcn-\/resnet18-\/voc-\/320x320}  &\SetCell{c}85.\+9\%  &\SetCell{c}45 FPS  &\SetCell{c}508 FPS  \\
+\SetCell{c}\href{http://host.robots.ox.ac.uk/pascal/VOC/}{\texttt{Pascal VOC}}  &\SetCell{c}512x320  &{\ttfamily fcn-\/resnet18-\/voc-\/512x320}  &\SetCell{c}88.\+5\%  &\SetCell{c}34 FPS  &\SetCell{c}375 FPS  \\
+\SetCell{c}\href{http://rgbd.cs.princeton.edu/}{\texttt{SUN RGB-\/D}}  &\SetCell{c}512x400  &{\ttfamily fcn-\/resnet18-\/sun-\/512x400}  &\SetCell{c}64.\+3\%  &\SetCell{c}28 FPS  &\SetCell{c}340 FPS  \\
+\SetCell{c}\href{http://rgbd.cs.princeton.edu/}{\texttt{SUN RGB-\/D}}  &\SetCell{c}640x512  &{\ttfamily fcn-\/resnet18-\/sun-\/640x512}  &\SetCell{c}65.\+1\%  &\SetCell{c}17 FPS  &\SetCell{c}224 FPS  \\
+\end{DoxyTable}
+
+
+
+\begin{DoxyItemize}
+\item If the resolution is omitted from the CLI argument, the lowest resolution model is loaded
+\item Accuracy indicates the pixel classification accuracy across the model\textquotesingle{}s validation dataset
+\item Performance is measured for GPU FP16 mode with Jet\+Pack 4.\+2.\+1, {\ttfamily nvpmodel 0} (MAX-\/N)
+\end{DoxyItemize}
+
+
+
+{\bfseries{Legacy Segmentation Models}}\begin{adjustwidth}{1em}{0em}
+
+
+
+\begin{DoxyTable}{4}{}{}{1}
+\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}Network  &\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}CLI Argument  &\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}Network\+Type enum  &\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}Classes  \\
+Cityscapes (2048x2048)  &{\ttfamily fcn-\/alexnet-\/cityscapes-\/hd}  &{\ttfamily FCN\+\_\+\+ALEXNET\+\_\+\+CITYSCAPES\+\_\+\+HD}  &21  \\
+Cityscapes (1024x1024)  &{\ttfamily fcn-\/alexnet-\/cityscapes-\/sd}  &{\ttfamily FCN\+\_\+\+ALEXNET\+\_\+\+CITYSCAPES\+\_\+\+SD}  &21  \\
+Pascal VOC (500x356)  &{\ttfamily fcn-\/alexnet-\/pascal-\/voc}  &{\ttfamily FCN\+\_\+\+ALEXNET\+\_\+\+PASCAL\+\_\+\+VOC}  &21  \\
+Synthia (CVPR16)  &{\ttfamily fcn-\/alexnet-\/synthia-\/cvpr}  &{\ttfamily FCN\+\_\+\+ALEXNET\+\_\+\+SYNTHIA\+\_\+\+CVPR}  &14  \\
+Synthia (Summer-\/\+HD)  &{\ttfamily fcn-\/alexnet-\/synthia-\/summer-\/hd}  &{\ttfamily FCN\+\_\+\+ALEXNET\+\_\+\+SYNTHIA\+\_\+\+SUMMER\+\_\+\+HD}  &14  \\
+Synthia (Summer-\/\+SD)  &{\ttfamily fcn-\/alexnet-\/synthia-\/summer-\/sd}  &{\ttfamily FCN\+\_\+\+ALEXNET\+\_\+\+SYNTHIA\+\_\+\+SUMMER\+\_\+\+SD}  &14  \\
+Aerial-\/\+FPV (1280x720)  &{\ttfamily fcn-\/alexnet-\/aerial-\/fpv-\/720p}  &{\ttfamily FCN\+\_\+\+ALEXNET\+\_\+\+AERIAL\+\_\+\+FPV\+\_\+720p}  &2  \\
+\end{DoxyTable}
+
+
+\end{adjustwidth}
+\hypertarget{dir_5fcaaf5af391369b2d07f8dcd23285dd_autotoc_md485}{}\doxysubsubsubsubsection{\texorpdfstring{Pose Estimation}{Pose Estimation}}\label{dir_5fcaaf5af391369b2d07f8dcd23285dd_autotoc_md485}
+
+\begin{DoxyTable}{4}{}{}{1}
+\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}Model  &\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}CLI argument  &\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}Network\+Type enum  &\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}Keypoints  \\
+Pose-\/\+Res\+Net18-\/\+Body  &{\ttfamily resnet18-\/body}  &{\ttfamily RESNET18\+\_\+\+BODY}  &18  \\
+Pose-\/\+Res\+Net18-\/\+Hand  &{\ttfamily resnet18-\/hand}  &{\ttfamily RESNET18\+\_\+\+HAND}  &21  \\
+Pose-\/\+Dense\+Net121-\/\+Body  &{\ttfamily densenet121-\/body}  &{\ttfamily DENSENET121\+\_\+\+BODY}  &18  \\
+\end{DoxyTable}
+\hypertarget{dir_5fcaaf5af391369b2d07f8dcd23285dd_autotoc_md486}{}\doxysubsubsubsubsection{\texorpdfstring{Action Recognition}{Action Recognition}}\label{dir_5fcaaf5af391369b2d07f8dcd23285dd_autotoc_md486}
+
+\begin{DoxyTable}{3}{}{}{1}
+\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}Model  &\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}CLI argument  &\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}Classes  \\
+Action-\/\+Res\+Net18-\/\+Kinetics  &{\ttfamily resnet18}  &1040  \\
+Action-\/\+Res\+Net34-\/\+Kinetics  &{\ttfamily resnet34}  &1040  \\
+\end{DoxyTable}
+\hypertarget{dir_5fcaaf5af391369b2d07f8dcd23285dd_autotoc_md487}{}\doxysubsubsection{\texorpdfstring{Recommended System Requirements}{Recommended System Requirements}}\label{dir_5fcaaf5af391369b2d07f8dcd23285dd_autotoc_md487}
+
+\begin{DoxyItemize}
+\item Jetson Nano Developer Kit with Jet\+Pack 4.\+2 or newer (Ubuntu 18.\+04 aarch64). ~\newline
+
+\item Jetson Nano 2GB Developer Kit with Jet\+Pack 4.\+4.\+1 or newer (Ubuntu 18.\+04 aarch64).
+\item Jetson Orin Nano Developer Kit with Jet\+Pack 5.\+0 or newer (Ubuntu 20.\+04 aarch64).
+\item Jetson Xavier NX Developer Kit with Jet\+Pack 4.\+4 or newer (Ubuntu 18.\+04 aarch64). ~\newline
+
+\item Jetson AGX Xavier Developer Kit with Jet\+Pack 4.\+0 or newer (Ubuntu 18.\+04 aarch64). ~\newline
+
+\item Jetson AGX Orin Developer Kit with Jet\+Pack 5.\+0 or newer (Ubuntu 20.\+04 aarch64).
+\item Jetson TX2 Developer Kit with Jet\+Pack 3.\+0 or newer (Ubuntu 16.\+04 aarch64). ~\newline
+
+\item Jetson TX1 Developer Kit with Jet\+Pack 2.\+3 or newer (Ubuntu 16.\+04 aarch64). ~\newline
+
+\end{DoxyItemize}
+
+\doxylink{requirements_The}{The} Transfer Learning with Py\+Torch section of the tutorial speaks from the perspective of running Py\+Torch onboard Jetson for training DNNs, however the same Py\+Torch code can be used on a PC, server, or cloud instance with an NVIDIA discrete GPU for faster training.\hypertarget{dir_5fcaaf5af391369b2d07f8dcd23285dd_autotoc_md488}{}\doxysubsubsection{\texorpdfstring{Extra Resources}{Extra Resources}}\label{dir_5fcaaf5af391369b2d07f8dcd23285dd_autotoc_md488}
+In this area, links and resources for deep learning are listed:\+
+
+
+\begin{DoxyItemize}
+\item \href{http://www.github.com/dusty-nv/ros_deep_learning}{\texttt{ros\+\_\+deep\+\_\+learning}} -\/ Tensor\+RT inference ROS nodes
+\item \href{https://github.com/NVIDIA-AI-IOT}{\texttt{NVIDIA AI IoT}} -\/ NVIDIA Jetson Git\+Hub repositories
+\item \href{https://www.eLinux.org/Jetson}{\texttt{Jetson e\+Linux Wiki}} -\/ Jetson e\+Linux Wiki
+\end{DoxyItemize}\hypertarget{dir_5fcaaf5af391369b2d07f8dcd23285dd_autotoc_md489}{}\doxysubsubsection{\texorpdfstring{Two Days to a Demo (DIGITS)}{Two Days to a Demo (DIGITS)}}\label{dir_5fcaaf5af391369b2d07f8dcd23285dd_autotoc_md489}
+\begin{quote}
+{\bfseries{note:\+}} the DIGITS/\+\+Caffe tutorial from below is deprecated. It\textquotesingle{}s recommended to follow the Transfer Learning with Py\+Torch tutorial from Hello AI World. \end{quote}
+
+
+
+
+{\bfseries{Expand this section to see original DIGITS tutorial (deprecated)}}\begin{adjustwidth}{1em}{0em}
+~\newline
+ \doxylink{requirements_The}{The} DIGITS tutorial includes training DNN\textquotesingle{}s in the cloud or PC, and inference on the Jetson with Tensor\+RT, and can take roughly two days or more depending on system setup, downloading the datasets, and the training speed of your GPU.
+
+
+\begin{DoxyItemize}
+\item \doxysectlink{md_jetson-inference_2docs_2digits-workflow}{DIGITS Workflow}{0}
+\item \doxysectlink{md_jetson-inference_2docs_2digits-setup}{DIGITS System Setup}{0}
+\item \doxysectlink{md_jetson-inference_2docs_2jetpack-setup}{Setting up Jetson with Jet\+Pack}{0}
+\item \doxysectlink{md_jetson-inference_2docs_2building-repo}{Building the Project from Source}{0}
+\item \doxysectlink{md_jetson-inference_2docs_2imagenet-console}{Classifying Images with Image\+Net}{0}
+\begin{DoxyItemize}
+\item \href{docs/imagenet-console.md\#using-the-console-program-on-jetson}{\texttt{Using the Console Program on Jetson}}
+\item \doxysectlink{md_jetson-inference_2docs_2imagenet-example}{Coding Your Own Image Recognition Program}{0}
+\item \doxysectlink{md_jetson-inference_2docs_2imagenet-camera}{Running the Live Camera Recognition Demo}{0}
+\item \doxysectlink{md_jetson-inference_2docs_2imagenet-training}{Re-\/\+Training the Network with DIGITS}{0}
+\item \href{docs/imagenet-training.md\#downloading-image-recognition-dataset}{\texttt{Downloading Image Recognition Dataset}}
+\item \href{docs/imagenet-training.md\#customizing-the-object-classes}{\texttt{Customizing the Object Classes}}
+\item \href{docs/imagenet-training.md\#importing-classification-dataset-into-digits}{\texttt{Importing Classification Dataset into DIGITS}}
+\item \href{docs/imagenet-training.md\#creating-image-classification-model-with-digits}{\texttt{Creating Image Classification Model with DIGITS}}
+\item \href{docs/imagenet-training.md\#testing-classification-model-in-digits}{\texttt{Testing Classification Model in DIGITS}}
+\item \doxysectlink{md_jetson-inference_2docs_2imagenet-snapshot}{Downloading Model Snapshot to Jetson}{0}
+\item \doxysectlink{md_jetson-inference_2docs_2imagenet-custom}{Loading Custom Models on Jetson}{0}
+\end{DoxyItemize}
+\item \doxysectlink{md_jetson-inference_2docs_2detectnet-training}{Locating Objects with Detect\+Net}{0}
+\begin{DoxyItemize}
+\item \href{docs/detectnet-training.md\#detection-data-formatting-in-digits}{\texttt{Detection Data Formatting in DIGITS}}
+\item \href{docs/detectnet-training.md\#downloading-the-detection-dataset}{\texttt{Downloading the Detection Dataset}}
+\item \href{docs/detectnet-training.md\#importing-the-detection-dataset-into-digits}{\texttt{Importing the Detection Dataset into DIGITS}}
+\item \href{docs/detectnet-training.md\#creating-detectnet-model-with-digits}{\texttt{Creating Detect\+Net Model with DIGITS}}
+\item \href{docs/detectnet-training.md\#testing-detectnet-model-inference-in-digits}{\texttt{Testing Detect\+Net Model Inference in DIGITS}}
+\item \doxysectlink{md_jetson-inference_2docs_2detectnet-snapshot}{Downloading the Detection Model to Jetson}{0}
+\item \href{docs/detectnet-snapshot.md\#detectnet-patches-for-tensorrt}{\texttt{Detect\+Net Patches for Tensor\+RT}}
+\item \doxysectlink{md_jetson-inference_2docs_2detectnet-console}{Detecting Objects from the Command Line}{0}
+\item \href{docs/detectnet-console.md\#multi-class-object-detection-models}{\texttt{Multi-\/class Object Detection Models}}
+\item \doxysectlink{md_jetson-inference_2docs_2detectnet-camera}{Running the Live Camera Detection Demo on Jetson}{0}
+\end{DoxyItemize}
+\item \doxysectlink{md_jetson-inference_2docs_2segnet-dataset}{Semantic Segmentation with Seg\+Net}{0}
+\begin{DoxyItemize}
+\item \href{docs/segnet-dataset.md\#downloading-aerial-drone-dataset}{\texttt{Downloading Aerial Drone Dataset}}
+\item \href{docs/segnet-dataset.md\#importing-the-aerial-dataset-into-digits}{\texttt{Importing the Aerial Dataset into DIGITS}}
+\item \doxysectlink{md_jetson-inference_2docs_2segnet-pretrained}{Generating Pretrained FCN-\/\+Alexnet}{0}
+\item \doxysectlink{md_jetson-inference_2docs_2segnet-training}{Training FCN-\/\+Alexnet with DIGITS}{0}
+\item \href{docs/segnet-training.md\#testing-inference-model-in-digits}{\texttt{Testing Inference Model in DIGITS}}
+\item \doxysectlink{md_jetson-inference_2docs_2segnet-patches}{FCN-\/\+Alexnet Patches for Tensor\+RT}{0}
+\item \doxysectlink{md_jetson-inference_2docs_2segnet-console}{Running Segmentation Models on Jetson}{0}
+\end{DoxyItemize}
+\end{DoxyItemize}
+
+\end{adjustwidth}
+\hypertarget{dir_5fcaaf5af391369b2d07f8dcd23285dd_autotoc_md490}{}\doxysubsubsection{\texorpdfstring{autotoc\+\_\+md490}{autotoc\+\_\+md490}}\label{dir_5fcaaf5af391369b2d07f8dcd23285dd_autotoc_md490}
+\textsuperscript{© 2016-\/2019 NVIDIA \texorpdfstring{$\vert$}{|} }\href{\#deploying-deep-learning}{\texttt{\textsuperscript{Table of Contents}}}

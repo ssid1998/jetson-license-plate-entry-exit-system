@@ -1,0 +1,1876 @@
+\doxysection{gl\+Display Class Reference}
+\hypertarget{classgl_display}{}\label{classgl_display}\index{glDisplay@{glDisplay}}
+
+
+{\ttfamily \+\#include $<$gl\+Display.\+h$>$}
+
+Inheritance diagram for gl\+Display:\+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classgl_display}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \doxymbox{\hyperlink{structgl_display_1_1event_handler}{event\+Handler}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{classgl_display_a3978a9f43490e6f19268ca5225679c60}{\texorpdfstring{$\sim$}{\string~}gl\+Display}} ()
+\item 
+virtual bool \doxymbox{\hyperlink{classgl_display_addff6dd6558e309f765da6e15c278213}{Open}} ()
+\item 
+bool \doxymbox{\hyperlink{classgl_display_a7c96e8b41901e1b0555baef0433d5794}{Is\+Open}} () const
+\item 
+bool \doxymbox{\hyperlink{classgl_display_a634ed5ff30a1d2944f3667157a649c9a}{Is\+Closed}} () const
+\item 
+bool \doxymbox{\hyperlink{classgl_display_a89c660203dc7e4c95ebf1069681121b1}{Is\+Rendering}} () const
+\item 
+float \doxymbox{\hyperlink{classgl_display_a130822b4a5eda58692c0899627790700}{Get\+FPS}} () const
+\item 
+uint32\+\_\+t \doxymbox{\hyperlink{classgl_display_a14cf9b4f8c585e52963e8f644b816cd1}{Get\+ID}} () const
+\item 
+virtual uint32\+\_\+t \doxymbox{\hyperlink{classgl_display_a2dd585c39b61c2b06c4bf21b9663ef93}{Get\+Type}} () const
+\item 
+\doxymbox{\hyperlink{classgl_display_a3978a9f43490e6f19268ca5225679c60}{\texorpdfstring{$\sim$}{\string~}gl\+Display}} ()
+\item 
+virtual bool \doxymbox{\hyperlink{classgl_display_a65a2ec3a8dae7febff9c1e46b426c891}{Open}} ()
+\item 
+bool \doxymbox{\hyperlink{classgl_display_a7c96e8b41901e1b0555baef0433d5794}{Is\+Open}} () const
+\item 
+bool \doxymbox{\hyperlink{classgl_display_a634ed5ff30a1d2944f3667157a649c9a}{Is\+Closed}} () const
+\item 
+bool \doxymbox{\hyperlink{classgl_display_a89c660203dc7e4c95ebf1069681121b1}{Is\+Rendering}} () const
+\item 
+float \doxymbox{\hyperlink{classgl_display_a130822b4a5eda58692c0899627790700}{Get\+FPS}} () const
+\item 
+uint32\+\_\+t \doxymbox{\hyperlink{classgl_display_a14cf9b4f8c585e52963e8f644b816cd1}{Get\+ID}} () const
+\item 
+virtual uint32\+\_\+t \doxymbox{\hyperlink{classgl_display_a2dd585c39b61c2b06c4bf21b9663ef93}{Get\+Type}} () const
+\end{DoxyCompactItemize}
+\begin{Indent}\textbf{ Frame Begin + End}\par
+\begin{DoxyCompactItemize}
+\item 
+void \doxymbox{\hyperlink{classgl_display_aa8abd41c4dbaca15b2d092168ee14a83}{Begin\+Render}} (bool process\+Events=true)
+\item 
+void \doxymbox{\hyperlink{classgl_display_a97612036c5849cb4d7026337f2603c87}{End\+Render}} ()
+\item 
+void \doxymbox{\hyperlink{classgl_display_aa8abd41c4dbaca15b2d092168ee14a83}{Begin\+Render}} (bool process\+Events=true)
+\item 
+void \doxymbox{\hyperlink{classgl_display_a97612036c5849cb4d7026337f2603c87}{End\+Render}} ()
+\end{DoxyCompactItemize}
+\end{Indent}
+\begin{Indent}\textbf{ Image Rendering}\par
+\begin{DoxyCompactItemize}
+\item 
+void \doxymbox{\hyperlink{classgl_display_a528c58b4fcecd7d3d516f44de3233538}{Render}} (\doxymbox{\hyperlink{classgl_texture}{gl\+Texture}} \texorpdfstring{$\ast$}{*}texture, float x=5.\+0f, float y=30.\+0f)
+\item 
+void \doxymbox{\hyperlink{classgl_display_ad8dc7b93d535e81aa584f3d390b7d406}{Render}} (float \texorpdfstring{$\ast$}{*}image, uint32\+\_\+t width, uint32\+\_\+t height, float x=0.\+0f, float y=30.\+0f, bool normalize=true, cuda\+Stream\+\_\+t stream=0)
+\item 
+{\footnotesize template$<$typename T$>$ }\\bool \doxymbox{\hyperlink{classgl_display_a569c90f55d90e9de651122fc6667cc68}{Render}} (T \texorpdfstring{$\ast$}{*}image, uint32\+\_\+t width, uint32\+\_\+t height, cuda\+Stream\+\_\+t stream=0)
+\item 
+virtual bool \doxymbox{\hyperlink{classgl_display_a78e69f3717c19efc51fb6294f51b693a}{Render}} (void \texorpdfstring{$\ast$}{*}image, uint32\+\_\+t width, uint32\+\_\+t height, \doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{image\+Format}} format, cuda\+Stream\+\_\+t stream=0)
+\item 
+void \doxymbox{\hyperlink{classgl_display_a8a752d4e719940fe6b15c81bf8f7b09b}{Render\+Image}} (void \texorpdfstring{$\ast$}{*}image, uint32\+\_\+t width, uint32\+\_\+t height, \doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{image\+Format}} format, float x=0.\+0f, float y=30.\+0f, bool normalize=true, cuda\+Stream\+\_\+t stream=0)
+\item 
+void \doxymbox{\hyperlink{classgl_display_a2f253dbc05bf1773e9d213396123d5d5}{Render\+Once}} (void \texorpdfstring{$\ast$}{*}image, uint32\+\_\+t width, uint32\+\_\+t height, \doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{image\+Format}} format, float x=5.\+0f, float y=30.\+0f, bool normalize=true, cuda\+Stream\+\_\+t stream=0)
+\item 
+void \doxymbox{\hyperlink{classgl_display_ac9db9ed605e16ebb1e7f37f5427cf4d6}{Render\+Once}} (float \texorpdfstring{$\ast$}{*}image, uint32\+\_\+t width, uint32\+\_\+t height, float x=5.\+0f, float y=30.\+0f, bool normalize=true, cuda\+Stream\+\_\+t stream=0)
+\item 
+void \doxymbox{\hyperlink{classgl_display_a528c58b4fcecd7d3d516f44de3233538}{Render}} (\doxymbox{\hyperlink{classgl_texture}{gl\+Texture}} \texorpdfstring{$\ast$}{*}texture, float x=5.\+0f, float y=30.\+0f)
+\item 
+void \doxymbox{\hyperlink{classgl_display_ad8dc7b93d535e81aa584f3d390b7d406}{Render}} (float \texorpdfstring{$\ast$}{*}image, uint32\+\_\+t width, uint32\+\_\+t height, float x=0.\+0f, float y=30.\+0f, bool normalize=true, cuda\+Stream\+\_\+t stream=0)
+\item 
+{\footnotesize template$<$typename T$>$ }\\bool \doxymbox{\hyperlink{classgl_display_a569c90f55d90e9de651122fc6667cc68}{Render}} (T \texorpdfstring{$\ast$}{*}image, uint32\+\_\+t width, uint32\+\_\+t height, cuda\+Stream\+\_\+t stream=0)
+\item 
+virtual bool \doxymbox{\hyperlink{classgl_display_a3168a221a52f320ab00cfd6a68b9286f}{Render}} (void \texorpdfstring{$\ast$}{*}image, uint32\+\_\+t width, uint32\+\_\+t height, \doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{image\+Format}} format, cuda\+Stream\+\_\+t stream=0)
+\item 
+void \doxymbox{\hyperlink{classgl_display_a8a752d4e719940fe6b15c81bf8f7b09b}{Render\+Image}} (void \texorpdfstring{$\ast$}{*}image, uint32\+\_\+t width, uint32\+\_\+t height, \doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{image\+Format}} format, float x=0.\+0f, float y=30.\+0f, bool normalize=true, cuda\+Stream\+\_\+t stream=0)
+\item 
+void \doxymbox{\hyperlink{classgl_display_a2f253dbc05bf1773e9d213396123d5d5}{Render\+Once}} (void \texorpdfstring{$\ast$}{*}image, uint32\+\_\+t width, uint32\+\_\+t height, \doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{image\+Format}} format, float x=5.\+0f, float y=30.\+0f, bool normalize=true, cuda\+Stream\+\_\+t stream=0)
+\item 
+void \doxymbox{\hyperlink{classgl_display_ac9db9ed605e16ebb1e7f37f5427cf4d6}{Render\+Once}} (float \texorpdfstring{$\ast$}{*}image, uint32\+\_\+t width, uint32\+\_\+t height, float x=5.\+0f, float y=30.\+0f, bool normalize=true, cuda\+Stream\+\_\+t stream=0)
+\end{DoxyCompactItemize}
+\end{Indent}
+\begin{Indent}\textbf{ Vector Rendering}\par
+\begin{DoxyCompactItemize}
+\item 
+void \doxymbox{\hyperlink{classgl_display_a13db65eada3b098f3e301fee10de9917}{Render\+Line}} (float x1, float y1, float x2, float y2, float r, float g, float b, float a=1.\+0f, float thickness=2.\+0f)
+\item 
+void \doxymbox{\hyperlink{classgl_display_a58a8c3a68b96d5e52484354634ffec3b}{Render\+Outline}} (float x, float y, float width, float height, float r, float g, float b, float a=1.\+0f, float thickness=2.\+0f)
+\item 
+void \doxymbox{\hyperlink{classgl_display_ac390303fad04b7ffac04f208f48ea536}{Render\+Rect}} (float x, float y, float width, float height, float r, float g, float b, float a=1.\+0f)
+\item 
+void \doxymbox{\hyperlink{classgl_display_a9621c6abd6509bf14feb104684477861}{Render\+Rect}} (float r, float g, float b, float a=1.\+0f)
+\item 
+void \doxymbox{\hyperlink{classgl_display_a13db65eada3b098f3e301fee10de9917}{Render\+Line}} (float x1, float y1, float x2, float y2, float r, float g, float b, float a=1.\+0f, float thickness=2.\+0f)
+\item 
+void \doxymbox{\hyperlink{classgl_display_a58a8c3a68b96d5e52484354634ffec3b}{Render\+Outline}} (float x, float y, float width, float height, float r, float g, float b, float a=1.\+0f, float thickness=2.\+0f)
+\item 
+void \doxymbox{\hyperlink{classgl_display_ac390303fad04b7ffac04f208f48ea536}{Render\+Rect}} (float x, float y, float width, float height, float r, float g, float b, float a=1.\+0f)
+\item 
+void \doxymbox{\hyperlink{classgl_display_a9621c6abd6509bf14feb104684477861}{Render\+Rect}} (float r, float g, float b, float a=1.\+0f)
+\end{DoxyCompactItemize}
+\end{Indent}
+\begin{Indent}\textbf{ Window Resizing}\par
+\begin{DoxyCompactItemize}
+\item 
+void \doxymbox{\hyperlink{classgl_display_a52516d4523e536c9ed2e40113ee3856e}{Set\+Size}} (uint32\+\_\+t width, uint32\+\_\+t height)
+\item 
+void \doxymbox{\hyperlink{classgl_display_aa8149384dbd4a389281d1420608e8418}{Set\+Maximized}} (bool maximized)
+\item 
+bool \doxymbox{\hyperlink{classgl_display_a3bfec8d5ad04e8737a3ef7cfb13bc06f}{Is\+Maximized}} ()
+\item 
+void \doxymbox{\hyperlink{classgl_display_ae48ceb52e06b5d111777c5a92e3380db}{Set\+Fullscreen}} (bool fullscreen)
+\item 
+bool \doxymbox{\hyperlink{classgl_display_a90e336dd87d340d9fcf592f297fcf3b9}{Is\+Fullscreen}} ()
+\item 
+void \doxymbox{\hyperlink{classgl_display_a52516d4523e536c9ed2e40113ee3856e}{Set\+Size}} (uint32\+\_\+t width, uint32\+\_\+t height)
+\item 
+void \doxymbox{\hyperlink{classgl_display_aa8149384dbd4a389281d1420608e8418}{Set\+Maximized}} (bool maximized)
+\item 
+bool \doxymbox{\hyperlink{classgl_display_a3bfec8d5ad04e8737a3ef7cfb13bc06f}{Is\+Maximized}} ()
+\item 
+void \doxymbox{\hyperlink{classgl_display_ae48ceb52e06b5d111777c5a92e3380db}{Set\+Fullscreen}} (bool fullscreen)
+\item 
+bool \doxymbox{\hyperlink{classgl_display_a90e336dd87d340d9fcf592f297fcf3b9}{Is\+Fullscreen}} ()
+\end{DoxyCompactItemize}
+\end{Indent}
+\begin{Indent}\textbf{ Viewport Options}\par
+\begin{DoxyCompactItemize}
+\item 
+void \doxymbox{\hyperlink{classgl_display_a5e115cfde574e1b517a6422b1c3fbf02}{Get\+Background\+Color}} (float \texorpdfstring{$\ast$}{*}r, float \texorpdfstring{$\ast$}{*}g, float \texorpdfstring{$\ast$}{*}b, float \texorpdfstring{$\ast$}{*}a=NULL)
+\item 
+void \doxymbox{\hyperlink{classgl_display_a1494b4f48cc98493ff9d38537df076e7}{Set\+Background\+Color}} (float r, float g, float b, float a=1.\+0f)
+\item 
+void \doxymbox{\hyperlink{classgl_display_a61179bfa1ba61d66ff243273c71bf5a3}{Set\+Viewport}} (int left, int top, int right, int bottom)
+\item 
+void \doxymbox{\hyperlink{classgl_display_a23dd7a9f481c772766f049d8056a8dad}{Reset\+Viewport}} ()
+\item 
+void \doxymbox{\hyperlink{classgl_display_a5e115cfde574e1b517a6422b1c3fbf02}{Get\+Background\+Color}} (float \texorpdfstring{$\ast$}{*}r, float \texorpdfstring{$\ast$}{*}g, float \texorpdfstring{$\ast$}{*}b, float \texorpdfstring{$\ast$}{*}a=NULL)
+\item 
+void \doxymbox{\hyperlink{classgl_display_a1494b4f48cc98493ff9d38537df076e7}{Set\+Background\+Color}} (float r, float g, float b, float a=1.\+0f)
+\item 
+void \doxymbox{\hyperlink{classgl_display_a61179bfa1ba61d66ff243273c71bf5a3}{Set\+Viewport}} (int left, int top, int right, int bottom)
+\item 
+void \doxymbox{\hyperlink{classgl_display_a23dd7a9f481c772766f049d8056a8dad}{Reset\+Viewport}} ()
+\end{DoxyCompactItemize}
+\end{Indent}
+\begin{Indent}\textbf{ Event Handling}\par
+\begin{DoxyCompactItemize}
+\item 
+void \doxymbox{\hyperlink{classgl_display_a27bf4053fddbb4e0fdc88e142b2a7bb7}{Process\+Events}} ()
+\item 
+void \doxymbox{\hyperlink{classgl_display_ab84607fffba7eb6a8dc4cd71981aefb6}{Add\+Event\+Handler}} (\doxymbox{\hyperlink{group___open_g_l_gacbcfc0668226b31d1becba25887ff47e}{gl\+Event\+Handler}} callback, void \texorpdfstring{$\ast$}{*}user=NULL)
+\item 
+void \doxymbox{\hyperlink{classgl_display_aa1c19aa18e413da822f284c500a2af6f}{Remove\+Event\+Handler}} (\doxymbox{\hyperlink{group___open_g_l_gacbcfc0668226b31d1becba25887ff47e}{gl\+Event\+Handler}} callback, void \texorpdfstring{$\ast$}{*}user=NULL)
+\item 
+void \doxymbox{\hyperlink{classgl_display_a27bf4053fddbb4e0fdc88e142b2a7bb7}{Process\+Events}} ()
+\item 
+void \doxymbox{\hyperlink{classgl_display_ab84607fffba7eb6a8dc4cd71981aefb6}{Add\+Event\+Handler}} (\doxymbox{\hyperlink{group___open_g_l_gacbcfc0668226b31d1becba25887ff47e}{gl\+Event\+Handler}} callback, void \texorpdfstring{$\ast$}{*}user=NULL)
+\item 
+void \doxymbox{\hyperlink{classgl_display_aa1c19aa18e413da822f284c500a2af6f}{Remove\+Event\+Handler}} (\doxymbox{\hyperlink{group___open_g_l_gacbcfc0668226b31d1becba25887ff47e}{gl\+Event\+Handler}} callback, void \texorpdfstring{$\ast$}{*}user=NULL)
+\end{DoxyCompactItemize}
+\end{Indent}
+\begin{Indent}\textbf{ Mouse + Keyboard State}\par
+\begin{DoxyCompactItemize}
+\item 
+const int \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classgl_display_a1539a0481251800b98d5771085ec97cf}{Get\+Mouse\+Position}} () const
+\item 
+void \doxymbox{\hyperlink{classgl_display_a57d3f8b1bec6eba7925e187367adab47}{Get\+Mouse\+Position}} (int \texorpdfstring{$\ast$}{*}x, int \texorpdfstring{$\ast$}{*}y) const
+\item 
+bool \doxymbox{\hyperlink{classgl_display_a611350bedb3e68adfd0e691f3612fc89}{Get\+Mouse\+Button}} (uint32\+\_\+t button) const
+\item 
+bool \doxymbox{\hyperlink{classgl_display_a11c7c3c210333feb222d6f2480dbbc85}{Get\+Key}} (uint32\+\_\+t key) const
+\item 
+const int \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classgl_display_a1539a0481251800b98d5771085ec97cf}{Get\+Mouse\+Position}} () const
+\item 
+void \doxymbox{\hyperlink{classgl_display_a57d3f8b1bec6eba7925e187367adab47}{Get\+Mouse\+Position}} (int \texorpdfstring{$\ast$}{*}x, int \texorpdfstring{$\ast$}{*}y) const
+\item 
+bool \doxymbox{\hyperlink{classgl_display_a611350bedb3e68adfd0e691f3612fc89}{Get\+Mouse\+Button}} (uint32\+\_\+t button) const
+\item 
+bool \doxymbox{\hyperlink{classgl_display_a11c7c3c210333feb222d6f2480dbbc85}{Get\+Key}} (uint32\+\_\+t key) const
+\end{DoxyCompactItemize}
+\end{Indent}
+\begin{Indent}\textbf{ Mouse Cursor}\par
+\begin{DoxyCompactItemize}
+\item 
+void \doxymbox{\hyperlink{classgl_display_a93f2524dad00aad905af487e6e30c5e3}{Set\+Cursor}} (uint32\+\_\+t cursor)
+\item 
+void \doxymbox{\hyperlink{classgl_display_a8ebb8bd67bd55d9a1a24189ba46d09ab}{Set\+Default\+Cursor}} (uint32\+\_\+t cursor, bool activate=true)
+\item 
+void \doxymbox{\hyperlink{classgl_display_a55c92bc0159c94b720a5bdd06cefcd69}{Reset\+Cursor}} ()
+\item 
+void \doxymbox{\hyperlink{classgl_display_a617f568a9a94622e9c687540e36ea064}{Reset\+Default\+Cursor}} (bool activate=true)
+\item 
+void \doxymbox{\hyperlink{classgl_display_a93f2524dad00aad905af487e6e30c5e3}{Set\+Cursor}} (uint32\+\_\+t cursor)
+\item 
+void \doxymbox{\hyperlink{classgl_display_a8ebb8bd67bd55d9a1a24189ba46d09ab}{Set\+Default\+Cursor}} (uint32\+\_\+t cursor, bool activate=true)
+\item 
+void \doxymbox{\hyperlink{classgl_display_a55c92bc0159c94b720a5bdd06cefcd69}{Reset\+Cursor}} ()
+\item 
+void \doxymbox{\hyperlink{classgl_display_a617f568a9a94622e9c687540e36ea064}{Reset\+Default\+Cursor}} (bool activate=true)
+\end{DoxyCompactItemize}
+\end{Indent}
+\begin{Indent}\textbf{ Widgets}\par
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{classgl_widget}{gl\+Widget}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classgl_display_a961baa710c1097a7948d380e49cef92f}{Add\+Widget}} (\doxymbox{\hyperlink{classgl_widget}{gl\+Widget}} \texorpdfstring{$\ast$}{*}widget)
+\item 
+void \doxymbox{\hyperlink{classgl_display_a6de44eb3a03c6053ee61cb5cccce3f28}{Remove\+Widget}} (\doxymbox{\hyperlink{classgl_widget}{gl\+Widget}} \texorpdfstring{$\ast$}{*}widget, bool delete\+Widget=true)
+\item 
+void \doxymbox{\hyperlink{classgl_display_ad50e13424000eaf6f5ecb08e4acbfeb8}{Remove\+Widget}} (uint32\+\_\+t index, bool delete\+Widget=true)
+\item 
+void \doxymbox{\hyperlink{classgl_display_a5e209d2b90b11c2948a0cd98c19624e7}{Remove\+All\+Widgets}} (bool delete\+Widgets=true)
+\item 
+uint32\+\_\+t \doxymbox{\hyperlink{classgl_display_a80669db30cd225b4f6d0b8ab59237a97}{Get\+Num\+Widgets}} () const
+\item 
+\doxymbox{\hyperlink{classgl_widget}{gl\+Widget}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classgl_display_a0421635c70abe3765a363408bad79eca}{Get\+Widget}} (const uint32\+\_\+t index) const
+\item 
+int \doxymbox{\hyperlink{classgl_display_a2d13a48ff0860c5da554443a27413ad9}{Get\+Widget\+Index}} (const \doxymbox{\hyperlink{classgl_widget}{gl\+Widget}} \texorpdfstring{$\ast$}{*}widget) const
+\item 
+\doxymbox{\hyperlink{classgl_widget}{gl\+Widget}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classgl_display_a8c341a478fc5566bec3bf9d621534783}{Find\+Widget}} (int x, int y)
+\item 
+std::\+vector$<$ \doxymbox{\hyperlink{classgl_widget}{gl\+Widget}} \texorpdfstring{$\ast$}{*} $>$ \doxymbox{\hyperlink{classgl_display_a6dd32af584a54a2eaaed72bda83bf2aa}{Find\+Widgets}} (int x, int y)
+\item 
+\doxymbox{\hyperlink{classgl_widget}{gl\+Widget}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classgl_display_a961baa710c1097a7948d380e49cef92f}{Add\+Widget}} (\doxymbox{\hyperlink{classgl_widget}{gl\+Widget}} \texorpdfstring{$\ast$}{*}widget)
+\item 
+void \doxymbox{\hyperlink{classgl_display_a6de44eb3a03c6053ee61cb5cccce3f28}{Remove\+Widget}} (\doxymbox{\hyperlink{classgl_widget}{gl\+Widget}} \texorpdfstring{$\ast$}{*}widget, bool delete\+Widget=true)
+\item 
+void \doxymbox{\hyperlink{classgl_display_ad50e13424000eaf6f5ecb08e4acbfeb8}{Remove\+Widget}} (uint32\+\_\+t index, bool delete\+Widget=true)
+\item 
+void \doxymbox{\hyperlink{classgl_display_a5e209d2b90b11c2948a0cd98c19624e7}{Remove\+All\+Widgets}} (bool delete\+Widgets=true)
+\item 
+uint32\+\_\+t \doxymbox{\hyperlink{classgl_display_a80669db30cd225b4f6d0b8ab59237a97}{Get\+Num\+Widgets}} () const
+\item 
+\doxymbox{\hyperlink{classgl_widget}{gl\+Widget}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classgl_display_a0421635c70abe3765a363408bad79eca}{Get\+Widget}} (const uint32\+\_\+t index) const
+\item 
+int \doxymbox{\hyperlink{classgl_display_a2d13a48ff0860c5da554443a27413ad9}{Get\+Widget\+Index}} (const \doxymbox{\hyperlink{classgl_widget}{gl\+Widget}} \texorpdfstring{$\ast$}{*}widget) const
+\item 
+\doxymbox{\hyperlink{classgl_widget}{gl\+Widget}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classgl_display_a8c341a478fc5566bec3bf9d621534783}{Find\+Widget}} (int x, int y)
+\item 
+std::\+vector$<$ \doxymbox{\hyperlink{classgl_widget}{gl\+Widget}} \texorpdfstring{$\ast$}{*} $>$ \doxymbox{\hyperlink{classgl_display_a6dd32af584a54a2eaaed72bda83bf2aa}{Find\+Widgets}} (int x, int y)
+\end{DoxyCompactItemize}
+\end{Indent}
+\doxysubsection*{Public Member Functions inherited from \doxymbox{\hyperlink{classvideo_output}{video\+Output}}}
+\begin{DoxyCompactItemize}
+\item 
+virtual \doxymbox{\hyperlink{classvideo_output_a95e72081b15d45e889e20fc9ba508c4c}{\texorpdfstring{$\sim$}{\string~}video\+Output}} ()
+\item 
+{\footnotesize template$<$typename T$>$ }\\bool \doxymbox{\hyperlink{classvideo_output_aba0bbb203522826c7d30509ffcca0820}{Render}} (T \texorpdfstring{$\ast$}{*}image, uint32\+\_\+t width, uint32\+\_\+t height, cuda\+Stream\+\_\+t stream=0)
+\item 
+virtual void \doxymbox{\hyperlink{classvideo_output_a0b574e20e27b9faf890cfd4fa8ff4d1c}{Close}} ()
+\item 
+bool \doxymbox{\hyperlink{classvideo_output_a2a3cf8d6230e26e27c5d22b29a150bdc}{Is\+Streaming}} () const
+\item 
+uint32\+\_\+t \doxymbox{\hyperlink{classvideo_output_afaba8521f7ff078293ee4052a28ee71c}{Get\+Width}} () const
+\item 
+uint32\+\_\+t \doxymbox{\hyperlink{classvideo_output_aa225fb199069cf2a4b30f467e237da73}{Get\+Height}} () const
+\item 
+float \doxymbox{\hyperlink{classvideo_output_a26c37f79e965f1b9741b4d9b3923bd6b}{Get\+Frame\+Rate}} () const
+\item 
+uint64\+\_\+t \doxymbox{\hyperlink{classvideo_output_ab38d8fb1ad7855cf428d9f8cf5806bb4}{Get\+Frame\+Count}} () const
+\item 
+const \doxymbox{\hyperlink{struct_u_r_i}{URI}} \& \doxymbox{\hyperlink{classvideo_output_a6395fb85b10d35cf4261ab267805b5e3}{Get\+Resource}} () const
+\item 
+const \doxymbox{\hyperlink{structvideo_options}{video\+Options}} \& \doxymbox{\hyperlink{classvideo_output_a24c5c222811408279be199edaf295811}{Get\+Options}} () const
+\item 
+void \doxymbox{\hyperlink{classvideo_output_ad2da4bab42fbd19a851e205647443ea5}{Add\+Output}} (\doxymbox{\hyperlink{classvideo_output}{video\+Output}} \texorpdfstring{$\ast$}{*}output)
+\item 
+uint32\+\_\+t \doxymbox{\hyperlink{classvideo_output_adc630f31a8d55dc852ac1e01c1f7dc58}{Get\+Num\+Outputs}} () const
+\item 
+\doxymbox{\hyperlink{classvideo_output}{video\+Output}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classvideo_output_a764dc1776532382b633833f4d77dbd6b}{Get\+Output}} (uint32\+\_\+t index) const
+\item 
+bool \doxymbox{\hyperlink{classvideo_output_a0a3ed32e27da1e996dc21c0339dc5a95}{Is\+Type}} (uint32\+\_\+t type) const
+\item 
+{\footnotesize template$<$typename T$>$ }\\bool \doxymbox{\hyperlink{classvideo_output_aa5463fc78e3d259fa18ea2e6349e21c8}{Is\+Type}} () const
+\item 
+const char \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classvideo_output_a5469ab79333db3f70c92599a2f520126}{Type\+To\+Str}} () const
+\item 
+virtual \doxymbox{\hyperlink{classvideo_output_a2186412156484860e31d827c10becf96}{\texorpdfstring{$\sim$}{\string~}video\+Output}} ()
+\item 
+{\footnotesize template$<$typename T$>$ }\\bool \doxymbox{\hyperlink{classvideo_output_aba0bbb203522826c7d30509ffcca0820}{Render}} (T \texorpdfstring{$\ast$}{*}image, uint32\+\_\+t width, uint32\+\_\+t height, cuda\+Stream\+\_\+t stream=0)
+\item 
+virtual void \doxymbox{\hyperlink{classvideo_output_a552252a397249335e77755e0b911225e}{Close}} ()
+\item 
+bool \doxymbox{\hyperlink{classvideo_output_a2a3cf8d6230e26e27c5d22b29a150bdc}{Is\+Streaming}} () const
+\item 
+uint32\+\_\+t \doxymbox{\hyperlink{classvideo_output_afaba8521f7ff078293ee4052a28ee71c}{Get\+Width}} () const
+\item 
+uint32\+\_\+t \doxymbox{\hyperlink{classvideo_output_aa225fb199069cf2a4b30f467e237da73}{Get\+Height}} () const
+\item 
+float \doxymbox{\hyperlink{classvideo_output_a26c37f79e965f1b9741b4d9b3923bd6b}{Get\+Frame\+Rate}} () const
+\item 
+uint64\+\_\+t \doxymbox{\hyperlink{classvideo_output_ab38d8fb1ad7855cf428d9f8cf5806bb4}{Get\+Frame\+Count}} () const
+\item 
+const \doxymbox{\hyperlink{struct_u_r_i}{URI}} \& \doxymbox{\hyperlink{classvideo_output_a6395fb85b10d35cf4261ab267805b5e3}{Get\+Resource}} () const
+\item 
+const \doxymbox{\hyperlink{structvideo_options}{video\+Options}} \& \doxymbox{\hyperlink{classvideo_output_a24c5c222811408279be199edaf295811}{Get\+Options}} () const
+\item 
+void \doxymbox{\hyperlink{classvideo_output_ad2da4bab42fbd19a851e205647443ea5}{Add\+Output}} (\doxymbox{\hyperlink{classvideo_output}{video\+Output}} \texorpdfstring{$\ast$}{*}output)
+\item 
+uint32\+\_\+t \doxymbox{\hyperlink{classvideo_output_adc630f31a8d55dc852ac1e01c1f7dc58}{Get\+Num\+Outputs}} () const
+\item 
+\doxymbox{\hyperlink{classvideo_output}{video\+Output}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classvideo_output_a764dc1776532382b633833f4d77dbd6b}{Get\+Output}} (uint32\+\_\+t index) const
+\item 
+bool \doxymbox{\hyperlink{classvideo_output_a0a3ed32e27da1e996dc21c0339dc5a95}{Is\+Type}} (uint32\+\_\+t type) const
+\item 
+{\footnotesize template$<$typename T$>$ }\\bool \doxymbox{\hyperlink{classvideo_output_aa5463fc78e3d259fa18ea2e6349e21c8}{Is\+Type}} () const
+\item 
+const char \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classvideo_output_a5469ab79333db3f70c92599a2f520126}{Type\+To\+Str}} () const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \doxymbox{\hyperlink{classgl_display}{gl\+Display}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classgl_display_a1f74c54c01fd88c9c2648cc313c35257}{Create}} (const char \texorpdfstring{$\ast$}{*}title=NULL, int width=-\/1, int height=-\/1, float r=0.\+05f, float g=0.\+05f, float b=0.\+05f, float a=1.\+0f)
+\item 
+static \doxymbox{\hyperlink{classgl_display}{gl\+Display}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classgl_display_a8210c3aadb33070713e0d5f84a76e94e}{Create}} (const \doxymbox{\hyperlink{structvideo_options}{video\+Options}} \&options)
+\item 
+static \doxymbox{\hyperlink{classgl_display}{gl\+Display}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classgl_display_a1b89aa3bc8a71275eeb36a11ea601e1e}{Create}} (const char \texorpdfstring{$\ast$}{*}title=NULL, int width=-\/1, int height=-\/1, float r=0.\+05f, float g=0.\+05f, float b=0.\+05f, float a=1.\+0f)
+\item 
+static \doxymbox{\hyperlink{classgl_display}{gl\+Display}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classgl_display_a46aeb20d8d56c86f8728436864f4de8e}{Create}} (const \doxymbox{\hyperlink{structvideo_options}{video\+Options}} \&options)
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions inherited from \doxymbox{\hyperlink{classvideo_output}{video\+Output}}}
+\begin{DoxyCompactItemize}
+\item 
+static \doxymbox{\hyperlink{classvideo_output}{video\+Output}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classvideo_output_acedbc7ebeb4f736471098dac4369f65a}{Create}} (const \doxymbox{\hyperlink{structvideo_options}{video\+Options}} \&options)
+\item 
+static \doxymbox{\hyperlink{classvideo_output}{video\+Output}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classvideo_output_a9e52b3455d062aa317a528062af5a381}{Create}} (const int argc, char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}argv, int position\+Arg=-\/1)
+\item 
+static \doxymbox{\hyperlink{classvideo_output}{video\+Output}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classvideo_output_a9f19d8bcdd8b235d86ec989a539ccd8a}{Create}} (const \doxymbox{\hyperlink{classcommand_line}{command\+Line}} \&cmd\+Line, int position\+Arg=-\/1)
+\item 
+static \doxymbox{\hyperlink{classvideo_output}{video\+Output}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classvideo_output_a7b619e6347ac4234f13e15c32b1fd172}{Create}} (const char \texorpdfstring{$\ast$}{*}\doxymbox{\hyperlink{struct_u_r_i}{URI}}, const \doxymbox{\hyperlink{structvideo_options}{video\+Options}} \&options=\doxymbox{\hyperlink{structvideo_options}{video\+Options}}())
+\item 
+static \doxymbox{\hyperlink{classvideo_output}{video\+Output}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classvideo_output_a4dcbfea79f60d40a9f1512d3fc5850e6}{Create}} (const char \texorpdfstring{$\ast$}{*}\doxymbox{\hyperlink{struct_u_r_i}{URI}}, const \doxymbox{\hyperlink{classcommand_line}{command\+Line}} \&cmd\+Line, int position\+Arg=-\/1, const \doxymbox{\hyperlink{structvideo_options}{video\+Options}} \&options=\doxymbox{\hyperlink{structvideo_options}{video\+Options}}())
+\item 
+static \doxymbox{\hyperlink{classvideo_output}{video\+Output}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classvideo_output_afc1dd13065e9cfe8a81593656d4090ec}{Create}} (const char \texorpdfstring{$\ast$}{*}\doxymbox{\hyperlink{struct_u_r_i}{URI}}, const int argc, char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}argv, int position\+Arg=-\/1, const \doxymbox{\hyperlink{structvideo_options}{video\+Options}} \&options=\doxymbox{\hyperlink{structvideo_options}{video\+Options}}())
+\item 
+static \doxymbox{\hyperlink{classvideo_output}{video\+Output}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classvideo_output_a7fcad4b320ff9f928ef70db9b32986f1}{Create\+Null\+Output}} ()
+\item 
+static const char \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classvideo_output_a17f8185e3edad32bf90de2d045348bd4}{Usage}} ()
+\item 
+static const char \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classvideo_output_a89c221b3f278a9b3eea59a10425381ef}{Type\+To\+Str}} (uint32\+\_\+t type)
+\item 
+static \doxymbox{\hyperlink{classvideo_output}{video\+Output}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classvideo_output_a5a8d2f68b787a62372a5f6c3ef9b5c53}{Create}} (const \doxymbox{\hyperlink{structvideo_options}{video\+Options}} \&options)
+\item 
+static \doxymbox{\hyperlink{classvideo_output}{video\+Output}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classvideo_output_a6874aaadf62da2dafb26961d4fae9ae5}{Create}} (const int argc, char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}argv, int position\+Arg=-\/1)
+\item 
+static \doxymbox{\hyperlink{classvideo_output}{video\+Output}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classvideo_output_adf958e1059fd9af632611ea30fa244a2}{Create}} (const \doxymbox{\hyperlink{classcommand_line}{command\+Line}} \&cmd\+Line, int position\+Arg=-\/1)
+\item 
+static \doxymbox{\hyperlink{classvideo_output}{video\+Output}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classvideo_output_a2cc5e23c17a4d484787ac5fbe926775b}{Create}} (const char \texorpdfstring{$\ast$}{*}\doxymbox{\hyperlink{struct_u_r_i}{URI}}, const \doxymbox{\hyperlink{structvideo_options}{video\+Options}} \&options=\doxymbox{\hyperlink{structvideo_options}{video\+Options}}())
+\item 
+static \doxymbox{\hyperlink{classvideo_output}{video\+Output}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classvideo_output_a17a679f2092fdccb0ea189ea40717fd0}{Create}} (const char \texorpdfstring{$\ast$}{*}\doxymbox{\hyperlink{struct_u_r_i}{URI}}, const \doxymbox{\hyperlink{classcommand_line}{command\+Line}} \&cmd\+Line, int position\+Arg=-\/1, const \doxymbox{\hyperlink{structvideo_options}{video\+Options}} \&options=\doxymbox{\hyperlink{structvideo_options}{video\+Options}}())
+\item 
+static \doxymbox{\hyperlink{classvideo_output}{video\+Output}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classvideo_output_a1fa3d46b5a900c0c49b726e07109e8d1}{Create}} (const char \texorpdfstring{$\ast$}{*}\doxymbox{\hyperlink{struct_u_r_i}{URI}}, const int argc, char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}argv, int position\+Arg=-\/1, const \doxymbox{\hyperlink{structvideo_options}{video\+Options}} \&options=\doxymbox{\hyperlink{structvideo_options}{video\+Options}}())
+\item 
+static \doxymbox{\hyperlink{classvideo_output}{video\+Output}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classvideo_output_a2e6bd6b52ff33b1536d3510081ab5fab}{Create\+Null\+Output}} ()
+\item 
+static const char \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classvideo_output_a17f8185e3edad32bf90de2d045348bd4}{Usage}} ()
+\item 
+static const char \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classvideo_output_adfeba4d7e15f71823daba498b6abb3e0}{Type\+To\+Str}} (uint32\+\_\+t type)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static const uint32\+\_\+t \doxymbox{\hyperlink{classgl_display_a600c2e9468bad51e51dc110a9032e72b}{Type}} = (1 $<$$<$ 3)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classgl_display_a2559c6f33ab5760f3f2efe345bf9fa97}\label{classgl_display_a2559c6f33ab5760f3f2efe345bf9fa97} 
+{\bfseries gl\+Display} (const \doxymbox{\hyperlink{structvideo_options}{video\+Options}} \&options)
+\item 
+\Hypertarget{classgl_display_a2d545e3ad748e899a413b1c954dc06d4}\label{classgl_display_a2d545e3ad748e899a413b1c954dc06d4} 
+bool {\bfseries init\+Window} ()
+\item 
+\Hypertarget{classgl_display_a022eebf333e5acf6df0fcf2f632a470a}\label{classgl_display_a022eebf333e5acf6df0fcf2f632a470a} 
+bool {\bfseries init\+GL} ()
+\item 
+\Hypertarget{classgl_display_ab79613a6c4462148e664a1c6f9aa28c9}\label{classgl_display_ab79613a6c4462148e664a1c6f9aa28c9} 
+\doxymbox{\hyperlink{classgl_texture}{gl\+Texture}} \texorpdfstring{$\ast$}{*} {\bfseries alloc\+Texture} (uint32\+\_\+t width, uint32\+\_\+t height, \doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{image\+Format}} format)
+\item 
+\Hypertarget{classgl_display_ac62b17bd5fc32d79a65c4fe675ba643c}\label{classgl_display_ac62b17bd5fc32d79a65c4fe675ba643c} 
+void {\bfseries activate\+Viewport} ()
+\item 
+\Hypertarget{classgl_display_a003b6aa5e7a7e32eee46b2720e6f1f1f}\label{classgl_display_a003b6aa5e7a7e32eee46b2720e6f1f1f} 
+void {\bfseries dispatch\+Event} (uint16\+\_\+t msg, int a, int b)
+\item 
+\Hypertarget{classgl_display_a2559c6f33ab5760f3f2efe345bf9fa97}\label{classgl_display_a2559c6f33ab5760f3f2efe345bf9fa97} 
+{\bfseries gl\+Display} (const \doxymbox{\hyperlink{structvideo_options}{video\+Options}} \&options)
+\item 
+\Hypertarget{classgl_display_a2d545e3ad748e899a413b1c954dc06d4}\label{classgl_display_a2d545e3ad748e899a413b1c954dc06d4} 
+bool {\bfseries init\+Window} ()
+\item 
+\Hypertarget{classgl_display_a022eebf333e5acf6df0fcf2f632a470a}\label{classgl_display_a022eebf333e5acf6df0fcf2f632a470a} 
+bool {\bfseries init\+GL} ()
+\item 
+\Hypertarget{classgl_display_ab79613a6c4462148e664a1c6f9aa28c9}\label{classgl_display_ab79613a6c4462148e664a1c6f9aa28c9} 
+\doxymbox{\hyperlink{classgl_texture}{gl\+Texture}} \texorpdfstring{$\ast$}{*} {\bfseries alloc\+Texture} (uint32\+\_\+t width, uint32\+\_\+t height, \doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{image\+Format}} format)
+\item 
+\Hypertarget{classgl_display_ac62b17bd5fc32d79a65c4fe675ba643c}\label{classgl_display_ac62b17bd5fc32d79a65c4fe675ba643c} 
+void {\bfseries activate\+Viewport} ()
+\item 
+\Hypertarget{classgl_display_a003b6aa5e7a7e32eee46b2720e6f1f1f}\label{classgl_display_a003b6aa5e7a7e32eee46b2720e6f1f1f} 
+void {\bfseries dispatch\+Event} (uint16\+\_\+t msg, int a, int b)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions inherited from \doxymbox{\hyperlink{classvideo_output}{video\+Output}}}
+\begin{DoxyCompactItemize}
+\item 
+{\bfseries video\+Output} (const \doxymbox{\hyperlink{structvideo_options}{video\+Options}} \&options)
+\item 
+{\bfseries video\+Output} (const \doxymbox{\hyperlink{structvideo_options}{video\+Options}} \&options)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classgl_display_a015f638487e53ebd6c644bf61e04ccd8}\label{classgl_display_a015f638487e53ebd6c644bf61e04ccd8} 
+static bool {\bfseries on\+Event} (uint16\+\_\+t msg, int a, int b, void \texorpdfstring{$\ast$}{*}user)
+\item 
+\Hypertarget{classgl_display_a0b7479b6bc4e384c66b164411333f00e}\label{classgl_display_a0b7479b6bc4e384c66b164411333f00e} 
+static bool {\bfseries on\+Event} (uint16\+\_\+t msg, int a, int b, void \texorpdfstring{$\ast$}{*}user)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classgl_display_a56ad032a849cf5efd6c73b9a2319b693}\label{classgl_display_a56ad032a849cf5efd6c73b9a2319b693} 
+Display \texorpdfstring{$\ast$}{*} {\bfseries m\+DisplayX}
+\item 
+\Hypertarget{classgl_display_aa2e9eb7c4a1feb70d5dee5a4086a30ba}\label{classgl_display_aa2e9eb7c4a1feb70d5dee5a4086a30ba} 
+Screen \texorpdfstring{$\ast$}{*} {\bfseries m\+ScreenX}
+\item 
+\Hypertarget{classgl_display_a4275f8c27f5af03fccf9457c21de4a5d}\label{classgl_display_a4275f8c27f5af03fccf9457c21de4a5d} 
+XVisual\+Info \texorpdfstring{$\ast$}{*} {\bfseries m\+VisualX}
+\item 
+\Hypertarget{classgl_display_a59861c4376b388d34c57f06c9a460e97}\label{classgl_display_a59861c4376b388d34c57f06c9a460e97} 
+Window {\bfseries m\+WindowX}
+\item 
+\Hypertarget{classgl_display_aecdedd41e0d674fb614b88fd9ca9fa15}\label{classgl_display_aecdedd41e0d674fb614b88fd9ca9fa15} 
+GLXContext {\bfseries m\+Context\+GL}
+\item 
+\Hypertarget{classgl_display_a994004322531ae2611d0d70a823b3560}\label{classgl_display_a994004322531ae2611d0d70a823b3560} 
+Cursor {\bfseries m\+Cursors} \+[256]\+
+\item 
+\Hypertarget{classgl_display_aab1f8e0d4ac630ab4c9ab681c61d8419}\label{classgl_display_aab1f8e0d4ac630ab4c9ab681c61d8419} 
+int {\bfseries m\+Active\+Cursor}
+\item 
+\Hypertarget{classgl_display_ae5eeb341bb438b349634928c6ee92813}\label{classgl_display_ae5eeb341bb438b349634928c6ee92813} 
+int {\bfseries m\+Default\+Cursor}
+\item 
+\Hypertarget{classgl_display_ac78bc19a9838670a017e80f56b9037df}\label{classgl_display_ac78bc19a9838670a017e80f56b9037df} 
+bool {\bfseries m\+Initial\+Show}
+\item 
+\Hypertarget{classgl_display_a82d14054eb62a16e6101a57e32a050e1}\label{classgl_display_a82d14054eb62a16e6101a57e32a050e1} 
+bool {\bfseries m\+Rendering}
+\item 
+\Hypertarget{classgl_display_a50e2a59369c56c0b43cb2c45ae1bdb9f}\label{classgl_display_a50e2a59369c56c0b43cb2c45ae1bdb9f} 
+bool {\bfseries m\+Resized\+To\+Feed}
+\item 
+\Hypertarget{classgl_display_a4d20a9b3eb655b1719c3896f9af608e4}\label{classgl_display_a4d20a9b3eb655b1719c3896f9af608e4} 
+Atom {\bfseries m\+Window\+Closed\+Msg}
+\item 
+\Hypertarget{classgl_display_a0fa64e4b894f4084fb9c6ba1fb249658}\label{classgl_display_a0fa64e4b894f4084fb9c6ba1fb249658} 
+\doxymbox{\hyperlink{classgl_display_a0d39d6f011999828560d8353edadf46c}{Drag\+Mode}} {\bfseries m\+Drag\+Mode}
+\item 
+\Hypertarget{classgl_display_a3af6f1d107f3deb4b18230af4e3561a8}\label{classgl_display_a3af6f1d107f3deb4b18230af4e3561a8} 
+uint32\+\_\+t {\bfseries m\+ID}
+\item 
+\Hypertarget{classgl_display_a893682bb4ca0ae400c48aed020408128}\label{classgl_display_a893682bb4ca0ae400c48aed020408128} 
+uint32\+\_\+t {\bfseries m\+Screen\+Width}
+\item 
+\Hypertarget{classgl_display_adfe7e2b2b85b8888b21c07e56718ef57}\label{classgl_display_adfe7e2b2b85b8888b21c07e56718ef57} 
+uint32\+\_\+t {\bfseries m\+Screen\+Height}
+\item 
+\Hypertarget{classgl_display_a060f50c9661124d2d8aa457dfe30d4bc}\label{classgl_display_a060f50c9661124d2d8aa457dfe30d4bc} 
+timespec {\bfseries m\+Last\+Time}
+\item 
+\Hypertarget{classgl_display_a5696e63a87c34b0d50d1615bca5072ad}\label{classgl_display_a5696e63a87c34b0d50d1615bca5072ad} 
+float {\bfseries m\+Avg\+Time}
+\item 
+\Hypertarget{classgl_display_abe853c6acd8589d41c1771fa3d6ec374}\label{classgl_display_abe853c6acd8589d41c1771fa3d6ec374} 
+float {\bfseries m\+Bg\+Color} \+[4]\+
+\item 
+\Hypertarget{classgl_display_a2dc39e55690b6a689c6d5fbbdedf2b30}\label{classgl_display_a2dc39e55690b6a689c6d5fbbdedf2b30} 
+int {\bfseries m\+Viewport} \+[4]\+
+\item 
+\Hypertarget{classgl_display_adccaa8b1779ef7fb08ebfc33e401d07d}\label{classgl_display_adccaa8b1779ef7fb08ebfc33e401d07d} 
+int {\bfseries m\+Mouse\+Pos} \+[2]\+
+\item 
+\Hypertarget{classgl_display_ace9beb427e2287f4bbf36da9385653d4}\label{classgl_display_ace9beb427e2287f4bbf36da9385653d4} 
+int {\bfseries m\+Mouse\+Drag} \+[2]\+
+\item 
+\Hypertarget{classgl_display_ae82c6c66e9ff598eec13ca0f05664930}\label{classgl_display_ae82c6c66e9ff598eec13ca0f05664930} 
+int {\bfseries m\+Mouse\+Drag\+Origin} \+[2]\+
+\item 
+\Hypertarget{classgl_display_ad7b6f7d5d1091275d71aa71742e31d65}\label{classgl_display_ad7b6f7d5d1091275d71aa71742e31d65} 
+bool {\bfseries m\+Mouse\+Buttons} \+[16]\+
+\item 
+\Hypertarget{classgl_display_ad2b0382531b0981abd615c382174c2ff}\label{classgl_display_ad2b0382531b0981abd615c382174c2ff} 
+bool {\bfseries m\+Key\+States} \+[1024]\+
+\item 
+\Hypertarget{classgl_display_a7a64451498152b3d96185d3b857d1293}\label{classgl_display_a7a64451498152b3d96185d3b857d1293} 
+float \texorpdfstring{$\ast$}{*} {\bfseries m\+Normalized\+CUDA}
+\item 
+\Hypertarget{classgl_display_ac3a52573738ea17a2dd9d4263c166759}\label{classgl_display_ac3a52573738ea17a2dd9d4263c166759} 
+uint32\+\_\+t {\bfseries m\+Normalized\+Width}
+\item 
+\Hypertarget{classgl_display_aebc8ffc67311372c24f60a8c33652f48}\label{classgl_display_aebc8ffc67311372c24f60a8c33652f48} 
+uint32\+\_\+t {\bfseries m\+Normalized\+Height}
+\item 
+\Hypertarget{classgl_display_aa0da3eccc2dfba532978df9c4a650cac}\label{classgl_display_aa0da3eccc2dfba532978df9c4a650cac} 
+std::\+vector$<$ \doxymbox{\hyperlink{classgl_widget}{gl\+Widget}} \texorpdfstring{$\ast$}{*} $>$ {\bfseries m\+Widgets}
+\item 
+\Hypertarget{classgl_display_ac55e76646304c591f3fec9ac56e6d559}\label{classgl_display_ac55e76646304c591f3fec9ac56e6d559} 
+std::\+vector$<$ \doxymbox{\hyperlink{classgl_texture}{gl\+Texture}} \texorpdfstring{$\ast$}{*} $>$ {\bfseries m\+Textures}
+\item 
+\Hypertarget{classgl_display_a3b75ded7881035404e5d44e75e33e394}\label{classgl_display_a3b75ded7881035404e5d44e75e33e394} 
+std::\+vector$<$ \doxymbox{\hyperlink{structgl_display_1_1event_handler}{event\+Handler}} $>$ {\bfseries m\+Event\+Handlers}
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes inherited from \doxymbox{\hyperlink{classvideo_output}{video\+Output}}}
+\begin{DoxyCompactItemize}
+\item 
+bool {\bfseries m\+Streaming}
+\item 
+\doxymbox{\hyperlink{structvideo_options}{video\+Options}} {\bfseries m\+Options}
+\item 
+std::\+vector$<$ \doxymbox{\hyperlink{classvideo_output}{video\+Output}} \texorpdfstring{$\ast$}{*} $>$ {\bfseries m\+Outputs}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classgl_display_ae79503362f82c95456a082301c187618}\label{classgl_display_ae79503362f82c95456a082301c187618} 
+static const int {\bfseries screen\+Idx} = 0
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Mouse Dragging}
+\begin{DoxyCompactItemize}
+\item 
+enum \doxymbox{\hyperlink{classgl_display_a0d39d6f011999828560d8353edadf46c}{Drag\+Mode}} \{ \newline
+\doxymbox{\hyperlink{classgl_display_a0d39d6f011999828560d8353edadf46ca3b0e007875951671b43bc2a9a4cd04a0}{Drag\+Default}}
+, \doxymbox{\hyperlink{classgl_display_a0d39d6f011999828560d8353edadf46cafdc916973850f87a72e8cc27cc5c8641}{Drag\+Disabled}}
+, \doxymbox{\hyperlink{classgl_display_a0d39d6f011999828560d8353edadf46ca17435bbaf69d5527db2ac46e34fd9793}{Drag\+Select}}
+, \doxymbox{\hyperlink{classgl_display_a0d39d6f011999828560d8353edadf46ca8d05921a9f4c8e73f819451bd491c8bd}{Drag\+Create}}
+, \newline
+\doxymbox{\hyperlink{classgl_display_a0d39d6f011999828560d8353edadf46ca3b0e007875951671b43bc2a9a4cd04a0}{Drag\+Default}}
+, \doxymbox{\hyperlink{classgl_display_a0d39d6f011999828560d8353edadf46cafdc916973850f87a72e8cc27cc5c8641}{Drag\+Disabled}}
+, \doxymbox{\hyperlink{classgl_display_a0d39d6f011999828560d8353edadf46ca17435bbaf69d5527db2ac46e34fd9793}{Drag\+Select}}
+, \doxymbox{\hyperlink{classgl_display_a0d39d6f011999828560d8353edadf46ca8d05921a9f4c8e73f819451bd491c8bd}{Drag\+Create}}
+ \}
+\item 
+enum \doxymbox{\hyperlink{classgl_display_a0d39d6f011999828560d8353edadf46c}{Drag\+Mode}} \{ \newline
+\doxymbox{\hyperlink{classgl_display_a0d39d6f011999828560d8353edadf46ca3b0e007875951671b43bc2a9a4cd04a0}{Drag\+Default}}
+, \doxymbox{\hyperlink{classgl_display_a0d39d6f011999828560d8353edadf46cafdc916973850f87a72e8cc27cc5c8641}{Drag\+Disabled}}
+, \doxymbox{\hyperlink{classgl_display_a0d39d6f011999828560d8353edadf46ca17435bbaf69d5527db2ac46e34fd9793}{Drag\+Select}}
+, \doxymbox{\hyperlink{classgl_display_a0d39d6f011999828560d8353edadf46ca8d05921a9f4c8e73f819451bd491c8bd}{Drag\+Create}}
+, \newline
+\doxymbox{\hyperlink{classgl_display_a0d39d6f011999828560d8353edadf46ca3b0e007875951671b43bc2a9a4cd04a0}{Drag\+Default}}
+, \doxymbox{\hyperlink{classgl_display_a0d39d6f011999828560d8353edadf46cafdc916973850f87a72e8cc27cc5c8641}{Drag\+Disabled}}
+, \doxymbox{\hyperlink{classgl_display_a0d39d6f011999828560d8353edadf46ca17435bbaf69d5527db2ac46e34fd9793}{Drag\+Select}}
+, \doxymbox{\hyperlink{classgl_display_a0d39d6f011999828560d8353edadf46ca8d05921a9f4c8e73f819451bd491c8bd}{Drag\+Create}}
+ \}
+\item 
+\doxymbox{\hyperlink{classgl_display_a0d39d6f011999828560d8353edadf46c}{Drag\+Mode}} \doxymbox{\hyperlink{classgl_display_a2869b89190621c2fc502c0263035ca10}{Get\+Drag\+Mode}} () const
+\item 
+void \doxymbox{\hyperlink{classgl_display_aad873a9d842442644747bdb3176efad8}{Set\+Drag\+Mode}} (\doxymbox{\hyperlink{classgl_display_a0d39d6f011999828560d8353edadf46c}{Drag\+Mode}} mode)
+\item 
+bool \doxymbox{\hyperlink{classgl_display_a6f26c928e592b54e91d95e3edd96575a}{Is\+Dragging}} (\doxymbox{\hyperlink{classgl_display_a0d39d6f011999828560d8353edadf46c}{Drag\+Mode}} mode=\doxymbox{\hyperlink{classgl_display_a0d39d6f011999828560d8353edadf46ca3b0e007875951671b43bc2a9a4cd04a0}{Drag\+Default}}) const
+\item 
+bool \doxymbox{\hyperlink{classgl_display_a2a1bbe0f4e81a8a639ad1262e2e984e1}{Get\+Drag\+Rect}} (int \texorpdfstring{$\ast$}{*}x, int \texorpdfstring{$\ast$}{*}y, int \texorpdfstring{$\ast$}{*}width, int \texorpdfstring{$\ast$}{*}height)
+\item 
+bool \doxymbox{\hyperlink{classgl_display_a737d99f08c2b1cedcacb1f1f559bf1aa}{Get\+Drag\+Coords}} (int \texorpdfstring{$\ast$}{*}x1, int \texorpdfstring{$\ast$}{*}y1, int \texorpdfstring{$\ast$}{*}x2, int \texorpdfstring{$\ast$}{*}y2)
+\item 
+\doxymbox{\hyperlink{classgl_display_a0d39d6f011999828560d8353edadf46c}{Drag\+Mode}} \doxymbox{\hyperlink{classgl_display_a2869b89190621c2fc502c0263035ca10}{Get\+Drag\+Mode}} () const
+\item 
+void \doxymbox{\hyperlink{classgl_display_aad873a9d842442644747bdb3176efad8}{Set\+Drag\+Mode}} (\doxymbox{\hyperlink{classgl_display_a0d39d6f011999828560d8353edadf46c}{Drag\+Mode}} mode)
+\item 
+bool \doxymbox{\hyperlink{classgl_display_a6f26c928e592b54e91d95e3edd96575a}{Is\+Dragging}} (\doxymbox{\hyperlink{classgl_display_a0d39d6f011999828560d8353edadf46c}{Drag\+Mode}} mode=\doxymbox{\hyperlink{classgl_display_a0d39d6f011999828560d8353edadf46ca3b0e007875951671b43bc2a9a4cd04a0}{Drag\+Default}}) const
+\item 
+bool \doxymbox{\hyperlink{classgl_display_a2a1bbe0f4e81a8a639ad1262e2e984e1}{Get\+Drag\+Rect}} (int \texorpdfstring{$\ast$}{*}x, int \texorpdfstring{$\ast$}{*}y, int \texorpdfstring{$\ast$}{*}width, int \texorpdfstring{$\ast$}{*}height)
+\item 
+bool \doxymbox{\hyperlink{classgl_display_a737d99f08c2b1cedcacb1f1f559bf1aa}{Get\+Drag\+Coords}} (int \texorpdfstring{$\ast$}{*}x1, int \texorpdfstring{$\ast$}{*}y1, int \texorpdfstring{$\ast$}{*}x2, int \texorpdfstring{$\ast$}{*}y2)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Status Bar Text}
+\begin{DoxyCompactItemize}
+\item 
+static const char \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classgl_display_aa070974c9253183535b2ce4a9b6c471d}{DEFAULT\+\_\+\+TITLE}} = "{}NVIDIA Jetson"{}
+\item 
+virtual void \doxymbox{\hyperlink{classgl_display_a1f6dec929939ef80d3ae3bb4412b0863}{Set\+Status}} (const char \texorpdfstring{$\ast$}{*}str)
+\item 
+void \doxymbox{\hyperlink{classgl_display_a4a4943779f0d036af2e49fc9d9a8aade}{Set\+Title}} (const char \texorpdfstring{$\ast$}{*}str)
+\item 
+virtual void \doxymbox{\hyperlink{classgl_display_a63804bbc679034342b14fe4c2c4da042}{Set\+Status}} (const char \texorpdfstring{$\ast$}{*}str)
+\item 
+void \doxymbox{\hyperlink{classgl_display_a4a4943779f0d036af2e49fc9d9a8aade}{Set\+Title}} (const char \texorpdfstring{$\ast$}{*}str)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Open\+GL display window and image/\+video renderer with CUDA interoperability.
+
+\begin{DoxyNote}{Note}
+\doxylink{classgl_display}{gl\+Display} implements the \doxylink{classvideo_output}{video\+Output} interface and is intended to be used through that as opposed to directly. \doxylink{classvideo_output}{video\+Output} implements additional command-\/line parsing of \doxylink{structvideo_options}{video\+Options} to construct instances.
+\end{DoxyNote}
+\begin{DoxySeeAlso}{See also}
+\doxylink{classvideo_output}{video\+Output} 
+\end{DoxySeeAlso}
+
+
+\label{doc-enum-members}
+\Hypertarget{classgl_display_doc-enum-members}
+\doxysubsection{Member Enumeration Documentation}
+\Hypertarget{classgl_display_a0d39d6f011999828560d8353edadf46c}\index{glDisplay@{glDisplay}!DragMode@{DragMode}}
+\index{DragMode@{DragMode}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{DragMode}{DragMode}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgl_display_a0d39d6f011999828560d8353edadf46c} 
+enum \doxymbox{\hyperlink{classgl_display_a0d39d6f011999828560d8353edadf46c}{gl\+Display::\+\+Drag\+Mode}}}
+
+Drag behavior enum
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{classgl_display_a2869b89190621c2fc502c0263035ca10}{Get\+Drag\+Mode()} 
+
+\doxylink{classgl_display_aad873a9d842442644747bdb3176efad8}{Set\+Drag\+Mode()} 
+\end{DoxySeeAlso}
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DragDefault@{DragDefault}!glDisplay@{glDisplay}}
+\index{glDisplay@{glDisplay}!DragDefault@{DragDefault}}
+}\Hypertarget{classgl_display_a0d39d6f011999828560d8353edadf46ca3b0e007875951671b43bc2a9a4cd04a0}\label{classgl_display_a0d39d6f011999828560d8353edadf46ca3b0e007875951671b43bc2a9a4cd04a0} 
+Drag\+Default&Issue MOUSE\+\_\+\+DRAG events, but nothing else. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DragDisabled@{DragDisabled}!glDisplay@{glDisplay}}
+\index{glDisplay@{glDisplay}!DragDisabled@{DragDisabled}}
+}\Hypertarget{classgl_display_a0d39d6f011999828560d8353edadf46cafdc916973850f87a72e8cc27cc5c8641}\label{classgl_display_a0d39d6f011999828560d8353edadf46cafdc916973850f87a72e8cc27cc5c8641} 
+Drag\+Disabled&Disable issuing all MOUSE\+\_\+\+DRAG events \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DragSelect@{DragSelect}!glDisplay@{glDisplay}}
+\index{glDisplay@{glDisplay}!DragSelect@{DragSelect}}
+}\Hypertarget{classgl_display_a0d39d6f011999828560d8353edadf46ca17435bbaf69d5527db2ac46e34fd9793}\label{classgl_display_a0d39d6f011999828560d8353edadf46ca17435bbaf69d5527db2ac46e34fd9793} 
+Drag\+Select&Select widgets from a dragging rectangle, and issue WIDGET\+\_\+\+SELECTED events \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DragCreate@{DragCreate}!glDisplay@{glDisplay}}
+\index{glDisplay@{glDisplay}!DragCreate@{DragCreate}}
+}\Hypertarget{classgl_display_a0d39d6f011999828560d8353edadf46ca8d05921a9f4c8e73f819451bd491c8bd}\label{classgl_display_a0d39d6f011999828560d8353edadf46ca8d05921a9f4c8e73f819451bd491c8bd} 
+Drag\+Create&Create a new widget from a dragging rectangle, and issue WIDGET\+\_\+\+CREATED events \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DragDefault@{DragDefault}!glDisplay@{glDisplay}}
+\index{glDisplay@{glDisplay}!DragDefault@{DragDefault}}
+}\Hypertarget{classgl_display_a0d39d6f011999828560d8353edadf46ca3b0e007875951671b43bc2a9a4cd04a0}\label{classgl_display_a0d39d6f011999828560d8353edadf46ca3b0e007875951671b43bc2a9a4cd04a0} 
+Drag\+Default&Issue MOUSE\+\_\+\+DRAG events, but nothing else. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DragDisabled@{DragDisabled}!glDisplay@{glDisplay}}
+\index{glDisplay@{glDisplay}!DragDisabled@{DragDisabled}}
+}\Hypertarget{classgl_display_a0d39d6f011999828560d8353edadf46cafdc916973850f87a72e8cc27cc5c8641}\label{classgl_display_a0d39d6f011999828560d8353edadf46cafdc916973850f87a72e8cc27cc5c8641} 
+Drag\+Disabled&Disable issuing all MOUSE\+\_\+\+DRAG events \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DragSelect@{DragSelect}!glDisplay@{glDisplay}}
+\index{glDisplay@{glDisplay}!DragSelect@{DragSelect}}
+}\Hypertarget{classgl_display_a0d39d6f011999828560d8353edadf46ca17435bbaf69d5527db2ac46e34fd9793}\label{classgl_display_a0d39d6f011999828560d8353edadf46ca17435bbaf69d5527db2ac46e34fd9793} 
+Drag\+Select&Select widgets from a dragging rectangle, and issue WIDGET\+\_\+\+SELECTED events \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DragCreate@{DragCreate}!glDisplay@{glDisplay}}
+\index{glDisplay@{glDisplay}!DragCreate@{DragCreate}}
+}\Hypertarget{classgl_display_a0d39d6f011999828560d8353edadf46ca8d05921a9f4c8e73f819451bd491c8bd}\label{classgl_display_a0d39d6f011999828560d8353edadf46ca8d05921a9f4c8e73f819451bd491c8bd} 
+Drag\+Create&Create a new widget from a dragging rectangle, and issue WIDGET\+\_\+\+CREATED events \\
+\hline
+
+\end{DoxyEnumFields}
+\Hypertarget{classgl_display_a0d39d6f011999828560d8353edadf46c}\index{glDisplay@{glDisplay}!DragMode@{DragMode}}
+\index{DragMode@{DragMode}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{DragMode}{DragMode}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgl_display_a0d39d6f011999828560d8353edadf46c} 
+enum \doxymbox{\hyperlink{classgl_display_a0d39d6f011999828560d8353edadf46c}{gl\+Display::\+\+Drag\+Mode}}}
+
+Drag behavior enum
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{classgl_display_a2869b89190621c2fc502c0263035ca10}{Get\+Drag\+Mode()} 
+
+\doxylink{classgl_display_aad873a9d842442644747bdb3176efad8}{Set\+Drag\+Mode()} 
+\end{DoxySeeAlso}
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DragDefault@{DragDefault}!glDisplay@{glDisplay}}
+\index{glDisplay@{glDisplay}!DragDefault@{DragDefault}}
+}\Hypertarget{classgl_display_a0d39d6f011999828560d8353edadf46ca3b0e007875951671b43bc2a9a4cd04a0}\label{classgl_display_a0d39d6f011999828560d8353edadf46ca3b0e007875951671b43bc2a9a4cd04a0} 
+Drag\+Default&Issue MOUSE\+\_\+\+DRAG events, but nothing else. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DragDisabled@{DragDisabled}!glDisplay@{glDisplay}}
+\index{glDisplay@{glDisplay}!DragDisabled@{DragDisabled}}
+}\Hypertarget{classgl_display_a0d39d6f011999828560d8353edadf46cafdc916973850f87a72e8cc27cc5c8641}\label{classgl_display_a0d39d6f011999828560d8353edadf46cafdc916973850f87a72e8cc27cc5c8641} 
+Drag\+Disabled&Disable issuing all MOUSE\+\_\+\+DRAG events \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DragSelect@{DragSelect}!glDisplay@{glDisplay}}
+\index{glDisplay@{glDisplay}!DragSelect@{DragSelect}}
+}\Hypertarget{classgl_display_a0d39d6f011999828560d8353edadf46ca17435bbaf69d5527db2ac46e34fd9793}\label{classgl_display_a0d39d6f011999828560d8353edadf46ca17435bbaf69d5527db2ac46e34fd9793} 
+Drag\+Select&Select widgets from a dragging rectangle, and issue WIDGET\+\_\+\+SELECTED events \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DragCreate@{DragCreate}!glDisplay@{glDisplay}}
+\index{glDisplay@{glDisplay}!DragCreate@{DragCreate}}
+}\Hypertarget{classgl_display_a0d39d6f011999828560d8353edadf46ca8d05921a9f4c8e73f819451bd491c8bd}\label{classgl_display_a0d39d6f011999828560d8353edadf46ca8d05921a9f4c8e73f819451bd491c8bd} 
+Drag\+Create&Create a new widget from a dragging rectangle, and issue WIDGET\+\_\+\+CREATED events \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DragDefault@{DragDefault}!glDisplay@{glDisplay}}
+\index{glDisplay@{glDisplay}!DragDefault@{DragDefault}}
+}\Hypertarget{classgl_display_a0d39d6f011999828560d8353edadf46ca3b0e007875951671b43bc2a9a4cd04a0}\label{classgl_display_a0d39d6f011999828560d8353edadf46ca3b0e007875951671b43bc2a9a4cd04a0} 
+Drag\+Default&Issue MOUSE\+\_\+\+DRAG events, but nothing else. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DragDisabled@{DragDisabled}!glDisplay@{glDisplay}}
+\index{glDisplay@{glDisplay}!DragDisabled@{DragDisabled}}
+}\Hypertarget{classgl_display_a0d39d6f011999828560d8353edadf46cafdc916973850f87a72e8cc27cc5c8641}\label{classgl_display_a0d39d6f011999828560d8353edadf46cafdc916973850f87a72e8cc27cc5c8641} 
+Drag\+Disabled&Disable issuing all MOUSE\+\_\+\+DRAG events \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DragSelect@{DragSelect}!glDisplay@{glDisplay}}
+\index{glDisplay@{glDisplay}!DragSelect@{DragSelect}}
+}\Hypertarget{classgl_display_a0d39d6f011999828560d8353edadf46ca17435bbaf69d5527db2ac46e34fd9793}\label{classgl_display_a0d39d6f011999828560d8353edadf46ca17435bbaf69d5527db2ac46e34fd9793} 
+Drag\+Select&Select widgets from a dragging rectangle, and issue WIDGET\+\_\+\+SELECTED events \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DragCreate@{DragCreate}!glDisplay@{glDisplay}}
+\index{glDisplay@{glDisplay}!DragCreate@{DragCreate}}
+}\Hypertarget{classgl_display_a0d39d6f011999828560d8353edadf46ca8d05921a9f4c8e73f819451bd491c8bd}\label{classgl_display_a0d39d6f011999828560d8353edadf46ca8d05921a9f4c8e73f819451bd491c8bd} 
+Drag\+Create&Create a new widget from a dragging rectangle, and issue WIDGET\+\_\+\+CREATED events \\
+\hline
+
+\end{DoxyEnumFields}
+
+
+\label{doc-constructors}
+\Hypertarget{classgl_display_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classgl_display_a3978a9f43490e6f19268ca5225679c60}\index{glDisplay@{glDisplay}!````~glDisplay@{\texorpdfstring{$\sim$}{\string~}glDisplay}}
+\index{````~glDisplay@{\texorpdfstring{$\sim$}{\string~}glDisplay}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}glDisplay()}{\string~glDisplay()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgl_display_a3978a9f43490e6f19268ca5225679c60} 
+gl\+Display::\+\texorpdfstring{$\sim$}{\string~}gl\+Display (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Destroy window \Hypertarget{classgl_display_a3978a9f43490e6f19268ca5225679c60}\index{glDisplay@{glDisplay}!````~glDisplay@{\texorpdfstring{$\sim$}{\string~}glDisplay}}
+\index{````~glDisplay@{\texorpdfstring{$\sim$}{\string~}glDisplay}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}glDisplay()}{\string~glDisplay()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgl_display_a3978a9f43490e6f19268ca5225679c60} 
+gl\+Display::\+\texorpdfstring{$\sim$}{\string~}gl\+Display (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Destroy window 
+
+\label{doc-func-members}
+\Hypertarget{classgl_display_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classgl_display_ab84607fffba7eb6a8dc4cd71981aefb6}\index{glDisplay@{glDisplay}!AddEventHandler@{AddEventHandler}}
+\index{AddEventHandler@{AddEventHandler}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{AddEventHandler()}{AddEventHandler()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgl_display_ab84607fffba7eb6a8dc4cd71981aefb6} 
+void gl\+Display::\+\+Add\+Event\+Handler (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{group___open_g_l_gacbcfc0668226b31d1becba25887ff47e}{gl\+Event\+Handler}}}]{callback}{, }\item[{void \texorpdfstring{$\ast$}{*}}]{user}{ = {\ttfamily NULL}}\end{DoxyParamCaption})}
+
+Register an event message handler that will be called by \doxylink{classgl_display_a27bf4053fddbb4e0fdc88e142b2a7bb7}{Process\+Events()} 
+\begin{DoxyParams}{Parameters}
+{\em callback} & function pointer to the event message handler callback \\
+\hline
+{\em user} & optional user-\/specified pointer that will be passed to all invocations of this event handler (typically an object) \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classgl_display_ab84607fffba7eb6a8dc4cd71981aefb6}\index{glDisplay@{glDisplay}!AddEventHandler@{AddEventHandler}}
+\index{AddEventHandler@{AddEventHandler}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{AddEventHandler()}{AddEventHandler()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgl_display_ab84607fffba7eb6a8dc4cd71981aefb6} 
+void gl\+Display::\+\+Add\+Event\+Handler (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{group___open_g_l_gacbcfc0668226b31d1becba25887ff47e}{gl\+Event\+Handler}}}]{callback}{, }\item[{void \texorpdfstring{$\ast$}{*}}]{user}{ = {\ttfamily NULL}}\end{DoxyParamCaption})}
+
+Register an event message handler that will be called by \doxylink{classgl_display_a27bf4053fddbb4e0fdc88e142b2a7bb7}{Process\+Events()} 
+\begin{DoxyParams}{Parameters}
+{\em callback} & function pointer to the event message handler callback \\
+\hline
+{\em user} & optional user-\/specified pointer that will be passed to all invocations of this event handler (typically an object) \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classgl_display_a961baa710c1097a7948d380e49cef92f}\index{glDisplay@{glDisplay}!AddWidget@{AddWidget}}
+\index{AddWidget@{AddWidget}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{AddWidget()}{AddWidget()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgl_display_a961baa710c1097a7948d380e49cef92f} 
+\doxymbox{\hyperlink{classgl_widget}{gl\+Widget}} \texorpdfstring{$\ast$}{*} gl\+Display::\+\+Add\+Widget (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{classgl_widget}{gl\+Widget}} \texorpdfstring{$\ast$}{*}}]{widget}{}\end{DoxyParamCaption})}
+
+Add a widget to the window that recieves events and is rendered. \Hypertarget{classgl_display_a961baa710c1097a7948d380e49cef92f}\index{glDisplay@{glDisplay}!AddWidget@{AddWidget}}
+\index{AddWidget@{AddWidget}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{AddWidget()}{AddWidget()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgl_display_a961baa710c1097a7948d380e49cef92f} 
+\doxymbox{\hyperlink{classgl_widget}{gl\+Widget}} \texorpdfstring{$\ast$}{*} gl\+Display::\+\+Add\+Widget (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{classgl_widget}{gl\+Widget}} \texorpdfstring{$\ast$}{*}}]{widget}{}\end{DoxyParamCaption})}
+
+Add a widget to the window that recieves events and is rendered. \Hypertarget{classgl_display_aa8abd41c4dbaca15b2d092168ee14a83}\index{glDisplay@{glDisplay}!BeginRender@{BeginRender}}
+\index{BeginRender@{BeginRender}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{BeginRender()}{BeginRender()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgl_display_aa8abd41c4dbaca15b2d092168ee14a83} 
+void gl\+Display::\+\+Begin\+Render (\begin{DoxyParamCaption}\item[{bool}]{process\+Events}{ = {\ttfamily true}}\end{DoxyParamCaption})}
+
+Clear window and begin rendering a frame. If process\+Events is true, \doxylink{classgl_display_a27bf4053fddbb4e0fdc88e142b2a7bb7}{Process\+Events()} will automatically be called. \Hypertarget{classgl_display_aa8abd41c4dbaca15b2d092168ee14a83}\index{glDisplay@{glDisplay}!BeginRender@{BeginRender}}
+\index{BeginRender@{BeginRender}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{BeginRender()}{BeginRender()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgl_display_aa8abd41c4dbaca15b2d092168ee14a83} 
+void gl\+Display::\+\+Begin\+Render (\begin{DoxyParamCaption}\item[{bool}]{process\+Events}{ = {\ttfamily true}}\end{DoxyParamCaption})}
+
+Clear window and begin rendering a frame. If process\+Events is true, \doxylink{classgl_display_a27bf4053fddbb4e0fdc88e142b2a7bb7}{Process\+Events()} will automatically be called. \Hypertarget{classgl_display_a1f74c54c01fd88c9c2648cc313c35257}\index{glDisplay@{glDisplay}!Create@{Create}}
+\index{Create@{Create}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{Create()}{Create()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily \label{classgl_display_a1f74c54c01fd88c9c2648cc313c35257} 
+\doxymbox{\hyperlink{classgl_display}{gl\+Display}} \texorpdfstring{$\ast$}{*} gl\+Display::\+\+Create (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{title}{ = {\ttfamily NULL}, }\item[{int}]{width}{ = {\ttfamily -\/1}, }\item[{int}]{height}{ = {\ttfamily -\/1}, }\item[{float}]{r}{ = {\ttfamily 0.05f}, }\item[{float}]{g}{ = {\ttfamily 0.05f}, }\item[{float}]{b}{ = {\ttfamily 0.05f}, }\item[{float}]{a}{ = {\ttfamily 1.0f}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Create a new Open\+GL display window with the specified options.
+
+
+\begin{DoxyParams}{Parameters}
+{\em title} & window title bar string, or NULL for a default title \\
+\hline
+{\em width} & desired width of the window, or -\/1 to be maximized \\
+\hline
+{\em height} & desired height of the window, or -\/1 to be maximized \\
+\hline
+{\em r} & default background RGBA color, red component (0.\+0-\/1.\+0f) \\
+\hline
+{\em g} & default background RGBA color, green component (0.\+0-\/1.\+0f) \\
+\hline
+{\em b} & default background RGBA color, blue component (0.\+0-\/1.\+0f) \\
+\hline
+{\em a} & default background RGBA color, alpha component (0.\+0-\/1.\+0f) \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classgl_display_a1b89aa3bc8a71275eeb36a11ea601e1e}\index{glDisplay@{glDisplay}!Create@{Create}}
+\index{Create@{Create}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{Create()}{Create()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily \label{classgl_display_a1b89aa3bc8a71275eeb36a11ea601e1e} 
+\doxymbox{\hyperlink{classgl_display}{gl\+Display}} \texorpdfstring{$\ast$}{*} gl\+Display::\+\+Create (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{title}{ = {\ttfamily NULL}, }\item[{int}]{width}{ = {\ttfamily -\/1}, }\item[{int}]{height}{ = {\ttfamily -\/1}, }\item[{float}]{r}{ = {\ttfamily 0.05f}, }\item[{float}]{g}{ = {\ttfamily 0.05f}, }\item[{float}]{b}{ = {\ttfamily 0.05f}, }\item[{float}]{a}{ = {\ttfamily 1.0f}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Create a new Open\+GL display window with the specified options.
+
+
+\begin{DoxyParams}{Parameters}
+{\em title} & window title bar string, or NULL for a default title \\
+\hline
+{\em width} & desired width of the window, or -\/1 to be maximized \\
+\hline
+{\em height} & desired height of the window, or -\/1 to be maximized \\
+\hline
+{\em r} & default background RGBA color, red component (0.\+0-\/1.\+0f) \\
+\hline
+{\em g} & default background RGBA color, green component (0.\+0-\/1.\+0f) \\
+\hline
+{\em b} & default background RGBA color, blue component (0.\+0-\/1.\+0f) \\
+\hline
+{\em a} & default background RGBA color, alpha component (0.\+0-\/1.\+0f) \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classgl_display_a8210c3aadb33070713e0d5f84a76e94e}\index{glDisplay@{glDisplay}!Create@{Create}}
+\index{Create@{Create}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{Create()}{Create()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily \label{classgl_display_a8210c3aadb33070713e0d5f84a76e94e} 
+\doxymbox{\hyperlink{classgl_display}{gl\+Display}} \texorpdfstring{$\ast$}{*} gl\+Display::\+\+Create (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{structvideo_options}{video\+Options}} \&}]{options}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Create a new Open\+GL display window with the specified options. \Hypertarget{classgl_display_a46aeb20d8d56c86f8728436864f4de8e}\index{glDisplay@{glDisplay}!Create@{Create}}
+\index{Create@{Create}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{Create()}{Create()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily \label{classgl_display_a46aeb20d8d56c86f8728436864f4de8e} 
+\doxymbox{\hyperlink{classgl_display}{gl\+Display}} \texorpdfstring{$\ast$}{*} gl\+Display::\+\+Create (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{structvideo_options}{video\+Options}} \&}]{options}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Create a new Open\+GL display window with the specified options. \Hypertarget{classgl_display_a97612036c5849cb4d7026337f2603c87}\index{glDisplay@{glDisplay}!EndRender@{EndRender}}
+\index{EndRender@{EndRender}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{EndRender()}{EndRender()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgl_display_a97612036c5849cb4d7026337f2603c87} 
+void gl\+Display::\+\+End\+Render (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Finish rendering and refresh /\+ flip the backbuffer. \Hypertarget{classgl_display_a97612036c5849cb4d7026337f2603c87}\index{glDisplay@{glDisplay}!EndRender@{EndRender}}
+\index{EndRender@{EndRender}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{EndRender()}{EndRender()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgl_display_a97612036c5849cb4d7026337f2603c87} 
+void gl\+Display::\+\+End\+Render (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Finish rendering and refresh /\+ flip the backbuffer. \Hypertarget{classgl_display_a8c341a478fc5566bec3bf9d621534783}\index{glDisplay@{glDisplay}!FindWidget@{FindWidget}}
+\index{FindWidget@{FindWidget}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{FindWidget()}{FindWidget()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgl_display_a8c341a478fc5566bec3bf9d621534783} 
+\doxymbox{\hyperlink{classgl_widget}{gl\+Widget}} \texorpdfstring{$\ast$}{*} gl\+Display::\+\+Find\+Widget (\begin{DoxyParamCaption}\item[{int}]{x}{, }\item[{int}]{y}{}\end{DoxyParamCaption})}
+
+Find first widget by coordinate, or NULL if no widget overlaps with that coordinate. \Hypertarget{classgl_display_a8c341a478fc5566bec3bf9d621534783}\index{glDisplay@{glDisplay}!FindWidget@{FindWidget}}
+\index{FindWidget@{FindWidget}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{FindWidget()}{FindWidget()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgl_display_a8c341a478fc5566bec3bf9d621534783} 
+\doxymbox{\hyperlink{classgl_widget}{gl\+Widget}} \texorpdfstring{$\ast$}{*} gl\+Display::\+\+Find\+Widget (\begin{DoxyParamCaption}\item[{int}]{x}{, }\item[{int}]{y}{}\end{DoxyParamCaption})}
+
+Find first widget by coordinate, or NULL if no widget overlaps with that coordinate. \Hypertarget{classgl_display_a6dd32af584a54a2eaaed72bda83bf2aa}\index{glDisplay@{glDisplay}!FindWidgets@{FindWidgets}}
+\index{FindWidgets@{FindWidgets}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{FindWidgets()}{FindWidgets()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgl_display_a6dd32af584a54a2eaaed72bda83bf2aa} 
+std::\+vector$<$ \doxymbox{\hyperlink{classgl_widget}{gl\+Widget}} \texorpdfstring{$\ast$}{*} $>$ gl\+Display::\+\+Find\+Widgets (\begin{DoxyParamCaption}\item[{int}]{x}{, }\item[{int}]{y}{}\end{DoxyParamCaption})}
+
+Find all widgets by coordinate, or NULL if no widget overlaps with that coordinate. \Hypertarget{classgl_display_a6dd32af584a54a2eaaed72bda83bf2aa}\index{glDisplay@{glDisplay}!FindWidgets@{FindWidgets}}
+\index{FindWidgets@{FindWidgets}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{FindWidgets()}{FindWidgets()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgl_display_a6dd32af584a54a2eaaed72bda83bf2aa} 
+std::\+vector$<$ \doxymbox{\hyperlink{classgl_widget}{gl\+Widget}} \texorpdfstring{$\ast$}{*} $>$ gl\+Display::\+\+Find\+Widgets (\begin{DoxyParamCaption}\item[{int}]{x}{, }\item[{int}]{y}{}\end{DoxyParamCaption})}
+
+Find all widgets by coordinate, or NULL if no widget overlaps with that coordinate. \Hypertarget{classgl_display_a5e115cfde574e1b517a6422b1c3fbf02}\index{glDisplay@{glDisplay}!GetBackgroundColor@{GetBackgroundColor}}
+\index{GetBackgroundColor@{GetBackgroundColor}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{GetBackgroundColor()}{GetBackgroundColor()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgl_display_a5e115cfde574e1b517a6422b1c3fbf02} 
+void gl\+Display::\+\+Get\+Background\+Color (\begin{DoxyParamCaption}\item[{float \texorpdfstring{$\ast$}{*}}]{r}{, }\item[{float \texorpdfstring{$\ast$}{*}}]{g}{, }\item[{float \texorpdfstring{$\ast$}{*}}]{b}{, }\item[{float \texorpdfstring{$\ast$}{*}}]{a}{ = {\ttfamily NULL}}\end{DoxyParamCaption})}
+
+Retrieve the window\textquotesingle{}s background color. \Hypertarget{classgl_display_a5e115cfde574e1b517a6422b1c3fbf02}\index{glDisplay@{glDisplay}!GetBackgroundColor@{GetBackgroundColor}}
+\index{GetBackgroundColor@{GetBackgroundColor}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{GetBackgroundColor()}{GetBackgroundColor()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgl_display_a5e115cfde574e1b517a6422b1c3fbf02} 
+void gl\+Display::\+\+Get\+Background\+Color (\begin{DoxyParamCaption}\item[{float \texorpdfstring{$\ast$}{*}}]{r}{, }\item[{float \texorpdfstring{$\ast$}{*}}]{g}{, }\item[{float \texorpdfstring{$\ast$}{*}}]{b}{, }\item[{float \texorpdfstring{$\ast$}{*}}]{a}{ = {\ttfamily NULL}}\end{DoxyParamCaption})}
+
+Retrieve the window\textquotesingle{}s background color. \Hypertarget{classgl_display_a737d99f08c2b1cedcacb1f1f559bf1aa}\index{glDisplay@{glDisplay}!GetDragCoords@{GetDragCoords}}
+\index{GetDragCoords@{GetDragCoords}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{GetDragCoords()}{GetDragCoords()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgl_display_a737d99f08c2b1cedcacb1f1f559bf1aa} 
+bool gl\+Display::\+\+Get\+Drag\+Coords (\begin{DoxyParamCaption}\item[{int \texorpdfstring{$\ast$}{*}}]{x1}{, }\item[{int \texorpdfstring{$\ast$}{*}}]{y1}{, }\item[{int \texorpdfstring{$\ast$}{*}}]{x2}{, }\item[{int \texorpdfstring{$\ast$}{*}}]{y2}{}\end{DoxyParamCaption})}
+
+Get the current dragging coordinates, or return false if not dragging. \Hypertarget{classgl_display_a737d99f08c2b1cedcacb1f1f559bf1aa}\index{glDisplay@{glDisplay}!GetDragCoords@{GetDragCoords}}
+\index{GetDragCoords@{GetDragCoords}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{GetDragCoords()}{GetDragCoords()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgl_display_a737d99f08c2b1cedcacb1f1f559bf1aa} 
+bool gl\+Display::\+\+Get\+Drag\+Coords (\begin{DoxyParamCaption}\item[{int \texorpdfstring{$\ast$}{*}}]{x1}{, }\item[{int \texorpdfstring{$\ast$}{*}}]{y1}{, }\item[{int \texorpdfstring{$\ast$}{*}}]{x2}{, }\item[{int \texorpdfstring{$\ast$}{*}}]{y2}{}\end{DoxyParamCaption})}
+
+Get the current dragging coordinates, or return false if not dragging. \Hypertarget{classgl_display_a2869b89190621c2fc502c0263035ca10}\index{glDisplay@{glDisplay}!GetDragMode@{GetDragMode}}
+\index{GetDragMode@{GetDragMode}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{GetDragMode()}{GetDragMode()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgl_display_a2869b89190621c2fc502c0263035ca10} 
+\doxymbox{\hyperlink{classgl_display_a0d39d6f011999828560d8353edadf46c}{Drag\+Mode}} gl\+Display::\+\+Get\+Drag\+Mode (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Get the dragging behavior mode. \Hypertarget{classgl_display_a2869b89190621c2fc502c0263035ca10}\index{glDisplay@{glDisplay}!GetDragMode@{GetDragMode}}
+\index{GetDragMode@{GetDragMode}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{GetDragMode()}{GetDragMode()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgl_display_a2869b89190621c2fc502c0263035ca10} 
+\doxymbox{\hyperlink{classgl_display_a0d39d6f011999828560d8353edadf46c}{Drag\+Mode}} gl\+Display::\+\+Get\+Drag\+Mode (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Get the dragging behavior mode. \Hypertarget{classgl_display_a2a1bbe0f4e81a8a639ad1262e2e984e1}\index{glDisplay@{glDisplay}!GetDragRect@{GetDragRect}}
+\index{GetDragRect@{GetDragRect}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{GetDragRect()}{GetDragRect()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgl_display_a2a1bbe0f4e81a8a639ad1262e2e984e1} 
+bool gl\+Display::\+\+Get\+Drag\+Rect (\begin{DoxyParamCaption}\item[{int \texorpdfstring{$\ast$}{*}}]{x}{, }\item[{int \texorpdfstring{$\ast$}{*}}]{y}{, }\item[{int \texorpdfstring{$\ast$}{*}}]{width}{, }\item[{int \texorpdfstring{$\ast$}{*}}]{height}{}\end{DoxyParamCaption})}
+
+Get the current dragging rectangle, or return false if not dragging. \Hypertarget{classgl_display_a2a1bbe0f4e81a8a639ad1262e2e984e1}\index{glDisplay@{glDisplay}!GetDragRect@{GetDragRect}}
+\index{GetDragRect@{GetDragRect}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{GetDragRect()}{GetDragRect()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgl_display_a2a1bbe0f4e81a8a639ad1262e2e984e1} 
+bool gl\+Display::\+\+Get\+Drag\+Rect (\begin{DoxyParamCaption}\item[{int \texorpdfstring{$\ast$}{*}}]{x}{, }\item[{int \texorpdfstring{$\ast$}{*}}]{y}{, }\item[{int \texorpdfstring{$\ast$}{*}}]{width}{, }\item[{int \texorpdfstring{$\ast$}{*}}]{height}{}\end{DoxyParamCaption})}
+
+Get the current dragging rectangle, or return false if not dragging. \Hypertarget{classgl_display_a130822b4a5eda58692c0899627790700}\index{glDisplay@{glDisplay}!GetFPS@{GetFPS}}
+\index{GetFPS@{GetFPS}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{GetFPS()}{GetFPS()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgl_display_a130822b4a5eda58692c0899627790700} 
+float gl\+Display::\+\+Get\+FPS (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Get the average frame time (in milliseconds). \Hypertarget{classgl_display_a130822b4a5eda58692c0899627790700}\index{glDisplay@{glDisplay}!GetFPS@{GetFPS}}
+\index{GetFPS@{GetFPS}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{GetFPS()}{GetFPS()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgl_display_a130822b4a5eda58692c0899627790700} 
+float gl\+Display::\+\+Get\+FPS (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Get the average frame time (in milliseconds). \Hypertarget{classgl_display_a14cf9b4f8c585e52963e8f644b816cd1}\index{glDisplay@{glDisplay}!GetID@{GetID}}
+\index{GetID@{GetID}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{GetID()}{GetID()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgl_display_a14cf9b4f8c585e52963e8f644b816cd1} 
+uint32\+\_\+t gl\+Display::\+\+Get\+ID (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Get the ID of this display instance into \doxylink{group___open_g_l_ga61283cf7b8556dea102d55c311b8ea66}{gl\+Get\+Display()} \Hypertarget{classgl_display_a14cf9b4f8c585e52963e8f644b816cd1}\index{glDisplay@{glDisplay}!GetID@{GetID}}
+\index{GetID@{GetID}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{GetID()}{GetID()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgl_display_a14cf9b4f8c585e52963e8f644b816cd1} 
+uint32\+\_\+t gl\+Display::\+\+Get\+ID (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Get the ID of this display instance into \doxylink{group___open_g_l_ga61283cf7b8556dea102d55c311b8ea66}{gl\+Get\+Display()} \Hypertarget{classgl_display_a11c7c3c210333feb222d6f2480dbbc85}\index{glDisplay@{glDisplay}!GetKey@{GetKey}}
+\index{GetKey@{GetKey}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{GetKey()}{GetKey()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgl_display_a11c7c3c210333feb222d6f2480dbbc85} 
+bool gl\+Display::\+\+Get\+Key (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{key}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Get the state of a key (lowercase, without modifiers applied)
+
+Similar to gl\+Event::\+\+KEY\+\_\+\+STATE, \doxylink{classgl_display_a11c7c3c210333feb222d6f2480dbbc85}{Get\+Key()} queries the raw key state without being translated by modifier keys such as Shift, Caps\+Lock, Num\+Lock, ect. Alphanumeric keys will be left as lowercase, so query lowercase keys -\/ uppercase keys will always return false. ~\newline
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em key} & the {\ttfamily XK\+\_\+} key symbol (see {\ttfamily /\+usr/\+include/\+\+X11/\+keysymdef.h}) \begin{DoxyCode}{0}       Uppercase keys like XK\+\_\+\+A or XK\+\_\+plus will always return false.\newline        Instead, query the lowercase keys such as XK\+\_\+a, XK\+\_\+1, ect.\newline \newline        Other keys like F1-\/\+F12, shift, tab, ctrl/\+alt, arrow keys, \newline        backspace, delete, escape, and enter can all be queried.\newline \newline        Get\+Key() caches the first 1024 key symbols. Other keys will\newline        return false, but can be subscribed to through a gl\+Event\+Hander.\newline \end{DoxyCode}
+\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the key is pressed, otherwise false 
+\end{DoxyReturn}
+\Hypertarget{classgl_display_a11c7c3c210333feb222d6f2480dbbc85}\index{glDisplay@{glDisplay}!GetKey@{GetKey}}
+\index{GetKey@{GetKey}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{GetKey()}{GetKey()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgl_display_a11c7c3c210333feb222d6f2480dbbc85} 
+bool gl\+Display::\+\+Get\+Key (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{key}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Get the state of a key (lowercase, without modifiers applied)
+
+Similar to gl\+Event::\+\+KEY\+\_\+\+STATE, \doxylink{classgl_display_a11c7c3c210333feb222d6f2480dbbc85}{Get\+Key()} queries the raw key state without being translated by modifier keys such as Shift, Caps\+Lock, Num\+Lock, ect. Alphanumeric keys will be left as lowercase, so query lowercase keys -\/ uppercase keys will always return false. ~\newline
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em key} & the {\ttfamily XK\+\_\+} key symbol (see {\ttfamily /\+usr/\+include/\+\+X11/\+keysymdef.h}) \begin{DoxyCode}{0}       Uppercase keys like XK\+\_\+\+A or XK\+\_\+plus will always return false.\newline        Instead, query the lowercase keys such as XK\+\_\+a, XK\+\_\+1, ect.\newline \newline        Other keys like F1-\/\+F12, shift, tab, ctrl/\+alt, arrow keys, \newline        backspace, delete, escape, and enter can all be queried.\newline \newline        Get\+Key() caches the first 1024 key symbols. Other keys will\newline        return false, but can be subscribed to through a gl\+Event\+Hander.\newline \end{DoxyCode}
+\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the key is pressed, otherwise false 
+\end{DoxyReturn}
+\Hypertarget{classgl_display_a611350bedb3e68adfd0e691f3612fc89}\index{glDisplay@{glDisplay}!GetMouseButton@{GetMouseButton}}
+\index{GetMouseButton@{GetMouseButton}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{GetMouseButton()}{GetMouseButton()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgl_display_a611350bedb3e68adfd0e691f3612fc89} 
+bool gl\+Display::\+\+Get\+Mouse\+Button (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{button}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Get the mouse button state.
+
+
+\begin{DoxyParams}{Parameters}
+{\em button} & the button number, starting with 1. In X11, the left mouse button is 1. Here are the mouse button numbers:\+\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyItemize}
+\item 1 MOUSE\+\_\+\+LEFT (left button)
+\begin{DoxyItemize}
+\item 2 MOUSE\+\_\+\+MIDDLE (middle button /\+ scroll wheel button)
+\item 3 MOUSE\+\_\+\+RIGHT (right button)
+\item 4 MOUSE\+\_\+\+WHEEL\+\_\+\+UP (scroll wheel up)
+\item 5 MOUSE\+\_\+\+WHEEL\+\_\+\+DOWN (scroll wheel down)
+\end{DoxyItemize}
+\end{DoxyItemize}
+
+\begin{DoxyReturn}{Returns}
+true if the button is pressed, otherwise false 
+\end{DoxyReturn}
+\Hypertarget{classgl_display_a611350bedb3e68adfd0e691f3612fc89}\index{glDisplay@{glDisplay}!GetMouseButton@{GetMouseButton}}
+\index{GetMouseButton@{GetMouseButton}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{GetMouseButton()}{GetMouseButton()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgl_display_a611350bedb3e68adfd0e691f3612fc89} 
+bool gl\+Display::\+\+Get\+Mouse\+Button (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{button}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Get the mouse button state.
+
+
+\begin{DoxyParams}{Parameters}
+{\em button} & the button number, starting with 1. In X11, the left mouse button is 1. Here are the mouse button numbers:\+\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyItemize}
+\item 1 MOUSE\+\_\+\+LEFT (left button)
+\begin{DoxyItemize}
+\item 2 MOUSE\+\_\+\+MIDDLE (middle button /\+ scroll wheel button)
+\item 3 MOUSE\+\_\+\+RIGHT (right button)
+\item 4 MOUSE\+\_\+\+WHEEL\+\_\+\+UP (scroll wheel up)
+\item 5 MOUSE\+\_\+\+WHEEL\+\_\+\+DOWN (scroll wheel down)
+\end{DoxyItemize}
+\end{DoxyItemize}
+
+\begin{DoxyReturn}{Returns}
+true if the button is pressed, otherwise false 
+\end{DoxyReturn}
+\Hypertarget{classgl_display_a1539a0481251800b98d5771085ec97cf}\index{glDisplay@{glDisplay}!GetMousePosition@{GetMousePosition}}
+\index{GetMousePosition@{GetMousePosition}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{GetMousePosition()}{GetMousePosition()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily \label{classgl_display_a1539a0481251800b98d5771085ec97cf} 
+const int \texorpdfstring{$\ast$}{*} gl\+Display::\+\+Get\+Mouse\+Position (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Get the mouse position. \Hypertarget{classgl_display_a1539a0481251800b98d5771085ec97cf}\index{glDisplay@{glDisplay}!GetMousePosition@{GetMousePosition}}
+\index{GetMousePosition@{GetMousePosition}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{GetMousePosition()}{GetMousePosition()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily \label{classgl_display_a1539a0481251800b98d5771085ec97cf} 
+const int \texorpdfstring{$\ast$}{*} gl\+Display::\+\+Get\+Mouse\+Position (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Get the mouse position. \Hypertarget{classgl_display_a57d3f8b1bec6eba7925e187367adab47}\index{glDisplay@{glDisplay}!GetMousePosition@{GetMousePosition}}
+\index{GetMousePosition@{GetMousePosition}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{GetMousePosition()}{GetMousePosition()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily \label{classgl_display_a57d3f8b1bec6eba7925e187367adab47} 
+void gl\+Display::\+\+Get\+Mouse\+Position (\begin{DoxyParamCaption}\item[{int \texorpdfstring{$\ast$}{*}}]{x}{, }\item[{int \texorpdfstring{$\ast$}{*}}]{y}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Get the mouse position. \Hypertarget{classgl_display_a57d3f8b1bec6eba7925e187367adab47}\index{glDisplay@{glDisplay}!GetMousePosition@{GetMousePosition}}
+\index{GetMousePosition@{GetMousePosition}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{GetMousePosition()}{GetMousePosition()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily \label{classgl_display_a57d3f8b1bec6eba7925e187367adab47} 
+void gl\+Display::\+\+Get\+Mouse\+Position (\begin{DoxyParamCaption}\item[{int \texorpdfstring{$\ast$}{*}}]{x}{, }\item[{int \texorpdfstring{$\ast$}{*}}]{y}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Get the mouse position. \Hypertarget{classgl_display_a80669db30cd225b4f6d0b8ab59237a97}\index{glDisplay@{glDisplay}!GetNumWidgets@{GetNumWidgets}}
+\index{GetNumWidgets@{GetNumWidgets}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{GetNumWidgets()}{GetNumWidgets()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgl_display_a80669db30cd225b4f6d0b8ab59237a97} 
+uint32\+\_\+t gl\+Display::\+\+Get\+Num\+Widgets (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Retrieve the number of widgets. \Hypertarget{classgl_display_a80669db30cd225b4f6d0b8ab59237a97}\index{glDisplay@{glDisplay}!GetNumWidgets@{GetNumWidgets}}
+\index{GetNumWidgets@{GetNumWidgets}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{GetNumWidgets()}{GetNumWidgets()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgl_display_a80669db30cd225b4f6d0b8ab59237a97} 
+uint32\+\_\+t gl\+Display::\+\+Get\+Num\+Widgets (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Retrieve the number of widgets. \Hypertarget{classgl_display_a2dd585c39b61c2b06c4bf21b9663ef93}\index{glDisplay@{glDisplay}!GetType@{GetType}}
+\index{GetType@{GetType}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{GetType()}{GetType()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgl_display_a2dd585c39b61c2b06c4bf21b9663ef93} 
+virtual uint32\+\_\+t gl\+Display::\+\+Get\+Type (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+Return the interface type (\doxylink{classgl_display_a600c2e9468bad51e51dc110a9032e72b}{gl\+Display::\+\+Type}) 
+
+Reimplemented from \doxymbox{\hyperlink{classvideo_output_aaedce68dfff9bd5c3e76c32468632512}{video\+Output}}.
+
+\Hypertarget{classgl_display_a2dd585c39b61c2b06c4bf21b9663ef93}\index{glDisplay@{glDisplay}!GetType@{GetType}}
+\index{GetType@{GetType}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{GetType()}{GetType()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgl_display_a2dd585c39b61c2b06c4bf21b9663ef93} 
+virtual uint32\+\_\+t gl\+Display::\+\+Get\+Type (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+Return the interface type (\doxylink{classgl_display_a600c2e9468bad51e51dc110a9032e72b}{gl\+Display::\+\+Type}) 
+
+Reimplemented from \doxymbox{\hyperlink{classvideo_output_aaedce68dfff9bd5c3e76c32468632512}{video\+Output}}.
+
+\Hypertarget{classgl_display_a0421635c70abe3765a363408bad79eca}\index{glDisplay@{glDisplay}!GetWidget@{GetWidget}}
+\index{GetWidget@{GetWidget}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{GetWidget()}{GetWidget()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgl_display_a0421635c70abe3765a363408bad79eca} 
+\doxymbox{\hyperlink{classgl_widget}{gl\+Widget}} \texorpdfstring{$\ast$}{*} gl\+Display::\+\+Get\+Widget (\begin{DoxyParamCaption}\item[{const uint32\+\_\+t}]{index}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Retrieve a widget. \Hypertarget{classgl_display_a0421635c70abe3765a363408bad79eca}\index{glDisplay@{glDisplay}!GetWidget@{GetWidget}}
+\index{GetWidget@{GetWidget}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{GetWidget()}{GetWidget()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgl_display_a0421635c70abe3765a363408bad79eca} 
+\doxymbox{\hyperlink{classgl_widget}{gl\+Widget}} \texorpdfstring{$\ast$}{*} gl\+Display::\+\+Get\+Widget (\begin{DoxyParamCaption}\item[{const uint32\+\_\+t}]{index}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Retrieve a widget. \Hypertarget{classgl_display_a2d13a48ff0860c5da554443a27413ad9}\index{glDisplay@{glDisplay}!GetWidgetIndex@{GetWidgetIndex}}
+\index{GetWidgetIndex@{GetWidgetIndex}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{GetWidgetIndex()}{GetWidgetIndex()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgl_display_a2d13a48ff0860c5da554443a27413ad9} 
+int gl\+Display::\+\+Get\+Widget\+Index (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{classgl_widget}{gl\+Widget}} \texorpdfstring{$\ast$}{*}}]{widget}{}\end{DoxyParamCaption}) const}
+
+Retrieve the index of a widget (or -\/1 if not found) \Hypertarget{classgl_display_a2d13a48ff0860c5da554443a27413ad9}\index{glDisplay@{glDisplay}!GetWidgetIndex@{GetWidgetIndex}}
+\index{GetWidgetIndex@{GetWidgetIndex}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{GetWidgetIndex()}{GetWidgetIndex()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgl_display_a2d13a48ff0860c5da554443a27413ad9} 
+int gl\+Display::\+\+Get\+Widget\+Index (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{classgl_widget}{gl\+Widget}} \texorpdfstring{$\ast$}{*}}]{widget}{}\end{DoxyParamCaption}) const}
+
+Retrieve the index of a widget (or -\/1 if not found) \Hypertarget{classgl_display_a634ed5ff30a1d2944f3667157a649c9a}\index{glDisplay@{glDisplay}!IsClosed@{IsClosed}}
+\index{IsClosed@{IsClosed}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{IsClosed()}{IsClosed()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgl_display_a634ed5ff30a1d2944f3667157a649c9a} 
+bool gl\+Display::\+\+Is\+Closed (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Returns true if the window has been closed. \Hypertarget{classgl_display_a634ed5ff30a1d2944f3667157a649c9a}\index{glDisplay@{glDisplay}!IsClosed@{IsClosed}}
+\index{IsClosed@{IsClosed}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{IsClosed()}{IsClosed()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgl_display_a634ed5ff30a1d2944f3667157a649c9a} 
+bool gl\+Display::\+\+Is\+Closed (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Returns true if the window has been closed. \Hypertarget{classgl_display_a6f26c928e592b54e91d95e3edd96575a}\index{glDisplay@{glDisplay}!IsDragging@{IsDragging}}
+\index{IsDragging@{IsDragging}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{IsDragging()}{IsDragging()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgl_display_a6f26c928e592b54e91d95e3edd96575a} 
+bool gl\+Display::\+\+Is\+Dragging (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{classgl_display_a0d39d6f011999828560d8353edadf46c}{Drag\+Mode}}}]{mode}{ = {\ttfamily \doxymbox{\hyperlink{classgl_display_a0d39d6f011999828560d8353edadf46ca3b0e007875951671b43bc2a9a4cd04a0}{Drag\+Default}}}}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Is the mouse currently dragging in the specified mode? \Hypertarget{classgl_display_a6f26c928e592b54e91d95e3edd96575a}\index{glDisplay@{glDisplay}!IsDragging@{IsDragging}}
+\index{IsDragging@{IsDragging}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{IsDragging()}{IsDragging()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgl_display_a6f26c928e592b54e91d95e3edd96575a} 
+bool gl\+Display::\+\+Is\+Dragging (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{classgl_display_a0d39d6f011999828560d8353edadf46c}{Drag\+Mode}}}]{mode}{ = {\ttfamily \doxymbox{\hyperlink{classgl_display_a0d39d6f011999828560d8353edadf46ca3b0e007875951671b43bc2a9a4cd04a0}{Drag\+Default}}}}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Is the mouse currently dragging in the specified mode? \Hypertarget{classgl_display_a90e336dd87d340d9fcf592f297fcf3b9}\index{glDisplay@{glDisplay}!IsFullscreen@{IsFullscreen}}
+\index{IsFullscreen@{IsFullscreen}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{IsFullscreen()}{IsFullscreen()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgl_display_a90e336dd87d340d9fcf592f297fcf3b9} 
+bool gl\+Display::\+\+Is\+Fullscreen (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Determine if the window is fullscreen or not. \Hypertarget{classgl_display_a90e336dd87d340d9fcf592f297fcf3b9}\index{glDisplay@{glDisplay}!IsFullscreen@{IsFullscreen}}
+\index{IsFullscreen@{IsFullscreen}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{IsFullscreen()}{IsFullscreen()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgl_display_a90e336dd87d340d9fcf592f297fcf3b9} 
+bool gl\+Display::\+\+Is\+Fullscreen (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Determine if the window is fullscreen or not. \Hypertarget{classgl_display_a3bfec8d5ad04e8737a3ef7cfb13bc06f}\index{glDisplay@{glDisplay}!IsMaximized@{IsMaximized}}
+\index{IsMaximized@{IsMaximized}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{IsMaximized()}{IsMaximized()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgl_display_a3bfec8d5ad04e8737a3ef7cfb13bc06f} 
+bool gl\+Display::\+\+Is\+Maximized (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Determine if the window is maximized or not. \Hypertarget{classgl_display_a3bfec8d5ad04e8737a3ef7cfb13bc06f}\index{glDisplay@{glDisplay}!IsMaximized@{IsMaximized}}
+\index{IsMaximized@{IsMaximized}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{IsMaximized()}{IsMaximized()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgl_display_a3bfec8d5ad04e8737a3ef7cfb13bc06f} 
+bool gl\+Display::\+\+Is\+Maximized (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Determine if the window is maximized or not. \Hypertarget{classgl_display_a7c96e8b41901e1b0555baef0433d5794}\index{glDisplay@{glDisplay}!IsOpen@{IsOpen}}
+\index{IsOpen@{IsOpen}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{IsOpen()}{IsOpen()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgl_display_a7c96e8b41901e1b0555baef0433d5794} 
+bool gl\+Display::\+\+Is\+Open (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Returns true if the window is open. \Hypertarget{classgl_display_a7c96e8b41901e1b0555baef0433d5794}\index{glDisplay@{glDisplay}!IsOpen@{IsOpen}}
+\index{IsOpen@{IsOpen}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{IsOpen()}{IsOpen()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgl_display_a7c96e8b41901e1b0555baef0433d5794} 
+bool gl\+Display::\+\+Is\+Open (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Returns true if the window is open. \Hypertarget{classgl_display_a89c660203dc7e4c95ebf1069681121b1}\index{glDisplay@{glDisplay}!IsRendering@{IsRendering}}
+\index{IsRendering@{IsRendering}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{IsRendering()}{IsRendering()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgl_display_a89c660203dc7e4c95ebf1069681121b1} 
+bool gl\+Display::\+\+Is\+Rendering (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Returns true if between \doxylink{classgl_display_aa8abd41c4dbaca15b2d092168ee14a83}{Begin\+Render()} and \doxylink{classgl_display_a97612036c5849cb4d7026337f2603c87}{End\+Render()} \Hypertarget{classgl_display_a89c660203dc7e4c95ebf1069681121b1}\index{glDisplay@{glDisplay}!IsRendering@{IsRendering}}
+\index{IsRendering@{IsRendering}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{IsRendering()}{IsRendering()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgl_display_a89c660203dc7e4c95ebf1069681121b1} 
+bool gl\+Display::\+\+Is\+Rendering (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Returns true if between \doxylink{classgl_display_aa8abd41c4dbaca15b2d092168ee14a83}{Begin\+Render()} and \doxylink{classgl_display_a97612036c5849cb4d7026337f2603c87}{End\+Render()} \Hypertarget{classgl_display_addff6dd6558e309f765da6e15c278213}\index{glDisplay@{glDisplay}!Open@{Open}}
+\index{Open@{Open}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{Open()}{Open()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgl_display_addff6dd6558e309f765da6e15c278213} 
+bool gl\+Display::\+\+Open (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+Open the window. \begin{DoxySeeAlso}{See also}
+\doxylink{classvideo_output_aa8e69abec1f9b6bd6450a839d98c21b3}{video\+Output::\+\+Open()} 
+\end{DoxySeeAlso}
+
+
+Reimplemented from \doxymbox{\hyperlink{classvideo_output_aa8e69abec1f9b6bd6450a839d98c21b3}{video\+Output}}.
+
+\Hypertarget{classgl_display_a65a2ec3a8dae7febff9c1e46b426c891}\index{glDisplay@{glDisplay}!Open@{Open}}
+\index{Open@{Open}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{Open()}{Open()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgl_display_a65a2ec3a8dae7febff9c1e46b426c891} 
+virtual bool gl\+Display::\+\+Open (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+Open the window. \begin{DoxySeeAlso}{See also}
+\doxylink{classvideo_output_aa8e69abec1f9b6bd6450a839d98c21b3}{video\+Output::\+\+Open()} 
+\end{DoxySeeAlso}
+
+
+Reimplemented from \doxymbox{\hyperlink{classvideo_output_aa8e69abec1f9b6bd6450a839d98c21b3}{video\+Output}}.
+
+\Hypertarget{classgl_display_a27bf4053fddbb4e0fdc88e142b2a7bb7}\index{glDisplay@{glDisplay}!ProcessEvents@{ProcessEvents}}
+\index{ProcessEvents@{ProcessEvents}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{ProcessEvents()}{ProcessEvents()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgl_display_a27bf4053fddbb4e0fdc88e142b2a7bb7} 
+void gl\+Display::\+\+Process\+Events (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\doxylink{class_process}{Process} UI event messages. Any queued events will be dispatched to the event message handlers that were registered with Register\+Event\+Handler()
+
+\doxylink{classgl_display_a27bf4053fddbb4e0fdc88e142b2a7bb7}{Process\+Events()} usually gets called automatically by Begin\+Frame(), so it is not typically necessary to explicitly call it unless you passed {\ttfamily false} to Begin\+Frame() and wish to process events at another time of your choosing.
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{group___open_g_l_gadad47fc5cdbc7af41eee1991038749fe}{gl\+Event\+Type} 
+
+\doxylink{group___open_g_l_gacbcfc0668226b31d1becba25887ff47e}{gl\+Event\+Handler} 
+\end{DoxySeeAlso}
+\Hypertarget{classgl_display_a27bf4053fddbb4e0fdc88e142b2a7bb7}\index{glDisplay@{glDisplay}!ProcessEvents@{ProcessEvents}}
+\index{ProcessEvents@{ProcessEvents}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{ProcessEvents()}{ProcessEvents()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgl_display_a27bf4053fddbb4e0fdc88e142b2a7bb7} 
+void gl\+Display::\+\+Process\+Events (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\doxylink{class_process}{Process} UI event messages. Any queued events will be dispatched to the event message handlers that were registered with Register\+Event\+Handler()
+
+\doxylink{classgl_display_a27bf4053fddbb4e0fdc88e142b2a7bb7}{Process\+Events()} usually gets called automatically by Begin\+Frame(), so it is not typically necessary to explicitly call it unless you passed {\ttfamily false} to Begin\+Frame() and wish to process events at another time of your choosing.
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{group___open_g_l_gadad47fc5cdbc7af41eee1991038749fe}{gl\+Event\+Type} 
+
+\doxylink{group___open_g_l_gacbcfc0668226b31d1becba25887ff47e}{gl\+Event\+Handler} 
+\end{DoxySeeAlso}
+\Hypertarget{classgl_display_a5e209d2b90b11c2948a0cd98c19624e7}\index{glDisplay@{glDisplay}!RemoveAllWidgets@{RemoveAllWidgets}}
+\index{RemoveAllWidgets@{RemoveAllWidgets}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{RemoveAllWidgets()}{RemoveAllWidgets()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgl_display_a5e209d2b90b11c2948a0cd98c19624e7} 
+void gl\+Display::\+\+Remove\+All\+Widgets (\begin{DoxyParamCaption}\item[{bool}]{delete\+Widgets}{ = {\ttfamily true}}\end{DoxyParamCaption})}
+
+Remove all widgets from the window (and optionally delete them) \Hypertarget{classgl_display_a5e209d2b90b11c2948a0cd98c19624e7}\index{glDisplay@{glDisplay}!RemoveAllWidgets@{RemoveAllWidgets}}
+\index{RemoveAllWidgets@{RemoveAllWidgets}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{RemoveAllWidgets()}{RemoveAllWidgets()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgl_display_a5e209d2b90b11c2948a0cd98c19624e7} 
+void gl\+Display::\+\+Remove\+All\+Widgets (\begin{DoxyParamCaption}\item[{bool}]{delete\+Widgets}{ = {\ttfamily true}}\end{DoxyParamCaption})}
+
+Remove all widgets from the window (and optionally delete them) \Hypertarget{classgl_display_aa1c19aa18e413da822f284c500a2af6f}\index{glDisplay@{glDisplay}!RemoveEventHandler@{RemoveEventHandler}}
+\index{RemoveEventHandler@{RemoveEventHandler}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{RemoveEventHandler()}{RemoveEventHandler()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgl_display_aa1c19aa18e413da822f284c500a2af6f} 
+void gl\+Display::\+\+Remove\+Event\+Handler (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{group___open_g_l_gacbcfc0668226b31d1becba25887ff47e}{gl\+Event\+Handler}}}]{callback}{, }\item[{void \texorpdfstring{$\ast$}{*}}]{user}{ = {\ttfamily NULL}}\end{DoxyParamCaption})}
+
+Remove an event message handler from being called by \doxylink{classgl_display_a27bf4053fddbb4e0fdc88e142b2a7bb7}{Process\+Events()} \doxylink{classgl_display_aa1c19aa18e413da822f284c500a2af6f}{Remove\+Event\+Handler()} will search for previously registered event handlers that have the same function pointer and/\+or user pointer, and remove them for being called again in the future. \Hypertarget{classgl_display_aa1c19aa18e413da822f284c500a2af6f}\index{glDisplay@{glDisplay}!RemoveEventHandler@{RemoveEventHandler}}
+\index{RemoveEventHandler@{RemoveEventHandler}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{RemoveEventHandler()}{RemoveEventHandler()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgl_display_aa1c19aa18e413da822f284c500a2af6f} 
+void gl\+Display::\+\+Remove\+Event\+Handler (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{group___open_g_l_gacbcfc0668226b31d1becba25887ff47e}{gl\+Event\+Handler}}}]{callback}{, }\item[{void \texorpdfstring{$\ast$}{*}}]{user}{ = {\ttfamily NULL}}\end{DoxyParamCaption})}
+
+Remove an event message handler from being called by \doxylink{classgl_display_a27bf4053fddbb4e0fdc88e142b2a7bb7}{Process\+Events()} \doxylink{classgl_display_aa1c19aa18e413da822f284c500a2af6f}{Remove\+Event\+Handler()} will search for previously registered event handlers that have the same function pointer and/\+or user pointer, and remove them for being called again in the future. \Hypertarget{classgl_display_a6de44eb3a03c6053ee61cb5cccce3f28}\index{glDisplay@{glDisplay}!RemoveWidget@{RemoveWidget}}
+\index{RemoveWidget@{RemoveWidget}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{RemoveWidget()}{RemoveWidget()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily \label{classgl_display_a6de44eb3a03c6053ee61cb5cccce3f28} 
+void gl\+Display::\+\+Remove\+Widget (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{classgl_widget}{gl\+Widget}} \texorpdfstring{$\ast$}{*}}]{widget}{, }\item[{bool}]{delete\+Widget}{ = {\ttfamily true}}\end{DoxyParamCaption})}
+
+Remove a widget from the window (and optionally delete it) \Hypertarget{classgl_display_a6de44eb3a03c6053ee61cb5cccce3f28}\index{glDisplay@{glDisplay}!RemoveWidget@{RemoveWidget}}
+\index{RemoveWidget@{RemoveWidget}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{RemoveWidget()}{RemoveWidget()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily \label{classgl_display_a6de44eb3a03c6053ee61cb5cccce3f28} 
+void gl\+Display::\+\+Remove\+Widget (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{classgl_widget}{gl\+Widget}} \texorpdfstring{$\ast$}{*}}]{widget}{, }\item[{bool}]{delete\+Widget}{ = {\ttfamily true}}\end{DoxyParamCaption})}
+
+Remove a widget from the window (and optionally delete it) \Hypertarget{classgl_display_ad50e13424000eaf6f5ecb08e4acbfeb8}\index{glDisplay@{glDisplay}!RemoveWidget@{RemoveWidget}}
+\index{RemoveWidget@{RemoveWidget}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{RemoveWidget()}{RemoveWidget()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily \label{classgl_display_ad50e13424000eaf6f5ecb08e4acbfeb8} 
+void gl\+Display::\+\+Remove\+Widget (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{index}{, }\item[{bool}]{delete\+Widget}{ = {\ttfamily true}}\end{DoxyParamCaption})}
+
+Remove a widget from the window (and optionally delete it) \Hypertarget{classgl_display_ad50e13424000eaf6f5ecb08e4acbfeb8}\index{glDisplay@{glDisplay}!RemoveWidget@{RemoveWidget}}
+\index{RemoveWidget@{RemoveWidget}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{RemoveWidget()}{RemoveWidget()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily \label{classgl_display_ad50e13424000eaf6f5ecb08e4acbfeb8} 
+void gl\+Display::\+\+Remove\+Widget (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{index}{, }\item[{bool}]{delete\+Widget}{ = {\ttfamily true}}\end{DoxyParamCaption})}
+
+Remove a widget from the window (and optionally delete it) \Hypertarget{classgl_display_ad8dc7b93d535e81aa584f3d390b7d406}\index{glDisplay@{glDisplay}!Render@{Render}}
+\index{Render@{Render}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{Render()}{Render()}\hspace{0.1cm}{\footnotesize\ttfamily [1/8]}}
+{\footnotesize\ttfamily \label{classgl_display_ad8dc7b93d535e81aa584f3d390b7d406} 
+void gl\+Display::\+\+Render (\begin{DoxyParamCaption}\item[{float \texorpdfstring{$\ast$}{*}}]{image}{, }\item[{uint32\+\_\+t}]{width}{, }\item[{uint32\+\_\+t}]{height}{, }\item[{float}]{x}{ = {\ttfamily 0.0f}, }\item[{float}]{y}{ = {\ttfamily 30.0f}, }\item[{bool}]{normalize}{ = {\ttfamily true}, }\item[{cuda\+Stream\+\_\+t}]{stream}{ = {\ttfamily 0}}\end{DoxyParamCaption})}
+
+Render a CUDA float4 image using Open\+GL interop If normalize is true, the image\textquotesingle{}s pixel values will be rescaled from the range of \+[0-\/255]\+ to \+[0-\/1]\+ If normalize is false, the image\textquotesingle{}s pixel values are assumed to already be in the range of \+[0-\/1]\+ Note that if normalization is selected to be performed, it will be done in-\/place on the image \Hypertarget{classgl_display_ad8dc7b93d535e81aa584f3d390b7d406}\index{glDisplay@{glDisplay}!Render@{Render}}
+\index{Render@{Render}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{Render()}{Render()}\hspace{0.1cm}{\footnotesize\ttfamily [2/8]}}
+{\footnotesize\ttfamily \label{classgl_display_ad8dc7b93d535e81aa584f3d390b7d406} 
+void gl\+Display::\+\+Render (\begin{DoxyParamCaption}\item[{float \texorpdfstring{$\ast$}{*}}]{image}{, }\item[{uint32\+\_\+t}]{width}{, }\item[{uint32\+\_\+t}]{height}{, }\item[{float}]{x}{ = {\ttfamily 0.0f}, }\item[{float}]{y}{ = {\ttfamily 30.0f}, }\item[{bool}]{normalize}{ = {\ttfamily true}, }\item[{cuda\+Stream\+\_\+t}]{stream}{ = {\ttfamily 0}}\end{DoxyParamCaption})}
+
+Render a CUDA float4 image using Open\+GL interop If normalize is true, the image\textquotesingle{}s pixel values will be rescaled from the range of \+[0-\/255]\+ to \+[0-\/1]\+ If normalize is false, the image\textquotesingle{}s pixel values are assumed to already be in the range of \+[0-\/1]\+ Note that if normalization is selected to be performed, it will be done in-\/place on the image \Hypertarget{classgl_display_a528c58b4fcecd7d3d516f44de3233538}\index{glDisplay@{glDisplay}!Render@{Render}}
+\index{Render@{Render}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{Render()}{Render()}\hspace{0.1cm}{\footnotesize\ttfamily [3/8]}}
+{\footnotesize\ttfamily \label{classgl_display_a528c58b4fcecd7d3d516f44de3233538} 
+void gl\+Display::\+\+Render (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{classgl_texture}{gl\+Texture}} \texorpdfstring{$\ast$}{*}}]{texture}{, }\item[{float}]{x}{ = {\ttfamily 5.0f}, }\item[{float}]{y}{ = {\ttfamily 30.0f}}\end{DoxyParamCaption})}
+
+Render an Open\+GL texture \begin{DoxyNote}{Note}
+for more texture rendering methods, 
+\end{DoxyNote}
+\begin{DoxySeeAlso}{See also}
+\doxylink{classgl_texture}{gl\+Texture} 
+\end{DoxySeeAlso}
+\Hypertarget{classgl_display_a528c58b4fcecd7d3d516f44de3233538}\index{glDisplay@{glDisplay}!Render@{Render}}
+\index{Render@{Render}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{Render()}{Render()}\hspace{0.1cm}{\footnotesize\ttfamily [4/8]}}
+{\footnotesize\ttfamily \label{classgl_display_a528c58b4fcecd7d3d516f44de3233538} 
+void gl\+Display::\+\+Render (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{classgl_texture}{gl\+Texture}} \texorpdfstring{$\ast$}{*}}]{texture}{, }\item[{float}]{x}{ = {\ttfamily 5.0f}, }\item[{float}]{y}{ = {\ttfamily 30.0f}}\end{DoxyParamCaption})}
+
+Render an Open\+GL texture \begin{DoxyNote}{Note}
+for more texture rendering methods, 
+\end{DoxyNote}
+\begin{DoxySeeAlso}{See also}
+\doxylink{classgl_texture}{gl\+Texture} 
+\end{DoxySeeAlso}
+\Hypertarget{classgl_display_a569c90f55d90e9de651122fc6667cc68}\index{glDisplay@{glDisplay}!Render@{Render}}
+\index{Render@{Render}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{Render()}{Render()}\hspace{0.1cm}{\footnotesize\ttfamily [5/8]}}
+{\footnotesize\ttfamily \label{classgl_display_a569c90f55d90e9de651122fc6667cc68} 
+template$<$typename T$>$ \\
+bool gl\+Display::\+\+Render (\begin{DoxyParamCaption}\item[{T \texorpdfstring{$\ast$}{*}}]{image}{, }\item[{uint32\+\_\+t}]{width}{, }\item[{uint32\+\_\+t}]{height}{, }\item[{cuda\+Stream\+\_\+t}]{stream}{ = {\ttfamily 0}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Render a CUDA image (uchar3, uchar4, float3, float4) using Open\+GL interop. This is similar to \doxylink{classgl_display_a2f253dbc05bf1773e9d213396123d5d5}{Render\+Once()}, in that it will begin/\+end the frame also. \begin{DoxySeeAlso}{See also}
+\doxylink{classvideo_output_aba0bbb203522826c7d30509ffcca0820}{video\+Output::\+\+Render} 
+\end{DoxySeeAlso}
+\Hypertarget{classgl_display_a569c90f55d90e9de651122fc6667cc68}\index{glDisplay@{glDisplay}!Render@{Render}}
+\index{Render@{Render}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{Render()}{Render()}\hspace{0.1cm}{\footnotesize\ttfamily [6/8]}}
+{\footnotesize\ttfamily \label{classgl_display_a569c90f55d90e9de651122fc6667cc68} 
+template$<$typename T$>$ \\
+bool gl\+Display::\+\+Render (\begin{DoxyParamCaption}\item[{T \texorpdfstring{$\ast$}{*}}]{image}{, }\item[{uint32\+\_\+t}]{width}{, }\item[{uint32\+\_\+t}]{height}{, }\item[{cuda\+Stream\+\_\+t}]{stream}{ = {\ttfamily 0}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Render a CUDA image (uchar3, uchar4, float3, float4) using Open\+GL interop. This is similar to \doxylink{classgl_display_a2f253dbc05bf1773e9d213396123d5d5}{Render\+Once()}, in that it will begin/\+end the frame also. \begin{DoxySeeAlso}{See also}
+\doxylink{classvideo_output_aba0bbb203522826c7d30509ffcca0820}{video\+Output::\+\+Render} 
+\end{DoxySeeAlso}
+\Hypertarget{classgl_display_a78e69f3717c19efc51fb6294f51b693a}\index{glDisplay@{glDisplay}!Render@{Render}}
+\index{Render@{Render}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{Render()}{Render()}\hspace{0.1cm}{\footnotesize\ttfamily [7/8]}}
+{\footnotesize\ttfamily \label{classgl_display_a78e69f3717c19efc51fb6294f51b693a} 
+bool gl\+Display::\+\+Render (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}}]{image}{, }\item[{uint32\+\_\+t}]{width}{, }\item[{uint32\+\_\+t}]{height}{, }\item[{\doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{image\+Format}}}]{format}{, }\item[{cuda\+Stream\+\_\+t}]{stream}{ = {\ttfamily 0}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+Render a CUDA image (uchar3, uchar4, float3, float4) using Open\+GL interop. This is similar to \doxylink{classgl_display_a2f253dbc05bf1773e9d213396123d5d5}{Render\+Once()}, in that it will begin/\+end the frame also. \begin{DoxySeeAlso}{See also}
+\doxylink{classvideo_output_aba0bbb203522826c7d30509ffcca0820}{video\+Output::\+\+Render} 
+\end{DoxySeeAlso}
+
+
+Reimplemented from \doxymbox{\hyperlink{classvideo_output_ac36542b380c0f61d0e2e1fc1581fc69d}{video\+Output}}.
+
+\Hypertarget{classgl_display_a3168a221a52f320ab00cfd6a68b9286f}\index{glDisplay@{glDisplay}!Render@{Render}}
+\index{Render@{Render}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{Render()}{Render()}\hspace{0.1cm}{\footnotesize\ttfamily [8/8]}}
+{\footnotesize\ttfamily \label{classgl_display_a3168a221a52f320ab00cfd6a68b9286f} 
+virtual bool gl\+Display::\+\+Render (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}}]{image}{, }\item[{uint32\+\_\+t}]{width}{, }\item[{uint32\+\_\+t}]{height}{, }\item[{\doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{image\+Format}}}]{format}{, }\item[{cuda\+Stream\+\_\+t}]{stream}{ = {\ttfamily 0}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+Render a CUDA image (uchar3, uchar4, float3, float4) using Open\+GL interop. This is similar to \doxylink{classgl_display_a2f253dbc05bf1773e9d213396123d5d5}{Render\+Once()}, in that it will begin/\+end the frame also. \begin{DoxySeeAlso}{See also}
+\doxylink{classvideo_output_aba0bbb203522826c7d30509ffcca0820}{video\+Output::\+\+Render} 
+\end{DoxySeeAlso}
+
+
+Reimplemented from \doxymbox{\hyperlink{classvideo_output_ac36542b380c0f61d0e2e1fc1581fc69d}{video\+Output}}.
+
+\Hypertarget{classgl_display_a8a752d4e719940fe6b15c81bf8f7b09b}\index{glDisplay@{glDisplay}!RenderImage@{RenderImage}}
+\index{RenderImage@{RenderImage}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{RenderImage()}{RenderImage()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgl_display_a8a752d4e719940fe6b15c81bf8f7b09b} 
+void gl\+Display::\+\+Render\+Image (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}}]{image}{, }\item[{uint32\+\_\+t}]{width}{, }\item[{uint32\+\_\+t}]{height}{, }\item[{\doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{image\+Format}}}]{format}{, }\item[{float}]{x}{ = {\ttfamily 0.0f}, }\item[{float}]{y}{ = {\ttfamily 30.0f}, }\item[{bool}]{normalize}{ = {\ttfamily true}, }\item[{cuda\+Stream\+\_\+t}]{stream}{ = {\ttfamily 0}}\end{DoxyParamCaption})}
+
+Render a CUDA image (uchar3, uchar4, float3, float4) using Open\+GL interop. If normalize is true, the image\textquotesingle{}s pixel values will be rescaled from the range of \+[0-\/255]\+ to \+[0-\/1]\+ If normalize is false, the image\textquotesingle{}s pixel values are assumed to already be in the range of \+[0-\/1]\+ Note that if normalization is selected to be performed, it will be done in-\/place on the image \Hypertarget{classgl_display_a8a752d4e719940fe6b15c81bf8f7b09b}\index{glDisplay@{glDisplay}!RenderImage@{RenderImage}}
+\index{RenderImage@{RenderImage}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{RenderImage()}{RenderImage()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgl_display_a8a752d4e719940fe6b15c81bf8f7b09b} 
+void gl\+Display::\+\+Render\+Image (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}}]{image}{, }\item[{uint32\+\_\+t}]{width}{, }\item[{uint32\+\_\+t}]{height}{, }\item[{\doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{image\+Format}}}]{format}{, }\item[{float}]{x}{ = {\ttfamily 0.0f}, }\item[{float}]{y}{ = {\ttfamily 30.0f}, }\item[{bool}]{normalize}{ = {\ttfamily true}, }\item[{cuda\+Stream\+\_\+t}]{stream}{ = {\ttfamily 0}}\end{DoxyParamCaption})}
+
+Render a CUDA image (uchar3, uchar4, float3, float4) using Open\+GL interop. If normalize is true, the image\textquotesingle{}s pixel values will be rescaled from the range of \+[0-\/255]\+ to \+[0-\/1]\+ If normalize is false, the image\textquotesingle{}s pixel values are assumed to already be in the range of \+[0-\/1]\+ Note that if normalization is selected to be performed, it will be done in-\/place on the image \Hypertarget{classgl_display_a13db65eada3b098f3e301fee10de9917}\index{glDisplay@{glDisplay}!RenderLine@{RenderLine}}
+\index{RenderLine@{RenderLine}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{RenderLine()}{RenderLine()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgl_display_a13db65eada3b098f3e301fee10de9917} 
+void gl\+Display::\+\+Render\+Line (\begin{DoxyParamCaption}\item[{float}]{x1}{, }\item[{float}]{y1}{, }\item[{float}]{x2}{, }\item[{float}]{y2}{, }\item[{float}]{r}{, }\item[{float}]{g}{, }\item[{float}]{b}{, }\item[{float}]{a}{ = {\ttfamily 1.0f}, }\item[{float}]{thickness}{ = {\ttfamily 2.0f}}\end{DoxyParamCaption})}
+
+Render a line in screen coordinates with the specified color \begin{DoxyNote}{Note}
+the RGBA color values are expected to be in the range of \+[0-\/1]\+ 
+\end{DoxyNote}
+\Hypertarget{classgl_display_a13db65eada3b098f3e301fee10de9917}\index{glDisplay@{glDisplay}!RenderLine@{RenderLine}}
+\index{RenderLine@{RenderLine}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{RenderLine()}{RenderLine()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgl_display_a13db65eada3b098f3e301fee10de9917} 
+void gl\+Display::\+\+Render\+Line (\begin{DoxyParamCaption}\item[{float}]{x1}{, }\item[{float}]{y1}{, }\item[{float}]{x2}{, }\item[{float}]{y2}{, }\item[{float}]{r}{, }\item[{float}]{g}{, }\item[{float}]{b}{, }\item[{float}]{a}{ = {\ttfamily 1.0f}, }\item[{float}]{thickness}{ = {\ttfamily 2.0f}}\end{DoxyParamCaption})}
+
+Render a line in screen coordinates with the specified color \begin{DoxyNote}{Note}
+the RGBA color values are expected to be in the range of \+[0-\/1]\+ 
+\end{DoxyNote}
+\Hypertarget{classgl_display_ac9db9ed605e16ebb1e7f37f5427cf4d6}\index{glDisplay@{glDisplay}!RenderOnce@{RenderOnce}}
+\index{RenderOnce@{RenderOnce}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{RenderOnce()}{RenderOnce()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily \label{classgl_display_ac9db9ed605e16ebb1e7f37f5427cf4d6} 
+void gl\+Display::\+\+Render\+Once (\begin{DoxyParamCaption}\item[{float \texorpdfstring{$\ast$}{*}}]{image}{, }\item[{uint32\+\_\+t}]{width}{, }\item[{uint32\+\_\+t}]{height}{, }\item[{float}]{x}{ = {\ttfamily 5.0f}, }\item[{float}]{y}{ = {\ttfamily 30.0f}, }\item[{bool}]{normalize}{ = {\ttfamily true}, }\item[{cuda\+Stream\+\_\+t}]{stream}{ = {\ttfamily 0}}\end{DoxyParamCaption})}
+
+Begin the frame, render one CUDA float4 image using Open\+GL interop, and end the frame. Note that this function is only useful if you are rendering a single texture per frame. If normalize is true, the image\textquotesingle{}s pixel values will be rescaled from the range of \+[0-\/255]\+ to \+[0-\/1]\+ If normalize is false, the image\textquotesingle{}s pixel values are assumed to already be in the range of \+[0-\/1]\+ Note that if normalization is selected to be performed, it will be done in-\/place on the image \Hypertarget{classgl_display_ac9db9ed605e16ebb1e7f37f5427cf4d6}\index{glDisplay@{glDisplay}!RenderOnce@{RenderOnce}}
+\index{RenderOnce@{RenderOnce}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{RenderOnce()}{RenderOnce()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily \label{classgl_display_ac9db9ed605e16ebb1e7f37f5427cf4d6} 
+void gl\+Display::\+\+Render\+Once (\begin{DoxyParamCaption}\item[{float \texorpdfstring{$\ast$}{*}}]{image}{, }\item[{uint32\+\_\+t}]{width}{, }\item[{uint32\+\_\+t}]{height}{, }\item[{float}]{x}{ = {\ttfamily 5.0f}, }\item[{float}]{y}{ = {\ttfamily 30.0f}, }\item[{bool}]{normalize}{ = {\ttfamily true}, }\item[{cuda\+Stream\+\_\+t}]{stream}{ = {\ttfamily 0}}\end{DoxyParamCaption})}
+
+Begin the frame, render one CUDA float4 image using Open\+GL interop, and end the frame. Note that this function is only useful if you are rendering a single texture per frame. If normalize is true, the image\textquotesingle{}s pixel values will be rescaled from the range of \+[0-\/255]\+ to \+[0-\/1]\+ If normalize is false, the image\textquotesingle{}s pixel values are assumed to already be in the range of \+[0-\/1]\+ Note that if normalization is selected to be performed, it will be done in-\/place on the image \Hypertarget{classgl_display_a2f253dbc05bf1773e9d213396123d5d5}\index{glDisplay@{glDisplay}!RenderOnce@{RenderOnce}}
+\index{RenderOnce@{RenderOnce}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{RenderOnce()}{RenderOnce()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily \label{classgl_display_a2f253dbc05bf1773e9d213396123d5d5} 
+void gl\+Display::\+\+Render\+Once (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}}]{image}{, }\item[{uint32\+\_\+t}]{width}{, }\item[{uint32\+\_\+t}]{height}{, }\item[{\doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{image\+Format}}}]{format}{, }\item[{float}]{x}{ = {\ttfamily 5.0f}, }\item[{float}]{y}{ = {\ttfamily 30.0f}, }\item[{bool}]{normalize}{ = {\ttfamily true}, }\item[{cuda\+Stream\+\_\+t}]{stream}{ = {\ttfamily 0}}\end{DoxyParamCaption})}
+
+Begin the frame, render one CUDA image using Open\+GL interop, and end the frame. Note that this function is only useful if you are rendering a single texture per frame. If normalize is true, the image\textquotesingle{}s pixel values will be rescaled from the range of \+[0-\/255]\+ to \+[0-\/1]\+ If normalize is false, the image\textquotesingle{}s pixel values are assumed to already be in the range of \+[0-\/1]\+ Note that if normalization is selected to be performed, it will be done in-\/place on the image \Hypertarget{classgl_display_a2f253dbc05bf1773e9d213396123d5d5}\index{glDisplay@{glDisplay}!RenderOnce@{RenderOnce}}
+\index{RenderOnce@{RenderOnce}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{RenderOnce()}{RenderOnce()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily \label{classgl_display_a2f253dbc05bf1773e9d213396123d5d5} 
+void gl\+Display::\+\+Render\+Once (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}}]{image}{, }\item[{uint32\+\_\+t}]{width}{, }\item[{uint32\+\_\+t}]{height}{, }\item[{\doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{image\+Format}}}]{format}{, }\item[{float}]{x}{ = {\ttfamily 5.0f}, }\item[{float}]{y}{ = {\ttfamily 30.0f}, }\item[{bool}]{normalize}{ = {\ttfamily true}, }\item[{cuda\+Stream\+\_\+t}]{stream}{ = {\ttfamily 0}}\end{DoxyParamCaption})}
+
+Begin the frame, render one CUDA image using Open\+GL interop, and end the frame. Note that this function is only useful if you are rendering a single texture per frame. If normalize is true, the image\textquotesingle{}s pixel values will be rescaled from the range of \+[0-\/255]\+ to \+[0-\/1]\+ If normalize is false, the image\textquotesingle{}s pixel values are assumed to already be in the range of \+[0-\/1]\+ Note that if normalization is selected to be performed, it will be done in-\/place on the image \Hypertarget{classgl_display_a58a8c3a68b96d5e52484354634ffec3b}\index{glDisplay@{glDisplay}!RenderOutline@{RenderOutline}}
+\index{RenderOutline@{RenderOutline}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{RenderOutline()}{RenderOutline()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgl_display_a58a8c3a68b96d5e52484354634ffec3b} 
+void gl\+Display::\+\+Render\+Outline (\begin{DoxyParamCaption}\item[{float}]{x}{, }\item[{float}]{y}{, }\item[{float}]{width}{, }\item[{float}]{height}{, }\item[{float}]{r}{, }\item[{float}]{g}{, }\item[{float}]{b}{, }\item[{float}]{a}{ = {\ttfamily 1.0f}, }\item[{float}]{thickness}{ = {\ttfamily 2.0f}}\end{DoxyParamCaption})}
+
+Render the outline of a rect in screen coordinates with the specified color \begin{DoxyNote}{Note}
+the RGBA color values are expected to be in the range of \+[0-\/1]\+ 
+\end{DoxyNote}
+\Hypertarget{classgl_display_a58a8c3a68b96d5e52484354634ffec3b}\index{glDisplay@{glDisplay}!RenderOutline@{RenderOutline}}
+\index{RenderOutline@{RenderOutline}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{RenderOutline()}{RenderOutline()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgl_display_a58a8c3a68b96d5e52484354634ffec3b} 
+void gl\+Display::\+\+Render\+Outline (\begin{DoxyParamCaption}\item[{float}]{x}{, }\item[{float}]{y}{, }\item[{float}]{width}{, }\item[{float}]{height}{, }\item[{float}]{r}{, }\item[{float}]{g}{, }\item[{float}]{b}{, }\item[{float}]{a}{ = {\ttfamily 1.0f}, }\item[{float}]{thickness}{ = {\ttfamily 2.0f}}\end{DoxyParamCaption})}
+
+Render the outline of a rect in screen coordinates with the specified color \begin{DoxyNote}{Note}
+the RGBA color values are expected to be in the range of \+[0-\/1]\+ 
+\end{DoxyNote}
+\Hypertarget{classgl_display_a9621c6abd6509bf14feb104684477861}\index{glDisplay@{glDisplay}!RenderRect@{RenderRect}}
+\index{RenderRect@{RenderRect}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{RenderRect()}{RenderRect()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily \label{classgl_display_a9621c6abd6509bf14feb104684477861} 
+void gl\+Display::\+\+Render\+Rect (\begin{DoxyParamCaption}\item[{float}]{r}{, }\item[{float}]{g}{, }\item[{float}]{b}{, }\item[{float}]{a}{ = {\ttfamily 1.0f}}\end{DoxyParamCaption})}
+
+Render a filled rect covering the current viewport with the specified color \begin{DoxyNote}{Note}
+the RGBA color values are expected to be in the range of \+[0-\/1]\+ 
+\end{DoxyNote}
+\Hypertarget{classgl_display_a9621c6abd6509bf14feb104684477861}\index{glDisplay@{glDisplay}!RenderRect@{RenderRect}}
+\index{RenderRect@{RenderRect}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{RenderRect()}{RenderRect()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily \label{classgl_display_a9621c6abd6509bf14feb104684477861} 
+void gl\+Display::\+\+Render\+Rect (\begin{DoxyParamCaption}\item[{float}]{r}{, }\item[{float}]{g}{, }\item[{float}]{b}{, }\item[{float}]{a}{ = {\ttfamily 1.0f}}\end{DoxyParamCaption})}
+
+Render a filled rect covering the current viewport with the specified color \begin{DoxyNote}{Note}
+the RGBA color values are expected to be in the range of \+[0-\/1]\+ 
+\end{DoxyNote}
+\Hypertarget{classgl_display_ac390303fad04b7ffac04f208f48ea536}\index{glDisplay@{glDisplay}!RenderRect@{RenderRect}}
+\index{RenderRect@{RenderRect}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{RenderRect()}{RenderRect()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily \label{classgl_display_ac390303fad04b7ffac04f208f48ea536} 
+void gl\+Display::\+\+Render\+Rect (\begin{DoxyParamCaption}\item[{float}]{x}{, }\item[{float}]{y}{, }\item[{float}]{width}{, }\item[{float}]{height}{, }\item[{float}]{r}{, }\item[{float}]{g}{, }\item[{float}]{b}{, }\item[{float}]{a}{ = {\ttfamily 1.0f}}\end{DoxyParamCaption})}
+
+Render a filled rect in screen coordinates with the specified color \begin{DoxyNote}{Note}
+the RGBA color values are expected to be in the range of \+[0-\/1]\+ 
+\end{DoxyNote}
+\Hypertarget{classgl_display_ac390303fad04b7ffac04f208f48ea536}\index{glDisplay@{glDisplay}!RenderRect@{RenderRect}}
+\index{RenderRect@{RenderRect}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{RenderRect()}{RenderRect()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily \label{classgl_display_ac390303fad04b7ffac04f208f48ea536} 
+void gl\+Display::\+\+Render\+Rect (\begin{DoxyParamCaption}\item[{float}]{x}{, }\item[{float}]{y}{, }\item[{float}]{width}{, }\item[{float}]{height}{, }\item[{float}]{r}{, }\item[{float}]{g}{, }\item[{float}]{b}{, }\item[{float}]{a}{ = {\ttfamily 1.0f}}\end{DoxyParamCaption})}
+
+Render a filled rect in screen coordinates with the specified color \begin{DoxyNote}{Note}
+the RGBA color values are expected to be in the range of \+[0-\/1]\+ 
+\end{DoxyNote}
+\Hypertarget{classgl_display_a55c92bc0159c94b720a5bdd06cefcd69}\index{glDisplay@{glDisplay}!ResetCursor@{ResetCursor}}
+\index{ResetCursor@{ResetCursor}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{ResetCursor()}{ResetCursor()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgl_display_a55c92bc0159c94b720a5bdd06cefcd69} 
+void gl\+Display::\+\+Reset\+Cursor (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Reset the mouse cursor back to it\textquotesingle{}s default. \doxylink{requirements_The}{The} default mouse cursor is defined by \doxylink{classgl_display_a8ebb8bd67bd55d9a1a24189ba46d09ab}{Set\+Default\+Cursor()}.
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{classgl_display_a8ebb8bd67bd55d9a1a24189ba46d09ab}{Set\+Default\+Cursor()} 
+
+\doxylink{classgl_display_a93f2524dad00aad905af487e6e30c5e3}{Set\+Cursor()} 
+\end{DoxySeeAlso}
+\Hypertarget{classgl_display_a55c92bc0159c94b720a5bdd06cefcd69}\index{glDisplay@{glDisplay}!ResetCursor@{ResetCursor}}
+\index{ResetCursor@{ResetCursor}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{ResetCursor()}{ResetCursor()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgl_display_a55c92bc0159c94b720a5bdd06cefcd69} 
+void gl\+Display::\+\+Reset\+Cursor (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Reset the mouse cursor back to it\textquotesingle{}s default. \doxylink{requirements_The}{The} default mouse cursor is defined by \doxylink{classgl_display_a8ebb8bd67bd55d9a1a24189ba46d09ab}{Set\+Default\+Cursor()}.
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{classgl_display_a8ebb8bd67bd55d9a1a24189ba46d09ab}{Set\+Default\+Cursor()} 
+
+\doxylink{classgl_display_a93f2524dad00aad905af487e6e30c5e3}{Set\+Cursor()} 
+\end{DoxySeeAlso}
+\Hypertarget{classgl_display_a617f568a9a94622e9c687540e36ea064}\index{glDisplay@{glDisplay}!ResetDefaultCursor@{ResetDefaultCursor}}
+\index{ResetDefaultCursor@{ResetDefaultCursor}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{ResetDefaultCursor()}{ResetDefaultCursor()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgl_display_a617f568a9a94622e9c687540e36ea064} 
+void gl\+Display::\+\+Reset\+Default\+Cursor (\begin{DoxyParamCaption}\item[{bool}]{activate}{ = {\ttfamily true}}\end{DoxyParamCaption})}
+
+Reset the default cursor back to it\textquotesingle{}s original, the arrow.
+
+
+\begin{DoxyParams}{Parameters}
+{\em activate} & if {\ttfamily true} (default), the active cursor will be changed to this new default cursor immediately. If {\ttfamily false}, the active cursor will stay the same until \doxylink{classgl_display_a55c92bc0159c94b720a5bdd06cefcd69}{Reset\+Cursor()} gets called in the future.\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\doxylink{classgl_display_a8ebb8bd67bd55d9a1a24189ba46d09ab}{Set\+Default\+Cursor()} 
+
+\doxylink{classgl_display_a93f2524dad00aad905af487e6e30c5e3}{Set\+Cursor()} 
+
+\doxylink{classgl_display_a55c92bc0159c94b720a5bdd06cefcd69}{Reset\+Cursor()} 
+\end{DoxySeeAlso}
+\Hypertarget{classgl_display_a617f568a9a94622e9c687540e36ea064}\index{glDisplay@{glDisplay}!ResetDefaultCursor@{ResetDefaultCursor}}
+\index{ResetDefaultCursor@{ResetDefaultCursor}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{ResetDefaultCursor()}{ResetDefaultCursor()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgl_display_a617f568a9a94622e9c687540e36ea064} 
+void gl\+Display::\+\+Reset\+Default\+Cursor (\begin{DoxyParamCaption}\item[{bool}]{activate}{ = {\ttfamily true}}\end{DoxyParamCaption})}
+
+Reset the default cursor back to it\textquotesingle{}s original, the arrow.
+
+
+\begin{DoxyParams}{Parameters}
+{\em activate} & if {\ttfamily true} (default), the active cursor will be changed to this new default cursor immediately. If {\ttfamily false}, the active cursor will stay the same until \doxylink{classgl_display_a55c92bc0159c94b720a5bdd06cefcd69}{Reset\+Cursor()} gets called in the future.\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\doxylink{classgl_display_a8ebb8bd67bd55d9a1a24189ba46d09ab}{Set\+Default\+Cursor()} 
+
+\doxylink{classgl_display_a93f2524dad00aad905af487e6e30c5e3}{Set\+Cursor()} 
+
+\doxylink{classgl_display_a55c92bc0159c94b720a5bdd06cefcd69}{Reset\+Cursor()} 
+\end{DoxySeeAlso}
+\Hypertarget{classgl_display_a23dd7a9f481c772766f049d8056a8dad}\index{glDisplay@{glDisplay}!ResetViewport@{ResetViewport}}
+\index{ResetViewport@{ResetViewport}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{ResetViewport()}{ResetViewport()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgl_display_a23dd7a9f481c772766f049d8056a8dad} 
+void gl\+Display::\+\+Reset\+Viewport (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Reset to the full viewport (and change back GL\+\_\+\+PROJECTION) \Hypertarget{classgl_display_a23dd7a9f481c772766f049d8056a8dad}\index{glDisplay@{glDisplay}!ResetViewport@{ResetViewport}}
+\index{ResetViewport@{ResetViewport}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{ResetViewport()}{ResetViewport()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgl_display_a23dd7a9f481c772766f049d8056a8dad} 
+void gl\+Display::\+\+Reset\+Viewport (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Reset to the full viewport (and change back GL\+\_\+\+PROJECTION) \Hypertarget{classgl_display_a1494b4f48cc98493ff9d38537df076e7}\index{glDisplay@{glDisplay}!SetBackgroundColor@{SetBackgroundColor}}
+\index{SetBackgroundColor@{SetBackgroundColor}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{SetBackgroundColor()}{SetBackgroundColor()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgl_display_a1494b4f48cc98493ff9d38537df076e7} 
+void gl\+Display::\+\+Set\+Background\+Color (\begin{DoxyParamCaption}\item[{float}]{r}{, }\item[{float}]{g}{, }\item[{float}]{b}{, }\item[{float}]{a}{ = {\ttfamily 1.0f}}\end{DoxyParamCaption})}
+
+Set the window\textquotesingle{}s background color.
+
+
+\begin{DoxyParams}{Parameters}
+{\em r} & background RGBA color, red component (0.\+0-\/1.\+0f) \\
+\hline
+{\em g} & background RGBA color, green component (0.\+0-\/1.\+0f) \\
+\hline
+{\em b} & background RGBA color, blue component (0.\+0-\/1.\+0f) \\
+\hline
+{\em a} & background RGBA color, alpha component (0.\+0-\/1.\+0f) \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classgl_display_a1494b4f48cc98493ff9d38537df076e7}\index{glDisplay@{glDisplay}!SetBackgroundColor@{SetBackgroundColor}}
+\index{SetBackgroundColor@{SetBackgroundColor}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{SetBackgroundColor()}{SetBackgroundColor()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgl_display_a1494b4f48cc98493ff9d38537df076e7} 
+void gl\+Display::\+\+Set\+Background\+Color (\begin{DoxyParamCaption}\item[{float}]{r}{, }\item[{float}]{g}{, }\item[{float}]{b}{, }\item[{float}]{a}{ = {\ttfamily 1.0f}}\end{DoxyParamCaption})}
+
+Set the window\textquotesingle{}s background color.
+
+
+\begin{DoxyParams}{Parameters}
+{\em r} & background RGBA color, red component (0.\+0-\/1.\+0f) \\
+\hline
+{\em g} & background RGBA color, green component (0.\+0-\/1.\+0f) \\
+\hline
+{\em b} & background RGBA color, blue component (0.\+0-\/1.\+0f) \\
+\hline
+{\em a} & background RGBA color, alpha component (0.\+0-\/1.\+0f) \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classgl_display_a93f2524dad00aad905af487e6e30c5e3}\index{glDisplay@{glDisplay}!SetCursor@{SetCursor}}
+\index{SetCursor@{SetCursor}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{SetCursor()}{SetCursor()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgl_display_a93f2524dad00aad905af487e6e30c5e3} 
+void gl\+Display::\+\+Set\+Cursor (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{cursor}{}\end{DoxyParamCaption})}
+
+Set the active mouse cursor.
+
+
+\begin{DoxyParams}{Parameters}
+{\em cursor} & one of the cursor ID\textquotesingle{}s from {\ttfamily X11/\+cursorfont.\+h}\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\doxylink{classgl_display_a55c92bc0159c94b720a5bdd06cefcd69}{Reset\+Cursor()} to restore the cursor back to default 
+
+\doxylink{classgl_display_a8ebb8bd67bd55d9a1a24189ba46d09ab}{Set\+Default\+Cursor()} to change the default cursor 
+\end{DoxySeeAlso}
+\Hypertarget{classgl_display_a93f2524dad00aad905af487e6e30c5e3}\index{glDisplay@{glDisplay}!SetCursor@{SetCursor}}
+\index{SetCursor@{SetCursor}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{SetCursor()}{SetCursor()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgl_display_a93f2524dad00aad905af487e6e30c5e3} 
+void gl\+Display::\+\+Set\+Cursor (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{cursor}{}\end{DoxyParamCaption})}
+
+Set the active mouse cursor.
+
+
+\begin{DoxyParams}{Parameters}
+{\em cursor} & one of the cursor ID\textquotesingle{}s from {\ttfamily X11/\+cursorfont.\+h}\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\doxylink{classgl_display_a55c92bc0159c94b720a5bdd06cefcd69}{Reset\+Cursor()} to restore the cursor back to default 
+
+\doxylink{classgl_display_a8ebb8bd67bd55d9a1a24189ba46d09ab}{Set\+Default\+Cursor()} to change the default cursor 
+\end{DoxySeeAlso}
+\Hypertarget{classgl_display_a8ebb8bd67bd55d9a1a24189ba46d09ab}\index{glDisplay@{glDisplay}!SetDefaultCursor@{SetDefaultCursor}}
+\index{SetDefaultCursor@{SetDefaultCursor}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{SetDefaultCursor()}{SetDefaultCursor()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgl_display_a8ebb8bd67bd55d9a1a24189ba46d09ab} 
+void gl\+Display::\+\+Set\+Default\+Cursor (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{cursor}{, }\item[{bool}]{activate}{ = {\ttfamily true}}\end{DoxyParamCaption})}
+
+Set the default mouse cursor that gets used by \doxylink{classgl_display_a55c92bc0159c94b720a5bdd06cefcd69}{Reset\+Cursor()}
+
+
+\begin{DoxyParams}{Parameters}
+{\em cursor} & one of the cursor ID\textquotesingle{}s from {\ttfamily X11/\+cursorfont.\+h}. This will be the default cursor that gets set when \doxylink{classgl_display_a55c92bc0159c94b720a5bdd06cefcd69}{Reset\+Cursor()} is called.\\
+\hline
+{\em activate} & if {\ttfamily true} (default), the active cursor will be changed to this new default cursor immediately. If {\ttfamily false}, the active cursor will stay the same until \doxylink{classgl_display_a55c92bc0159c94b720a5bdd06cefcd69}{Reset\+Cursor()} gets called in the future.\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\doxylink{classgl_display_a55c92bc0159c94b720a5bdd06cefcd69}{Reset\+Cursor()} 
+
+\doxylink{classgl_display_a617f568a9a94622e9c687540e36ea064}{Reset\+Default\+Cursor()} 
+
+\doxylink{classgl_display_a93f2524dad00aad905af487e6e30c5e3}{Set\+Cursor()} 
+\end{DoxySeeAlso}
+\Hypertarget{classgl_display_a8ebb8bd67bd55d9a1a24189ba46d09ab}\index{glDisplay@{glDisplay}!SetDefaultCursor@{SetDefaultCursor}}
+\index{SetDefaultCursor@{SetDefaultCursor}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{SetDefaultCursor()}{SetDefaultCursor()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgl_display_a8ebb8bd67bd55d9a1a24189ba46d09ab} 
+void gl\+Display::\+\+Set\+Default\+Cursor (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{cursor}{, }\item[{bool}]{activate}{ = {\ttfamily true}}\end{DoxyParamCaption})}
+
+Set the default mouse cursor that gets used by \doxylink{classgl_display_a55c92bc0159c94b720a5bdd06cefcd69}{Reset\+Cursor()}
+
+
+\begin{DoxyParams}{Parameters}
+{\em cursor} & one of the cursor ID\textquotesingle{}s from {\ttfamily X11/\+cursorfont.\+h}. This will be the default cursor that gets set when \doxylink{classgl_display_a55c92bc0159c94b720a5bdd06cefcd69}{Reset\+Cursor()} is called.\\
+\hline
+{\em activate} & if {\ttfamily true} (default), the active cursor will be changed to this new default cursor immediately. If {\ttfamily false}, the active cursor will stay the same until \doxylink{classgl_display_a55c92bc0159c94b720a5bdd06cefcd69}{Reset\+Cursor()} gets called in the future.\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\doxylink{classgl_display_a55c92bc0159c94b720a5bdd06cefcd69}{Reset\+Cursor()} 
+
+\doxylink{classgl_display_a617f568a9a94622e9c687540e36ea064}{Reset\+Default\+Cursor()} 
+
+\doxylink{classgl_display_a93f2524dad00aad905af487e6e30c5e3}{Set\+Cursor()} 
+\end{DoxySeeAlso}
+\Hypertarget{classgl_display_aad873a9d842442644747bdb3176efad8}\index{glDisplay@{glDisplay}!SetDragMode@{SetDragMode}}
+\index{SetDragMode@{SetDragMode}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{SetDragMode()}{SetDragMode()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgl_display_aad873a9d842442644747bdb3176efad8} 
+void gl\+Display::\+\+Set\+Drag\+Mode (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{classgl_display_a0d39d6f011999828560d8353edadf46c}{Drag\+Mode}}}]{mode}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Set the dragging behavior mode. \Hypertarget{classgl_display_aad873a9d842442644747bdb3176efad8}\index{glDisplay@{glDisplay}!SetDragMode@{SetDragMode}}
+\index{SetDragMode@{SetDragMode}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{SetDragMode()}{SetDragMode()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgl_display_aad873a9d842442644747bdb3176efad8} 
+void gl\+Display::\+\+Set\+Drag\+Mode (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{classgl_display_a0d39d6f011999828560d8353edadf46c}{Drag\+Mode}}}]{mode}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Set the dragging behavior mode. \Hypertarget{classgl_display_ae48ceb52e06b5d111777c5a92e3380db}\index{glDisplay@{glDisplay}!SetFullscreen@{SetFullscreen}}
+\index{SetFullscreen@{SetFullscreen}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{SetFullscreen()}{SetFullscreen()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgl_display_ae48ceb52e06b5d111777c5a92e3380db} 
+void gl\+Display::\+\+Set\+Fullscreen (\begin{DoxyParamCaption}\item[{bool}]{fullscreen}{}\end{DoxyParamCaption})}
+
+Set the window to fullscreen mode or not. \Hypertarget{classgl_display_ae48ceb52e06b5d111777c5a92e3380db}\index{glDisplay@{glDisplay}!SetFullscreen@{SetFullscreen}}
+\index{SetFullscreen@{SetFullscreen}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{SetFullscreen()}{SetFullscreen()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgl_display_ae48ceb52e06b5d111777c5a92e3380db} 
+void gl\+Display::\+\+Set\+Fullscreen (\begin{DoxyParamCaption}\item[{bool}]{fullscreen}{}\end{DoxyParamCaption})}
+
+Set the window to fullscreen mode or not. \Hypertarget{classgl_display_aa8149384dbd4a389281d1420608e8418}\index{glDisplay@{glDisplay}!SetMaximized@{SetMaximized}}
+\index{SetMaximized@{SetMaximized}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{SetMaximized()}{SetMaximized()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgl_display_aa8149384dbd4a389281d1420608e8418} 
+void gl\+Display::\+\+Set\+Maximized (\begin{DoxyParamCaption}\item[{bool}]{maximized}{}\end{DoxyParamCaption})}
+
+Maximize or un-\/maximize the window. \Hypertarget{classgl_display_aa8149384dbd4a389281d1420608e8418}\index{glDisplay@{glDisplay}!SetMaximized@{SetMaximized}}
+\index{SetMaximized@{SetMaximized}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{SetMaximized()}{SetMaximized()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgl_display_aa8149384dbd4a389281d1420608e8418} 
+void gl\+Display::\+\+Set\+Maximized (\begin{DoxyParamCaption}\item[{bool}]{maximized}{}\end{DoxyParamCaption})}
+
+Maximize or un-\/maximize the window. \Hypertarget{classgl_display_a52516d4523e536c9ed2e40113ee3856e}\index{glDisplay@{glDisplay}!SetSize@{SetSize}}
+\index{SetSize@{SetSize}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{SetSize()}{SetSize()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgl_display_a52516d4523e536c9ed2e40113ee3856e} 
+void gl\+Display::\+\+Set\+Size (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{width}{, }\item[{uint32\+\_\+t}]{height}{}\end{DoxyParamCaption})}
+
+Set the window\textquotesingle{}s size.
+
+
+\begin{DoxyParams}{Parameters}
+{\em width} & the desired width of the window, in pixels. \\
+\hline
+{\em height} & the desired height of the window, in pixels.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+modifying the window\textquotesingle{}s size will reset the viewport to cover the full area of the new size of the window. 
+\end{DoxyNote}
+\Hypertarget{classgl_display_a52516d4523e536c9ed2e40113ee3856e}\index{glDisplay@{glDisplay}!SetSize@{SetSize}}
+\index{SetSize@{SetSize}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{SetSize()}{SetSize()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgl_display_a52516d4523e536c9ed2e40113ee3856e} 
+void gl\+Display::\+\+Set\+Size (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{width}{, }\item[{uint32\+\_\+t}]{height}{}\end{DoxyParamCaption})}
+
+Set the window\textquotesingle{}s size.
+
+
+\begin{DoxyParams}{Parameters}
+{\em width} & the desired width of the window, in pixels. \\
+\hline
+{\em height} & the desired height of the window, in pixels.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+modifying the window\textquotesingle{}s size will reset the viewport to cover the full area of the new size of the window. 
+\end{DoxyNote}
+\Hypertarget{classgl_display_a1f6dec929939ef80d3ae3bb4412b0863}\index{glDisplay@{glDisplay}!SetStatus@{SetStatus}}
+\index{SetStatus@{SetStatus}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{SetStatus()}{SetStatus()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgl_display_a1f6dec929939ef80d3ae3bb4412b0863} 
+void gl\+Display::\+\+Set\+Status (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{str}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+Set the window title string. 
+
+Reimplemented from \doxymbox{\hyperlink{classvideo_output_a5a7a5b64da12b651e1eca653f00c7d7b}{video\+Output}}.
+
+\Hypertarget{classgl_display_a63804bbc679034342b14fe4c2c4da042}\index{glDisplay@{glDisplay}!SetStatus@{SetStatus}}
+\index{SetStatus@{SetStatus}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{SetStatus()}{SetStatus()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgl_display_a63804bbc679034342b14fe4c2c4da042} 
+virtual void gl\+Display::\+\+Set\+Status (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{str}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+Set the window title string. 
+
+Reimplemented from \doxymbox{\hyperlink{classvideo_output_a5a7a5b64da12b651e1eca653f00c7d7b}{video\+Output}}.
+
+\Hypertarget{classgl_display_a4a4943779f0d036af2e49fc9d9a8aade}\index{glDisplay@{glDisplay}!SetTitle@{SetTitle}}
+\index{SetTitle@{SetTitle}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{SetTitle()}{SetTitle()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgl_display_a4a4943779f0d036af2e49fc9d9a8aade} 
+void gl\+Display::\+\+Set\+Title (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{str}{}\end{DoxyParamCaption})}
+
+Set the window title string. \begin{DoxyRefDesc}{Deprecated}
+\item[\doxymbox{\hyperlink{deprecated__deprecated000014}{Deprecated}}]\doxylink{classgl_display_a4a4943779f0d036af2e49fc9d9a8aade}{Set\+Title()} has been superceded by \doxylink{classgl_display_a1f6dec929939ef80d3ae3bb4412b0863}{Set\+Status()} from \doxylink{classvideo_output}{video\+Output} API. \doxylink{classgl_display_a4a4943779f0d036af2e49fc9d9a8aade}{Set\+Title()} is functionally the same as \doxylink{classgl_display_a1f6dec929939ef80d3ae3bb4412b0863}{Set\+Status()}. \end{DoxyRefDesc}
+\Hypertarget{classgl_display_a4a4943779f0d036af2e49fc9d9a8aade}\index{glDisplay@{glDisplay}!SetTitle@{SetTitle}}
+\index{SetTitle@{SetTitle}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{SetTitle()}{SetTitle()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgl_display_a4a4943779f0d036af2e49fc9d9a8aade} 
+void gl\+Display::\+\+Set\+Title (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{str}{}\end{DoxyParamCaption})}
+
+Set the window title string. \begin{DoxyRefDesc}{Deprecated}
+\item[\doxymbox{\hyperlink{deprecated__deprecated000027}{Deprecated}}]\doxylink{classgl_display_a4a4943779f0d036af2e49fc9d9a8aade}{Set\+Title()} has been superceded by \doxylink{classgl_display_a1f6dec929939ef80d3ae3bb4412b0863}{Set\+Status()} from \doxylink{classvideo_output}{video\+Output} API. \doxylink{classgl_display_a4a4943779f0d036af2e49fc9d9a8aade}{Set\+Title()} is functionally the same as \doxylink{classgl_display_a1f6dec929939ef80d3ae3bb4412b0863}{Set\+Status()}. \end{DoxyRefDesc}
+\Hypertarget{classgl_display_a61179bfa1ba61d66ff243273c71bf5a3}\index{glDisplay@{glDisplay}!SetViewport@{SetViewport}}
+\index{SetViewport@{SetViewport}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{SetViewport()}{SetViewport()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgl_display_a61179bfa1ba61d66ff243273c71bf5a3} 
+void gl\+Display::\+\+Set\+Viewport (\begin{DoxyParamCaption}\item[{int}]{left}{, }\item[{int}]{top}{, }\item[{int}]{right}{, }\item[{int}]{bottom}{}\end{DoxyParamCaption})}
+
+Set the active viewport being rendered to.
+
+\doxylink{classgl_display_a61179bfa1ba61d66ff243273c71bf5a3}{Set\+Viewport()} will update the GL\+\_\+\+PROJECTION matrix with a new ortho matrix to reflect these changes.
+
+After done rendering to this viewport, you should reset it back to it\textquotesingle{}s original with \doxylink{classgl_display_a23dd7a9f481c772766f049d8056a8dad}{Reset\+Viewport()} \Hypertarget{classgl_display_a61179bfa1ba61d66ff243273c71bf5a3}\index{glDisplay@{glDisplay}!SetViewport@{SetViewport}}
+\index{SetViewport@{SetViewport}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{SetViewport()}{SetViewport()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgl_display_a61179bfa1ba61d66ff243273c71bf5a3} 
+void gl\+Display::\+\+Set\+Viewport (\begin{DoxyParamCaption}\item[{int}]{left}{, }\item[{int}]{top}{, }\item[{int}]{right}{, }\item[{int}]{bottom}{}\end{DoxyParamCaption})}
+
+Set the active viewport being rendered to.
+
+\doxylink{classgl_display_a61179bfa1ba61d66ff243273c71bf5a3}{Set\+Viewport()} will update the GL\+\_\+\+PROJECTION matrix with a new ortho matrix to reflect these changes.
+
+After done rendering to this viewport, you should reset it back to it\textquotesingle{}s original with \doxylink{classgl_display_a23dd7a9f481c772766f049d8056a8dad}{Reset\+Viewport()} 
+
+\label{doc-variable-members}
+\Hypertarget{classgl_display_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classgl_display_aa070974c9253183535b2ce4a9b6c471d}\index{glDisplay@{glDisplay}!DEFAULT\_TITLE@{DEFAULT\_TITLE}}
+\index{DEFAULT\_TITLE@{DEFAULT\_TITLE}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{DEFAULT\_TITLE}{DEFAULT\_TITLE}}
+{\footnotesize\ttfamily \label{classgl_display_aa070974c9253183535b2ce4a9b6c471d} 
+const char \texorpdfstring{$\ast$}{*} gl\+Display::\+\+DEFAULT\+\_\+\+TITLE = "{}NVIDIA Jetson"{}\hspace{0.3cm}{\ttfamily [static]}}
+
+Default title bar name \Hypertarget{classgl_display_a600c2e9468bad51e51dc110a9032e72b}\index{glDisplay@{glDisplay}!Type@{Type}}
+\index{Type@{Type}!glDisplay@{glDisplay}}
+\doxysubsubsection{\texorpdfstring{Type}{Type}}
+{\footnotesize\ttfamily \label{classgl_display_a600c2e9468bad51e51dc110a9032e72b} 
+const uint32\+\_\+t gl\+Display::\+\+Type = (1 $<$$<$ 3)\hspace{0.3cm}{\ttfamily [static]}}
+
+Unique type identifier of \doxylink{classgl_display}{gl\+Display} class. 
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+jetson-\/inference/\+build/\+aarch64/\+include/\+jetson-\/utils/\+gl\+Display.\+h\item 
+jetson-\/inference/\+utils/\+display/\+gl\+Display.\+h\item 
+jetson-\/inference/\+utils/\+display/\+gl\+Display.\+cpp\end{DoxyCompactItemize}

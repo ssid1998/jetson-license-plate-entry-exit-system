@@ -1,0 +1,60 @@
+\doxysection{eval\+\_\+ssd.\+Mean\+APEvaluator Class Reference}
+\hypertarget{classeval__ssd_1_1_mean_a_p_evaluator}{}\label{classeval__ssd_1_1_mean_a_p_evaluator}\index{eval\_ssd.MeanAPEvaluator@{eval\_ssd.MeanAPEvaluator}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classeval__ssd_1_1_mean_a_p_evaluator_a8a7effe77feee2450ae2384c67d5e15a}\label{classeval__ssd_1_1_mean_a_p_evaluator_a8a7effe77feee2450ae2384c67d5e15a} 
+{\bfseries \+\_\+\+\_\+init\+\_\+\+\_\+} (self, dataset, net, arch=\textquotesingle{}mb1-\/ssd\textquotesingle{}, eval\+\_\+dir=\textquotesingle{}models/\+eval\+\_\+results\textquotesingle{}, nms\+\_\+method=\textquotesingle{}hard\textquotesingle{}, iou\+\_\+threshold=0.\+5, use\+\_\+2007\+\_\+metric=True, device=\textquotesingle{}cuda:\+0\textquotesingle{})
+\item 
+\Hypertarget{classeval__ssd_1_1_mean_a_p_evaluator_a2a83b5c221e3a4056bbe9a6f3a52a83e}\label{classeval__ssd_1_1_mean_a_p_evaluator_a2a83b5c221e3a4056bbe9a6f3a52a83e} 
+{\bfseries compute} (self)
+\item 
+\Hypertarget{classeval__ssd_1_1_mean_a_p_evaluator_add54d9a0155c3d07bf80f77dd80a14cc}\label{classeval__ssd_1_1_mean_a_p_evaluator_add54d9a0155c3d07bf80f77dd80a14cc} 
+{\bfseries log\+\_\+results} (self, mean\+\_\+ap, class\+\_\+ap, prefix=\textquotesingle{}\textquotesingle{})
+\item 
+\Hypertarget{classeval__ssd_1_1_mean_a_p_evaluator_a6dcd3412ffd1cf5f7ca6ed0617569b92}\label{classeval__ssd_1_1_mean_a_p_evaluator_a6dcd3412ffd1cf5f7ca6ed0617569b92} 
+{\bfseries group\+\_\+annotation\+\_\+by\+\_\+class} (self, dataset)
+\item 
+\Hypertarget{classeval__ssd_1_1_mean_a_p_evaluator_a27d178f4a808617d0b932df61854d015}\label{classeval__ssd_1_1_mean_a_p_evaluator_a27d178f4a808617d0b932df61854d015} 
+{\bfseries compute\+\_\+average\+\_\+precision\+\_\+per\+\_\+class} (self, num\+\_\+true\+\_\+cases, gt\+\_\+boxes, difficult\+\_\+cases, prediction\+\_\+file, iou\+\_\+threshold, use\+\_\+2007\+\_\+metric)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classeval__ssd_1_1_mean_a_p_evaluator_a3ab7fa7fb0ad29d808bfcafe8a7b13c4}\label{classeval__ssd_1_1_mean_a_p_evaluator_a3ab7fa7fb0ad29d808bfcafe8a7b13c4} 
+{\bfseries dataset} = dataset
+\item 
+\Hypertarget{classeval__ssd_1_1_mean_a_p_evaluator_ae637ea85cc623125235f288ae1123638}\label{classeval__ssd_1_1_mean_a_p_evaluator_ae637ea85cc623125235f288ae1123638} 
+{\bfseries net} = net
+\item 
+\Hypertarget{classeval__ssd_1_1_mean_a_p_evaluator_a8a14004680ad0be9315ed6282e7cd321}\label{classeval__ssd_1_1_mean_a_p_evaluator_a8a14004680ad0be9315ed6282e7cd321} 
+{\bfseries iou\+\_\+threshold} = iou\+\_\+threshold
+\item 
+\Hypertarget{classeval__ssd_1_1_mean_a_p_evaluator_a474b579d7310326036449385cc5442f5}\label{classeval__ssd_1_1_mean_a_p_evaluator_a474b579d7310326036449385cc5442f5} 
+{\bfseries use\+\_\+2007\+\_\+metric} = use\+\_\+2007\+\_\+metric
+\item 
+\Hypertarget{classeval__ssd_1_1_mean_a_p_evaluator_ab84f7be8748fae136f88a740913aa6a1}\label{classeval__ssd_1_1_mean_a_p_evaluator_ab84f7be8748fae136f88a740913aa6a1} 
+{\bfseries eval\+\_\+path} = pathlib.\+Path(eval\+\_\+dir)
+\item 
+\Hypertarget{classeval__ssd_1_1_mean_a_p_evaluator_a6136634136deff7754c2ea9e8bc40ce8}\label{classeval__ssd_1_1_mean_a_p_evaluator_a6136634136deff7754c2ea9e8bc40ce8} 
+{\bfseries true\+\_\+case\+\_\+stat}
+\item 
+\Hypertarget{classeval__ssd_1_1_mean_a_p_evaluator_a9bc4dbb5898429be9dd9aac1a03baded}\label{classeval__ssd_1_1_mean_a_p_evaluator_a9bc4dbb5898429be9dd9aac1a03baded} 
+{\bfseries all\+\_\+gb\+\_\+boxes}
+\item 
+\Hypertarget{classeval__ssd_1_1_mean_a_p_evaluator_ab86d9ef9ba59662ecb8a0ec04a83cf1f}\label{classeval__ssd_1_1_mean_a_p_evaluator_ab86d9ef9ba59662ecb8a0ec04a83cf1f} 
+{\bfseries all\+\_\+difficult\+\_\+cases} = self.\+group\+\_\+annotation\+\_\+by\+\_\+class(self.\+dataset)
+\item 
+\Hypertarget{classeval__ssd_1_1_mean_a_p_evaluator_ac51195cc816ba8a208efc2a78871d29e}\label{classeval__ssd_1_1_mean_a_p_evaluator_ac51195cc816ba8a208efc2a78871d29e} 
+{\bfseries predictor} = create\+\_\+vgg\+\_\+ssd\+\_\+predictor(net, nms\+\_\+method=nms\+\_\+method, device=device)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyVerb}Mean Average Precision (mAP) evaluator
+\end{DoxyVerb}
+ 
+
+The documentation for this class was generated from the following file:\+\begin{DoxyCompactItemize}
+\item 
+jetson-\/inference/\+python/\+training/\+detection/\+ssd/\+eval\+\_\+ssd.\+py\end{DoxyCompactItemize}

@@ -1,0 +1,85 @@
+\doxysection{Thread.\+h}
+\hypertarget{utils_2threads_2_thread_8h_source}{}\label{utils_2threads_2_thread_8h_source}\index{jetson-\/inference/utils/threads/Thread.h@{jetson-\/inference/utils/threads/Thread.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ *\ Copyright\ (c)\ 2018,\ NVIDIA\ CORPORATION.\ All\ rights\ reserved.}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ *\ Permission\ is\ hereby\ granted,\ free\ of\ charge,\ to\ any\ person\ obtaining\ a}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ *\ copy\ of\ this\ software\ and\ associated\ documentation\ files\ (the\ "{}Software"{}),}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ *\ to\ deal\ in\ the\ Software\ without\ restriction,\ including\ without\ limitation}}
+\DoxyCodeLine{00007\ \textcolor{comment}{\ *\ the\ rights\ to\ use,\ copy,\ modify,\ merge,\ publish,\ distribute,\ sublicense,}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ *\ and/or\ sell\ copies\ of\ the\ Software,\ and\ to\ permit\ persons\ to\ whom\ the}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ *\ Software\ is\ furnished\ to\ do\ so,\ subject\ to\ the\ following\ conditions:}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ *\ The\ above\ copyright\ notice\ and\ this\ permission\ notice\ shall\ be\ included\ in}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ *\ all\ copies\ or\ substantial\ portions\ of\ the\ Software.}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ *\ THE\ SOFTWARE\ IS\ PROVIDED\ "{}AS\ IS"{},\ WITHOUT\ WARRANTY\ OF\ ANY\ KIND,\ EXPRESS\ OR}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ *\ IMPLIED,\ INCLUDING\ BUT\ NOT\ LIMITED\ TO\ THE\ WARRANTIES\ OF\ MERCHANTABILITY,}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ *\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE\ AND\ NONINFRINGEMENT.\ \ IN\ NO\ EVENT\ SHALL}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ *\ THE\ AUTHORS\ OR\ COPYRIGHT\ HOLDERS\ BE\ LIABLE\ FOR\ ANY\ CLAIM,\ DAMAGES\ OR\ OTHER}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ *\ LIABILITY,\ WHETHER\ IN\ AN\ ACTION\ OF\ CONTRACT,\ TORT\ OR\ OTHERWISE,\ ARISING}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ *\ FROM,\ OUT\ OF\ OR\ IN\ CONNECTION\ WITH\ THE\ SOFTWARE\ OR\ THE\ USE\ OR\ OTHER}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ *\ DEALINGS\ IN\ THE\ SOFTWARE.}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00022\ \ }
+\DoxyCodeLine{00023\ \textcolor{preprocessor}{\#ifndef\ \_\_MULTITHREAD\_H\_}}
+\DoxyCodeLine{00024\ \textcolor{preprocessor}{\#define\ \_\_MULTITHREAD\_H\_}}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \textcolor{preprocessor}{\#include\ <pthread.h>}}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00035\ \textcolor{keyword}{typedef}\ \textcolor{keywordtype}{void}*\ (*ThreadEntryFunction)(\ \textcolor{keywordtype}{void}*\ user\_param\ );}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00044\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_thread}{Thread}}}
+\DoxyCodeLine{00045\ \{}
+\DoxyCodeLine{00046\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00050\ \ \ \ \ \doxymbox{\hyperlink{class_thread_a95c703fb8f2f27cb64f475a8c940864a}{Thread}}();}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00055\ \ \ \ \ \textcolor{keyword}{virtual}\ \doxymbox{\hyperlink{class_thread_a026b23628e1727050e864e00489c0baf}{\string~Thread}}();}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00060\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_thread_ac852bc49c5bf8c2f448e4df85b1a4cae}{Run}}();}
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_thread_a279c2b78aa2bf43371f2462623588830}{Start}}();}
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00072\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_thread_af729f1405c5c2a4fb43bc5f4d249bedf}{Start}}(\ \doxymbox{\hyperlink{group__threads_ga4cb8fdf15550fce3b7114efa581d5d8d}{ThreadEntryFunction}}\ entry,\ \textcolor{keywordtype}{void}*\ user\_param=NULL\ );}
+\DoxyCodeLine{00073\ \ \ \ \ }
+\DoxyCodeLine{00078\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_thread_a3e16995fb09c32004824ce8be5d11045}{Stop}}(\ \textcolor{keywordtype}{bool}\ wait=\textcolor{keyword}{false}\ );}
+\DoxyCodeLine{00079\ }
+\DoxyCodeLine{00083\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_thread_ac1bccfcc9119d0c9f8dc95ef13175c74}{InitRealtime}}();}
+\DoxyCodeLine{00084\ \ \ \ \ }
+\DoxyCodeLine{00088\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_thread_a11087c8d97fc7b7c2ab37576acee61a3}{GetMaxPriority}}();}
+\DoxyCodeLine{00089\ \ \ \ \ }
+\DoxyCodeLine{00093\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_thread_adc90bfb74a4f32b717c681a6a073f70a}{GetMinPriority}}();}
+\DoxyCodeLine{00094\ }
+\DoxyCodeLine{00099\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_thread_ad69f498b3cbc8ec002238b74672b7aa2}{GetPriority}}(\ pthread\_t*\ thread=NULL\ );}
+\DoxyCodeLine{00100\ \ }
+\DoxyCodeLine{00105\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_thread_a4bebcec1fe0fc8b0c1e8010a15bf6493}{SetPriority}}(\ \textcolor{keywordtype}{int}\ priority,\ pthread\_t*\ thread=NULL\ );}
+\DoxyCodeLine{00106\ }
+\DoxyCodeLine{00110\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_thread_a04d3a576997c17f058273831630cc394}{GetPriorityLevel}}();}
+\DoxyCodeLine{00111\ }
+\DoxyCodeLine{00115\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_thread_a46f5f8800a58219817127784c75ed1ba}{SetPriorityLevel}}(\ \textcolor{keywordtype}{int}\ priority\ );}
+\DoxyCodeLine{00116\ }
+\DoxyCodeLine{00121\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_thread_a3013f9ed28496e937143b9807ba6bd72}{Yield}}(\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ ms\ );}
+\DoxyCodeLine{00122\ }
+\DoxyCodeLine{00126\ \ \ \ \ \textcolor{keyword}{inline}\ pthread\_t*\ \doxymbox{\hyperlink{class_thread_a38166f20a8e274fa30b0f1276502cec8}{GetThreadID}}()\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{\ \textcolor{keywordflow}{return}\ \&mThreadID;\ \}}
+\DoxyCodeLine{00127\ }
+\DoxyCodeLine{00131\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_thread_a786ef18c62603f0fe041e95391637740}{LockAffinity}}(\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ cpu\ );}
+\DoxyCodeLine{00132\ }
+\DoxyCodeLine{00138\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_thread_a8b944c18ba34a7fdb04dd65c754b6366}{SetAffinity}}(\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ cpu,\ pthread\_t*\ thread=NULL\ );}
+\DoxyCodeLine{00139\ }
+\DoxyCodeLine{00143\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_thread_aca2de16d52730f2c5f247b816ed1a064}{GetCPU}}();}
+\DoxyCodeLine{00144\ }
+\DoxyCodeLine{00145\ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00146\ }
+\DoxyCodeLine{00147\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}*\ DefaultEntry(\ \textcolor{keywordtype}{void}*\ param\ );}
+\DoxyCodeLine{00148\ }
+\DoxyCodeLine{00149\ \ \ \ \ pthread\_t\ mThreadID;}
+\DoxyCodeLine{00150\ \ \ \ \ \textcolor{keywordtype}{bool}\ mThreadStarted;}
+\DoxyCodeLine{00151\ \};}
+\DoxyCodeLine{00152\ }
+\DoxyCodeLine{00153\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

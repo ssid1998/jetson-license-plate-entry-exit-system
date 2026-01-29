@@ -1,0 +1,106 @@
+\doxysection{Socket.\+h}
+\hypertarget{build_2aarch64_2include_2jetson-utils_2_socket_8h_source}{}\label{build_2aarch64_2include_2jetson-utils_2_socket_8h_source}\index{jetson-\/inference/build/aarch64/include/jetson-\/utils/Socket.h@{jetson-\/inference/build/aarch64/include/jetson-\/utils/Socket.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ *\ Copyright\ (c)\ 2018,\ NVIDIA\ CORPORATION.\ All\ rights\ reserved.}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ *\ Permission\ is\ hereby\ granted,\ free\ of\ charge,\ to\ any\ person\ obtaining\ a}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ *\ copy\ of\ this\ software\ and\ associated\ documentation\ files\ (the\ "{}Software"{}),}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ *\ to\ deal\ in\ the\ Software\ without\ restriction,\ including\ without\ limitation}}
+\DoxyCodeLine{00007\ \textcolor{comment}{\ *\ the\ rights\ to\ use,\ copy,\ modify,\ merge,\ publish,\ distribute,\ sublicense,}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ *\ and/or\ sell\ copies\ of\ the\ Software,\ and\ to\ permit\ persons\ to\ whom\ the}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ *\ Software\ is\ furnished\ to\ do\ so,\ subject\ to\ the\ following\ conditions:}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ *\ The\ above\ copyright\ notice\ and\ this\ permission\ notice\ shall\ be\ included\ in}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ *\ all\ copies\ or\ substantial\ portions\ of\ the\ Software.}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ *\ THE\ SOFTWARE\ IS\ PROVIDED\ "{}AS\ IS"{},\ WITHOUT\ WARRANTY\ OF\ ANY\ KIND,\ EXPRESS\ OR}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ *\ IMPLIED,\ INCLUDING\ BUT\ NOT\ LIMITED\ TO\ THE\ WARRANTIES\ OF\ MERCHANTABILITY,}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ *\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE\ AND\ NONINFRINGEMENT.\ \ IN\ NO\ EVENT\ SHALL}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ *\ THE\ AUTHORS\ OR\ COPYRIGHT\ HOLDERS\ BE\ LIABLE\ FOR\ ANY\ CLAIM,\ DAMAGES\ OR\ OTHER}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ *\ LIABILITY,\ WHETHER\ IN\ AN\ ACTION\ OF\ CONTRACT,\ TORT\ OR\ OTHERWISE,\ ARISING}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ *\ FROM,\ OUT\ OF\ OR\ IN\ CONNECTION\ WITH\ THE\ SOFTWARE\ OR\ THE\ USE\ OR\ OTHER}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ *\ DEALINGS\ IN\ THE\ SOFTWARE.}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00022\ \ }
+\DoxyCodeLine{00023\ \textcolor{preprocessor}{\#ifndef\ \_\_NETWORK\_SOCKET\_H\_}}
+\DoxyCodeLine{00024\ \textcolor{preprocessor}{\#define\ \_\_NETWORK\_SOCKET\_H\_}}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
+\DoxyCodeLine{00027\ \textcolor{preprocessor}{\#include\ <cstddef>}}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00034\ \textcolor{keyword}{enum}\ \doxymbox{\hyperlink{group__network_gaa78c7398fa81f7f62aa233159d4d8d97}{SocketType}}}
+\DoxyCodeLine{00035\ \{}
+\DoxyCodeLine{00039\ \ \ \ \ \doxymbox{\hyperlink{group__network_ggaa78c7398fa81f7f62aa233159d4d8d97a180747545a72ff6d0fd0569e781aefd5}{SOCKET\_UDP}}\ \ =\ 0,}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00044\ \ \ \ \ \doxymbox{\hyperlink{group__network_ggaa78c7398fa81f7f62aa233159d4d8d97a2843397fd39bd96681bca78a8aa03096}{SOCKET\_TCP}}\ \ =\ 1}
+\DoxyCodeLine{00045\ \};}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00048\ \textcolor{preprocessor}{\#define\ IP\_ANY\ \ \ \ \ \ \ \ \ \ 0x00000000}}
+\DoxyCodeLine{00049\ \textcolor{preprocessor}{\#define\ IP\_BROADCAST\ \ \ \ 0xFFFFFFFF}}
+\DoxyCodeLine{00050\ \textcolor{preprocessor}{\#define\ IP\_LOOPBACK\ \ \ \ \ 0x7F000001}}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00063\ \textcolor{keyword}{class\ }Socket}
+\DoxyCodeLine{00064\ \{}
+\DoxyCodeLine{00065\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00069\ \ \ \ \ \textcolor{keyword}{static}\ Socket*\ \doxymbox{\hyperlink{class_socket_ae378f39a40f45251a6b74920d319e320}{Create}}(\ \doxymbox{\hyperlink{group__network_gaa78c7398fa81f7f62aa233159d4d8d97}{SocketType}}\ type\ );}
+\DoxyCodeLine{00070\ }
+\DoxyCodeLine{00074\ \ \ \ \ \doxymbox{\hyperlink{class_socket_aeac4eb6379a543d38ed88977d3b6630a}{\string~Socket}}();}
+\DoxyCodeLine{00075\ }
+\DoxyCodeLine{00080\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_socket_ae3fb80aa2f7ab74d371fe045bc1312ee}{Accept}}(\ uint64\_t\ timeout=0\ );\ \ }
+\DoxyCodeLine{00081\ }
+\DoxyCodeLine{00088\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_socket_a3935a15fa982064c2cb35996a2d6ef3d}{Bind}}(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ localIP,\ uint16\_t\ port\ );}
+\DoxyCodeLine{00089\ }
+\DoxyCodeLine{00097\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_socket_a3935a15fa982064c2cb35996a2d6ef3d}{Bind}}(\ uint32\_t\ localIP,\ uint16\_t\ port\ );}
+\DoxyCodeLine{00098\ }
+\DoxyCodeLine{00104\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_socket_a3935a15fa982064c2cb35996a2d6ef3d}{Bind}}(\ uint16\_t\ port=0\ );}
+\DoxyCodeLine{00105\ }
+\DoxyCodeLine{00110\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_socket_ae52ee0bd9db277eee9324ed8da312bc7}{Connect}}(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ remoteIP,\ uint16\_t\ port\ );}
+\DoxyCodeLine{00111\ }
+\DoxyCodeLine{00116\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_socket_ae52ee0bd9db277eee9324ed8da312bc7}{Connect}}(\ uint32\_t\ remoteIP,\ uint16\_t\ port\ );}
+\DoxyCodeLine{00117\ }
+\DoxyCodeLine{00127\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \doxymbox{\hyperlink{class_socket_a30b5c0d94e1477859a1b05ce9cd2bedf}{Recieve}}(\ uint8\_t*\ buffer,\ \textcolor{keywordtype}{size\_t}\ size,\ uint32\_t*\ remoteIP=NULL,\ uint16\_t*\ remotePort=NULL\ );}
+\DoxyCodeLine{00128\ }
+\DoxyCodeLine{00135\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \doxymbox{\hyperlink{class_socket_a30b5c0d94e1477859a1b05ce9cd2bedf}{Recieve}}(\ uint8\_t*\ buffer,\ \textcolor{keywordtype}{size\_t}\ size,\ uint32\_t*\ remoteIP,\ uint16\_t*\ remotePort,\ uint32\_t*\ localIP\ );}
+\DoxyCodeLine{00136\ \ \ \ \ }
+\DoxyCodeLine{00140\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_socket_a899ae7dea24300c0c11ffc908f428f76}{Send}}(\ \textcolor{keywordtype}{void}*\ buffer,\ \textcolor{keywordtype}{size\_t}\ size,\ uint32\_t\ remoteIP,\ uint16\_t\ remotePort\ );}
+\DoxyCodeLine{00141\ \ \ \ \ }
+\DoxyCodeLine{00145\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_socket_a74faf2bdb3116dc69164549465bfb638}{SetRecieveTimeout}}(\ uint64\_t\ timeout\ );}
+\DoxyCodeLine{00146\ \ \ \ \ }
+\DoxyCodeLine{00150\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_socket_a453d33c92c88a15b0d93601ef9f067aa}{SetBufferSize}}(\ \textcolor{keywordtype}{size\_t}\ size\ );}
+\DoxyCodeLine{00151\ }
+\DoxyCodeLine{00155\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_socket_a90ff068da1fa6e1a28a014adca9efd74}{EnableJumboBuffer}}();}
+\DoxyCodeLine{00156\ }
+\DoxyCodeLine{00160\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_socket_af8e832813b2d414478b83e898cd88e30}{GetFD}}()\textcolor{keyword}{\ const\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\{\ \textcolor{keywordflow}{return}\ mSock;\ \}}
+\DoxyCodeLine{00161\ }
+\DoxyCodeLine{00165\ \ \ \ \ \textcolor{keyword}{inline}\ \doxymbox{\hyperlink{group__network_gaa78c7398fa81f7f62aa233159d4d8d97}{SocketType}}\ \doxymbox{\hyperlink{class_socket_a7c5d363579140822d7477b21df0ca1e7}{GetType}}()\textcolor{keyword}{\ const\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\{\ \textcolor{keywordflow}{return}\ mType;\ \}}
+\DoxyCodeLine{00166\ }
+\DoxyCodeLine{00170\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_socket_a2a1a0827f962d665cbcd8fe363c2f411}{PrintIP}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00171\ }
+\DoxyCodeLine{00176\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \doxymbox{\hyperlink{class_socket_a4e9d1c14216315b46e2ab531735eec45}{GetMTU}}();}
+\DoxyCodeLine{00177\ \ \ \ \ }
+\DoxyCodeLine{00178\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00179\ \ \ \ \ }
+\DoxyCodeLine{00180\ \ \ \ \ \doxymbox{\hyperlink{class_socket}{Socket}}(\ \doxymbox{\hyperlink{group__network_gaa78c7398fa81f7f62aa233159d4d8d97}{SocketType}}\ type\ );}
+\DoxyCodeLine{00181\ \ \ \ \ \textcolor{keywordtype}{bool}\ Init();}
+\DoxyCodeLine{00182\ }
+\DoxyCodeLine{00183\ \ \ \ \ \textcolor{keywordtype}{int}\ \ \ \ \ \ \ \ mSock;}
+\DoxyCodeLine{00184\ \ \ \ \ \doxymbox{\hyperlink{group__network_gaa78c7398fa81f7f62aa233159d4d8d97}{SocketType}}\ mType;}
+\DoxyCodeLine{00185\ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ mListening;}
+\DoxyCodeLine{00186\ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ mPktInfoEnabled;}
+\DoxyCodeLine{00187\ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ mBroadcastEnabled;}
+\DoxyCodeLine{00188\ \ \ \ \ }
+\DoxyCodeLine{00189\ \ \ \ \ uint32\_t\ \ \ mLocalIP;}
+\DoxyCodeLine{00190\ \ \ \ \ uint16\_t\ \ \ mLocalPort;}
+\DoxyCodeLine{00191\ }
+\DoxyCodeLine{00192\ \ \ \ \ uint32\_t\ \ \ mRemoteIP;}
+\DoxyCodeLine{00193\ \ \ \ \ uint16\_t\ \ \ mRemotePort;\ }
+\DoxyCodeLine{00194\ \};}
+\DoxyCodeLine{00195\ }
+\DoxyCodeLine{00196\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

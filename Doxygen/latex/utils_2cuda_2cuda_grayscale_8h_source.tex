@@ -1,0 +1,98 @@
+\doxysection{cuda\+Grayscale.\+h}
+\hypertarget{utils_2cuda_2cuda_grayscale_8h_source}{}\label{utils_2cuda_2cuda_grayscale_8h_source}\index{jetson-\/inference/utils/cuda/cudaGrayscale.h@{jetson-\/inference/utils/cuda/cudaGrayscale.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ *\ Copyright\ (c)\ 2020,\ NVIDIA\ CORPORATION.\ All\ rights\ reserved.}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ *\ Permission\ is\ hereby\ granted,\ free\ of\ charge,\ to\ any\ person\ obtaining\ a}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ *\ copy\ of\ this\ software\ and\ associated\ documentation\ files\ (the\ "{}Software"{}),}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ *\ to\ deal\ in\ the\ Software\ without\ restriction,\ including\ without\ limitation}}
+\DoxyCodeLine{00007\ \textcolor{comment}{\ *\ the\ rights\ to\ use,\ copy,\ modify,\ merge,\ publish,\ distribute,\ sublicense,}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ *\ and/or\ sell\ copies\ of\ the\ Software,\ and\ to\ permit\ persons\ to\ whom\ the}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ *\ Software\ is\ furnished\ to\ do\ so,\ subject\ to\ the\ following\ conditions:}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ *\ The\ above\ copyright\ notice\ and\ this\ permission\ notice\ shall\ be\ included\ in}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ *\ all\ copies\ or\ substantial\ portions\ of\ the\ Software.}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ *\ THE\ SOFTWARE\ IS\ PROVIDED\ "{}AS\ IS"{},\ WITHOUT\ WARRANTY\ OF\ ANY\ KIND,\ EXPRESS\ OR}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ *\ IMPLIED,\ INCLUDING\ BUT\ NOT\ LIMITED\ TO\ THE\ WARRANTIES\ OF\ MERCHANTABILITY,}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ *\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE\ AND\ NONINFRINGEMENT.\ \ IN\ NO\ EVENT\ SHALL}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ *\ THE\ AUTHORS\ OR\ COPYRIGHT\ HOLDERS\ BE\ LIABLE\ FOR\ ANY\ CLAIM,\ DAMAGES\ OR\ OTHER}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ *\ LIABILITY,\ WHETHER\ IN\ AN\ ACTION\ OF\ CONTRACT,\ TORT\ OR\ OTHERWISE,\ ARISING}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ *\ FROM,\ OUT\ OF\ OR\ IN\ CONNECTION\ WITH\ THE\ SOFTWARE\ OR\ THE\ USE\ OR\ OTHER}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ *\ DEALINGS\ IN\ THE\ SOFTWARE.}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \textcolor{preprocessor}{\#ifndef\ \_\_CUDA\_GRAYSCALE\_CONVERT\_H}}
+\DoxyCodeLine{00024\ \textcolor{preprocessor}{\#define\ \_\_CUDA\_GRAYSCALE\_CONVERT\_H}}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \textcolor{preprocessor}{\#include\ "{}cudaUtility.h"{}}}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00042\ cudaError\_t\ \doxymbox{\hyperlink{group__colorspace_ga78bfd45726deb324059e80073b74b79d}{cudaGray8ToGray32}}(\ uint8\_t*\ input,\ \textcolor{keywordtype}{float}*\ output,\ \textcolor{keywordtype}{size\_t}\ width,\ \textcolor{keywordtype}{size\_t}\ height,\ cudaStream\_t\ stream=0\ );}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00054\ cudaError\_t\ \doxymbox{\hyperlink{group__colorspace_ga0f722d52a73bfcb1c056da89a28ac45f}{cudaGray32ToGray8}}(\ \textcolor{keywordtype}{float}*\ input,\ uint8\_t*\ output,\ \textcolor{keywordtype}{size\_t}\ width,\ \textcolor{keywordtype}{size\_t}\ height,\ }
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ float2\&\ pixelRange=make\_float2(0,255),\ cudaStream\_t\ stream=0\ );}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00076\ cudaError\_t\ \doxymbox{\hyperlink{group__colorspace_ga28a2e7db71d32507831724c3759abe17}{cudaRGB8ToGray8}}(\ uchar3*\ input,\ uint8\_t*\ output,\ \textcolor{keywordtype}{size\_t}\ width,\ \textcolor{keywordtype}{size\_t}\ height,\ \textcolor{keywordtype}{bool}\ swapRedBlue=\textcolor{keyword}{false},\ cudaStream\_t\ stream=0\ );}
+\DoxyCodeLine{00077\ }
+\DoxyCodeLine{00086\ cudaError\_t\ \doxymbox{\hyperlink{group__colorspace_ga29c37ba49ec52143fc14bfafb2aa0fa2}{cudaRGBA8ToGray8}}(\ uchar4*\ input,\ uint8\_t*\ output,\ \textcolor{keywordtype}{size\_t}\ width,\ \textcolor{keywordtype}{size\_t}\ height,\ \textcolor{keywordtype}{bool}\ swapRedBlue=\textcolor{keyword}{false},\ cudaStream\_t\ stream=0\ );}
+\DoxyCodeLine{00087\ }
+\DoxyCodeLine{00101\ cudaError\_t\ \doxymbox{\hyperlink{group__colorspace_ga1283d9aa931efc1de75f38c3178dea90}{cudaRGB32ToGray8}}(\ float3*\ input,\ uint8\_t*\ output,\ \textcolor{keywordtype}{size\_t}\ width,\ \textcolor{keywordtype}{size\_t}\ height,\ }
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ swapRedBlue=\textcolor{keyword}{false},\ \textcolor{keyword}{const}\ float2\&\ pixelRange=make\_float2(0,255),}
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cudaStream\_t\ stream=0\ );}
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00118\ cudaError\_t\ \doxymbox{\hyperlink{group__colorspace_ga2cf5fda9999a85a70fdb8c162fdcaf30}{cudaRGBA32ToGray8}}(\ float4*\ input,\ uint8\_t*\ output,\ \textcolor{keywordtype}{size\_t}\ width,\ \textcolor{keywordtype}{size\_t}\ height,\ }
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ swapRedBlue=\textcolor{keyword}{false},\ \textcolor{keyword}{const}\ float2\&\ pixelRange=make\_float2(0,255),}
+\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cudaStream\_t\ stream=0\ );}
+\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00123\ }
+\DoxyCodeLine{00124\ }
+\DoxyCodeLine{00130\ }
+\DoxyCodeLine{00132\ }
+\DoxyCodeLine{00141\ cudaError\_t\ \doxymbox{\hyperlink{group__colorspace_gac20cee0c96ab23b7353d4c62d92b273e}{cudaRGB8ToGray32}}(\ uchar3*\ input,\ \textcolor{keywordtype}{float}*\ output,\ \textcolor{keywordtype}{size\_t}\ width,\ \textcolor{keywordtype}{size\_t}\ height,\ \textcolor{keywordtype}{bool}\ swapRedBlue=\textcolor{keyword}{false},\ cudaStream\_t\ stream=0\ );}
+\DoxyCodeLine{00142\ }
+\DoxyCodeLine{00151\ cudaError\_t\ \doxymbox{\hyperlink{group__colorspace_gae303d2f99398fc13406ee4bea960e00c}{cudaRGBA8ToGray32}}(\ uchar4*\ input,\ \textcolor{keywordtype}{float}*\ output,\ \textcolor{keywordtype}{size\_t}\ width,\ \textcolor{keywordtype}{size\_t}\ height,\ \textcolor{keywordtype}{bool}\ swapRedBlue=\textcolor{keyword}{false},\ cudaStream\_t\ stream=0\ );}
+\DoxyCodeLine{00152\ }
+\DoxyCodeLine{00161\ cudaError\_t\ \doxymbox{\hyperlink{group__colorspace_ga8a9310dc9b9fee48d0f7fe84eea09880}{cudaRGB32ToGray32}}(\ float3*\ input,\ \textcolor{keywordtype}{float}*\ output,\ \textcolor{keywordtype}{size\_t}\ width,\ \textcolor{keywordtype}{size\_t}\ height,\ \textcolor{keywordtype}{bool}\ swapRedBlue=\textcolor{keyword}{false},\ cudaStream\_t\ stream=0\ );}
+\DoxyCodeLine{00162\ }
+\DoxyCodeLine{00171\ cudaError\_t\ \doxymbox{\hyperlink{group__colorspace_ga2cfdd373df7afb8f1c69efcacdbe551f}{cudaRGBA32ToGray32}}(\ float4*\ input,\ \textcolor{keywordtype}{float}*\ output,\ \textcolor{keywordtype}{size\_t}\ width,\ \textcolor{keywordtype}{size\_t}\ height,\ \textcolor{keywordtype}{bool}\ swapRedBlue=\textcolor{keyword}{false},\ cudaStream\_t\ stream=0\ );}
+\DoxyCodeLine{00172\ }
+\DoxyCodeLine{00174\ }
+\DoxyCodeLine{00175\ }
+\DoxyCodeLine{00181\ }
+\DoxyCodeLine{00183\ }
+\DoxyCodeLine{00188\ cudaError\_t\ \doxymbox{\hyperlink{group__colorspace_gac59874b8143a514bd8f60fe9cc94a23a}{cudaGray8ToRGB8}}(\ uint8\_t*\ input,\ uchar3*\ output,\ \textcolor{keywordtype}{size\_t}\ width,\ \textcolor{keywordtype}{size\_t}\ height,\ cudaStream\_t\ stream=0\ );}
+\DoxyCodeLine{00189\ }
+\DoxyCodeLine{00194\ cudaError\_t\ \doxymbox{\hyperlink{group__colorspace_ga20da00400850d20eda53810139119f4a}{cudaGray8ToRGBA8}}(\ uint8\_t*\ input,\ uchar4*\ output,\ \textcolor{keywordtype}{size\_t}\ width,\ \textcolor{keywordtype}{size\_t}\ height,\ cudaStream\_t\ stream=0\ );}
+\DoxyCodeLine{00195\ }
+\DoxyCodeLine{00200\ cudaError\_t\ \doxymbox{\hyperlink{group__colorspace_ga5739705ba35873c6d37655342ca29942}{cudaGray8ToRGB32}}(\ uint8\_t*\ input,\ float3*\ output,\ \textcolor{keywordtype}{size\_t}\ width,\ \textcolor{keywordtype}{size\_t}\ height,\ cudaStream\_t\ stream=0\ );}
+\DoxyCodeLine{00201\ }
+\DoxyCodeLine{00206\ cudaError\_t\ \doxymbox{\hyperlink{group__colorspace_gac76c58412960b51b451a21afefc575b1}{cudaGray8ToRGBA32}}(\ uint8\_t*\ input,\ float4*\ output,\ \textcolor{keywordtype}{size\_t}\ width,\ \textcolor{keywordtype}{size\_t}\ height,\ cudaStream\_t\ stream=0\ );}
+\DoxyCodeLine{00207\ }
+\DoxyCodeLine{00209\ }
+\DoxyCodeLine{00210\ }
+\DoxyCodeLine{00216\ }
+\DoxyCodeLine{00218\ }
+\DoxyCodeLine{00230\ cudaError\_t\ \doxymbox{\hyperlink{group__colorspace_gac1cfd6edf0d58513fcdc2cd37b481bb2}{cudaGray32ToRGB8}}(\ \textcolor{keywordtype}{float}*\ input,\ uchar3*\ output,\ \textcolor{keywordtype}{size\_t}\ width,\ \textcolor{keywordtype}{size\_t}\ height,\ }
+\DoxyCodeLine{00231\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ float2\&\ pixelRange=make\_float2(0,255),\ cudaStream\_t\ stream=0\ );}
+\DoxyCodeLine{00232\ }
+\DoxyCodeLine{00243\ cudaError\_t\ \doxymbox{\hyperlink{group__colorspace_ga1e08f2bcf60d67a139e899cf5513e267}{cudaGray32ToRGBA8}}(\ \textcolor{keywordtype}{float}*\ input,\ uchar4*\ output,\ \textcolor{keywordtype}{size\_t}\ width,\ \textcolor{keywordtype}{size\_t}\ height,\ }
+\DoxyCodeLine{00244\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ float2\&\ pixelRange=make\_float2(0,255),\ cudaStream\_t\ stream=0\ );}
+\DoxyCodeLine{00245\ }
+\DoxyCodeLine{00250\ cudaError\_t\ \doxymbox{\hyperlink{group__colorspace_gab85f8225737129b0c7f9c46d0852d171}{cudaGray32ToRGB32}}(\ \textcolor{keywordtype}{float}*\ input,\ float3*\ output,\ \textcolor{keywordtype}{size\_t}\ width,\ \textcolor{keywordtype}{size\_t}\ height,\ cudaStream\_t\ stream=0\ );}
+\DoxyCodeLine{00251\ }
+\DoxyCodeLine{00256\ cudaError\_t\ \doxymbox{\hyperlink{group__colorspace_ga7cc3e460f7a335e087fc073361a55bd5}{cudaGray32ToRGBA32}}(\ \textcolor{keywordtype}{float}*\ input,\ float4*\ output,\ \textcolor{keywordtype}{size\_t}\ width,\ \textcolor{keywordtype}{size\_t}\ height,\ cudaStream\_t\ stream=0\ );}
+\DoxyCodeLine{00257\ }
+\DoxyCodeLine{00259\ }
+\DoxyCodeLine{00260\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

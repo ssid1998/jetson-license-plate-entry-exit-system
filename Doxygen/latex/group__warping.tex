@@ -1,0 +1,117 @@
+\doxysubsubsection{Warping }
+\hypertarget{group__warping}{}\label{group__warping}\index{Warping@{Warping}}
+\doxysubsubsubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+cuda\+Error\+\_\+t \doxymbox{\hyperlink{group__warping_gabaf91f32ec039c484028081b2c230620}{cuda\+Warp\+Affine}} (uchar4 \texorpdfstring{$\ast$}{*}input, uchar4 \texorpdfstring{$\ast$}{*}output, uint32\+\_\+t width, uint32\+\_\+t height, const float transform\+[2]\+\+[3]\+, bool transform\+\_\+inverted=false, cuda\+Stream\+\_\+t stream=0)
+\item 
+cuda\+Error\+\_\+t \doxymbox{\hyperlink{group__warping_gacc25084061491dcf6f56d99bfafec46c}{cuda\+Warp\+Affine}} (float4 \texorpdfstring{$\ast$}{*}input, float4 \texorpdfstring{$\ast$}{*}output, uint32\+\_\+t width, uint32\+\_\+t height, const float transform\+[2]\+\+[3]\+, bool transform\+\_\+inverted=false, cuda\+Stream\+\_\+t stream=0)
+\item 
+cuda\+Error\+\_\+t \doxymbox{\hyperlink{group__warping_ga1d41a986d83815697ec280b38882ddf3}{cuda\+Warp\+Perspective}} (void \texorpdfstring{$\ast$}{*}input, uint32\+\_\+t input\+Width, uint32\+\_\+t input\+Height, \doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{image\+Format}} input\+Format, void \texorpdfstring{$\ast$}{*}output, uint32\+\_\+t output\+Width, uint32\+\_\+t output\+Height, \doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{image\+Format}} output\+Format, const float transform\+[3]\+\+[3]\+, bool transform\+\_\+inverted=false, cuda\+Stream\+\_\+t stream=0)
+\item 
+{\footnotesize template$<$typename T$>$ }\\cuda\+Error\+\_\+t \doxymbox{\hyperlink{group__warping_gaed8a1ac7bbc9074262360140c6e04383}{cuda\+Warp\+Perspective}} (T \texorpdfstring{$\ast$}{*}input, uint32\+\_\+t input\+Width, uint32\+\_\+t input\+Height, T \texorpdfstring{$\ast$}{*}output, uint32\+\_\+t output\+Width, uint32\+\_\+t output\+Height, const float transform\+[3]\+\+[3]\+, bool transform\+\_\+inverted=false, cuda\+Stream\+\_\+t stream=0)
+\item 
+cuda\+Error\+\_\+t \doxymbox{\hyperlink{group__warping_ga9ae8f66a73e308ee12a26bb51c389ce7}{cuda\+Warp\+Perspective}} (uchar4 \texorpdfstring{$\ast$}{*}input, uchar4 \texorpdfstring{$\ast$}{*}output, uint32\+\_\+t width, uint32\+\_\+t height, const float transform\+[3]\+\+[3]\+, bool transform\+\_\+inverted=false, cuda\+Stream\+\_\+t stream=0)
+\item 
+cuda\+Error\+\_\+t \doxymbox{\hyperlink{group__warping_ga71dd488c3ef4f7e0a0c67fd045de85bb}{cuda\+Warp\+Perspective}} (float4 \texorpdfstring{$\ast$}{*}input, float4 \texorpdfstring{$\ast$}{*}output, uint32\+\_\+t width, uint32\+\_\+t height, const float transform\+[3]\+\+[3]\+, bool transform\+\_\+inverted=false, cuda\+Stream\+\_\+t stream=0)
+\item 
+cuda\+Error\+\_\+t \doxymbox{\hyperlink{group__warping_ga790bba1dee986867e6258f2d44009b1a}{cuda\+Warp\+Intrinsic}} (uchar4 \texorpdfstring{$\ast$}{*}input, uchar4 \texorpdfstring{$\ast$}{*}output, uint32\+\_\+t width, uint32\+\_\+t height, const float2 \&focal\+Length, const float2 \&principal\+Point, const float4 \&distortion, cuda\+Stream\+\_\+t stream=0)
+\item 
+cuda\+Error\+\_\+t \doxymbox{\hyperlink{group__warping_ga619ca4714f7ea9c972eba81bb0757ac5}{cuda\+Warp\+Intrinsic}} (float4 \texorpdfstring{$\ast$}{*}input, float4 \texorpdfstring{$\ast$}{*}output, uint32\+\_\+t width, uint32\+\_\+t height, const float2 \&focal\+Length, const float2 \&principal\+Point, const float4 \&distortion, cuda\+Stream\+\_\+t stream=0)
+\item 
+cuda\+Error\+\_\+t \doxymbox{\hyperlink{group__warping_ga7df839de775c4c8588a93bf0b71635b5}{cuda\+Warp\+Fisheye}} (uchar4 \texorpdfstring{$\ast$}{*}input, uchar4 \texorpdfstring{$\ast$}{*}output, uint32\+\_\+t width, uint32\+\_\+t height, float focus, cuda\+Stream\+\_\+t stream=0)
+\item 
+cuda\+Error\+\_\+t \doxymbox{\hyperlink{group__warping_ga92fddb702df79ada2d4169278a992a70}{cuda\+Warp\+Fisheye}} (float4 \texorpdfstring{$\ast$}{*}input, float4 \texorpdfstring{$\ast$}{*}output, uint32\+\_\+t width, uint32\+\_\+t height, float focus, cuda\+Stream\+\_\+t stream=0)
+\end{DoxyCompactItemize}
+
+
+\doxysubsubsubsection{Detailed Description}
+Various image warps and matrix transforms. 
+
+\label{doc-func-members}
+\Hypertarget{group__warping_doc-func-members}
+\doxysubsubsubsection{Function Documentation}
+\Hypertarget{group__warping_gacc25084061491dcf6f56d99bfafec46c}\index{Warping@{Warping}!cudaWarpAffine@{cudaWarpAffine}}
+\index{cudaWarpAffine@{cudaWarpAffine}!Warping@{Warping}}
+\doxysubsubsubsubsection{\texorpdfstring{cudaWarpAffine()}{cudaWarpAffine()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{group__warping_gacc25084061491dcf6f56d99bfafec46c} 
+cuda\+Error\+\_\+t cuda\+Warp\+Affine (\begin{DoxyParamCaption}\item[{float4 \texorpdfstring{$\ast$}{*}}]{input}{, }\item[{float4 \texorpdfstring{$\ast$}{*}}]{output}{, }\item[{uint32\+\_\+t}]{width}{, }\item[{uint32\+\_\+t}]{height}{, }\item[{const float}]{transform}{\+[2]\+\+[3]\+, }\item[{bool}]{transform\+\_\+inverted}{ = {\ttfamily false}, }\item[{cuda\+Stream\+\_\+t}]{stream}{ = {\ttfamily 0}}\end{DoxyParamCaption})}
+
+Apply 2x3 affine warp to an 32-\/bit floating-\/point RGBA image. \doxylink{requirements_The}{The} 2x3 matrix transform is in row-\/major order (transform\+[row]\+\+[column]\+) If the transform has already been inverted, set transform\+\_\+inverted to true. \Hypertarget{group__warping_gabaf91f32ec039c484028081b2c230620}\index{Warping@{Warping}!cudaWarpAffine@{cudaWarpAffine}}
+\index{cudaWarpAffine@{cudaWarpAffine}!Warping@{Warping}}
+\doxysubsubsubsubsection{\texorpdfstring{cudaWarpAffine()}{cudaWarpAffine()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{group__warping_gabaf91f32ec039c484028081b2c230620} 
+cuda\+Error\+\_\+t cuda\+Warp\+Affine (\begin{DoxyParamCaption}\item[{uchar4 \texorpdfstring{$\ast$}{*}}]{input}{, }\item[{uchar4 \texorpdfstring{$\ast$}{*}}]{output}{, }\item[{uint32\+\_\+t}]{width}{, }\item[{uint32\+\_\+t}]{height}{, }\item[{const float}]{transform}{\+[2]\+\+[3]\+, }\item[{bool}]{transform\+\_\+inverted}{ = {\ttfamily false}, }\item[{cuda\+Stream\+\_\+t}]{stream}{ = {\ttfamily 0}}\end{DoxyParamCaption})}
+
+Apply 2x3 affine warp to an 8-\/bit fixed-\/point RGBA image. \doxylink{requirements_The}{The} 2x3 matrix transform is in row-\/major order (transform\+[row]\+\+[column]\+) If the transform has already been inverted, set transform\+\_\+inverted to true. \Hypertarget{group__warping_ga92fddb702df79ada2d4169278a992a70}\index{Warping@{Warping}!cudaWarpFisheye@{cudaWarpFisheye}}
+\index{cudaWarpFisheye@{cudaWarpFisheye}!Warping@{Warping}}
+\doxysubsubsubsubsection{\texorpdfstring{cudaWarpFisheye()}{cudaWarpFisheye()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{group__warping_ga92fddb702df79ada2d4169278a992a70} 
+cuda\+Error\+\_\+t cuda\+Warp\+Fisheye (\begin{DoxyParamCaption}\item[{float4 \texorpdfstring{$\ast$}{*}}]{input}{, }\item[{float4 \texorpdfstring{$\ast$}{*}}]{output}{, }\item[{uint32\+\_\+t}]{width}{, }\item[{uint32\+\_\+t}]{height}{, }\item[{float}]{focus}{, }\item[{cuda\+Stream\+\_\+t}]{stream}{ = {\ttfamily 0}}\end{DoxyParamCaption})}
+
+Apply fisheye lens dewarping to a 32-\/bit floating-\/point RGBA image. 
+\begin{DoxyParams}[1]{Parameters}
+\doxymbox{\texttt{in}}  & {\em focus} & focus of the lens (in mm). \\
+\hline
+\end{DoxyParams}
+\Hypertarget{group__warping_ga7df839de775c4c8588a93bf0b71635b5}\index{Warping@{Warping}!cudaWarpFisheye@{cudaWarpFisheye}}
+\index{cudaWarpFisheye@{cudaWarpFisheye}!Warping@{Warping}}
+\doxysubsubsubsubsection{\texorpdfstring{cudaWarpFisheye()}{cudaWarpFisheye()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{group__warping_ga7df839de775c4c8588a93bf0b71635b5} 
+cuda\+Error\+\_\+t cuda\+Warp\+Fisheye (\begin{DoxyParamCaption}\item[{uchar4 \texorpdfstring{$\ast$}{*}}]{input}{, }\item[{uchar4 \texorpdfstring{$\ast$}{*}}]{output}{, }\item[{uint32\+\_\+t}]{width}{, }\item[{uint32\+\_\+t}]{height}{, }\item[{float}]{focus}{, }\item[{cuda\+Stream\+\_\+t}]{stream}{ = {\ttfamily 0}}\end{DoxyParamCaption})}
+
+Apply fisheye lens dewarping to an 8-\/bit fixed-\/point RGBA image. 
+\begin{DoxyParams}[1]{Parameters}
+\doxymbox{\texttt{in}}  & {\em focus} & focus of the lens (in mm). \\
+\hline
+\end{DoxyParams}
+\Hypertarget{group__warping_ga619ca4714f7ea9c972eba81bb0757ac5}\index{Warping@{Warping}!cudaWarpIntrinsic@{cudaWarpIntrinsic}}
+\index{cudaWarpIntrinsic@{cudaWarpIntrinsic}!Warping@{Warping}}
+\doxysubsubsubsubsection{\texorpdfstring{cudaWarpIntrinsic()}{cudaWarpIntrinsic()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{group__warping_ga619ca4714f7ea9c972eba81bb0757ac5} 
+cuda\+Error\+\_\+t cuda\+Warp\+Intrinsic (\begin{DoxyParamCaption}\item[{float4 \texorpdfstring{$\ast$}{*}}]{input}{, }\item[{float4 \texorpdfstring{$\ast$}{*}}]{output}{, }\item[{uint32\+\_\+t}]{width}{, }\item[{uint32\+\_\+t}]{height}{, }\item[{const float2 \&}]{focal\+Length}{, }\item[{const float2 \&}]{principal\+Point}{, }\item[{const float4 \&}]{distortion}{, }\item[{cuda\+Stream\+\_\+t}]{stream}{ = {\ttfamily 0}}\end{DoxyParamCaption})}
+
+Apply in-\/place instrinsic lens distortion correction to 32-\/bit floating-\/point RGBA image. Pinhole camera model with radial (barrel) distortion and tangential distortion. \Hypertarget{group__warping_ga790bba1dee986867e6258f2d44009b1a}\index{Warping@{Warping}!cudaWarpIntrinsic@{cudaWarpIntrinsic}}
+\index{cudaWarpIntrinsic@{cudaWarpIntrinsic}!Warping@{Warping}}
+\doxysubsubsubsubsection{\texorpdfstring{cudaWarpIntrinsic()}{cudaWarpIntrinsic()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{group__warping_ga790bba1dee986867e6258f2d44009b1a} 
+cuda\+Error\+\_\+t cuda\+Warp\+Intrinsic (\begin{DoxyParamCaption}\item[{uchar4 \texorpdfstring{$\ast$}{*}}]{input}{, }\item[{uchar4 \texorpdfstring{$\ast$}{*}}]{output}{, }\item[{uint32\+\_\+t}]{width}{, }\item[{uint32\+\_\+t}]{height}{, }\item[{const float2 \&}]{focal\+Length}{, }\item[{const float2 \&}]{principal\+Point}{, }\item[{const float4 \&}]{distortion}{, }\item[{cuda\+Stream\+\_\+t}]{stream}{ = {\ttfamily 0}}\end{DoxyParamCaption})}
+
+Apply in-\/place instrinsic lens distortion correction to an 8-\/bit fixed-\/point RGBA image. Pinhole camera model with radial (barrel) distortion and tangential distortion. \Hypertarget{group__warping_ga71dd488c3ef4f7e0a0c67fd045de85bb}\index{Warping@{Warping}!cudaWarpPerspective@{cudaWarpPerspective}}
+\index{cudaWarpPerspective@{cudaWarpPerspective}!Warping@{Warping}}
+\doxysubsubsubsubsection{\texorpdfstring{cudaWarpPerspective()}{cudaWarpPerspective()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily \label{group__warping_ga71dd488c3ef4f7e0a0c67fd045de85bb} 
+cuda\+Error\+\_\+t cuda\+Warp\+Perspective (\begin{DoxyParamCaption}\item[{float4 \texorpdfstring{$\ast$}{*}}]{input}{, }\item[{float4 \texorpdfstring{$\ast$}{*}}]{output}{, }\item[{uint32\+\_\+t}]{width}{, }\item[{uint32\+\_\+t}]{height}{, }\item[{const float}]{transform}{\+[3]\+\+[3]\+, }\item[{bool}]{transform\+\_\+inverted}{ = {\ttfamily false}, }\item[{cuda\+Stream\+\_\+t}]{stream}{ = {\ttfamily 0}}\end{DoxyParamCaption})}
+
+Apply 3x3 perspective warp to an 32-\/bit floating-\/point RGBA image. \doxylink{requirements_The}{The} 3x3 matrix transform is in row-\/major order (transform\+[row]\+\+[column]\+) If the transform has already been inverted, set transform\+\_\+inverted to true. \begin{DoxyRefDesc}{Deprecated}
+\item[\doxymbox{\hyperlink{deprecated__deprecated000013}{Deprecated}}]this function has been deprecated in lieu of the overload that accepts different dimensions for the input and output images.\end{DoxyRefDesc}
+
+
+Apply 3x3 perspective warp to an 32-\/bit floating-\/point RGBA image. \doxylink{requirements_The}{The} 3x3 matrix transform is in row-\/major order (transform\+[row]\+\+[column]\+) If the transform has already been inverted, set transform\+\_\+inverted to true. \begin{DoxyRefDesc}{Deprecated}
+\item[\doxymbox{\hyperlink{deprecated__deprecated000026}{Deprecated}}]this function has been deprecated in lieu of the overload that accepts different dimensions for the input and output images.\end{DoxyRefDesc}
+\Hypertarget{group__warping_gaed8a1ac7bbc9074262360140c6e04383}\index{Warping@{Warping}!cudaWarpPerspective@{cudaWarpPerspective}}
+\index{cudaWarpPerspective@{cudaWarpPerspective}!Warping@{Warping}}
+\doxysubsubsubsubsection{\texorpdfstring{cudaWarpPerspective()}{cudaWarpPerspective()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily \label{group__warping_gaed8a1ac7bbc9074262360140c6e04383} 
+template$<$typename T$>$ \\
+cuda\+Error\+\_\+t cuda\+Warp\+Perspective (\begin{DoxyParamCaption}\item[{T \texorpdfstring{$\ast$}{*}}]{input}{, }\item[{uint32\+\_\+t}]{input\+Width}{, }\item[{uint32\+\_\+t}]{input\+Height}{, }\item[{T \texorpdfstring{$\ast$}{*}}]{output}{, }\item[{uint32\+\_\+t}]{output\+Width}{, }\item[{uint32\+\_\+t}]{output\+Height}{, }\item[{const float}]{transform}{\+[3]\+\+[3]\+, }\item[{bool}]{transform\+\_\+inverted}{ = {\ttfamily false}, }\item[{cuda\+Stream\+\_\+t}]{stream}{ = {\ttfamily 0}}\end{DoxyParamCaption})}
+
+Apply a 3x3 perspective warp to an image. \doxylink{requirements_The}{The} 3x3 matrix transform is in row-\/major order (transform\+[row]\+\+[column]\+) If the transform has already been inverted, set transform\+\_\+inverted to true. \Hypertarget{group__warping_ga9ae8f66a73e308ee12a26bb51c389ce7}\index{Warping@{Warping}!cudaWarpPerspective@{cudaWarpPerspective}}
+\index{cudaWarpPerspective@{cudaWarpPerspective}!Warping@{Warping}}
+\doxysubsubsubsubsection{\texorpdfstring{cudaWarpPerspective()}{cudaWarpPerspective()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily \label{group__warping_ga9ae8f66a73e308ee12a26bb51c389ce7} 
+cuda\+Error\+\_\+t cuda\+Warp\+Perspective (\begin{DoxyParamCaption}\item[{uchar4 \texorpdfstring{$\ast$}{*}}]{input}{, }\item[{uchar4 \texorpdfstring{$\ast$}{*}}]{output}{, }\item[{uint32\+\_\+t}]{width}{, }\item[{uint32\+\_\+t}]{height}{, }\item[{const float}]{transform}{\+[3]\+\+[3]\+, }\item[{bool}]{transform\+\_\+inverted}{ = {\ttfamily false}, }\item[{cuda\+Stream\+\_\+t}]{stream}{ = {\ttfamily 0}}\end{DoxyParamCaption})}
+
+Apply 3x3 perspective warp to an 8-\/bit fixed-\/point RGBA image. \doxylink{requirements_The}{The} 3x3 matrix transform is in row-\/major order (transform\+[row]\+\+[column]\+) If the transform has already been inverted, set transform\+\_\+inverted to true. \begin{DoxyRefDesc}{Deprecated}
+\item[\doxymbox{\hyperlink{deprecated__deprecated000012}{Deprecated}}]this function has been deprecated in lieu of the overload that accepts different dimensions for the input and output images.\end{DoxyRefDesc}
+
+
+Apply 3x3 perspective warp to an 8-\/bit fixed-\/point RGBA image. \doxylink{requirements_The}{The} 3x3 matrix transform is in row-\/major order (transform\+[row]\+\+[column]\+) If the transform has already been inverted, set transform\+\_\+inverted to true. \begin{DoxyRefDesc}{Deprecated}
+\item[\doxymbox{\hyperlink{deprecated__deprecated000025}{Deprecated}}]this function has been deprecated in lieu of the overload that accepts different dimensions for the input and output images.\end{DoxyRefDesc}
+\Hypertarget{group__warping_ga1d41a986d83815697ec280b38882ddf3}\index{Warping@{Warping}!cudaWarpPerspective@{cudaWarpPerspective}}
+\index{cudaWarpPerspective@{cudaWarpPerspective}!Warping@{Warping}}
+\doxysubsubsubsubsection{\texorpdfstring{cudaWarpPerspective()}{cudaWarpPerspective()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily \label{group__warping_ga1d41a986d83815697ec280b38882ddf3} 
+cuda\+Error\+\_\+t cuda\+Warp\+Perspective (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}}]{input}{, }\item[{uint32\+\_\+t}]{input\+Width}{, }\item[{uint32\+\_\+t}]{input\+Height}{, }\item[{\doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{image\+Format}}}]{input\+Format}{, }\item[{void \texorpdfstring{$\ast$}{*}}]{output}{, }\item[{uint32\+\_\+t}]{output\+Width}{, }\item[{uint32\+\_\+t}]{output\+Height}{, }\item[{\doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{image\+Format}}}]{output\+Format}{, }\item[{const float}]{transform}{\+[3]\+\+[3]\+, }\item[{bool}]{transform\+\_\+inverted}{ = {\ttfamily false}, }\item[{cuda\+Stream\+\_\+t}]{stream}{ = {\ttfamily 0}}\end{DoxyParamCaption})}
+
+Apply a 3x3 perspective warp to an image. \doxylink{requirements_The}{The} 3x3 matrix transform is in row-\/major order (transform\+[row]\+\+[column]\+) If the transform has already been inverted, set transform\+\_\+inverted to true. 

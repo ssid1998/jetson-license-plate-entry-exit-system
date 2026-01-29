@@ -1,0 +1,130 @@
+\doxysection{gl\+Camera.\+h}
+\hypertarget{build_2aarch64_2include_2jetson-utils_2gl_camera_8h_source}{}\label{build_2aarch64_2include_2jetson-utils_2gl_camera_8h_source}\index{jetson-\/inference/build/aarch64/include/jetson-\/utils/glCamera.h@{jetson-\/inference/build/aarch64/include/jetson-\/utils/glCamera.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ *\ Copyright\ (c)\ 2019,\ NVIDIA\ CORPORATION.\ All\ rights\ reserved.}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ *\ Permission\ is\ hereby\ granted,\ free\ of\ charge,\ to\ any\ person\ obtaining\ a}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ *\ copy\ of\ this\ software\ and\ associated\ documentation\ files\ (the\ "{}Software"{}),}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ *\ to\ deal\ in\ the\ Software\ without\ restriction,\ including\ without\ limitation}}
+\DoxyCodeLine{00007\ \textcolor{comment}{\ *\ the\ rights\ to\ use,\ copy,\ modify,\ merge,\ publish,\ distribute,\ sublicense,}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ *\ and/or\ sell\ copies\ of\ the\ Software,\ and\ to\ permit\ persons\ to\ whom\ the}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ *\ Software\ is\ furnished\ to\ do\ so,\ subject\ to\ the\ following\ conditions:}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ *\ The\ above\ copyright\ notice\ and\ this\ permission\ notice\ shall\ be\ included\ in}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ *\ all\ copies\ or\ substantial\ portions\ of\ the\ Software.}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ *\ THE\ SOFTWARE\ IS\ PROVIDED\ "{}AS\ IS"{},\ WITHOUT\ WARRANTY\ OF\ ANY\ KIND,\ EXPRESS\ OR}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ *\ IMPLIED,\ INCLUDING\ BUT\ NOT\ LIMITED\ TO\ THE\ WARRANTIES\ OF\ MERCHANTABILITY,}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ *\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE\ AND\ NONINFRINGEMENT.\ \ IN\ NO\ EVENT\ SHALL}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ *\ THE\ AUTHORS\ OR\ COPYRIGHT\ HOLDERS\ BE\ LIABLE\ FOR\ ANY\ CLAIM,\ DAMAGES\ OR\ OTHER}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ *\ LIABILITY,\ WHETHER\ IN\ AN\ ACTION\ OF\ CONTRACT,\ TORT\ OR\ OTHERWISE,\ ARISING}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ *\ FROM,\ OUT\ OF\ OR\ IN\ CONNECTION\ WITH\ THE\ SOFTWARE\ OR\ THE\ USE\ OR\ OTHER}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ *\ DEALINGS\ IN\ THE\ SOFTWARE.}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00022\ \ }
+\DoxyCodeLine{00023\ \textcolor{preprocessor}{\#ifndef\ \_\_GL\_CAMERA\_H\_\_}}
+\DoxyCodeLine{00024\ \textcolor{preprocessor}{\#define\ \_\_GL\_CAMERA\_H\_\_}}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
+\DoxyCodeLine{00028\ \textcolor{preprocessor}{\#include\ <stdio.h>}}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00035\ \textcolor{keyword}{class\ }glCamera}
+\DoxyCodeLine{00036\ \{}
+\DoxyCodeLine{00037\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keyword}{enum}\ \doxymbox{\hyperlink{classgl_camera_a29491e624fc3c4bd85def74db643f273}{CameraMode}}}
+\DoxyCodeLine{00042\ \ \ \ \ \{}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{classgl_camera_a29491e624fc3c4bd85def74db643f273a34d4d2282740a6f574e777458b3cf025}{LookAt}},\ \ \ \ \ }
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{classgl_camera_a29491e624fc3c4bd85def74db643f273a6e2b01732a36487ed617436b2be1405c}{YawPitchRoll}},\ \ \ }
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{classgl_camera_a29491e624fc3c4bd85def74db643f273a742a4b6cb13d0a13ab21fd621161c331}{Ortho}}\ \ \ \ \ \ \ }
+\DoxyCodeLine{00046\ \ \ \ \ \};}
+\DoxyCodeLine{00047\ \ \ \ \ }
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{keyword}{static}\ \doxymbox{\hyperlink{classgl_camera}{glCamera}}*\ \doxymbox{\hyperlink{classgl_camera_a30246ac80b816730e0a5b773b22a1949}{Create}}(\ \doxymbox{\hyperlink{classgl_camera_a29491e624fc3c4bd85def74db643f273}{CameraMode}}\ mode,\ \textcolor{keywordtype}{int}\ registerEvents=0\ );}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keyword}{static}\ \doxymbox{\hyperlink{classgl_camera}{glCamera}}*\ \doxymbox{\hyperlink{classgl_camera_a30246ac80b816730e0a5b773b22a1949}{Create}}(\ \textcolor{keywordtype}{int}\ registerEvents=0\ );}
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00071\ \ \ \ \ \doxymbox{\hyperlink{classgl_camera_a4f5818f0d43ab3d97a316d4f5834fb63}{\string~glCamera}}();}
+\DoxyCodeLine{00072\ \ \ \ \ }
+\DoxyCodeLine{00076\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{classgl_camera_a71bf818dcda3515efe0632ed3144882e}{Activate}}();}
+\DoxyCodeLine{00077\ }
+\DoxyCodeLine{00081\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{classgl_camera_a71bf818dcda3515efe0632ed3144882e}{Activate}}(\ \doxymbox{\hyperlink{classgl_camera_a29491e624fc3c4bd85def74db643f273}{CameraMode}}\ mode\ );}
+\DoxyCodeLine{00082\ }
+\DoxyCodeLine{00086\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{classgl_camera_a57ff1e828c714a95750cd89c167e5d6b}{Deactivate}}();}
+\DoxyCodeLine{00087\ }
+\DoxyCodeLine{00091\ \ \ \ \ \textcolor{keyword}{inline}\ \doxymbox{\hyperlink{classgl_camera_a29491e624fc3c4bd85def74db643f273}{CameraMode}}\ \doxymbox{\hyperlink{classgl_camera_ac8ab4555df063460fba8876dadd4062e}{GetCameraMode}}()\textcolor{keyword}{\ const\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\{\ \textcolor{keywordflow}{return}\ mMode;\ \}}
+\DoxyCodeLine{00092\ }
+\DoxyCodeLine{00096\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{classgl_camera_a347c1ccc0ad3315d4da0702a2faf09f6}{SetCameraMode}}(\ \doxymbox{\hyperlink{classgl_camera_a29491e624fc3c4bd85def74db643f273}{CameraMode}}\ mode\ )\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{\ mMode\ =\ mode;\ \}}
+\DoxyCodeLine{00097\ }
+\DoxyCodeLine{00101\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{classgl_camera_af47b7686cf77efa848eb434cfa3fd321}{SetFOV}}(\ \textcolor{keywordtype}{float}\ fov\ )\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{\ mFoV\ =\ fov;\ \}}
+\DoxyCodeLine{00102\ }
+\DoxyCodeLine{00106\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{classgl_camera_a852623aaf193398d25db0a0e9a4dc629}{SetClippingPlane}}(\ \textcolor{keywordtype}{float}\ near,\ \textcolor{keywordtype}{float}\ far\ )\ \ \ \ \ \ \ \ \ \ \ \{\ mNear\ =\ near;\ mFar\ =\ far;\ \}}
+\DoxyCodeLine{00107\ }
+\DoxyCodeLine{00111\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{classgl_camera_a3a735b9285463eed8a02b8b902b32a07}{SetNear}}(\ \textcolor{keywordtype}{float}\ near\ )\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{\ mNear\ =\ near;\ \}}
+\DoxyCodeLine{00112\ }
+\DoxyCodeLine{00116\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{classgl_camera_a147284055bcb4ff3e2c8048b3022b104}{SetFar}}(\ \textcolor{keywordtype}{float}\ far\ )\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{\ mFar\ =\ far;\ \}}
+\DoxyCodeLine{00117\ }
+\DoxyCodeLine{00121\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{classgl_camera_a726cc60dfc9e44f840b2af99880e0e00}{SetEye}}(\ \textcolor{keywordtype}{float}\ x,\ \textcolor{keywordtype}{float}\ y,\ \textcolor{keywordtype}{float}\ z\ )\ \ \ \ \ \ \ \ \ \ \ \ \ \{\ mEye[0]\ =\ x;\ mEye[1]\ =\ y;\ mEye[2]\ =\ z;\ \}}
+\DoxyCodeLine{00122\ }
+\DoxyCodeLine{00126\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{classgl_camera_aea368e16edee12cee5017f811b316194}{SetLookAt}}(\ \textcolor{keywordtype}{float}\ x,\ \textcolor{keywordtype}{float}\ y,\ \textcolor{keywordtype}{float}\ z\ )\ \ \ \ \ \ \ \ \ \ \{\ mLookAt[0]\ =\ x;\ mLookAt[1]\ =\ y;\ mLookAt[2]\ =\ z;\ \}}
+\DoxyCodeLine{00127\ }
+\DoxyCodeLine{00131\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{classgl_camera_a62c720c85eeef476422bd7c8dbd9a710}{SetRotation}}(\ \textcolor{keywordtype}{float}\ yaw,\ \textcolor{keywordtype}{float}\ pitch,\ \textcolor{keywordtype}{float}\ roll\ )\ \ \ \{\ mRotation[0]\ =\ pitch;\ mRotation[1]\ =\ yaw;\ mRotation[2]\ =\ roll;\ \}}
+\DoxyCodeLine{00132\ }
+\DoxyCodeLine{00136\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{classgl_camera_a734435b2f59ab105fe94ab77b82a3d85}{SetYaw}}(\ \textcolor{keywordtype}{float}\ yaw\ )\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{\ mRotation[1]\ =\ yaw;\ \}}
+\DoxyCodeLine{00137\ }
+\DoxyCodeLine{00141\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{classgl_camera_a9f4db9c7aeb9c87b9e7b8f3f2ad80b91}{SetPitch}}(\ \textcolor{keywordtype}{float}\ pitch\ )\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{\ mRotation[0]\ =\ pitch;\ \}}
+\DoxyCodeLine{00142\ }
+\DoxyCodeLine{00146\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{classgl_camera_ae218a6c23442cec2e1ec00e69636ecfc}{SetRoll}}(\ \textcolor{keywordtype}{float}\ roll\ )\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{\ mRotation[2]\ =\ roll;\ \}}
+\DoxyCodeLine{00147\ }
+\DoxyCodeLine{00151\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{classgl_camera_a58f9840ebf78940daff3271506660a43}{SetMovementSpeed}}(\ \textcolor{keywordtype}{float}\ speed\ )\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{\ mMovementSpeed\ =\ speed;\ \}}
+\DoxyCodeLine{00152\ }
+\DoxyCodeLine{00156\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{classgl_camera_ad41d546593fd4db98970c184dae165dc}{SetMovementEnabled}}(\ \textcolor{keywordtype}{bool}\ enabled\ )\ \ \ \ \ \ \ \ \ \ \ \ \ \ \{\ mMovementEnabled\ =\ enabled;\ \}}
+\DoxyCodeLine{00157\ }
+\DoxyCodeLine{00161\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{classgl_camera_a501f30aa5dbfd57efde333c6d98f22cf}{StoreDefaults}}();}
+\DoxyCodeLine{00162\ }
+\DoxyCodeLine{00166\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{classgl_camera_a0bf5909cb5b66ad34df86a0e85cfdf0c}{Reset}}();}
+\DoxyCodeLine{00167\ }
+\DoxyCodeLine{00171\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{classgl_camera_ab023571c5b0b7d3927851cc0a4389b09}{RegisterEvents}}(\ uint32\_t\ display=0\ );}
+\DoxyCodeLine{00172\ \ \ \ \ }
+\DoxyCodeLine{00173\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00174\ \ \ \ \ \doxymbox{\hyperlink{classgl_camera}{glCamera}}(\ \doxymbox{\hyperlink{classgl_camera_a29491e624fc3c4bd85def74db643f273}{CameraMode}}\ mode\ );}
+\DoxyCodeLine{00175\ }
+\DoxyCodeLine{00176\ \ \ \ \ \textcolor{keywordtype}{bool}\ mouseInViewport()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00177\ }
+\DoxyCodeLine{00178\ \ \ \ \ \textcolor{keywordtype}{bool}\ onEventLookAt(\ uint16\_t\ msg,\ \textcolor{keywordtype}{int}\ a,\ \textcolor{keywordtype}{int}\ b\ );}
+\DoxyCodeLine{00179\ \ \ \ \ \textcolor{keywordtype}{bool}\ onEventYawPitchRoll(\ uint16\_t\ msg,\ \textcolor{keywordtype}{int}\ a,\ \textcolor{keywordtype}{int}\ b\ );}
+\DoxyCodeLine{00180\ }
+\DoxyCodeLine{00181\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ onEvent(\ uint16\_t\ msg,\ \textcolor{keywordtype}{int}\ a,\ \textcolor{keywordtype}{int}\ b,\ \textcolor{keywordtype}{void}*\ user\ );}
+\DoxyCodeLine{00182\ }
+\DoxyCodeLine{00183\ \ \ \ \ \doxymbox{\hyperlink{classgl_camera_a29491e624fc3c4bd85def74db643f273}{CameraMode}}\ mMode;}
+\DoxyCodeLine{00184\ }
+\DoxyCodeLine{00185\ \ \ \ \ \textcolor{keywordtype}{float}\ mNear;}
+\DoxyCodeLine{00186\ \ \ \ \ \textcolor{keywordtype}{float}\ mFar;}
+\DoxyCodeLine{00187\ \ \ \ \ \textcolor{keywordtype}{float}\ mFoV;}
+\DoxyCodeLine{00188\ }
+\DoxyCodeLine{00189\ \ \ \ \ \textcolor{keywordtype}{float}\ mEye[3];\ \ \ \ \ \ \textcolor{comment}{//\ camera\ location}}
+\DoxyCodeLine{00190\ \ \ \ \ \textcolor{keywordtype}{float}\ mRotation[3];\ \textcolor{comment}{//\ pitch/yaw/roll\ euler\ angles}}
+\DoxyCodeLine{00191\ \ \ \ \ \textcolor{keywordtype}{float}\ mLookAt[3];\ \ \ \textcolor{comment}{//\ look-\/at\ point}}
+\DoxyCodeLine{00192\ \ \ \ \ \textcolor{keywordtype}{float}\ mUp[3];\ \ \ \ \ \ \ \textcolor{comment}{//\ up\ direction}}
+\DoxyCodeLine{00193\ }
+\DoxyCodeLine{00194\ \ \ \ \ \textcolor{keywordtype}{float}\ mDefaultEye[3];}
+\DoxyCodeLine{00195\ \ \ \ \ \textcolor{keywordtype}{float}\ mDefaultRotation[3];}
+\DoxyCodeLine{00196\ \ \ \ \ \textcolor{keywordtype}{float}\ mDefaultLookAt[3];}
+\DoxyCodeLine{00197\ }
+\DoxyCodeLine{00198\ \ \ \ \ \textcolor{keywordtype}{float}\ mPrevModelView[16];}
+\DoxyCodeLine{00199\ \ \ \ \ \textcolor{keywordtype}{float}\ mPrevProjection[16];}
+\DoxyCodeLine{00200\ }
+\DoxyCodeLine{00201\ \ \ \ \ \textcolor{keywordtype}{float}\ mMovementSpeed;}
+\DoxyCodeLine{00202\ \ \ \ \ \textcolor{keywordtype}{bool}\ \ mMovementEnabled;}
+\DoxyCodeLine{00203\ \ \ \ \ }
+\DoxyCodeLine{00204\ \ \ \ \ \textcolor{keywordtype}{void}*\ mDisplay;}
+\DoxyCodeLine{00205\ \ \ \ \ \textcolor{keywordtype}{int}\ \ \ mViewport[4];}
+\DoxyCodeLine{00206\ \ \ \ \ \textcolor{keywordtype}{bool}\ \ mMouseActive;}
+\DoxyCodeLine{00207\ \};}
+\DoxyCodeLine{00208\ }
+\DoxyCodeLine{00209\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00210\ }
+
+\end{DoxyCode}

@@ -1,0 +1,84 @@
+\doxysection{Ring\+Buffer.\+h}
+\hypertarget{utils_2threads_2_ring_buffer_8h_source}{}\label{utils_2threads_2_ring_buffer_8h_source}\index{jetson-\/inference/utils/threads/RingBuffer.h@{jetson-\/inference/utils/threads/RingBuffer.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ *\ Copyright\ (c)\ 2018,\ NVIDIA\ CORPORATION.\ All\ rights\ reserved.}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ *\ Permission\ is\ hereby\ granted,\ free\ of\ charge,\ to\ any\ person\ obtaining\ a}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ *\ copy\ of\ this\ software\ and\ associated\ documentation\ files\ (the\ "{}Software"{}),}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ *\ to\ deal\ in\ the\ Software\ without\ restriction,\ including\ without\ limitation}}
+\DoxyCodeLine{00007\ \textcolor{comment}{\ *\ the\ rights\ to\ use,\ copy,\ modify,\ merge,\ publish,\ distribute,\ sublicense,}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ *\ and/or\ sell\ copies\ of\ the\ Software,\ and\ to\ permit\ persons\ to\ whom\ the}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ *\ Software\ is\ furnished\ to\ do\ so,\ subject\ to\ the\ following\ conditions:}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ *\ The\ above\ copyright\ notice\ and\ this\ permission\ notice\ shall\ be\ included\ in}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ *\ all\ copies\ or\ substantial\ portions\ of\ the\ Software.}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ *\ THE\ SOFTWARE\ IS\ PROVIDED\ "{}AS\ IS"{},\ WITHOUT\ WARRANTY\ OF\ ANY\ KIND,\ EXPRESS\ OR}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ *\ IMPLIED,\ INCLUDING\ BUT\ NOT\ LIMITED\ TO\ THE\ WARRANTIES\ OF\ MERCHANTABILITY,}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ *\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE\ AND\ NONINFRINGEMENT.\ \ IN\ NO\ EVENT\ SHALL}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ *\ THE\ AUTHORS\ OR\ COPYRIGHT\ HOLDERS\ BE\ LIABLE\ FOR\ ANY\ CLAIM,\ DAMAGES\ OR\ OTHER}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ *\ LIABILITY,\ WHETHER\ IN\ AN\ ACTION\ OF\ CONTRACT,\ TORT\ OR\ OTHERWISE,\ ARISING}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ *\ FROM,\ OUT\ OF\ OR\ IN\ CONNECTION\ WITH\ THE\ SOFTWARE\ OR\ THE\ USE\ OR\ OTHER}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ *\ DEALINGS\ IN\ THE\ SOFTWARE.}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \textcolor{preprocessor}{\#ifndef\ \_\_MULTITHREAD\_RINGBUFFER\_H\_}}
+\DoxyCodeLine{00024\ \textcolor{preprocessor}{\#define\ \_\_MULTITHREAD\_RINGBUFFER\_H\_}}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \textcolor{preprocessor}{\#include\ "{}Mutex.h"{}}}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00033\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_ring_buffer}{RingBuffer}}}
+\DoxyCodeLine{00034\ \{}
+\DoxyCodeLine{00035\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keyword}{enum}\ \doxymbox{\hyperlink{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4}{Flags}}}
+\DoxyCodeLine{00040\ \ \ \ \ \{}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4a8b7bc1ec3d2537242fd243ea817692a2}{Read}}\ \ \ \ \ \ \ \ \ \ \ =\ (1\ <<\ 0),\ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4ad29fd3d5da7b79b50ab2fdf368f4bfc2}{ReadOnce}}\ \ \ \ \ \ \ =\ (1\ <<\ 1)\ |\ \doxymbox{\hyperlink{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4a8b7bc1ec3d2537242fd243ea817692a2}{Read}},\ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4a692766a528eba0bb4f66c3fb4c26e1d7}{ReadLatest}}\ \ \ \ \ =\ (1\ <<\ 2)\ |\ \doxymbox{\hyperlink{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4a8b7bc1ec3d2537242fd243ea817692a2}{Read}},\ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4a353657c02a56746433578ff32c6f0dbd}{ReadLatestOnce}}\ =\ (1\ <<\ 3)\ |\ \doxymbox{\hyperlink{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4a692766a528eba0bb4f66c3fb4c26e1d7}{ReadLatest}},\ \ \ \ \ }
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4a3a3ae3c682202b6326ff206920edc867}{Write}}\ \ \ \ \ \ \ \ \ \ =\ (1\ <<\ 4),\ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4a6c809130e293fee07a15e90f71b89d5e}{Threaded}}\ \ \ \ \ \ \ =\ (1\ <<\ 5),\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4a7b847e24eb1d842bf7ee1b049664e6da}{ZeroCopy}}\ \ \ \ \ \ \ =\ (1\ <<\ 6),\ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00048\ \ \ \ \ \};}
+\DoxyCodeLine{00049\ \ \ \ \ }
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keyword}{inline}\ \doxymbox{\hyperlink{class_ring_buffer_ae18d0a5ac60eb4db2f99887772ed5778}{RingBuffer}}(\ uint32\_t\ flags=\doxymbox{\hyperlink{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4a6c809130e293fee07a15e90f71b89d5e}{Threaded}}\ );}
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00058\ \ \ \ \ \textcolor{keyword}{inline}\ \doxymbox{\hyperlink{class_ring_buffer_a2715b2e99ea24521ef7a586c2f33e1c9}{\string~RingBuffer}}();}
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00070\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_ring_buffer_a41718c1a3577dee2d0f7cfea02667535}{Alloc}}(\ uint32\_t\ numBuffers,\ \textcolor{keywordtype}{size\_t}\ size,\ uint32\_t\ flags=0\ );}
+\DoxyCodeLine{00071\ }
+\DoxyCodeLine{00075\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_ring_buffer_a787fdb833c95a386e6ec3e19fb6d1fd8}{Free}}();}
+\DoxyCodeLine{00076\ }
+\DoxyCodeLine{00080\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}*\ \doxymbox{\hyperlink{class_ring_buffer_a0627137366bb5d7a2dbf648122b86104}{Peek}}(\ uint32\_t\ flags\ );}
+\DoxyCodeLine{00081\ }
+\DoxyCodeLine{00085\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}*\ \doxymbox{\hyperlink{class_ring_buffer_a841be016a4ffeee7383b1284093b8eee}{Next}}(\ uint32\_t\ flags\ );}
+\DoxyCodeLine{00086\ }
+\DoxyCodeLine{00090\ \ \ \ \ \textcolor{keyword}{inline}\ uint32\_t\ \doxymbox{\hyperlink{class_ring_buffer_a13c5161ed54ede296a4c5f079fbaface}{GetFlags}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00091\ \ \ \ \ }
+\DoxyCodeLine{00095\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_ring_buffer_ab9066deaa7cee206d7f604a443766955}{SetFlags}}(\ uint32\_t\ flags\ );}
+\DoxyCodeLine{00096\ \ \ \ \ }
+\DoxyCodeLine{00100\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_ring_buffer_a1a39008053c6aa06e348fa5b2ead2f91}{SetThreaded}}(\ \textcolor{keywordtype}{bool}\ threaded\ );}
+\DoxyCodeLine{00101\ }
+\DoxyCodeLine{00102\ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00103\ }
+\DoxyCodeLine{00104\ \ \ \ \ uint32\_t\ mNumBuffers;}
+\DoxyCodeLine{00105\ \ \ \ \ uint32\_t\ mLatestRead;}
+\DoxyCodeLine{00106\ \ \ \ \ uint32\_t\ mLatestWrite;}
+\DoxyCodeLine{00107\ \ \ \ \ uint32\_t\ mFlags;}
+\DoxyCodeLine{00108\ }
+\DoxyCodeLine{00109\ \ \ \ \ \textcolor{keywordtype}{void}**\ mBuffers;}
+\DoxyCodeLine{00110\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ mBufferSize;}
+\DoxyCodeLine{00111\ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ mReadOnce;}
+\DoxyCodeLine{00112\ \ \ \ \ \doxymbox{\hyperlink{class_mutex}{Mutex}}\ \ mMutex;}
+\DoxyCodeLine{00113\ \};}
+\DoxyCodeLine{00114\ }
+\DoxyCodeLine{00115\ \textcolor{comment}{//\ inline\ implementations}}
+\DoxyCodeLine{00116\ \textcolor{preprocessor}{\#include\ "{}RingBuffer.inl"{}}}
+\DoxyCodeLine{00117\ }
+\DoxyCodeLine{00118\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00119\ }
+
+\end{DoxyCode}

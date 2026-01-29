@@ -1,0 +1,64 @@
+\doxysection{image\+Writer.\+h}
+\hypertarget{utils_2image_2image_writer_8h_source}{}\label{utils_2image_2image_writer_8h_source}\index{jetson-\/inference/utils/image/imageWriter.h@{jetson-\/inference/utils/image/imageWriter.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ *\ Copyright\ (c)\ 2020,\ NVIDIA\ CORPORATION.\ All\ rights\ reserved.}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ *\ Permission\ is\ hereby\ granted,\ free\ of\ charge,\ to\ any\ person\ obtaining\ a}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ *\ copy\ of\ this\ software\ and\ associated\ documentation\ files\ (the\ "{}Software"{}),}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ *\ to\ deal\ in\ the\ Software\ without\ restriction,\ including\ without\ limitation}}
+\DoxyCodeLine{00007\ \textcolor{comment}{\ *\ the\ rights\ to\ use,\ copy,\ modify,\ merge,\ publish,\ distribute,\ sublicense,}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ *\ and/or\ sell\ copies\ of\ the\ Software,\ and\ to\ permit\ persons\ to\ whom\ the}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ *\ Software\ is\ furnished\ to\ do\ so,\ subject\ to\ the\ following\ conditions:}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ *\ The\ above\ copyright\ notice\ and\ this\ permission\ notice\ shall\ be\ included\ in}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ *\ all\ copies\ or\ substantial\ portions\ of\ the\ Software.}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ *\ THE\ SOFTWARE\ IS\ PROVIDED\ "{}AS\ IS"{},\ WITHOUT\ WARRANTY\ OF\ ANY\ KIND,\ EXPRESS\ OR}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ *\ IMPLIED,\ INCLUDING\ BUT\ NOT\ LIMITED\ TO\ THE\ WARRANTIES\ OF\ MERCHANTABILITY,}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ *\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE\ AND\ NONINFRINGEMENT.\ \ IN\ NO\ EVENT\ SHALL}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ *\ THE\ AUTHORS\ OR\ COPYRIGHT\ HOLDERS\ BE\ LIABLE\ FOR\ ANY\ CLAIM,\ DAMAGES\ OR\ OTHER}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ *\ LIABILITY,\ WHETHER\ IN\ AN\ ACTION\ OF\ CONTRACT,\ TORT\ OR\ OTHERWISE,\ ARISING}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ *\ FROM,\ OUT\ OF\ OR\ IN\ CONNECTION\ WITH\ THE\ SOFTWARE\ OR\ THE\ USE\ OR\ OTHER}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ *\ DEALINGS\ IN\ THE\ SOFTWARE.}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00022\ \ }
+\DoxyCodeLine{00023\ \textcolor{preprocessor}{\#ifndef\ \_\_IMAGE\_WRITER\_H\_}}
+\DoxyCodeLine{00024\ \textcolor{preprocessor}{\#define\ \_\_IMAGE\_WRITER\_H\_}}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \textcolor{preprocessor}{\#include\ "{}videoOutput.h"{}}}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00050\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{classimage_writer}{imageWriter}}\ :\ \textcolor{keyword}{public}\ \doxymbox{\hyperlink{classvideo_output}{videoOutput}}}
+\DoxyCodeLine{00051\ \{}
+\DoxyCodeLine{00052\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{keyword}{static}\ imageWriter*\ \doxymbox{\hyperlink{classimage_writer_a5c1a14a2e07a283c149d452ef518b114}{Create}}(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ path,\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{structvideo_options}{videoOptions}}\&\ options=\doxymbox{\hyperlink{structvideo_options}{videoOptions}}()\ );}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{keyword}{static}\ imageWriter*\ \doxymbox{\hyperlink{classimage_writer_ac9791a4a8893da704f15bda8859b5125}{Create}}(\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{structvideo_options}{videoOptions}}\&\ options\ );}
+\DoxyCodeLine{00062\ }
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keyword}{virtual}\ \doxymbox{\hyperlink{classimage_writer_a0038555473cca96319845f4e67c92882}{\string~imageWriter}}();}
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00072\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{classimage_writer_a30c2e9ae15b7d0a38e456eff6f7297cb}{Render}}(\ T*\ image,\ uint32\_t\ width,\ uint32\_t\ height,\ cudaStream\_t\ stream=0\ )\ \ \ \ \ \ \ \ \{\ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{classimage_writer_a30c2e9ae15b7d0a38e456eff6f7297cb}{Render}}((\textcolor{keywordtype}{void}**)image,\ width,\ height,\ imageFormatFromType<T>(),\ stream);\ \}}
+\DoxyCodeLine{00073\ \ \ \ \ }
+\DoxyCodeLine{00078\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{classimage_writer_ab21a58525cee976814cfb4c8ffb94eb7}{Render}}(\ \textcolor{keywordtype}{void}*\ image,\ uint32\_t\ width,\ uint32\_t\ height,\ \doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{imageFormat}}\ format,\ cudaStream\_t\ stream=0\ );}
+\DoxyCodeLine{00079\ }
+\DoxyCodeLine{00083\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keyword}{inline}\ uint32\_t\ \doxymbox{\hyperlink{classimage_writer_ae5d8c048302526edb9e6a84edbc4cb97}{GetType}}()\textcolor{keyword}{\ const\ \ \ \ \ }\{\ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{classimage_writer_a1474a339330f8d7c953ee40c62002a3a}{Type}};\ \}}
+\DoxyCodeLine{00084\ }
+\DoxyCodeLine{00088\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ uint32\_t\ \doxymbox{\hyperlink{classimage_writer_a1474a339330f8d7c953ee40c62002a3a}{Type}}\ =\ (1\ <<\ 5);}
+\DoxyCodeLine{00089\ }
+\DoxyCodeLine{00101\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \doxymbox{\hyperlink{classimage_writer_adfdfbc50c49bb598e7b83473cb7d3ca1}{SupportedExtensions}}[];}
+\DoxyCodeLine{00102\ }
+\DoxyCodeLine{00108\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{classimage_writer_ae3f60a3765942132ffdfb27c72153359}{IsSupportedExtension}}(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ ext\ );}
+\DoxyCodeLine{00109\ }
+\DoxyCodeLine{00110\ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00111\ \ \ \ \ imageWriter(\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{structvideo_options}{videoOptions}}\&\ options\ );}
+\DoxyCodeLine{00112\ }
+\DoxyCodeLine{00113\ \ \ \ \ uint32\_t\ mFileCount;}
+\DoxyCodeLine{00114\ \ \ \ \ \textcolor{keywordtype}{char}\ \ \ \ \ mFileOut[1024];}
+\DoxyCodeLine{00115\ \};}
+\DoxyCodeLine{00116\ }
+\DoxyCodeLine{00117\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

@@ -1,0 +1,227 @@
+\doxysection{gst\+Buffer\+Manager Class Reference}
+\hypertarget{classgst_buffer_manager}{}\label{classgst_buffer_manager}\index{gstBufferManager@{gstBufferManager}}
+
+
+{\ttfamily \+\#include $<$gst\+Buffer\+Manager.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{classgst_buffer_manager_a8d0c7f6ad4fad98bca732caa255eb94c}{gst\+Buffer\+Manager}} (\doxymbox{\hyperlink{structvideo_options}{video\+Options}} \texorpdfstring{$\ast$}{*}options)
+\item 
+\doxymbox{\hyperlink{classgst_buffer_manager_a12abb8d449269f24ade36c787fab1bd3}{\texorpdfstring{$\sim$}{\string~}gst\+Buffer\+Manager}} ()
+\item 
+bool \doxymbox{\hyperlink{classgst_buffer_manager_a8cd180e308002d209ec400f5c9966ebe}{Enqueue}} (Gst\+Buffer \texorpdfstring{$\ast$}{*}buffer, Gst\+Caps \texorpdfstring{$\ast$}{*}caps)
+\item 
+int \doxymbox{\hyperlink{classgst_buffer_manager_a451091897b267ffbce465df96118b4b3}{Dequeue}} (void \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}output, \doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{image\+Format}} format, uint64\+\_\+t timeout=UINT64\+\_\+\+MAX, cuda\+Stream\+\_\+t stream=0)
+\item 
+uint64\+\_\+t \doxymbox{\hyperlink{classgst_buffer_manager_a9416f0ffbcd3bee21e909fbd174c3436}{Get\+Last\+Timestamp}} () const
+\item 
+\doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{image\+Format}} \doxymbox{\hyperlink{classgst_buffer_manager_a850ecaaeb9a220bd42e718f93ecb8ae4}{Get\+Raw\+Format}} () const
+\item 
+uint64\+\_\+t \doxymbox{\hyperlink{classgst_buffer_manager_ac8653af78fcfd69dd452c01b10ba3277}{Get\+Frame\+Count}} () const
+\item 
+\doxymbox{\hyperlink{classgst_buffer_manager_a8d0c7f6ad4fad98bca732caa255eb94c}{gst\+Buffer\+Manager}} (\doxymbox{\hyperlink{structvideo_options}{video\+Options}} \texorpdfstring{$\ast$}{*}options)
+\item 
+\doxymbox{\hyperlink{classgst_buffer_manager_a12abb8d449269f24ade36c787fab1bd3}{\texorpdfstring{$\sim$}{\string~}gst\+Buffer\+Manager}} ()
+\item 
+bool \doxymbox{\hyperlink{classgst_buffer_manager_a8cd180e308002d209ec400f5c9966ebe}{Enqueue}} (Gst\+Buffer \texorpdfstring{$\ast$}{*}buffer, Gst\+Caps \texorpdfstring{$\ast$}{*}caps)
+\item 
+int \doxymbox{\hyperlink{classgst_buffer_manager_a451091897b267ffbce465df96118b4b3}{Dequeue}} (void \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}output, \doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{image\+Format}} format, uint64\+\_\+t timeout=UINT64\+\_\+\+MAX, cuda\+Stream\+\_\+t stream=0)
+\item 
+uint64\+\_\+t \doxymbox{\hyperlink{classgst_buffer_manager_a9416f0ffbcd3bee21e909fbd174c3436}{Get\+Last\+Timestamp}} () const
+\item 
+\doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{image\+Format}} \doxymbox{\hyperlink{classgst_buffer_manager_a850ecaaeb9a220bd42e718f93ecb8ae4}{Get\+Raw\+Format}} () const
+\item 
+uint64\+\_\+t \doxymbox{\hyperlink{classgst_buffer_manager_ac8653af78fcfd69dd452c01b10ba3277}{Get\+Frame\+Count}} () const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{image\+Format}} \doxymbox{\hyperlink{classgst_buffer_manager_a648c0f76e9eedc9d3483c36b118b2e0d}{m\+Format\+YUV}}
+\item 
+\doxymbox{\hyperlink{class_ring_buffer}{Ring\+Buffer}} \doxymbox{\hyperlink{classgst_buffer_manager_a9bf6538dcf98e4773b6fe2ea28ee8944}{m\+Buffer\+YUV}}
+\item 
+\doxymbox{\hyperlink{class_ring_buffer}{Ring\+Buffer}} \doxymbox{\hyperlink{classgst_buffer_manager_aea126364b147dd2c7946ba66f64fd3a4}{m\+Timestamps}}
+\item 
+\doxymbox{\hyperlink{class_ring_buffer}{Ring\+Buffer}} \doxymbox{\hyperlink{classgst_buffer_manager_ab07dfcccd8fa8e9e5f0c80ba969bd953}{m\+Buffer\+RGB}}
+\item 
+uint64\+\_\+t \doxymbox{\hyperlink{classgst_buffer_manager_abe9df1a58cf2e4ae57c0239a12cc4aa4}{m\+Last\+Timestamp}}
+\item 
+\doxymbox{\hyperlink{class_event}{Event}} \doxymbox{\hyperlink{classgst_buffer_manager_a9f62a8198853fdab6da3775b9b879280}{m\+Wait\+Event}}
+\item 
+\doxymbox{\hyperlink{structvideo_options}{video\+Options}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classgst_buffer_manager_a742e929409e877a0e8e2b8c56f0d58a3}{m\+Options}}
+\item 
+uint64\+\_\+t \doxymbox{\hyperlink{classgst_buffer_manager_aac53eb50db281d89d9142576b5adf6d3}{m\+Frame\+Count}}
+\item 
+bool \doxymbox{\hyperlink{classgst_buffer_manager_abd5bf5577fd3a1bb129419243dc91d1a}{m\+Nvmm\+Used}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\doxylink{classgst_buffer_manager}{gst\+Buffer\+Manager} recieves GStreamer buffers from appsink elements and unpacks/\+maps them into CUDA address space, and handles colorspace conversion into RGB format.
+
+It can handle both normal CPU-\/based GStreamer buffers and NVMM memory which can be mapped directly to the GPU without requiring memory copies using the CPU.
+
+To disable the use of NVMM memory, set -\/DENABLE\+\_\+\+NVMM=OFF when building with CMake:\+ \begin{DoxyVerb}cmake -DENABLE_NVMM=OFF ../
+\end{DoxyVerb}
+ 
+
+\label{doc-constructors}
+\Hypertarget{classgst_buffer_manager_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classgst_buffer_manager_a8d0c7f6ad4fad98bca732caa255eb94c}\index{gstBufferManager@{gstBufferManager}!gstBufferManager@{gstBufferManager}}
+\index{gstBufferManager@{gstBufferManager}!gstBufferManager@{gstBufferManager}}
+\doxysubsubsection{\texorpdfstring{gstBufferManager()}{gstBufferManager()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgst_buffer_manager_a8d0c7f6ad4fad98bca732caa255eb94c} 
+gst\+Buffer\+Manager::\+gst\+Buffer\+Manager (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{structvideo_options}{video\+Options}} \texorpdfstring{$\ast$}{*}}]{options}{}\end{DoxyParamCaption})}
+
+Constructor \Hypertarget{classgst_buffer_manager_a12abb8d449269f24ade36c787fab1bd3}\index{gstBufferManager@{gstBufferManager}!````~gstBufferManager@{\texorpdfstring{$\sim$}{\string~}gstBufferManager}}
+\index{````~gstBufferManager@{\texorpdfstring{$\sim$}{\string~}gstBufferManager}!gstBufferManager@{gstBufferManager}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}gstBufferManager()}{\string~gstBufferManager()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgst_buffer_manager_a12abb8d449269f24ade36c787fab1bd3} 
+gst\+Buffer\+Manager::\+\texorpdfstring{$\sim$}{\string~}gst\+Buffer\+Manager (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Destructor \Hypertarget{classgst_buffer_manager_a8d0c7f6ad4fad98bca732caa255eb94c}\index{gstBufferManager@{gstBufferManager}!gstBufferManager@{gstBufferManager}}
+\index{gstBufferManager@{gstBufferManager}!gstBufferManager@{gstBufferManager}}
+\doxysubsubsection{\texorpdfstring{gstBufferManager()}{gstBufferManager()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgst_buffer_manager_a8d0c7f6ad4fad98bca732caa255eb94c} 
+gst\+Buffer\+Manager::\+gst\+Buffer\+Manager (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{structvideo_options}{video\+Options}} \texorpdfstring{$\ast$}{*}}]{options}{}\end{DoxyParamCaption})}
+
+Constructor \Hypertarget{classgst_buffer_manager_a12abb8d449269f24ade36c787fab1bd3}\index{gstBufferManager@{gstBufferManager}!````~gstBufferManager@{\texorpdfstring{$\sim$}{\string~}gstBufferManager}}
+\index{````~gstBufferManager@{\texorpdfstring{$\sim$}{\string~}gstBufferManager}!gstBufferManager@{gstBufferManager}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}gstBufferManager()}{\string~gstBufferManager()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgst_buffer_manager_a12abb8d449269f24ade36c787fab1bd3} 
+gst\+Buffer\+Manager::\+\texorpdfstring{$\sim$}{\string~}gst\+Buffer\+Manager (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Destructor 
+
+\label{doc-func-members}
+\Hypertarget{classgst_buffer_manager_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classgst_buffer_manager_a451091897b267ffbce465df96118b4b3}\index{gstBufferManager@{gstBufferManager}!Dequeue@{Dequeue}}
+\index{Dequeue@{Dequeue}!gstBufferManager@{gstBufferManager}}
+\doxysubsubsection{\texorpdfstring{Dequeue()}{Dequeue()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgst_buffer_manager_a451091897b267ffbce465df96118b4b3} 
+int gst\+Buffer\+Manager::\+\+Dequeue (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{output}{, }\item[{\doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{image\+Format}}}]{format}{, }\item[{uint64\+\_\+t}]{timeout}{ = {\ttfamily UINT64\+\_\+MAX}, }\item[{cuda\+Stream\+\_\+t}]{stream}{ = {\ttfamily 0}}\end{DoxyParamCaption})}
+
+Dequeue the next frame. Returns 1 on success, 0 on timeout, -\/1 on error. \Hypertarget{classgst_buffer_manager_a451091897b267ffbce465df96118b4b3}\index{gstBufferManager@{gstBufferManager}!Dequeue@{Dequeue}}
+\index{Dequeue@{Dequeue}!gstBufferManager@{gstBufferManager}}
+\doxysubsubsection{\texorpdfstring{Dequeue()}{Dequeue()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgst_buffer_manager_a451091897b267ffbce465df96118b4b3} 
+int gst\+Buffer\+Manager::\+\+Dequeue (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{output}{, }\item[{\doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{image\+Format}}}]{format}{, }\item[{uint64\+\_\+t}]{timeout}{ = {\ttfamily UINT64\+\_\+MAX}, }\item[{cuda\+Stream\+\_\+t}]{stream}{ = {\ttfamily 0}}\end{DoxyParamCaption})}
+
+Dequeue the next frame. Returns 1 on success, 0 on timeout, -\/1 on error. \Hypertarget{classgst_buffer_manager_a8cd180e308002d209ec400f5c9966ebe}\index{gstBufferManager@{gstBufferManager}!Enqueue@{Enqueue}}
+\index{Enqueue@{Enqueue}!gstBufferManager@{gstBufferManager}}
+\doxysubsubsection{\texorpdfstring{Enqueue()}{Enqueue()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgst_buffer_manager_a8cd180e308002d209ec400f5c9966ebe} 
+bool gst\+Buffer\+Manager::\+\+Enqueue (\begin{DoxyParamCaption}\item[{Gst\+Buffer \texorpdfstring{$\ast$}{*}}]{buffer}{, }\item[{Gst\+Caps \texorpdfstring{$\ast$}{*}}]{caps}{}\end{DoxyParamCaption})}
+
+Enqueue a Gst\+Buffer from GStreamer. \Hypertarget{classgst_buffer_manager_a8cd180e308002d209ec400f5c9966ebe}\index{gstBufferManager@{gstBufferManager}!Enqueue@{Enqueue}}
+\index{Enqueue@{Enqueue}!gstBufferManager@{gstBufferManager}}
+\doxysubsubsection{\texorpdfstring{Enqueue()}{Enqueue()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgst_buffer_manager_a8cd180e308002d209ec400f5c9966ebe} 
+bool gst\+Buffer\+Manager::\+\+Enqueue (\begin{DoxyParamCaption}\item[{Gst\+Buffer \texorpdfstring{$\ast$}{*}}]{buffer}{, }\item[{Gst\+Caps \texorpdfstring{$\ast$}{*}}]{caps}{}\end{DoxyParamCaption})}
+
+Enqueue a Gst\+Buffer from GStreamer. \Hypertarget{classgst_buffer_manager_ac8653af78fcfd69dd452c01b10ba3277}\index{gstBufferManager@{gstBufferManager}!GetFrameCount@{GetFrameCount}}
+\index{GetFrameCount@{GetFrameCount}!gstBufferManager@{gstBufferManager}}
+\doxysubsubsection{\texorpdfstring{GetFrameCount()}{GetFrameCount()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgst_buffer_manager_ac8653af78fcfd69dd452c01b10ba3277} 
+uint64\+\_\+t gst\+Buffer\+Manager::\+\+Get\+Frame\+Count (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Get the total number of frames that have been recieved. \Hypertarget{classgst_buffer_manager_ac8653af78fcfd69dd452c01b10ba3277}\index{gstBufferManager@{gstBufferManager}!GetFrameCount@{GetFrameCount}}
+\index{GetFrameCount@{GetFrameCount}!gstBufferManager@{gstBufferManager}}
+\doxysubsubsection{\texorpdfstring{GetFrameCount()}{GetFrameCount()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgst_buffer_manager_ac8653af78fcfd69dd452c01b10ba3277} 
+uint64\+\_\+t gst\+Buffer\+Manager::\+\+Get\+Frame\+Count (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Get the total number of frames that have been recieved. \Hypertarget{classgst_buffer_manager_a9416f0ffbcd3bee21e909fbd174c3436}\index{gstBufferManager@{gstBufferManager}!GetLastTimestamp@{GetLastTimestamp}}
+\index{GetLastTimestamp@{GetLastTimestamp}!gstBufferManager@{gstBufferManager}}
+\doxysubsubsection{\texorpdfstring{GetLastTimestamp()}{GetLastTimestamp()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgst_buffer_manager_a9416f0ffbcd3bee21e909fbd174c3436} 
+uint64\+\_\+t gst\+Buffer\+Manager::\+\+Get\+Last\+Timestamp (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Get timestamp of the latest dequeued frame. \Hypertarget{classgst_buffer_manager_a9416f0ffbcd3bee21e909fbd174c3436}\index{gstBufferManager@{gstBufferManager}!GetLastTimestamp@{GetLastTimestamp}}
+\index{GetLastTimestamp@{GetLastTimestamp}!gstBufferManager@{gstBufferManager}}
+\doxysubsubsection{\texorpdfstring{GetLastTimestamp()}{GetLastTimestamp()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgst_buffer_manager_a9416f0ffbcd3bee21e909fbd174c3436} 
+uint64\+\_\+t gst\+Buffer\+Manager::\+\+Get\+Last\+Timestamp (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Get timestamp of the latest dequeued frame. \Hypertarget{classgst_buffer_manager_a850ecaaeb9a220bd42e718f93ecb8ae4}\index{gstBufferManager@{gstBufferManager}!GetRawFormat@{GetRawFormat}}
+\index{GetRawFormat@{GetRawFormat}!gstBufferManager@{gstBufferManager}}
+\doxysubsubsection{\texorpdfstring{GetRawFormat()}{GetRawFormat()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classgst_buffer_manager_a850ecaaeb9a220bd42e718f93ecb8ae4} 
+\doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{image\+Format}} gst\+Buffer\+Manager::\+\+Get\+Raw\+Format (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Get raw image format. \Hypertarget{classgst_buffer_manager_a850ecaaeb9a220bd42e718f93ecb8ae4}\index{gstBufferManager@{gstBufferManager}!GetRawFormat@{GetRawFormat}}
+\index{GetRawFormat@{GetRawFormat}!gstBufferManager@{gstBufferManager}}
+\doxysubsubsection{\texorpdfstring{GetRawFormat()}{GetRawFormat()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classgst_buffer_manager_a850ecaaeb9a220bd42e718f93ecb8ae4} 
+\doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{image\+Format}} gst\+Buffer\+Manager::\+\+Get\+Raw\+Format (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Get raw image format. 
+
+\label{doc-variable-members}
+\Hypertarget{classgst_buffer_manager_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classgst_buffer_manager_ab07dfcccd8fa8e9e5f0c80ba969bd953}\index{gstBufferManager@{gstBufferManager}!mBufferRGB@{mBufferRGB}}
+\index{mBufferRGB@{mBufferRGB}!gstBufferManager@{gstBufferManager}}
+\doxysubsubsection{\texorpdfstring{mBufferRGB}{mBufferRGB}}
+{\footnotesize\ttfamily \label{classgst_buffer_manager_ab07dfcccd8fa8e9e5f0c80ba969bd953} 
+\doxymbox{\hyperlink{class_ring_buffer}{Ring\+Buffer}} gst\+Buffer\+Manager::\+m\+Buffer\+RGB\hspace{0.3cm}{\ttfamily [protected]}}
+
+Ringbuffer of frames that have been converted to RGB colorspace \Hypertarget{classgst_buffer_manager_a9bf6538dcf98e4773b6fe2ea28ee8944}\index{gstBufferManager@{gstBufferManager}!mBufferYUV@{mBufferYUV}}
+\index{mBufferYUV@{mBufferYUV}!gstBufferManager@{gstBufferManager}}
+\doxysubsubsection{\texorpdfstring{mBufferYUV}{mBufferYUV}}
+{\footnotesize\ttfamily \label{classgst_buffer_manager_a9bf6538dcf98e4773b6fe2ea28ee8944} 
+\doxymbox{\hyperlink{class_ring_buffer}{Ring\+Buffer}} gst\+Buffer\+Manager::\+m\+Buffer\+YUV\hspace{0.3cm}{\ttfamily [protected]}}
+
+Ringbuffer of CPU-\/based YUV frames (non-\/\+NVMM) that come from appsink \Hypertarget{classgst_buffer_manager_a648c0f76e9eedc9d3483c36b118b2e0d}\index{gstBufferManager@{gstBufferManager}!mFormatYUV@{mFormatYUV}}
+\index{mFormatYUV@{mFormatYUV}!gstBufferManager@{gstBufferManager}}
+\doxysubsubsection{\texorpdfstring{mFormatYUV}{mFormatYUV}}
+{\footnotesize\ttfamily \label{classgst_buffer_manager_a648c0f76e9eedc9d3483c36b118b2e0d} 
+\doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{image\+Format}} gst\+Buffer\+Manager::\+m\+Format\+YUV\hspace{0.3cm}{\ttfamily [protected]}}
+
+\doxylink{requirements_The}{The} YUV colorspace format coming from appsink (typically NV12 or YUY2) \Hypertarget{classgst_buffer_manager_aac53eb50db281d89d9142576b5adf6d3}\index{gstBufferManager@{gstBufferManager}!mFrameCount@{mFrameCount}}
+\index{mFrameCount@{mFrameCount}!gstBufferManager@{gstBufferManager}}
+\doxysubsubsection{\texorpdfstring{mFrameCount}{mFrameCount}}
+{\footnotesize\ttfamily \label{classgst_buffer_manager_aac53eb50db281d89d9142576b5adf6d3} 
+uint64\+\_\+t gst\+Buffer\+Manager::\+m\+Frame\+Count\hspace{0.3cm}{\ttfamily [protected]}}
+
+Total number of frames that have been recieved \Hypertarget{classgst_buffer_manager_abe9df1a58cf2e4ae57c0239a12cc4aa4}\index{gstBufferManager@{gstBufferManager}!mLastTimestamp@{mLastTimestamp}}
+\index{mLastTimestamp@{mLastTimestamp}!gstBufferManager@{gstBufferManager}}
+\doxysubsubsection{\texorpdfstring{mLastTimestamp}{mLastTimestamp}}
+{\footnotesize\ttfamily \label{classgst_buffer_manager_abe9df1a58cf2e4ae57c0239a12cc4aa4} 
+uint64\+\_\+t gst\+Buffer\+Manager::\+m\+Last\+Timestamp\hspace{0.3cm}{\ttfamily [protected]}}
+
+Timestamp of the latest dequeued frame \Hypertarget{classgst_buffer_manager_abd5bf5577fd3a1bb129419243dc91d1a}\index{gstBufferManager@{gstBufferManager}!mNvmmUsed@{mNvmmUsed}}
+\index{mNvmmUsed@{mNvmmUsed}!gstBufferManager@{gstBufferManager}}
+\doxysubsubsection{\texorpdfstring{mNvmmUsed}{mNvmmUsed}}
+{\footnotesize\ttfamily \label{classgst_buffer_manager_abd5bf5577fd3a1bb129419243dc91d1a} 
+bool gst\+Buffer\+Manager::\+m\+Nvmm\+Used\hspace{0.3cm}{\ttfamily [protected]}}
+
+Is NVMM memory actually used by the stream? \Hypertarget{classgst_buffer_manager_a742e929409e877a0e8e2b8c56f0d58a3}\index{gstBufferManager@{gstBufferManager}!mOptions@{mOptions}}
+\index{mOptions@{mOptions}!gstBufferManager@{gstBufferManager}}
+\doxysubsubsection{\texorpdfstring{mOptions}{mOptions}}
+{\footnotesize\ttfamily \label{classgst_buffer_manager_a742e929409e877a0e8e2b8c56f0d58a3} 
+\doxymbox{\hyperlink{structvideo_options}{video\+Options}} \texorpdfstring{$\ast$}{*} gst\+Buffer\+Manager::\+m\+Options\hspace{0.3cm}{\ttfamily [protected]}}
+
+Options of the \doxylink{classgst_decoder}{gst\+Decoder} /\+ \doxylink{classgst_camera}{gst\+Camera} object \Hypertarget{classgst_buffer_manager_aea126364b147dd2c7946ba66f64fd3a4}\index{gstBufferManager@{gstBufferManager}!mTimestamps@{mTimestamps}}
+\index{mTimestamps@{mTimestamps}!gstBufferManager@{gstBufferManager}}
+\doxysubsubsection{\texorpdfstring{mTimestamps}{mTimestamps}}
+{\footnotesize\ttfamily \label{classgst_buffer_manager_aea126364b147dd2c7946ba66f64fd3a4} 
+\doxymbox{\hyperlink{class_ring_buffer}{Ring\+Buffer}} gst\+Buffer\+Manager::\+m\+Timestamps\hspace{0.3cm}{\ttfamily [protected]}}
+
+Ringbuffer of timestamps that come from appsink \Hypertarget{classgst_buffer_manager_a9f62a8198853fdab6da3775b9b879280}\index{gstBufferManager@{gstBufferManager}!mWaitEvent@{mWaitEvent}}
+\index{mWaitEvent@{mWaitEvent}!gstBufferManager@{gstBufferManager}}
+\doxysubsubsection{\texorpdfstring{mWaitEvent}{mWaitEvent}}
+{\footnotesize\ttfamily \label{classgst_buffer_manager_a9f62a8198853fdab6da3775b9b879280} 
+\doxymbox{\hyperlink{class_event}{Event}} gst\+Buffer\+Manager::\+m\+Wait\+Event\hspace{0.3cm}{\ttfamily [protected]}}
+
+\doxylink{class_event}{Event} that gets triggered when a new frame is recieved 
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+jetson-\/inference/\+build/\+aarch64/\+include/\+jetson-\/utils/\+gst\+Buffer\+Manager.\+h\item 
+jetson-\/inference/\+utils/\+codec/\+gst\+Buffer\+Manager.\+h\item 
+jetson-\/inference/\+utils/\+codec/\+gst\+Buffer\+Manager.\+cpp\end{DoxyCompactItemize}

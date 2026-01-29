@@ -1,0 +1,89 @@
+\doxysection{cuda\+Warp.\+h}
+\hypertarget{utils_2cuda_2cuda_warp_8h_source}{}\label{utils_2cuda_2cuda_warp_8h_source}\index{jetson-\/inference/utils/cuda/cudaWarp.h@{jetson-\/inference/utils/cuda/cudaWarp.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ *\ Copyright\ (c)\ 2019,\ NVIDIA\ CORPORATION.\ All\ rights\ reserved.}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ *\ Permission\ is\ hereby\ granted,\ free\ of\ charge,\ to\ any\ person\ obtaining\ a}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ *\ copy\ of\ this\ software\ and\ associated\ documentation\ files\ (the\ "{}Software"{}),}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ *\ to\ deal\ in\ the\ Software\ without\ restriction,\ including\ without\ limitation}}
+\DoxyCodeLine{00007\ \textcolor{comment}{\ *\ the\ rights\ to\ use,\ copy,\ modify,\ merge,\ publish,\ distribute,\ sublicense,}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ *\ and/or\ sell\ copies\ of\ the\ Software,\ and\ to\ permit\ persons\ to\ whom\ the}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ *\ Software\ is\ furnished\ to\ do\ so,\ subject\ to\ the\ following\ conditions:}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ *\ The\ above\ copyright\ notice\ and\ this\ permission\ notice\ shall\ be\ included\ in}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ *\ all\ copies\ or\ substantial\ portions\ of\ the\ Software.}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ *\ THE\ SOFTWARE\ IS\ PROVIDED\ "{}AS\ IS"{},\ WITHOUT\ WARRANTY\ OF\ ANY\ KIND,\ EXPRESS\ OR}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ *\ IMPLIED,\ INCLUDING\ BUT\ NOT\ LIMITED\ TO\ THE\ WARRANTIES\ OF\ MERCHANTABILITY,}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ *\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE\ AND\ NONINFRINGEMENT.\ \ IN\ NO\ EVENT\ SHALL}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ *\ THE\ AUTHORS\ OR\ COPYRIGHT\ HOLDERS\ BE\ LIABLE\ FOR\ ANY\ CLAIM,\ DAMAGES\ OR\ OTHER}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ *\ LIABILITY,\ WHETHER\ IN\ AN\ ACTION\ OF\ CONTRACT,\ TORT\ OR\ OTHERWISE,\ ARISING}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ *\ FROM,\ OUT\ OF\ OR\ IN\ CONNECTION\ WITH\ THE\ SOFTWARE\ OR\ THE\ USE\ OR\ OTHER}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ *\ DEALINGS\ IN\ THE\ SOFTWARE.}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \textcolor{preprocessor}{\#ifndef\ \_\_CUDA\_WARP\_H\_\_}}
+\DoxyCodeLine{00024\ \textcolor{preprocessor}{\#define\ \_\_CUDA\_WARP\_H\_\_}}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \textcolor{preprocessor}{\#include\ "{}cudaUtility.h"{}}}
+\DoxyCodeLine{00028\ \textcolor{preprocessor}{\#include\ "{}imageFormat.h"{}}}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00037\ cudaError\_t\ \doxymbox{\hyperlink{group__warping_gabaf91f32ec039c484028081b2c230620}{cudaWarpAffine}}(\ uchar4*\ input,\ uchar4*\ output,\ uint32\_t\ width,\ uint32\_t\ height,}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ transform[2][3],\ \textcolor{keywordtype}{bool}\ transform\_inverted=\textcolor{keyword}{false},}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cudaStream\_t\ stream=0\ );}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00048\ cudaError\_t\ \doxymbox{\hyperlink{group__warping_gabaf91f32ec039c484028081b2c230620}{cudaWarpAffine}}(\ float4*\ input,\ float4*\ output,\ uint32\_t\ width,\ uint32\_t\ height,}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ transform[2][3],\ \textcolor{keywordtype}{bool}\ transform\_inverted=\textcolor{keyword}{false},}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cudaStream\_t\ stream=0\ );}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00059\ cudaError\_t\ \doxymbox{\hyperlink{group__warping_ga1d41a986d83815697ec280b38882ddf3}{cudaWarpPerspective}}(\ \textcolor{keywordtype}{void}*\ input,\ uint32\_t\ inputWidth,\ uint32\_t\ inputHeight,\ \doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{imageFormat}}\ inputFormat,}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}*\ output,\ uint32\_t\ outputWidth,\ uint32\_t\ outputHeight,\ \doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{imageFormat}}\ outputFormat,}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ transform[3][3],\ \textcolor{keywordtype}{bool}\ transform\_inverted=\textcolor{keyword}{false},\ cudaStream\_t\ stream=0\ );}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00070\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>\ }
+\DoxyCodeLine{00071\ cudaError\_t\ \doxymbox{\hyperlink{group__warping_ga1d41a986d83815697ec280b38882ddf3}{cudaWarpPerspective}}(\ T*\ input,\ uint32\_t\ inputWidth,\ uint32\_t\ inputHeight,}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T*\ output,\ uint32\_t\ outputWidth,\ uint32\_t\ outputHeight,}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ transform[3][3],\ \textcolor{keywordtype}{bool}\ transform\_inverted=\textcolor{keyword}{false},}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cudaStream\_t\ stream=0\ )}
+\DoxyCodeLine{00075\ \{\ }
+\DoxyCodeLine{00076\ \ \ \ \ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{group__warping_ga1d41a986d83815697ec280b38882ddf3}{cudaWarpPerspective}}(input,\ inputWidth,\ inputHeight,\ imageFormatFromType<T>(),\ output,\ outputWidth,\ outputHeight,\ imageFormatFromType<T>(),\ transform,\ transform\_inverted,\ stream);}
+\DoxyCodeLine{00077\ \}\ \ \ }
+\DoxyCodeLine{00078\ }
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00088\ cudaError\_t\ \doxymbox{\hyperlink{group__warping_ga1d41a986d83815697ec280b38882ddf3}{cudaWarpPerspective}}(\ uchar4*\ input,\ uchar4*\ output,\ uint32\_t\ width,\ uint32\_t\ height,}
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ transform[3][3],\ \textcolor{keywordtype}{bool}\ transform\_inverted=\textcolor{keyword}{false},}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cudaStream\_t\ stream=0\ );}
+\DoxyCodeLine{00091\ }
+\DoxyCodeLine{00092\ }
+\DoxyCodeLine{00101\ cudaError\_t\ \doxymbox{\hyperlink{group__warping_ga1d41a986d83815697ec280b38882ddf3}{cudaWarpPerspective}}(\ float4*\ input,\ float4*\ output,\ uint32\_t\ width,\ uint32\_t\ height,}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ transform[3][3],\ \textcolor{keywordtype}{bool}\ transform\_inverted=\textcolor{keyword}{false},}
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cudaStream\_t\ stream=0\ );}
+\DoxyCodeLine{00104\ }
+\DoxyCodeLine{00105\ }
+\DoxyCodeLine{00111\ cudaError\_t\ \doxymbox{\hyperlink{group__warping_ga790bba1dee986867e6258f2d44009b1a}{cudaWarpIntrinsic}}(\ uchar4*\ input,\ uchar4*\ output,\ uint32\_t\ width,\ uint32\_t\ height,}
+\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ float2\&\ focalLength,\ \textcolor{keyword}{const}\ float2\&\ principalPoint,\ \textcolor{keyword}{const}\ float4\&\ distortion,}
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cudaStream\_t\ stream=0\ );}
+\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00115\ }
+\DoxyCodeLine{00121\ cudaError\_t\ \doxymbox{\hyperlink{group__warping_ga790bba1dee986867e6258f2d44009b1a}{cudaWarpIntrinsic}}(\ float4*\ input,\ float4*\ output,\ uint32\_t\ width,\ uint32\_t\ height,}
+\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ float2\&\ focalLength,\ \textcolor{keyword}{const}\ float2\&\ principalPoint,\ \textcolor{keyword}{const}\ float4\&\ distortion,}
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cudaStream\_t\ stream=0\ );}
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00125\ }
+\DoxyCodeLine{00131\ cudaError\_t\ \doxymbox{\hyperlink{group__warping_ga7df839de775c4c8588a93bf0b71635b5}{cudaWarpFisheye}}(\ uchar4*\ input,\ uchar4*\ output,\ uint32\_t\ width,\ uint32\_t\ height,\ \textcolor{keywordtype}{float}\ focus,\ cudaStream\_t\ stream=0\ );}
+\DoxyCodeLine{00132\ }
+\DoxyCodeLine{00133\ }
+\DoxyCodeLine{00139\ cudaError\_t\ \doxymbox{\hyperlink{group__warping_ga7df839de775c4c8588a93bf0b71635b5}{cudaWarpFisheye}}(\ float4*\ input,\ float4*\ output,\ uint32\_t\ width,\ uint32\_t\ height,\ \textcolor{keywordtype}{float}\ focus,\ cudaStream\_t\ stream=0\ );}
+\DoxyCodeLine{00140\ }
+\DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00142\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00143\ }
+
+\end{DoxyCode}

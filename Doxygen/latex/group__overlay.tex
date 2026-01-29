@@ -1,0 +1,68 @@
+\doxysubsubsection{Overlay }
+\hypertarget{group__overlay}{}\label{group__overlay}\index{Overlay@{Overlay}}
+\doxysubsubsubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+cuda\+Error\+\_\+t \doxymbox{\hyperlink{group__overlay_ga065786f45d44a4aa5b3a127fbfe16323}{cuda\+Overlay}} (void \texorpdfstring{$\ast$}{*}input, size\+\_\+t input\+Width, size\+\_\+t input\+Height, void \texorpdfstring{$\ast$}{*}output, size\+\_\+t output\+Width, size\+\_\+t output\+Height, \doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{image\+Format}} format, int x, int y, cuda\+Stream\+\_\+t stream=0)
+\item 
+{\footnotesize template$<$typename T$>$ }\\cuda\+Error\+\_\+t \doxymbox{\hyperlink{group__overlay_ga751c38beeeaa383c7fac5df686f2ec1a}{cuda\+Overlay}} (T \texorpdfstring{$\ast$}{*}input, size\+\_\+t input\+Width, size\+\_\+t input\+Height, T \texorpdfstring{$\ast$}{*}output, size\+\_\+t output\+Width, size\+\_\+t output\+Height, int x, int y, cuda\+Stream\+\_\+t stream=0)
+\item 
+{\footnotesize template$<$typename T$>$ }\\cuda\+Error\+\_\+t \doxymbox{\hyperlink{group__overlay_ga66c5acbba3d52e5e2cbc86fa4ecd2aa5}{cuda\+Overlay}} (T \texorpdfstring{$\ast$}{*}input, const int2 \&input\+Dims, T \texorpdfstring{$\ast$}{*}output, const int2 \&output\+Dims, int x, int y, cuda\+Stream\+\_\+t stream=0)
+\item 
+cuda\+Error\+\_\+t \doxymbox{\hyperlink{group__overlay_ga0520ed669aab3e2570d23e11e2e39b4d}{cuda\+Rect\+Fill}} (void \texorpdfstring{$\ast$}{*}input, void \texorpdfstring{$\ast$}{*}output, size\+\_\+t width, size\+\_\+t height, \doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{image\+Format}} format, float4 \texorpdfstring{$\ast$}{*}rects, int num\+Rects, const float4 \&color, cuda\+Stream\+\_\+t stream=0)
+\item 
+{\footnotesize template$<$typename T$>$ }\\cuda\+Error\+\_\+t \doxymbox{\hyperlink{group__overlay_ga852b6b1da9290729d7bbddf73553f824}{cuda\+Rect\+Fill}} (T \texorpdfstring{$\ast$}{*}input, T \texorpdfstring{$\ast$}{*}output, size\+\_\+t width, size\+\_\+t height, float4 \texorpdfstring{$\ast$}{*}rects, int num\+Rects, const float4 \&color, cuda\+Stream\+\_\+t stream=0)
+\end{DoxyCompactItemize}
+
+
+\doxysubsubsubsection{Detailed Description}
+Overlay images and vector shapes onto other images. 
+
+\label{doc-func-members}
+\Hypertarget{group__overlay_doc-func-members}
+\doxysubsubsubsection{Function Documentation}
+\Hypertarget{group__overlay_ga66c5acbba3d52e5e2cbc86fa4ecd2aa5}\index{Overlay@{Overlay}!cudaOverlay@{cudaOverlay}}
+\index{cudaOverlay@{cudaOverlay}!Overlay@{Overlay}}
+\doxysubsubsubsubsection{\texorpdfstring{cudaOverlay()}{cudaOverlay()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily \label{group__overlay_ga66c5acbba3d52e5e2cbc86fa4ecd2aa5} 
+template$<$typename T$>$ \\
+cuda\+Error\+\_\+t cuda\+Overlay (\begin{DoxyParamCaption}\item[{T \texorpdfstring{$\ast$}{*}}]{input}{, }\item[{const int2 \&}]{input\+Dims}{, }\item[{T \texorpdfstring{$\ast$}{*}}]{output}{, }\item[{const int2 \&}]{output\+Dims}{, }\item[{int}]{x}{, }\item[{int}]{y}{, }\item[{cuda\+Stream\+\_\+t}]{stream}{ = {\ttfamily 0}}\end{DoxyParamCaption})}
+
+Overlay the input image composted onto the output image at location (x,y) If the composted image doesn\textquotesingle{}t entirely fit in the output, it will be cropped. If the images have an alpha channel, they will be alpha blended. \Hypertarget{group__overlay_ga751c38beeeaa383c7fac5df686f2ec1a}\index{Overlay@{Overlay}!cudaOverlay@{cudaOverlay}}
+\index{cudaOverlay@{cudaOverlay}!Overlay@{Overlay}}
+\doxysubsubsubsubsection{\texorpdfstring{cudaOverlay()}{cudaOverlay()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily \label{group__overlay_ga751c38beeeaa383c7fac5df686f2ec1a} 
+template$<$typename T$>$ \\
+cuda\+Error\+\_\+t cuda\+Overlay (\begin{DoxyParamCaption}\item[{T \texorpdfstring{$\ast$}{*}}]{input}{, }\item[{size\+\_\+t}]{input\+Width}{, }\item[{size\+\_\+t}]{input\+Height}{, }\item[{T \texorpdfstring{$\ast$}{*}}]{output}{, }\item[{size\+\_\+t}]{output\+Width}{, }\item[{size\+\_\+t}]{output\+Height}{, }\item[{int}]{x}{, }\item[{int}]{y}{, }\item[{cuda\+Stream\+\_\+t}]{stream}{ = {\ttfamily 0}}\end{DoxyParamCaption})}
+
+Overlay the input image composted onto the output image at location (x,y) If the composted image doesn\textquotesingle{}t entirely fit in the output, it will be cropped. If the images have an alpha channel, they will be alpha blended. \Hypertarget{group__overlay_ga065786f45d44a4aa5b3a127fbfe16323}\index{Overlay@{Overlay}!cudaOverlay@{cudaOverlay}}
+\index{cudaOverlay@{cudaOverlay}!Overlay@{Overlay}}
+\doxysubsubsubsubsection{\texorpdfstring{cudaOverlay()}{cudaOverlay()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily \label{group__overlay_ga065786f45d44a4aa5b3a127fbfe16323} 
+cuda\+Error\+\_\+t cuda\+Overlay (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}}]{input}{, }\item[{size\+\_\+t}]{input\+Width}{, }\item[{size\+\_\+t}]{input\+Height}{, }\item[{void \texorpdfstring{$\ast$}{*}}]{output}{, }\item[{size\+\_\+t}]{output\+Width}{, }\item[{size\+\_\+t}]{output\+Height}{, }\item[{\doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{image\+Format}}}]{format}{, }\item[{int}]{x}{, }\item[{int}]{y}{, }\item[{cuda\+Stream\+\_\+t}]{stream}{ = {\ttfamily 0}}\end{DoxyParamCaption})}
+
+Overlay the input image onto the output image at location (x,y) If the composted image doesn\textquotesingle{}t entirely fit in the output, it will be cropped. If the images have an alpha channel, they will be alpha blended. \Hypertarget{group__overlay_ga852b6b1da9290729d7bbddf73553f824}\index{Overlay@{Overlay}!cudaRectFill@{cudaRectFill}}
+\index{cudaRectFill@{cudaRectFill}!Overlay@{Overlay}}
+\doxysubsubsubsubsection{\texorpdfstring{cudaRectFill()}{cudaRectFill()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{group__overlay_ga852b6b1da9290729d7bbddf73553f824} 
+template$<$typename T$>$ \\
+cuda\+Error\+\_\+t cuda\+Rect\+Fill (\begin{DoxyParamCaption}\item[{T \texorpdfstring{$\ast$}{*}}]{input}{, }\item[{T \texorpdfstring{$\ast$}{*}}]{output}{, }\item[{size\+\_\+t}]{width}{, }\item[{size\+\_\+t}]{height}{, }\item[{float4 \texorpdfstring{$\ast$}{*}}]{rects}{, }\item[{int}]{num\+Rects}{, }\item[{const float4 \&}]{color}{, }\item[{cuda\+Stream\+\_\+t}]{stream}{ = {\ttfamily 0}}\end{DoxyParamCaption})}
+
+cuda\+Rect\+Fill \begin{DoxyRefDesc}{Deprecated}
+\item[\doxymbox{\hyperlink{deprecated__deprecated000011}{Deprecated}}]please use the functions from cuda\+Draw.\+h instead\end{DoxyRefDesc}
+
+
+cuda\+Rect\+Fill \begin{DoxyRefDesc}{Deprecated}
+\item[\doxymbox{\hyperlink{deprecated__deprecated000024}{Deprecated}}]please use the functions from cuda\+Draw.\+h instead\end{DoxyRefDesc}
+\Hypertarget{group__overlay_ga0520ed669aab3e2570d23e11e2e39b4d}\index{Overlay@{Overlay}!cudaRectFill@{cudaRectFill}}
+\index{cudaRectFill@{cudaRectFill}!Overlay@{Overlay}}
+\doxysubsubsubsubsection{\texorpdfstring{cudaRectFill()}{cudaRectFill()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{group__overlay_ga0520ed669aab3e2570d23e11e2e39b4d} 
+cuda\+Error\+\_\+t cuda\+Rect\+Fill (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}}]{input}{, }\item[{void \texorpdfstring{$\ast$}{*}}]{output}{, }\item[{size\+\_\+t}]{width}{, }\item[{size\+\_\+t}]{height}{, }\item[{\doxymbox{\hyperlink{group__image_format_ga931c48e08f361637d093355d64583406}{image\+Format}}}]{format}{, }\item[{float4 \texorpdfstring{$\ast$}{*}}]{rects}{, }\item[{int}]{num\+Rects}{, }\item[{const float4 \&}]{color}{, }\item[{cuda\+Stream\+\_\+t}]{stream}{ = {\ttfamily 0}}\end{DoxyParamCaption})}
+
+cuda\+Rect\+Fill \begin{DoxyRefDesc}{Deprecated}
+\item[\doxymbox{\hyperlink{deprecated__deprecated000010}{Deprecated}}]please use the functions from cuda\+Draw.\+h instead\end{DoxyRefDesc}
+
+
+cuda\+Rect\+Fill \begin{DoxyRefDesc}{Deprecated}
+\item[\doxymbox{\hyperlink{deprecated__deprecated000023}{Deprecated}}]please use the functions from cuda\+Draw.\+h instead\end{DoxyRefDesc}

@@ -1,0 +1,20 @@
+var searchData=
+[
+  ['debug_0',['DEBUG',['../class_log.html#afb5d4c945d835d194a295461d752531eaebc8d74612fd39367faf40dc03d89f77',1,'Log']]],
+  ['default_1',['DEFAULT',['../class_log.html#afb5d4c945d835d194a295461d752531eadd4347e35ba271488d46d1298aa02904',1,'Log']]],
+  ['device_5fcsi_2',['DEVICE_CSI',['../structvideo_options.html#a4065c77be7f3be75eddfc16b6efb36eda42a1da7a25ef3e190c93a43455876033',1,'videoOptions']]],
+  ['device_5fdefault_3',['DEVICE_DEFAULT',['../structvideo_options.html#a4065c77be7f3be75eddfc16b6efb36eda472ab160f2cec34c6798e70d1e4fdbfd',1,'videoOptions']]],
+  ['device_5fdisplay_4',['DEVICE_DISPLAY',['../structvideo_options.html#a4065c77be7f3be75eddfc16b6efb36eda2c39fc92225489afd7851a8e874401dd',1,'videoOptions']]],
+  ['device_5fdla_5',['DEVICE_DLA',['../group__tensor_net.html#ggaa5d3f9981cdbd91516c1474006a80fe4aeaef16f066c95dd987fbde765b8b30b2',1,'tensorNet.h']]],
+  ['device_5fdla_5f0_6',['DEVICE_DLA_0',['../group__tensor_net.html#ggaa5d3f9981cdbd91516c1474006a80fe4a4950aeb02ff7fba02eb2fd2437788399',1,'tensorNet.h']]],
+  ['device_5fdla_5f1_7',['DEVICE_DLA_1',['../group__tensor_net.html#ggaa5d3f9981cdbd91516c1474006a80fe4a63fbbad29461776cf20c2137a3d124f0',1,'tensorNet.h']]],
+  ['device_5ffile_8',['DEVICE_FILE',['../structvideo_options.html#a4065c77be7f3be75eddfc16b6efb36eda781ebf62044a7e1ff17f9832fb28d758',1,'videoOptions']]],
+  ['device_5fgpu_9',['DEVICE_GPU',['../group__tensor_net.html#ggaa5d3f9981cdbd91516c1474006a80fe4adc7f3f88455afa81458863e5b3092e4b',1,'tensorNet.h']]],
+  ['device_5fip_10',['DEVICE_IP',['../structvideo_options.html#a4065c77be7f3be75eddfc16b6efb36edaf3d3416e7b238e6c6dcc0adecd5a74b7',1,'videoOptions']]],
+  ['device_5fv4l2_11',['DEVICE_V4L2',['../structvideo_options.html#a4065c77be7f3be75eddfc16b6efb36eda00076d8dcfad04e4170ff92818c5b04f',1,'videoOptions']]],
+  ['discarded_12',['discarded',['../namespacenlohmann_1_1detail.html#a1ed8fc6239da25abcaf681d30ace4985a94708897ec9db8647dfe695714c98e46',1,'nlohmann::detail::discarded'],['../namespacenlohmann_1_1detail.html#a1ed8fc6239da25abcaf681d30ace4985a94708897ec9db8647dfe695714c98e46',1,'nlohmann::detail::discarded'],['../namespacenlohmann_1_1detail.html#a1ed8fc6239da25abcaf681d30ace4985a94708897ec9db8647dfe695714c98e46',1,'nlohmann::detail::discarded'],['../namespacenlohmann_1_1detail.html#a1ed8fc6239da25abcaf681d30ace4985a94708897ec9db8647dfe695714c98e46',1,'nlohmann::detail::discarded']]],
+  ['dragcreate_13',['DragCreate',['../classgl_display.html#a0d39d6f011999828560d8353edadf46ca8d05921a9f4c8e73f819451bd491c8bd',1,'glDisplay']]],
+  ['dragdefault_14',['DragDefault',['../classgl_display.html#a0d39d6f011999828560d8353edadf46ca3b0e007875951671b43bc2a9a4cd04a0',1,'glDisplay']]],
+  ['dragdisabled_15',['DragDisabled',['../classgl_display.html#a0d39d6f011999828560d8353edadf46cafdc916973850f87a72e8cc27cc5c8641',1,'glDisplay']]],
+  ['dragselect_16',['DragSelect',['../classgl_display.html#a0d39d6f011999828560d8353edadf46ca17435bbaf69d5527db2ac46e34fd9793',1,'glDisplay']]]
+];

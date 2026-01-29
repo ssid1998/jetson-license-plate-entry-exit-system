@@ -1,0 +1,447 @@
+\doxysection{Ring\+Buffer Class Reference}
+\hypertarget{class_ring_buffer}{}\label{class_ring_buffer}\index{RingBuffer@{RingBuffer}}
+
+
+{\ttfamily \+\#include $<$Ring\+Buffer.\+h$>$}
+
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \doxymbox{\hyperlink{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4}{Flags}} \{ \newline
+\doxymbox{\hyperlink{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4a8b7bc1ec3d2537242fd243ea817692a2}{Read}} = (1 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 0)
+, \doxymbox{\hyperlink{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4ad29fd3d5da7b79b50ab2fdf368f4bfc2}{Read\+Once}} = (1 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 1) \texorpdfstring{$\vert$}{|} Read
+, \doxymbox{\hyperlink{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4a692766a528eba0bb4f66c3fb4c26e1d7}{Read\+Latest}} = (1 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 2) \texorpdfstring{$\vert$}{|} Read
+, \doxymbox{\hyperlink{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4a353657c02a56746433578ff32c6f0dbd}{Read\+Latest\+Once}} = (1 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 3) \texorpdfstring{$\vert$}{|} Read\+Latest
+, \newline
+\doxymbox{\hyperlink{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4a3a3ae3c682202b6326ff206920edc867}{Write}} = (1 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 4)
+, \doxymbox{\hyperlink{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4a6c809130e293fee07a15e90f71b89d5e}{Threaded}} = (1 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 5)
+, \doxymbox{\hyperlink{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4a7b847e24eb1d842bf7ee1b049664e6da}{Zero\+Copy}} = (1 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 6)
+, \doxymbox{\hyperlink{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4a8b7bc1ec3d2537242fd243ea817692a2}{Read}} = (1 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 0)
+, \newline
+\doxymbox{\hyperlink{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4ad29fd3d5da7b79b50ab2fdf368f4bfc2}{Read\+Once}} = (1 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 1) \texorpdfstring{$\vert$}{|} Read
+, \doxymbox{\hyperlink{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4a692766a528eba0bb4f66c3fb4c26e1d7}{Read\+Latest}} = (1 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 2) \texorpdfstring{$\vert$}{|} Read
+, \doxymbox{\hyperlink{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4a353657c02a56746433578ff32c6f0dbd}{Read\+Latest\+Once}} = (1 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 3) \texorpdfstring{$\vert$}{|} Read\+Latest
+, \doxymbox{\hyperlink{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4a3a3ae3c682202b6326ff206920edc867}{Write}} = (1 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 4)
+, \newline
+\doxymbox{\hyperlink{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4a6c809130e293fee07a15e90f71b89d5e}{Threaded}} = (1 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 5)
+, \doxymbox{\hyperlink{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4a7b847e24eb1d842bf7ee1b049664e6da}{Zero\+Copy}} = (1 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 6)
+ \}
+\item 
+enum \doxymbox{\hyperlink{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4}{Flags}} \{ \newline
+\doxymbox{\hyperlink{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4a8b7bc1ec3d2537242fd243ea817692a2}{Read}} = (1 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 0)
+, \doxymbox{\hyperlink{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4ad29fd3d5da7b79b50ab2fdf368f4bfc2}{Read\+Once}} = (1 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 1) \texorpdfstring{$\vert$}{|} Read
+, \doxymbox{\hyperlink{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4a692766a528eba0bb4f66c3fb4c26e1d7}{Read\+Latest}} = (1 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 2) \texorpdfstring{$\vert$}{|} Read
+, \doxymbox{\hyperlink{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4a353657c02a56746433578ff32c6f0dbd}{Read\+Latest\+Once}} = (1 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 3) \texorpdfstring{$\vert$}{|} Read\+Latest
+, \newline
+\doxymbox{\hyperlink{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4a3a3ae3c682202b6326ff206920edc867}{Write}} = (1 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 4)
+, \doxymbox{\hyperlink{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4a6c809130e293fee07a15e90f71b89d5e}{Threaded}} = (1 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 5)
+, \doxymbox{\hyperlink{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4a7b847e24eb1d842bf7ee1b049664e6da}{Zero\+Copy}} = (1 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 6)
+, \doxymbox{\hyperlink{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4a8b7bc1ec3d2537242fd243ea817692a2}{Read}} = (1 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 0)
+, \newline
+\doxymbox{\hyperlink{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4ad29fd3d5da7b79b50ab2fdf368f4bfc2}{Read\+Once}} = (1 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 1) \texorpdfstring{$\vert$}{|} Read
+, \doxymbox{\hyperlink{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4a692766a528eba0bb4f66c3fb4c26e1d7}{Read\+Latest}} = (1 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 2) \texorpdfstring{$\vert$}{|} Read
+, \doxymbox{\hyperlink{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4a353657c02a56746433578ff32c6f0dbd}{Read\+Latest\+Once}} = (1 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 3) \texorpdfstring{$\vert$}{|} Read\+Latest
+, \doxymbox{\hyperlink{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4a3a3ae3c682202b6326ff206920edc867}{Write}} = (1 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 4)
+, \newline
+\doxymbox{\hyperlink{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4a6c809130e293fee07a15e90f71b89d5e}{Threaded}} = (1 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 5)
+, \doxymbox{\hyperlink{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4a7b847e24eb1d842bf7ee1b049664e6da}{Zero\+Copy}} = (1 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 6)
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_ring_buffer_ae18d0a5ac60eb4db2f99887772ed5778}{Ring\+Buffer}} (uint32\+\_\+t flags=\doxymbox{\hyperlink{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4a6c809130e293fee07a15e90f71b89d5e}{Threaded}})
+\item 
+\doxymbox{\hyperlink{class_ring_buffer_a2715b2e99ea24521ef7a586c2f33e1c9}{\texorpdfstring{$\sim$}{\string~}\+Ring\+Buffer}} ()
+\item 
+bool \doxymbox{\hyperlink{class_ring_buffer_a41718c1a3577dee2d0f7cfea02667535}{Alloc}} (uint32\+\_\+t num\+Buffers, size\+\_\+t size, uint32\+\_\+t flags=0)
+\item 
+void \doxymbox{\hyperlink{class_ring_buffer_a787fdb833c95a386e6ec3e19fb6d1fd8}{Free}} ()
+\item 
+void \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_ring_buffer_a0627137366bb5d7a2dbf648122b86104}{Peek}} (uint32\+\_\+t flags)
+\item 
+void \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_ring_buffer_a841be016a4ffeee7383b1284093b8eee}{Next}} (uint32\+\_\+t flags)
+\item 
+uint32\+\_\+t \doxymbox{\hyperlink{class_ring_buffer_a13c5161ed54ede296a4c5f079fbaface}{Get\+Flags}} () const
+\item 
+void \doxymbox{\hyperlink{class_ring_buffer_ab9066deaa7cee206d7f604a443766955}{Set\+Flags}} (uint32\+\_\+t flags)
+\item 
+void \doxymbox{\hyperlink{class_ring_buffer_a1a39008053c6aa06e348fa5b2ead2f91}{Set\+Threaded}} (bool threaded)
+\item 
+\doxymbox{\hyperlink{class_ring_buffer_ae18d0a5ac60eb4db2f99887772ed5778}{Ring\+Buffer}} (uint32\+\_\+t flags=\doxymbox{\hyperlink{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4a6c809130e293fee07a15e90f71b89d5e}{Threaded}})
+\item 
+\doxymbox{\hyperlink{class_ring_buffer_a2715b2e99ea24521ef7a586c2f33e1c9}{\texorpdfstring{$\sim$}{\string~}\+Ring\+Buffer}} ()
+\item 
+bool \doxymbox{\hyperlink{class_ring_buffer_a41718c1a3577dee2d0f7cfea02667535}{Alloc}} (uint32\+\_\+t num\+Buffers, size\+\_\+t size, uint32\+\_\+t flags=0)
+\item 
+void \doxymbox{\hyperlink{class_ring_buffer_a787fdb833c95a386e6ec3e19fb6d1fd8}{Free}} ()
+\item 
+void \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_ring_buffer_a0627137366bb5d7a2dbf648122b86104}{Peek}} (uint32\+\_\+t flags)
+\item 
+void \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_ring_buffer_a841be016a4ffeee7383b1284093b8eee}{Next}} (uint32\+\_\+t flags)
+\item 
+uint32\+\_\+t \doxymbox{\hyperlink{class_ring_buffer_a13c5161ed54ede296a4c5f079fbaface}{Get\+Flags}} () const
+\item 
+void \doxymbox{\hyperlink{class_ring_buffer_ab9066deaa7cee206d7f604a443766955}{Set\+Flags}} (uint32\+\_\+t flags)
+\item 
+void \doxymbox{\hyperlink{class_ring_buffer_a1a39008053c6aa06e348fa5b2ead2f91}{Set\+Threaded}} (bool threaded)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_ring_buffer_a884afb997bffaf51d550e88d97e062d2}\label{class_ring_buffer_a884afb997bffaf51d550e88d97e062d2} 
+uint32\+\_\+t {\bfseries m\+Num\+Buffers}
+\item 
+\Hypertarget{class_ring_buffer_ab2322c263d4e1e928848ff4c33893713}\label{class_ring_buffer_ab2322c263d4e1e928848ff4c33893713} 
+uint32\+\_\+t {\bfseries m\+Latest\+Read}
+\item 
+\Hypertarget{class_ring_buffer_a767436a25c53cfb845f731e0ff633120}\label{class_ring_buffer_a767436a25c53cfb845f731e0ff633120} 
+uint32\+\_\+t {\bfseries m\+Latest\+Write}
+\item 
+\Hypertarget{class_ring_buffer_aa3177dcbe1bf1a936e810a709361df94}\label{class_ring_buffer_aa3177dcbe1bf1a936e810a709361df94} 
+uint32\+\_\+t {\bfseries m\+Flags}
+\item 
+\Hypertarget{class_ring_buffer_aaad73c4d2cc51bd0006bde028d1b1c5e}\label{class_ring_buffer_aaad73c4d2cc51bd0006bde028d1b1c5e} 
+void \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*} {\bfseries m\+Buffers}
+\item 
+\Hypertarget{class_ring_buffer_a5025680071ca78b1e204d4931d2a70cd}\label{class_ring_buffer_a5025680071ca78b1e204d4931d2a70cd} 
+size\+\_\+t {\bfseries m\+Buffer\+Size}
+\item 
+\Hypertarget{class_ring_buffer_a52c369f6697dea2696e0b4b9be08b622}\label{class_ring_buffer_a52c369f6697dea2696e0b4b9be08b622} 
+bool {\bfseries m\+Read\+Once}
+\item 
+\Hypertarget{class_ring_buffer_ad8fadecc95016c471104fbadb1b0e9f3}\label{class_ring_buffer_ad8fadecc95016c471104fbadb1b0e9f3} 
+\doxymbox{\hyperlink{class_mutex}{Mutex}} {\bfseries m\+Mutex}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Thread-\/safe circular ring buffer queue 
+
+\label{doc-enum-members}
+\Hypertarget{class_ring_buffer_doc-enum-members}
+\doxysubsection{Member Enumeration Documentation}
+\Hypertarget{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4}\index{RingBuffer@{RingBuffer}!Flags@{Flags}}
+\index{Flags@{Flags}!RingBuffer@{RingBuffer}}
+\doxysubsubsection{\texorpdfstring{Flags}{Flags}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4} 
+enum \doxymbox{\hyperlink{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4}{Ring\+Buffer::\+\+Flags}}}
+
+Ring buffer flags \begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Read@{Read}!RingBuffer@{RingBuffer}}
+\index{RingBuffer@{RingBuffer}!Read@{Read}}
+}\Hypertarget{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4a8b7bc1ec3d2537242fd243ea817692a2}\label{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4a8b7bc1ec3d2537242fd243ea817692a2} 
+Read&Read the next buffer. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ReadOnce@{ReadOnce}!RingBuffer@{RingBuffer}}
+\index{RingBuffer@{RingBuffer}!ReadOnce@{ReadOnce}}
+}\Hypertarget{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4ad29fd3d5da7b79b50ab2fdf368f4bfc2}\label{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4ad29fd3d5da7b79b50ab2fdf368f4bfc2} 
+Read\+Once&Read the next buffer, but only if it hasn\textquotesingle{}t been read before. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ReadLatest@{ReadLatest}!RingBuffer@{RingBuffer}}
+\index{RingBuffer@{RingBuffer}!ReadLatest@{ReadLatest}}
+}\Hypertarget{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4a692766a528eba0bb4f66c3fb4c26e1d7}\label{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4a692766a528eba0bb4f66c3fb4c26e1d7} 
+Read\+Latest&Read the latest buffer in the queue, skipping other buffers that may not have been read. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ReadLatestOnce@{ReadLatestOnce}!RingBuffer@{RingBuffer}}
+\index{RingBuffer@{RingBuffer}!ReadLatestOnce@{ReadLatestOnce}}
+}\Hypertarget{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4a353657c02a56746433578ff32c6f0dbd}\label{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4a353657c02a56746433578ff32c6f0dbd} 
+Read\+Latest\+Once&Combination of Read\+Once and Read\+Latest flags. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Write@{Write}!RingBuffer@{RingBuffer}}
+\index{RingBuffer@{RingBuffer}!Write@{Write}}
+}\Hypertarget{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4a3a3ae3c682202b6326ff206920edc867}\label{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4a3a3ae3c682202b6326ff206920edc867} 
+Write&Write the next buffer. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Threaded@{Threaded}!RingBuffer@{RingBuffer}}
+\index{RingBuffer@{RingBuffer}!Threaded@{Threaded}}
+}\Hypertarget{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4a6c809130e293fee07a15e90f71b89d5e}\label{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4a6c809130e293fee07a15e90f71b89d5e} 
+Threaded&Buffers should be thread-\/safe (enabled by default). \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ZeroCopy@{ZeroCopy}!RingBuffer@{RingBuffer}}
+\index{RingBuffer@{RingBuffer}!ZeroCopy@{ZeroCopy}}
+}\Hypertarget{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4a7b847e24eb1d842bf7ee1b049664e6da}\label{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4a7b847e24eb1d842bf7ee1b049664e6da} 
+Zero\+Copy&Buffers should be allocated in mapped CPU/\+\+GPU zero\+Copy memory (otherwise GPU only) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Read@{Read}!RingBuffer@{RingBuffer}}
+\index{RingBuffer@{RingBuffer}!Read@{Read}}
+}\Hypertarget{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4a8b7bc1ec3d2537242fd243ea817692a2}\label{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4a8b7bc1ec3d2537242fd243ea817692a2} 
+Read&Read the next buffer. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ReadOnce@{ReadOnce}!RingBuffer@{RingBuffer}}
+\index{RingBuffer@{RingBuffer}!ReadOnce@{ReadOnce}}
+}\Hypertarget{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4ad29fd3d5da7b79b50ab2fdf368f4bfc2}\label{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4ad29fd3d5da7b79b50ab2fdf368f4bfc2} 
+Read\+Once&Read the next buffer, but only if it hasn\textquotesingle{}t been read before. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ReadLatest@{ReadLatest}!RingBuffer@{RingBuffer}}
+\index{RingBuffer@{RingBuffer}!ReadLatest@{ReadLatest}}
+}\Hypertarget{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4a692766a528eba0bb4f66c3fb4c26e1d7}\label{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4a692766a528eba0bb4f66c3fb4c26e1d7} 
+Read\+Latest&Read the latest buffer in the queue, skipping other buffers that may not have been read. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ReadLatestOnce@{ReadLatestOnce}!RingBuffer@{RingBuffer}}
+\index{RingBuffer@{RingBuffer}!ReadLatestOnce@{ReadLatestOnce}}
+}\Hypertarget{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4a353657c02a56746433578ff32c6f0dbd}\label{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4a353657c02a56746433578ff32c6f0dbd} 
+Read\+Latest\+Once&Combination of Read\+Once and Read\+Latest flags. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Write@{Write}!RingBuffer@{RingBuffer}}
+\index{RingBuffer@{RingBuffer}!Write@{Write}}
+}\Hypertarget{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4a3a3ae3c682202b6326ff206920edc867}\label{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4a3a3ae3c682202b6326ff206920edc867} 
+Write&Write the next buffer. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Threaded@{Threaded}!RingBuffer@{RingBuffer}}
+\index{RingBuffer@{RingBuffer}!Threaded@{Threaded}}
+}\Hypertarget{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4a6c809130e293fee07a15e90f71b89d5e}\label{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4a6c809130e293fee07a15e90f71b89d5e} 
+Threaded&Buffers should be thread-\/safe (enabled by default). \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ZeroCopy@{ZeroCopy}!RingBuffer@{RingBuffer}}
+\index{RingBuffer@{RingBuffer}!ZeroCopy@{ZeroCopy}}
+}\Hypertarget{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4a7b847e24eb1d842bf7ee1b049664e6da}\label{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4a7b847e24eb1d842bf7ee1b049664e6da} 
+Zero\+Copy&Buffers should be allocated in mapped CPU/\+\+GPU zero\+Copy memory (otherwise GPU only) \\
+\hline
+
+\end{DoxyEnumFields}
+\Hypertarget{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4}\index{RingBuffer@{RingBuffer}!Flags@{Flags}}
+\index{Flags@{Flags}!RingBuffer@{RingBuffer}}
+\doxysubsubsection{\texorpdfstring{Flags}{Flags}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4} 
+enum \doxymbox{\hyperlink{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4}{Ring\+Buffer::\+\+Flags}}}
+
+Ring buffer flags \begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Read@{Read}!RingBuffer@{RingBuffer}}
+\index{RingBuffer@{RingBuffer}!Read@{Read}}
+}\Hypertarget{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4a8b7bc1ec3d2537242fd243ea817692a2}\label{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4a8b7bc1ec3d2537242fd243ea817692a2} 
+Read&Read the next buffer. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ReadOnce@{ReadOnce}!RingBuffer@{RingBuffer}}
+\index{RingBuffer@{RingBuffer}!ReadOnce@{ReadOnce}}
+}\Hypertarget{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4ad29fd3d5da7b79b50ab2fdf368f4bfc2}\label{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4ad29fd3d5da7b79b50ab2fdf368f4bfc2} 
+Read\+Once&Read the next buffer, but only if it hasn\textquotesingle{}t been read before. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ReadLatest@{ReadLatest}!RingBuffer@{RingBuffer}}
+\index{RingBuffer@{RingBuffer}!ReadLatest@{ReadLatest}}
+}\Hypertarget{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4a692766a528eba0bb4f66c3fb4c26e1d7}\label{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4a692766a528eba0bb4f66c3fb4c26e1d7} 
+Read\+Latest&Read the latest buffer in the queue, skipping other buffers that may not have been read. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ReadLatestOnce@{ReadLatestOnce}!RingBuffer@{RingBuffer}}
+\index{RingBuffer@{RingBuffer}!ReadLatestOnce@{ReadLatestOnce}}
+}\Hypertarget{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4a353657c02a56746433578ff32c6f0dbd}\label{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4a353657c02a56746433578ff32c6f0dbd} 
+Read\+Latest\+Once&Combination of Read\+Once and Read\+Latest flags. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Write@{Write}!RingBuffer@{RingBuffer}}
+\index{RingBuffer@{RingBuffer}!Write@{Write}}
+}\Hypertarget{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4a3a3ae3c682202b6326ff206920edc867}\label{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4a3a3ae3c682202b6326ff206920edc867} 
+Write&Write the next buffer. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Threaded@{Threaded}!RingBuffer@{RingBuffer}}
+\index{RingBuffer@{RingBuffer}!Threaded@{Threaded}}
+}\Hypertarget{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4a6c809130e293fee07a15e90f71b89d5e}\label{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4a6c809130e293fee07a15e90f71b89d5e} 
+Threaded&Buffers should be thread-\/safe (enabled by default). \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ZeroCopy@{ZeroCopy}!RingBuffer@{RingBuffer}}
+\index{RingBuffer@{RingBuffer}!ZeroCopy@{ZeroCopy}}
+}\Hypertarget{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4a7b847e24eb1d842bf7ee1b049664e6da}\label{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4a7b847e24eb1d842bf7ee1b049664e6da} 
+Zero\+Copy&Buffers should be allocated in mapped CPU/\+\+GPU zero\+Copy memory (otherwise GPU only) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Read@{Read}!RingBuffer@{RingBuffer}}
+\index{RingBuffer@{RingBuffer}!Read@{Read}}
+}\Hypertarget{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4a8b7bc1ec3d2537242fd243ea817692a2}\label{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4a8b7bc1ec3d2537242fd243ea817692a2} 
+Read&Read the next buffer. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ReadOnce@{ReadOnce}!RingBuffer@{RingBuffer}}
+\index{RingBuffer@{RingBuffer}!ReadOnce@{ReadOnce}}
+}\Hypertarget{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4ad29fd3d5da7b79b50ab2fdf368f4bfc2}\label{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4ad29fd3d5da7b79b50ab2fdf368f4bfc2} 
+Read\+Once&Read the next buffer, but only if it hasn\textquotesingle{}t been read before. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ReadLatest@{ReadLatest}!RingBuffer@{RingBuffer}}
+\index{RingBuffer@{RingBuffer}!ReadLatest@{ReadLatest}}
+}\Hypertarget{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4a692766a528eba0bb4f66c3fb4c26e1d7}\label{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4a692766a528eba0bb4f66c3fb4c26e1d7} 
+Read\+Latest&Read the latest buffer in the queue, skipping other buffers that may not have been read. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ReadLatestOnce@{ReadLatestOnce}!RingBuffer@{RingBuffer}}
+\index{RingBuffer@{RingBuffer}!ReadLatestOnce@{ReadLatestOnce}}
+}\Hypertarget{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4a353657c02a56746433578ff32c6f0dbd}\label{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4a353657c02a56746433578ff32c6f0dbd} 
+Read\+Latest\+Once&Combination of Read\+Once and Read\+Latest flags. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Write@{Write}!RingBuffer@{RingBuffer}}
+\index{RingBuffer@{RingBuffer}!Write@{Write}}
+}\Hypertarget{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4a3a3ae3c682202b6326ff206920edc867}\label{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4a3a3ae3c682202b6326ff206920edc867} 
+Write&Write the next buffer. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Threaded@{Threaded}!RingBuffer@{RingBuffer}}
+\index{RingBuffer@{RingBuffer}!Threaded@{Threaded}}
+}\Hypertarget{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4a6c809130e293fee07a15e90f71b89d5e}\label{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4a6c809130e293fee07a15e90f71b89d5e} 
+Threaded&Buffers should be thread-\/safe (enabled by default). \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ZeroCopy@{ZeroCopy}!RingBuffer@{RingBuffer}}
+\index{RingBuffer@{RingBuffer}!ZeroCopy@{ZeroCopy}}
+}\Hypertarget{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4a7b847e24eb1d842bf7ee1b049664e6da}\label{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4a7b847e24eb1d842bf7ee1b049664e6da} 
+Zero\+Copy&Buffers should be allocated in mapped CPU/\+\+GPU zero\+Copy memory (otherwise GPU only) \\
+\hline
+
+\end{DoxyEnumFields}
+
+
+\label{doc-constructors}
+\Hypertarget{class_ring_buffer_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_ring_buffer_ae18d0a5ac60eb4db2f99887772ed5778}\index{RingBuffer@{RingBuffer}!RingBuffer@{RingBuffer}}
+\index{RingBuffer@{RingBuffer}!RingBuffer@{RingBuffer}}
+\doxysubsubsection{\texorpdfstring{RingBuffer()}{RingBuffer()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_ring_buffer_ae18d0a5ac60eb4db2f99887772ed5778} 
+Ring\+Buffer::\+\+Ring\+Buffer (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{flags}{ = {\ttfamily \doxymbox{\hyperlink{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4a6c809130e293fee07a15e90f71b89d5e}{Threaded}}}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Construct a new ring buffer. \Hypertarget{class_ring_buffer_a2715b2e99ea24521ef7a586c2f33e1c9}\index{RingBuffer@{RingBuffer}!````~RingBuffer@{\texorpdfstring{$\sim$}{\string~}RingBuffer}}
+\index{````~RingBuffer@{\texorpdfstring{$\sim$}{\string~}RingBuffer}!RingBuffer@{RingBuffer}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}RingBuffer()}{\string~RingBuffer()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_ring_buffer_a2715b2e99ea24521ef7a586c2f33e1c9} 
+Ring\+Buffer::\+\texorpdfstring{$\sim$}{\string~}\+Ring\+Buffer (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Destructor \Hypertarget{class_ring_buffer_ae18d0a5ac60eb4db2f99887772ed5778}\index{RingBuffer@{RingBuffer}!RingBuffer@{RingBuffer}}
+\index{RingBuffer@{RingBuffer}!RingBuffer@{RingBuffer}}
+\doxysubsubsection{\texorpdfstring{RingBuffer()}{RingBuffer()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_ring_buffer_ae18d0a5ac60eb4db2f99887772ed5778} 
+Ring\+Buffer::\+\+Ring\+Buffer (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{flags}{ = {\ttfamily \doxymbox{\hyperlink{class_ring_buffer_add028ff4436a9c7467ea5df2d81623a4a6c809130e293fee07a15e90f71b89d5e}{Threaded}}}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Construct a new ring buffer. \Hypertarget{class_ring_buffer_a2715b2e99ea24521ef7a586c2f33e1c9}\index{RingBuffer@{RingBuffer}!````~RingBuffer@{\texorpdfstring{$\sim$}{\string~}RingBuffer}}
+\index{````~RingBuffer@{\texorpdfstring{$\sim$}{\string~}RingBuffer}!RingBuffer@{RingBuffer}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}RingBuffer()}{\string~RingBuffer()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_ring_buffer_a2715b2e99ea24521ef7a586c2f33e1c9} 
+Ring\+Buffer::\+\texorpdfstring{$\sim$}{\string~}\+Ring\+Buffer (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Destructor 
+
+\label{doc-func-members}
+\Hypertarget{class_ring_buffer_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_ring_buffer_a41718c1a3577dee2d0f7cfea02667535}\index{RingBuffer@{RingBuffer}!Alloc@{Alloc}}
+\index{Alloc@{Alloc}!RingBuffer@{RingBuffer}}
+\doxysubsubsection{\texorpdfstring{Alloc()}{Alloc()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_ring_buffer_a41718c1a3577dee2d0f7cfea02667535} 
+bool Ring\+Buffer::\+\+Alloc (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{num\+Buffers}{, }\item[{size\+\_\+t}]{size}{, }\item[{uint32\+\_\+t}]{flags}{ = {\ttfamily 0}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Allocate memory for a set of buffers, where each buffer has the specified size.
+
+If the requested allocation is compatible with what was already allocated, this will return {\ttfamily true} without performing additional allocations. Otherwise, the previous buffers are released and new ones are allocated.
+
+\begin{DoxyReturn}{Returns}
+{\ttfamily true} if the allocations succeeded or was previously done. {\ttfamily false} if a memory allocation error occurred. 
+\end{DoxyReturn}
+\Hypertarget{class_ring_buffer_a41718c1a3577dee2d0f7cfea02667535}\index{RingBuffer@{RingBuffer}!Alloc@{Alloc}}
+\index{Alloc@{Alloc}!RingBuffer@{RingBuffer}}
+\doxysubsubsection{\texorpdfstring{Alloc()}{Alloc()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_ring_buffer_a41718c1a3577dee2d0f7cfea02667535} 
+bool Ring\+Buffer::\+\+Alloc (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{num\+Buffers}{, }\item[{size\+\_\+t}]{size}{, }\item[{uint32\+\_\+t}]{flags}{ = {\ttfamily 0}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Allocate memory for a set of buffers, where each buffer has the specified size.
+
+If the requested allocation is compatible with what was already allocated, this will return {\ttfamily true} without performing additional allocations. Otherwise, the previous buffers are released and new ones are allocated.
+
+\begin{DoxyReturn}{Returns}
+{\ttfamily true} if the allocations succeeded or was previously done. {\ttfamily false} if a memory allocation error occurred. 
+\end{DoxyReturn}
+\Hypertarget{class_ring_buffer_a787fdb833c95a386e6ec3e19fb6d1fd8}\index{RingBuffer@{RingBuffer}!Free@{Free}}
+\index{Free@{Free}!RingBuffer@{RingBuffer}}
+\doxysubsubsection{\texorpdfstring{Free()}{Free()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_ring_buffer_a787fdb833c95a386e6ec3e19fb6d1fd8} 
+void Ring\+Buffer::\+\+Free (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Free the buffer allocations. \Hypertarget{class_ring_buffer_a787fdb833c95a386e6ec3e19fb6d1fd8}\index{RingBuffer@{RingBuffer}!Free@{Free}}
+\index{Free@{Free}!RingBuffer@{RingBuffer}}
+\doxysubsubsection{\texorpdfstring{Free()}{Free()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_ring_buffer_a787fdb833c95a386e6ec3e19fb6d1fd8} 
+void Ring\+Buffer::\+\+Free (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Free the buffer allocations. \Hypertarget{class_ring_buffer_a13c5161ed54ede296a4c5f079fbaface}\index{RingBuffer@{RingBuffer}!GetFlags@{GetFlags}}
+\index{GetFlags@{GetFlags}!RingBuffer@{RingBuffer}}
+\doxysubsubsection{\texorpdfstring{GetFlags()}{GetFlags()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_ring_buffer_a13c5161ed54ede296a4c5f079fbaface} 
+uint32\+\_\+t Ring\+Buffer::\+\+Get\+Flags (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Get the flags of the ring buffer. \Hypertarget{class_ring_buffer_a13c5161ed54ede296a4c5f079fbaface}\index{RingBuffer@{RingBuffer}!GetFlags@{GetFlags}}
+\index{GetFlags@{GetFlags}!RingBuffer@{RingBuffer}}
+\doxysubsubsection{\texorpdfstring{GetFlags()}{GetFlags()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_ring_buffer_a13c5161ed54ede296a4c5f079fbaface} 
+uint32\+\_\+t Ring\+Buffer::\+\+Get\+Flags (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Get the flags of the ring buffer. \Hypertarget{class_ring_buffer_a841be016a4ffeee7383b1284093b8eee}\index{RingBuffer@{RingBuffer}!Next@{Next}}
+\index{Next@{Next}!RingBuffer@{RingBuffer}}
+\doxysubsubsection{\texorpdfstring{Next()}{Next()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_ring_buffer_a841be016a4ffeee7383b1284093b8eee} 
+void \texorpdfstring{$\ast$}{*} Ring\+Buffer::\+\+Next (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{flags}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Get the next read/\+write buffer and advance the position in the queue. \Hypertarget{class_ring_buffer_a841be016a4ffeee7383b1284093b8eee}\index{RingBuffer@{RingBuffer}!Next@{Next}}
+\index{Next@{Next}!RingBuffer@{RingBuffer}}
+\doxysubsubsection{\texorpdfstring{Next()}{Next()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_ring_buffer_a841be016a4ffeee7383b1284093b8eee} 
+void \texorpdfstring{$\ast$}{*} Ring\+Buffer::\+\+Next (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{flags}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Get the next read/\+write buffer and advance the position in the queue. \Hypertarget{class_ring_buffer_a0627137366bb5d7a2dbf648122b86104}\index{RingBuffer@{RingBuffer}!Peek@{Peek}}
+\index{Peek@{Peek}!RingBuffer@{RingBuffer}}
+\doxysubsubsection{\texorpdfstring{Peek()}{Peek()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_ring_buffer_a0627137366bb5d7a2dbf648122b86104} 
+void \texorpdfstring{$\ast$}{*} Ring\+Buffer::\+\+Peek (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{flags}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Get the next read/\+write buffer without advancing the position in the queue. \Hypertarget{class_ring_buffer_a0627137366bb5d7a2dbf648122b86104}\index{RingBuffer@{RingBuffer}!Peek@{Peek}}
+\index{Peek@{Peek}!RingBuffer@{RingBuffer}}
+\doxysubsubsection{\texorpdfstring{Peek()}{Peek()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_ring_buffer_a0627137366bb5d7a2dbf648122b86104} 
+void \texorpdfstring{$\ast$}{*} Ring\+Buffer::\+\+Peek (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{flags}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Get the next read/\+write buffer without advancing the position in the queue. \Hypertarget{class_ring_buffer_ab9066deaa7cee206d7f604a443766955}\index{RingBuffer@{RingBuffer}!SetFlags@{SetFlags}}
+\index{SetFlags@{SetFlags}!RingBuffer@{RingBuffer}}
+\doxysubsubsection{\texorpdfstring{SetFlags()}{SetFlags()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_ring_buffer_ab9066deaa7cee206d7f604a443766955} 
+void Ring\+Buffer::\+\+Set\+Flags (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{flags}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Set the ring buffer\textquotesingle{}s flags. \Hypertarget{class_ring_buffer_ab9066deaa7cee206d7f604a443766955}\index{RingBuffer@{RingBuffer}!SetFlags@{SetFlags}}
+\index{SetFlags@{SetFlags}!RingBuffer@{RingBuffer}}
+\doxysubsubsection{\texorpdfstring{SetFlags()}{SetFlags()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_ring_buffer_ab9066deaa7cee206d7f604a443766955} 
+void Ring\+Buffer::\+\+Set\+Flags (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{flags}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Set the ring buffer\textquotesingle{}s flags. \Hypertarget{class_ring_buffer_a1a39008053c6aa06e348fa5b2ead2f91}\index{RingBuffer@{RingBuffer}!SetThreaded@{SetThreaded}}
+\index{SetThreaded@{SetThreaded}!RingBuffer@{RingBuffer}}
+\doxysubsubsection{\texorpdfstring{SetThreaded()}{SetThreaded()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_ring_buffer_a1a39008053c6aa06e348fa5b2ead2f91} 
+void Ring\+Buffer::\+\+Set\+Threaded (\begin{DoxyParamCaption}\item[{bool}]{threaded}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Enable or disable multi-\/threading. \Hypertarget{class_ring_buffer_a1a39008053c6aa06e348fa5b2ead2f91}\index{RingBuffer@{RingBuffer}!SetThreaded@{SetThreaded}}
+\index{SetThreaded@{SetThreaded}!RingBuffer@{RingBuffer}}
+\doxysubsubsection{\texorpdfstring{SetThreaded()}{SetThreaded()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_ring_buffer_a1a39008053c6aa06e348fa5b2ead2f91} 
+void Ring\+Buffer::\+\+Set\+Threaded (\begin{DoxyParamCaption}\item[{bool}]{threaded}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Enable or disable multi-\/threading. 
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+jetson-\/inference/\+build/\+aarch64/\+include/\+jetson-\/utils/\+Ring\+Buffer.\+h\item 
+jetson-\/inference/\+utils/\+threads/\+Ring\+Buffer.\+h\item 
+jetson-\/inference/\+build/\+aarch64/\+include/\+jetson-\/utils/\+Ring\+Buffer.\+inl\item 
+jetson-\/inference/\+utils/\+threads/\+Ring\+Buffer.\+inl\end{DoxyCompactItemize}

@@ -1,0 +1,168 @@
+\doxysection{video\+Options.\+h}
+\hypertarget{build_2aarch64_2include_2jetson-utils_2video_options_8h_source}{}\label{build_2aarch64_2include_2jetson-utils_2video_options_8h_source}\index{jetson-\/inference/build/aarch64/include/jetson-\/utils/videoOptions.h@{jetson-\/inference/build/aarch64/include/jetson-\/utils/videoOptions.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ *\ Copyright\ (c)\ 2020,\ NVIDIA\ CORPORATION.\ All\ rights\ reserved.}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ *\ Permission\ is\ hereby\ granted,\ free\ of\ charge,\ to\ any\ person\ obtaining\ a}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ *\ copy\ of\ this\ software\ and\ associated\ documentation\ files\ (the\ "{}Software"{}),}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ *\ to\ deal\ in\ the\ Software\ without\ restriction,\ including\ without\ limitation}}
+\DoxyCodeLine{00007\ \textcolor{comment}{\ *\ the\ rights\ to\ use,\ copy,\ modify,\ merge,\ publish,\ distribute,\ sublicense,}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ *\ and/or\ sell\ copies\ of\ the\ Software,\ and\ to\ permit\ persons\ to\ whom\ the}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ *\ Software\ is\ furnished\ to\ do\ so,\ subject\ to\ the\ following\ conditions:}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ *\ The\ above\ copyright\ notice\ and\ this\ permission\ notice\ shall\ be\ included\ in}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ *\ all\ copies\ or\ substantial\ portions\ of\ the\ Software.}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ *\ THE\ SOFTWARE\ IS\ PROVIDED\ "{}AS\ IS"{},\ WITHOUT\ WARRANTY\ OF\ ANY\ KIND,\ EXPRESS\ OR}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ *\ IMPLIED,\ INCLUDING\ BUT\ NOT\ LIMITED\ TO\ THE\ WARRANTIES\ OF\ MERCHANTABILITY,}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ *\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE\ AND\ NONINFRINGEMENT.\ \ IN\ NO\ EVENT\ SHALL}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ *\ THE\ AUTHORS\ OR\ COPYRIGHT\ HOLDERS\ BE\ LIABLE\ FOR\ ANY\ CLAIM,\ DAMAGES\ OR\ OTHER}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ *\ LIABILITY,\ WHETHER\ IN\ AN\ ACTION\ OF\ CONTRACT,\ TORT\ OR\ OTHERWISE,\ ARISING}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ *\ FROM,\ OUT\ OF\ OR\ IN\ CONNECTION\ WITH\ THE\ SOFTWARE\ OR\ THE\ USE\ OR\ OTHER}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ *\ DEALINGS\ IN\ THE\ SOFTWARE.}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00022\ \ }
+\DoxyCodeLine{00023\ \textcolor{preprocessor}{\#ifndef\ \_\_VIDEO\_OPTIONS\_H\_}}
+\DoxyCodeLine{00024\ \textcolor{preprocessor}{\#define\ \_\_VIDEO\_OPTIONS\_H\_}}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \textcolor{preprocessor}{\#include\ "{}imageFormat.h"{}}\ \ \ \ }
+\DoxyCodeLine{00027\ \textcolor{preprocessor}{\#include\ "{}commandLine.h"{}}}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \textcolor{preprocessor}{\#include\ "{}URI.h"{}}\ \ \ \ }
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00037\ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{structvideo_options_afa1cc55ed3beeca6917d90607334079e}{videoOptions}}}
+\DoxyCodeLine{00038\ \{}
+\DoxyCodeLine{00039\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00043\ \ \ \ \ \doxymbox{\hyperlink{structvideo_options_afa1cc55ed3beeca6917d90607334079e}{videoOptions}}();}
+\DoxyCodeLine{00044\ \ \ \ \ }
+\DoxyCodeLine{00049\ \ \ \ \ \doxymbox{\hyperlink{struct_u_r_i}{URI}}\ \doxymbox{\hyperlink{structvideo_options_a1e904a117abb3b703f01eaed7fa305f2}{resource}};}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00057\ \ \ \ \ \doxymbox{\hyperlink{struct_u_r_i}{URI}}\ \doxymbox{\hyperlink{structvideo_options_a8f2128bc68ef2316b500da0d840e3942}{save}};}
+\DoxyCodeLine{00058\ \ \ \ \ }
+\DoxyCodeLine{00064\ \ \ \ \ uint32\_t\ \doxymbox{\hyperlink{structvideo_options_a5c30587a874bb769d7b346ac00cff580}{width}};}
+\DoxyCodeLine{00065\ \ \ \ \ }
+\DoxyCodeLine{00071\ \ \ \ \ uint32\_t\ \doxymbox{\hyperlink{structvideo_options_a66660b049937fd088b5ab29a0aa2187c}{height}};\ \ \ \ }
+\DoxyCodeLine{00072\ }
+\DoxyCodeLine{00078\ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{structvideo_options_a85ceaa18c31e939f92da06027de8dedd}{frameRate}};}
+\DoxyCodeLine{00079\ \ \ \ \ }
+\DoxyCodeLine{00083\ \ \ \ \ uint64\_t\ \doxymbox{\hyperlink{structvideo_options_a69d5446579b0f133a7212afb81fc1a81}{frameCount}};}
+\DoxyCodeLine{00084\ \ \ \ \ }
+\DoxyCodeLine{00090\ \ \ \ \ uint32\_t\ \doxymbox{\hyperlink{structvideo_options_aec87b064f96732d6d1d8af49483673e6}{bitRate}};}
+\DoxyCodeLine{00091\ }
+\DoxyCodeLine{00097\ \ \ \ \ uint32\_t\ \doxymbox{\hyperlink{structvideo_options_a65b80ddd3f3cf0940f18e365fb58270b}{numBuffers}};}
+\DoxyCodeLine{00098\ }
+\DoxyCodeLine{00104\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{structvideo_options_afff91aa102908923622328e9f3ca3b83}{zeroCopy}};}
+\DoxyCodeLine{00105\ \ \ \ \ }
+\DoxyCodeLine{00119\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{structvideo_options_aa8e394eb896dd92fd39c0946c10dd1ea}{loop}};}
+\DoxyCodeLine{00120\ }
+\DoxyCodeLine{00127\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{structvideo_options_a4fb6a10cf16e794e6025329e63f51294}{latency}};}
+\DoxyCodeLine{00128\ }
+\DoxyCodeLine{00132\ \ \ \ \ \textcolor{keyword}{enum}\ \doxymbox{\hyperlink{structvideo_options_a4065c77be7f3be75eddfc16b6efb36ed}{DeviceType}}}
+\DoxyCodeLine{00133\ \ \ \ \ \{}
+\DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{structvideo_options_a4065c77be7f3be75eddfc16b6efb36eda472ab160f2cec34c6798e70d1e4fdbfd}{DEVICE\_DEFAULT}}\ =\ 0,\ \ \ \ \ }
+\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{structvideo_options_a4065c77be7f3be75eddfc16b6efb36eda00076d8dcfad04e4170ff92818c5b04f}{DEVICE\_V4L2}},\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{structvideo_options_a4065c77be7f3be75eddfc16b6efb36eda42a1da7a25ef3e190c93a43455876033}{DEVICE\_CSI}},\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{structvideo_options_a4065c77be7f3be75eddfc16b6efb36edaf3d3416e7b238e6c6dcc0adecd5a74b7}{DEVICE\_IP}},\ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{structvideo_options_a4065c77be7f3be75eddfc16b6efb36eda781ebf62044a7e1ff17f9832fb28d758}{DEVICE\_FILE}},\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{structvideo_options_a4065c77be7f3be75eddfc16b6efb36eda2c39fc92225489afd7851a8e874401dd}{DEVICE\_DISPLAY}}\ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00140\ \ \ \ \ \};}
+\DoxyCodeLine{00141\ }
+\DoxyCodeLine{00145\ \ \ \ \ \doxymbox{\hyperlink{structvideo_options_a4065c77be7f3be75eddfc16b6efb36ed}{DeviceType}}\ \doxymbox{\hyperlink{structvideo_options_a63c0d583c059d4498ba885090dac062e}{deviceType}};}
+\DoxyCodeLine{00146\ }
+\DoxyCodeLine{00150\ \ \ \ \ \textcolor{keyword}{enum}\ \doxymbox{\hyperlink{structvideo_options_a7f7ae50399192afba10ee226310878b8}{IoType}}}
+\DoxyCodeLine{00151\ \ \ \ \ \{}
+\DoxyCodeLine{00152\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{structvideo_options_a7f7ae50399192afba10ee226310878b8ab41fa1b7782b4e22548bd917a15ad181}{INPUT}}\ =\ 0,\ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00153\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{structvideo_options_a7f7ae50399192afba10ee226310878b8af197f25ad92514078dbd28bafa1710cb}{OUTPUT}},\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00154\ \ \ \ \ \};}
+\DoxyCodeLine{00155\ }
+\DoxyCodeLine{00159\ \ \ \ \ \doxymbox{\hyperlink{structvideo_options_a7f7ae50399192afba10ee226310878b8}{IoType}}\ \doxymbox{\hyperlink{structvideo_options_af48a7105c91b415ef158290be02f45e9}{ioType}};}
+\DoxyCodeLine{00160\ }
+\DoxyCodeLine{00164\ \ \ \ \ \textcolor{keyword}{enum}\ \doxymbox{\hyperlink{structvideo_options_acd8d5155cc7b38791698b4e89c6a96ee}{FlipMethod}}}
+\DoxyCodeLine{00165\ \ \ \ \ \{}
+\DoxyCodeLine{00166\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eea1302ee053edc9aaa35619b19e17c6529}{FLIP\_NONE}}\ =\ 0,\ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eea792ce378541be240bdcb8b8c40e8d63d}{FLIP\_COUNTERCLOCKWISE}},\ \ \ \ \ \ }
+\DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eeaf6bcea96d2852de27d10047158f25c71}{FLIP\_ROTATE\_180}},\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00169\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eeaffa836e6587173f46110cac710942ddd}{FLIP\_CLOCKWISE}},\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00170\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eea12de6ce800e456bae8c1715c4a30778f}{FLIP\_HORIZONTAL}},\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00171\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eeae1d1a1b2bc8a7f29abcd693d562665a4}{FLIP\_UPPER\_RIGHT\_DIAGONAL}},\ \ }
+\DoxyCodeLine{00172\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eead0bc96c4f600b7a7859dbd50f5e7b71e}{FLIP\_VERTICAL}},\ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00173\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eeac2d4b99bd4f4c40f83d10618acf4cd26}{FLIP\_UPPER\_LEFT\_DIAGONAL}},\ \ \ }
+\DoxyCodeLine{00174\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eea79bec6145a19215de4b522a2e6a4545e}{FLIP\_DEFAULT}}\ =\ \doxymbox{\hyperlink{structvideo_options_acd8d5155cc7b38791698b4e89c6a96eea1302ee053edc9aaa35619b19e17c6529}{FLIP\_NONE}}\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00175\ \ \ \ \ \};}
+\DoxyCodeLine{00176\ }
+\DoxyCodeLine{00193\ \ \ \ \ \doxymbox{\hyperlink{structvideo_options_acd8d5155cc7b38791698b4e89c6a96ee}{FlipMethod}}\ \doxymbox{\hyperlink{structvideo_options_a7af22e5cccd15cc2bdf14386f7f34d36}{flipMethod}};}
+\DoxyCodeLine{00194\ }
+\DoxyCodeLine{00198\ \ \ \ \ \textcolor{keyword}{enum}\ \doxymbox{\hyperlink{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8f}{Codec}}}
+\DoxyCodeLine{00199\ \ \ \ \ \{}
+\DoxyCodeLine{00200\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa0a8b4a6d2262619a5dc929a6bd6a3b7f}{CODEC\_UNKNOWN}}\ =\ 0,\ \ \ \ \ \ }
+\DoxyCodeLine{00201\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa6d4d70855081e902df81941a8405b521}{CODEC\_RAW}},\ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00202\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa808865a8507895d589028285d76f9385}{CODEC\_H264}},\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00203\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa7ecbacdc7e7aaafec3791bc882113b94}{CODEC\_H265}},\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00204\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa5cb276a627b350964489b17fec18ba62}{CODEC\_VP8}},\ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00205\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa7ed59d4245ba3236a3fe2c1778baf7fa}{CODEC\_VP9}},\ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00206\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fae20d2ac6ddafb4172eeb194eaab82149}{CODEC\_MPEG2}},\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00207\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa4b680fc74561b8572d5fdc7e9458d753}{CODEC\_MPEG4}},\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00208\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8fa757c8603f52d22f16cca42f88c6a8d34}{CODEC\_MJPEG}}\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00209\ \ \ \ \ \};}
+\DoxyCodeLine{00210\ }
+\DoxyCodeLine{00222\ \ \ \ \ \doxymbox{\hyperlink{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8f}{Codec}}\ \doxymbox{\hyperlink{structvideo_options_a7570676849d4971e061170b755f7cb71}{codec}};}
+\DoxyCodeLine{00223\ \ \ \ \ }
+\DoxyCodeLine{00227\ \ \ \ \ \textcolor{keyword}{enum}\ \doxymbox{\hyperlink{structvideo_options_a4e6a7e1158f7614ffdfcff4d58dcc3cc}{CodecType}}}
+\DoxyCodeLine{00228\ \ \ \ \ \{}
+\DoxyCodeLine{00229\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{structvideo_options_a4e6a7e1158f7614ffdfcff4d58dcc3ccad0a74e957cde0131abb48cb607b02ae4}{CODEC\_CPU}}\ =\ 0,\ \ \ }
+\DoxyCodeLine{00230\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{structvideo_options_a4e6a7e1158f7614ffdfcff4d58dcc3cca5e866f272b0d66286049cd34bffb666b}{CODEC\_OMX}},\ \ \ }
+\DoxyCodeLine{00231\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{structvideo_options_a4e6a7e1158f7614ffdfcff4d58dcc3cca584cfa92353a07b0d764e4484e64a76c}{CODEC\_V4L2}},\ \ }
+\DoxyCodeLine{00232\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{structvideo_options_a4e6a7e1158f7614ffdfcff4d58dcc3cca230dab1cdf270f29280b9382c8d40bd6}{CODEC\_NVENC}},\ \ \ \ \ }
+\DoxyCodeLine{00233\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{structvideo_options_a4e6a7e1158f7614ffdfcff4d58dcc3cca78b8e29d73c12499c3553df95ca390db}{CODEC\_NVDEC}}\ \ }
+\DoxyCodeLine{00234\ \ \ \ \ \};}
+\DoxyCodeLine{00235\ \ \ \ \ }
+\DoxyCodeLine{00242\ \ \ \ \ \doxymbox{\hyperlink{structvideo_options_a4e6a7e1158f7614ffdfcff4d58dcc3cc}{CodecType}}\ \doxymbox{\hyperlink{structvideo_options_a780f3d2a953a013c031e4b54599313b6}{codecType}};}
+\DoxyCodeLine{00243\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00244\ }
+\DoxyCodeLine{00250\ \ \ \ \ std::string\ \doxymbox{\hyperlink{structvideo_options_a8c6f6313d185d475703557642b4f9a47}{stunServer}};}
+\DoxyCodeLine{00251\ \ \ \ \ }
+\DoxyCodeLine{00259\ \ \ \ \ std::string\ \doxymbox{\hyperlink{structvideo_options_a236086322dc1d853b29c1fa570c8723d}{sslCert}};}
+\DoxyCodeLine{00260\ \ \ \ \ }
+\DoxyCodeLine{00268\ \ \ \ \ std::string\ \doxymbox{\hyperlink{structvideo_options_abc783d9782db081aa07af5f01e5c902c}{sslKey}};}
+\DoxyCodeLine{00269\ \ \ \ \ }
+\DoxyCodeLine{00273\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{structvideo_options_aa69a63112b92c4e19a459427329ffd47}{Print}}(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ prefix=NULL\ )\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00274\ }
+\DoxyCodeLine{00278\ \ \ \ \ \textcolor{keywordtype}{bool}\ Parse(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \doxymbox{\hyperlink{struct_u_r_i}{URI}},\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ argc,\ \textcolor{keywordtype}{char}**\ argv,\ \doxymbox{\hyperlink{structvideo_options_a7f7ae50399192afba10ee226310878b8}{IoType}}\ \doxymbox{\hyperlink{structvideo_options_af48a7105c91b415ef158290be02f45e9}{ioType}},\ \textcolor{keywordtype}{int}\ ioPositionArg=-\/1);}
+\DoxyCodeLine{00279\ }
+\DoxyCodeLine{00283\ \ \ \ \ \textcolor{keywordtype}{bool}\ Parse(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \doxymbox{\hyperlink{struct_u_r_i}{URI}},\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{classcommand_line}{commandLine}}\&\ cmdLine,\ \doxymbox{\hyperlink{structvideo_options_a7f7ae50399192afba10ee226310878b8}{IoType}}\ \doxymbox{\hyperlink{structvideo_options_af48a7105c91b415ef158290be02f45e9}{ioType}},\ \textcolor{keywordtype}{int}\ ioPositionArg=-\/1);}
+\DoxyCodeLine{00284\ }
+\DoxyCodeLine{00288\ \ \ \ \ \textcolor{keywordtype}{bool}\ Parse(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ argc,\ \textcolor{keywordtype}{char}**\ argv,\ \doxymbox{\hyperlink{structvideo_options_a7f7ae50399192afba10ee226310878b8}{IoType}}\ \doxymbox{\hyperlink{structvideo_options_af48a7105c91b415ef158290be02f45e9}{ioType}},\ \textcolor{keywordtype}{int}\ ioPositionArg=-\/1\ );}
+\DoxyCodeLine{00289\ }
+\DoxyCodeLine{00293\ \ \ \ \ \textcolor{keywordtype}{bool}\ Parse(\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{classcommand_line}{commandLine}}\&\ cmdLine,\ \doxymbox{\hyperlink{structvideo_options_a7f7ae50399192afba10ee226310878b8}{IoType}}\ \doxymbox{\hyperlink{structvideo_options_af48a7105c91b415ef158290be02f45e9}{ioType}},\ \textcolor{keywordtype}{int}\ ioPositionArg=-\/1\ );}
+\DoxyCodeLine{00294\ }
+\DoxyCodeLine{00298\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \doxymbox{\hyperlink{structvideo_options_a3936a1ca663e19984d1b4649077d737f}{IoTypeToStr}}(\ \doxymbox{\hyperlink{structvideo_options_a7f7ae50399192afba10ee226310878b8}{IoType}}\ type\ );}
+\DoxyCodeLine{00299\ }
+\DoxyCodeLine{00303\ \ \ \ \ \textcolor{keyword}{static}\ \doxymbox{\hyperlink{structvideo_options_a7f7ae50399192afba10ee226310878b8}{IoType}}\ \doxymbox{\hyperlink{structvideo_options_a43a55fadd51bea4403b7b3364ac8e0c1}{IoTypeFromStr}}(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ str\ );}
+\DoxyCodeLine{00304\ }
+\DoxyCodeLine{00308\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \doxymbox{\hyperlink{structvideo_options_a9d646f22c1bf60e71350e86445836b61}{DeviceTypeToStr}}(\ \doxymbox{\hyperlink{structvideo_options_a4065c77be7f3be75eddfc16b6efb36ed}{DeviceType}}\ type\ );}
+\DoxyCodeLine{00309\ }
+\DoxyCodeLine{00313\ \ \ \ \ \textcolor{keyword}{static}\ \doxymbox{\hyperlink{structvideo_options_a4065c77be7f3be75eddfc16b6efb36ed}{DeviceType}}\ \doxymbox{\hyperlink{structvideo_options_ab667e7beec81249a4c59d070b2e83fdf}{DeviceTypeFromStr}}(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ str\ );}
+\DoxyCodeLine{00314\ }
+\DoxyCodeLine{00318\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \doxymbox{\hyperlink{structvideo_options_ab0edaaba4185ee813d999081bdaad6d4}{FlipMethodToStr}}(\ \doxymbox{\hyperlink{structvideo_options_acd8d5155cc7b38791698b4e89c6a96ee}{FlipMethod}}\ flip\ );}
+\DoxyCodeLine{00319\ }
+\DoxyCodeLine{00323\ \ \ \ \ \textcolor{keyword}{static}\ \doxymbox{\hyperlink{structvideo_options_acd8d5155cc7b38791698b4e89c6a96ee}{FlipMethod}}\ \doxymbox{\hyperlink{structvideo_options_ab021912a5096f23dc82a3a19fd9525a6}{FlipMethodFromStr}}(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ str\ );}
+\DoxyCodeLine{00324\ }
+\DoxyCodeLine{00328\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \doxymbox{\hyperlink{structvideo_options_a09f140de4647245a8f7ea7fe30d2b1ad}{CodecToStr}}(\ \doxymbox{\hyperlink{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8f}{Codec}}\ \doxymbox{\hyperlink{structvideo_options_a7570676849d4971e061170b755f7cb71}{codec}}\ );}
+\DoxyCodeLine{00329\ }
+\DoxyCodeLine{00333\ \ \ \ \ \textcolor{keyword}{static}\ \doxymbox{\hyperlink{structvideo_options_a99a95e988dcf46c0e9177abc7217cf8f}{Codec}}\ \doxymbox{\hyperlink{structvideo_options_a12fd71efc366c62f31f6de44f218cd09}{CodecFromStr}}(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ str\ );}
+\DoxyCodeLine{00334\ \ \ \ \ }
+\DoxyCodeLine{00338\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \doxymbox{\hyperlink{structvideo_options_a95cb59ab93cfd2b5e2670f87fa1d8559}{CodecTypeToStr}}(\ \doxymbox{\hyperlink{structvideo_options_a4e6a7e1158f7614ffdfcff4d58dcc3cc}{CodecType}}\ \doxymbox{\hyperlink{structvideo_options_a780f3d2a953a013c031e4b54599313b6}{codecType}}\ );}
+\DoxyCodeLine{00339\ }
+\DoxyCodeLine{00343\ \ \ \ \ \textcolor{keyword}{static}\ \doxymbox{\hyperlink{structvideo_options_a4e6a7e1158f7614ffdfcff4d58dcc3cc}{CodecType}}\ \doxymbox{\hyperlink{structvideo_options_ab2b260cee059bdb20a690bd4bae41d9d}{CodecTypeFromStr}}(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ str\ );}
+\DoxyCodeLine{00344\ \};}
+\DoxyCodeLine{00345\ }
+\DoxyCodeLine{00346\ }
+\DoxyCodeLine{00350\ \textcolor{preprocessor}{\#define\ LOG\_VIDEO\ "{}[video]\ \ "{}}}
+\DoxyCodeLine{00351\ }
+\DoxyCodeLine{00352\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00353\ }
+
+\end{DoxyCode}

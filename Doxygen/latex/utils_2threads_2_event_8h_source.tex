@@ -1,0 +1,72 @@
+\doxysection{Event.\+h}
+\hypertarget{utils_2threads_2_event_8h_source}{}\label{utils_2threads_2_event_8h_source}\index{jetson-\/inference/utils/threads/Event.h@{jetson-\/inference/utils/threads/Event.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ *\ Copyright\ (c)\ 2018,\ NVIDIA\ CORPORATION.\ All\ rights\ reserved.}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ *\ Permission\ is\ hereby\ granted,\ free\ of\ charge,\ to\ any\ person\ obtaining\ a}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ *\ copy\ of\ this\ software\ and\ associated\ documentation\ files\ (the\ "{}Software"{}),}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ *\ to\ deal\ in\ the\ Software\ without\ restriction,\ including\ without\ limitation}}
+\DoxyCodeLine{00007\ \textcolor{comment}{\ *\ the\ rights\ to\ use,\ copy,\ modify,\ merge,\ publish,\ distribute,\ sublicense,}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ *\ and/or\ sell\ copies\ of\ the\ Software,\ and\ to\ permit\ persons\ to\ whom\ the}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ *\ Software\ is\ furnished\ to\ do\ so,\ subject\ to\ the\ following\ conditions:}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ *\ The\ above\ copyright\ notice\ and\ this\ permission\ notice\ shall\ be\ included\ in}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ *\ all\ copies\ or\ substantial\ portions\ of\ the\ Software.}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ *\ THE\ SOFTWARE\ IS\ PROVIDED\ "{}AS\ IS"{},\ WITHOUT\ WARRANTY\ OF\ ANY\ KIND,\ EXPRESS\ OR}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ *\ IMPLIED,\ INCLUDING\ BUT\ NOT\ LIMITED\ TO\ THE\ WARRANTIES\ OF\ MERCHANTABILITY,}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ *\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE\ AND\ NONINFRINGEMENT.\ \ IN\ NO\ EVENT\ SHALL}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ *\ THE\ AUTHORS\ OR\ COPYRIGHT\ HOLDERS\ BE\ LIABLE\ FOR\ ANY\ CLAIM,\ DAMAGES\ OR\ OTHER}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ *\ LIABILITY,\ WHETHER\ IN\ AN\ ACTION\ OF\ CONTRACT,\ TORT\ OR\ OTHERWISE,\ ARISING}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ *\ FROM,\ OUT\ OF\ OR\ IN\ CONNECTION\ WITH\ THE\ SOFTWARE\ OR\ THE\ USE\ OR\ OTHER}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ *\ DEALINGS\ IN\ THE\ SOFTWARE.}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00022\ \ }
+\DoxyCodeLine{00023\ \textcolor{preprocessor}{\#ifndef\ \_\_MULTITHREAD\_EVENT\_H\_}}
+\DoxyCodeLine{00024\ \textcolor{preprocessor}{\#define\ \_\_MULTITHREAD\_EVENT\_H\_}}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \textcolor{preprocessor}{\#include\ "{}Mutex.h"{}}}
+\DoxyCodeLine{00027\ \textcolor{preprocessor}{\#include\ "{}timespec.h"{}}}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00033\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_event}{Event}}}
+\DoxyCodeLine{00034\ \{}
+\DoxyCodeLine{00035\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keyword}{inline}\ \doxymbox{\hyperlink{class_event_a44841bb41f204f03100a2759e7097389}{Event}}(\ \textcolor{keywordtype}{bool}\ auto\_reset=\textcolor{keyword}{true}\ );}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keyword}{inline}\ \doxymbox{\hyperlink{class_event_a7704ec01ce91e673885792054214b3d2}{\string~Event}}();}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_event_a86507f584eb0bff8eb7bdb2c280d0c23}{Wake}}();}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00055\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_event_afed31be0b4f98fb83163a4d725886e81}{Reset}}();}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_event_a188ebb92f80c6fae559051b084524fcd}{Query}}();}
+\DoxyCodeLine{00062\ }
+\DoxyCodeLine{00067\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_event_a55398e16a006f6a0ec00de1e75ff6162}{Wait}}();}
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00073\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_event_ab081aad525e1599f9d46cf52df91be4f}{Wait}}(\ \textcolor{keyword}{const}\ timespec\&\ timeout\ );}
+\DoxyCodeLine{00074\ \ \ \ \ }
+\DoxyCodeLine{00079\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_event_acf45a1a49a93de6c9c9d0d8ce3f8b811}{Wait}}(\ uint64\_t\ timeout\ );}
+\DoxyCodeLine{00080\ \ \ \ \ }
+\DoxyCodeLine{00085\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_event_a7c5e80c726452ce485d9baa7cdd8c148}{WaitNs}}(\ uint64\_t\ timeout\ );}
+\DoxyCodeLine{00086\ \ \ \ \ }
+\DoxyCodeLine{00091\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_event_a515f66ad3126b7c3b456a10604a40c39}{WaitUs}}(\ uint64\_t\ timeout\ );}
+\DoxyCodeLine{00092\ \ \ \ \ }
+\DoxyCodeLine{00096\ \ \ \ \ \textcolor{keyword}{inline}\ pthread\_cond\_t*\ \doxymbox{\hyperlink{class_event_a5d1d8894bb8994116c0e781639117738}{GetID}}();}
+\DoxyCodeLine{00097\ }
+\DoxyCodeLine{00098\ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00099\ }
+\DoxyCodeLine{00100\ \ \ \ \ pthread\_cond\_t\ mID;}
+\DoxyCodeLine{00101\ }
+\DoxyCodeLine{00102\ \ \ \ \ \doxymbox{\hyperlink{class_mutex}{Mutex}}\ mQueryMutex;}
+\DoxyCodeLine{00103\ \ \ \ \ \textcolor{keywordtype}{bool}\ \ mQuery;}
+\DoxyCodeLine{00104\ \ \ \ \ \textcolor{keywordtype}{bool}\ \ mAutoReset;}
+\DoxyCodeLine{00105\ \};}
+\DoxyCodeLine{00106\ }
+\DoxyCodeLine{00107\ \textcolor{comment}{//\ inline\ implementations}}
+\DoxyCodeLine{00108\ \textcolor{preprocessor}{\#include\ "{}Event.inl"{}}}
+\DoxyCodeLine{00109\ }
+\DoxyCodeLine{00110\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

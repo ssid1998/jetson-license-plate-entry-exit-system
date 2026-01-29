@@ -1,0 +1,281 @@
+\doxysubsection{Filesystem }
+\hypertarget{group__filesystem}{}\label{group__filesystem}\index{Filesystem@{Filesystem}}
+\doxysubsubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \doxymbox{\hyperlink{group__filesystem_gad1f15dffa07492b842b0446759083939}{file\+Types}} \{ \newline
+{\bfseries FILE\+\_\+\+MISSING} = 0
+, {\bfseries FILE\+\_\+\+REGULAR} = (1 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 0)
+, {\bfseries FILE\+\_\+\+DIR} = (1 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 1)
+, {\bfseries FILE\+\_\+\+LINK} = (1 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 2)
+, \newline
+{\bfseries FILE\+\_\+\+CHAR} = (1 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 3)
+, {\bfseries FILE\+\_\+\+BLOCK} = (1 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 4)
+, {\bfseries FILE\+\_\+\+FIFO} = (1 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 5)
+, {\bfseries FILE\+\_\+\+SOCKET} = (1 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 6)
+ \}
+\item 
+enum \doxymbox{\hyperlink{group__filesystem_gad1f15dffa07492b842b0446759083939}{file\+Types}} \{ \newline
+{\bfseries FILE\+\_\+\+MISSING} = 0
+, {\bfseries FILE\+\_\+\+REGULAR} = (1 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 0)
+, {\bfseries FILE\+\_\+\+DIR} = (1 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 1)
+, {\bfseries FILE\+\_\+\+LINK} = (1 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 2)
+, \newline
+{\bfseries FILE\+\_\+\+CHAR} = (1 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 3)
+, {\bfseries FILE\+\_\+\+BLOCK} = (1 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 4)
+, {\bfseries FILE\+\_\+\+FIFO} = (1 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 5)
+, {\bfseries FILE\+\_\+\+SOCKET} = (1 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 6)
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+std::\+string \doxymbox{\hyperlink{group__filesystem_ga2cc7cb09746b8181f3389dfee1113f78}{absolute\+Path}} (const std::\+string \&relative\+\_\+path)
+\item 
+std::\+string \doxymbox{\hyperlink{group__filesystem_ga09605d11f78fcd2d936793371d1c2ccc}{locate\+File}} (const std::\+string \&path)
+\item 
+std::\+string \doxymbox{\hyperlink{group__filesystem_ga0209cabb0f62f9cfec99a763b5a0bbd1}{locate\+File}} (const std::\+string \&path, std::\+vector$<$ std::\+string $>$ \&locations)
+\item 
+size\+\_\+t \doxymbox{\hyperlink{group__filesystem_gac474df797628ea8190c0133563854ba9}{load\+File}} (const std::\+string \&path, void \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}buffer)
+\item 
+std::\+string \doxymbox{\hyperlink{group__filesystem_ga9161593ad3336650b604b9b7ceb15b81}{read\+File}} (const std::\+string \&path)
+\item 
+std::\+string \doxymbox{\hyperlink{group__filesystem_ga54a247d108dcb744e97b74cfb2c8cbdf}{path\+Dir}} (const std::\+string \&path)
+\item 
+std::\+string \doxymbox{\hyperlink{group__filesystem_gad5cfaa7262a96cffe8e5427f9a2b2a7e}{path\+Filename}} (const std::\+string \&path)
+\item 
+std::\+pair$<$ std::\+string, std::\+string $>$ \doxymbox{\hyperlink{group__filesystem_gac404e89c91fa4ba01060628200f517cf}{split\+Path}} (const std::\+string \&path)
+\item 
+bool \doxymbox{\hyperlink{group__filesystem_gafccdab42bbe88448a26f3485e04cd6f2}{list\+Dir}} (const std::\+string \&path, std::\+vector$<$ std::\+string $>$ \&list, uint32\+\_\+t mask=0)
+\item 
+bool \doxymbox{\hyperlink{group__filesystem_ga70cae24b8865ece1b2dbc16cbbcfe700}{file\+Exists}} (const std::\+string \&path, uint32\+\_\+t mask=0)
+\item 
+bool \doxymbox{\hyperlink{group__filesystem_ga2fae54af76a7a9056e1589b8b25bcc1a}{file\+Is\+Type}} (const std::\+string \&path, uint32\+\_\+t mask)
+\item 
+uint32\+\_\+t \doxymbox{\hyperlink{group__filesystem_ga5b9080296348ef2841dcd4c690c59001}{file\+Type}} (const std::\+string \&path)
+\item 
+size\+\_\+t \doxymbox{\hyperlink{group__filesystem_ga300756f37fbacd5c996a384d698a151f}{file\+Size}} (const std::\+string \&path)
+\item 
+std::\+string \doxymbox{\hyperlink{group__filesystem_ga45ff5e488382fe54d24f27d340fcb5d2}{file\+Extension}} (const std::\+string \&path)
+\item 
+bool \doxymbox{\hyperlink{group__filesystem_gabd437b0bcd116aa71e6ef6e49be351f1}{file\+Has\+Extension}} (const std::\+string \&path, const std::\+string \&extension)
+\item 
+bool \doxymbox{\hyperlink{group__filesystem_gafc84dff3ce2435020bf2bcd4c02edda7}{file\+Has\+Extension}} (const std::\+string \&path, const std::\+vector$<$ std::\+string $>$ \&extensions)
+\item 
+bool \doxymbox{\hyperlink{group__filesystem_ga684efd9f7360be64d2f0601c47552870}{file\+Has\+Extension}} (const std::\+string \&path, const char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}extensions)
+\item 
+std::\+string \doxymbox{\hyperlink{group__filesystem_gaad68e41c1ebdc261ba49694e18eb8d15}{file\+Remove\+Extension}} (const std::\+string \&filename)
+\item 
+std::\+string \doxymbox{\hyperlink{group__filesystem_gac5d5187920a9c4e1743dbd0b57ea8294}{file\+Change\+Extension}} (const std::\+string \&filename, const std::\+string \&new\+Extension)
+\end{DoxyCompactItemize}
+
+
+\doxysubsubsection{Detailed Description}
+Functions for listing files in directories and manipulating file paths. 
+
+\label{doc-enum-members}
+\Hypertarget{group__filesystem_doc-enum-members}
+\doxysubsubsection{Enumeration Type Documentation}
+\Hypertarget{group__filesystem_gad1f15dffa07492b842b0446759083939}\index{Filesystem@{Filesystem}!fileTypes@{fileTypes}}
+\index{fileTypes@{fileTypes}!Filesystem@{Filesystem}}
+\doxysubsubsubsection{\texorpdfstring{fileTypes}{fileTypes}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{group__filesystem_gad1f15dffa07492b842b0446759083939} 
+enum \doxymbox{\hyperlink{group__filesystem_gad1f15dffa07492b842b0446759083939}{file\+Types}}}
+
+File types \Hypertarget{group__filesystem_gad1f15dffa07492b842b0446759083939}\index{Filesystem@{Filesystem}!fileTypes@{fileTypes}}
+\index{fileTypes@{fileTypes}!Filesystem@{Filesystem}}
+\doxysubsubsubsection{\texorpdfstring{fileTypes}{fileTypes}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{group__filesystem_gad1f15dffa07492b842b0446759083939} 
+enum \doxymbox{\hyperlink{group__filesystem_gad1f15dffa07492b842b0446759083939}{file\+Types}}}
+
+File types 
+
+\label{doc-func-members}
+\Hypertarget{group__filesystem_doc-func-members}
+\doxysubsubsection{Function Documentation}
+\Hypertarget{group__filesystem_ga2cc7cb09746b8181f3389dfee1113f78}\index{Filesystem@{Filesystem}!absolutePath@{absolutePath}}
+\index{absolutePath@{absolutePath}!Filesystem@{Filesystem}}
+\doxysubsubsubsection{\texorpdfstring{absolutePath()}{absolutePath()}}
+{\footnotesize\ttfamily \label{group__filesystem_ga2cc7cb09746b8181f3389dfee1113f78} 
+std::\+string absolute\+Path (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{relative\+\_\+path}{}\end{DoxyParamCaption})}
+
+Given a relative path, resolve the absolute path using the working directory.
+
+For example, if the current working directory {\ttfamily /\+home/\+user/\+} and {\ttfamily \doxylink{group__filesystem_ga2cc7cb09746b8181f3389dfee1113f78}{absolute\+Path}("{}resources/\+example"{})} is called, then this function would return the path {\ttfamily /\+home/\+user/\+resources/\+example}.
+
+If the path is already an absolute path (i.\+e. it begins with {\ttfamily /\+} or {\ttfamily \texorpdfstring{$\sim$}{\string~}/\+}) then this function will be ignored and the path will be returned as-\/is. \Hypertarget{group__filesystem_gac5d5187920a9c4e1743dbd0b57ea8294}\index{Filesystem@{Filesystem}!fileChangeExtension@{fileChangeExtension}}
+\index{fileChangeExtension@{fileChangeExtension}!Filesystem@{Filesystem}}
+\doxysubsubsubsection{\texorpdfstring{fileChangeExtension()}{fileChangeExtension()}}
+{\footnotesize\ttfamily \label{group__filesystem_gac5d5187920a9c4e1743dbd0b57ea8294} 
+std::\+string file\+Change\+Extension (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{filename}{, }\item[{const std::\+string \&}]{new\+Extension}{}\end{DoxyParamCaption})}
+
+Return the input string with a changed file extension For example, {\ttfamily \doxylink{group__filesystem_gac5d5187920a9c4e1743dbd0b57ea8294}{file\+Change\+Extension}("{}\texorpdfstring{$\sim$}{\string~}/\+workspace/\+somefile.xml"{}, "{}zip"{})} would return {\ttfamily \texorpdfstring{$\sim$}{\string~}/\+user/\+somefile.zip}. \Hypertarget{group__filesystem_ga70cae24b8865ece1b2dbc16cbbcfe700}\index{Filesystem@{Filesystem}!fileExists@{fileExists}}
+\index{fileExists@{fileExists}!Filesystem@{Filesystem}}
+\doxysubsubsubsection{\texorpdfstring{fileExists()}{fileExists()}}
+{\footnotesize\ttfamily \label{group__filesystem_ga70cae24b8865ece1b2dbc16cbbcfe700} 
+bool file\+Exists (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{path}{, }\item[{uint32\+\_\+t}]{mask}{ = {\ttfamily 0}}\end{DoxyParamCaption})}
+
+Return the directory /\+\texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*} Verify path and return true if the file exists. 
+\begin{DoxyParams}{Parameters}
+{\em mask} & filter by file type (by default, any file including directories will be checked). \doxylink{requirements_The}{The} mask should consist of \doxylink{group__filesystem_gad1f15dffa07492b842b0446759083939}{file\+Types} OR\textquotesingle{}d together (e.\+g. {\ttfamily FILE\+\_\+\+REGULAR\texorpdfstring{$\vert$}{|}\+FILE\+\_\+\+DIR}). \\
+\hline
+\end{DoxyParams}
+\Hypertarget{group__filesystem_ga45ff5e488382fe54d24f27d340fcb5d2}\index{Filesystem@{Filesystem}!fileExtension@{fileExtension}}
+\index{fileExtension@{fileExtension}!Filesystem@{Filesystem}}
+\doxysubsubsubsection{\texorpdfstring{fileExtension()}{fileExtension()}}
+{\footnotesize\ttfamily \label{group__filesystem_ga45ff5e488382fe54d24f27d340fcb5d2} 
+std::\+string file\+Extension (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{path}{}\end{DoxyParamCaption})}
+
+Extract the file extension from the path. This function will return all contents of the path to the right of the right-\/most {\ttfamily \textquotesingle{}.\textquotesingle{}} \doxylink{requirements_The}{The} extension will be returned in all lowercase characters. \Hypertarget{group__filesystem_ga684efd9f7360be64d2f0601c47552870}\index{Filesystem@{Filesystem}!fileHasExtension@{fileHasExtension}}
+\index{fileHasExtension@{fileHasExtension}!Filesystem@{Filesystem}}
+\doxysubsubsubsection{\texorpdfstring{fileHasExtension()}{fileHasExtension()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily \label{group__filesystem_ga684efd9f7360be64d2f0601c47552870} 
+bool file\+Has\+Extension (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{path}{, }\item[{const char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{extensions}{}\end{DoxyParamCaption})}
+
+Return true if the file has one of the given extensions, otherwise false. For example, {\ttfamily \doxylink{group__filesystem_gabd437b0bcd116aa71e6ef6e49be351f1}{file\+Has\+Extension}("{}image.\+jpg"{}, \{"{}jpg"{}, "{}jpeg"{}, NULL\})} would return true. 
+\begin{DoxyParams}{Parameters}
+{\em extensions} & list of extensions, should end with {\ttfamily NULL} sentinel. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{group__filesystem_gabd437b0bcd116aa71e6ef6e49be351f1}\index{Filesystem@{Filesystem}!fileHasExtension@{fileHasExtension}}
+\index{fileHasExtension@{fileHasExtension}!Filesystem@{Filesystem}}
+\doxysubsubsubsection{\texorpdfstring{fileHasExtension()}{fileHasExtension()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily \label{group__filesystem_gabd437b0bcd116aa71e6ef6e49be351f1} 
+bool file\+Has\+Extension (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{path}{, }\item[{const std::\+string \&}]{extension}{}\end{DoxyParamCaption})}
+
+Return true if the file has the given extension, otherwise false. For example, {\ttfamily \doxylink{group__filesystem_gabd437b0bcd116aa71e6ef6e49be351f1}{file\+Has\+Extension}("{}\texorpdfstring{$\sim$}{\string~}/\+workspace/\+image.jpg"{}, "{}jpg"{})} would return true. \Hypertarget{group__filesystem_gafc84dff3ce2435020bf2bcd4c02edda7}\index{Filesystem@{Filesystem}!fileHasExtension@{fileHasExtension}}
+\index{fileHasExtension@{fileHasExtension}!Filesystem@{Filesystem}}
+\doxysubsubsubsection{\texorpdfstring{fileHasExtension()}{fileHasExtension()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily \label{group__filesystem_gafc84dff3ce2435020bf2bcd4c02edda7} 
+bool file\+Has\+Extension (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{path}{, }\item[{const std::\+vector$<$ std::\+string $>$ \&}]{extensions}{}\end{DoxyParamCaption})}
+
+Return true if the file has one of the given extensions, otherwise false. \Hypertarget{group__filesystem_ga2fae54af76a7a9056e1589b8b25bcc1a}\index{Filesystem@{Filesystem}!fileIsType@{fileIsType}}
+\index{fileIsType@{fileIsType}!Filesystem@{Filesystem}}
+\doxysubsubsubsection{\texorpdfstring{fileIsType()}{fileIsType()}}
+{\footnotesize\ttfamily \label{group__filesystem_ga2fae54af76a7a9056e1589b8b25bcc1a} 
+bool file\+Is\+Type (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{path}{, }\item[{uint32\+\_\+t}]{mask}{}\end{DoxyParamCaption})}
+
+Return true if the file is one of the types in the \doxylink{group__filesystem_gad1f15dffa07492b842b0446759083939}{file\+Types} mask. 
+\begin{DoxyParams}{Parameters}
+{\em mask} & file types to check against (\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\doxylink{group__filesystem_gad1f15dffa07492b842b0446759083939}{file\+Types}) \doxylink{requirements_The}{The} mask should consist of \doxylink{group__filesystem_gad1f15dffa07492b842b0446759083939}{file\+Types} OR\textquotesingle{}d together (e.\+g. {\ttfamily FILE\+\_\+\+REGULAR\texorpdfstring{$\vert$}{|}\+FILE\+\_\+\+DIR}). 
+\end{DoxySeeAlso}
+\Hypertarget{group__filesystem_gaad68e41c1ebdc261ba49694e18eb8d15}\index{Filesystem@{Filesystem}!fileRemoveExtension@{fileRemoveExtension}}
+\index{fileRemoveExtension@{fileRemoveExtension}!Filesystem@{Filesystem}}
+\doxysubsubsubsection{\texorpdfstring{fileRemoveExtension()}{fileRemoveExtension()}}
+{\footnotesize\ttfamily \label{group__filesystem_gaad68e41c1ebdc261ba49694e18eb8d15} 
+std::\+string file\+Remove\+Extension (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{filename}{}\end{DoxyParamCaption})}
+
+Return the input string with the file extension removed For example, {\ttfamily \doxylink{group__filesystem_gaad68e41c1ebdc261ba49694e18eb8d15}{file\+Remove\+Extension}("{}\texorpdfstring{$\sim$}{\string~}/\+workspace/\+somefile.xml"{})} would return {\ttfamily \texorpdfstring{$\sim$}{\string~}/\+user/\+somefile}. \Hypertarget{group__filesystem_ga300756f37fbacd5c996a384d698a151f}\index{Filesystem@{Filesystem}!fileSize@{fileSize}}
+\index{fileSize@{fileSize}!Filesystem@{Filesystem}}
+\doxysubsubsubsection{\texorpdfstring{fileSize()}{fileSize()}}
+{\footnotesize\ttfamily \label{group__filesystem_ga300756f37fbacd5c996a384d698a151f} 
+size\+\_\+t file\+Size (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{path}{}\end{DoxyParamCaption})}
+
+Return the size (in bytes) of the specified file.
+
+
+\begin{DoxyParams}{Parameters}
+{\em path} & the path of the file \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+if successful, the size of the file in bytes otherwise, 0 will be returned. 
+\end{DoxyReturn}
+\Hypertarget{group__filesystem_ga5b9080296348ef2841dcd4c690c59001}\index{Filesystem@{Filesystem}!fileType@{fileType}}
+\index{fileType@{fileType}!Filesystem@{Filesystem}}
+\doxysubsubsubsection{\texorpdfstring{fileType()}{fileType()}}
+{\footnotesize\ttfamily \label{group__filesystem_ga5b9080296348ef2841dcd4c690c59001} 
+uint32\+\_\+t file\+Type (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{path}{}\end{DoxyParamCaption})}
+
+Return the file type, or FILE\+\_\+\+MISSING if it doesn\textquotesingle{}t exist. \begin{DoxySeeAlso}{See also}
+\doxylink{group__filesystem_gad1f15dffa07492b842b0446759083939}{file\+Types} 
+\end{DoxySeeAlso}
+\Hypertarget{group__filesystem_gafccdab42bbe88448a26f3485e04cd6f2}\index{Filesystem@{Filesystem}!listDir@{listDir}}
+\index{listDir@{listDir}!Filesystem@{Filesystem}}
+\doxysubsubsubsection{\texorpdfstring{listDir()}{listDir()}}
+{\footnotesize\ttfamily \label{group__filesystem_gafccdab42bbe88448a26f3485e04cd6f2} 
+bool list\+Dir (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{path}{, }\item[{std::\+vector$<$ std::\+string $>$ \&}]{list}{, }\item[{uint32\+\_\+t}]{mask}{ = {\ttfamily 0}}\end{DoxyParamCaption})}
+
+Return a sorted list of the files in the specified directory. \doxylink{group__filesystem_gafccdab42bbe88448a26f3485e04cd6f2}{list\+Dir()} will glob files from the specified path, and filter against wildcard characters including {\ttfamily \texorpdfstring{$\ast$}{*}} and {\ttfamily ?}. For example, valid paths would include {\ttfamily \texorpdfstring{$\sim$}{\string~}/\+workspace}, {\ttfamily \texorpdfstring{$\sim$}{\string~}/\+workspace/\+\texorpdfstring{$\ast$}{*}.jpg}, ect.
+
+\begin{DoxySeeAlso}{See also}
+here for a description of wildcard matching:\+ \href{https://www.man7.org/linux/man-pages/man7/glob.7.html}{\texttt{https:\+/\+/\+www.\+man7.\+org/\+linux/\+man-\/pages/\+man7/\+glob.\+7.\+html}}
+\end{DoxySeeAlso}
+
+\begin{DoxyParams}[1]{Parameters}
+ & {\em path} & the path of the directory (may include wildcard characters) \\
+\hline
+\doxymbox{\texttt{out}}  & {\em list} & the alphanumerically sorted output list of the files in the directory \\
+\hline
+ & {\em mask} & filter by file type (by default, any file including directories will be included). \doxylink{requirements_The}{The} mask should consist of \doxylink{group__filesystem_gad1f15dffa07492b842b0446759083939}{file\+Types} OR\textquotesingle{}d together (e.\+g. {\ttfamily FILE\+\_\+\+REGULAR\texorpdfstring{$\vert$}{|}\+FILE\+\_\+\+DIR}). \\
+\hline
+\end{DoxyParams}
+\Hypertarget{group__filesystem_gac474df797628ea8190c0133563854ba9}\index{Filesystem@{Filesystem}!loadFile@{loadFile}}
+\index{loadFile@{loadFile}!Filesystem@{Filesystem}}
+\doxysubsubsubsection{\texorpdfstring{loadFile()}{loadFile()}}
+{\footnotesize\ttfamily \label{group__filesystem_gac474df797628ea8190c0133563854ba9} 
+size\+\_\+t load\+File (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{path}{, }\item[{void \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{buffer}{}\end{DoxyParamCaption})}
+
+Loads a binary file into a buffer that it allocates. \begin{DoxyReturn}{Returns}
+the size in bytes read (or 0 on error) 
+\end{DoxyReturn}
+\Hypertarget{group__filesystem_ga09605d11f78fcd2d936793371d1c2ccc}\index{Filesystem@{Filesystem}!locateFile@{locateFile}}
+\index{locateFile@{locateFile}!Filesystem@{Filesystem}}
+\doxysubsubsubsection{\texorpdfstring{locateFile()}{locateFile()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{group__filesystem_ga09605d11f78fcd2d936793371d1c2ccc} 
+std::\+string locate\+File (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{path}{}\end{DoxyParamCaption})}
+
+Locate a file from common system locations. First, this function will check if the file exists at the path provided, and if not it will check for the existance of the file in common system locations such as "{}/\+opt"{}, "{}/\+usr/\+local"{}, and "{}/\+usr/\+local/\+bin"{}.
+
+\begin{DoxyReturn}{Returns}
+the confirmed path of the located file, or empty string if the file could not be found 
+\end{DoxyReturn}
+\Hypertarget{group__filesystem_ga0209cabb0f62f9cfec99a763b5a0bbd1}\index{Filesystem@{Filesystem}!locateFile@{locateFile}}
+\index{locateFile@{locateFile}!Filesystem@{Filesystem}}
+\doxysubsubsubsection{\texorpdfstring{locateFile()}{locateFile()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{group__filesystem_ga0209cabb0f62f9cfec99a763b5a0bbd1} 
+std::\+string locate\+File (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{path}{, }\item[{std::\+vector$<$ std::\+string $>$ \&}]{locations}{}\end{DoxyParamCaption})}
+
+Locate a file from a set of locations provided by the user, in addition to common system locations such as "{}/\+opt"{} and "{}/\+usr/\+local"{}.
+
+\begin{DoxyReturn}{Returns}
+the confirmed path of the located file, or empty string if the file could not be found 
+\end{DoxyReturn}
+\Hypertarget{group__filesystem_ga54a247d108dcb744e97b74cfb2c8cbdf}\index{Filesystem@{Filesystem}!pathDir@{pathDir}}
+\index{pathDir@{pathDir}!Filesystem@{Filesystem}}
+\doxysubsubsubsection{\texorpdfstring{pathDir()}{pathDir()}}
+{\footnotesize\ttfamily \label{group__filesystem_ga54a247d108dcb744e97b74cfb2c8cbdf} 
+std::\+string path\+Dir (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{path}{}\end{DoxyParamCaption})}
+
+Join two paths, and properly include a path separator ({\ttfamily /\+}) as needed. For example, \textquotesingle{}path\+Join("{}\texorpdfstring{$\sim$}{\string~}/\+workspace"{}, "{}somefile.\+xml"{}){\ttfamily  would return }\texorpdfstring{$\sim$}{\string~}/\+workspace/\+somefile.xml\`{}.
+
+\texorpdfstring{$\ast$}{*}/\+ std::\+string path\+Join( const std::\+string\& a, const std::\+string\& b );
+
+/\+\texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*} Return the parent directory of the specified path, removing the filename and extension. For example, {\ttfamily \doxylink{group__filesystem_ga54a247d108dcb744e97b74cfb2c8cbdf}{path\+Dir}("{}\texorpdfstring{$\sim$}{\string~}/\+workspace/\+somefile.xml"{})} would return {\ttfamily \texorpdfstring{$\sim$}{\string~}/\+workspace/\+} \Hypertarget{group__filesystem_gad5cfaa7262a96cffe8e5427f9a2b2a7e}\index{Filesystem@{Filesystem}!pathFilename@{pathFilename}}
+\index{pathFilename@{pathFilename}!Filesystem@{Filesystem}}
+\doxysubsubsubsection{\texorpdfstring{pathFilename()}{pathFilename()}}
+{\footnotesize\ttfamily \label{group__filesystem_gad5cfaa7262a96cffe8e5427f9a2b2a7e} 
+std::\+string path\+Filename (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{path}{}\end{DoxyParamCaption})}
+
+Return the filename from the path, including the file extension. \Hypertarget{group__filesystem_ga9161593ad3336650b604b9b7ceb15b81}\index{Filesystem@{Filesystem}!readFile@{readFile}}
+\index{readFile@{readFile}!Filesystem@{Filesystem}}
+\doxysubsubsubsection{\texorpdfstring{readFile()}{readFile()}}
+{\footnotesize\ttfamily \label{group__filesystem_ga9161593ad3336650b604b9b7ceb15b81} 
+std::\+string read\+File (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{path}{}\end{DoxyParamCaption})}
+
+Read a text file into a string. It\textquotesingle{}s assumed that the file is text, and that it is of a managegable size (otherwise you should use buffering and read it line-\/by-\/line)
+
+\begin{DoxyReturn}{Returns}
+the string containing the file contents, or an empty string if an error occurred. 
+\end{DoxyReturn}
+\Hypertarget{group__filesystem_gac404e89c91fa4ba01060628200f517cf}\index{Filesystem@{Filesystem}!splitPath@{splitPath}}
+\index{splitPath@{splitPath}!Filesystem@{Filesystem}}
+\doxysubsubsubsection{\texorpdfstring{splitPath()}{splitPath()}}
+{\footnotesize\ttfamily \label{group__filesystem_gac404e89c91fa4ba01060628200f517cf} 
+std::\+pair$<$ std::\+string, std::\+string $>$ split\+Path (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{path}{}\end{DoxyParamCaption})}
+
+Split a path into directory and filename components. \doxylink{requirements_The}{The} directory will be returned first in the pair, and the filename second. 

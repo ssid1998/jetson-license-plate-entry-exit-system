@@ -1,0 +1,64 @@
+\chapter{segnet-\/dataset }
+\hypertarget{md_jetson-inference_2docs_2segnet-dataset}{}\label{md_jetson-inference_2docs_2segnet-dataset}\index{segnet-\/dataset@{segnet-\/dataset}}
+ 
+
+\textsuperscript{\href{detectnet-camera.md}{\texttt{Back}} \texorpdfstring{$\vert$}{|} \href{segnet-pretrained.md}{\texttt{Next}} \texorpdfstring{$\vert$}{|} }\href{../README.md\#two-days-to-a-demo-digits}{\texttt{\textsuperscript{Contents}}} ~\newline
+ \textsuperscript{Semantic Segmentation}\hypertarget{md_jetson-inference_2docs_2segnet-dataset_autotoc_md415}{}\doxysection{\texorpdfstring{Semantic Segmentation with Seg\+Net}{Semantic Segmentation with Seg\+Net}}\label{md_jetson-inference_2docs_2segnet-dataset_autotoc_md415}
+\doxylink{requirements_The}{The} third deep learning capability we\textquotesingle{}re highlighting in this tutorial is semantic segmentation. Semantic segmentation is based on image recognition, except the classifications occur at the pixel level as opposed to classifying entire images as with image recognition. This is accomplished by {\itshape convolutionalizing} a pre-\/trained image recognition model (like Alexnet), which turns it into a fully-\/convolutional segmentation model capable of per-\/pixel labelling. Useful for environmental sensing and collision avoidance, segmentation yields dense per-\/pixel classification of many different potential objects per scene, including scene foregrounds and backgrounds.
+
+
+
+\doxylink{requirements_The}{The} \href{../c/segNet.h}{\texttt{{\ttfamily seg\+Net}}} object accepts as input the 2D image, and outputs a second image with the per-\/pixel classification mask overlay. Each pixel of the mask corresponds to the class of object that was classified.
+
+\begin{quote}
+{\bfseries{note}}:\+ see the DIGITS \href{https://github.com/NVIDIA/DIGITS/tree/master/examples/semantic-segmentation}{\texttt{semantic segmentation}} example for more background info on segmentation. \end{quote}
+\hypertarget{md_jetson-inference_2docs_2segnet-dataset_autotoc_md416}{}\doxysubsubsection{\texorpdfstring{Downloading Aerial Drone Dataset}{Downloading Aerial Drone Dataset}}\label{md_jetson-inference_2docs_2segnet-dataset_autotoc_md416}
+As an example of image segmentation, we\textquotesingle{}ll work with an aerial drone dataset that separates ground terrain from the sky. \doxylink{requirements_The}{The} dataset is in First Person View (FPV) to emulate the vantage point of a drone in flight and train a network that functions as an autopilot guided by the terrain that it senses.
+
+To download and extract the dataset, run the following commands from the host PC running the DIGITS server:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ bash}
+\DoxyCodeLine{\$\ wget\ -\/-\/no-\/check-\/certificate\ https://nvidia.box.com/shared/static/ft9cc5yjvrbhkh07wcivu5ji9zola6i1.gz\ -\/O\ NVIDIA-\/Aerial-\/Drone-\/Dataset.tar.gz}
+\DoxyCodeLine{}
+\DoxyCodeLine{HTTP\ request\ sent,\ awaiting\ response...\ 200\ OK}
+\DoxyCodeLine{Length:\ 7140413391\ (6.6G)\ [application/octet-\/stream]}
+\DoxyCodeLine{Saving\ to:\ ‘NVIDIA-\/Aerial-\/Drone-\/Dataset.tar.gz’}
+\DoxyCodeLine{}
+\DoxyCodeLine{NVIDIA-\/Aerial-\/Drone-\/Datase\ 100\%[======================================>]\ \ \ 6.65G\ \ 3.33MB/s\ \ \ \ in\ 44m\ 44s\ }
+\DoxyCodeLine{}
+\DoxyCodeLine{2017-\/04-\/17\ 14:11:54\ (2.54\ MB/s)\ -\/\ ‘NVIDIA-\/Aerial-\/Drone-\/Dataset.tar.gz’\ saved\ [7140413391/7140413391]}
+\DoxyCodeLine{}
+\DoxyCodeLine{\$\ tar\ -\/xzvf\ NVIDIA-\/Aerial-\/Drone-\/Dataset.tar.gz\ }
+
+\end{DoxyCode}
+
+
+\doxylink{requirements_The}{The} dataset includes various clips captured from flights of drone platforms, but the one we\textquotesingle{}ll be focusing on in this tutorial is under {\ttfamily FPV/\+\+SFWA}. Next we\textquotesingle{}ll create the training database in DIGITS before training the model.\hypertarget{md_jetson-inference_2docs_2segnet-dataset_autotoc_md417}{}\doxysubsubsection{\texorpdfstring{Importing the Aerial Dataset into DIGITS}{Importing the Aerial Dataset into DIGITS}}\label{md_jetson-inference_2docs_2segnet-dataset_autotoc_md417}
+First, navigate your browser to your DIGITS server instance and choose to create a new {\ttfamily Segmentation Dataset} from the drop-\/down in the Datasets tab:\+
+
+
+
+In the dataset creation form, specify the following options and paths to the image and label folders under the location where you extracted the aerial dataset:\+
+
+
+\begin{DoxyItemize}
+\item Feature image folder:\+ {\ttfamily NVIDIA-\/\+Aerial-\/\+Drone-\/\+Dataset/\+\+FPV/\+\+SFWA/\+720p/\+images}
+\item Label image folder:\+ {\ttfamily NVIDIA-\/\+Aerial-\/\+Drone-\/\+Dataset/\+\+FPV/\+\+SFWA/\+720p/\+labels}
+\item set {\ttfamily \% for validation} to 1\%
+\item Class labels:\+ {\ttfamily NVIDIA-\/\+Aerial-\/\+Drone-\/\+Dataset/\+\+FPV/\+\+SFWA/\+fpv-\/labels.\+txt}
+\item Color map:\+ From text file
+\item Feature Encoding:\+ {\ttfamily None}
+\item Label Encoding:\+ {\ttfamily None}
+\end{DoxyItemize}
+
+
+
+Name the dataset whatever you choose and click the {\ttfamily Create} button at the bottom of the page to launch the importing job. Next we\textquotesingle{}ll create the new segmentation model and begin training.\hypertarget{md_jetson-inference_2docs_2segnet-dataset_autotoc_md418}{}\doxysubsection{\texorpdfstring{autotoc\+\_\+md418}{autotoc\+\_\+md418}}\label{md_jetson-inference_2docs_2segnet-dataset_autotoc_md418}
+Next \texorpdfstring{$\vert$}{|} {\bfseries{\href{segnet-pretrained.md}{\texttt{Generating Pretrained FCN-\/\+Alexnet}}}} ~\newline
+ Back \texorpdfstring{$\vert$}{|} {\bfseries{\href{detectnet-camera.md}{\texttt{Running the Live Camera Detection Demo}}}}
+
+{\bfseries{ }}
+
+\textsuperscript{© 2016-\/2019 NVIDIA \texorpdfstring{$\vert$}{|} }\href{../README.md\#two-days-to-a-demo-digits}{\texttt{\textsuperscript{Table of Contents}}}

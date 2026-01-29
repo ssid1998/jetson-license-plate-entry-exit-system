@@ -1,0 +1,37 @@
+\chapter{deep-\/learning }
+\hypertarget{md_jetson-inference_2docs_2deep-learning}{}\label{md_jetson-inference_2docs_2deep-learning}\index{deep-\/learning@{deep-\/learning}}
+ 
+
+\textsuperscript{\href{digits-workflow.md}{\texttt{Back}} \texorpdfstring{$\vert$}{|} \href{digits-workflow.md}{\texttt{Next}} \texorpdfstring{$\vert$}{|} }\href{../README.md\#two-days-to-a-demo-digits}{\texttt{\textsuperscript{Contents}}} ~\newline
+ \textsuperscript{Overview}\hypertarget{md_jetson-inference_2docs_2deep-learning_autotoc_md159}{}\doxysection{\texorpdfstring{What\textquotesingle{}s Deep Learning?}{What\textquotesingle{}s Deep Learning?}}\label{md_jetson-inference_2docs_2deep-learning_autotoc_md159}
+\hypertarget{md_jetson-inference_2docs_2deep-learning_autotoc_md160}{}\doxysubsubsection{\texorpdfstring{Introduction}{Introduction}}\label{md_jetson-inference_2docs_2deep-learning_autotoc_md160}
+{\itshape Deep-\/learning} networks typically have two primary phases of development:\+ {\bfseries{training}} and {\bfseries{inference}}\hypertarget{md_jetson-inference_2docs_2deep-learning_autotoc_md161}{}\doxysubsubsubsection{\texorpdfstring{Training}{Training}}\label{md_jetson-inference_2docs_2deep-learning_autotoc_md161}
+During the training phase, the network learns from a large dataset of labeled examples. \doxylink{requirements_The}{The} weights of the neural network become optimized to recognize the patterns contained within the training dataset. Deep neural networks have many layers of neurons connected togethers. Deeper networks take increasingly longer to train and evaluate, but are ultimately able to encode more intelligence within them.
+
+
+
+Throughout training, the network\textquotesingle{}s inference performance is tested and refined using trial dataset. Like the training dataset, the trial dataset is labeled with ground-\/truth so the network\textquotesingle{}s accuracy can be evaluated, but was not included in the training dataset. \doxylink{requirements_The}{The} network continues to train iteratively until it reaches a certain level of accuracy set by the user.
+
+Due to the size of the datasets and deep inference networks, training is typically very resource-\/intensive and can take weeks or months on traditional compute architectures. However, using GPUs vastly accellerates the process down to days or hours. ~\newline
+\hypertarget{md_jetson-inference_2docs_2deep-learning_autotoc_md162}{}\doxysubsubsubsubsection{\texorpdfstring{DIGITS}{DIGITS}}\label{md_jetson-inference_2docs_2deep-learning_autotoc_md162}
+Using \href{https://developer.nvidia.com/digits}{\texttt{DIGITS}}, anyone can easily get started and interactively train their networks with GPU acceleration. ~\newline
+DIGITS is an open-\/source project contributed by NVIDIA, located here:\+ \href{https://github.com/NVIDIA/DIGITS}{\texttt{https:\+/\+/\+github.\+com/\+\+NVIDIA/\+\+DIGITS}}.
+
+This tutorial will use DIGITS and Jetson TX1 together for training and deploying deep-\/learning networks, ~\newline
+refered to as the DIGITS workflow:\+
+
+\hypertarget{md_jetson-inference_2docs_2deep-learning_autotoc_md163}{}\doxysubsubsubsection{\texorpdfstring{Inference}{Inference}}\label{md_jetson-inference_2docs_2deep-learning_autotoc_md163}
+Using it\textquotesingle{}s trained weights, the network evaluates live data at runtime. Called inference, the network predicts and applies reasoning based off the examples it learned. Due to the depth of deep learning networks, inference requires significant compute resources to process in realtime on imagery and other sensor data. However, using NVIDIA\textquotesingle{}s GPU Inference Engine which uses Jetson\textquotesingle{}s integrated NVIDIA GPU, inference can be deployed onboard embedded platforms. Applications in robotics like picking, autonomous navigation, agriculture, and industrial inspection have many uses for deploying deep inference, including:\+
+
+
+\begin{DoxyItemize}
+\item Image recognition
+\item Object detection
+\item Segmentation
+\item Image registration (homography estimation)
+\item Depth from raw stereo
+\item Signal analytics
+\end{DoxyItemize}\hypertarget{md_jetson-inference_2docs_2deep-learning_autotoc_md164}{}\doxysubsection{\texorpdfstring{autotoc\+\_\+md164}{autotoc\+\_\+md164}}\label{md_jetson-inference_2docs_2deep-learning_autotoc_md164}
+Next \texorpdfstring{$\vert$}{|} {\bfseries{\href{digits-workflow.md}{\texttt{DIGITS Workflow}}}}
+
+\textsuperscript{© 2016-\/2019 NVIDIA \texorpdfstring{$\vert$}{|} }\href{../README.md\#two-days-to-a-demo-digits}{\texttt{\textsuperscript{Table of Contents}}}
