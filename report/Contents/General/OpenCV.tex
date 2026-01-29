@@ -53,6 +53,13 @@ For the licence plate detection system, the typical processing chain is:
 	\item Frames are saved and displayed for further processing.
 \end{enumerate}
 
+\begin{figure}[htbp]
+	\centering
+	\input{../../tikz/4DomainKnowledgeML/OpenCV/OpenCVPipeline.tikz}
+	\caption{OpenCV's role in the real-time licence plate detection workflow: camera I/O, pre-processing, overlays, and visual debugging around the model inference stage.}
+	\label{fig:opencv_pipeline}
+\end{figure}
+
 OpenCV is highly optimised and takes advantage of hardware acceleration (e.g.\ NEON, CUDA, and other backends) on embedded platforms. This makes it suitable for real-time processing on devices such as the Jetson Nano \cite{opencv_lfs,opencv_on_wheels}.
 
 
@@ -87,7 +94,7 @@ The command is responsible for installation of the \PYTHON{cv2} module, imported
 \subsection{Example -- Description}
 \index{OpenCV!Example Description}
 
-The example script \FILE{OpenCVExample.py} describes a minimal OpenCV workflow. The following points are verified:
+The example script \FILE{opencvexample.py} describes a minimal OpenCV workflow. The following points are verified:
 \begin{itemize}
 	\item The camera interface is initialized correctly and accessible,
 	\item OpenCV is able to capture and display frames, and
@@ -116,7 +123,7 @@ The following set of instructions lay out running the OpenCV example on the Jets
 \begin{itemize}
 	\item \textbf{Step 1:} Ensure the Jetson Nano is active and the camera is connected to the correct USB port.
 	\item \textbf{Step 2:} Activate the Python virtual environment (if used) containing project dependencies, including OpenCV.
-	\item \textbf{Step 3:} Navigate to the project directory where \FILE{OpenCVExample.py} is stored, for example:
+	\item \textbf{Step 3:} Navigate to the project directory where \FILE{opencvexample.py} is stored, for example:
 
 	\begin{tcolorbox}[colback=white,colframe=black,coltext= ShellColor, sharp corners, boxrule=0.8pt]
 		\begin{small}
@@ -136,16 +143,16 @@ The following set of instructions lay out running the OpenCV example on the Jets
 		\begin{small}
 			\begin{verbatim}
 				
-				python OpenCVExample.py	\end{verbatim}
+				python opencvexample.py	\end{verbatim}
 		\end{small}
 	\end{tcolorbox}
 
 %	\begin{verbatim}
-%		python OpenCVExample.py
+%		python opencvexample.py
 %	\end{verbatim}
 
 
-	\item \textbf{Step 5:} A window opens displaying the camera feed consisting of a grayscale conversion. 
+	\item \textbf{Step 5:} A window opens displaying the camera feed consisting of a grayscale conversion (requires a connected monitor / GUI session). 
 	\item \textbf{Step 6:} Press the configured exit key (e.g.\ \texttt{q}) to close the window, release the camera, and terminate the program.
 \end{itemize}
 
@@ -210,7 +217,7 @@ rulecolor=\color{black!30}
 ]{../../Code/OpenCV/opencvexample.py}
 
 \subsection{Further Reading}
-\index{YOLO!Further Reading}
+\index{OpenCV!Further Reading}
 
 \begin{itemize}
 	\item Python bindings (OpenCV-Python) and their integration into computer vision workflows \cite{opencv_py_intro}.

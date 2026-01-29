@@ -1,0 +1,41 @@
+\begin{tikzpicture}[
+	node distance=10mm and 10mm,
+	box/.style={
+		rectangle,
+		draw=blue!60,
+		fill=blue!5,
+		very thick,
+		rounded corners,
+		align=center,
+		text width=0.26\linewidth,
+		minimum height=11mm
+	},
+	ml/.style={
+		rectangle,
+		draw=black!40,
+		fill=black!3,
+		thick,
+		rounded corners,
+		align=center,
+		text width=0.26\linewidth,
+		minimum height=11mm
+	},
+	arrow/.style={-Latex, thick, blue!60}
+]
+
+	\node[box] (capture) {Frame capture\\\tiny \texttt{cv2.VideoCapture()}};
+	\node[box, right=of capture] (pre) {Pre-processing\\\tiny resize, \texttt{cvtColor}, normalise};
+	\node[ml, right=of pre] (infer) {Detector inference\\\tiny YOLOv8 (PyTorch/TensorRT)};
+
+	\node[box, below=of infer] (overlay) {Post-processing overlay\\\tiny \texttt{rectangle}, \texttt{putText}};
+	\node[box, left=of overlay] (roi) {Plate ROI extraction\\\tiny crop for OCR};
+	\node[box, left=of roi] (display) {Visualisation / debug\\\tiny \texttt{imshow()} / \texttt{imwrite()}};
+
+	\draw[arrow] (capture) -- (pre);
+	\draw[arrow] (pre) -- (infer);
+	\draw[arrow] (infer) -- (overlay);
+	\draw[arrow] (overlay) -- (roi);
+	\draw[arrow] (roi) -- (display);
+
+\end{tikzpicture}
+
