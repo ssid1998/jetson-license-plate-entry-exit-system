@@ -1,6 +1,6 @@
 %%%
 %
-% $Autor: Wings $
+% $Autor:Shubhankar Dhumka$
 % $Datum: 2021-05-14 $
 % $Pfad:  $
 % $Dateiname: SBOM
@@ -79,31 +79,36 @@ The following file lists all the packages being used and will automatically be i
 }
 
 \begin{lstlisting}[language=Python, caption={Requirements.txt for License Plate Detection on Jetson Nano}]
-	# Core ML frameworks
-	torch== v2.9.0   # Jetson Nano compatible PyTorch version with NVIDIA build
-	torchvision==0.16.1+nv22.12
-	
-	# YOLO / Object detection
-	ultralytics==8.1.3
+	# Object detection framework
+	ultralytics
 	
 	# Computer vision
-	opencv-python-headless== 4.12.0  # lightweight OpenCV for Jetson
+	opencv-python
+	Pillow
 	
-	# OCR packages
-	easyocr==1.6.2
-	paddleocr==2.7.0.1
+	# OCR
+	easyocr
+	pytesseract
 	
 	# Data handling
-	numpy==1.25.0
-	pandas==2.1.0
+	numpy
+	pandas
 	
 	# Visualization
-	matplotlib==3.8.0
-	seaborn==0.12.2
+	plotly
 	
-	# Utilities
-	scipy==1.11.1
-	tqdm==4.68.0
+	# Web dashboard / API
+	Flask==2.0.3
+	
+	# ------------------------------------------------------------
+	# Jetson-specific runtime components
+	# (Provided by NVIDIA JetPack / built from source, NOT via pip)
+	# ------------------------------------------------------------
+	# - PyTorch (NVIDIA-provided Jetson build)
+	# - TensorRT Python bindings (e.g., tensorrt)
+	# - PyCUDA (pycuda)
+	# - jetson-inference Python bindings
+	#   (jetson.inference, jetson.utils)
 \end{lstlisting}
 
 \chapter{List of Software Packages}
