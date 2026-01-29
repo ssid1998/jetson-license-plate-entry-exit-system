@@ -72,7 +72,7 @@ This approach is convenient for development (fast iteration, minimal conversion 
 \noindent
 The entrypoint is a minimal wrapper that simply calls the detector loop:
 
-\begin{lstlisting}[language=Python,caption={Entrypoint for the Ultralytics runtime (\FILE{Code/LicencePlateDetection/jetson\_app/main.py})},label={lst:jetson_ultralytics_main}]
+\begin{lstlisting}[language=Python,caption={Entrypoint for the Ultralytics runtime},label={lst:jetson_ultralytics_main}]
 	# File: Code/LicencePlateDetection/jetson_app/main.py
 	# Deployment meaning:
 	#   - Keeps the runtime entry stable ("python3 jetson_app/main.py")
@@ -92,7 +92,7 @@ The detector loop in \FILE{Code/LicencePlateDetection/jetson\_app/detector.py} p
 \noindent
 The following excerpt highlights the core deployment logic: model loading and device selection, the inference call, and how OCR is integrated into the runtime loop.
 
-\begin{lstlisting}[language=Python,caption={Ultralytics runtime: model loading, inference loop, and OCR integration (\FILE{Code/LicencePlateDetection/jetson\_app/detector.py})},label={lst:jetson_ultralytics_detector}]
+\begin{lstlisting}[language=Python,caption={Ultralytics runtime: model loading, inference loop, and OCR integration},label={lst:jetson_ultralytics_detector}]
 	# File: Code/LicencePlateDetection/jetson_app/detector.py
 	
 	import cv2
@@ -189,7 +189,7 @@ The file \FILE{Code/LicencePlateDetection/jetson-inference/python/www/flask/dash
 \noindent
 The following excerpts show \emph{where TensorRT is used for deployment} and how the engine file becomes the runtime model artefact on the Jetson:
 
-\begin{lstlisting}[language=Python,caption={TensorRT runtime: configuration and engine loading (\FILE{Code/LicencePlateDetection/jetson-inference/python/www/flask/dashboard2.py})},label={lst:tensorrt_dashboard_engine_load}]
+\begin{lstlisting}[language=Python,caption={TensorRT runtime: configuration and engine loading},label={lst:tensorrt_dashboard_engine_load}]
 	# File: Code/LicencePlateDetection/jetson-inference/python/www/flask/dashboard2.py
 	
 	import tensorrt as trt
@@ -234,7 +234,7 @@ The following excerpts show \emph{where TensorRT is used for deployment} and how
 Once buffers are allocated, the main loop performs preprocessing, runs the engine, and consumes the output tensor.
 The key deployment idea is that \textbf{the heavy model computation now happens inside TensorRT}, while Python only orchestrates data movement and post-processing:
 
-\begin{lstlisting}[language=Python,caption={TensorRT runtime: preprocessing + execute\_async\_v2 + output decoding (\FILE{Code/LicencePlateDetection/jetson-inference/python/www/flask/dashboard2.py})},label={lst:tensorrt_dashboard_inference}]
+\begin{lstlisting}[language=Python,caption={TensorRT runtime: preprocessing + execute\_async\_v2 + output decoding},label={lst:tensorrt_dashboard_inference}]
 	# Still in dashboard2.py, inside the frame loop:
 	
 	# 1) Preprocess to match the engine input:
@@ -264,7 +264,7 @@ The key deployment idea is that \textbf{the heavy model computation now happens 
 \noindent
 When a valid plate is recognized, the deployment integrates persistence by updating SQLite on the SSD (a restart continues with the existing DB state):
 
-\begin{lstlisting}[language=Python,caption={TensorRT runtime: persistence (SQLite) after OCR validation (\FILE{Code/LicencePlateDetection/jetson-inference/python/www/flask/dashboard2.py})},label={lst:tensorrt_dashboard_sqlite}]
+\begin{lstlisting}[language=Python,caption={TensorRT runtime: persistence (SQLite) after OCR validation },label={lst:tensorrt_dashboard_sqlite}]
 	# After OCR + German format cleanup produced a plate string "clean":
 	
 	conn = sqlite3.connect(DB_PATH)

@@ -1,112 +1,51 @@
 %%%%%%%%%%%%
 %
-% $Autor: Wings $
-% $Datum: 2019-03-05 08:03:15Z $
-% $Pfad: TemplateSensor $
+% $Autor: Siddhanth Sharma $
+% $Datum: 2026-01-02 $
+% $Pfad: report/Contents/General/Display.tex $
 % $Version: 4250 $
 % !TeX spellcheck = en_GB/de_DE
 % !TeX encoding = utf8
-% !TeX root = filename 
+% !TeX root = ../../System/EdgeComputer/jetsonNano.tex
 % !TeX TXS-program:bibliography = txs:///biber
 %
 %%%%%%%%%%%%
 
-% Structure
-%\chapter{\textcolor{red}{Actor XY}}
-%
-%Introduction
-%\Mynote{cite books, applications, board}
-%
-%\section{General}
-%
-%General description
-%
-%cite books
-%
-%\section{Specific Sensor/Actor}
-%
-%cite board
-%
-%\section{Specification}
-%
-%\begin{itemize}
-%  \item Cite the data sheet
-%  \item Extract te information from the data sheet
-%  \item Circuit Diagram
-%\end{itemize}
-%
-%\section{Library}
-%
-%\subsection{Description}
-%
-%\subsection{Installation}
-%
-%\begin{itemize}
-%    \item data types
-%    \item data structure
-%    \item data quantity
-%    \item data quality
-%\end{itemize}
-%
-%\subsection{Functions}
-%
-%\section{Example}
-%
-%In this section, a simple example is described in detail, which demonstrates how the library supports the sensor/actor.
-%
-%
-%\subsection{Manual}
-%
-%\subsection{Inside the Example}
-%
-%\subsection{Code}
-%
-%\subsection{Files}
-%
-%
-%
-%\section{Calibration}
-%
-%cite method
-%
-%\section{Simple Code}
-%
-%
-%\section{Simple Application}
-%
-%
-%
-%\section{Tests}
-%
-%\subsection{Simple Function Test}
-%
-%\subsection{Test all Functions}
-%
-%
-%
-%\section{Further Readings}
 
 \chapter{Display as System Actor}
 \label{chap:display_actor}
 
 \section{Introduction}
-As a part of embedded \ac{AI} systems, \textbf{actors} refers to those components that transform computational results into observable system responses.  
-In the context of this project, actors are implemented as a \textbf{visual display interface} connected with NVIDIA Jetson Nano, presented with real-time image and character recognition outcomes. Examples are \textit{“Willkommen”} (Welcome) or \textit{“Ausfahrt registriert”} (Exit recorded) on successful license plate recognition.  
+In embedded \ac{AI} systems, \textbf{actors} are components that translate internal computation into observable system responses.
+In this project, the actor is a \textbf{visual user interface} that presents the results of the license-plate pipeline on an \ac{HDMI}-connected monitor.
+Instead of driving a physical actuator (gate, buzzer), the Jetson Nano runs a local dashboard that shows (i) an annotated live camera stream and (ii) the current session/billing state derived from the persistent database.
 
-Traditional actuators such as buzzers or gates are replaced with visually available feedback. This offers clarity and non-intrusiveness in communication from the point of view of a user \cite{edgeAIbook, opencv_doc_2024}.  
+The display is connected to the Jetson Nano via the \textbf{\ac{HDMI} 2.0 (J3)} port on the Seeed Studio J101 carrier board.
+It serves as a direct, on-device output interface for the operator during runtime (and is also useful during development).
 
-The display used is attached to the Jetson Nano’s \textbf{\ac{HDMI} 2.0 (J3)} port on the Seeed Studio J101 carrier board.  
-It functions both as a debugging interface during development and as the final system actor during runtime.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.95\linewidth]{Display/Display.png}
+	\caption{Display actor: the Jetson Nano renders the local dashboard on an \ac{HDMI} monitor, combining live visual feedback and operational controls.}
+	\label{fig:display_overview}
+\end{figure}
 
 \section{General}
-Displays serve as standard output actors in access-control and surveillance systems, allowing real-time visual verification of detections without additional hardware.  
-In this setup, the \ac{HDMI}-connected monitor provides a direct visualization of processed video frames and overlayed license-plate information.  
-Rendering is performed via OpenCV’s GPU-accelerated pipeline on the Jetson Nano \cite{jetson_nano_doc}.
+Displays are standard output actors in access-control and surveillance systems because they enable immediate, human-readable verification of system behaviour.
+In this setup, the \ac{HDMI}-connected monitor shows a \textbf{local web dashboard} running on the Jetson Nano.
+The dashboard is opened in a browser \textit{on the Jetson itself} and continuously updates while the inference pipeline runs.
+
+The operator sees the processed camera image (license plate region highlighted) and a structured list of recent detections and their derived state (timestamps and fee).
+This keeps all output local to the edge device.
 
 \section{Specific Actor}
 \label{sec:display_specs}
-In this context, a standard \ac{HDMI} display connected through the Jetson Nano’s \ac{HDMI} 2.0 Type-A port acts as an actor.   
-It is able to receive RGB frames, that are further rendered in real time. Textual overlays are then displayed as a result of processing by the inference module.
+In this context, a standard \ac{HDMI} display connected through the Jetson Nano’s \ac{HDMI} 2.0 Type-A port acts as the system actor.
+The monitor renders a browser-based dashboard (served locally by the Jetson) that presents:
+\begin{itemize}
+	\item a live annotated video stream (frame overlays drawn by the inference pipeline), and
+	\item a database-backed parking/session table for the most recent recognized plates.
+\end{itemize}
 
 \begin{table}[H]
 	\centering
@@ -121,7 +60,7 @@ It is able to receive RGB frames, that are further rendered in real time. Textua
 		Power Supply & External 5 V DC adapter (display dependent) \\ \hline
 		Connection Type & \ac{HDMI} male-to-male cable \\ \hline
 		Display Technology & LCD/LED compatible \\ \hline
-		Usage in Project & Visual output of recognition results and system logs \\ \hline
+		Usage in Project & Local dashboard UI: live stream, session log, and operational actions \\ \hline
 	\end{tabular}
 \end{table}
 
@@ -136,27 +75,18 @@ The complete system-level data flow between the camera, Jetson Nano, and display
 	\centering
 	\input{../../tikz/3DomainKnowledgeHardware/Display/DataFlowDisplay.tikz}
 	\caption{Vertical data flow of the system: image acquisition from the LifeCam,\ac{AI} inference on Jetson Nano, and output display via \ac{HDMI}.}
-	\label{fig:dataflow_display_portrait}
+	\label{fig:dataflow_display}
 \end{figure}
 
 \section{Library}
 \subsection{Description}
-The display actor is implemented in software through the OpenCV Python library, specifically its \texttt{highgui} module.  
-It renders processed frames in real time and overlays text and bounding boxes on the live video stream \cite{opencv_doc_2024}.
+From a hardware perspective, the display actor relies on the Jetson Nano graphics output stack to generate a stable \ac{HDMI} signal.
+The operating system detects the connected monitor through \textbf{EDID} (Extended Display Identification Data), negotiates a compatible resolution/refresh rate, and continuously drives the \ac{HDMI} link during runtime.
+The display therefore requires no dedicated device driver integration beyond the standard Jetson/Linux graphics stack; it behaves as an external \ac{HDMI} sink.
 
 \subsection{Installation}
-The required package is installed via:
-
-
-\begin{tcolorbox}[colback=white,colframe=black,coltext= ShellColor, sharp corners, boxrule=0.8pt]
-	\begin{small}
-		\begin{verbatim}
-			
-			sudo apt install python3-opencv	\end{verbatim}
-	\end{small}
-\end{tcolorbox}
-
-After installation, verify using:
+No special installation is required for the display hardware itself beyond connecting the \ac{HDMI} cable and ensuring the Jetson graphics stack is active.
+For verification and diagnostics, the monitor connection can be inspected from the shell:
 
 \begin{tcolorbox}[colback=white,colframe=black,coltext= ShellColor, sharp corners, boxrule=0.8pt]
 	\begin{small}
@@ -165,86 +95,88 @@ After installation, verify using:
 			xrandr	\end{verbatim}
 	\end{small}
 \end{tcolorbox}
-to ensure \ac{HDMI} detection and resolution configuration.
 
 \subsection{Functions}
-Essential OpenCV functions used:
+Essential software elements used for the display actor:
 \begin{itemize}
-	\item \PYTHON{cv2.imshow()} – displays processed video frames.
-	\item \PYTHON{cv2.putText()} – overlays recognition messages.
-	\item \PYTHON{cv2.rectangle()} – draws bounding boxes on detected regions.
-	\item \PYTHON{cv2.waitKey()} – defines frame-refresh delay.
-	
+	\item \textbf{EDID-based detection:} the connected monitor is recognized and a display mode is selected automatically.
+	\item \textbf{Mode control and diagnostics:} resolution and refresh rate can be inspected and adjusted via \SHELL{xrandr}.
+	\item \textbf{Continuous video output:} the Jetson renders the user interface to the framebuffer, which is output over \ac{HDMI}.
 \end{itemize}
 
 \subsection{Data Characteristics}
-\paragraph{Data Types:}  RGB image frames represented as \texttt{uint8} arrays; UTF-8 text for overlay messages.
+\paragraph{Data Types:} RGB camera frames (\texttt{uint8} arrays) that are encoded as JPEG bytes for streaming; JSON objects for table updates; SQLite rows for persistent session state.
 
-\paragraph{Data Structure:}  Each frame is a NumPy array of shape (height, width, 3), over which graphical elements are rendered directly.
+\paragraph{Data Structure:} The dashboard consumes (i) a continuous MJPEG byte stream for the live view and (ii) periodic JSON responses containing plate strings, timestamps, and computed fee values.
 
-\paragraph{Data Quantity:}  Approximately 25–30 frames per second are displayed, each frame about 2–3 MB (720p).  
-Latency from inference to display < 100 ms \cite{edgeAIbook}.
+\paragraph{Data Quantity:} The UI updates continuously for the video stream and polls the JSON endpoint periodically (e.g., every second) to refresh the table.
 
-\paragraph{Data Quality:}  GPU-accelerated rendering maintains clarity and smoothness.  
-Color-coded overlays (green = recognized, red = unregistered) enhance user perception.  
-\ac{HDMI} 2.0 ensures stable 60 Hz output without frame tearing.
+\paragraph{Data Quality:} The video overlays provide immediate visual validation of plate localization, while the table view provides readable, persistent state for the operator.
+The \ac{HDMI} output ensures stable on-device presentation without requiring network connectivity.
 
 \section{Example}
 In this section, a complete example illustrates how the display actor visualizes the system response.
 
 \subsection{Manual}
-To operate, connect the \ac{HDMI} cable between the Jetson Nano and monitor, select the proper input source, and power both devices.
+To operate the display actor, connect the \ac{HDMI} cable between the Jetson Nano and monitor, select the proper input source, and power both devices.
+Start the Jetson application and ensure the user interface is rendered on the connected monitor.
+For demonstration/kiosk operation, use full-screen mode and ensure that the monitor resolution is set so all UI elements are visible.
 
 \subsection{Inside the Example and Code}
-
-
-\subsection{Code}
-\lstinputlisting[
-language=Python,
-caption={Displaying a license plate recognition message on Jetson Nano display},
-label={lst:license_plate_display},
-basicstyle=\ttfamily\small,
-keywordstyle=\color{blue},
-commentstyle=\color{gray},
-stringstyle=\color{green!40!black},
-breaklines=true,
-showstringspaces=false,
-numbers=left,
-numberstyle=\tiny\color{gray},
-frame=single,
-rulecolor=\color{black!30}
-]{../../Code/Display/licenceplateopencv.py}
-
-
-
-\noindent
-This demonstrates the entry event for a vehicle from Emden, Deutschland.  
-When the plate “\texttt{EMD AB 1234}” is recognized, the system displays the localized message  
-\textit{"Willkommen Fahrzeug EMD AB 1234"} (“Welcome Vehicle EMD AB 1234”).  
-For exits, it shows  
-\textit{"Ausfahrt registriert für EMD AB 1234"} (“Exit recorded for EMD AB 1234”).
+The rendered interface on the monitor is organized as a two-panel layout:
+\begin{itemize}
+	\item \textbf{Left:} live camera stream with overlays (bounding box on the detected license plate).
+	\item \textbf{Right:} \textit{PARKING LOG (DB)} table showing the most recent recognized plate(s), timestamps, and the computed fee derived from persisted visit data.
+\end{itemize}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.7\linewidth]{Display/led_display.png}
-	\caption{Display output showing localized entry message for \texttt{EMD AB 1234} (Emden, Germany) \cite{opencv_doc_2024}.}
-	\label{fig:display_output}
+	\includegraphics[width=0.95\linewidth]{Display/dashboard.png}
+	\caption{Full dashboard on the \ac{HDMI} display: annotated live stream (left) and database-backed log table (right).}
+	\label{fig:display_dashboard}
 \end{figure}
+
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}[t]{0.48\linewidth}
+		\centering
+		\includegraphics[width=\linewidth]{Display/sidebar.png}
+		\caption{Table panel (\textit{PARKING LOG (DB)}) with fee output.}
+		\label{fig:display_sidebar}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[t]{0.48\linewidth}
+		\centering
+		\includegraphics[width=\linewidth]{Display/shutDownbutton.png}
+		\caption{Shutdown control for a controlled poweroff from the UI.}
+		\label{fig:display_shutdown}
+	\end{subfigure}
+	\caption{Key dashboard UI elements used as the system actor.}
+	\label{fig:display_ui_elements}
+\end{figure}
+
+
+\subsection{Code}
+No dedicated code is required for the display hardware itself beyond the standard \ac{HDMI} output of the Jetson Nano.
+Software implementation details of the dashboard/UI are documented in the application deployment chapters; here the focus remains on the physical actor and its integration.
 
 \section{Calibration}
 Calibration is limited to brightness, contrast, and resolution adjustments for optimal visibility.  
-Settings are managed using \texttt{xrandr} or the desktop display configuration under JetPack 5.x.
+Settings are managed using \texttt{xrandr} or the desktop display configuration of the Jetson runtime environment.
+For kiosk-like operation, browser zoom and full-screen mode can be used to match the monitor resolution.
 
 \section{Simple Code}
-The OpenCV example above also serves as the minimal functional code verifying proper \ac{HDMI} output and text overlay generation.
+The minimal functional verification for the display actor is to confirm that the monitor is detected and a valid mode is active (resolution/refresh rate), and that the Jetson renders output continuously to the screen.
+This is typically verified using \SHELL{xrandr} together with a visual check that the UI is visible without flicker or tearing.
 
 \section{Simple Application}
-During live inference:
+During live inference, the display actor provides:
 \begin{itemize}
-	\item \textit{Entry Event:} “Willkommen Fahrzeug EMD AB 1234” displayed in green.
-	\item \textit{Exit Event:} “Ausfahrt registriert für EMD AB 1234” displayed in blue.
+	\item \textbf{Live verification:} annotated camera frames with the detected plate region highlighted.
+	\item \textbf{Operational table:} a continuously updated log of plates and their derived state from the SQLite database.
+	\item \textbf{Operator control:} a shutdown action for safe poweroff after the demonstration.
 \end{itemize}
-These localized messages provide clear user feedback at the system interface.
+This provides clear user feedback and makes system behaviour observable directly at the Jetson device.
 
 \section{Tests}
 \subsection{Simple Function Test}
@@ -260,13 +192,18 @@ Run:
 to confirm that the \ac{HDMI} display is detected and configured.
 
 \subsection{Test all Functions}
-Execute the complete inference script; verify real-time text overlays, color changes, and frame-rate stability ( greater than equal to 25 FPS).
+Execute the complete dashboard application and verify:
+\begin{itemize}
+	\item the dashboard loads in the on-device browser,
+	\item the live stream is visible and updates continuously, and
+	\item the table updates from SQLite and the shutdown button triggers the expected action (only when confirmed by the operator).
+\end{itemize}
 
 \section{Constraints}
 \begin{itemize}
 	\item Requires \ac{HDMI}-compatible display; analog VGA unsupported.  
-	\item Minimum 25 FPS for fluid real-time feedback.  
-	\item Text overlays must avoid covering detection regions.  
+	\item Browser must run on the Jetson Nano to display the local dashboard.  
+	\item Video overlays must avoid covering key regions needed for visual validation.  
 	\item Manual brightness/contrast tuning recommended.  
 \end{itemize}
 

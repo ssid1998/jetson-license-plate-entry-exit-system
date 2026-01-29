@@ -1,19 +1,41 @@
 %%%
 %
 % $Autor: Siddhanth Sharma $
-% $Date: 2024-10-31 11:15:45Z $
+% $Date: 2025-10-31 11:15:45Z $
 % $File: file.tex $
 % $Version: 1 $
-%
-% Project: 
-%
+
 %%%
+
+
+\definecolor{c004150}{RGB}{0,65,80}
+\definecolor{c212121}{RGB}{33,33,33}
+\definecolor{cd0d0d0}{RGB}{208,208,208}
+\definecolor{c004250}{RGB}{0,66,80}
+\definecolor{ccfcfcf}{RGB}{207,207,207}
+\definecolor{c202121}{RGB}{32,33,33}
+\definecolor{c4b4b4c}{RGB}{75,75,76}
+\definecolor{c4b4b4b}{RGB}{75,75,75}
+\definecolor{cd7d7d7}{RGB}{215,215,215}
+\definecolor{cd9d9d9}{RGB}{217,217,217}
+\definecolor{c014251}{RGB}{1,66,81}
+\definecolor{c004251}{RGB}{0,66,81}
+\definecolor{c636363}{RGB}{99,99,99}
+\definecolor{c46505e}{RGB}{70,80,94}
+\definecolor{c2b63b6}{RGB}{43,99,182}
+\definecolor{c959595}{RGB}{149,149,149}
+\definecolor{cd06a00}{RGB}{208,106,0}
+\definecolor{cc46a05}{RGB}{196,106,5}
+\definecolor{cfbff07}{RGB}{251,255,7}
+\definecolor{cedf40b}{RGB}{237,244,11}
+\definecolor{cf8f706}{RGB}{248,247,6}
+\definecolor{c9d5000}{RGB}{157,80,0}
+
+\def \globalscale {0.5500000}
 
 
 \chapter{Domain Hardware - Jetson Nano}
 
-%\section{Jetson Nano}
-%\label{sec:jetsonnano}
 
 \section{Description}
 \label{subsec:description}
@@ -120,7 +142,7 @@ The module links the J101 carrier board via a 260-pin SODIMM edge connector, tha
 The J101 carrier board has dimensions of approximately $100\,\text{mm}\times80\,\text{mm}\times29\,\text{mm}$ and is mounted within an anodized aluminum enclosure supplied by Seeed Studio.  
 The function is to allow direct access to peripheral connectors, such as \ac{USB}, \ac{HDMI}, \ac{CSI}, M.2~Key~E, and Ethernet, while maintaining compact form-factor integration suited towards embedded deployment.  
 The passive aluminum heatsink ensures thermal stability during continuous inference workloads, and an optional 5~V~\ac{PWM} fan can be connected to header~J8 for active cooling.  
-Figure~\ref{fig:recomputerJ101v2} shows the top view of the reComputer~J1010 board with major connectors labeled (refer to Section~\ref{sec:Interfaces} for detailed pin-level descriptions).
+Figure~\ref{fig:recomputerJ101v2} shows the top view of the reComputer~J1010 board with major connectors labeled (refer to Section~\ref{sec:interfaces} for detailed pin-level descriptions).
 
 \begin{figure}[H]
 	\centering
@@ -204,44 +226,13 @@ The Seeed Studio J101 carrier board provides multiple connectors (J1--J19) for p
 Figure~\ref{fig:interfaces_layout} illustrates the physical locations of these connectors on the board, including power (J1, J2), \ac{USB} and \ac{HDMI} ports (J3--J5), Ethernet (J6), camera interfaces (J9, J13), \ac{GPIO} header (J10), and auxiliary modules such as the M.2~Key~E and RTC header.  
 This section describes the purpose and electrical characteristics of each connector based on the official Seeed Studio documentation \cite{seeedJ101Manual,reComputer_HardwareLayout}.
 
-%\begin{figure}[H]
-%	\centering
-%	\includegraphics[width=0.95\linewidth]{JetsonNano/interfaces.png}
-%	\caption{Labeled layout of the Seeed Studio reComputer~J1010 carrier board showing connector positions (J1--J19), including power, USB, HDMI, CSI camera ports, GPIO header, and M.2~Key~E slot \cite{seeedJ101Manual,reComputer_HardwareLayout}.}
-%	\label{fig:interfaces_layout}
-%\end{figure}
 
 \bigskip
-%\noindent\textbf{\textcolor{red}{TODO: Convert this to TikZ/illustration diagram later.}}
 
-\definecolor{c004150}{RGB}{0,65,80}
-\definecolor{c212121}{RGB}{33,33,33}
-\definecolor{cd0d0d0}{RGB}{208,208,208}
-\definecolor{c004250}{RGB}{0,66,80}
-\definecolor{ccfcfcf}{RGB}{207,207,207}
-\definecolor{c202121}{RGB}{32,33,33}
-\definecolor{c4b4b4c}{RGB}{75,75,76}
-\definecolor{c4b4b4b}{RGB}{75,75,75}
-\definecolor{cd7d7d7}{RGB}{215,215,215}
-\definecolor{cd9d9d9}{RGB}{217,217,217}
-\definecolor{c014251}{RGB}{1,66,81}
-\definecolor{c004251}{RGB}{0,66,81}
-\definecolor{c636363}{RGB}{99,99,99}
-\definecolor{c46505e}{RGB}{70,80,94}
-\definecolor{c2b63b6}{RGB}{43,99,182}
-\definecolor{c959595}{RGB}{149,149,149}
-\definecolor{cd06a00}{RGB}{208,106,0}
-\definecolor{cc46a05}{RGB}{196,106,5}
-\definecolor{cfbff07}{RGB}{251,255,7}
-\definecolor{cedf40b}{RGB}{237,244,11}
-\definecolor{cf8f706}{RGB}{248,247,6}
-\definecolor{c9d5000}{RGB}{157,80,0}
 
-\def \globalscale {0.5500000}
 
 \begin{figure}[h!]
 	\centering
-%	3DomainKnowledgeHardware/JetsonHardwareDesc
 	\input{../../tikz/3DomainKnowledgeHardware/JetsonHardwareDesc/JetsonNanoOversight.tikz}
 	\caption{Board-level layout and interface overview of the Jetson Nano J1010 {\setlength{\fboxrule}{1.25pt}\setlength{\fboxsep}{0.75pt}\fcolorbox{green}{white}{Author}}}
 	\label{fig:interfaces_layout_oversight}
@@ -259,14 +250,6 @@ This section describes the purpose and electrical characteristics of each connec
 \bigskip
 
 
-%\begin{figure}[h!]
-%	\centering
-%	
-%
-%
-%\caption{Jetson Nano Overview}
-%\end{figure}
-%\bigskip
 
 
 \subsubsection{J1--J19 Connectors }
@@ -293,15 +276,6 @@ Two 15-pin \ac{CSI}-2 connectors supporting 4-lane cameras. Camera control is pr
 Raspberry~Pi-compatible 40-pin header exposing 3.3~V logic \ac{GPIO} and multiplexed buses (I\textsuperscript{2}C, \ac{SPI}, \ac{UART}, I\textsuperscript{2}S, \ac{PWM}). 
 Use the Jetson.\ac{GPIO} Python library for user-space access; detailed electrical behavior is described in Section~\ref{subsec:pinconfig} \cite{reComputer_Jetson_GPIO}.
 
-%\bigskip
-%
-%
-%\begin{tikzpicture}
-%	\node[draw=red, dashed, rounded corners, inner sep=4pt, text width=0.9\linewidth]
-%	{\textbf{\textcolor{red}{TODO: Add the 40-pin description table.}}};
-%\end{tikzpicture}
-%
-%\bigskip
 
 
 \subsubsection{J11: M.2 Key~E}
@@ -329,7 +303,7 @@ x
 \begin{figure}[h!]
 	\centering
 	\input{../../tikz/3DomainKnowledgeHardware/JetsonHardwareDesc/J10PinHeader.tikz}
-	\caption{40-Pin Header \cite{seeedJ101Manual,reComputer_HardwareLayout}.}
+	\caption{40-Pin Header {\setlength{\fboxrule}{1.25pt}\setlength{\fboxsep}{0.75pt}\fcolorbox{green}{white}{Author}}.}
 	\label{fig:40-pin_header}
 \end{figure}
 \paragraph{Numbering conventions.}
@@ -349,7 +323,7 @@ The J101 header follows the widely used Raspberry~Pi layout:
 \end{itemize}
 
 
-%\paragraph{Selected J10 pin map (BOARD numbers).}
+
 \newpage
 \begin{table}[H]
 	\centering
@@ -370,39 +344,6 @@ The J101 header follows the widely used Raspberry~Pi layout:
 \end{table}
 \bigskip
 
-%\paragraph{Safe-use guidance.}
-%Avoid sourcing more than a few mA from a single GPIO; drive external loads through a transistor/MOSFET or a driver IC. 
-%For 5~V sensors/actuators, use a bidirectional level shifter on data lines. 
-%Enable/disable SPI, I\textsuperscript{2}C, UART, and PWM via \texttt{sudo /opt/nvidia/jetson-io/jetson-io.py} and reboot to apply the device-tree overlay \cite{reComputer_Jetson_GPIO}.
-%
-%\paragraph{Examples.}
-%\textit{GPIO toggle (BOARD numbering):}
-%\begin{lstlisting}[language=Python]
-%	import Jetson.GPIO as GPIO, time
-%	LED = 12                 # physical pin 12
-%	GPIO.setmode(GPIO.BOARD)
-%	GPIO.setup(LED, GPIO.OUT, initial=GPIO.LOW)
-%	try:
-%	while True:
-%	GPIO.output(LED, not GPIO.input(LED))
-%	time.sleep(0.5)
-%	finally:
-%	GPIO.cleanup()
-%\end{lstlisting}
-%
-%\textit{I2C device scan (Bus 1):}
-%\begin{lstlisting}[language=Python]
-%	import smbus2
-%	bus = smbus2.SMBus(1)
-%	found = []
-%	for addr in range(0x03, 0x78):
-%	try:
-%	bus.read_byte(addr)
-%	found.append(hex(addr))
-%	except OSError:
-%	pass
-%	print("I2C devices:", found)
-%\end{lstlisting}
 
 \newpage
 \subsubsection{Enable \ac{SPI} Interface on Jetson-Nano}
@@ -450,19 +391,6 @@ You can refer to the \textit{Flashing JetPack OS via Command Line} tutorial for 
 \noindent Create a new \SHELL{.sh} file in the \SHELL{Linux\_for\_Tegra} directory, and run the script. 
 The script content is as follows:
 
-%\bigskip
-%\begin{tikzpicture}[baseline]
-%	\node[
-%	draw=red,
-%	dashed,
-%	rounded corners,
-%	inner sep=4pt,
-%	text width=0.9\linewidth
-%	] {\textbf{\textcolor{red}{TODO: Add the code for modify\_spi.sh}}};
-%\end{tikzpicture}
-%\bigskip
-
-%				
 
 \begingroup
 \lstinputlisting[
@@ -491,11 +419,6 @@ If you want to enable \ac{SPI}2, simply replace the keyword \texttt{spi1} with \
 After modifying the device tree, flash the image to the Jetson Nano using:
 
 \medskip
-%\begin{small}
-%	\begin{quote}
-%		\SHELL{sudo ./flash.sh jetson-nano-emmc mmcblk0p1}
-%	\end{quote}
-%\end{small}
 
 \begin{tcolorbox}[colback=white,colframe=black,coltext= ShellColor, sharp corners, boxrule=0.8pt]
 	\begin{small}
@@ -522,47 +445,17 @@ After rebooting, the \textbf{SPI0\_MOSI}, \textbf{SPI0\_MISO}, \textbf{SPI0\_CS0
 
 Short \textbf{pin~19} and \textbf{pin~21}, which correspond to \textbf{SPI0\_MOSI} and \textbf{SPI0\_MISO} respectively, to perform a loopback test using the \ac{SPI}1 controller.
 
-%\begin{figure}[H]
-%	\centering
-%	\includegraphics[width=0.85\linewidth]{JetsonNano/enable_spi2.jpg}
-%	\caption{SPI1 loopback setup on the Jetson Nano showing shorted pins (MOSI--MISO) for testing SPI communication \cite{reComputer_FlashGuide}.}
-%	\label{fig:enable_spi2}
-%\end{figure}
+Figure~\ref{fig:spi1_loopback} illustrates the physical wiring used for the \ac{SPI}1 loopback test on the Jetson Nano header, while Table~\ref{tab:JetsonGPIO} provides the corresponding pin numbers and GPIO signal mappings for verification.
 
-%\begin{table}
-%	
-%	\centering	
-%	\scalebox{0.85}{
-%	{\small%\scriptsize
-%		\begin{tabular}{|c|c|a|a|c|c|} \hline
-%			\rowcolor{white}	 Sysfs GPIO &   \begin{tabular}{c} \textcolor{white}{I}\\ \textcolor{white}{I}\end{tabular}    Name   \begin{tabular}{c} \textcolor{white}{I}\\ \textcolor{white}{I}\end{tabular}     & Pin & Pin & Name & Sysfs GPIO  \\ \hline
-%			gpio78 & \begin{tabular}{c}I2S\_4\_SDOUT \\ D21 \\ \end{tabular}  & 40 & 39 & \GND   &  \\ \hline
-%			gpio77 & \begin{tabular}{c}I2S\_4\_SDIN  \\ D20 \\ \end{tabular}  & 38 & 37 & \begin{tabular}{c}SPI\_2\_MOSI  \\ D26 \\ \end{tabular}  & gpio12  \\ \hline
-%			gpio51 & \begin{tabular}{c}UART\_2\_CTS  \\ D16 \\ \end{tabular}  & 36 & 35 & \begin{tabular}{c}I2S\_4\_LRCK  \\ D19 \\ \end{tabular}  & gpio76  \\ \hline
-%			& \GND                                                     & 34 & 33 & \begin{tabular}{c}GPIO\_PE6  \\ D13 \\ \end{tabular}     & gpio38  \\ \hline
-%			gpio168& \begin{tabular}{c}LCD\_BL\_PWM \\ D12 \\ \end{tabular}   & 32 & 31 & \begin{tabular}{c}GPIO\_PZ0  \\ D6 \\ \end{tabular}      & gpio200  \\ \hline
-%			& \GND                                                     & 30 & 29 & \begin{tabular}{c}CAM\_AF\_EN  \\ D5 \\ \end{tabular}    & gpio149  \\ \hline
-%			&\begin{tabular}{c}I2C\_1\_SCL\\D1/I2C Bus 0\\\end{tabular} & 28 & 27 & \begin{tabular}{c}I2C\_1\_SDA\\ D0/I2C Bus 0\\\end{tabular}  &         \\   \hline     
-%			gpio20 & \begin{tabular}{c}SPI\_1\_CS1\\ D7\\\end{tabular}    & 26 & 25 &\GND        &          \\ \hline
-%			gpio19 & \begin{tabular}{c}SPI\_1\_CS0\\ D8\\\end{tabular}    & 24 & 23 & \begin{tabular}{c}SPI\_1\_SCK\\ D11\\\end{tabular}            & gpio18  \\ \hline
-%			gpio13 & \begin{tabular}{c}SPI\_2\_MISO\\ D25\\\end{tabular}  & 22 & 21 & \begin{tabular}{c}SPI\_1\_MISO\\ D9\\\end{tabular}            & gpio17   \\  \hline
-%			&      \GND                                            & 20 & 19 & \begin{tabular}{c}SPI\_1\_MOSI\\ D10\\\end{tabular}           & gpio16  \\ \hline
-%			gpio15 & \begin{tabular}{c}SPI\_2\_CS0\\ D24\\\end{tabular}   & 18 & 17 & \Vd        &         \\  \hline 
-%			gpio232& \begin{tabular}{c}SPI\_2\_CS1\\ D23\\\end{tabular}   & 16 & 15 & \begin{tabular}{c}LCD\_TE\\ D22\\\end{tabular}       & gpio194 \\   \hline
-%			&      \GND                                            & 14 & 13 & \begin{tabular}{c}SPI\_2\_SCK\\ D27\\\end{tabular}   & gpio14  \\ \hline
-%			gpio79 & \begin{tabular}{c}I2S\_4\_SCLK\\ D18\\\end{tabular}  & 12 & 11 & \begin{tabular}{c}UART\_2\_RTS\\ D17\\\end{tabular}  & gpio50  \\ \hline
-%			& \begin{tabular}{c}UART\_2\_RX\\ /dev/ttyTHS1 - D15\\\end{tabular}  & 10 &  9 &\GND        &         \\ \hline
-%			& \begin{tabular}{c}UART\_2\_TX\\ /dev/ttyTHS1 - D14\\\end{tabular}  &  8 &  7 & \begin{tabular}{c}AUDIO\_MCLK\\ D4\\\end{tabular}        & gpio216 \\ \hline
-%			&\GND       &  6 &  5 & \begin{tabular}{c}I2C\_2\_SCL\\ I2C Bus 1 - D3\\\end{tabular}     &         \\ \hline
-%			& \Vf       &  4 &  3 & \begin{tabular}{c}I2C\_2\_SDA\\ I2C Bus 1 - D2\\\end{tabular}     &         \\ \hline
-%			& \Vf       &  2 &  1 & \Vd        &     \begin{tabular}{c} \textcolor{white}{I}\\ \textcolor{white}{I}\end{tabular}              \\ \hline
-%		\end{tabular}
-%	}
-%	}
-%
-%	\caption{Pinout of the GPIOs of the Jetson Nano \cite{seeedJ101Manual,jetson_carrier_designguide}} \label{Jetson:gpio}
-%\end{table}
-%											
+\begin{figure}[h!]
+	\centering
+	\resizebox{1\textwidth}{!}{
+		\input{../../tikz/3DomainKnowledgeHardware/JetsonHardwareDesc/SPIConnection.tikz}
+	}
+	\caption{\ac{SPI}1 loopback wiring between pin~19 (MOSI) and pin~21 (MISO) {\setlength{\fboxrule}{1.25pt}\setlength{\fboxsep}{0.75pt}\fcolorbox{green}{white}{Author}}.}
+	\label{fig:spi1_loopback}
+\end{figure}
+
 
 \begin{table}[H]
 	\centering
@@ -627,19 +520,14 @@ Short \textbf{pin~19} and \textbf{pin~21}, which correspond to \textbf{SPI0\_MOS
 \bigskip
 The physical connection diagram is shown below:
 
-%\bigskip
-%\noindent\textbf{\textcolor{red}{TODO: Add image of physical connection diagram after procuring the hardware.}}
-%
 
 
-
-%\bigskip
-
-
-\begin{tikzpicture}
-	\node[draw=red, dashed, rounded corners, inner sep=4pt, text width=0.9\linewidth]
-	{\textbf{\textcolor{red}{TODO: Add image of physical connection diagram after procuring the hardware.}}};
-\end{tikzpicture}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.5\linewidth]{JetsonNano/SPIConnection.png}
+	\caption{Flashing process output confirming successful Jetson Nano \ac{SPI} modification and OS installation \cite{reComputer_FlashGuide}.}
+	\label{fig:enable_spi1}
+\end{figure}
 
 \noindent Load the \ac{SPI} driver module, then download and compile the test program:
 \begin{tcolorbox}[colback=white,colframe=black,coltext= ShellColor, sharp corners, boxrule=0.8pt]
@@ -669,13 +557,7 @@ The physical connection diagram is shown below:
 \end{tcolorbox}
 
 \medskip
-The test result is shown below, indicating that \ac{SPI}1 has successfully completed the loopback transmission. 
 You can also run the command below to check the available \ac{SPI} controllers:
-%\begin{small}
-%	\begin{quote}
-%	\SHELL{ls /dev/spidev*}
-%	\end{quote}
-%\end{small}
 
 \begin{tcolorbox}[colback=white,colframe=black,coltext= ShellColor, sharp corners, boxrule=0.8pt]
 	\begin{small}
@@ -686,16 +568,11 @@ You can also run the command below to check the available \ac{SPI} controllers:
 \end{tcolorbox}
 
 
-\bigskip
-\begin{tikzpicture}
-	\node[draw=red, dashed, rounded corners, inner sep=4pt, text width=0.9\linewidth]
-	{\textbf{\textcolor{red}{TODO: Add image of terminal confirming loopback transmission.}}};
-\end{tikzpicture}
 
 \subsubsection{Summary of Jetson Nano Interfaces}
 \begin{table}[H]
 	\centering
-	\caption{Summary of interfaces on reComputer~J1010 (compiled from the official datasheet) \cite{seeedJ101Manual}.}
+	\caption{Summary of interfaces on reComputer~J1010 \cite{seeedJ101Manual}.}
 	\label{tab:iface_summary}
 	\begin{tabular}{|p{1.4cm}|p{3.0cm}|p{4.2cm}|p{2.7cm}|p{3.0cm}|}
 		\hline
@@ -718,14 +595,6 @@ You can also run the command below to check the available \ac{SPI} controllers:
 	\end{tabular}
 \end{table}
 
-\newpage
-%\section{Data Quality}
-%The Jetson Nano offers consistent high-resolution image capture through its dedicated MIPI CSI-2 interface, minimizing latency compared to USB cameras. 
-%GPU-accelerated image preprocessing ensures robust frame quality and stability for license plate detection under variable illumination \cite{edgeAIbook}.
-%
-%\section{Data Quantity}
-%The CSI camera streams up to 30~FPS at 720p or 1080p resolution, producing 2--4~MB per frame. 
-%A 64--128~GB microSD card or USB~3.0 SSD provides sufficient capacity for long-duration data recording.
 
 \newpage
 \section{Data Characteristics}
@@ -750,14 +619,6 @@ Matrices normalized are batched into tensors, as a prerequisite to neural networ
 $N$ is a representation of batch size.  
 Intermediate feature maps within the YOLOv8 model follow convolutional tensor structures $(B, C, H', W')$, dynamically allocated in \ac{GPU} memory using the CUDA runtime.  
 Through the inference process, \ac{GPU} memory bandwidth goes up to to 25.6~GB/s (LPDDR4 @ 1600~MHz) while establishing real-time processing.\cite{jetsonNanoDatasheet}.  
-%Figure~\ref{fig:jetson_data_flow} conceptually illustrates the Jetson Nano data pipeline.
-
-%\begin{figure}[H]
-%	\centering
-%	\includegraphics[width=0.9\linewidth]{JetsonNano/dataflow_jetson.png}
-%	\caption{Conceptual data flow in the Jetson Nano pipeline: image acquisition, preprocessing, inference, and output stages \cite{jetson_nano_doc,edgeAIbook}.}
-%	\label{fig:jetson_data_flow}
-%\end{figure}
 
 \subsection{Data Quantity}
 The Jetson Nano continuously processes high-frequency data streams consisting primarily of camera frames and model inference outputs.  
@@ -848,20 +709,6 @@ Visual variance across 1000 frames of static test scenes was below 1.2~\% in ave
 In summary, the Jetson Nano demonstrates robust handling of real-time video data, maintaining consistent quality in spatial, numerical, and temporal domains.  
 When paired with TensorRT’s mixed-precision optimization and sufficient cooling, the platform delivers deterministic, low-latency \ac{AI} inference suitable for continuous embedded vision applications.
 
-%\subsection{Data Formats Summary}
-%\begin{table}[H]
-%	\centering
-%	\caption{Summary of primary data types and formats processed by the Jetson Nano \cite{jetson_nano_doc,opencv_doc_2024}}
-%	\label{tab:jetson_data_types}
-%	\begin{tabular}{|p{4cm}|p{4cm}|p{6cm}|}
-%		\hline
-%		\textbf{Data Type} & \textbf{Format / Precision} & \textbf{Description} \\ \hline
-%		Input Frames & RGB888 / uint8 & Captured via USB camera (OpenCV / GStreamer) \\ \hline
-%		Preprocessed Images & FP32 Tensor & Normalized and resized (640$\times$640) \\ \hline
-%		Inference Outputs & FP16 / FP32 Tensor & Bounding boxes and class confidence values \\ \hline
-%		System Logs & ASCII / CSV & Temperature, utilization, and power metrics \\ \hline
-%	\end{tabular}
-%\end{table}
 
 \subsubsection{Data Flow Efficiency}
 The Jetson Nano’s unified memory architecture and \ac{GPU}-accelerated TensorRT engine reduce latency between data acquisition and inference.  
@@ -891,14 +738,12 @@ This ensures deterministic data flow with sub-40~ms total pipeline latency, enab
 	\begin{subfigure}[b]{0.40\linewidth}
 		\centering
 		\includegraphics[width=\linewidth]{JetsonNano/recomputercase.png}
-%		\caption{reComputer J1010 case with grid reference (dimensions in cm and inches)~\cite{NVIDIAJetsonNanoDatasheet}.}
 		\label{fig:recomputer_case}
 	\end{subfigure}
 	\hfill
 	\begin{subfigure}[b]{0.40\linewidth}
 		\centering
 		\includegraphics[width=\linewidth]{JetsonNano/heatsink.png}
-%		\caption{Passive aluminum heatsink for Jetson Nano module~\cite{NVIDIAJetsonNanoDatasheet}.}
 		\label{fig:jetson_heatsink}
 	\end{subfigure}
 	\caption{Physical components of the Seeed Studio reComputer J1010: outer enclosure and passive heatsink for Jetson Nano thermal management~\cite{NVIDIAJetsonNanoDatasheet}.}
@@ -1025,7 +870,7 @@ Before proceeding to the installation steps, it is essential that the reComputer
 Next, there is a breif overview on the tutorial about installing the system via NVIDIA SDK Manager. The NVIDIA SDK Manager is an all-in-one tool that bundles developer software and provides an end-to-end development environment setup solution for NVIDIA SDKs.
 
 
-\begin{figure}[H] % Use [H] if you want to force it exactly here (requires package float)
+\begin{figure}[H]
 	\centering
 	\includegraphics[width=0.7\linewidth]{JetsonNano/hardware_prep4.png}
 	\caption{Flashing JetPack OS workflow using NVIDIA SDK Manager.}
@@ -1053,7 +898,7 @@ On the Linux host PC screen, the mouse can be right clicked to open a Terminal. 
 \texttt{sdkmanager}
 The first time you use NVIDIA SDK Manager, a web page will pop up prompting you to log in with your previously registered NVIDIA account.
 
-\begin{figure} % Requires \usepackage{float}
+\begin{figure} 
 	\centering
 	\includegraphics[width=0.3\textwidth]{JetsonNano/hardware_prep6.png}
 	\caption{Command to start sdkmanager command in Terminal}
@@ -1079,7 +924,7 @@ There are more selections for you to choose in the first screen:
 
 Click \textbf{Continue} to proceed to the next step.
 
-\begin{figure}[H] % Requires \usepackage{float}
+\begin{figure}[H] 
 	\centering
 	\includegraphics[width=0.7\linewidth]{JetsonNano/hardware_prep7.png}
 	\caption{Target Device}
@@ -1092,7 +937,7 @@ Click \textbf{Continue} to proceed to the next step.
 
 From Details and License, you can expand the host components and target components panels to review the components that will be installed on your system.
 
-\begin{figure}[H] % Requires \usepackage{float}
+\begin{figure}[H] 
 	\centering
 	\includegraphics[width=0.7\linewidth]{JetsonNano/hardware_prep8.png}
 	\caption{OS Components}
@@ -1103,7 +948,7 @@ If you only need to install the system, you can uncheck the SDK component.
 
 When choosing which components to install, you may want to keep an eye on the capacity used. The built-in eMMC size is only 16GB, please allocate and use this space wisely according to your actual needs.
 
-\begin{figure}[H] % Requires \usepackage{float}
+\begin{figure}[H] 
 	\centering
 	\includegraphics[width=0.95\textwidth]{JetsonNano/hardware_prep9.png}
 	\caption{Allocating space}
@@ -1125,9 +970,9 @@ Before the installation begins, SDK Manager prompts you to enter your \SHELL{sud
 
 After a while, we will be asked to set up the new system for our reComputer. Since we manually forced into recovery mode, we select \textbf{Manual setup: set the target to Force Recovery Mode via manual operations} here. Meanwhile, we choose the default \textbf{Pre-Config}.
 
-\begin{figure}[H] % requires \usepackage{float}
+\begin{figure}[H] 
 	\centering
-	\includegraphics[width=0.7\linewidth]{JetsonNano/installingsystem.png}% adjust path if needed
+	\includegraphics[width=0.7\linewidth]{JetsonNano/installingsystem.png}
 	\caption{SDK Manager: choose \textbf{Manual setup} (Force Recovery Mode via manual operations) and keep \textbf{Pre-Config}. Set the new \texttt{username} and \texttt{password} for the target.}
 	\label{fig:sdkmanager_manual_setup}
 \end{figure}
@@ -1178,7 +1023,7 @@ When the following window appears, the installation has been done. The Jetson ca
 
 To customize the BSP (NVIDIA Linux Driver Package), flashing JetPack OS via command line is relatively simple for Linux knowledge-based users.
 
-\begin{figure}[H] % Requires \usepackage{float}
+\begin{figure}[H]
 	\centering
 	\includegraphics[width=0.7\linewidth]{JetsonNano/JOSviaCMD.png}
 	\caption{Overview of the JetPack OS flashing process via command line — from downloading and preparing system files on the Ubuntu host to flashing and initializing the reComputer.}
@@ -1197,7 +1042,7 @@ On the Linux host PC, open a browser and navigate to the Jetson Linux Archive. F
 \end{verbatim}
 \smallskip
 
-\begin{figure}[H] % Requires \usepackage{float}
+\begin{figure}[H] 
 	\centering
 	\includegraphics[width=0.7\linewidth]{JetsonNano/NVIDIAL4T.png}
 	\caption{Official NVIDIA Jetson L4T 32.7.1 download page showing links for \textbf{L4T Driver Package (BSP)} and \textbf{Sample Root Filesystem}. These are the essential files required for flashing JetPack OS manually.}
@@ -1270,7 +1115,7 @@ Since the reComputer J1010 is forced into recovery mode and the module is Jetson
 		\end{verbatim}
 	\end{small}
 \end{tcolorbox}
-\begin{figure}[H] % Requires \usepackage{float}
+\begin{figure}[H] 
 	\centering
 	\includegraphics[width=0.7\linewidth]{JetsonNano/flashingsystem.png}
 	\caption{Flashing process output after executing \texttt{sudo ./flash.sh jetson-nano-devkit-emmc mmcblk0p1}, showing partition writing and completion message indicating successful Jetson Nano system flash.}
@@ -1353,11 +1198,3 @@ If you encounter the error shown below in Flashing to eMMC with command-line -- 
 \end{figure}
 
 If you can't get into the system in Flashing to eMMC with command-line -- Step 3 and are stuck on the boot up display command line, you probably did not exit force recovery mode. Likewise, it is not valid for you to unplug the jumper to exit force recovery mode while the Jetson-101 Carrier Board is powered up, this all needs to be done while you are powered down.
-
-\section{SSH Connection}
-
-\begin{figure}[h!]
-	\centering
-	% \includegraphics[width=0.8\textwidth]{General/billing_flow.png}
-	\todo[inline]{Add SSH hosting connection }
-\end{figure}
