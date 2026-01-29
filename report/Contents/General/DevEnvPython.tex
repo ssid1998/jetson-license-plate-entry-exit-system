@@ -1,9 +1,7 @@
 %%%
 %
 % $Autor: Siddhanth Sharma $
-% $Datum: 2021-05-14 $
-% $Dateiname:
-% $Version: 4620 $
+% $Datum: 2026-01-02 $
 %
 % !TeX spellcheck = GB
 % !TeX program = pdflatex
@@ -11,10 +9,8 @@
 %
 %%%
 
-\chapter{\textcolor{red}{Development Environment -- Python}}
+\chapter{Development Environment -- Python}
 \index{Domain Knowledge -- Tools}
-
-\providecommand{\TBD}[1]{\textcolor{red}{#1}}
 
 \noindent
 This chapter documents the \textbf{project-relevant} tools and the system environment used to build and run the license plate detection system.
@@ -34,23 +30,77 @@ The interpreter version was verified directly on the target device using \SHELL{
 Python is used for the complete processing chain:
 \begin{itemize}
 	\item \textbf{Camera access and image acquisition} (USB camera frames via OpenCV).
-	\item \textbf{Image preprocessing} (cropping, resizing, binarization/contrast adjustments for OCR).
-	\item \textbf{Detection inference} (license plate detection model on the Jetson).
+	\item \textbf{Image preprocessing} (cropping, resizing, binarization and contrast adjustment for OCR).
+	\item \textbf{Detection inference} (license plate detection model executed on the Jetson).
 	\item \textbf{OCR integration} (text extraction from the cropped plate region).
 	\item \textbf{Local logging} (timestamps and detection results persisted locally).
 \end{itemize}
 
 \vspace{1mm}
 \noindent
-	The following Python modules are relevant for this project:
+The following Python modules are relevant for this project:
+\begin{itemize}
+	\item \textbf{OpenCV (cv2):} camera access, preprocessing, and visualization.
+	\item \textbf{NumPy:} array operations and numerical processing.
+	\item \textbf{SQLite (sqlite3):} lightweight, file-based storage for entries, exits, and timestamps.
+	
+	\item \textbf{Detection runtime:}
 	\begin{itemize}
-		\item \textbf{OpenCV (cv2):} camera access, preprocessing, visualization.
-		\item \textbf{NumPy:} array operations and numerical processing.
-		\item \textbf{SQLite (sqlite3):} lightweight, file-based storage for entries/exits and timestamps.
-		\item \textbf{Detection runtime:} TensorRT engine (\FILE{/media/myssd/jetson-inference/data/networks/best.engine}) built from a YOLOv8 model exported to ONNX.
-		\item \textbf{OCR runtime:} EasyOCR (\texttt{easyocr==1.7.1}), configured to run on CPU (\PYTHON{gpu=False}) to reduce GPU memory pressure.
-		\item \textbf{UI layer:} Flask web dashboard (live view + billing table) served from the Jetson (\TBD{confirm final port and launch command}).
+		\item \textbf{Optimized deployment:}  
+		TensorRT engine loaded by the Flask dashboard.
+		
+		{\sloppy\small
+			\begin{itemize}
+				\item Engine file: \FILE{/media/myssd/jetson-inference/data/networks/best.engine}
+				\item Loader script: \FILE{Code/LicencePlateDetection/jetson-inference/python/www/flask/dashboard2.py}
+			\end{itemize}
+		}
+		
+		\item \textbf{Prototype / runtime fallback:}  
+		Ultralytics YOLO (PyTorch) loading trained weights.
+		
+		{\sloppy\small
+			\begin{itemize}
+				\item Weights file: \FILE{best.pt}
+				\item Detector module: \FILE{Code/LicencePlateDetection/jetson\_app/detector.py}
+				\item Prototype dashboard: \FILE{Code/LicencePlateDetection/jetson\_app/dashboard.py}
+			\end{itemize}
+		}
 	\end{itemize}
+	
+	\item \textbf{OCR runtime:}  
+	EasyOCR (\texttt{easyocr==1.7.1}).  
+	In the deployment dashboard (\FILE{dashboard2.py}), OCR is executed on the CPU
+	(\PYTHON{gpu=False}) to reduce GPU memory pressure.
+	
+	\item \textbf{UI layer (final demo):}
+	\begin{itemize}
+		\item \textbf{Web dashboard (Jetson):}  
+		Flask application started via \SHELL{python3 dashboard2.py}, listening on
+		\texttt{0.0.0.0:8055}.
+		
+		{\sloppy\small
+			\begin{itemize}
+				\item Application path: \FILE{Code/LicencePlateDetection/jetson-inference/python/www/flask/dashboard2.py}
+				\item Endpoints:
+				\begin{itemize}
+					\item \texttt{/} — Web UI
+					\item \texttt{/video\_feed} — MJPEG video stream
+					\item \texttt{/api/billing} — JSON billing API
+				\end{itemize}
+			\end{itemize}
+		}
+		
+		\item \textbf{Prototype UI (not used in final demo):}  
+		Flet-based kiosk dashboard implemented as a GUI application.
+		
+		{\sloppy\small
+			\begin{itemize}
+				\item Path: \FILE{Code/LicencePlateDetection/jetson\_app/dashboard.py}
+			\end{itemize}
+		}
+	\end{itemize}
+\end{itemize}
 
 \section{Installation}
 \noindent
@@ -61,9 +111,9 @@ Project dependencies were installed via \SHELL{pip}/\SHELL{pip3}, ideally from a
 \noindent
 \textbf{Reproducibility items to document:}
 \begin{itemize}
-	\item \textbf{Requirements file:} \TBD{final requirements file used on Jetson (path + name).}
-	\item \textbf{Installation command:} \TBD{e.g., \SHELL{pip3 install -r requirements.txt}.}
-	\item \textbf{Virtual environment:} \TBD{confirm if a venv is used; if yes, provide its location and activation command.}
+	\item \textbf{Requirements file:} \FILE{Code/LicencePlateDetection/requirements.txt}.
+	\item \textbf{Installation command:} from the repository root, \SHELL{python3 -m pip install -r Code/LicencePlateDetection/requirements.txt}.
+	\item \textbf{Virtual environment:} the development repository contains a venv folder at \FILE{Code/LicencePlateDetection/.venv}. If used on the Jetson, it is activated with \SHELL{source Code/LicencePlateDetection/.venv/bin/activate} (created via \SHELL{python3 -m venv .venv}).
 \end{itemize}
 
 \vspace{1mm}
@@ -80,10 +130,11 @@ Project dependencies were installed via \SHELL{pip}/\SHELL{pip3}, ideally from a
 \noindent
 Only project-relevant configuration is required:
 \begin{itemize}
-		\item \textbf{Interpreter selection:} system Python vs.\ virtual environment activation (\TBD{document the exact activation command}).
+		\item \textbf{Interpreter selection:} system Python (\FILE{/usr/bin/python3}) vs.\ virtual environment activation (\SHELL{source Code/LicencePlateDetection/.venv/bin/activate}).
 		\item \textbf{Hardware acceleration visibility:} CUDA is available from Python (\PYTHON{torch.cuda.is\_available()} $\rightarrow$ \texttt{True}).
 		\item \textbf{Memory-aware runtime setup:} OCR is configured to run on CPU (\PYTHON{gpu=False}) to keep GPU memory available for TensorRT inference and reduce OOM risk on the 4\,GB unified-memory device.
-		\item \textbf{Post-processing:} \TBD{confirm whether IoU-based NMS is implemented in the final demo script, or if confidence filtering/top-1 selection is used.}
+		\item \textbf{Post-processing:} Non-Maximum Suppression (NMS) is performed inside the YOLO runtime. In our scripts we control this via the model thresholds (e.g., \PYTHON{conf=0.2} and \PYTHON{iou=0.5} in \FILE{Code/LicencePlateDetection/jetson\_app/detector.py}).
+		\item \textbf{Offline OCR models:} \FILE{Code/LicencePlateDetection/jetson\_app/ocr\_pipeline.py} disables automatic model downloads (\PYTHON{download\_enabled=False}); therefore the EasyOCR model files must already be present on the Jetson (downloaded once during initial setup).
 \end{itemize}
 
 \section{First Steps}
@@ -144,10 +195,8 @@ rulecolor=\color{black!30}
 ]{../../Code/SystemTools/python_project_sanity_check.py}
 
 
-\chapter{\textcolor{red}{Development Environment -- Hardware / OS / System Tools}}
+\chapter{Development Environment -- Hardware / OS / System Tools}
 \index{Development Environment -- Hardware}
-
-\providecommand{\TBD}[1]{\textcolor{red}{#1}}
 
 \section{Version}
 \noindent
@@ -175,7 +224,7 @@ Operating locally reduces latency and avoids dependence on external servers for 
 Project-relevant system aspects include:
 \begin{itemize}
 	\item \textbf{Access mode:} local GUI (monitor/keyboard) or headless operation via SSH.
-	\item \textbf{Remote development:} \TBD{confirm whether VS Code Remote is blocked due to \texttt{glibc}; if yes, document SSHFS/SFTP mounting as workaround.}
+	\item \textbf{Remote development:} VS Code Remote is blocked on JetPack 4.x because the VS Code Remote Server requires \texttt{glibc 2.28}, while Ubuntu 18.04 on Jetson provides \texttt{glibc 2.27}. As a workaround, the project was edited locally and synchronized to the Jetson via SFTP (see \FILE{Code/LicencePlateDetection/.vscode/sftp.json}) while using SSH for terminal commands.
 	\item \textbf{Resource constraints:} Jetson Nano has 4\,GB unified memory, requiring memory-aware configuration for stable inference.
 \end{itemize}
 
@@ -199,11 +248,12 @@ System configuration steps relevant to this project:
 \begin{itemize}
 	\item \textbf{SSH enablement:} verify headless access for deployment/debugging.
 	\item \textbf{Performance monitoring:} confirm \SHELL{tegrastats} availability for runtime observation.
-	\item \textbf{Power/performance mode:} \TBD{confirm whether \SHELL{jetson\_clocks} is used for stable inference timing.}
+	\item \textbf{Power/performance mode:} for benchmarking and stable inference timing the Jetson is set to maximum performance using \SHELL{sudo nvpmodel -m 0} and \SHELL{sudo jetson\_clocks}.
 	\item \textbf{Storage:} external SSD mounted at \FILE{/media/myssd} (\texttt{/dev/sda2}, 1.8\,TB).
 	\item \textbf{Swap:} swapfile at \FILE{/media/myssd/swapfile} (8\,GB) and zram swap devices (\texttt{/dev/zram0..3}).
 	\item \textbf{Camera:} USB camera is available as \FILE{/dev/video0} (Microsoft LifeCam).
-	\item \textbf{TensorRT engine build (on-device):} \TBD{confirm final command and ONNX source path; example: \SHELL{/usr/src/tensorrt/bin/trtexec --onnx=best.onnx --saveEngine=best.engine --fp16}.}
+	\item \textbf{TensorRT engine build (on-device):} the deployed Flask dashboard expects the engine file at \FILE{/media/myssd/jetson-inference/data/networks/best.engine} (see \FILE{Code/LicencePlateDetection/jetson-inference/python/www/flask/dashboard2.py}). The engine is built from an exported ONNX model using TensorRT's \SHELL{trtexec}, for example:
+	\SHELL{trtexec --onnx=best.onnx --saveEngine=/media/myssd/jetson-inference/data/networks/best.engine --fp16}.
 	\end{itemize}
 
 \section{First Steps (GUI / UI)}
