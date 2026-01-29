@@ -117,7 +117,7 @@ In the context of this project, the camera is mounted on a stand that is adjusta
 \label{sec:lifecam_specific}
 
 The model specific to this project is the \textbf{Microsoft LifeCam Show (Model~1139)}and connects with the Jetson Nano via a \ac{USB}~2.0 Type-A interface, capable of supplying both \textbf{data transmission} and \textbf{5~V~DC power} (up to 500~mA).  
-While operational, the LifeCam functions as a plug-and-play UVC device, which Linux-based systems such as JetPack~5.x are able to automatically recognize, appearing under \texttt{/dev/video0} \cite{linux_uvc_driver, jetson_nano_doc}.  
+While operational, the LifeCam functions as a plug-and-play UVC device, which Linux-based systems such as JetPack~4.6.x are able to automatically recognize, appearing under \texttt{/dev/video0} \cite{linux_uvc_driver, jetson_nano_doc}.  
 
 \bigskip
 \textbf{Design Specifics and Mounting Accessory Description:}  
@@ -145,7 +145,7 @@ Figure~\ref{fig:lifecam_label} illustrates the camera's back label, providing mo
 In combination, the figures give a summary of both the \textbf{hardware configuration} and the \textbf{mounting system} describing the project’s image acquisition setup.
 
 \section{Camera Specification}
-Camera specifications are derived from Microsoft's official datasheet and are verified using empirical testing on Ubuntu~20.04 under JetPack~5.x.  
+Camera specifications are derived from Microsoft's official datasheet and are verified using empirical testing on Ubuntu~18.04 under JetPack~4.6.x.  
 Key parameters are described in Table~\ref{tab:lifecam_specs}.
 
 \begin{table}[H]
@@ -370,4 +370,3 @@ The camera maintained stable frame rates (~30~FPS) and temperature below 38°C d
 	\item OpenCV Camera Module Guide — \cite{opencv_doc_2024}
 	\item NVIDIA Jetson Nano Developer Guide — \cite{jetson_nano_doc}
 \end{itemize}
-
