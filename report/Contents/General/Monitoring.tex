@@ -1,6 +1,6 @@
 %%%
 %
-% $Autor: Shubhankar Dumka, Gautam Ramesh, Siddhanth Sharma $
+% $Autor: Siddhanth Sharma $
 % $Date: 2026-01-24 $
 % $File: Monitoring.tex $
 % $Version: 1.0 $
@@ -11,7 +11,7 @@
 %
 %%%
 
-\chapter{\textcolor{red}{Monitoring}}
+\chapter{Monitoring}
 \label{ch:monitoring}
 \index{Monitoring}
 
@@ -34,6 +34,7 @@ The core objectives for this project are:
 	\item \textbf{Hardware health:} detect resource pressure and thermal throttling on the Jetson Nano.
 	\item \textbf{Availability:} detect crashes, camera failures, and model-load failures quickly.
 	\item \textbf{Data quality:} identify unreadable/low-quality plate crops and collect them as new training data.
+	\item \textbf{Operational correctness:} ensure that entry/exit logic and price calculation behave plausibly during a demo run (e.g., no duplicate charges for the same plate in a short time window).
 \end{itemize}
 
 % --------------------------------------------------------
@@ -50,6 +51,7 @@ The project uses a small set of practical signals that are easy to collect local
 	\item \textbf{Throughput indicator:} processing interval / FPS-style feedback during testing (e.g., camera test scripts overlay FPS).
 	\item \textbf{System resources (Jetson):} temperature, CPU/GPU load, memory usage, and disk space using built-in OS tools.
 	\item \textbf{Operational events:} errors such as camera not opening, empty frames, and model-load failures.
+	\item \textbf{Demo state signals:} displayed plate state (e.g., the overlay \texttt{READ: ...}), the live web UI table, and the computed fee from the SQLite state (implemented in \FILE{Code/LicencePlateDetection/jetson-inference/python/www/flask/dashboard2.py}).
 \end{itemize}
 
 \subsection{How metrics are collected and stored}
@@ -59,11 +61,13 @@ The project uses a small set of practical signals that are easy to collect local
 To remain feasible on a Jetson Nano, metrics are stored locally and kept simple:
 \begin{itemize}
 	\item \textbf{Event log (SQLite):}
-	detections are persisted in a lightweight SQLite database using \PYTHON{sqlite3}.
-	In the reference implementation, \PYTHON{DatabaseManager} (see \FILE{Code/LicencePlateDetection/jetson\_app/db.py}) stores \PYTHON{plate\_text}, \PYTHON{confidence}, and \PYTHON{timestamp} in the local database file\linebreak
-	\FILE{Code/LicencePlateDetection/jetson\_app/parking.db}.
-	\item \textbf{Failure evidence (images):}
-	when a plate crop cannot be read, the system stores the crop image in a dedicated directory for later analysis (created on demand in \FILE{Code/LicencePlateDetection/jetson\_app/dashboard.py}).
+	the deployed dashboard persists a minimal \texttt{visits} table using \PYTHON{sqlite3} (\FILE{Code/LicencePlateDetection/jetson-inference/python/www/flask/dashboard2.py}).
+	Each plate acts as a primary key and is tracked with an \textbf{entry timestamp} and a \textbf{last-seen timestamp}.
+	This supports lightweight monitoring of \emph{currently seen cars} and \emph{demo billing state} via the local database file configured as \PYTHON{DB\_PATH} (default:\linebreak
+	\texttt{/media/myssd/jetson-inference/python/www/flask/parking.db}).
+	\item \textbf{Optional evidence capture (images):}
+	the current deployed dashboard does \textbf{not} automatically persist plate crops for unreadable cases.
+	For dataset growth, captures are obtained either by temporarily enabling \PYTHON{cv2.imwrite(...)} in \FILE{Code/LicencePlateDetection/jetson-inference/python/www/flask/dashboard2.py} (store the stable crop used for OCR), or by using a dedicated capture script during development (example: \FILE{Code/LicencePlateDetection/jetson\_app/detector.py} writes periodic samples to \FILE{Code/LicencePlateDetection/jetson\_app/captures}).
 	\item \textbf{Resource snapshots (manual / scheduled):}
 	during testing and demos, Jetson resource metrics can be observed with \SHELL{tegrastats} or by reading thermal sensors from \FILE{/sys/devices/virtual/thermal/}.
 	If required, these outputs can be appended to a plain log file at a low frequency (e.g., every 10--30 seconds) to avoid overhead.
@@ -76,9 +80,11 @@ To remain feasible on a Jetson Nano, metrics are stored locally and kept simple:
 The monitoring concept follows the deployed data flow:
 	\begin{enumerate}
 		\item \textbf{Camera input} is validated (camera opens, frames are non-empty).
-		\item \textbf{Detection} runs with a confidence threshold (example: \PYTHON{conf=0.2} in \FILE{Code/LicencePlateDetection/jetson\_app/detector.py}).
-		\item \textbf{OCR pipeline} validates output format and confidence (example: \PYTHON{validateGermanPlate()} and \PYTHON{confThreshold}).
-		\item \textbf{Logging layer} writes a minimal event record (SQLite) and stores failure samples as images.
+		\item \textbf{Detection} runs through a TensorRT engine and only processes boxes above a confidence threshold (configured via \PYTHON{CONFIDENCE\_THRESHOLD} in\linebreak
+		\FILE{Code/LicencePlateDetection/jetson-inference/python/www/flask/dashboard2.py}).
+		\item \textbf{OCR gating} is time-based: OCR is executed only after the bounding box is stable for at least \PYTHON{OCR\_DELAY} and not more frequently than \PYTHON{OCR\_COOLDOWN} (\FILE{Code/LicencePlateDetection/jetson-inference/python/www/flask/dashboard2.py}).
+		\item \textbf{Normalization/validation} cleans OCR output into a German plate format using \PYTHON{clean\_german\_plate()} and a small corrections dictionary (\FILE{Code/LicencePlateDetection/jetson-inference/python/www/flask/dashboard2.py}).
+		\item \textbf{Logging layer} writes a minimal state record (SQLite) by inserting/updating \texttt{visits} (plate $\rightarrow$ entry\_ts, last\_seen\_ts).
 		\item \textbf{Operator checks} (during operation) confirm system resources and review logs/samples.
 	\end{enumerate}
 
@@ -96,9 +102,8 @@ The collection strategy is intentionally selective to control storage usage on t
 \noindent
 New data is captured under conditions that indicate that the current model/pipeline struggles:
 \begin{itemize}
-	\item \textbf{Unreadable OCR:} if the OCR result is empty or invalid, the best plate crop is stored for later inspection (see \FILE{Code/LicencePlateDetection/jetson\_app/dashboard.py}).
-	\item \textbf{High-confidence detections:} the detector script periodically saves frames and plate crops when detection confidence exceeds a threshold (example: \PYTHON{captureConfidence=0.5} with a minimum interval of \PYTHON{1500ms} in \FILE{Code/LicencePlateDetection/jetson\_app/detector.py}).
-	\item \textbf{Sharpest sample selection:} multiple candidate crops are buffered and the sharpest crop is selected using the variance of Laplacian (implemented in \FILE{Code/LicencePlateDetection/jetson\_app/dashboard.py}).
+	\item \textbf{OCR fails / invalid format:} if the dashboard produces no valid plate string after \PYTHON{clean\_german\_plate()}, the recommended workflow is to \emph{temporarily} enable crop saving in \FILE{Code/LicencePlateDetection/jetson-inference/python/www/flask/dashboard2.py} so that hard cases can be reviewed offline.
+	\item \textbf{High-confidence detections:} for planned dataset collection runs, the development detector can periodically save frames and plate crops when detection confidence exceeds a threshold (example: \PYTHON{captureConfidence=0.5} with a minimum interval of \PYTHON{1500ms} in \FILE{Code/LicencePlateDetection/jetson\_app/detector.py}).
 \end{itemize}
 
 \noindent
@@ -149,22 +154,19 @@ Checks are used at three times: \textbf{startup}, \textbf{runtime}, and \textbf{
 
 \begin{itemize}
 	\item \textbf{Python environment sanity:} verify imports and camera access using the project script \FILE{report/Code/SystemTools/python\_project\_sanity\_check.py}.
-	\item \textbf{Model availability:} verify the expected model file exists before starting inference (paths are printed during initialization in \FILE{Code/LicencePlateDetection/jetson\_app/dashboard.py}).
-	\item \textbf{Database readiness:} ensure the SQLite table exists on startup (\PYTHON{DatabaseManager.\_create\_table()} in \FILE{Code/LicencePlateDetection/jetson\_app/db.py}).
+	\item \textbf{Engine availability:} verify the TensorRT engine file configured as \PYTHON{ENGINE\_PATH} exists before starting inference (\FILE{Code/LicencePlateDetection/jetson-inference/python/www/flask/dashboard2.py}).
+	\item \textbf{Database readiness:} ensure the SQLite table \texttt{visits} exists on startup (\PYTHON{init\_db()} in \FILE{Code/LicencePlateDetection/jetson-inference/python/www/flask/dashboard2.py}).
+	\item \textbf{Service supervision:} when started as a systemd service, verify \texttt{Restart=always} and inspect startup logs via \SHELL{systemctl status} / \SHELL{journalctl} (\FILE{Code/LicencePlateDetection/lpr-system.service}).
 \end{itemize}
 
 \subsection{Runtime checks}
 \index{Monitoring!Checks!Runtime}
 
 \begin{itemize}
-	\item \textbf{Frame validity:} skip empty frames / empty plate crops (handled in\linebreak
-	\FILE{Code/LicencePlateDetection/jetson\_app/ocr\_pipeline.py} and\linebreak
-	\FILE{Code/LicencePlateDetection/jetson\_app/dashboard.py}).
-	\item \textbf{Camera fallback:} attempt an external camera first and fall back to a default camera index if unavailable (implemented in\linebreak
-	\FILE{Code/LicencePlateDetection/jetson\_app/dashboard.py}).
-	\item \textbf{Output plausibility:} validate plate text against a German plate pattern before accepting it (implemented in\linebreak
-	\PYTHON{validateGermanPlate()} in\linebreak
-	\FILE{Code/LicencePlateDetection/jetson\_app/ocr\_pipeline.py}).
+	\item \textbf{Frame validity:} handle missing frames by continuing the loop and retrying (\FILE{Code/LicencePlateDetection/jetson-inference/python/www/flask/dashboard2.py}).
+	\item \textbf{Camera fallback:} attempt camera index 0 and fall back to index 1 if needed (\FILE{Code/LicencePlateDetection/jetson-inference/python/www/flask/dashboard2.py}).
+	\item \textbf{OCR throttling:} avoid spamming OCR using \PYTHON{OCR\_DELAY} and \PYTHON{OCR\_COOLDOWN} and require a minimum OCR confidence \PYTHON{OCR\_MIN\_CONFIDENCE} (\FILE{Code/LicencePlateDetection/jetson-inference/python/www/flask/dashboard2.py}).
+	\item \textbf{Database writes:} handle and review DB write errors printed during insert/update transactions (\FILE{Code/LicencePlateDetection/jetson-inference/python/www/flask/dashboard2.py}).
 \end{itemize}
 
 \subsection{Periodic review checks}
@@ -174,9 +176,10 @@ Checks are used at three times: \textbf{startup}, \textbf{runtime}, and \textbf{
 During longer runs or demos, logs and system resources are reviewed:
 \begin{itemize}
 	\item \textbf{SQLite growth:} ensure the database file does not grow without bounds:\linebreak
-	\FILE{Code/LicencePlateDetection/jetson\_app/parking.db}.
-	\item \textbf{Disk usage:} ensure the capture directories do not fill the device storage.
+	\texttt{/media/myssd/jetson-inference/python/www/flask/parking.db} (configured as \PYTHON{DB\_PATH} in \FILE{Code/LicencePlateDetection/jetson-inference/python/www/flask/dashboard2.py}).
+	\item \textbf{Disk usage:} ensure the database partition and any optional capture directories do not fill the device storage.
 	\item \textbf{Thermals:} check for thermal throttling symptoms (e.g., sudden FPS drops) and verify with Jetson OS tools.
+	\item \textbf{Service logs:} review runtime errors and restarts in journald (service definition in \FILE{Code/LicencePlateDetection/lpr-system.service}).
 \end{itemize}
 
 % --------------------------------------------------------
@@ -186,9 +189,9 @@ During longer runs or demos, logs and system resources are reviewed:
 \noindent
 To keep monitoring logic maintainable, the project separates core concerns into small functions/classes:
 \begin{itemize}
-	\item \textbf{Event persistence:} \PYTHON{DatabaseManager.log\_detection()} and \PYTHON{get\_first\_detection\_today()} in \FILE{Code/LicencePlateDetection/jetson\_app/db.py} encapsulate SQLite operations.
-	\item \textbf{Quality gating:} \PYTHON{PlateOcrPipeline.readPlate()} combines preprocessing, OCR execution, normalization, and format validation in one reusable pipeline (\FILE{Code/LicencePlateDetection/jetson\_app/ocr\_pipeline.py}).
-	\item \textbf{Sample selection:} sharpness scoring and buffering reduce noisy captures and improve the quality of stored samples (\FILE{Code/LicencePlateDetection/jetson\_app/dashboard.py}).
+	\item \textbf{Event persistence:} \PYTHON{init\_db()} creates and validates the SQLite table \texttt{visits}, and the inference loop performs insert/update transactions (\FILE{Code/LicencePlateDetection/jetson-inference/python/www/flask/dashboard2.py}).
+	\item \textbf{Plate validation:} \PYTHON{clean\_german\_plate()} normalizes and validates OCR output using a whitelist of city prefixes and simple formatting rules (\FILE{Code/LicencePlateDetection/jetson-inference/python/www/flask/dashboard2.py}).
+	\item \textbf{Runtime UI/API monitoring:} \PYTHON{/api/billing} provides a direct view into the current database state, and the MJPEG stream endpoint exposes the latest processed frame (\FILE{Code/LicencePlateDetection/jetson-inference/python/www/flask/dashboard2.py}).
 	\item \textbf{Performance feedback (testing):} \PYTHON{draw\_fps()} in \FILE{Code/LicencePlateDetection/scripts/test\_camera.py} provides quick runtime feedback during development.
 \end{itemize}
 
@@ -201,7 +204,7 @@ Testing focuses on fast checks that catch deployment blockers early:
 \begin{itemize}
 	\item \textbf{Import and environment tests:} validate dependencies and basic runtime readiness (example: \FILE{Code/LicencePlateDetection/scripts/test\_yolo\_import.py} and \FILE{report/Code/SystemTools/python\_project\_sanity\_check.py}).
 	\item \textbf{Camera and throughput tests:} validate camera read loop and visual overlays (example: \FILE{Code/LicencePlateDetection/scripts/test\_camera.py}).
-	\item \textbf{End-to-end dry runs:} run the full pipeline and confirm that detections appear in SQLite and that unreadable crops are stored when OCR fails (dashboard run).
+	\item \textbf{End-to-end dry runs:} run the deployed application (\FILE{Code/LicencePlateDetection/jetson-inference/python/www/flask/dashboard2.py}) and confirm that (i) the web UI updates, (ii) \PYTHON{/api/billing} returns records, and (iii) the SQLite \texttt{visits} table is updated on valid plate reads.
 \end{itemize}
 
 % --------------------------------------------------------
@@ -211,7 +214,7 @@ Testing focuses on fast checks that catch deployment blockers early:
 \noindent
 License plates are personal data in many jurisdictions, therefore monitoring must minimize data exposure:
 \begin{itemize}
-	\item \textbf{Data minimization:} the default operational log stores plate text, timestamp, and confidence (SQLite) instead of storing full video streams.
+	\item \textbf{Data minimization:} the default operational log stores plate text and timestamps (SQLite) instead of storing full video streams or raw images.
 	\item \textbf{Restricted access:} logs and captured images remain on the device and are intended for project team access only.
 	\item \textbf{Retention:} captured images for debugging/retraining should be deleted after they have been reviewed and incorporated into an updated dataset; database entries should be pruned to a defined retention window (e.g., last N days) for the demo setup.
 \end{itemize}
@@ -224,8 +227,10 @@ License plates are personal data in many jurisdictions, therefore monitoring mus
 The system is designed to degrade gracefully under common edge failures:
 \begin{itemize}
 	\item \textbf{Camera issues:} the application detects missing cameras and either falls back to another device index or terminates with a clear error.
-	\item \textbf{OCR failures:} empty/invalid crops are handled without crashing, and failures are recorded as samples for later improvement.
-	\item \textbf{GPU/CPU variability:} OCR can run on CPU if GPU resources are constrained (fallback behaviour exists in \PYTHON{PlateOcrPipeline.\_ensureReader()} in \FILE{Code/LicencePlateDetection/jetson\_app/ocr\_pipeline.py}).
+	\item \textbf{OCR failures:} unreadable crops do not crash the system; they simply do not trigger a valid DB update (validity enforced via \PYTHON{clean\_german\_plate()} in \FILE{Code/LicencePlateDetection/jetson-inference/python/www/flask/dashboard2.py}).
+	\item \textbf{GPU/CPU variability:} OCR is executed on the CPU (explicitly \PYTHON{gpu=False}) and can be quantified/optimized via EasyOCR settings (see initialization in\linebreak
+	\FILE{Code/LicencePlateDetection/jetson-inference/python/www/flask/dashboard2.py}).
+	\item \textbf{Automatic restart:} when installed as a systemd service, the application is restarted automatically on failure (\texttt{Restart=always} in \FILE{Code/LicencePlateDetection/lpr-system.service}).
 \end{itemize}
 
 % --------------------------------------------------------
@@ -236,16 +241,16 @@ The system is designed to degrade gracefully under common edge failures:
 A typical operational workflow for a demo run on the Jetson Nano is:
 \begin{enumerate}
 	\item \textbf{Start:} run the sanity check (\FILE{report/Code/SystemTools/python\_project\_sanity\_check.py}), then start the dashboard application.
-	\item \textbf{Observe:} verify that the UI updates, detections are shown, and that \FILE{Code/LicencePlateDetection/jetson\_app/parking.db} records events.
+	\item \textbf{Observe:} verify that the web UI updates, detections are shown in the stream, and that the SQLite database at \PYTHON{DB\_PATH} records visit state (see \FILE{Code/LicencePlateDetection/jetson-inference/python/www/flask/dashboard2.py}).
 	\item \textbf{Monitor resources:} periodically check Jetson temperatures and utilization using OS tools during longer runs.
 	\item \textbf{Stop:} terminate the application cleanly and archive logs/captures if needed.
-	\item \textbf{Review:} inspect unreadable/failed captures and add useful samples to the retraining dataset.
+	\item \textbf{Review:} if evidence capture is enabled (or if a dedicated capture run was performed), inspect failed samples and add useful images to the retraining dataset.
 \end{enumerate}
 
 \noindent
 Example decision rules used during operation:
 \begin{itemize}
 	\item If the processing rate drops noticeably, check Jetson thermals and system load; reduce camera resolution or processing frequency if necessary.
-	\item If many plates become unreadable, inspect recent captures to identify whether the cause is motion blur, lighting changes, or camera focus, and collect samples for retraining.
+	\item If many plates become unreadable, collect a small set of hard cases (temporary crop saving in \FILE{Code/LicencePlateDetection/jetson-inference/python/www/flask/dashboard2.py} or a dedicated capture run) to determine whether the cause is motion blur, lighting changes, or camera focus.
 	\item If detections are missing entirely, run the startup checks again (camera access, model path, CUDA availability) before changing thresholds.
 \end{itemize}
