@@ -102,10 +102,17 @@ The collection strategy is intentionally selective to control storage usage on t
 \noindent
 New data is captured under conditions that indicate that the current model/pipeline struggles:
 \begin{itemize}
-	\item \textbf{OCR fails / invalid format:} if the dashboard produces no valid plate string after \PYTHON{clean\_german\_plate()}, the recommended workflow is to \emph{temporarily} enable crop saving in \FILE{Code/LicencePlateDetection/jetson-inference/python/www/flask/dashboard2.py} so that hard cases can be reviewed offline.
-	\item \textbf{High-confidence detections:} for planned dataset collection runs, the development detector can periodically save frames and plate crops when detection confidence exceeds a threshold (example: \PYTHON{captureConfidence=0.5} with a minimum interval of \PYTHON{1500ms} in \FILE{Code/LicencePlateDetection/jetson\_app/detector.py}).
+	\item \textbf{OCR fails / invalid format:} if the dashboard produces no valid plate string after
+	\PYTHON{clean\_german\allowbreak\_plate()},
+	the recommended workflow is to \emph{temporarily} enable crop saving in
+	\FILE{Code/LicencePlateDetection/\allowbreak jetson-inference/\allowbreak python/www/flask/\allowbreak dashboard2.py}
+	so that hard cases can be reviewed offline.
+	
+	\item \textbf{High-confidence detections:} for planned dataset collection runs, the development detector can
+	periodically save frames and plate crops when detection confidence exceeds a threshold (example:
+	\PYTHON{captureConfidence=0.5} with a minimum interval of \PYTHON{1500ms} in
+	\FILE{Code/LicencePlateDetection/\allowbreak jetson\_app/\allowbreak detector.py}).
 \end{itemize}
-
 \noindent
 This approach creates a focused "hard cases" dataset (blur, glare, angle issues, partial occlusions) that is valuable for retraining and debugging.
 
@@ -153,20 +160,39 @@ Checks are used at three times: \textbf{startup}, \textbf{runtime}, and \textbf{
 \index{Monitoring!Checks!Startup}
 
 \begin{itemize}
-	\item \textbf{Python environment sanity:} verify imports and camera access using the project script \FILE{report/Code/SystemTools/python\_project\_sanity\_check.py}.
-	\item \textbf{Engine availability:} verify the TensorRT engine file configured as \PYTHON{ENGINE\_PATH} exists before starting inference (\FILE{Code/LicencePlateDetection/jetson-inference/python/www/flask/dashboard2.py}).
-	\item \textbf{Database readiness:} ensure the SQLite table \texttt{visits} exists on startup (\PYTHON{init\_db()} in \FILE{Code/LicencePlateDetection/jetson-inference/python/www/flask/dashboard2.py}).
-	\item \textbf{Service supervision:} when started as a systemd service, verify \texttt{Restart=always} and inspect startup logs via \SHELL{systemctl status} / \SHELL{journalctl} (\FILE{Code/LicencePlateDetection/lpr-system.service}).
+	\item \textbf{Python environment sanity:} verify imports and camera access using the project script
+	\FILE{report/Code/SystemTools/\allowbreak python\_project\allowbreak\_sanity\allowbreak\_check.py}.
+	
+	\item \textbf{Engine availability:} verify the TensorRT engine file configured as
+	\PYTHON{ENGINE\allowbreak\_PATH} exists before starting inference
+	(\FILE{Code/LicencePlateDetection/\allowbreak jetson-inference/\allowbreak python/www/flask/\allowbreak dashboard2.py}).
+	
+	\item \textbf{Database readiness:} ensure the SQLite table \texttt{visits} exists on startup
+	(\PYTHON{init\allowbreak\_db()} in
+	\FILE{Code/LicencePlateDetection/\allowbreak jetson-inference/\allowbreak python/www/flask/\allowbreak dashboard2.py}).
+	
+	\item \textbf{Service supervision:} when started as a systemd service, verify \texttt{Restart=always}
+	and inspect startup logs via \SHELL{systemctl status} / \SHELL{journalctl}
+	(\FILE{Code/LicencePlateDetection/\allowbreak lpr-system.service}).
 \end{itemize}
 
 \subsection{Runtime checks}
 \index{Monitoring!Checks!Runtime}
 
 \begin{itemize}
-	\item \textbf{Frame validity:} handle missing frames by continuing the loop and retrying (\FILE{Code/LicencePlateDetection/jetson-inference/python/www/flask/dashboard2.py}).
-	\item \textbf{Camera fallback:} attempt camera index 0 and fall back to index 1 if needed (\FILE{Code/LicencePlateDetection/jetson-inference/python/www/flask/dashboard2.py}).
-	\item \textbf{OCR throttling:} avoid spamming OCR using \PYTHON{OCR\_DELAY} and \PYTHON{OCR\_COOLDOWN} and require a minimum OCR confidence \PYTHON{OCR\_MIN\_CONFIDENCE} (\FILE{Code/LicencePlateDetection/jetson-inference/python/www/flask/dashboard2.py}).
-	\item \textbf{Database writes:} handle and review DB write errors printed during insert/update transactions (\FILE{Code/LicencePlateDetection/jetson-inference/python/www/flask/dashboard2.py}).
+	\item \textbf{Frame validity:} handle missing frames by continuing the loop and retrying
+	(\FILE{Code/LicencePlateDetection/\allowbreak jetson-inference/\allowbreak python/www/flask/\allowbreak dashboard2.py}).
+	
+	\item \textbf{Camera fallback:} attempt camera index 0 and fall back to index 1 if needed
+	(\FILE{Code/LicencePlateDetection/\allowbreak jetson-inference/\allowbreak python/www/flask/\allowbreak dashboard2.py}).
+	
+	\item \textbf{OCR throttling:} avoid spamming OCR using \PYTHON{OCR\allowbreak\_DELAY} and
+	\PYTHON{OCR\allowbreak\_COOLDOWN} and require a minimum OCR confidence
+	\PYTHON{OCR\allowbreak\_MIN\allowbreak\_CONFIDENCE}
+	(\FILE{Code/LicencePlateDetection/\allowbreak jetson-inference/\allowbreak python/www/flask/\allowbreak dashboard2.py}).
+	
+	\item \textbf{Database writes:} handle and review DB write errors printed during insert/update transactions
+	(\FILE{Code/LicencePlateDetection/\allowbreak jetson-inference/\allowbreak python/www/flask/\allowbreak dashboard2.py}).
 \end{itemize}
 
 \subsection{Periodic review checks}
@@ -175,11 +201,17 @@ Checks are used at three times: \textbf{startup}, \textbf{runtime}, and \textbf{
 \noindent
 During longer runs or demos, logs and system resources are reviewed:
 \begin{itemize}
-	\item \textbf{SQLite growth:} ensure the database file does not grow without bounds:\linebreak
-	\texttt{/media/myssd/jetson-inference/python/www/flask/parking.db} (configured as \PYTHON{DB\_PATH} in \FILE{Code/LicencePlateDetection/jetson-inference/python/www/flask/dashboard2.py}).
+	\item \textbf{SQLite growth:} ensure the database file does not grow without bounds:
+	\texttt{/media/myssd/\allowbreak jetson-inference/\allowbreak python/www/flask/\allowbreak parking.db}
+	(configured as \PYTHON{DB\allowbreak\_PATH} in
+	\FILE{Code/LicencePlateDetection/\allowbreak jetson-inference/\allowbreak python/www/flask/\allowbreak dashboard2.py}).
+	
 	\item \textbf{Disk usage:} ensure the database partition and any optional capture directories do not fill the device storage.
+	
 	\item \textbf{Thermals:} check for thermal throttling symptoms (e.g., sudden FPS drops) and verify with Jetson OS tools.
-	\item \textbf{Service logs:} review runtime errors and restarts in journald (service definition in \FILE{Code/LicencePlateDetection/lpr-system.service}).
+	
+	\item \textbf{Service logs:} review runtime errors and restarts in journald
+	(service definition in \FILE{Code/LicencePlateDetection/\allowbreak lpr-system.service}).
 \end{itemize}
 
 % --------------------------------------------------------
@@ -189,10 +221,21 @@ During longer runs or demos, logs and system resources are reviewed:
 \noindent
 To keep monitoring logic maintainable, the project separates core concerns into small functions/classes:
 \begin{itemize}
-	\item \textbf{Event persistence:} \PYTHON{init\_db()} creates and validates the SQLite table \texttt{visits}, and the inference loop performs insert/update transactions (\FILE{Code/LicencePlateDetection/jetson-inference/python/www/flask/dashboard2.py}).
-	\item \textbf{Plate validation:} \PYTHON{clean\_german\_plate()} normalizes and validates OCR output using a whitelist of city prefixes and simple formatting rules (\FILE{Code/LicencePlateDetection/jetson-inference/python/www/flask/dashboard2.py}).
-	\item \textbf{Runtime UI/API monitoring:} \PYTHON{/api/billing} provides a direct view into the current database state, and the MJPEG stream endpoint exposes the latest processed frame (\FILE{Code/LicencePlateDetection/jetson-inference/python/www/flask/dashboard2.py}).
-	\item \textbf{Performance feedback (testing):} \PYTHON{draw\_fps()} in \FILE{Code/LicencePlateDetection/scripts/test\_camera.py} provides quick runtime feedback during development.
+	\item \textbf{Event persistence:} \PYTHON{init\allowbreak\_db()} creates and validates the SQLite table \texttt{visits},
+	and the inference loop performs insert/update transactions
+	(\FILE{Code/LicencePlateDetection/\allowbreak jetson-inference/\allowbreak python/www/flask/\allowbreak dashboard2.py}).
+	
+	\item \textbf{Plate validation:} \PYTHON{clean\allowbreak\_german\allowbreak\_plate()} normalizes and validates OCR output
+	using a whitelist of city prefixes and simple formatting rules
+	(\FILE{Code/LicencePlateDetection/\allowbreak jetson-inference/\allowbreak python/www/flask/\allowbreak dashboard2.py}).
+	
+	\item \textbf{Runtime UI/API monitoring:} \texttt{/api/billing} provides a direct view into the current database state,
+	and the MJPEG stream endpoint exposes the latest processed frame
+	(\FILE{Code/LicencePlateDetection/\allowbreak jetson-inference/\allowbreak python/www/flask/\allowbreak dashboard2.py}).
+	
+	\item \textbf{Performance feedback (testing):} \PYTHON{draw\allowbreak\_fps()} in
+	\FILE{Code/LicencePlateDetection/\allowbreak scripts/\allowbreak test\allowbreak\_camera.py}
+	provides quick runtime feedback during development.
 \end{itemize}
 
 % --------------------------------------------------------
