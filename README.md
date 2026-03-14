@@ -1,16 +1,82 @@
-# Car License Plate Identification with Jetson Nano
+# Automated Vehicle Entry–Exit Analytics System  
+*(Edge AI License Plate Recognition using NVIDIA Jetson Nano)*
 
 <img src="Poster/images/JetsonNanoPoster.png" alt="Jetson Nano ANPR Poster" width="750" />
 
 ## 📖 Project Overview
-This project implements *Automatic Number Plate Recognition (ANPR)* on the *NVIDIA Jetson Nano*.
-It leverages *deep learning–based object detection* methods (e.g., YOLO, CNNs) and *OCR techniques* to detect and recognize license plates in real time.
 
-The work is part of a university project and focuses on the following goals:
-- Deploy a license plate detection pipeline optimized for edge AI devices.
-- Compare different deep learning models (YOLO, SSD, Faster R-CNN) on embedded hardware.
-- Explore OCR-based text extraction for license plate numbers.
-- Demonstrate real-time inference on Jetson Nano.
+This project implements an **Automated Vehicle Entry–Exit Analytics System** using **edge AI on the NVIDIA Jetson Nano**.
+
+The system performs **Automatic Number Plate Recognition (ANPR)** to detect vehicles entering and exiting a facility by identifying license plates in real time.
+
+Using **deep learning–based object detection and OCR pipelines**, the project demonstrates how **embedded edge devices can perform real-time vehicle monitoring and access analytics** without relying on cloud processing.
+
+The project focuses on:
+
+- Detecting vehicle license plates using **deep learning object detection models**
+- Extracting license plate text using **Optical Character Recognition (OCR)**
+- Running the full inference pipeline **on the NVIDIA Jetson Nano edge device**
+- Evaluating **performance trade-offs of different detection architectures** on embedded hardware
+
+---
+
+## ⚙ System Capabilities
+
+The system enables:
+
+- Automated vehicle detection at **entry and exit points**
+- **License plate recognition** using deep learning + OCR
+- **Edge inference** using Jetson Nano (low latency)
+- **Vehicle entry–exit monitoring and analytics**
+
+Example applications include:
+
+- Smart parking systems
+- Automated gate access control
+- Traffic monitoring
+- Campus or facility vehicle logging
+
+---
+
+## 🧠 AI / Computer Vision Pipeline
+
+The system pipeline follows these stages:
+
+1. **Image Capture**
+   - Camera input connected to the Jetson Nano
+
+2. **License Plate Detection**
+   - Deep learning models used for detection:
+     - YOLO
+     - SSD
+     - Faster R-CNN
+
+3. **Plate Cropping**
+   - Detected plate region is isolated
+
+4. **Text Recognition**
+   - OCR techniques extract license plate numbers
+
+5. **Vehicle Entry–Exit Logging**
+   - Recognized plate numbers can be used for tracking and analytics
+
+---
+
+## 🛠 Technology Stack
+
+- **Hardware**
+  - NVIDIA Jetson Nano
+  - Camera module
+
+- **Software**
+  - Python
+  - OpenCV
+  - PyTorch / TensorFlow
+  - YOLO object detection
+  - OCR pipeline
+
+- **Deployment**
+  - Edge AI inference on embedded hardware
 
 ---
 
